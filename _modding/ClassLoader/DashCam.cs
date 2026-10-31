@@ -52,6 +52,9 @@ namespace SCClassLoader
 
         private static Runner runner;
 
+        /// <summary>The crawler body of your class, as the game keeps it.</summary>
+        internal static Character CrawlerPrefab() => Runner.Prefab(Runner.BodyId());
+
         private static bool CanShoot =>
             Enabled != null && Enabled.Value && Player_Control.instance != null && Player_Control.instance.playerCamera != null
             && Player.instance != null && !Player.instance.GetIsDead() && Player.instance.GetMover() != null;
@@ -355,7 +358,7 @@ namespace SCClassLoader
             // ---- the body you see -----------------------------------------------------------------------------
 
             /// <summary>The Nemesis crawler of your first tree that has one (Nemesis_Cyberninja for a Cyberninja), else one for its archetype.</summary>
-            private static string BodyId()
+            internal static string BodyId()
             {
                 var trees = Player_SkillControl.instance?.skillTrees?.Where(t => t != null && !string.IsNullOrEmpty(t.internalName)).ToList() ?? new List<Skill_Tree>();
                 foreach (Skill_Tree t in trees)
@@ -371,7 +374,7 @@ namespace SCClassLoader
                 }
             }
 
-            private static Character Prefab(string id) =>
+            internal static Character Prefab(string id) =>
                 AI_Manager.instance?.allCharacters?.FirstOrDefault(c => c != null && c.internalName == id);
 
             /// <summary>A copy of the crawler's looks only: meshes, bones and its Animator, nothing that thinks, collides or makes sound.</summary>

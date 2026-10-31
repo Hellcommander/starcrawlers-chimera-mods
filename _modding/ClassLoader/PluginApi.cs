@@ -285,6 +285,9 @@ namespace Breachwork
         /// <summary>Gives the current character a picture from the folder, by file name; or the one being made, on the creation screen (needs apiLevel 2).</summary>
         public static void SetPortrait(string fileName, bool onCreationScreen = false) => Portraits.Choose(onCreationScreen, fileName);
 
+        /// <summary>Renders the character in their real gear to a file in the portrait folder, on the GPU with no AI model. Null when it worked, or why not (needs apiLevel 4).</summary>
+        public static string RenderPortrait(string fileName) => PortraitRender.Render(fileName);
+
         /// <summary>
         /// True while a plugin has everyone act at the same time: the loader's combat pacing then stops making enemies wait
         /// for your step and for each other, and your turn for them (needs apiLevel 3). A plugin that sets it clears it when it's done.

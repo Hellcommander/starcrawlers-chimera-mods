@@ -7,7 +7,7 @@ namespace SCClassLoader
 {
     /// <summary>
     /// Diagonal steps for the player. Hold forward or back together with a strafe key (W+Q, W+E, S+Q, S+E by default),
-    /// use numpad 7 / 9 / 1 / 3, or push the controller stick diagonally. A diagonal step is a normal move to the tile
+    /// use numpad 7 / 9 / 1 / 3 (with Num Lock on or off), or push the controller stick diagonally. A diagonal step is a normal move to the tile
     /// across the corner, so it animates, occupies tiles and sets off what's on the floor like any step.
     ///
     /// No corner cutting: both tiles beside the diagonal must be open floor (no wall piece, no door) and not both
@@ -30,7 +30,7 @@ namespace SCClassLoader
         internal static void Bind(ConfigFile cfg)
         {
             Enabled = cfg.Bind("Movement", "DiagonalSteps", true, "Step diagonally: forward/back + a strafe key together, numpad 7/9/1/3, or the stick on a diagonal. Costs 1.41 turns (the extra shows up as an occasional lost moment).");
-            Numpad = cfg.Bind("Movement", "NumpadDiagonals", true, "Numpad 7, 9, 1 and 3 step diagonally (forward-left, forward-right, back-left, back-right).");
+            Numpad = cfg.Bind("Movement", "NumpadDiagonals", true, "Numpad 7, 9, 1 and 3 step diagonally (forward-left, forward-right, back-left, back-right), with Num Lock on or off. With it off they arrive as Home, Page Up, End and Page Down, so those keys step too.");
             ComboWindow = cfg.Bind("Movement", "ComboWindow", 0.06f, "Seconds a fresh forward/back or strafe press waits for its partner key before moving straight (so two keys pressed together make a diagonal).");
         }
 
@@ -102,6 +102,10 @@ namespace SCClassLoader
             return true;
         }
 
+        /// <summary>Page keys need their combo, so alone they're free to step; with no combo set they stay page keys.</summary>
+        private static bool NavFree => HotbarPages.Key2Combo.Value != KeyCode.None && !HotbarPages.Key2Held
+            && !(Menu_Stash.instance_stash != null && Menu_Stash.instance_stash.GetIsShowing());
+
         private static bool Held(string key) => !string.IsNullOrEmpty(key) && Input.GetKey(key);
         private static bool Pressed(string key) => !string.IsNullOrEmpty(key) && Input.GetKeyDown(key);
 
@@ -120,6 +124,14 @@ namespace SCClassLoader
                     else if (Input.GetKey(KeyCode.Keypad9)) { f = 1; r = 1; }
                     else if (Input.GetKey(KeyCode.Keypad1)) { f = -1; r = -1; }
                     else if (Input.GetKey(KeyCode.Keypad3)) { f = -1; r = 1; }
+                    else if (NavFree)
+                    {
+                        // Num Lock off: the same four keys arrive as Home, Page Up, End and Page Down
+                        if (Input.GetKey(KeyCode.Home)) { f = 1; r = -1; }
+                        else if (Input.GetKey(KeyCode.PageUp)) { f = 1; r = 1; }
+                        else if (Input.GetKey(KeyCode.End)) { f = -1; r = -1; }
+                        else if (Input.GetKey(KeyCode.PageDown)) { f = -1; r = 1; }
+                    }
                 }
                 if (f == 0)
                 {

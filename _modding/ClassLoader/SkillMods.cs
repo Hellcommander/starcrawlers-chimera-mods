@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
@@ -82,6 +83,17 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>A rewrite's own files stay next to the class carrying it, whichever class's skill it lands on.</summary>
+        private static void Anchor(SkillModSpec m, string classId)
+        {
+            string dir = ClassRegistry.FolderOf(classId);
+            if (m == null || string.IsNullOrEmpty(dir)) return;
+            string Own(string file) => string.IsNullOrEmpty(file) || file.StartsWith("event:") || Path.IsPathRooted(file) ? file : Path.GetFullPath(Path.Combine(dir, file));
+            m.sound = Own(m.sound);
+            if (m.model != null) { m.model.mesh = Own(m.model.mesh); m.model.texture = Own(m.model.texture); }
+            foreach (SkillModSpec r in m.roll ?? new List<SkillModSpec>()) Anchor(r, classId);
+        }
+
         private static void OwnEffects(RuneSpec m, string classId)
         {
             if (string.IsNullOrEmpty(classId)) return;
@@ -148,6 +160,7 @@ namespace SCClassLoader
         internal static void Take(List<Carried> list, SkillModSpec mod, ModAbility ab, string classId, string source, string key, ModEffect carrier)
         {
             if (mod == null || !Matches(mod, ab, classId) || !Holds(mod, classId, source)) return;
+            Anchor(mod, classId);
             bool rolled = mod.roll != null;
             if (rolled)
             {
@@ -185,7 +198,7 @@ namespace SCClassLoader
 
         internal static void ClearDraws() => draws.Clear(); // devtests
 
-        private static readonly string[] DamageTraits = { "lifesteal", "truedamage", "weapon", "scale", "scalemult", "perrank", "bonus", "chance", "levelcap" };
+        private static readonly string[] DamageTraits = { "lifesteal", "truedamage", "weapon", "channel", "scale", "scalemult", "perrank", "bonus", "chance", "levelcap" };
 
         private static readonly string[] SkillTraits = { "resetonkill", "instant", "dodgeable", "melee", "radius", "area", "shape", "travel" };
 
@@ -261,7 +274,7 @@ namespace SCClassLoader
             // skill traits
             "resetOnKill", "instant", "dodgeable", "melee", "command", "reactionSlots", "pierce", "jumps",
             // damage traits (every damage action)
-            "lifesteal", "trueDamage", "weapon", "scale", "scaleMult", "perRank", "bonus", "chance", "levelCap",
+            "lifesteal", "trueDamage", "weapon", "channel", "scale", "scaleMult", "perRank", "bonus", "chance", "levelCap",
             // on each target
             "stun", "knockback", "pull", "blind", "silence", "taunt", "exhaust", "purge", "effect", "effectTurns", "execute", "hazard", "swap",
             // on you, once per cast
@@ -397,6 +410,7 @@ namespace SCClassLoader
                         case "lifesteal": a.lifesteal += F(v); break;
                         case "truedamage": a.trueDamage = B(v); break;
                         case "weapon": a.weapon += F(v); break;
+                        case "channel": a.channel = B(v); break;
                         case "scale": a.scale = string.IsNullOrEmpty(a.scale) ? S(v) : a.scale + "+" + S(v); break;
                         case "scalemult": a.scaleMult = F(v); break;
                         case "perrank": a.perRank += I(v); break;
@@ -467,13 +481,18 @@ namespace SCClassLoader
                     return true;
                 case "nova":
                     {
-                        // the burst spreads from you to every side: one streak per direction
-                        string fx = t.travelVfx;
-                        if (!string.IsNullOrEmpty(fx) && ctx.caster != null)
+                        // the skill's own bolt flies out to every side and lands in its own impact, so the burst can be
+                        // seen from behind your own eyes
+                        string fx = t.travelVfx ?? ab.Spec?.travelVfx, hit = t.impactVfx ?? ab.Spec?.impactVfx;
+                        if (ctx.caster != null)
                         {
                             Vector3 at = ctx.caster.GetHitFx().position;
                             for (int d = 0; d < 8; d++)
-                                Actions.SpawnTravel(fx, at, from + Quaternion.Euler(0f, 45f * d, 0f) * Vector3.forward * Mathf.Max(1f, radius) + Vector3.up * 0.9f, 14f);
+                            {
+                                Vector3 end = from + Quaternion.Euler(0f, 45f * d, 0f) * Vector3.forward * (Mathf.Max(1f, radius) + 1.5f) + Vector3.up * 0.9f; // past the hits, so it reads as a volley
+                                Actions.SpawnTravel(fx, at, end, 7f);
+                                if (!string.IsNullOrEmpty(hit)) Actions.SpawnVfx(hit, end);
+                            }
                         }
                         return false;
                     }
@@ -724,6 +743,7 @@ namespace SCClassLoader
                     case "lifesteal": bits.Add($"heals you for {Mathf.RoundToInt(F(v) * 100)}% of its damage"); break;
                     case "truedamage": bits.Add(B(v) ? "true damage (ignores armor, shields and resistances)" : "ordinary damage"); break;
                     case "weapon": bits.Add($"+{Mathf.RoundToInt(F(v) * 100)}% of a weapon roll"); break;
+                    case "channel": if (B(v)) bits.Add("channelled through your weapon: its reach, accuracy and on-hit effects, the skill's own damage"); break;
                     case "scale": bits.Add($"also scales with {S(v)}"); break;
                     case "scalemult": bits.Add($"{Mathf.RoundToInt(F(v) * 100)}% per stat point"); break;
                     case "perrank": bits.Add($"+{I(v)} damage per rank"); break;

@@ -195,6 +195,9 @@ namespace SCClassLoader
         /// <summary>Damage actions: adds this share of a roll of your main-hand weapon's damage (0.5 = half), for
         /// skills that are half blade, half spell. Nothing without a weapon, and only for you.</summary>
         public float weapon;
+        /// <summary>Damage actions: the hit counts as a weapon hit (your weapon's and ammo's on-hit effects go off) with
+        /// no weapon damage added. Comes with SkillMods' "channel".</summary>
+        public bool channel;
         /// <summary>Damage actions run by an effect (onExpireActions, onDeathActions, a burst or threshold): adds this
         /// share of the health its bearer lost while the effect was on it (0.5 = half). A revenge counter.</summary>
         public float stored;

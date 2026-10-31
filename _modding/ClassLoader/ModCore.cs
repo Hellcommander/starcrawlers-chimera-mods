@@ -101,7 +101,7 @@ namespace SCClassLoader
         internal const string NeedsOk = "waiting for your OK to run its code";
 
         /// <summary>The level of the plugin API (the Breachwork namespace); goes up when plugins can do more ("apiLevel" in mod.json).</summary>
-        public const int ApiLevel = 3;
+        public const int ApiLevel = 4;
 
         private static readonly Dictionary<string, ModPack> byFolder = new Dictionary<string, ModPack>(StringComparer.OrdinalIgnoreCase);
 
@@ -115,7 +115,7 @@ namespace SCClassLoader
         internal static ModPack Find(string id) => byFolder.Values.FirstOrDefault(p => string.Equals(p.id, id, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>Folders inside a mod that hold code, not mod files: a plugin's own files, a plugin project's build output, scripts.</summary>
-        private static readonly string[] CodeFolders = { "plugins", "bin", "obj", "scripts" };
+        private static readonly string[] CodeFolders = { "plugins", "bin", "obj", "scripts", "tools" };
 
         private static bool InCodeFolder(string file, string modsDir) =>
             file.Substring(modsDir.Length).Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Any(d => CodeFolders.Contains(d, StringComparer.OrdinalIgnoreCase));

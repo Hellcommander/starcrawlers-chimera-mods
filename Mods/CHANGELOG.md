@@ -25,7 +25,9 @@ Covers everything since 1.1.0.
 - Passives, stances, one-shot charges and socketed runes can rewrite other skills: delivery (trap, grenade, walking
   bomb, drifter, nova, line, cone, area, chain, scatter), element, damage type, effects and behaviors. Tooltips and
   aiming follow the rewrite, and the skill keeps its own scaling.
-- **Spellsmith** (example class): now a spellshaper that rewrites attacks from your other classes.
+- **Spellsmith** (example class): now a spellshaper that rewrites attacks from your other classes, with its own
+  icons, effects, sounds, buried charge and Kindled Shell. Hammer Form now fires an attack through your weapon, animation, effects and ammo included:
+  the attack keeps its own damage and takes the weapon's reach, accuracy and on-hit effects.
 - **Rune matrix augments:** rune casters spend a shared pool on delivery and behavior changes, and on flaws that give
   points back. Flux Savant opts in, its flaws bite through rune burn, sealed sockets and Instability, and they only
   discount while they really cost something. When the pool shrinks, skills go dark and keep their picks.
@@ -33,11 +35,11 @@ Covers everything since 1.1.0.
 ### Character pictures
 
 - **Custom character pictures.** Put a png or jpg in the game's Portraits folder, any size, and it is cut to a square.
-  Pick it on the creation screen or above the character sheet. The load screen's thumbnail shows it too. A save keeps
-  only the file name, and each Conjoined body has its own picture.
-- **AI Character Portraits** (new mod, off by default). Adds Paint Portrait to the picture picker, which paints a
-  picture from your classes, skills, gear, effects and form. It needs the AI asset toolkit on your computer and an
-  NVIDIA GPU, so it doesn't work from the player package alone.
+  Pick it on the creation screen or above the character sheet, or press Load picture to choose one from anywhere on
+  your computer. A save keeps only the file name, and each Conjoined body has its own picture.
+- **Character Portrait Tools** (new mod, off by default). Adds Make Portrait to the picture picker, which makes a
+  picture from your classes, skills, gear, effects and form. The `Tool` setting picks what makes it: the optional
+  Portrait Maker download, which draws one from code with no GPU, or the AI asset toolkit, which needs an NVIDIA GPU.
 
 ### Resources and balance
 
@@ -50,11 +52,16 @@ Covers everything since 1.1.0.
   two classes act on each other instead: marks spread, one class's resource pays for the other's effect, attackers get
   marked, specials are set back and foes are shoved, stunned or silenced. Level raises a synergy's odds.
 - Classes without synergies got their own set. Synergy Strain and per-skill penalties weigh on what synergies add.
-  Ichorborn + Chemistry (Spiked Ichor): a chem in your blood poisons Tarred foes, and their corpses breed Ichorlings.
-  Black Culture (Ichorborn + Xenobiologist) now sets the two broods on each other: Ichorlings slime, the pet slime
+- **Spiked Ichor** (Ichorborn + Chemistry): a chem in your blood poisons Tarred foes, and their corpses breed Ichorlings.
+- **Black Culture** (Ichorborn + Xenobiologist) now sets the two broods on each other: Ichorlings slime, the pet slime
   tars, and a foe dropped carrying both marks breeds an Ichorling.
 - Free deaths are a boss's move. Only Looking-Glass keeps one. Scrapper, Demolitionist, Null Chorister and Probability
   Shaman now trigger their last stands on a low-health line.
+
+### Quality of life
+
+- **Class search:** a box on the creation screen narrows the class grid by class name, skill, description, synergy or
+  stat bonus, so "crit" or "savvy" finds the classes that offer it. Hovering a result says where it matched.
 
 ### Modding
 
@@ -81,7 +88,10 @@ Covers everything since 1.1.0.
 ### Sound
 
 - Sounds that came back as one signal in both channels were re-rendered in true stereo, and many others were replaced.
-- Sounds can ship sealed in a mod's `sounds.pak`, as FLAC under AES-256. Every archive has its own key, wrapped with the
+- **The pack's audio now lives in encrypted archives,** to better follow the terms of the audio assets, some of which
+  require sounds to be embedded and not shared as loose files. The game plays them as before.
+- Sounds can ship sealed in a mod's `sounds.pak`, as PCM under AES-256 (`--flac` for a half-size lossless archive that
+  takes FMOD longer to open). Every archive has its own key, wrapped with the
   loader's public key, so any mod can have embedded audio: `BreachworkModManager.exe --seal-audio Mods\YourMod` (or
   `_modding/audio/sfx_archive.py`). No `"sound"` value changes, and a loose file still wins over the pak. Archived sounds
   are read, decrypted and decoded while the game starts, so a play does no file work. Every sound and the (encrypted)
@@ -89,8 +99,16 @@ Covers everything since 1.1.0.
   loader key it was sealed for, so the loader can carry more than one key after a rotation (`sfx_archive.py keygen
   --rotate`); `sfx_archive.py verify` checks an archive; `"soundsPreload": false` in a mod's `mod.json` reads its archive
   on demand instead of at start.
+- The archives are ready about 0.2 s after the preload starts, down from about 1.4 s: the loader decrypts and checks
+  them with the processor's AES instructions through Windows CNG (after a self-test against the managed code, which
+  stays as the fallback) on several threads, those threads hand each sound to FMOD themselves instead of waiting for
+  game frames, and the entries are PCM, so FMOD has nothing to decode. The sounds are the same bits; only the speed
+  changed. `SCCL_DEVTEST=audiofast` now reports each stage's time.
 - A sound that is missing or won't load now plays a vanilla sound, so nothing goes silent. Mods can add their own
   fallbacks with `soundFallbacks`.
+- **Lower sound delay:** `[Audio] MixBlock` in Mod Settings sets how quickly every sound in the game reaches your
+  speakers. The default here is `512`, half the game's block size. Use `1024` if you hear crackling, or `game` to leave
+  the game's own setting alone. It applies after a restart.
 - Mod audio left the source repository. The packages still ship it, and a build from a plain clone uses the fallbacks.
 - Every licensed sound was rebuilt from its pack clips with plain signal processing and no AI, since those packs'
   licenses bar AI tools. The 63 `sfx/` renders that had such a pack among their references were rebuilt the same
@@ -98,13 +116,20 @@ Covers everything since 1.1.0.
   Function Loops clip moved to their mods' `audio_licensed/` folders (same file names; the class files point there).
 - The rebuilt sounds use an anti-aliased pitch move, keep each clip's colour and attack, and sit at the clip's loudness;
   `vasculist_spike` is synthesized from material parameters, a sound with no clip behind it at all.
-- Sound quality is judged by an audio model, not by ear or in game: `audio_listener.py` in the asset toolkit picks
-  the best try of every rebuilt sound and says whether it beats the one it replaces; `sfx_audit.py` ranks the set.
+- **Sounds from packs that bar AI are rebuilt by a custom programmatic tool.** A listener works out which clips to layer and what tweaks each sound needs, and sends that advice to the tool, which
+  compiles the sound by plain signal processing. No AI generates or changes these sounds. The listener is a read-only audio model: it only measures the tries and picks the
+  best one, nothing it produces ships, and no pack clip goes into it. 
+- Not every sound takes that route. Noise Alchemy and Dark Fantasy allow AI in production, so where neither has a
+  good-quality clip that fits, the audio workbench still makes a base sound from their references, changed and layered
+  from the original sounds. Those `sfx/` sounds can be Stable Audio renders, and Stable Audio stays in the credits.
 
 ### Credits and license
 
 - Soulash 2 and MoonSharp are credited, here and in the roll after Cerberus. The nova and the other delivery forms are
   Arendeth's own.
+- The credits now say where each sound comes from: Noise Alchemy for the `sfx/` sounds, and Function Loops, Tao & Sound
+  and Ovani Sound for the `audio_licensed/` sounds. The CLAP model is credited as the listening-only quality tuner.
+- Odds Breaker and Swarm Conductor are no longer credited as inspired by the first StarCrawlers.
 - **License version 3.0: one license for the code and the content, and commercial use is now allowed** with credit. It
   replaces PolyForm Noncommercial 1.0.0 and the non-commercial content terms. Copies already shared keep the terms they
   came with.
@@ -112,6 +137,12 @@ Covers everything since 1.1.0.
 - No sound may be sold as a sound or in an audio pack, even altered, and `audio_licensed/` sounds may not be used
   commercially at all. Game material never ships.
 - The source of the example plugins is free for any use.
+
+### Source repository
+
+- The GitHub repository was remade to remove access to the old audio files, which its commit history still held. The
+  sounds now ship only in the encrypted archives. The repository restarts from a single commit, so this changelog is
+  now the record of the earlier work. A clone builds with `-p:PlayerBuild=true`.
 
 ## 1.1.0 (2026-10-29)
 

@@ -3,7 +3,7 @@
   "name": "Spellsmith",
   "description": "A smith of other people's spells. The Spellsmith barely casts anything of their own: their craft is reworking the attacks you learned from your other classes, lobbing them as grenades, beating them into hammers, burying them in the deck or strapping them to walking bombs. When pressed, the whole workshop runs cold.\n\nTake it beside another class with mod attacks: its forms do nothing to vanilla skills or its own lance. Example class: shows how passives, stances and loaded charges reshape other classes' skills (\"modifies\") and stack. Favors [SMT] and [REC].",
   "archetype": "Intellect",
-  "iconFrom": "SKILLTREE_Pyromaniac",
+  "icon": "spellsmith.png",
   "attributePriorities": {
     "Smarts": 4,
     "Recognition": 2
@@ -23,8 +23,9 @@
           "armTurns": 1,
           "turns": 8,
           "radius": 1,
-          "look": "HAZARD_Security_Boobytrap",
-          "areaVfx": "PA_Pyromaniac_MovotolCocktail.explosionPrefab@0.6",
+          "model": { "mesh": "models/items/ss_buried_charge.glb", "scale": 0.8, "glow": "#FFB050", "glowStrength": 0.12 },
+          "areaVfx": "fx_spellsmith_buried",
+          "sound": "sfx/ss_burst.wav",
           "consume": true
         }
       ]
@@ -42,15 +43,16 @@
           "form": "grenade",
           "radius": 1.5,
           "stamina": 4,
-          "travelVfx": "PA_Pyromaniac_MovotolCocktail.grenadePrefab",
-          "areaVfx": "PA_Pyromaniac_MovotolCocktail.explosionPrefab@0.7"
+          "travelVfx": "fx_spellsmith_lobbed_travel",
+          "areaVfx": "fx_spellsmith_lobbed",
+          "sound": "sfx/ss_lob.wav"
         }
       ]
     },
     {
       "id": "Kindled",
       "name": "Kindled Shell",
-      "description": "Your next attack from another class is packed into a Spidermine that walks it to the enemy, keeping whatever your stance gives it.",
+      "description": "Your next attack from another class is packed into a Kindled Shell that walks it to the enemy, keeping whatever your stance gives it.",
       "duration": 4,
       "group": "load",
       "modifies": [
@@ -60,10 +62,12 @@
           "form": "monster",
           "creature": "PA_Engineer_Spidermine.characterPrefab",
           "summonName": "Kindled Shell",
+          "model": { "mesh": "models/items/ss_kindled_shell.glb", "scale": 1.4, "keepParticles": false, "bob": 0.03, "wobble": 5, "glow": "#FFB050", "glowStrength": 0.12, "deathVfx": "fx_spellsmith_shell" },
           "turns": 4,
           "radius": 1.5,
           "burstOn": "contact",
-          "areaVfx": "PA_Pyromaniac_MovotolCocktail.explosionPrefab@0.7",
+          "areaVfx": "fx_spellsmith_shell",
+          "sound": "sfx/ss_burst.wav",
           "consume": true
         }
       ]
@@ -71,7 +75,7 @@
     {
       "id": "Novaform",
       "name": "Nova Form",
-      "description": "Your attacks from other classes burst out of you to every side: wider, weaker, and more tiring.",
+      "description": "Your attacks from other classes fire out of you in every direction at once: wider, weaker, and more tiring.",
       "duration": 40,
       "group": "forge",
       "modifies": [
@@ -82,15 +86,14 @@
           "radius": 2.5,
           "power": 0.6,
           "stamina": 8,
-          "travelVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle@0.6",
-          "areaVfx": "PA_Pyromaniac_MovotolCocktail.explosionPrefab@0.8"
+          "sound": "sfx/ss_nova.wav"
         }
       ]
     },
     {
       "id": "Hammered",
       "name": "Hammer Form",
-      "description": "Your attacks from other classes stop being cast at all: they are swung, reach only the foe beside you, land with your weapon and shove.",
+      "description": "Your attacks from other classes are channelled through your weapon: they take its reach, accuracy and on-hit effects, keep their own damage, and shove.",
       "duration": 40,
       "group": "forge",
       "modifies": [
@@ -98,11 +101,11 @@
           "skills": "others",
           "name": "Hammered",
           "add": {
-            "melee": true,
-            "weapon": 0.5,
+            "channel": true,
             "knockback": 1
           },
-          "impactVfx": "PA_Prototype_Thunderclap.impactParticle@0.5"
+          "impactVfx": "fx_spellsmith_hammer",
+          "sound": "sfx/ss_hammer.wav"
         }
       ]
     },
@@ -124,7 +127,8 @@
             "resetOnKill": true
           },
           "consume": true,
-          "travelVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle@0.5"
+          "travelVfx": "fx_spellsmith_masterwork",
+          "sound": "sfx/ss_masterwork.wav"
         }
       ]
     },
@@ -143,7 +147,8 @@
           "radius": 1.1,
           "target": "floor",
           "consume": true,
-          "travelVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle@0.5"
+          "travelVfx": "fx_spellsmith_loose",
+          "sound": "sfx/ss_loose.wav"
         }
       ]
     }
@@ -158,16 +163,13 @@
       },
       "newAbility": {
         "name": "Ember Lance",
-        "icon": "SKILLTREE_Pyromaniac/1",
+        "icon": "spellsmith_t0.png",
         "description": "A plain lance of flame, for when you have nothing better to work on. No form of yours touches it: the Spellsmith's trade is your other classes' attacks.",
         "target": "enemy",
         "range": 6,
         "staminaCost": 8,
         "cooldown": 0,
-        "castVfx": "PA_Elementalist_MagmaBurst.castParticle@0.6",
-        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.7",
-        "travelVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle@0.5",
-        "sound": "event:/Abilities/Pyromaniac/Molotov_Explode",
+        "sound": "sfx/ss_lance.wav",
         "actions": [
           {
             "do": "damage",
@@ -199,13 +201,13 @@
       },
       "newAbility": {
         "name": "Bury the Charge",
-        "icon": "SKILLTREE_Security/1",
+        "icon": "spellsmith_t1.png",
         "description": "Load your next attack from another class into the deck plates, in whatever shape your stance gives it.",
         "target": "self",
         "instant": true,
         "staminaCost": 4,
         "cooldown": 3,
-        "castVfx": "PA_Engineer_Spidermine.PS_explode_shock@0.4",
+        "sound": "sfx/ss_bury.wav",
         "actions": [
           {
             "do": "effect",
@@ -224,9 +226,10 @@
       },
       "newAbility": {
         "name": "Lobbing Arm",
-        "icon": "SKILLTREE_Soldier/1",
+        "icon": "spellsmith_t2.png",
         "description": "Pull the arm back and throw your other classes' attacks instead of pointing them.",
         "target": "self",
+        "sound": "sfx/ss_lob.wav",
         "instant": true,
         "staminaCost": 0,
         "cooldown": 2,
@@ -248,9 +251,10 @@
       },
       "newAbility": {
         "name": "Kindled Shell",
-        "icon": "SKILLTREE_Engineer/2",
-        "description": "Pack your next attack from another class into a Spidermine, in whatever shape your stance gives it. It walks to the nearest enemy and goes up with the spell inside it.",
+        "icon": "spellsmith_t3.png",
+        "description": "Pack your next attack from another class into a little iron shell on legs, in whatever shape your stance gives it. It walks to the nearest enemy and goes up with the spell inside it.",
         "target": "self",
+        "sound": "sfx/ss_kindle.wav",
         "instant": true,
         "staminaCost": 6,
         "cooldown": 5,
@@ -272,9 +276,10 @@
       },
       "newAbility": {
         "name": "Nova Form",
-        "icon": "SKILLTREE_Elementalist/1",
+        "icon": "spellsmith_t4.png",
         "description": "Let your other classes' attacks out of every pore at once.",
         "target": "self",
+        "sound": "sfx/ss_nova.wav",
         "instant": true,
         "staminaCost": 0,
         "cooldown": 2,
@@ -297,7 +302,7 @@
       },
       "newAbility": {
         "name": "Cold Forge",
-        "icon": "SKILLTREE_Elementalist/0",
+        "icon": "spellsmith_t5.png",
         "type": "passive",
         "description": "When your health is below half, the forge runs cold: every attack from your other classes, whatever its shape, deals frost and chills instead of burning.",
         "modifies": [
@@ -309,7 +314,7 @@
               "#Burning": "#Chilled",
               "EFFECT_Fire": "EFFECT_Chill"
             },
-            "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.7",
+            "impactVfx": "fx_spellsmith_cold",
             "when": {
               "value": "health%",
               "below": 50
@@ -327,9 +332,10 @@
       },
       "newAbility": {
         "name": "Hammer Form",
-        "icon": "SKILLTREE_Smashmaster/0",
-        "description": "Beat your other classes' attacks into weapon swings.",
+        "icon": "spellsmith_t6.png",
+        "description": "Channel your other classes' attacks through your weapon: its reach, accuracy and on-hit effects, their own damage.",
         "target": "self",
+        "sound": "sfx/ss_hammer.wav",
         "instant": true,
         "staminaCost": 0,
         "cooldown": 2,
@@ -351,9 +357,10 @@
       },
       "newAbility": {
         "name": "Loose Spell",
-        "icon": "SKILLTREE_Psykonics/1",
+        "icon": "spellsmith_t7.png",
         "description": "Cut your next attack from another class free of you. It wanders the deck on its own and goes off on the first thing it meets.",
         "target": "self",
+        "sound": "sfx/ss_loose.wav",
         "instant": true,
         "staminaCost": 6,
         "cooldown": 6,
@@ -376,9 +383,10 @@
       },
       "newAbility": {
         "name": "Masterwork",
-        "icon": "SKILLTREE_Pyromaniac/3",
+        "icon": "spellsmith_t8.png",
         "description": "One perfect rewrite: the next attack from another class leaves your hands instantly and runs on from foe to foe.",
         "target": "self",
+        "sound": "sfx/ss_masterwork.wav",
         "instant": true,
         "staminaCost": 6,
         "cooldown": 9,

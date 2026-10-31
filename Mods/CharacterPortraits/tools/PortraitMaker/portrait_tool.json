@@ -1,0 +1,6 @@
+{
+  "name": "Portrait Maker",
+  "run": ["PortraitMaker.exe", "{job}"],
+  "gpu": false,
+  "minutes": 1
+}

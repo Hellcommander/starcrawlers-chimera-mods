@@ -3,8 +3,10 @@
 Any mod can have embedded audio this way, not only ours: every archive gets its own random key, wrapped with the
 loader's public key (RSA-2048, OAEP). Only the loader, which carries the matching private key, can open it, and no mod
 author needs anyone else's secret. The public key is in the repository (breachwork_public.xml); the private key
-(loader_private.b64) never is, and ClassLoader.csproj writes it into the dll at build. Sounds are stored as lossless FLAC,
-or as they are if that is smaller, each under AES-256-CBC with a key derived from the archive key and its path, and each
+(loader_private.b64) never is, and ClassLoader.csproj writes it into the dll at build. Sounds are stored as they are
+(PCM wav, so FMOD has nothing to decode at start: the whole set is ready about 0.2 s after the preload begins; --flac
+packs them as lossless FLAC instead, about half the size, at some 0.3 s of FMOD decoding), each under AES-256-CBC with
+a key derived from the archive key and its path, and each
 carries an HMAC-SHA256 tag, as does the index (which is itself encrypted, so the sound names don't sit in the clear): a
 changed or damaged archive is refused, not played as noise. Scrambling against copying and tools, not secrecy: someone
 who decompiles the loader can find the private key.
@@ -18,8 +20,9 @@ Format BWPK5, little-endian:
 
 Mod authors without Python: the mod manager does the same without FLAC: BreachworkModManager.exe --seal-audio <mod folder>.
 
-Usage: python sfx_archive.py <Mods folder or one mod folder> [--remove] [--verify]
+Usage: python sfx_archive.py <Mods folder or one mod folder> [--remove] [--verify] [--flac]
          --remove deletes the loose sounds it packed: for release copies, never for the working Mods folder.
+         --flac stores wavs as lossless FLAC (smaller archive, slower start); the default stores PCM as it is.
          --verify reads every archive back and checks every tag and every FLAC, the way the loader would.
        python sfx_archive.py keygen [--rotate]   once: the loader's key pair (private file kept out of the repository);
                                                  --rotate adds a new current key and keeps the old ones so old archives still open
@@ -145,9 +148,9 @@ def tag_entry(key, name, iv, enc):
     return hmac.new(key, name.encode("utf-8") + iv + enc, hashlib.sha256).digest()
 
 
-def stored(path):
+def stored(path, flac=False):
     raw = open(path, "rb").read()
-    if not path.lower().endswith(".wav"):
+    if not flac or not path.lower().endswith(".wav"):
         return raw
     x, sr = soundfile.read(path, dtype="int16", always_2d=True)
     out = io.BytesIO()
@@ -156,7 +159,7 @@ def stored(path):
     return flac if len(flac) < len(raw) else raw
 
 
-def pack(folder, names, out, pub, loader_id):
+def pack(folder, names, out, pub, loader_id, flac=False):
     key = os.urandom(32)
     wrapped = pub.encrypt(key, OAEP)
     blobs, raw_total = [], 0
@@ -164,7 +167,7 @@ def pack(folder, names, out, pub, loader_id):
         path = os.path.join(folder, name)
         raw_total += os.path.getsize(path)
         iv = os.urandom(16)
-        enc = aes_cbc(entry_key(key, name), iv, stored(path), True)
+        enc = aes_cbc(entry_key(key, name), iv, stored(path, flac), True)
         blobs.append((name.encode("utf-8"), iv, enc, tag_entry(key, name, iv, enc)))
     plain_index_len = 4 + sum(2 + len(n) + 8 + 4 + 16 + 32 for n, _, _, _ in blobs)
     enc_index_len = 16 + (plain_index_len // 16 + 1) * 16
@@ -245,13 +248,13 @@ def verify(path):
     return bad == 0
 
 
-def seal_mod(mod, remove, pub, loader_id):
+def seal_mod(mod, remove, pub, loader_id, flac=False):
     files = [f for f in glob.glob(os.path.join(mod, "**", "*"), recursive=True) if f.lower().endswith(KINDS)
              and not any(part in ("plugins", "bin", "obj") for part in os.path.relpath(f, mod).split(os.sep))]
     if not files:
         return None
     names = sorted(os.path.relpath(f, mod).replace(os.sep, "/") for f in files)
-    raw, size = pack(mod, names, os.path.join(mod, "sounds.pak"), pub, loader_id)
+    raw, size = pack(mod, names, os.path.join(mod, "sounds.pak"), pub, loader_id, flac)
     print(f"{os.path.basename(mod)}: {len(names)} sounds, {raw / 1048576:.1f} -> {size / 1048576:.1f} MB")
     if remove:
         for f in files:
@@ -266,6 +269,7 @@ def main():
     ap.add_argument("--remove", action="store_true")
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--rotate", action="store_true")
+    ap.add_argument("--flac", action="store_true", help="store wavs as FLAC (smaller, slower to start) instead of PCM as they are")
     args = ap.parse_args()
     if args.target == "keygen":
         return keygen(args.rotate)
@@ -281,7 +285,7 @@ def main():
     total = packed = 0
     mods = [args.target] if os.path.exists(os.path.join(args.target, "mod.json")) else sorted(d for d in glob.glob(os.path.join(args.target, "*")) if os.path.isdir(d))
     for mod in mods:
-        r = seal_mod(mod, args.remove, pub, loader_id)
+        r = seal_mod(mod, args.remove, pub, loader_id, args.flac)
         if r:
             total += r[0]; packed += r[1]
             if args.verify:

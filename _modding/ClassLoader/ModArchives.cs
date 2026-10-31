@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Diagnostics;
 using System.Threading;
 
 namespace SCClassLoader
@@ -55,6 +56,12 @@ namespace SCClassLoader
         internal static readonly ConcurrentQueue<(string path, byte[] data)> Ready = new ConcurrentQueue<(string, byte[])>();
         internal static volatile bool PreloadDone;
         internal static long PreloadMs;
+        internal static int PreloadThreads;
+        /// <summary>Runs from the moment the preload threads start, so the audio pipeline's stages can be timed against one clock.</summary>
+        internal static readonly Stopwatch PreloadClock = new Stopwatch();
+        private static long readTicks, macTicks, aesTicks;
+        /// <summary>Where the preload's time went, summed over its threads (so with several threads it can exceed PreloadMs).</summary>
+        internal static string PhaseReport => $"file read {readTicks * 1000 / Stopwatch.Frequency} ms, tag check {macTicks * 1000 / Stopwatch.Frequency} ms, decrypt {aesTicks * 1000 / Stopwatch.Frequency} ms over {PreloadThreads} thread(s), {Crypto.Backend}";
 
         internal static int Count { get { Load(); return index.Count; } }
         internal static IEnumerable<string> Paths { get { Load(); return index.Keys.ToList(); } }
@@ -104,14 +111,7 @@ namespace SCClassLoader
             if (index.Count > 0) Plugin.Log.LogInfo($"Sound archives: {index.Count} sounds");
         }
 
-        private static byte[] Hmac(byte[] key, params byte[][] parts)
-        {
-            using (var h = new HMACSHA256(key))
-            {
-                var all = parts.SelectMany(b => b).ToArray();
-                return h.ComputeHash(all);
-            }
-        }
+        private static byte[] Hmac(byte[] key, params byte[][] parts) => Crypto.Hmac(key, parts);
 
         private static bool SameBytes(byte[] a, byte[] b)
         {
@@ -121,14 +121,7 @@ namespace SCClassLoader
             return diff == 0;
         }
 
-        private static byte[] AesCbc(byte[] key, byte[] iv, byte[] data, bool encrypt)
-        {
-            using (var aes = Aes.Create())
-            {
-                aes.Mode = CipherMode.CBC; aes.Padding = PaddingMode.PKCS7; aes.Key = key; aes.IV = iv;
-                using (ICryptoTransform t = encrypt ? aes.CreateEncryptor() : aes.CreateDecryptor()) return t.TransformFinalBlock(data, 0, data.Length);
-            }
-        }
+        private static byte[] AesCbc(byte[] key, byte[] iv, byte[] data, bool encrypt) => Crypto.AesCbc(key, iv, data, encrypt);
 
         private static int ReadIndex(string pak, string folder, string modId, Dictionary<string, Entry> into)
         {
@@ -199,26 +192,37 @@ namespace SCClassLoader
             Load();
             var todo = index.Where(kv => !lazyPaks.Contains(kv.Value.pak)).GroupBy(kv => kv.Value.pak).ToList();
             if (todo.Count == 0) { PreloadDone = true; return; }
-            new Thread(() =>
-            {
-                var clock = System.Diagnostics.Stopwatch.StartNew();
-                foreach (var pak in todo)
+            // Largest archives first, on a few threads: the work is decryption, which scales with cores.
+            var queue = new ConcurrentQueue<IGrouping<string, KeyValuePair<string, Entry>>>(todo.OrderByDescending(g => g.Sum(kv => (long)kv.Value.size)));
+            int threads = Math.Min(todo.Count, Math.Max(1, Math.Min(Environment.ProcessorCount - 2, 4)));
+            PreloadThreads = threads;
+            int running = threads;
+            ModAudio.CaptureCore();
+            PreloadClock.Start();
+            var clock = PreloadClock;
+            for (int t = 0; t < threads; t++)
+                new Thread(() =>
                 {
-                    try
+                    while (queue.TryDequeue(out var pak))
                     {
-                        using (var f = new FileStream(pak.Key, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 18, FileOptions.SequentialScan))
-                            foreach (var kv in pak.OrderBy(k => k.Value.offset))
-                            {
-                                if (!includeLoose && File.Exists(kv.Key)) continue;
-                                try { Ready.Enqueue((kv.Key, ReadFrom(f, kv.Value))); }
-                                catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {kv.Value.name}: {e.Message}"); }
-                            }
+                        try
+                        {
+                            using (var f = new FileStream(pak.Key, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 18, FileOptions.SequentialScan))
+                                foreach (var kv in pak.OrderBy(k => k.Value.offset))
+                                {
+                                    if (!includeLoose && File.Exists(kv.Key)) continue;
+                                    try { byte[] bytes = ReadFrom(f, kv.Value); if (!ModAudio.Submit(kv.Key, bytes)) Ready.Enqueue((kv.Key, bytes)); }
+                                    catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {kv.Value.name}: {e.Message}"); }
+                                }
+                        }
+                        catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {e.Message}"); }
                     }
-                    catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {e.Message}"); }
-                }
-                PreloadMs = clock.ElapsedMilliseconds;
-                PreloadDone = true;
-            }) { IsBackground = true, Name = "Breachwork sound preload" }.Start();
+                    if (Interlocked.Decrement(ref running) == 0)
+                    {
+                        PreloadMs = clock.ElapsedMilliseconds;
+                        PreloadDone = true;
+                    }
+                }) { IsBackground = true, Name = "Breachwork sound preload " + t }.Start();
         }
 
         /// <summary>A sound's bytes right now, on the calling thread: for one asked for before the preload reached it, or from a pak read on demand.</summary>
@@ -240,12 +244,18 @@ namespace SCClassLoader
         private static byte[] ReadFrom(FileStream f, Entry e)
         {
             var data = new byte[e.size];
+            long t0 = Stopwatch.GetTimestamp();
             f.Seek(e.offset, SeekOrigin.Begin);
             for (int got = 0, n; got < data.Length; got += n)
                 if ((n = f.Read(data, got, data.Length - got)) <= 0) throw new EndOfStreamException();
+            long t1 = Stopwatch.GetTimestamp();
             if (e.tag != null && !SameBytes(e.tag, Hmac(e.key, Encoding.UTF8.GetBytes(e.name), e.iv, data)))
                 throw new InvalidDataException("tag does not match: changed or damaged, not played");
-            return AesCbc(Hmac(e.key, Encoding.UTF8.GetBytes(e.name.Replace('\\', '/').ToLowerInvariant())), e.iv, data, false);
+            long t2 = Stopwatch.GetTimestamp();
+            byte[] plain = AesCbc(Hmac(e.key, Encoding.UTF8.GetBytes(e.name.Replace('\\', '/').ToLowerInvariant())), e.iv, data, false);
+            long t3 = Stopwatch.GetTimestamp();
+            Interlocked.Add(ref readTicks, t1 - t0); Interlocked.Add(ref macTicks, t2 - t1); Interlocked.Add(ref aesTicks, t3 - t2);
+            return plain;
         }
     }
 }

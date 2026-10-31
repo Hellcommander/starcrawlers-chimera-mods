@@ -1,0 +1,9 @@
+{
+  "prompt": "the swing of a heavy arm throwing a hot iron shell, a whoosh and a metal clank",
+  "engine": "audio_materials + audio_bench",
+  "seed": 5,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.079
+}

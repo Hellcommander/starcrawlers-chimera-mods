@@ -17,7 +17,7 @@ namespace SCClassLoader
     internal static class HotbarPages
     {
         internal static ConfigEntry<int> PageCount;
-        internal static ConfigEntry<KeyCode> NextKey, PrevKey, NextKey2, PrevKey2;
+        internal static ConfigEntry<KeyCode> NextKey, PrevKey, NextKey2, PrevKey2, Key2Combo;
         internal static ConfigEntry<bool> MouseWheel;
 
         /// <summary>Devtest: a key that counts as pressed this frame.</summary>
@@ -38,6 +38,7 @@ namespace SCClassLoader
             PrevKey = cfg.Bind("Hotbar", "PrevPageKey", KeyCode.LeftBracket, "Shows the previous hotbar page.");
             NextKey2 = cfg.Bind("Hotbar", "NextPageKey2", KeyCode.PageDown, "A second key for the next hotbar page (not while the stash is open: there it flips stash pages).");
             PrevKey2 = cfg.Bind("Hotbar", "PrevPageKey2", KeyCode.PageUp, "A second key for the previous hotbar page (not while the stash is open: there it flips stash pages).");
+            Key2Combo = cfg.Bind("Hotbar", "PageKey2Combo", KeyCode.LeftControl, "Hold this with the second page keys (Ctrl+Page Up/Down by default). With Num Lock off the number pad sends Page Up/Down, so alone they would flip pages instead of stepping diagonally. None = they work alone.");
             MouseWheel = cfg.Bind("Hotbar", "MouseWheelOverHotbar", true, "Scrolling the mouse wheel over the hotbar flips pages.");
         }
 
@@ -153,7 +154,7 @@ namespace SCClassLoader
 
             public void OnPointerEnter(PointerEventData e) =>
                 Tooltip.instance?.Show_TinyTip($"Hotbar page {Current + 1} of {Count}",
-                    $"Left-click: next page. Right-click: previous.\n{PrevKey.Value} / {NextKey.Value}, {PrevKey2.Value} / {NextKey2.Value}{(MouseWheel.Value ? " or the mouse wheel over the hotbar" : "")} also flip pages.", null);
+                    $"Left-click: next page. Right-click: previous.\n{PrevKey.Value} / {NextKey.Value}, {Key2Name(PrevKey2.Value)} / {Key2Name(NextKey2.Value)}{(MouseWheel.Value ? " or the mouse wheel over the hotbar" : "")} also flip pages.", null);
 
             public void OnPointerExit(PointerEventData e) => Tooltip.instance?.Hide();
 
@@ -166,12 +167,25 @@ namespace SCClassLoader
                 if (Count < 2 || !CanSwap || Game.VENDOR || Game.EVENT) return;
                 int n = Count;
                 bool stashOpen = Menu_Stash.instance_stash != null && Menu_Stash.instance_stash.GetIsShowing(); // there Page Up/Down flip stash pages
-                if (Down(NextKey.Value) || (!stashOpen && Down(NextKey2.Value))) Show((Current + 1) % n);
-                else if (Down(PrevKey.Value) || (!stashOpen && Down(PrevKey2.Value))) Show((Current + n - 1) % n);
+                if (Down(NextKey.Value) || (!stashOpen && Key2Held && Down(NextKey2.Value))) Show((Current + 1) % n);
+                else if (Down(PrevKey.Value) || (!stashOpen && Key2Held && Down(PrevKey2.Value))) Show((Current + n - 1) % n);
                 else if (MouseWheel.Value && Input.mouseScrollDelta.y != 0f && Menu_HUD.instance.OverCheck_Hotbar())
                     Show(Input.mouseScrollDelta.y < 0f ? (Current + 1) % n : (Current + n - 1) % n);
             }
         }
+
+        /// <summary>The combo for the second page keys is held (or there is none); either Ctrl, Shift or Alt counts.</summary>
+        internal static bool Key2Held
+        {
+            get
+            {
+                KeyCode c = Key2Combo.Value;
+                if (c == KeyCode.None || Input.GetKey(c)) return true;
+                return (c == KeyCode.LeftControl && Input.GetKey(KeyCode.RightControl)) || (c == KeyCode.LeftShift && Input.GetKey(KeyCode.RightShift)) || (c == KeyCode.LeftAlt && Input.GetKey(KeyCode.RightAlt));
+            }
+        }
+
+        private static string Key2Name(KeyCode k) => Key2Combo.Value == KeyCode.None ? k.ToString() : $"{Keyboard.ShortcutName(new KeyboardShortcut(k, Key2Combo.Value))}";
 
         private static void BuildLabel(Menu_HUD hud)
         {

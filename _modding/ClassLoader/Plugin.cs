@@ -193,6 +193,7 @@ namespace SCClassLoader
             else if (dev == "perks") Instance.StartCoroutine(DevTestPerks.Run());
             else if (dev == "perks2") Instance.StartCoroutine(DevTestPerks2.Run());
             else if (dev == "menufps") Instance.StartCoroutine(DevTestMenuFps.Run());
+            else if (dev == "classsearch") Instance.StartCoroutine(DevTestClassSearch.Run());
             else if (dev == "names") Instance.StartCoroutine(DevTestNames.Run());
             else if (dev == "names2") Instance.StartCoroutine(DevTestNames.RunLoadList());
             else if (dev == "drones") Instance.StartCoroutine(DevTestDrones.Run());
@@ -262,6 +263,7 @@ namespace SCClassLoader
             else if (dev == "crew") Instance.StartCoroutine(DevTestCrew.Run());
             else if (dev == "commands") Instance.StartCoroutine(DevTestCommands.Run());
             else if (dev == "petwake") Instance.StartCoroutine(DevTestPetWake.Run());
+            else if (dev == "numpad") Instance.StartCoroutine(DevTestNumpad.Run());
             else if (dev == "minionmenu") Instance.StartCoroutine(DevTestMinionMenu.Run(null));
             else if (dev == "todos") Instance.StartCoroutine(DevTestTodos.Run(null));
             else if (dev == "todos2") Instance.StartCoroutine(DevTestTodos.RunFresh());
@@ -275,8 +277,14 @@ namespace SCClassLoader
             else if (dev == "settings") Instance.StartCoroutine(DevTestSettings.Run());
             else if (dev == "audiofast") Instance.StartCoroutine(DevTestAudioFallback.RunFast());
             else if (dev == "audiofallback") Instance.StartCoroutine(DevTestAudioFallback.Run());
+            else if (dev == "portraits") Instance.StartCoroutine(DevTestPortraits.Run());
+            else if (dev == "portraits2") Instance.StartCoroutine(DevTestPortraits.RunLoadScreen());
+            else if (dev == "portraitrender") Instance.StartCoroutine(DevTestPortraitTool.RunRender());
+            else if (dev == "portraittool") Instance.StartCoroutine(DevTestPortraitTool.Run());
+            else if (dev == "portraittool2") Instance.StartCoroutine(DevTestPortraitTool.RunAllowedSafely());
             else if (dev == "aiportrait") Instance.StartCoroutine(DevTestAiPortrait.Run());
             else if (dev == "aiportrait2") Instance.StartCoroutine(DevTestAiPortrait.RunAllowed());
+            else if (dev == "grid") Instance.StartCoroutine(DevTestGrid.Run());
             else if (dev == "realtime") Instance.StartCoroutine(DevTestRealtime.Run());
             else if (dev == "realtime2") Instance.StartCoroutine(DevTestRealtime.RunOn());
             else if (dev == "plugins") Instance.StartCoroutine(DevTestPlugins.Run());

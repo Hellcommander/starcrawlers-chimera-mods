@@ -490,7 +490,7 @@ namespace SCClassLoader
             else t.TakeDamage(ctx.caster, list, log, null, 0f);
             // a blade-and-spell hit is a weapon hit too: the weapon's own on-hit effects, its ammo's, and every
             // passive that answers weapon hits go off, the way a normal attack sets them off
-            if (a.weapon > 0f && ctx.caster is Player && ctx.source != null && Equipped.Hand(ctx, out _, out _) is Item_Weapon wpn && t != null)
+            if ((a.weapon > 0f || a.channel) && ctx.caster is Player && ctx.source != null && Equipped.Hand(ctx, out _, out _) is Item_Weapon wpn && t != null)
             {
                 try { ctx.source.OnHit(wpn, list, t); }
                 catch (Exception e) { Plugin.Log.LogWarning($"{ctx.sourceName}: weapon on-hit effects failed: {e.Message}"); }

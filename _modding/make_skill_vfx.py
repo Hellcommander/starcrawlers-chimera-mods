@@ -53,6 +53,7 @@ PAL = {
     "void": ("#E0B0FF", "#5010A0", "#A060FF", "#0E0818"), "water": ("#D0F4FF", "#2070D0", "#60B8F0", "#B0C8D8"),
     "smoke": ("#D0D0D8", "#606070", "#A0A0B0", "#30303A"), "earth": ("#E8D0A8", "#806040", "#D0A060", "#3A3024"),
     "ward": ("#F0FFFF", "#40C0E0", "#A0F0FF", "#1A2428"), "ember": ("#FFD8A0", "#E05010", "#FF9050", "#2A1E18"),
+    "spellforge": ("#FFE6B0", "#8A3CFF", "#FFB050", "#1E1826"), "coldforge": ("#E4F6FF", "#3A8CFF", "#9FD4FF", "#1A2230"),
 }
 
 rng = random.Random()
@@ -337,6 +338,9 @@ RECIPES = {
     "MOD_VoidHacker": ("glitch", {
         1: "travel=dart impact=zap", 2: "travel=swarm impact=glyph", 3: "cast=shield", 5: "impact=explode", 6: "cast=summon+zap"}),
     "MOD_ArcGunner": ("arc", {1: "travel=bullet impact=zap", 2: "travel=lance impact=zap", 3: "cast=shield+zap", 5: "travel=lance impact=heavy+zap"}),
+    "MOD_Spellsmith": ("spellforge", {
+        0: "cast=craft travel=lance impact=burst+embers", 1: "cast=arm", 2: "cast=craft", 3: "cast=summon+sparks", 4: "cast=power+sparks",
+        6: "cast=craft+ring", 7: "cast=blink+swirl", 8: "cast=power+stars"}),
     "MOD_FluxSavant": ("flux", {
         1: "travel=lance impact=zap", 2: "cast=craft+stars", 3: "travel=lob area=blastzone/acid", 4: "travel=bolt impact=web/frost",
         5: "area=explode", 6: "travel=dart impact=explode+shards"}),
@@ -390,6 +394,22 @@ ROLE_KEY = {"cast": "castVfx", "impact": "impactVfx", "travel": "travelVfx", "ar
 # Effects a class names by id in its own JSON (proc vfx, surge vfx, "vfx" actions, formVfx), beyond its skills' slots:
 # class -> {key: (recipe, radius)}; each becomes fx_<class>_<key>. A recipe is one role-less "arch+extra/palette".
 NAMED = {
+    # the shapes its forms put on other classes' attacks
+    "MOD_Spellsmith": {
+        "buried": ("explode+embers", 1.0), "lobbed_travel": ("lob", 1.0), "lobbed": ("blastzone+embers", 1.5), "shell": ("explode+shards", 1.5),
+        "hammer": ("heavy+sparks", 1.0), "masterwork": ("flare", 1.0),
+        "cold": ("frostburst+flash/coldforge", 1.0),
+        # the loose spell wandering the deck: steady streams only (played on a loop)
+        "loose": {"layers": [
+            {"texture": "soft", "count": 0, "rate": 14, "duration": 1.0, "life": [0.5, 0.7], "speed": [0, 0.05], "size": [0.4, 0.55],
+             "sizeCurve": "shrink", "color": "#FFB050", "color2": "#8A3CFF", "alpha": 0.4, "shape": "point"},
+            {"texture": "fx/spellsmith_bits.png", "grid": [2, 2], "randomFrame": True, "blend": "alpha", "count": 0, "rate": 18, "duration": 1.0,
+             "life": [0.6, 1.0], "speed": [0.1, 0.3], "size": [0.07, 0.14], "spin": [-200, 200], "color": "#FFE6B0", "color2": "#8A3CFF",
+             "shape": "sphere", "radius": 0.35, "orbit": 1.2},
+            {"texture": "mote", "count": 0, "rate": 40, "duration": 1.0, "life": [0.5, 0.9], "speed": [0, 0.15], "size": [0.05, 0.1],
+             "gravity": -0.3, "color": "#FFE6B0", "color2": "#8A3CFF", "alpha": 0.8, "shape": "sphere", "radius": 0.25},
+        ]},
+    },
     "MOD_Wildcaster": {
         # Unruly Casting's forms
         "form_area": ("nova+stars", 2.0), "form_line": ("lance", 5.0), "form_scatter": ("pop+sparks", 1.0),

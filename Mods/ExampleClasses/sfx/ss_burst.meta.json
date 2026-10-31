@@ -1,0 +1,9 @@
+{
+  "prompt": "a hot iron shell exploding, a sharp metal crack with a heavy boom and ringing shrapnel",
+  "engine": "audio_materials + audio_bench",
+  "seed": 4,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.112
+}

@@ -89,6 +89,37 @@ namespace SCClassLoader
 
         internal void Reprice() { if (rt?.spec.synergyPenalty != null) RefreshStats(); }
 
+        private const float ChannelGunRange = 10f;
+        private bool channelSwing, channelShot;
+
+        /// <summary>A shot through a gun rolls like the gun: ranged accuracy, distance and the weapon's accuracy tags.</summary>
+        public override int CalculateHitChance(Character t, Item_Weapon weapon) =>
+            base.CalculateHitChance(t, channelShot && weapon == null ? Equipped.Hand(rt?.spec?.equipped, Player.instance, out _) : weapon);
+
+        internal static System.Func<int, int> ChannelRoll; // devtests
+
+        /// <summary>A channelled skill is the weapon going off: its animation, shot and noise, and the ammo a shot uses.
+        /// An empty list, so the ammo's damage bonus stays out of the skill's own damage.</summary>
+        private IEnumerator FireWeapon(Character t, Vector3 aim)
+        {
+            Item_Weapon w = Equipped.Hand(rt.spec.equipped, Player.instance, out _);
+            if (w == null) { Ability.DoWeaponAttack(caster.GetHitFx().position, aim); yield break; }
+            Player_Control pc = Player_Control.instance;
+            pc.Handimator_R.SetTrigger(w.GetAnimTrigger());
+            Item_Equipment held = pc.GetWeapon_Mainhand();
+            if (held != null) yield return held.StartCoroutine(held.DoAttackFX(t));
+            yield return new WaitForSeconds(w.attackResolveDelay);
+            OnAttack(new List<DmgObj>(), w);
+            Ability.DoWeaponAttack(caster.GetHitFx().position, aim);
+        }
+
+        private bool ChannelShotHits(Character t)
+        {
+            int chance = CalculateHitChance(t, null);
+            int roll = ChannelRoll?.Invoke(chance) ?? Random.Range(1, 101);
+            return roll + t.effects.IncomingRangedAttack() <= chance;
+        }
+
         private void RefreshStats()
         {
             if (rt == null) return;
@@ -97,13 +128,22 @@ namespace SCClassLoader
             PerkSpec p = Perk;
             range = s.target == "self" ? 0f : s.range + (p?.rangeDelta ?? 0f) + (t?.range ?? 0f);
             if (t != null && t.adds.ContainsKey("melee")) range = Mathf.Min(range, 1.6f); // rewritten into a swing: it reaches the next tile
+            channelSwing = channelShot = false;
+            if (t != null && t.adds.ContainsKey("channel") && s.target != "self")
+            {
+                // weapons have no range of their own, only a kind: a blade reaches the next tile, a gun shoots
+                WEAPON_TYPE? kind = Equipped.Hand(s.equipped, Player.instance, out _)?.weaponType;
+                channelSwing = kind != WEAPON_TYPE.Ranged && kind != WEAPON_TYPE.HeavyRanged;
+                range = channelSwing ? 1.6f : ChannelGunRange;
+                channelShot = !channelSwing;
+            }
             int priced = SynergyLevels;
             staminaCost = Mathf.Max(0, s.staminaCost + (p?.staminaDelta ?? 0) + (t?.stamina ?? 0) + (s.stackCost == null ? t?.cost ?? 0 : PoolGone ? StackCostAmount : 0) + priced * (rt.spec.synergyPenalty?.stamina ?? 0));
             cooldown =Mathf.Max(0, s.cooldown + (p?.cooldownDelta ?? 0) + (t?.cooldown ?? 0) + priced * (rt.spec.synergyPenalty?.cooldown ?? 0));
             // a rewrite (SkillMods) can move the aim and the delivery: the game reads these when you click the icon
             isInstant = s.instant;
-            isMelee = s.melee;
-            isRanged = !s.melee && range > 1.6f;
+            isMelee = s.melee || channelSwing;
+            isRanged = !isMelee && range > 1.6f;
             targetStyle = isPassive ? TARGET_STYLE.None : s.target switch
             {
                 "enemy" => TARGET_STYLE.Character,
@@ -191,6 +231,7 @@ namespace SCClassLoader
                 else if (!Conjoined.Requirement(req)) return false;
             }
             if (!Equipped.Check(rt.spec.equipped, caster)) { _useFail = "equipped"; return false; }
+            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _)?.CanAttack() == false) return false; // no ammo, no shot
             if (rt.spec.usableWhen != null && !When.Check(rt.spec.usableWhen, MakeContext(), caster)) return false;
             return base.CanUse();
         }
@@ -332,7 +373,8 @@ namespace SCClassLoader
             ModAudio.Play(s.sound, caster.GetHitFx().position, rt.classId);
             if (caster == Player.instance) DashCam.Showcase(s.thirdPerson);
             Actions.SpawnVfx(s.castVfx, caster.GetHitFx().position);
-            if (s.melee && primary != null) Ability.DoWeaponAttack(caster, primary);
+            if (channelSwing || channelShot) yield return FireWeapon(primary, primary != null ? primary.GetHitFx().position : center + Vector3.up * 0.3f);
+            else if (s.melee && primary != null) Ability.DoWeaponAttack(caster, primary);
             Vector3 from = caster.GetMover().GetCurrentNavNode().transform.position;
             bool shaped = Shapes.Is(s.shape);
             if (shaped && !string.IsNullOrEmpty(s.travelVfx))
@@ -361,6 +403,15 @@ namespace SCClassLoader
             if (primary != null && s.dodgeable && DodgeCheck(caster, primary))
             {
                 primary.OnDodge(caster);
+                SkillMods.Redraw(this);
+                RefreshStats();
+                yield break;
+            }
+
+            if (primary != null && channelShot && !ChannelShotHits(primary))
+            {
+                if (HUD.instance != null) HUD.instance.MakeFct(T("General/Miss"), primary.GetHitFx().position, false);
+                OnMiss(Equipped.Hand(s.equipped, Player.instance, out _), new List<DmgObj>(), primary);
                 SkillMods.Redraw(this);
                 RefreshStats();
                 yield break;

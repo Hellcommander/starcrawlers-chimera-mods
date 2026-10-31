@@ -36,7 +36,7 @@ A code plugin (a `.dll` the loader runs from a mod's `plugins/` folder) or a Lua
 written by someone else is its author's own work, not part of the Project. Its author decides its terms, and this
 license doesn't apply to it. Anything of ours shipped along with one stays under this license.
 
-The example code in `Mods/ExamplePlugin/src/`, `Mods/RealtimeWithPause/src/`, `Mods/CharacterPortraits/src/` and
+The example code in `Mods/ExamplePlugin/src/`, `Mods/RealtimeWithPause/src/`, `Mods/CharacterPortraits/src/`, `Mods/CharacterPortraits/toolsrc/` and
 `Mods/ExampleScript/scripts/` is free to use, copy and change for any purpose, with no conditions and no credit needed.
 
 We don't review plugins or scripts and don't stand behind them.

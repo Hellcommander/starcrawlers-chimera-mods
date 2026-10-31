@@ -11,7 +11,7 @@ namespace SCClassLoader
 {
     /// <summary>
     /// Saved builds: the creation screen's custom preset button keeps a list instead of one build. Right-click it to
-    /// define a build as before (it's added to the list, or replaces the one with the same name); left-click opens
+    /// define a build from the current pick (it's added to the list, or replaces the one with the same name); left-click opens
     /// the list to load or delete one. Stored in SCCL_Builds.json next to Game.scc. The vanilla single preset is
     /// imported once and is kept in step with whatever build was last loaded or saved.
     /// </summary>
@@ -94,6 +94,22 @@ namespace SCClassLoader
 
         private static bool loading;
 
+        /// <summary>Vanilla's define mode, minus the wipe: the classes already picked stay picked and become the build.</summary>
+        internal static void Define(Menu_Creation mc)
+        {
+            var tr = Traverse.Create(mc);
+            if (tr.Field("isRandomizingSkills").GetValue<bool>()) return;
+            tr.Field("isDefiningPreset").SetValue(true);
+            mc.confirmPreset.gameObject.SetActive(true);
+            mc.beginButton.gameObject.SetActive(false);
+            mc.inputBaseText.SetTerm("UI/Enter Preset Name");
+            SkillSelect first = mc.selectedSkills.FirstOrDefault(s => s != null);
+            mc.presetTip.SetActive(first == null);
+            if (first != null) mc.presetImage.sprite = first.skillTree.icon;
+            AudioManager.PlayEvent("event:/UI/UI_Button_Keystroke", mc.transform.position);
+            if (!string.IsNullOrEmpty(mc.nameInput.text)) mc.PresetNameCheck(); // a name typed beforehand counts
+        }
+
         // ---- the list -----------------------------------------------------------------------------------------
 
         internal static bool ListOpen => listPanel != null;
@@ -163,7 +179,7 @@ namespace SCClassLoader
                 if (presetName != "customchar") { CloseList(); return true; }
                 if (loading) return true;
                 bool define = Input.GetMouseButtonDown(1) || Keybindings.GetInstance().GetButton("Square");
-                if (define) { CloseList(); return true; }
+                if (define) { CloseList(); Define(__instance); return false; }
                 try { OpenList(__instance); }
                 catch (Exception e) { Plugin.Log.LogError("Saved builds list: " + e); return true; }
                 return false;
@@ -183,6 +199,17 @@ namespace SCClassLoader
                 // Vanilla leaves old keys behind when the new build has fewer classes.
                 for (int i = __state.Count; i < 7; i++) PlayerPrefs.SetString("CustomPresetChar_" + i, "");
                 PlayerPrefs.Save();
+            }
+        }
+
+        /// <summary>Cancelling define mode with Esc: vanilla never brings the begin button back, which strands a kept pick.</summary>
+        [HarmonyPatch(typeof(Menu_Creation), "Update")]
+        private static class Patch_CancelDefine
+        {
+            private static void Postfix(Menu_Creation __instance)
+            {
+                if (__instance.confirmPreset.gameObject.activeSelf || __instance.beginButton.gameObject.activeSelf) return;
+                __instance.beginButton.gameObject.SetActive(true);
             }
         }
 

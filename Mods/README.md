@@ -317,7 +317,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   on you for the next cast) or a rune in a socket can rewrite how another skill is delivered, what it is made of and
   what it does. The skill's tooltip shows every rewrite in force ("Reshaped by ..."), the hotbar icon aims the new
   way when clicked, and the cast runs with the skill's own scaling (its damage, rank, perk and your stats).
-  `Mods/ExampleClasses/spellsmith.json` turns your other classes' attacks into traps, grenades, walking bombs, novas, weapon swings, loose drifters and chains, with one-shot loads stacking on top of stances; `SCCL_DEVTEST=skillmods` plays it.
+  `Mods/ExampleClasses/spellsmith.json` turns your other classes' attacks into traps, grenades, walking bombs, novas, attacks channelled through your weapon, loose drifters and chains, with one-shot loads stacking on top of stances; `SCCL_DEVTEST=skillmods` plays it.
   ```jsonc
   // on a passive or active ability ("while you know it"), or on an effect ("while it is on you"):
   "modifies": [
@@ -353,7 +353,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     - `line` / `cone`: that shape from you toward the aim point (`width`, `angle`). `area`: a burst around the target.
       `chain`: hops on (`jumps`, default 1). `scatter`: the aimed foe and `jumps` (default 2) random others in reach.
   - **`add` keys**: skill traits `resetOnKill`, `instant`, `dodgeable`, `melee`, `command`, `reactionSlots`, `pierce`
-    (`true`: a line through everyone; a number: flies on through that many past the first), `jumps`; damage traits on every damage action `lifesteal` (0.3), `trueDamage`, `weapon` (0.5 of a
+    (`true`: a line through everyone; a number: flies on through that many past the first), `jumps`; damage traits on every damage action `lifesteal` (0.3), `trueDamage`, `channel` (`true`: the weapon really fires once per cast, with its animation, effects, noise and ammo, and a gun with no rounds can't cast it; sent through your weapon, the skill keeps its own damage but takes the weapon's reach, a gun's accuracy roll and the weapon's and ammo's on-hit effects; a melee weapon swings at the next tile, a gun reaches 10), `weapon` (0.5 of a
     weapon roll), `scale` ("Smarts", joined to what is there), `scaleMult`, `perRank`, `bonus` (+n to min and max),
     `chance`, `levelCap`; on each target `stun`, `knockback`, `pull`, `blind`, `silence`, `taunt` (turns or tiles),
     `exhaust`, `purge` (an effect id), `effect` (an id or a list, `effectTurns`), `execute` (%), `hazard`, `swap`;
@@ -760,17 +760,28 @@ Any mod file can be written as `.xml` instead of `.json`: a class, a library, or
 
 ## Character pictures
 
-Put `.png` or `.jpg` files in the `Portraits` folder in the game folder (it appears on first use). Any size works: pictures are cut to a square from near the top. Click the picture frame on the creation screen, or above the character sheet, to pick one or to open the folder.
+Your own pictures always work, with or without the mod below. Click the picture frame on the creation screen, or above the character sheet, and press **Load picture** to choose a `.png` or `.jpg` from anywhere on your computer: it's copied into the `Portraits` folder in the game folder and goes on your character. You can also put files in that folder yourself and pick them from the same window. Any size works: pictures are cut to a square from near the top.
 
-The **AI Character Portraits** mod (`Mods/CharacterPortraits`, off by default) adds **Paint Portrait** to the picker: it sends your classes, skills, gear (both weapon sets), current effects and any transformation to the AI asset toolkit, which paints a picture and puts it on your character. It only works with that toolkit on your computer and an NVIDIA GPU (CUDA). Its settings are under **Options > Mod Settings**, or in `BepInEx/config/arendeth.starcrawlers.classloader.cfg` under `[CharacterPortraits]`: `ToolkitFolder`, `Python`, `Appearance`, `IncludeEffects`, `PaintingFrameRate` and `LowTexturesWhilePainting`.
+The **Character Portrait Tools** mod (`Mods/CharacterPortraits`, off by default) adds **Make Portrait** to the picker: it sends your classes, skills, gear (both weapon sets), current effects and any transformation to a portrait tool, and the finished picture lands in the `Portraits` folder and on your character. Pick the tool with `Tool` under **Options > Mod Settings**, or in `BepInEx/config/arendeth.starcrawlers.classloader.cfg` under `[CharacterPortraits]`. The other settings there are `Python`, `Appearance`, `IncludeEffects`, `PaintingFrameRate` and `LowTexturesWhilePainting`.
 
-Your picture shows above the character sheet and as the save's thumbnail on the load screen, not on the HUD during play. Each Conjoined body has its own. The save keeps only the file name, so a picture you delete just disappears. `SCCL_DEVTEST=portraits,portraits2` checks it in game.
+- `Tool = GameRender` (the default) has the game render it: your class's crawler body in a ready pose with the first-person models of your weapons, shield and stowed weapon (gripped where the game holds them, plants at the end of their idle, mouths facing forward), plus the 3D model of your headgear (glasses, masks and similar are left out for now, because they don't fit the helmet), armour in its real colour and tentacle arms if you have them, with the room you're in blurred behind. It's shot on the GPU in one frame, with no AI model and nothing to download, and the picture is saved in `Portraits` and put on your character. It needs a running game, not the creation screen. The body is the class's crawler, so `Appearance` and other mutations don't change it.
+- `Tool = PortraitMaker` uses the **Portrait Maker**, an optional download: unpack `Breachwork-PortraitMaker-<version>.7z` over the game folder. It draws a stylised picture from code in a moment and needs no GPU, AI or install. Each press rolls a new face; classes set the room's light, your gear's own icons and colours what's worn and held, mutations such as tentacle arms the body, and `Appearance` words the looks ("a woman with long red hair").
+- `Tool = <toolkit>\Tools\StarCrawlersChimera` uses the AI asset toolkit, which paints the picture on an NVIDIA GPU (CUDA). While it paints, the game frees GPU memory and caps its frame rate.
+- Any other tool works too: a folder name in `Mods/CharacterPortraits/tools`, or a full path. The folder needs a `portrait_tool.json`, which is how the mod knows how to run it:
+
+```json
+{ "name": "My Tool", "run": ["mytool.exe", "{job}"], "gpu": false, "minutes": 1 }
+```
+
+`run` is the command; its first word is a file in the tool's folder or a program on the PATH, `{job}` is the job file and `{python}` the `Python` setting. The job file is json: `name`, `level`, `appearance`, `output`, `classes`, `abilities`, `gear`, and optionally `effects` and `form`. Each `gear` entry has its `slot`, `name` and `description`, plus `icon` (the path of a png of the item's own game icon) and `colors` (that icon's main colours, the commonest first). Write the picture to `output`, and exit with 0; on failure exit with anything else, and the last line of `<job>.log` next to the job file is shown to the player. `gpu: true` turns on the two GPU-sharing settings. `minutes` is how long it may take. `Mods/CharacterPortraits/toolsrc/PortraitMaker` is an example, free for any use.
+
+Your picture shows above the character sheet only: not on the HUD during play, and the load screen keeps its save screenshots. Each Conjoined body has its own. The save keeps only the file name, so a picture you delete just disappears. `SCCL_DEVTEST=portraits,portraits2` checks it in game.
 
 ## Diagonal steps
 
 `[Movement]` in the config file. You can step diagonally:
 - **Keyboard:** hold forward or back together with a strafe key (W+Q, W+E, S+Q, S+E with the default keys). A fresh key press waits 0.06 s (`ComboWindow`) for its partner so the pair registers as a diagonal.
-- **Numpad:** 7, 9, 1 and 3 (`NumpadDiagonals`).
+- **Numpad:** 7, 9, 1 and 3 (`NumpadDiagonals`). With Num Lock off they arrive as Home, Page Up, End and Page Down, so those keys step too (not while the stash is open).
 - **Controller:** push the stick on a diagonal.
 
 It's a normal step to the tile across the corner: it animates, takes a tile and sets off whatever is on the floor.
@@ -866,15 +877,18 @@ plays them from there with no change to any `"sound"` value. Run
 
     BreachworkModManager.exe --seal-audio Mods\YourMod [--remove-loose]
 
-(or, with Python and lossless FLAC packing, `python _modding/audio/sfx_archive.py Mods/YourMod`). Every archive gets its own
+(or, with Python, `python _modding/audio/sfx_archive.py Mods/YourMod`; its `--flac` packs the wavs losslessly at half the
+size, at the price of FMOD decoding them at start). Every archive gets its own
 random key, wrapped with the loader's public key (`_modding/audio/breachwork_public.xml`, in the repository), so only the
 Breachwork Loader can open it and you never need anyone's secret; the loader carries the private key, which is not in the
 repository, and a loader built without it skips archives and plays the fallbacks below. Every sound and the index (which is
 itself encrypted, so the file names are not in the clear) carry an authentication tag: a changed or damaged archive is
 refused and logged, never played as noise, and `python _modding/audio/sfx_archive.py verify Mods/YourMod/sounds.pak` checks
 one the way the loader does. A loose file wins over the archive, so you can still test a new sound by dropping it in; remove
-the loose files from the copy you share. Archives are read and decrypted in the background as the game starts and FMOD
-decodes them into ready samples off the main thread, so playing a sound does no file work and no decoding; a mod with a very
+the loose files from the copy you share. Archives are read and decrypted in the background as the game starts (on several
+threads, with the processor's AES instructions where Windows offers them) and handed straight to FMOD as PCM, so the
+bundled mods' sounds are all ready about 0.2 s after the preload starts and playing one does no file work and no
+decoding; a mod with a very
 large sound set can put `"soundsPreload": false` in its `mod.json` to have its archive read one sound at a time on demand
 instead. Someone who decompiles the loader can find the private key: this keeps sounds from being copied out casually, not
 from a determined person. `SCCL_DEVTEST=audiofast` measures what a play costs; `audiofallback` also checks the tamper refusals.
@@ -1325,7 +1339,7 @@ autosave on, `[Saving] AutosaveOnFloorChange = true` also saves every time you t
 The hotbar has pages (4 by default) so you can keep more skills and items within reach. "Page 1/4" sits on the
 hotbar's top-left corner.
 
-- Flip pages with `]` / `[` or Page Down / Page Up, the mouse wheel over the hotbar, or by clicking the page label
+- Flip pages with `]` / `[` or Ctrl+Page Down / Ctrl+Page Up (`PageKey2Combo`; alone, those keys are the number pad's diagonals with Num Lock off), the mouse wheel over the hotbar, or by clicking the page label
   (left = next, right = previous). Pages don't flip while you are aiming an ability. While the stash is open, Page
   Up/Down flip stash pages instead.
 - Each page keeps its own layout; set it up the normal way (drag skills and items onto the slots).

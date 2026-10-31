@@ -4,13 +4,14 @@
 
 **Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM**
 
-The 126 sounds in the `sfx/` folders are made from Noise Alchemy material only. 91 were rendered new with our own
+The sounds in the `sfx/` folders are made from Noise Alchemy material only, apart from the synthesized ones named below. 91 were rendered new with our own
 asset tool (Stable Audio 3), which used clips from the packs below as reference material: every render starts from
 noise level 0.87, so the result is a new, unique sound, never a light edit of a clip (each one's correlation with its
 references is at most 0.081). 34 were rebuilt from their Noise Alchemy reference clips by plain signal
 processing, with no AI (pitch shift, layering, random all-pass, EQ; correlation with any clip at most 0.25), because
-their first renders had also leaned on a pack that bars AI tools, and one (`vasculist_spike`) is synthesized from material
-parameters by the asset toolkit's bench with no clip and no model behind it; each one's `.meta.json` says which it is. Noise
+their first renders had also leaned on a pack that bars AI tools, and one (`vasculist_spike`) and the Spellsmith's nine (`ss_*`) are synthesized from
+material parameters by the asset toolkit's bench with no clip and no model behind them (the read-only listener only picks,
+among seeded takes, the one that reads most clearly as its own sound and least like its siblings); each one's `.meta.json` says which it is. Noise
 Alchemy's terms allow transformed sounds in commercial projects, so all of these are free to share, adapt and use in
 your own work under Mods/LICENSE.md, but not to sell as sounds or audio packs. Credit Noise Alchemy as above wherever
 you use them.

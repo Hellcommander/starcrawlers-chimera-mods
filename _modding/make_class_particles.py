@@ -53,6 +53,7 @@ THEMES = {
                       "a single shard of dark violet shadow glass"),
     "splice_host": ("a burst of mutagen, bubbling green goo spattering outward", "a single sharp bony spine dripping green mutagen"),
     "void_hacker": ("a glitch burst, a blocky cluster of corrupted pixels and scanlines", "a single blocky glitched data fragment, a magenta and cyan pixel cube"),
+    "spellsmith": ("a round burst of molten gold droplets and violet sparks flung outward from one white-hot centre, as when a red-hot billet is struck", "a single small curled flake of glowing hot forge scale, gold edged and violet"),
     "arc_gunner": ("a forked lightning strike flash, branching bolts from a bright point", "a single small glowing capacitor cell"),
     "flux_savant": ("a burst of retuned energy, a prism splitting light into rune-like rays", "a single small faceted rune crystal glowing violet and green"),
     "blade_juggler": ("a burst of spinning knife glints, crescent slashes of light", "a single small throwing knife"),

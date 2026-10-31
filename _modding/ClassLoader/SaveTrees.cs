@@ -17,34 +17,24 @@ namespace SCClassLoader
     internal static class SaveTrees
     {
         private const float Icon = 44f, Gap = 5f;
-        private static readonly Dictionary<string, (DateTime when, string[] trees, int[] ranks, string portrait)> cache = new Dictionary<string, (DateTime, string[], int[], string)>();
+        private static readonly Dictionary<string, (DateTime when, string[] trees, int[] ranks)> cache = new Dictionary<string, (DateTime, string[], int[])>();
 
         /// <summary>The save's tree ids and ranks (rank 0 = first tier), read straight from the file.</summary>
         internal static (string[] trees, int[] ranks) Read(string path)
         {
-            var e = Entry(path);
-            return (e.trees, e.ranks);
-        }
-
-        /// <summary>The picture the save's character uses, or null.</summary>
-        internal static string Portrait(string path) => Entry(path).portrait;
-
-        private static (DateTime when, string[] trees, int[] ranks, string portrait) Entry(string path)
-        {
             DateTime when = File.GetLastWriteTimeUtc(path);
-            if (cache.TryGetValue(path, out var hit) && hit.when == when) return hit;
-            string[] trees = null; int[] ranks = null; string portrait = null;
+            if (cache.TryGetValue(path, out var hit) && hit.when == when) return (hit.trees, hit.ranks);
+            string[] trees = null; int[] ranks = null;
             using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 if (new BinaryFormatter().Deserialize(fs) is SaveData sd && sd.iSaveData is SaveGameInfo info && info.playerData is PlayerSaveInfo ps)
                 {
                     trees = ps.skillTrees;
                     ranks = ps.skillTreeRanks;
-                    if (info.levelData is LevelManagerSaveInfo lv && lv.levels != null)
-                        portrait = lv.levels.OfType<Dictionary<string, object>>().FirstOrDefault()?.TryGetValue(Portraits.Key, out object p) == true ? p as string : null;
                 }
             }
-            return cache[path] = (when, trees, ranks, portrait);
+            cache[path] = (when, trees, ranks);
+            return (trees, ranks);
         }
 
         private static void Add(SaveWidget w)
@@ -108,7 +98,7 @@ namespace SCClassLoader
         {
             foreach (SaveWidget w in menu.saveWidgets)
             {
-                try { Add(w); Portraits.OnSaveWidget(w); }
+                try { Add(w); }
                 catch (Exception e) { Plugin.Log.LogWarning($"Save trees for {w?.path}: {e}"); }
             }
         }

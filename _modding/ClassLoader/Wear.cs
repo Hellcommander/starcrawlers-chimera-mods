@@ -49,7 +49,7 @@ namespace SCClassLoader
             _ => new string[0],
         };
 
-        internal static Transform Bone(Character c, string name)
+        internal static Transform Bone(Component c, string name)
         {
             if (!Bones.TryGetValue(name, out var b)) return null;
             Animator an = c.GetComponentInChildren<Animator>(true);
@@ -69,7 +69,7 @@ namespace SCClassLoader
         }
 
         /// <summary>The crawler's own weapon models (they go when an item weapon comes in).</summary>
-        private static List<Renderer> OwnWeapons(Character c)
+        internal static List<Renderer> OwnWeapons(Component c)
         {
             var hands = new[] { Bone(c, "LeftHand"), Bone(c, "RightHand") }.Where(h => h != null).ToList();
             return c.GetComponentsInChildren<Renderer>(true)
@@ -83,13 +83,13 @@ namespace SCClassLoader
         private class WearMark : MonoBehaviour { public bool hidOwn; }
 
         /// <summary>Re-dresses a crawler from its gear.</summary>
-        internal static void Dress(Character c, Crew.Member m) => Dress(c, slot => Crew.Peek(m, slot), m.KindId, m.Name);
+        internal static void Dress(Component c, Crew.Member m) => Dress(c, slot => Crew.Peek(m, slot), m.KindId, m.Name);
 
         /// <summary>
         /// Re-dresses any body from a gear lookup (crew, Conjoined bodies, ...). peek returns a fresh Item per slot or
         /// null; Dress destroys each one it gets. kindId matches a wear entry's "kinds".
         /// </summary>
-        internal static void Dress(Character c, System.Func<EQUIP_TYPE, Item> peek, string kindId, string who)
+        internal static void Dress(Component c, System.Func<EQUIP_TYPE, Item> peek, string kindId, string who)
         {
             if (c == null) return;
             foreach (WearMark old in c.GetComponentsInChildren<WearMark>(true).ToList()) Object.Destroy(old.gameObject);
@@ -116,7 +116,7 @@ namespace SCClassLoader
             }
         }
 
-        private static float BodyHeight(Character c)
+        private static float BodyHeight(Component c)
         {
             var rs = c.GetComponentsInChildren<SkinnedMeshRenderer>(true).Where(r => r.bones.Length > 2).ToList();
             if (rs.Count == 0) return 1.8f;
@@ -186,7 +186,7 @@ namespace SCClassLoader
         private static Vector3 Axis(int i) => i == 0 ? Vector3.right : i == 1 ? Vector3.up : Vector3.forward;
 
         /// <summary>Stands a floor model up on a bone: thinnest side forward, longest side up (along the foot for boots and gloves).</summary>
-        private static GameObject Fit(Character c, GameObject src, Transform bone, EQUIP_TYPE slot, float height, bool mirror, float share = -1f, float turn = 0f, bool flip = false)
+        private static GameObject Fit(Component c, GameObject src, Transform bone, EQUIP_TYPE slot, float height, bool mirror, float share = -1f, float turn = 0f, bool flip = false)
         {
             if (bone == null || src == null) return null;
             GameObject pivot = Copy(src, bone);
@@ -221,6 +221,63 @@ namespace SCClassLoader
             return pivot;
         }
 
+        /// <summary>
+        /// A floor model posed by hand for a picture: centred on position, its longest side at size. Its thinnest side faces
+        /// rotation's forward, and its longest side runs along rotation's up, or its right when across (glasses).
+        /// </summary>
+        internal static GameObject Placed(GameObject src, Transform parent, Vector3 position, Quaternion rotation, float size, bool across = false)
+        {
+            GameObject pivot = Copy(src, parent);
+            if (pivot == null) return null;
+            pivot.transform.localRotation = Quaternion.identity;
+            pivot.transform.localScale = Vector3.one;
+            Transform holder = new GameObject(Tag + "_fit").transform;
+            holder.SetParent(pivot.transform, false);
+            foreach (Transform part in pivot.transform.Cast<Transform>().Where(t => t != holder).ToList()) part.SetParent(holder, true);
+            Bounds lb = LocalBounds(pivot);
+            float[] ext = { lb.size.x, lb.size.y, lb.size.z };
+            int[] order = new[] { 0, 1, 2 }.OrderBy(i => ext[i]).ToArray();
+            Quaternion local = Quaternion.Inverse(Quaternion.LookRotation(Axis(order[0]), Axis(across ? order[1] : order[2])));
+            holder.localPosition = -(local * lb.center);
+            holder.localRotation = local;
+            pivot.transform.rotation = rotation;
+            float k = size / Mathf.Max(1e-4f, ext[order[2]]);
+            Vector3 ls = parent.lossyScale;
+            pivot.transform.localScale = new Vector3(k / NZ(ls.x), k / NZ(ls.y), k / NZ(ls.z));
+            pivot.transform.position = position;
+            return pivot;
+        }
+
+        /// <summary>
+        /// A held model with its grip on position and the rest running away from it along rotation's up: Placed, but hung from
+        /// a point on the model (in src's space) rather than its middle, at least gripShare of the way along it.
+        /// </summary>
+        internal static GameObject Gripped(GameObject src, Vector3 grip, float gripShare, Transform parent, Vector3 position, Quaternion rotation, float size)
+        {
+            GameObject pivot = Copy(src, parent);
+            if (pivot == null) return null;
+            pivot.transform.localRotation = Quaternion.identity;
+            pivot.transform.localScale = Vector3.one;
+            Transform holder = new GameObject(Tag + "_fit").transform;
+            holder.SetParent(pivot.transform, false);
+            foreach (Transform part in pivot.transform.Cast<Transform>().Where(t => t != holder).ToList()) part.SetParent(holder, true);
+            Bounds lb = LocalBounds(pivot);
+            float[] ext = { lb.size.x, lb.size.y, lb.size.z };
+            int[] order = new[] { 0, 1, 2 }.OrderBy(i => ext[i]).ToArray();
+            Vector3 along = Axis(order[2]), hold = lb.ClosestPoint(grip);
+            if (Vector3.Dot(lb.center - hold, along) < 0f) along = -along;
+            hold += along * Mathf.Max(0f, ext[order[2]] * (gripShare - 0.5f) - Vector3.Dot(hold - lb.center, along)); // no holding a rifle by the butt
+            Quaternion local = Quaternion.Inverse(Quaternion.LookRotation(Axis(order[0]), along));
+            holder.localPosition = -(local * hold);
+            holder.localRotation = local;
+            pivot.transform.rotation = rotation;
+            float k = size / Mathf.Max(1e-4f, ext[order[2]]);
+            Vector3 ls = parent.lossyScale;
+            pivot.transform.localScale = new Vector3(k / NZ(ls.x), k / NZ(ls.y), k / NZ(ls.z));
+            pivot.transform.position = position;
+            return pivot;
+        }
+
         /// <summary>Where on the bone the piece sits (heads are above the neck joint, legplates below the hips).</summary>
         private static Vector3 SlotNudge(EQUIP_TYPE slot, Transform body, float h) => slot switch
         {
@@ -231,7 +288,7 @@ namespace SCClassLoader
         };
 
         /// <summary>An item weapon in place of the crawler's own: same parent, same spot, same length.</summary>
-        private static void DressWeapon(Character c, Item it, ItemDef def, List<Renderer> own)
+        private static void DressWeapon(Component c, Item it, ItemDef def, List<Renderer> own)
         {
             Renderer main = own.OrderByDescending(r => r.bounds.size.magnitude).FirstOrDefault();
             Transform hand = main != null ? main.transform : Bone(c, "RightHand");
@@ -286,7 +343,7 @@ namespace SCClassLoader
         /// Floor models of chestpieces and legplates are flat, folded props that read as panels on a body, so they
         /// aren't hung on: where the body has its own torso or leg mesh, that part takes the item's rarity colour.
         /// </summary>
-        private static void Tint(Character c, EQUIP_TYPE slot, Item it)
+        private static void Tint(Component c, EQUIP_TYPE slot, Item it)
         {
             string[] keys = slot == EQUIP_TYPE.Torso ? new[] { "torso", "body", "chest", "shoulder" } : new[] { "leg" };
             Color col = ItemDatabase.instance.GetRarityColor(it.rarity);
@@ -300,7 +357,20 @@ namespace SCClassLoader
             }
         }
 
-        private static void Untint(Character c)
+        /// <summary>Colours the body part as the item really looks, for a picture of a body that's about to go.</summary>
+        internal static void Paint(Component c, EQUIP_TYPE slot, Color col)
+        {
+            string[] keys = slot == EQUIP_TYPE.Torso ? new[] { "torso", "body", "chest", "shoulder", "pauldron" } : new[] { "leg" };
+            foreach (SkinnedMeshRenderer r in c.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                string n = r.name.ToLowerInvariant();
+                tinted.Remove(r);
+                if (!keys.Any(n.Contains) || (slot == EQUIP_TYPE.Torso && n.Contains("leg"))) continue;
+                foreach (Material m in r.materials) if (m.HasProperty("_Color")) m.color = Color.Lerp(Color.white, col, 0.85f);
+            }
+        }
+
+        private static void Untint(Component c)
         {
             foreach (SkinnedMeshRenderer r in c.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
@@ -357,7 +427,7 @@ namespace SCClassLoader
             return best;
         }
 
-        private static void FitEntry(Character c, WearEntry e, EQUIP_TYPE slot, float height)
+        private static void FitEntry(Component c, WearEntry e, EQUIP_TYPE slot, float height)
         {
             GameObject model = ModelAssets.Spawn(new ModelSpec { mesh = e.mesh, keepParticles = false }, e.folder, c.transform.position, null);
             if (model == null) return;
@@ -380,7 +450,7 @@ namespace SCClassLoader
         /// armour hugs this crawler's shape and bends with its animation. False (piece stays rigid) when the body mesh
         /// can't be read.
         /// </summary>
-        private static bool Skin(Character c, GameObject placed, float height)
+        private static bool Skin(Component c, GameObject placed, float height)
         {
             var bodies = c.GetComponentsInChildren<SkinnedMeshRenderer>(true)
                 .Where(r => r.enabled && r.bones.Length > 2 && r.sharedMesh != null && r.GetComponentInParent<WearMark>() == null).ToList();
@@ -488,7 +558,7 @@ namespace SCClassLoader
         }
 
         /// <summary>A mod item's own wearable model, exactly where the item says.</summary>
-        private static void Exact(Character c, ItemDef def, EQUIP_TYPE slot)
+        private static void Exact(Component c, ItemDef def, EQUIP_TYPE slot)
         {
             var bones = string.IsNullOrEmpty(def.wearBone) ? SlotBones(slot) : new[] { def.wearBone };
             foreach (string name in bones)

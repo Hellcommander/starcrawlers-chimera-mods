@@ -1,0 +1,10 @@
+{
+  "prompt": "a blacksmith's hammer ringing on an anvil, a hard bright clang",
+  "engine": "audio_materials + audio_bench",
+  "seed": 4,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.143,
+  "margin_over_siblings": 0.035
+}

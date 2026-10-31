@@ -1,11 +1,11 @@
 [center][size=6][b]Breachwork: a mod pack for StarCrawlers Chimera[/b][/size]
-[size=3][i]50 new classes, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
+[size=3][i]58 new classes, skill reshaping, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
 
 [line]
 
 [size=5][b]Description[/b][/size]
 
-This is a large expansion for [b]StarCrawlers Chimera[/b], built to give every run more to play with. It adds [b]50 new classes[/b] to mix into your 7-tree build. Each is a full skill tree with its own abilities, resource, stack mechanic and art. None of them borrow vanilla abilities, so you can combine them freely with each other and with the vanilla trees.
+This is a large expansion for [b]StarCrawlers Chimera[/b], built to give every run more to play with. It adds [b]58 new classes[/b] to mix into your 7-tree build. Each is a full skill tree with its own abilities, stack mechanic and art. None of them borrow vanilla abilities, so you can combine them freely with each other and with the vanilla trees.
 
 Around the classes, it brings back what the first StarCrawlers had and Chimera left out:
 [list]
@@ -17,9 +17,9 @@ Around the classes, it brings back what the first StarCrawlers had and Chimera l
 
 Beating Cerberus no longer has to end the run: the credits roll in game, and then you can stay and descend into [b]the Ichor Deep[/b], an endless side area that gets harder and richer with every depth.
 
-On top of that come [b]209 skill-tree synergies[/b], hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
+On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]247 class-interaction synergies[/b], a crafting window, a class search box, custom character pictures and portraits of your character, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
 
-Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML, with no code.
+Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML with no code, and mods can go further with sandboxed Lua scripts or C# plugins.
 
 [quote][b]Unofficial.[/b] This pack is not made or endorsed by Juggernaut Games. Back up your saves before installing (they are in [i]%USERPROFILE%\AppData\LocalLow\Juggernaut Games\StarCrawlers Chimera[/i]).[/quote]
 
@@ -38,7 +38,7 @@ This is a manual install: the archive is laid out like the game folder.
 [/list]
 
 [b]Updating[/b]
-Extract the new archive over the old one and let it overwrite. Your mod choices, load order and settings are kept. Pages 2 and up of your stash are kept too, because they're stored with your saves, not in the game folder. The mod manager is now [i]BreachworkModManager.exe[/i]; you can delete the old [i]ChimeraModManager.exe[/i].
+Extract the new archive over the old one and let it overwrite. Your mod choices, load order and settings are kept. Pages 2 and up of your stash are kept too, because they're stored with your saves, not in the game folder. An old [i]ChimeraModManager.exe[/i] from an earlier release is removed for you on the next start.
 
 [b]Turning mods on and off[/b]
 [list]
@@ -61,27 +61,35 @@ Every setting is in [b]Options > Mod Settings[/b], on the title screen and in ga
 
 [size=5][b]Main features[/b][/size]
 
-[size=4][b]1. Fifty new classes[/b][/size]
+[size=4][b]1. 58 new classes[/b][/size]
 
-Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the extra slots). Each has its own icon and a particle effect for each skill, and its abilities, stacks and resources are explained in the tooltips. Classes with a resource show it as a bar beside your health and stamina, toggled with [b]F3[/b]. Pick 7 trees as usual: a new class can sit next to any vanilla tree or any other new class.
+Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the extra slots). Each has its own icon and a particle effect for each skill, and its abilities, stacks and resources are explained in the tooltips. Skills cost stamina unless a class's mechanic says otherwise, and a class's stacks and meters show as bars beside your health and stamina, toggled with [b]F3[/b]. Pick 7 trees as usual: a new class can sit next to any vanilla tree or any other new class.
 
 [spoiler]
-[size=3][b]Arendeth Classes (14)[/b][/size]
+[size=3][b]Arendeth Classes (22)[/b][/size]
 [list]
+[*][b]Bulkhead Psion[/b] (Muscle): telekinesis that tears up deck plating. Shove foes against walls, raise bulkheads where there were none, and drive a spike out of every wall beside an enemy.
 [*][b]Castborn[/b] (Muscle): a walking foundry casting with plating that reseals itself. A modular construct tank with self-repair and poured allies.
 [*][b]Coilwright[/b] (Guile): a crossbow tinkerer whose shots stack Static until enemies overload in a stunning discharge. Coil towers feed your rig, and the charge outlasts them.
 [*][b]Emberhorn[/b] (Muscle): a furnace-hearted charger. Charges and gores build Head of Steam until it blows in a rampage, and gored enemies bleed harder until they burst.
 [*][b]Entropy Weaver[/b] (Intellect): a volatile chain-reaction caster. Spells build Spillover until it erupts, fraying everything nearby; frayed things set their neighbours smouldering.
 [*][b]Etcher[/b] (Intellect): eats armor one layer at a time with conjured acid. Lingering acid pools and a true-damage payoff, paced by a refilling Reagent pool.
+[*][b]Fulgurant[/b] (Guile): a lightning duelist. Leaps, blinks and rail-dashes build Potential, which bleeds away when you stand still, and Return Stroke cashes it in with every Stepped Leader you've laid. Needs a melee weapon and scales with your weapon, Agility and Psi Power.
 [*][b]Gloomspore Warden[/b] (Intellect): a summoner built around spawning fungal creatures, bursting them and growing the colony. Its Gloomcaps grow stronger with your Psi Power.
 [*][b]Graftwild[/b] (Muscle): a shapeshifting nature bruiser with summoned vines and stacking spores. Shrugs off toxins and regenerates, but is weak to fire.
 [*][b]Gravemote Astronomer[/b] (Intellect): every impact winds a mote into your Orbit for a harder next blow, and enemies Sag under your gravity until they're pinned. Meteors and a stored-power finisher.
+[*][b]Ichorborn[/b] (Intellect): ichor magic drawn from the final boss. Two Ichor Pinions shield you, and each one you lose splashes your foes and leaves you Wingshorn, hitting harder. Tarred stacks into Stuck, the Unmaking Gaze rewards standing still, and Shadow Molt is the capstone.
+[*][b]Miasmancer[/b] (Guile): a chemist of foul air who breathes and extracts to refill stamina, then spends it on clouds mixed mid-fight. In time your blood shrugs off poison and acid.
+[*][b]Mimeticist[/b] (Intellect): tag creatures, feed on them and rebuild yourself in their shape. Each form is a whole body with its own skills: a stalking panther, a pack hound, a shelled hullback, a grabbing sump lurker, a web-spinning weaver and a reactor wyrm.
+[*][b]Reactant Hauler[/b] (Muscle): hurls oil, coals, coolant, brine and blasting grit by the drum. Each throw marks the enemy and the deck, and mark the same foe twice and the reactants go off against each other.
 [*][b]Rimelight Seer[/b] (Intellect): starlight-and-frost magic. Frost compounds until it shatters, Hoarlights of cold light dart in and out beside you and can be spent as spells, Galeward turns shots back on their shooters, and Starbind tames a beast for good (one at a time, never a boss) to fight beside you with half your strength and wits. The heavy spells cost Strain; push it too far and the cold turns on you.
 [*][b]Runeforger[/b] (Intellect): an item-crafting caster who makes throwable glyphs, traps and constructs. The glyphs and cells take bag space.
 [*][b]Scrapper[/b] (Muscle): a stun-heavy brawler. Every hit landed builds Grit, every hit taken makes you harder to put down, and Grit pays for a room-clearing finisher.
+[*][b]Snareseer[/b] (Guile): a psychic who leaves thoughts on the deck like mines. Every trap that fires builds Premonition for the next, and a cascade sets the whole web off at once.
 [*][b]Squallblade[/b] (Guile): an air-pressure skirmisher with pulls, knockback, churning ground, storm constructs and a wind-body form.
 [*][b]Tidewright[/b] (Intellect): pressure hydromancy. Every hit Waterlogs enemies deeper until they're slow, clumsy and easy to shove around. A slicing jet, a water shackle that roots them, a fog that hides your side, a current to ride, a gyre that drags them together for the Rupture, a bound water-body, and a flood to end it.
 [*][b]Vasculist[/b] (Intellect): blood-pressure sorcery. Each spike raises Vein Pressure until the target ruptures, stunning it and everything beside it.
+[*][b]Wildcaster[/b] (Intellect): wild magic. Spells come out as a random spell from another class or a wild one of their own, change form on the way out, and late on surge by themselves. Spell Fever makes every attack draw a new delivery, gain, loss and element. Every cast builds Brimming, which backlashes at ten, and a rare Horror can turn up, hunting either side.
 [/list]
 
 [size=3][b]Custom Classes (15)[/b][/size]
@@ -130,15 +138,25 @@ Body-first classes built on movement, grabs and thrown things.
 [list]
 [*][b]Kelvin Magus[/b] (Intellect): four layers of Supercooled freeze an enemy solid. The heat you steal is banked as Stolen Heat, which feeds a Glacier Sentinel golem or vents as a Thermal Plume, and fire cracks frozen enemies apart. Hoard ten and you overheat.
 [*][b]Looking-Glass Rogue[/b] (Guile): Drink Me, Eat Me switches you between Shrunk (very hard to hit) and Grown (heavy blows that send enemies flying), and most of the kit changes with it. Dodges and kills build Wonder, which tilts every random roll your way, and a Tea Clock ticks through each fight and pours at six. Painted Guards daub enemies red for the claws and teeth of the last ranks, where you learn to vanish, leave your grin behind and become the Grinning Cat.
-[*][b]Flux Savant[/b] (Intellect): rune sockets in your skills retune their element, shape and power, and the runes run flat until you spend stamina to recharge them. Reagents react on contact, Rune Matrix on [b]F4[/b].
-[*][b]Odds Breaker[/b] (Guile): every trick costs real credits up front. Winning builds a Lucky Run that makes jackpots likelier and feeds Cash Out. Loaded Dice left on the floor roll for whoever steps on them, or pay out on their own three turns later. Starts with a small bankroll.
-[*][b]Swarm Conductor[/b] (Intellect): hijacks Chimera's CorpSec drones over a neural link, gives them orders and builds a couple of its own.
+[*][b]Flux Savant[/b] (Intellect): rune sockets in your skills retune their element, shape and power, and the runes run flat until you spend stamina to recharge them. A growing augment pool changes how each spell behaves and lands, and taking flaws gives points back. Reagents react on contact, and an Instability meter can backfire. Rune Matrix on [b]F4[/b].
+[*][b]Odds Breaker[/b] (Guile): every trick costs real credits up front. Winning builds a Lucky Run that makes jackpots likelier and feeds Cash Out. Loaded Dice left on the floor roll for the first enemy to step on them and everyone around it. Starts with a small bankroll.
+[*][b]Swarm Conductor[/b] (Intellect): hijacks Chimera's CorpSec drones over a neural link, gives them orders and builds a couple of its own. Hijacks and orders cost stamina, and machines you recall or lose give some back.
 [*][b]Reaction Architect[/b] (Intellect): spends its turns wiring the room with tripwires, cut-offs and retorts that fire on the enemy's moves (closing in, backing off, shooting from afar, hitting, debuffing, missing or winding up a big move), then releases them all at once. Nine tiers, up to Exit Clause.
 [*][b]Conjoined[/b] (Muscle): one mind in up to four bodies, gained at tiers 1, 3 and 5. Each body is a full character with its own level, classes, gear and hotbar, while inventory, credits and quests are shared. The others fight beside you; click a party card to switch bodies, free out of combat or with Trade Bodies in it. If the body you play falls, you wake up in another.
 [/list]
 [/spoiler]
 
-[size=4][b]2. Breaches and Echoes: side areas[/b][/size]
+[b]Boss Looks[/b] is a small extra mod: classes made from a boss's attacks, such as Ichorborn, wear that boss's own effects, read from your installed game. Turn it off and they use their own.
+
+[size=4][b]2. Skill reshaping[/b][/size]
+
+Passives, stances, one-shot charges and socketed runes can rewrite other skills. A skill can change its delivery (trap, grenade, walking bomb, drifter, nova, line, cone, area, chain or scatter), its element, its damage type, its effects and its behavior, and the tooltip and aiming follow. It keeps its own scaling.
+[list]
+[*][b]Spellsmith[/b] is the class built around this: an example class, included, that beats the attacks you learned from your other classes into grenades, buried charges and walking bombs. Hammer Form fires an attack through your weapon, with its animation, effects and ammo: the attack keeps its own damage and takes the weapon's reach, accuracy and on-hit effects. Take it beside another class with mod attacks; its forms don't touch vanilla skills.
+[*][b]Rune matrix augments:[/b] rune casters such as Flux Savant spend a shared pool on delivery and behavior changes, and take flaws that give points back.
+[/list]
+
+[size=4][b]3. Breaches and Echoes: side areas[/b][/size]
 
 Each new floor has a 60% chance of a purple [b]breach pad[/b] somewhere off the main rooms. Stepping on it takes you out of Chimera into a place generated for that breach, with its own layout, lighting and fog. Enemies and loot match your current floor, and the room you arrive in is always clear.
 
@@ -168,7 +186,7 @@ Each new floor has a 60% chance of a purple [b]breach pad[/b] somewhere off the 
 [b]Saving:[/b] you can save and quit inside, and the same layout comes back. The Apartment portal works there too. Chimera's own floors are unchanged apart from the pad itself. A brightness setting turns generated places up or down if you find them too dark.
 [/spoiler]
 
-[size=4][b]3. After the ending: credits and the Ichor Deep[/b][/size]
+[size=4][b]4. After the ending: credits and the Ichor Deep[/b][/size]
 
 Beat Cerberus and the credits roll right there, the game's own and then the mods'. Then you choose: [b]return to the title[/b] as in vanilla, or [b]stay and descend[/b]. The arena's locks come off, the Apartment Portal works again, and a green breach opens beside you into [b]the Ichor Deep[/b].
 
@@ -182,7 +200,7 @@ Beat Cerberus and the credits roll right there, the game's own and then the mods
 [/list]
 [/spoiler]
 
-[size=4][b]4. Outside Interests: factions[/b][/size]
+[size=4][b]5. Outside Interests: factions[/b][/size]
 
 Five factions from outside Chimera want something from inside the building, and they hire you through the breaches. Your standing, jobs and enemies are tracked on [b]the Wire[/b] ([b]F9[/b]).
 
@@ -215,7 +233,7 @@ You start out knowing two. The others turn up as you work: as job targets, throu
 [b]Optional:[/b] it can all be turned off; breaches then work without factions.
 [/spoiler]
 
-[size=4][b]5. Interlopers: new enemies[/b][/size]
+[size=4][b]6. Interlopers: new enemies[/b][/size]
 
 Ten new enemies with their own skills, 3D models and animations. They only appear in side areas.
 [list]
@@ -230,7 +248,7 @@ Ten new enemies with their own skills, 3D models and animations. They only appea
 [/list]
 In side areas, some of Chimera's own staff also learn new tricks: medics, grenadiers, bots that melt down, howling alpha mutts, and enemies using skills from the new classes.
 
-[size=4][b]6. Crew and orders[/b][/size]
+[size=4][b]7. Crew and orders[/b][/size]
 
 Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 [list]
@@ -239,14 +257,15 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 [*][b]Wages:[/b] pay them every floor. Miss two paydays and they walk off with your gear, or turn on you.
 [*][b]Orders:[/b] crew and Conjoined bodies take orders: Engage, Focus, Guard, Hold, Follow, Stand down, Move here, Fall back and Unleash.
 [*][b]Giving orders:[/b] use the order strip ([b]O[/b]), [b]Alt+1[/b] to [b]Alt+9[/b], or right-click a companion. Your summons and pets can take orders too: turn on CommandMinions, or order one from its right-click menu.
+[*][b]Idle allies:[/b] idle pets, summons and crew join fights.
 [*][b]Traps:[/b] your allies don't walk onto live traps you can see, and crew and Conjoined bodies next to one try to disarm it when their odds are good.
 [/list]
 
-[size=4][b]7. Skill Synergies[/b][/size]
+[size=4][b]8. Skill Synergies[/b][/size]
 
-[b]209 pairs of skill trees[/b], vanilla and new, give you a bonus when you take both. The bonus grows with the lower of the two ranks, up to level 5. Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists your active ones and the ones your trees could still make, so they don't crowd your buff bar.
+[b]247 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without. Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
 
-[size=4][b]8. Rogue Modder rebalance[/b][/size]
+[size=4][b]9. Rogue Modder rebalance[/b][/size]
 
 The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mod that could never fail, and Item (Re)Designer as a free reroll. With the rebalance on (the default):
 [list]
@@ -257,9 +276,13 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [*]Gear modded before keeps its stats. Turn the option off for the vanilla rules.
 [/list]
 
-[size=4][b]9. Quality of life[/b][/size]
+[size=4][b]10. Quality of life[/b][/size]
 [list]
-[*][b]Hotbar pages:[/b] 4 pages by default. Flip them with the square bracket keys, Page Up/Down or the mouse wheel over the hotbar. Your saves still load without the mod and show page 1.
+[*][b]Crafting window:[/b] a real recipe list with what you carry and [b]Craft x5[/b], on [b]F10[/b] or the [b]Craft[/b] tab in the Apartment. Crafting skills open it in the field.
+[*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, so "crit" or "savvy" finds the classes that offer it. Hovering a result says where it matched.
+[*][b]Character pictures:[/b] click the picture frame on the creation screen or above the character sheet and press [b]Load picture[/b] to pick a png or jpg from anywhere on your computer, or drop files in the game's [i]Portraits[/i] folder. Any size works, and each Conjoined body has its own picture.
+[*][b]Make Portrait:[/b] the optional [b]Character Portrait Tools[/b] mod makes a picture of your character for you. By default the game renders it in one frame: your class's crawler body in a ready pose, holding your real weapons and shield, with your stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. Glasses, masks and similar are left out for now, and this needs a running game, not the creation screen. See Requirements for the other tools.
+[*][b]Hotbar pages:[/b] 4 pages by default. Flip them with the square bracket keys, Ctrl+Page Up/Down or the mouse wheel over the hotbar. Your saves still load without the mod and show page 1.
 [*][b]Stash pages:[/b] 6 tabs of 120 slots. Drop an item on a tab to send it there. The [b]Own[/b] tab is saved with your character and takes items the shared stash refuses.
 [*][b]Death recap:[/b] the death screen says exactly what killed you: the enemy, its skill, the damage, your health and the three hits before.
 [*][b]Graveyard:[/b] every finished run goes on a local high-score list ([b]F8[/b], title screen too).
@@ -268,16 +291,18 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [*][b]Text that fits:[/b] text too long for its box shrinks instead of being cut off, in the game's own panels too.
 [*][b]Class loot:[/b] class-specific items such as runes and rig hardware only drop when someone in your party has a class that uses them.
 [*][b]Bug reports:[/b] with mods loaded, the Esc menu's Feedback button asks whether it's a mod bug and can open a GitHub issue with your versions, mods and errors already filled in.
-[*][b]Diagonal steps:[/b] W+Q, W+E, S+Q and S+E, the numpad, or a controller. No corner cutting, and a diagonal costs about 1.41 turns, as it should.
+[*][b]Sound delay:[/b] every sound in the game reaches your speakers about twice as fast by default. Set [b]MixBlock[/b] to 1024 if you hear crackling, or to [b]game[/b] for the game's own setting. It applies after a restart.
+[*][b]Sounds that never go silent:[/b] a mod sound that is missing or won't load plays a vanilla sound instead.
+[*][b]Diagonal steps:[/b] W+Q, W+E, S+Q and S+E, the numpad (Num Lock on or off), or a controller. No corner cutting, and a diagonal costs about 1.41 turns, as it should.
 [*][b]Shared tiles:[/b] you, your pets and your allies can stand on the same tile (up to three).
-[*][b]Saved builds:[/b] the creation screen's custom preset keeps a list of builds, not just one.
+[*][b]Saved builds:[/b] the creation screen's custom preset keeps a list of builds, not just one. Right-clicking it saves the classes you've already picked as a build, without wiping them.
 [*][b]Autosave:[/b] the game's hidden autosaves now respect the autosave option, and you can choose to autosave on every floor change.
 [*][b]Key binding:[/b] Enter, Backspace, Delete, the numpad keys and more can now be bound on the Keybindings screen, and hotbar rows 2 and 3 show their modifier (Ctrl+1, Alt+1).
 [*][b]Character names:[/b] up to 32 characters (or 64), with the case you type.
 [*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking. Skill tooltips now say where a stack stops.
 [/list]
 
-[size=4][b]10. Vanilla bug fixes[/b][/size]
+[size=4][b]11. Vanilla bug fixes[/b][/size]
 
 Each fix can be turned off in Mod Settings.
 [list]
@@ -305,7 +330,7 @@ Each fix can be turned off in Mod Settings.
 [/list]
 [/list]
 
-[size=4][b]11. Hotkeys[/b][/size]
+[size=4][b]12. Hotkeys[/b][/size]
 All of these can be rebound in Mod Settings.
 [list]
 [*][b]F3:[/b] class resource bars
@@ -314,21 +339,25 @@ All of these can be rebound in Mod Settings.
 [*][b]F7:[/b] Conjoined party cards
 [*][b]F8:[/b] Graveyard
 [*][b]F9:[/b] the Wire (factions)
+[*][b]F10:[/b] crafting window
 [*][b]O:[/b] order strip; [b]Alt+0[/b] picks who listens and [b]Alt+1[/b] to [b]Alt+9[/b] give orders
-[*][b]Square brackets:[/b] hotbar pages
+[*][b]Square brackets, or Ctrl+Page Up / Page Down:[/b] hotbar pages
 [*][b]Page Up / Page Down:[/b] stash pages while the stash is open
 [*][b]Left Alt (hold):[/b] character tips
 [/list]
 
-[size=4][b]12. For modders[/b][/size]
+[size=4][b]13. For modders[/b][/size]
 
-The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies.
+The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
 [list]
 [*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. There's a shared library of status effects and ability templates to build on.
-[*][b]Content:[/b] items, Fabricator recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
-[*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures.
+[*][b]Content:[/b] items, crafting recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
+[*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures. [i]BreachworkModManager.exe --seal-audio[/i] seals a mod's sounds into an encrypted [i]sounds.pak[/i], for sound packs whose terms require embedded audio.
+[*][b]Lua scripts:[/b] [i]scripts/*.lua[/i] add actions, conditions, numbers and events. They run sandboxed, with no access to files, the internet or the game's code, so they need no OK from the player.
+[*][b]C# plugins:[/b] [i]plugins/*.dll[/i] can reach anything, so a mod with a plugin stays out until the player allows it. Your plugin is your own work, on your own terms.
+[*][b]Portrait tools:[/b] any program can make portraits. Give it a folder with a [i]portrait_tool.json[/i] and it gets a job file with the character's classes, gear and effects. The Portrait Maker's source is included as an example.
 [*][b]Patching:[/b] later mods can patch or replace earlier mods' entries by id.
-[*][b]Examples:[/b] the example class, item and enemy mods show the format and are safe to delete.
+[*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
 [/list]
 
 [line]
@@ -340,6 +369,7 @@ The loader is a modding framework in its own right, and the bundled mods are wri
 [*]Nothing else to download. [b]BepInEx 6[/b], the mod framework, is included in the archive.
 [*]7-Zip, or Windows 11's built-in extractor, to open the .7z.
 [*]Most mods in the pack need [b]Core Library[/b], which is included. If you switch it off, the mod manager and the Mods page offer [b]Turn On What It Needs[/b].
+[*][b]Make Portrait[/b] needs nothing extra for its default render, only the [b]Character Portrait Tools[/b] mod, which is included but off by default. Turn it on and allow its code on the Mods page. The [b]Tool[/b] setting in Mod Settings picks what makes the picture, always on your own computer, so nothing goes to an online service. Set it to [b]PortraitMaker[/b] for the optional Portrait Maker download on the Files tab, which draws a stylised picture with no GPU or AI, or to your [url=https://github.com/Hellcommander/aamt]AAMT toolkit[/url]'s Tools\StarCrawlersChimera folder for a painting from your own local AI, which needs an NVIDIA GPU. You don't need any of this to load your own pictures.
 [/list]
 
 [b]Compatibility and saves[/b]
@@ -347,6 +377,7 @@ The loader is a modding framework in its own right, and the bundled mods are wri
 [*]Your existing characters keep working. To play a new class, start a new character.
 [*]If you turn off a mod whose class a character uses, that character loads with the skill slot empty and gets the points back to spend. The Mods page shows which saves use which classes.
 [*]Hotbar page 1 and stash page 1 stay in the game's own save, so removing the mod only hides the extra pages.
+[*]Stamina replaced most old class resources. Saves that held them still load, and skills priced in them fall back to stamina.
 [*]Maxing a new class gives no Steam achievement, and new classes have no lore dataslate.
 [/list]
 
@@ -355,10 +386,11 @@ Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mo
 
 [b]Permissions[/b]
 [list]
-[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original content of your own. The full terms are in [i]Mods\LICENSE.md[/i].
+[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original work of your own. It may be used with AI tools and training. The full terms are in [i]Mods\LICENSE.md[/i].
 [*]Please don't reupload the pack unchanged.
-[*]No sound here may be sold as a sound or in an audio pack, even altered. The sounds in [i]audio_licensed[/i] folders may not be used commercially at all, and game files must never be shared.
-[*]Juggernaut Games may use anything in this pack in the game.
+[*]No sound here may be sold as a sound or in an audio pack, even altered. The sounds in [i]audio_licensed[/i] folders may not be used commercially at all and may be shared only as part of these mods. Sounds in [i]sfx[/i] folders need the Noise Alchemy credit below. Game files must never be shared.
+[*]Plugins and Lua scripts that other people write are their authors' own work, on their own terms, and the example plugin and script code is free for any use.
+[*]Juggernaut Games may use anything in this pack in the game, except the [i]audio_licensed[/i] sounds.
 [/list]
 
 [line]
@@ -366,12 +398,15 @@ Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mo
 [size=5][b]Shout outs[/b][/size]
 
 [list]
-[*][b]Juggernaut Games[/b], for StarCrawlers and StarCrawlers Chimera. The first StarCrawlers inspired the factions, jobs and bonus objectives, the Interlopers and per-location enemy rosters, Odds Breaker's credit-paid gambles and timed dice traps, and Swarm Conductor's drones.
-[*][b]Dungeons of Dredmor[/b] (Gaslamp Games) and its modding community. The mod layout follows Dredmor's, and the Dredmor mods Runecaster, Runesmith and Hexblade inspired Flux Savant.
+[*][b]Juggernaut Games[/b], for StarCrawlers and StarCrawlers Chimera. The first StarCrawlers inspired the factions, jobs and bonus objectives, and the Interlopers and per-location enemy rosters.
+[*][b]Dungeons of Dredmor[/b] (Gaslamp Games) and its modding community. The mod layout follows Dredmor's, and the Dredmor mods Runecaster, Runesmith and Hexblade inspired Flux Savant. Wildcaster takes inspiration from the Wild Magic skill of Compleat Essential Skills, a Dredmor mod by Essence, and from the wild magic of D&D's sorcerers and Baldur's Gate II's Wild Mage.
 [*][b]Lewis Carroll[/b]'s Alice books (public domain), for the Looking-Glass Rogue.
+[*][b]Soulash 2[/b] (Wizards of the Code), whose amplifiers inspired the skill rewrites.
 [*]My own Soulash 2 mods, which gave each Arendeth Classes class its core mechanic, and my Caves of Qud mod Conjoined Extended, built on John Snail's Conjoined.
-[*][b]Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.[/b] Licensed sounds by [b]Function Loops[/b] (Ultimate SFX for Games), [b]Tao & Sound[/b] (Magic Spells SFX Bundle, Inventory SFX Bundle, Puzzle Audio Kit) and [b]Ovani Sound[/b] (Ice, Microscale Bugs and Robotic Beings packs), rebuilt without AI.
-[*][b]BepInEx[/b] and UnityDoorstop, [b]HarmonyX[/b], [b]MonoMod[/b], [b]Mono.Cecil[/b] and [b]Newtonsoft.Json[/b].
+[*][b]Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.[/b] Licensed sounds by [b]Function Loops[/b] (Ultimate SFX for Games), [b]Tao & Sound[/b] (Magic Spells SFX Bundle, Inventory SFX Bundle and Puzzle Audio Kit; sound assets by Fernando del Pueyo Montesinos, Tao & Sound Creative Music Solutions, used under their EULA) and [b]Ovani Sound[/b] (Ice, Microscale Bugs and Robotic Beings Sound FX Packs). These licensed sounds ship sealed in each mod's encrypted [i]sounds.pak[/i], as their terms require.
+[*][b]BepInEx[/b] and UnityDoorstop, [b]HarmonyX[/b], [b]MonoMod[/b], [b]Mono.Cecil[/b], [b]Newtonsoft.Json[/b] and [b]MoonSharp[/b].
 [/list]
 
-[b]AI-generated assets:[/b] the icons, 3D models, textures, animations, particle effects and new sound effects were made with my own asset toolkit. It uses Stable Diffusion 3.5 Medium, Stable Audio 3, Stable Fast 3D, TRELLIS.2, Wan2.2, UniRig, CoTracker3 and BiRefNet, with repairs in Blender. The full list with licenses is in [i]Mods\CREDITS.md[/i].
+[b]AI-generated assets:[/b] the icons, 3D models, textures, animations, particle effects and the rendered [i]sfx[/i] sounds were made with my own asset toolkit. It uses Stable Diffusion 3.5 Medium, Stable Audio 3, Stable Fast 3D, TRELLIS.2, Wan2.2, UniRig, CoTracker3 and BiRefNet, with repairs in Blender. Stable Audio only ever worked from Noise Alchemy references, whose terms allow it.
+
+[b]Licensed sounds and AI:[/b] no AI generates or changes the [i]audio_licensed[/i] sounds. They are rebuilt from their pack clips by plain signal processing. A read-only listening model (CLAP) measures the tries and picks the best one; nothing it produces ships, and no pack clip goes into it. The full list with licenses is in [i]Mods\CREDITS.md[/i], and every sound's source is in [i]Mods\AUDIO_CREDITS.md[/i].

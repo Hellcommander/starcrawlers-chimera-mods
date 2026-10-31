@@ -1,0 +1,10 @@
+{
+  "prompt": "a heavy metal thud and ratchet clicks, a charge bolted down",
+  "engine": "audio_materials + audio_bench",
+  "seed": 6,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.171,
+  "margin_over_siblings": 0.067
+}

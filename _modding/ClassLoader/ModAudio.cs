@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using FMODUnity;
@@ -57,22 +58,64 @@ namespace SCClassLoader
 
         /// <summary>Sounds FMOD is preparing on its own thread; each keeps its bytes until it's done.</summary>
         private static readonly Dictionary<string, (FMOD.Sound sound, byte[] data)> preparing = new Dictionary<string, (FMOD.Sound, byte[])>(StringComparer.OrdinalIgnoreCase);
-        private const int PreparePerFrame = 8;
+        private const int PreparePerFrame = 8, PrepareMaxPerFrame = 512;
+        private static readonly long PrepareBudgetTicks = System.Diagnostics.Stopwatch.Frequency * 4 / 1000;   // 4 ms a frame of hand-offs
 
-        internal static int Preparing => preparing.Count + ModArchives.Ready.Count;
+        internal static int Preparing => preparing.Count + ModArchives.Ready.Count + Submitted.Count;
+
+        // The preload threads hand sounds to FMOD themselves (its API is thread-safe and a non-blocking createSound only
+        // queues work for FMOD's loader thread), so the hand-off no longer waits for game frames, which are long while the
+        // scene loads. Tick only collects what they submitted. The core handle is captured on the main thread first.
+        private static FMOD.System workerCore;
+        private static volatile bool workerCoreReady;
+        internal static readonly ConcurrentQueue<(string path, FMOD.Sound sound, byte[] data)> Submitted = new ConcurrentQueue<(string, FMOD.Sound, byte[])>();
+
+        /// <summary>Main thread, before the preload starts: the FMOD core handle the worker threads will submit through.</summary>
+        internal static void CaptureCore()
+        {
+            try { workerCore = RuntimeManager.CoreSystem; workerCoreReady = workerCore.hasHandle(); }
+            catch (Exception) { workerCoreReady = false; }
+        }
+
+        /// <summary>Any thread: asks FMOD to prepare one sound from memory. False when it could not, so the caller falls back to the Ready queue.</summary>
+        internal static bool Submit(string path, byte[] data)
+        {
+            if (!workerCoreReady) return false;
+            try
+            {
+                var info = new FMOD.CREATESOUNDEXINFO { length = (uint)data.Length };
+                info.cbsize = System.Runtime.InteropServices.Marshal.SizeOf(info);
+                FMOD.RESULT r = workerCore.createSound(data, FMOD.MODE.OPENMEMORY | FMOD.MODE.CREATESAMPLE | FMOD.MODE._2D | FMOD.MODE.NONBLOCKING, ref info, out FMOD.Sound snd);
+                if (r != FMOD.RESULT.OK) return false;
+                Submitted.Enqueue((path, snd, data));
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+        // Timing of the start-up pipeline, for the audiofast devtest: when every read sound had been handed to FMOD, and when
+        // FMOD had finished turning them into samples, both from the moment the preload threads started; plus frames spent.
+        internal static long HandoffDoneMs = -1, DecodeDoneMs = -1;
+        internal static int HandoffFrames;
 
         /// <summary>Hands the preloaded archive sounds to FMOD, a few a frame, and keeps the ones it has finished.</summary>
         internal static void Tick()
         {
-            if (preparing.Count == 0 && ModArchives.Ready.IsEmpty)
+            if (preparing.Count == 0 && ModArchives.Ready.IsEmpty && Submitted.IsEmpty)
             {
                 if (ModArchives.PreloadDone) Warm();
                 return;
             }
             try
             {
+                HandoffFrames++;
                 FMOD.System core = RuntimeManager.CoreSystem;
-                for (int i = 0; i < PreparePerFrame && ModArchives.Ready.TryDequeue(out var next); i++)
+                while (Submitted.TryDequeue(out var sub))
+                {
+                    if (cache.ContainsKey(sub.path) || preparing.ContainsKey(sub.path)) sub.sound.release();
+                    else preparing[sub.path] = (sub.sound, sub.data);
+                }
+                long began = System.Diagnostics.Stopwatch.GetTimestamp();
+                for (int i = 0; i < PrepareMaxPerFrame && (i < PreparePerFrame || System.Diagnostics.Stopwatch.GetTimestamp() - began < PrepareBudgetTicks) && ModArchives.Ready.TryDequeue(out var next); i++)
                 {
                     if (cache.ContainsKey(next.path)) continue;
                     var info = new FMOD.CREATESOUNDEXINFO { length = (uint)next.data.Length };
@@ -81,6 +124,7 @@ namespace SCClassLoader
                     if (r == FMOD.RESULT.OK) preparing[next.path] = (snd, next.data);
                     else Plugin.Log.LogWarning($"FMOD could not prepare {next.path}: {r}");
                 }
+                if (HandoffDoneMs < 0 && ModArchives.PreloadDone && ModArchives.Ready.IsEmpty && Submitted.IsEmpty) HandoffDoneMs = ModArchives.PreloadClock.ElapsedMilliseconds;
                 foreach (var kv in new List<KeyValuePair<string, (FMOD.Sound sound, byte[] data)>>(preparing))
                 {
                     kv.Value.sound.getOpenState(out FMOD.OPENSTATE state, out uint _, out bool _, out bool _);
@@ -102,6 +146,7 @@ namespace SCClassLoader
             {
                 if (warned.Add("tick")) Plugin.Log.LogWarning($"Preparing sounds failed: {e.Message}");
             }
+            if (DecodeDoneMs < 0 && HandoffDoneMs >= 0 && preparing.Count == 0) DecodeDoneMs = ModArchives.PreloadClock.ElapsedMilliseconds;
         }
 
         private static void LoadFallbacks()

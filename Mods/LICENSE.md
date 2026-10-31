@@ -59,7 +59,7 @@ project, and this license does not apply to them. Content from this
 project carried along with one stays under this license.
 
 The example code (Mods/ExamplePlugin/src, Mods/RealtimeWithPause/src,
-Mods/CharacterPortraits/src, Mods/ExampleScript/scripts) may be used
+Mods/CharacterPortraits/src, Mods/CharacterPortraits/toolsrc, Mods/ExampleScript/scripts) may be used
 and copied for any purpose, with no conditions.
 
 JUGGERNAUT GAMES

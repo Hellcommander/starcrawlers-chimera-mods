@@ -25,6 +25,17 @@ FLAT_NEG = "text, letters, numbers, watermark, frame, border, gradient backgroun
 
 # (icon path under Mods, style, colour words, what to draw)
 ICONS = [
+    # ---- ExampleClasses -------------------------------------------------------------------------------------
+    ("ExampleClasses/spellsmith.png", "painted", "molten gold and violet", "smith's hammer striking a glowing spell sigil flat on an anvil, sparks flying"),
+    ("ExampleClasses/spellsmith_t0.png", "painted", "white-hot gold and orange", "slender spear of forged fire drawn from a crucible, straight and bright"),
+    ("ExampleClasses/spellsmith_t1.png", "painted", "gold and violet", "round iron charge sinking into a riveted deck plate, glowing seams, cracks in the steel"),
+    ("ExampleClasses/spellsmith_t2.png", "painted", "gold and violet", "armoured forearm hurling a glowing iron shell in a high arc, curved spark trail"),
+    ("ExampleClasses/spellsmith_t3.png", "painted", "molten orange and violet", "small riveted iron crucible on four short metal legs, molten glow in its mouth"),
+    ("ExampleClasses/spellsmith_t4.png", "painted", "gold and violet", "thin ring of molten droplets blown outward from a small bright core, dark empty space all around"),
+    ("ExampleClasses/spellsmith_t5.png", "painted", "icy blue and steel", "a cold dark anvil rimed with frost, ice crystals growing over a dead forge"),
+    ("ExampleClasses/spellsmith_t6.png", "painted", "gold and violet", "glowing spell sigil being beaten into the head of a heavy war hammer"),
+    ("ExampleClasses/spellsmith_t7.png", "painted", "violet and gold", "a chain of molten links snapping apart, a glowing spell wandering free of it"),
+    ("ExampleClasses/spellsmith_t8.png", "painted", "brilliant gold and violet", "flawless glowing blade fresh from the anvil, a maker's mark blazing on it"),
     # ---- ArendethClasses ------------------------------------------------------------------------------------
     ("ArendethClasses/castborn_t6.png", "painted", "molten orange", "roaring iron furnace mask with open vents spraying molten slag"),
     ("ArendethClasses/castborn_t7.png", "painted", "white-hot orange", "cracked iron heart-core flooding with fresh molten metal, glowing seams"),

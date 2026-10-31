@@ -1,0 +1,10 @@
+{
+  "prompt": "packing a charge into a small metal shell, a click, a spark and a rising forge hiss",
+  "engine": "audio_materials + audio_bench",
+  "seed": 2,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.198,
+  "margin_over_siblings": -0.007
+}

@@ -23,16 +23,34 @@ namespace SCClassLoader
         private static void Postfix(Menu_Creation __instance)
         {
             if (ClassRegistry.Templates.Count == 0) return;
-            GridLayoutGroup grid = __instance.skillGrid;
-            if (grid == null) return;
+            if (__instance.skillGrid == null) return;
+            Arrange(__instance);
+            CreationSearch.Ensure(__instance, (RectTransform)__instance.skillGrid.transform.parent);
+        }
 
-            foreach (GameObject s in spacers) if (s != null) Object.Destroy(s);
+        /// <summary>Lays out the classes the search lets through, in their archetype columns.</summary>
+        internal static void Arrange(Menu_Creation mc)
+        {
+            GridLayoutGroup grid = mc.skillGrid;
+
+            // inactive first: Destroy waits for the end of the frame and the grid is rebuilt before that
+            foreach (GameObject s in spacers) if (s != null) { s.SetActive(false); Object.Destroy(s); }
             spacers.Clear();
 
+            string query = CreationSearch.Query;
+            foreach (SkillSelect s in mc.madSkills.Where(s => s != null))
+            {
+                bool show = ClassSearch.Matches(s.skillTree, query);
+                if (show == s.gameObject.activeSelf) continue;
+                if (!show) s.BTN_PointerExit(); // a hidden cell never gets the pointer's exit
+                s.gameObject.SetActive(show);
+            }
+
+            var live = mc.madSkills.Where(s => s != null && s.gameObject.activeSelf).ToList();
             var groups = new[] { SKILL_CLASS.Muscle, SKILL_CLASS.Guile, SKILL_CLASS.Intellect }
-                .Select(c => __instance.madSkills.Where(s => s != null && s.skillTree != null && s.skillTree.skillClass == c).ToList())
+                .Select(c => live.Where(s => s.skillTree != null && s.skillTree.skillClass == c).ToList())
                 .ToList();
-            groups[0].AddRange(__instance.madSkills.Where(s => s != null && !groups.Any(g => g.Contains(s))));
+            groups[0].AddRange(live.Where(s => !groups.Any(g => g.Contains(s))));
 
             int rows = groups.Max(g => (g.Count + Cols - 1) / Cols);
             int sibling = 0;

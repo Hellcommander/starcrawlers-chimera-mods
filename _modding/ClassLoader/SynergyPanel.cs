@@ -11,8 +11,7 @@ namespace SCClassLoader
 {
     /// <summary>
     /// A third view on the character screen, beside Attributes and Resistances: Synergies. Synergy bonuses stay off
-    /// the buff bar (Synergies.Keep hides their effects); this view lists the active ones with their level and how much of each you use,
-    /// and the ones your trees could still make with the tree each one needs.
+    /// the buff bar (Synergies.Keep hides their effects); this view lists the active ones with their level and how much of each you use.
     /// The game's stats box is two small containers (attributes, resistances) whose content spills out of them, each
     /// holding one swap button to the other. Each gets a Synergies button beside its swap button (both at half width);
     /// the synergies view is a third container like them, with Attributes and Resistances buttons of its own.
@@ -170,7 +169,7 @@ namespace SCClassLoader
             if (container != null) container.gameObject.SetActive(false);
         }
 
-        /// <summary>What the tab shows: active synergies first, then the ones a tree you have is half of.</summary>
+        /// <summary>What the tab shows: only the synergies you have, and what they cost you.</summary>
         internal static string Text()
         {
             var active = Synergies.All.Select(s => (s, lvl: Synergies.Level(s))).Where(x => x.lvl > 0).ToList();
@@ -181,17 +180,6 @@ namespace SCClassLoader
             string strain = Synergies.StrainText();
             if (strain != "") lines.Add(strain);
             if (lines.Count == 0) lines.Add("<color=#9FB7C9>No synergies yet. Two trees that work well together give a bonus that grows with the lower of their ranks.</color>");
-
-            var half = Synergies.All.Where(s => Synergies.Level(s) == 0 && s.trees.Any(t => Synergies.TreeLevel(t) > 0)).ToList();
-            if (half.Count > 0)
-            {
-                lines.Add("<b>Within reach</b>");
-                foreach (SynergySpec s in half)
-                {
-                    string need = string.Join(" + ", s.trees.Where(t => Synergies.TreeLevel(t) == 0).Select(Synergies.TreeNames));
-                    lines.Add($"<color=#FFD15C>{s.name ?? s.id}</color> <size=85%><color=#9FB7C9>(needs {need})</color></size>\n{s.description}");
-                }
-            }
             return "<b>Synergies</b>\n" + string.Join("\n<size=40%>\n</size>", lines);
         }
 

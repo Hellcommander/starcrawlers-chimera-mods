@@ -45,6 +45,7 @@ __pycache__/
 # Built from each plugin's src folder, like the loader's own dll (pack.ps1 builds them into the packages)
 /Mods/ExamplePlugin/plugins/
 /Mods/CharacterPortraits/plugins/
+/Mods/CharacterPortraits/tools/**/*.exe
 
 # Mod audio stays out of the repository (its packs' licenses); pack.ps1 ships it from disk, and without it the loader
 # plays the game's own sounds (Mods/Library/sound_fallbacks.json)

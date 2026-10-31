@@ -1,0 +1,9 @@
+{
+  "prompt": "a hot lance of fire shot from a forge, sharp metallic ignition with a roaring hiss",
+  "engine": "audio_materials + audio_bench",
+  "seed": 2,
+  "unique": true,
+  "shippable": true,
+  "references": [],
+  "score": 0.15
+}

@@ -60,6 +60,37 @@ namespace SCClassLoader
             return b;
         }
 
+        /// <summary>A one-line text box with greyed placeholder text. It stays out of controller navigation.</summary>
+        internal static TMP_InputField TextBox(Transform parent, string placeholder, TMP_FontAsset font, float fontSize, Vector2 size)
+        {
+            RectTransform rt = Panel(parent, "TextBox", size, ButtonColor);
+            rt.gameObject.SetActive(false); // the field has to be wired up before its OnEnable builds the caret
+            RectTransform area = Rect(rt, "Text Area", Vector2.zero);
+            area.anchorMin = Vector2.zero; area.anchorMax = Vector2.one;
+            area.offsetMin = new Vector2(10f, 2f); area.offsetMax = new Vector2(-10f, -2f);
+            area.gameObject.AddComponent<RectMask2D>();
+            TextMeshProUGUI text = Label(area, "", font, fontSize, TextAlignmentOptions.Left);
+            TextMeshProUGUI hint = Label(area, placeholder, font, fontSize, TextAlignmentOptions.Left);
+            text.rectTransform.offsetMin = text.rectTransform.offsetMax = Vector2.zero;
+            hint.rectTransform.offsetMin = hint.rectTransform.offsetMax = Vector2.zero;
+            hint.color = new Color(0.62f, 0.72f, 0.79f, 0.8f);
+
+            var box = rt.gameObject.AddComponent<TMP_InputField>();
+            box.textViewport = area;
+            box.textComponent = text;
+            box.placeholder = hint;
+            box.targetGraphic = rt.GetComponent<Image>();
+            box.lineType = TMP_InputField.LineType.SingleLine;
+            box.caretColor = Color.white;
+            box.customCaretColor = true;
+            box.selectionColor = new Color(0.45f, 0.85f, 1f, 0.35f);
+            var nav = box.navigation;
+            nav.mode = Navigation.Mode.None;
+            box.navigation = nav;
+            rt.gameObject.SetActive(true);
+            return box;
+        }
+
         /// <summary>Places a child by its top-left corner inside a parent whose pivot is its top-left.</summary>
         internal static void At(RectTransform rt, float x, float y)
         {

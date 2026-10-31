@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
@@ -12,10 +13,10 @@ using Object = UnityEngine.Object;
 namespace SCClassLoader
 {
     /// <summary>
-    /// Character pictures, as in the first game: drop a .png or .jpg into the game's Portraits folder and pick it on
-    /// the creation screen or the character sheet. Any size works: pictures are cut to a square from near their top,
-    /// where a face usually is. Chimera has no character art of its own, so the picture gets its own spots: on the
-    /// character sheet and as the save's thumbnail on the load screen, never on the HUD during play.
+    /// Character pictures, as in the first game: press Load picture on the picker, or drop a .png or .jpg into the game's
+    /// Portraits folder and pick it on the creation screen or the character sheet. Any size works: pictures are cut to a square from near their top,
+    /// where a face usually is. Chimera has no character art of its own, so the picture lives on the character sheet
+    /// only: not on the HUD during play, and the load screen keeps its screenshots.
     /// The save keeps only the file name (SideAreas.Data, or the body's own data for Conjoined); a save whose picture
     /// is gone simply shows none.
     /// </summary>
@@ -117,9 +118,9 @@ namespace SCClassLoader
             }
             set
             {
-                if (Body != null) Body.Portrait = value;
                 var d = SideAreas.Data;
-                if (d != null) d[Key] = value; // for the load screen, which reads this one
+                if (Body != null) Body.Portrait = value;
+                else if (d != null) d[Key] = value;
                 Refresh();
             }
         }
@@ -194,11 +195,13 @@ namespace SCClassLoader
             {
                 try
                 {
-                    if (__instance.transform.Find("SCCL_Portrait") != null) return;
-                    Slot s = MakeSlot(__instance.transform, UiKit.FontFrom(__instance), true);
+                    // under content: Hide switches that off, not the menu's own object
+                    Transform parent = __instance.content.transform;
+                    if (parent.Find("SCCL_Portrait") != null) return;
+                    Slot s = MakeSlot(parent, UiKit.FontFrom(__instance), true);
                     var rt = (RectTransform)s.transform;
                     rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
-                    rt.anchoredPosition = new Vector2(-860f, 310f);
+                    rt.anchoredPosition = new Vector2(-910f, 310f);
                     s.Refresh();
                 }
                 catch (Exception e) { Plugin.Log.LogError("Portrait on the creation screen: " + e); }
@@ -254,6 +257,80 @@ namespace SCClassLoader
             else Current = name;
         }
 
+        // ---- loading a picture from anywhere ------------------------------------------------------------------
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        private class OpenFileName
+        {
+            public int structSize = Marshal.SizeOf(typeof(OpenFileName));
+            public IntPtr owner, instance;
+            public string filter;
+            public IntPtr customFilter;
+            public int maxCustomFilter, filterIndex;
+            public IntPtr file;
+            public int maxFile;
+            public IntPtr fileTitle;
+            public int maxFileTitle;
+            public string initialDir, title;
+            public int flags;
+            public short fileOffset, fileExtension;
+            public string defExt;
+            public IntPtr custData, hook, templateName, reserved;
+            public int reserved2, flagsEx;
+        }
+
+        [DllImport("comdlg32.dll", CharSet = CharSet.Unicode)] private static extern bool GetOpenFileNameW([In, Out] OpenFileName ofn);
+        [DllImport("user32.dll")] private static extern IntPtr GetActiveWindow();
+
+        internal const string DialogTitle = "Load a character picture";
+
+        /// <summary>The file the player chose in Windows' own window (the game waits behind it), or null.</summary>
+        private static string AskForFile()
+        {
+            const int Chars = 2048, MustExist = 0x1000 | 0x800 | 0x8; // file and path must exist; leave the game's folder alone
+            IntPtr buffer = Marshal.AllocHGlobal(Chars * 2);
+            try
+            {
+                Marshal.WriteInt16(buffer, 0);
+                var ofn = new OpenFileName
+                {
+                    owner = GetActiveWindow(), filter = "Pictures (png, jpg)\0*.png;*.jpg;*.jpeg\0\0", file = buffer, maxFile = Chars,
+                    title = DialogTitle, flags = MustExist,
+                };
+                return GetOpenFileNameW(ofn) ? Marshal.PtrToStringUni(buffer) : null;
+            }
+            finally { Marshal.FreeHGlobal(buffer); }
+        }
+
+        /// <summary>Copies a picture into the folder under a free name, unless it's in there already; null if it can't be read.</summary>
+        internal static string Import(string path)
+        {
+            try
+            {
+                EnsureFolder();
+                if (string.Equals(Path.GetDirectoryName(Path.GetFullPath(path)), Path.GetFullPath(Folder), StringComparison.OrdinalIgnoreCase))
+                    return Load(Path.GetFileName(path)) != null ? Path.GetFileName(path) : null;
+                string stem = Path.GetFileNameWithoutExtension(path), ext = Path.GetExtension(path), name = stem + ext;
+                for (int i = 2; File.Exists(Path.Combine(Folder, name)); i++) name = $"{stem}_{i}{ext}";
+                File.Copy(path, Path.Combine(Folder, name));
+                if (Load(name) != null) return name;
+                File.Delete(Path.Combine(Folder, name));
+            }
+            catch (Exception e) { Plugin.Log.LogWarning($"Loading picture {path}: {e.Message}"); }
+            return null;
+        }
+
+        /// <summary>Load picture on the picker: a good file goes on the character, and a bad one leaves the picker open to try again.</summary>
+        internal static void LoadPicture(bool creation)
+        {
+            string path = AskForFile();
+            if (path == null) return;
+            string name = Import(path);
+            if (name == null) { OpenPicker(creation); return; }
+            Choose(creation, name);
+            ClosePicker();
+        }
+
         internal static void OpenPicker(bool creation)
         {
             ClosePicker();
@@ -292,7 +369,7 @@ namespace SCClassLoader
 
             if (files.Count == 0)
             {
-                var none = UiKit.Label(view, "<color=#9FB7C9>No pictures yet. Put .png or .jpg files in the Portraits folder\nand press Reload. Any size works.</color>", font, 20);
+                var none = UiKit.Label(view, "<color=#9FB7C9>No pictures yet. Press Load picture to choose a .png or .jpg\nfrom anywhere on your computer. Any size works.</color>", font, 20);
                 none.alignment = TextAlignmentOptions.Center;
             }
             string current = creation ? Picked : Current;
@@ -323,24 +400,13 @@ namespace SCClassLoader
                 UiKit.At((RectTransform)b.transform, x, y);
                 x += width + gap;
             }
-            Add("No picture", 150f, () => { Choose(creation, null); ClosePicker(); }, UiKit.DangerColor);
-            Add("Open folder", 160f, () => { EnsureFolder(); Application.OpenURL("file:///" + Folder.Replace('\\', '/')); });
-            Add("Reload", 120f, () => OpenPicker(creation));
+            Add("No picture", 130f, () => { Choose(creation, null); ClosePicker(); }, UiKit.DangerColor);
+            Add("Load picture", 150f, () => LoadPicture(creation), UiKit.OnColor);
+            Add("Open folder", 140f, () => { EnsureFolder(); Application.OpenURL("file:///" + Folder.Replace('\\', '/')); });
+            Add("Reload", 100f, () => OpenPicker(creation));
             x = w - gap - 120f;
             Add("Close", 120f, ClosePicker);
         }
 
-        // ---- load screen --------------------------------------------------------------------------------------
-
-        /// <summary>The save's picture takes the place of its screenshot thumbnail.</summary>
-        internal static void OnSaveWidget(SaveWidget w)
-        {
-            if (w == null || w.image == null || string.IsNullOrEmpty(w.path) || !File.Exists(w.path)) return;
-            Sprite s = Load(SaveTrees.Portrait(w.path));
-            if (s == null) return;
-            w.image.sprite = s;
-            w.image.color = Color.white;
-            w.image.preserveAspect = true;
-        }
     }
 }
