@@ -1,0 +1,281 @@
+{
+  "id": "MOD_Glyphrunner",
+  "name": "Glyphrunner",
+  "description": "Somewhere in Chimera's firmware there are subroutines older than the company, written in sigils instead of code. Glyphrunners learned to read them and write them, and to inscribe them on anything that moves.\n\nPlace three glyphs on enemies: Mark (exposed), Loop (repeating damage) and Sever (armor breach). Glyphs react with each other; for example, Sever on a Marked target compiles an exploit that makes it take 30% more damage. Run Program cashes in every glyph on a target, and Stack Overflow triggers every glyph in the room. Favors [SMT] and [AGL].",
+  "archetype": "Guile",
+  "icon": "glyphrunner.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Agility": 2,
+    "Recognition": 1
+  },
+  "effects": [
+    {
+      "id": "Mark",
+      "name": "Glyph: Mark",
+      "description": "A sigil glows on them: target acquired.",
+      "duration": 5,
+      "debuff": true,
+      "stats": {
+        "Dodge": -5
+      },
+      "vfx": "EFFECT_Smuggler_Bounty"
+    },
+    {
+      "id": "Loop",
+      "name": "Glyph: Loop",
+      "description": "A sigil that repeats itself, painfully.",
+      "duration": 4,
+      "debuff": true,
+      "dot": {
+        "type": "Energy",
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "id": "Sever",
+      "name": "Glyph: Sever",
+      "description": "A sigil that unwrites armor.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Armor": -3
+      },
+      "resists": {
+        "Slashing": -10,
+        "Piercing": -10,
+        "Energy": -10
+      }
+    },
+    {
+      "id": "Compiled",
+      "name": "Compiled Exploit",
+      "description": "Two glyphs agreed with each other. That is very bad news for the host.",
+      "duration": 2,
+      "debuff": true,
+      "damageTakenMult": 1.3,
+      "vfx": "EFFECT_Hacker_Virus_Snowcrash"
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Syntax Sense",
+        "icon": "glyphrunner_t0.png",
+        "type": "passive",
+        "description": "Your attacks leave little sigils in the wound without you meaning to.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "effect": "@Mark" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Mark Sigil",
+        "icon": "glyphrunner_t1.png",
+        "target": "enemy",
+        "range": 7,
+        "staminaCost": 8,
+        "description": "Inscribe the target with a sigil that says 'here'. On a Severed target, the two glyphs compile.",
+        "impactVfx": "PA_Hacker_Hack.hackParticle",
+        "sound": "audio_licensed/glyph_mark.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Compiled", "ifTargetHas": "@Sever" },
+          { "do": "effect", "effect": "@Mark" }
+        ],
+        "perk": {
+          "name": "Bold Syntax",
+          "damageMult": 1.5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Loop Sigil",
+        "icon": "glyphrunner_t2.png",
+        "target": "enemy",
+        "range": 7,
+        "staminaCost": 10,
+        "cooldown": 2,
+        "description": "Write a recursion into their flesh. On a Marked target, the loop runs once immediately.",
+        "impactVfx": "PA_Hacker_Virus_Overheat.hackParticle",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "ifTargetHas": "@Mark" },
+          { "do": "effect", "effect": "@Loop" }
+        ],
+        "perk": {
+          "name": "Infinite Loop",
+          "addActions": [
+            { "do": "damage", "type": "Energy", "min": 2, "max": 3, "ifTargetHas": "@Loop" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Sever Sigil",
+        "icon": "glyphrunner_t3.png",
+        "target": "enemy",
+        "range": 1.5,
+        "melee": true,
+        "dodgeable": true,
+        "staminaCost": 12,
+        "cooldown": 3,
+        "description": "Cut a sigil through their armor. On a Marked target it compiles an exploit; on a Looping one it overloads the loop.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect",
+        "sound": "event:/Abilities/Misc/DualWield_SinisterStrike",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 2, "max": 5, "scale": "Agility", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@Compiled", "ifTargetHas": "@Mark" },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 5, "ifTargetHas": "@Loop" },
+          { "do": "effect", "effect": "@Sever" }
+        ],
+        "perk": {
+          "name": "Deep Cut",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "name": "Run Program",
+        "icon": "glyphrunner_t4.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 25,
+        "cooldown": 10,
+        "description": "Run the program. Every glyph on the target fires at once and is used up.",
+        "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+        "sound": "sfx/glyph_runprogram.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "ifTargetHas": "@Mark", "consume": true },
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "ifTargetHas": "@Loop", "consume": true },
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "trueDamage": true, "ifTargetHas": "@Sever", "consume": true }
+        ],
+        "perk": {
+          "name": "Root Access",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Stack Overflow",
+        "icon": "glyphrunner_t5.png",
+        "target": "self",
+        "radius": 6,
+        "staminaCost": 30,
+        "cooldown": 18,
+        "description": "Push every half-written glyph in the room past its buffer. The results are rarely what you planned and usually explosive.",
+        "castVfx": "PA_Hacker_Command.hackParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "event:/Abilities/Prototype/Thunderclap_Fire",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "ifTargetHas": "@Mark" },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "ifTargetHas": "@Loop" },
+          { "do": "stun", "turns": 1, "ifTargetHas": "@Sever" },
+          { "do": "effect", "effect": "CONFUSE", "chance": 30, "ifTargetHas": "@Compiled" }
+        ],
+        "perk": {
+          "name": "Buffer Overrun",
+          "chanceBonus": 30
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Daisy-Chain Cipher",
+        "icon": "glyphrunner_t6.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 20,
+        "cooldown": 8,
+        "description": "Write one glyph that copies itself. It runs through the target, then hops from Marked host to Marked host, leaving a Loop in each and compiling on anything already Severed.",
+        "impactVfx": "PA_Hacker_Hack.hackParticle",
+        "sound": "audio_licensed/glyph_mark.wav",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3.5,
+            "effect": "@Mark",
+            "falloff": 0.85,
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
+              { "do": "effect", "effect": "@Compiled", "ifTargetHas": "@Sever" },
+              { "do": "effect", "effect": "@Loop" }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Polymorphic Worm",
+          "damageMult": 1.3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Self-Amending Script",
+        "icon": "glyphrunner_t7.png",
+        "type": "passive",
+        "description": "Your glyphs have started finishing each other's sentences. A Mark grows a Loop, a Loop grows a Sever, and anyone who swings at you and misses gets written down.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "maxPerTurn": 2,
+            "actions": [
+              { "do": "effect", "effect": "@Sever", "ifTargetHas": "@Loop", "unlessTargetHas": "@Sever" },
+              { "do": "effect", "effect": "@Loop", "ifTargetHas": "@Mark", "unlessTargetHas": "@Loop" }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 50,
+            "actions": [
+              { "do": "effect", "effect": "@Mark" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

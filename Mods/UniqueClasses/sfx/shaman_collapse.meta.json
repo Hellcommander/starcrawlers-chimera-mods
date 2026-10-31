@@ -1,0 +1,204 @@
+{
+  "prompt": "quantum collapse, deep implosion whoom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, quantum collapse, deep implosion whoom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.14546018838882446,
+  "source_corr": 0.04163908213376999,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7adec14e1c2d9ca9",
+      "score": 0.5837709903717041,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 23.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "2d52d477c9a76fda",
+      "score": 0.570029616355896,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 19.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3289ce165558c9c7",
+      "score": 0.5677873492240906,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 20.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "065493491f9cd762",
+      "score": 0.5662244558334351,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 20.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8f9fba4cf2ac19f8",
+      "score": 0.5633111596107483,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 12.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "539275d5008d200f",
+      "score": 0.5558311343193054,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 16.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "76abfcffbc2e8e83",
+      "score": 0.5542252063751221,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 48.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "67b7c2b356872947",
+      "score": 0.5523695349693298,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 15.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "5a89fc22e4785aed",
+      "score": 0.5511171221733093,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 38.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "58ce2ceeb7fd422d",
+      "score": 0.5479273200035095,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 10.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "7adec14e1c2d9ca9",
+    "2d52d477c9a76fda",
+    "3289ce165558c9c7",
+    "065493491f9cd762",
+    "8f9fba4cf2ac19f8",
+    "539275d5008d200f",
+    "76abfcffbc2e8e83",
+    "67b7c2b356872947",
+    "5a89fc22e4785aed",
+    "58ce2ceeb7fd422d"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\shaman_collapse.wav",
+  "sample_rate": 44100
+}

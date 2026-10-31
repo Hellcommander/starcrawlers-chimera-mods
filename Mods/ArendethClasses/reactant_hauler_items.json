@@ -1,0 +1,19 @@
+{
+  "items": [
+    { "id": "RhOilDrum", "base": "CONSUME_TemperedGlassPhial", "icon": "items/rh_oil_drum.png", "model": { "mesh": "models/items/rh_oil_drum.glb", "scale": 0.32 },
+      "name": "Oil Drum", "description": "A dented little drum of engine oil. Thrown, it splits and slicks everything it lands on. Oil and fire don't stay apart for long.",
+      "rarity": "Common", "value": 2, "stackMax": 10, "tags": { "REACTANT": 1 } },
+    { "id": "RhEmberPot", "base": "CONSUME_TemperedGlassPhial", "icon": "items/rh_ember_pot.png", "model": { "mesh": "models/items/rh_ember_pot.glb", "scale": 0.3 },
+      "name": "Ember Pot", "description": "A clay-lined canister of live coals from a reactor vent. It bursts into flame on impact.",
+      "rarity": "Common", "value": 2, "stackMax": 10, "tags": { "REACTANT": 1 } },
+    { "id": "RhCoolantKeg", "base": "CONSUME_TemperedGlassPhial", "icon": "items/rh_coolant_keg.png", "model": { "mesh": "models/items/rh_coolant_keg.glb", "scale": 0.32 },
+      "name": "Coolant Keg", "description": "Frosted-over keg of reactor coolant. It frosts whatever it splashes, and boils into steam if fire meets it.",
+      "rarity": "Common", "value": 2, "stackMax": 10, "tags": { "REACTANT": 1 } },
+    { "id": "RhBrineJug", "base": "CONSUME_TemperedGlassPhial", "icon": "items/rh_brine_jug.png", "model": { "mesh": "models/items/rh_brine_jug.glb", "scale": 0.3 },
+      "name": "Brine Jug", "description": "Salt brine from the desalinators. It carries a current far too well, and freezes hard with coolant.",
+      "rarity": "Common", "value": 2, "stackMax": 10, "tags": { "REACTANT": 1 } },
+    { "id": "RhGritSack", "base": "CONSUME_TemperedGlassPhial", "icon": "items/rh_grit_sack.png", "model": { "mesh": "models/items/rh_grit_sack.glb", "scale": 0.3 },
+      "name": "Grit Sack", "description": "A sack of blasting grit swept from the hull yards. It scours and blinds, and turns oil into sucking sludge.",
+      "rarity": "Common", "value": 2, "stackMax": 10, "tags": { "REACTANT": 1 } }
+  ]
+}

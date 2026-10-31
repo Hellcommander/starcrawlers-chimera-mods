@@ -1,0 +1,1129 @@
+{
+  "synergies": [
+    {
+      "id": "CutlassAndDirk",
+      "name": "Cutlass and Dirk",
+      "trees": [
+        "MOD_Corsair",
+        "SKILLTREE_DualWield"
+      ],
+      "description": "One blade for show and one for business: Sinister Strike hits may pocket Spoils, and hits on Gashed foes may spend one to Gash the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils",
+                "ifSelfHas": "EFFECT_DualWield_SinisterStrike"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Corsair@Spoils",
+                  "of": "self"
+                },
+                {
+                  "has": "#Gashed"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Gashed",
+                    "stacks": 1
+                  }
+                ]
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils",
+                "stacks": -1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PowderInThePurse",
+      "name": "Powder in the Purse",
+      "trees": [
+        "MOD_Corsair",
+        "MOD_Demolitionist"
+      ],
+      "description": "Pirate and sapper split the take: hits on charged foes may slip Spoils into your pocket, and a kill made with three or more Spoils may stick a Sticky Charge on everyone standing near the body. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "MOD_Demolitionist@Charge",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 30,
+            "radius": 2,
+            "when": {
+              "value": "stacks:MOD_Corsair@Spoils",
+              "of": "self",
+              "atLeast": 3
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TamperSeal",
+      "name": "Tamper Seal",
+      "trees": [
+        "MOD_Demolitionist",
+        "SKILLTREE_Security"
+      ],
+      "description": "You wire your own pockets shut: whoever strikes you may walk away carrying a Sticky Charge, and hits on charged foes may trip a hidden boobytrap under them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "cooldown": 3,
+            "when": {
+              "has": "MOD_Demolitionist@Charge"
+            },
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Security_Boobytrap",
+                "turns": 4
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HipFireCadence",
+      "name": "Hip-Fire Cadence",
+      "trees": [
+        "MOD_GunKata",
+        "SKILLTREE_Pistolier"
+      ],
+      "description": "A pistol held low keeps the count: crits may add a beat of Rhythm, and shots fired while Locked In may leave the target Reeling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_GunKata@Rhythm"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling",
+                "ifSelfHas": "MOD_GunKata@Zone"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OffbeatPhase",
+      "name": "Offbeat Phase",
+      "trees": [
+        "MOD_GunKata",
+        "MOD_PhaseDrifter"
+      ],
+      "description": "You fire between the beats and between the frames: hits while Phased may add a beat of Rhythm, and dodges while Locked In may slip you Phased. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_GunKata@Rhythm",
+                "ifSelfHas": "MOD_PhaseDrifter@Phased"
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Phased",
+                "ifSelfHas": "MOD_GunKata@Zone"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BenchrestLoads",
+      "name": "Benchrest Loads",
+      "trees": [
+        "MOD_Longshot",
+        "SKILLTREE_BulletFarmer"
+      ],
+      "description": "Hand-poured rounds for a patient rifle: crits may settle another stack of Steady Aim, and hits on foes carrying Reaper Rounds may paint them Marked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Longshot@Steady"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked",
+                "ifTargetHas": "EFFECT_ReaperRounds"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SightedSigil",
+      "name": "Sighted Sigil",
+      "trees": [
+        "MOD_Longshot",
+        "MOD_Glyphrunner"
+      ],
+      "description": "Your crosshairs and your glyphs agree on the target: hits on foes with a Glyph: Mark may paint them Marked, and hits on Marked foes while Steady may cut a Sever through their armour. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked",
+                "ifTargetHas": "MOD_Glyphrunner@Mark"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Sever",
+                "ifSelfHas": "MOD_Longshot@Steady",
+                "ifTargetHas": "#Marked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PartsBinProdigy",
+      "name": "Parts Bin Prodigy",
+      "trees": [
+        "MOD_MadTinkerer",
+        "SKILLTREE_Gadgeteer"
+      ],
+      "description": "Everything you wreck goes back on the bench: kills may knock a turn off your other cooldowns, and hits while Redlined may jolt the target Shocked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "to": "self",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked",
+                "ifSelfHas": "MOD_MadTinkerer@Overclock"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NaniteSolder",
+      "name": "Nanite Solder",
+      "trees": [
+        "MOD_MadTinkerer",
+        "MOD_NaniteHerder"
+      ],
+      "description": "Your nanites solder as they eat: hits on Shocked foes may seed a Nanite Swarm, and hits on swarmed foes while Redlined may jump the swarm to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm",
+                "ifTargetHas": "#Shocked"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_MadTinkerer@Overclock",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_NaniteHerder@Swarm"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_NaniteHerder@Swarm",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OozeGrazing",
+      "name": "Ooze Grazing",
+      "trees": [
+        "MOD_NaniteHerder",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Your nanites graze on ooze: hits on foes coated in any ooze may seed a Nanite Swarm, and kills on swarmed foes may send it into the foes around them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "has": "EFFECT_Xeno_Ooze_Green",
+                  "of": "victim"
+                },
+                {
+                  "has": "EFFECT_Xeno_Ooze_Red",
+                  "of": "victim"
+                },
+                {
+                  "has": "EFFECT_Xeno_Ooze_Blue",
+                  "of": "victim"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 30,
+            "radius": 2,
+            "when": {
+              "has": "MOD_NaniteHerder@Swarm",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BookmarkedSelf",
+      "name": "Bookmarked Self",
+      "trees": [
+        "MOD_PhaseDrifter",
+        "SKILLTREE_Psykonics"
+      ],
+      "description": "A mind that keeps its place in time slips loose easily: each turn a Temporal Anomaly holds your spot may leave you Phased, and hits while Phased may replay your last attack at half power, from the moment you left. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "vfx": "PA_Psykonics_Temporal.castParticle@0.3",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Phased",
+                "ifSelfHas": "EFFECT_Psykonics_TemporalAnomaly"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_PhaseDrifter@Phased",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "echo",
+                "falloff": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SurgeOfStillness",
+      "name": "Surge of Stillness",
+      "trees": [
+        "MOD_PsiKnight",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "Speed and calm meet in the blade: hits while Surging may sharpen your Poise, and hits while your Kinetic Guard is up may shove the target back a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PsiKnight@Poise",
+                "ifSelfHas": "EFFECT_Cyberninja_Surge"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "ifSelfHas": "MOD_PsiKnight@Guard"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SwornInTwoOrders",
+      "name": "Sworn in Two Orders",
+      "trees": [
+        "MOD_PsiKnight",
+        "MOD_ReliquaryKnight"
+      ],
+      "description": "Two knightly orders keep one vigil: blows taken while the Moon Mirror is awake may sharpen your Poise, and hits while Poised with the Sun Engine awake may set the target alight. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PsiKnight@Poise",
+                "ifSelfHas": "MOD_ReliquaryKnight@MoonMirror"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_PsiKnight@Poise",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifSelfHas": "MOD_ReliquaryKnight@SunEngine"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PuppetFirmware",
+      "name": "Puppet Firmware",
+      "trees": [
+        "MOD_Puppetmaster",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "A melted mind is easy to string: hits on Mindmelted foes may tie Strings to them, and hits on foes wearing three or more Strings may leave them Reeling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "vfx": "PA_Hacker_Hack.hackParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Mindmelt"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "value": "stacks:MOD_Puppetmaster@Strings",
+              "of": "victim",
+              "atLeast": 3
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "IdolOnStrings",
+      "name": "Idol on Strings",
+      "trees": [
+        "MOD_Puppetmaster",
+        "MOD_RelicBearer"
+      ],
+      "description": "The idol learns to pull strings: hits while Idol-Ridden may tie Strings to the target, and hits on foes tangled in Strings may feed the idol another Whisper. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings",
+                "ifSelfHas": "MOD_RelicBearer@Possessed"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Puppetmaster@Strings",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RelicBearer@Whispers"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TitheOfWhispers",
+      "name": "Tithe of Whispers",
+      "trees": [
+        "MOD_RelicBearer",
+        "SKILLTREE_ThoughtLeader"
+      ],
+      "description": "Your followers pray to the idol too: kills while it whispers may feed it another Whisper, and the faithful's hits may leave foes Weakened. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RelicBearer@Whispers",
+                "ifSelfHas": "MOD_RelicBearer@Whispers"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Idol's Congregants",
+        "description": "Kneeling to the same idol as their leader, and its hits carry the idol's weight.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Weakened"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "HypertrophicSplice",
+      "name": "Hypertrophic Splice",
+      "trees": [
+        "MOD_SpliceHost",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "Muscle and mutation grow together: hits while Pumped Up in Claws form may leave them bleeding, and blows taken in Carapace form may teach your body another Adaptation. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "MOD_SpliceHost@Claws",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Bleed",
+                "ifSelfHas": "EFFECT_Bodybuilding_Pump"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_SpliceHost@Adaptation",
+                "ifSelfHas": "MOD_SpliceHost@Carapace"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HeatHardenedFlesh",
+      "name": "Heat-Hardened Flesh",
+      "trees": [
+        "MOD_SpliceHost",
+        "MOD_StarfireAdept"
+      ],
+      "description": "Your cells learn to live beside a star: blows taken during Burnout may grow another Adaptation, and hits in Claws form on Ionized foes may set them alight. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_SpliceHost@Adaptation",
+                "ifSelfHas": "MOD_StarfireAdept@Burnout"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifSelfHas": "MOD_SpliceHost@Claws",
+                "ifTargetHas": "MOD_StarfireAdept@Ionized"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BackswingEngine",
+      "name": "Backswing Engine",
+      "trees": [
+        "MOD_Juggernaut",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "Every backswing keeps the engine turning: hits during a Downswing may build Inertia, and hits on stunned foes may spend it to send them flying two tiles. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "ifSelfHas": "EFFECT_Downswing"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Juggernaut@Inertia",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_Stun"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 2
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "stacks": -1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChainedSyntax",
+      "name": "Chained Syntax",
+      "trees": [
+        "MOD_Glyphrunner",
+        "SKILLTREE_Combology"
+      ],
+      "description": "A combo is just a program with good timing: hits on Marked foes while you hold a Combo Point may write a Loop, and hits on Compiled foes may copy a Mark onto the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Loop",
+                "ifSelfHas": "EFFECT_ComboPoint",
+                "ifTargetHas": "MOD_Glyphrunner@Mark"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_Glyphrunner@Compiled"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Glyphrunner@Mark",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FourthReliquary",
+      "name": "Fourth Reliquary",
+      "trees": [
+        "MOD_ReliquaryKnight",
+        "SKILLTREE_Cursed"
+      ],
+      "description": "The cursed relic wants a place beside the other three: blows taken while the Moon Mirror is awake may turn the Evil Eye back on the attacker, and hits while the World Nail is awake may leave foes Weakened. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "EFFECT_EvilEye_Curse",
+                "ifSelfHas": "MOD_ReliquaryKnight@MoonMirror"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Weakened",
+                "ifSelfHas": "MOD_ReliquaryKnight@WorldNail"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChromeHeatsink",
+      "name": "Chrome Heatsink",
+      "trees": [
+        "MOD_StarfireAdept",
+        "SKILLTREE_Cybertechnician"
+      ],
+      "description": "Unobtanium chrome makes a fine radiator: each turn of Burnout may be vented off through your plating, and hits while you run five or more Stellar Heat may dump two of it into the target, setting them alight. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "when": {
+              "has": "MOD_StarfireAdept@Burnout",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "MOD_StarfireAdept@Burnout",
+                "ifSelfHas": "EFFECT_Cybertechnician_Chrome"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "value": "stacks:MOD_StarfireAdept@Heat",
+              "of": "self",
+              "atLeast": 5
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_StarfireAdept@Heat",
+                "stacks": -2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BattleDirge",
+      "name": "Battle Dirge",
+      "trees": [
+        "MOD_NullChorister",
+        "SKILLTREE_Barbarian"
+      ],
+      "description": "Your war cries finally find their key: hits on Smashed foes may leave them Off-Key, and killing an Off-Key foe may add two Dissonance to the song. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@OffKey",
+                "ifTargetHas": "EFFECT_Barbarian_Slow"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "when": {
+              "has": "MOD_NullChorister@OffKey",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_NullChorister@Dissonance",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FrostbittenSeconds",
+      "name": "Frostbitten Seconds",
+      "trees": [
+        "MOD_ParadoxWitch",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Cold slows the clock enough to write on it: hits on Chilled foes may open a Wound Ledger, and hits on foes under Accelerated Aging may Chill them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Ledger",
+                "ifTargetHas": "EFFECT_Chill"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Chill",
+                "turns": 2,
+                "ifTargetHas": "MOD_ParadoxWitch@Aging"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FlashOfMaybe",
+      "name": "Flash of Maybe",
+      "trees": [
+        "MOD_ProbabilityShaman",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "After a flashbang nobody is sure what happened: hits on Blinded foes may bank Possibility, and dodging while Unobserved may leave the attacker Blinded. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_Blind",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility"
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "EFFECT_Blind",
+                "turns": 2,
+                "ifSelfHas": "MOD_ProbabilityShaman@Unobserved"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PrayerChips",
+      "name": "Prayer Chips",
+      "trees": [
+        "MOD_OddsBreaker",
+        "SKILLTREE_Gunslinger"
+      ],
+      "description": "Every spray is a prayer and every prayer is a bet: hits while you Spray 'n Pray may stretch your Lucky Run, and hits on Staked foes may lay the same stake on the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_OddsBreaker@LuckyRun",
+                "ifSelfHas": "EFFECT_SprayPray"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_OddsBreaker@Staked"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_OddsBreaker@Staked",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

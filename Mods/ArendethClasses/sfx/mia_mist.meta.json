@@ -1,0 +1,205 @@
+{
+  "prompt": "low rolling hiss of toxic gas spreading, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, low rolling hiss of toxic gas spreading, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of horror, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0011879419907927513,
+  "source_corr": 0.01819845661520958,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "92e71bc045d7a519",
+      "score": 0.5058067440986633,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 13 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "9319a0293ae55509",
+      "score": 0.4861132800579071,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 19 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "62a0e465afc30a3e",
+      "score": 0.48536553978919983,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/48/NOISE ALCHEMY - HOSTILE 13 48k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "b1a0f36ccf00092c",
+      "score": 0.48313090205192566,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/48/NOISE ALCHEMY - HOSTILE 19 48k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "efb6159c2494c889",
+      "score": 0.45703762769699097,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-49.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d79c224e10952359",
+      "score": 0.45654937624931335,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-3.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "3e3b1fd9bc3ebafc",
+      "score": 0.4524931311607361,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 14 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "da5bd590c64f2a96",
+      "score": 0.45208120346069336,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-69.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "3d96f67e38e8a7f7",
+      "score": 0.4459543526172638,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DRAGON WINGS.zip",
+      "inner": "NOISE ALCHEMY- DRAGON WINGS/NOISE ALCHEMY- DRAGON WINGS 24.wav",
+      "license": "reference",
+      "tags": [
+        "dragon",
+        "wings",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "e7183bb454e9f41e",
+      "score": 0.4457780718803406,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 29_REV.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "92e71bc045d7a519",
+    "9319a0293ae55509",
+    "62a0e465afc30a3e",
+    "b1a0f36ccf00092c",
+    "efb6159c2494c889",
+    "d79c224e10952359",
+    "3e3b1fd9bc3ebafc",
+    "da5bd590c64f2a96",
+    "3d96f67e38e8a7f7",
+    "e7183bb454e9f41e"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_mist.wav",
+  "sample_rate": 44100
+}

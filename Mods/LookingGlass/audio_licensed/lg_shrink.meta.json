@@ -1,0 +1,225 @@
+{
+  "prompt": "magical shrinking sound, rising slide whistle with glittering sparkle",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "8b012e807d29cc8c",
+      "score": 0.4748563766479492,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 21.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "e701ced284fcc443",
+      "score": 0.46405085921287537,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Events/Event 21.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "events",
+        "event"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "545d037b526380b4",
+      "score": 0.4437411427497864,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/48K/NOISE ALCHEMY- CYNETIC 114 48k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    },
+    {
+      "id": "a4da0e9774bc1ed7",
+      "score": 0.4387566149234772,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 42.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "f4eec47b2bce692d",
+      "score": 0.4378002882003784,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/44.1K/NOISE ALCHEMY- CYNETIC 114 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "1k",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    },
+    {
+      "id": "3318f476bc052003",
+      "score": 0.436050683259964,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Misc/Special Move 2.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "special",
+        "move"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "b3a5fcdd453b230b",
+      "score": 0.4266822934150696,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shimmer D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shimmer"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "2062741e2bdea4e2",
+      "score": 0.4253029227256775,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shimmer B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shimmer"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "f1b39915f793b893",
+      "score": 0.42418932914733887,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "556f5ea9c452dc2b",
+      "score": 0.422258198261261,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/48K/NOISE ALCHEMY- CYNETIC 111 48k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    }
+  ],
+  "used_ids": [
+    "8b012e807d29cc8c",
+    "e701ced284fcc443",
+    "545d037b526380b4",
+    "a4da0e9774bc1ed7",
+    "f4eec47b2bce692d",
+    "3318f476bc052003",
+    "b3a5fcdd453b230b",
+    "2062741e2bdea4e2",
+    "f1b39915f793b893",
+    "556f5ea9c452dc2b"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_shrink.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.064,
+  "semitones": 5,
+  "width": 0.557,
+  "listen": {
+    "match": 0.464,
+    "clean": -2.058,
+    "faults": []
+  }
+}

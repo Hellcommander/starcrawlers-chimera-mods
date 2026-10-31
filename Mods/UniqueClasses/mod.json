@@ -1,0 +1,11 @@
+{
+  "id": "UniqueClasses",
+  "name": "Unique Classes",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Seven sci-fantasy caster and hybrid classes: Null Chorister, Paradox Witch, Starfire Adept, Glyphrunner, Probability Shaman, Reliquary Knight, Axiomancer.",
+  "requires": [
+    "Library"
+  ]
+}

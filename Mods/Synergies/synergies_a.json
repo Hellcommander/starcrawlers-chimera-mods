@@ -1,0 +1,696 @@
+{
+  "synergies": [
+    {
+      "id": "KindredCurrent",
+      "name": "Kindred Current",
+      "trees": [
+        "MOD_ArcGunner",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Electrified enemies count as Shocked for your arc work, and your hits on them may arc that on to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked",
+                "ifTargetHas": "EFFECT_Shock"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_Shock"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Shocked",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HammerSpark",
+      "name": "Hammer Spark",
+      "trees": [
+        "MOD_ArcGunner",
+        "SKILLTREE_Pistolier"
+      ],
+      "description": "Quick pistol work feeds the grip: crits may build Static, and while your grip holds it your shots may leave the target Shocked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_ArcGunner@Static",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked"
+              }
+            ]
+          },
+          {
+            "on": "crit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ArcGunner@Static"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SharedCapacitance",
+      "name": "Shared Capacitance",
+      "trees": [
+        "MOD_ArcGunner",
+        "MOD_Coilwright"
+      ],
+      "description": "Coil Static and arc Shock feed each other: hitting a target loaded with one sometimes adds the other. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked",
+                "ifTargetHas": "MOD_Coilwright@Static"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Coilwright@Static",
+                "ifTargetHas": "#Shocked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BulkheadSeating",
+      "name": "Bulkhead Seating",
+      "trees": [
+        "MOD_Castborn",
+        "SKILLTREE_Shieldbearer"
+      ],
+      "description": "Blows you take while ward-fitted may spatter the attacker with slag, and while braced they may start your plates mending. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Castborn@Slagged",
+                "ifSelfHas": "MOD_Castborn@WardFitting"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Castborn@Mending",
+                "ifSelfHas": "EFFECT_Shieldbearer_Brace"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FoundryKin",
+      "name": "Foundry Kin",
+      "trees": [
+        "MOD_Castborn",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Your junkers, turrets and watchmen are poured like you: their hits may leave foes Slagged. Each level adds 5% to these odds.",
+      "allies": {
+        "name": "Foundry-Poured",
+        "description": "Cast from the same melt as its maker, and it still runs hot.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Castborn@Slagged"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "MainsTieIn",
+      "name": "Mains Tie-In",
+      "trees": [
+        "MOD_Coilwright",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Your pets and turrets are wired into your rig: their hits may load Static. Each level adds 5% to these odds.",
+      "allies": {
+        "name": "Grid-Tied",
+        "description": "Wired into its maker's capacitor rig.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Coilwright@Static"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "LiveTripwire",
+      "name": "Live Tripwire",
+      "trees": [
+        "MOD_Coilwright",
+        "MOD_ReactionArchitect"
+      ],
+      "description": "Your reactions carry current: when one goes off it may load two Static onto that enemy and arc two more to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "reaction",
+            "chance": 40,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Coilwright@Static",
+                    "stacks": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ArticlesOfPlunder",
+      "name": "Articles of Plunder",
+      "trees": [
+        "MOD_Corsair",
+        "SKILLTREE_SpacePirate"
+      ],
+      "description": "Grog in your belly turns hits into Spoils, enemies wearing the Black Spot may be Gashed under your blade, and killing one may pay out two Spoils. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils",
+                "ifSelfHas": "EFFECT_Pirate_GrogBottle"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Gashed",
+                "ifTargetHas": "EFFECT_Pirate_BlackSpot"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "when": {
+              "has": "EFFECT_Pirate_BlackSpot",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RiggingDancer",
+      "name": "Rigging Dancer",
+      "trees": [
+        "MOD_Corsair",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "Dodging a blow may leave the attacker Reeling and slip a little Spoils into your pocket. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Corsair@Spoils"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OrdnanceDrill",
+      "name": "Ordnance Drill",
+      "trees": [
+        "MOD_Demolitionist",
+        "SKILLTREE_Soldier"
+      ],
+      "description": "Drilled ordnance work packs charges tighter: hits on an already charged enemy may stick another charge. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge",
+                "ifTargetHas": "MOD_Demolitionist@Charge"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ShortFuse",
+      "name": "Short Fuse",
+      "trees": [
+        "MOD_Demolitionist",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Burning enemies may catch a sticky charge, and hits on charged enemies may pass a charge to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge",
+                "ifTargetHas": "EFFECT_Fire"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_Demolitionist@Charge"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Demolitionist@Charge",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RunawayBoiler",
+      "name": "Runaway Boiler",
+      "trees": [
+        "MOD_Emberhorn",
+        "SKILLTREE_Barbarian"
+      ],
+      "description": "Kills keep the rampage rolling: they may stoke Head of Steam twice over, and hits on Smashed foes may leave a horn wound. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Emberhorn@Steam",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Emberhorn@Gored",
+                "ifTargetHas": "EFFECT_Barbarian_Slow"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RaggedEdges",
+      "name": "Ragged Edges",
+      "trees": [
+        "MOD_Emberhorn",
+        "SKILLTREE_Blademaster"
+      ],
+      "description": "Bleeding enemies may take a horn wound too, and horn wounds may start to bleed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_SerratedSpines.PS_impact",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Emberhorn@Gored",
+                "ifTargetHas": "EFFECT_Bleed"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Bleed",
+                "ifTargetHas": "MOD_Emberhorn@Gored"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThermalShear",
+      "name": "Thermal Shear",
+      "trees": [
+        "MOD_EntropyWeaver",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Electrified enemies fray under your hits, and chilled ones start to smoulder as heat meets frost. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed",
+                "ifTargetHas": "EFFECT_Shock"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Cinderlace",
+                "ifTargetHas": "EFFECT_Chill"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OozeTitration",
+      "name": "Ooze Titration",
+      "trees": [
+        "MOD_Etcher",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Acid-burned enemies pick up Scored layers, and ooze poison turns into a toxin your Last Layer can burn. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "vfx": "EFFECT_Xeno_Debuff_Green",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "ifTargetHas": "EFFECT_Acid"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned",
+                "ifTargetHas": "EFFECT_Poison"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "MycelialEtching",
+      "name": "Mycelial Etching",
+      "trees": [
+        "MOD_Etcher",
+        "MOD_GloomsporeWarden"
+      ],
+      "description": "Rot roots in scored flesh: your hits on Scored enemies may seed Gloomrot, and your summons' hits score their targets. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot",
+                "ifTargetHas": "MOD_Etcher@Etched"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Etchant Spores",
+        "description": "Its touch leaves an acid line in whatever it strikes.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "UnderdarkCommunion",
+      "name": "Underdark Communion",
+      "trees": [
+        "MOD_GloomsporeWarden",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "The void feeds the rot: your tentacles and caps spread Gloomrot, and hits on rotting enemies may drain them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Void_Psyker_Drain",
+                "ifTargetHas": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Rot-Touched",
+        "description": "Spores ride every lash it makes.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "MycelialStatic",
+      "name": "Mycelial Static",
+      "trees": [
+        "MOD_EntropyWeaver",
+        "MOD_GloomsporeWarden"
+      ],
+      "description": "Rot frays and fraying rots: your hits spread each decay to the other, and any summon that dies snaps threads through rotting foes. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed",
+                "ifTargetHas": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot",
+                "ifTargetHas": "MOD_EntropyWeaver@Frayed"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Threaded Spores",
+        "description": "When this summon dies, threads of static run from it through the rotting enemies nearby and fray them.",
+        "onDeathActions": [
+          {
+            "do": "chain",
+            "jumps": 2,
+            "radius": 2.5,
+            "effect": "MOD_GloomsporeWarden@Gloomrot",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed",
+                "ifTargetHas": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

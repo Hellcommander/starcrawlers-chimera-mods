@@ -1,0 +1,192 @@
+{
+  "prompt": "deep rumbling bellow of a huge shelled beast, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, deep rumbling bellow of a huge shelled beast, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of alien, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.036743197590112686,
+  "source_corr": 0.03388969600200653,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "1b371ec49fe6f17a",
+      "score": 0.6394583582878113,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-54.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "efb6159c2494c889",
+      "score": 0.6282922029495239,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-49.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "f7969988cfaf2a6d",
+      "score": 0.6116360425949097,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dark horns.zip",
+      "inner": "Dark Fantasy Studio- Dark horns/Dark Fantasy Studio- Dark horns 32.wav",
+      "license": "reference",
+      "tags": [
+        "dark",
+        "horns",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "709646a4bcb79a84",
+      "score": 0.6066592931747437,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-56.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "4db7d35a0fa3d9be",
+      "score": 0.5891526937484741,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-53.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "712a681543e445e2",
+      "score": 0.5874630808830261,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dark horns.zip",
+      "inner": "Dark Fantasy Studio- Dark horns/Dark Fantasy Studio- Dark horns 17.wav",
+      "license": "reference",
+      "tags": [
+        "dark",
+        "horns",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "83844a89ae38d1df",
+      "score": 0.5872797966003418,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-46.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "f731c6a9df7a50f1",
+      "score": 0.5843386650085449,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 18.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "0bb837aa2489a6c3",
+      "score": 0.5774124264717102,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 19.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "04ae6c32ac2afdd4",
+      "score": 0.5756758451461792,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-48.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "1b371ec49fe6f17a",
+    "efb6159c2494c889",
+    "f7969988cfaf2a6d",
+    "709646a4bcb79a84",
+    "4db7d35a0fa3d9be",
+    "712a681543e445e2",
+    "83844a89ae38d1df",
+    "f731c6a9df7a50f1",
+    "0bb837aa2489a6c3",
+    "04ae6c32ac2afdd4"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_bellow.wav",
+  "sample_rate": 44100
+}

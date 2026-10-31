@@ -1,0 +1,193 @@
+{
+  "prompt": "thick wet sludge sucking and setting, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.8,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "1e469cb2d33fd18b",
+      "score": 0.5866490006446838,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_5.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4cae8958713c1768",
+      "score": 0.5756202936172485,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_28.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a6541571441f84e3",
+      "score": 0.5689684152603149,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_4.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "dd90d2159d72f633",
+      "score": 0.5500268340110779,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_5 (seamless).wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio",
+        "seamless"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "168716bf77513a1d",
+      "score": 0.5484074354171753,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_3.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "174d6265bb55d1cd",
+      "score": 0.5352334976196289,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_24.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "ab4cc095057dc416",
+      "score": 0.5317438840866089,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "1d22a6cc0cd8748a",
+      "score": 0.5306758284568787,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_2.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "669f1fad7062ee66",
+      "score": 0.5303626656532288,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_23.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "98896051f8cebb3c",
+      "score": 0.525097131729126,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_25.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "1e469cb2d33fd18b",
+    "4cae8958713c1768",
+    "a6541571441f84e3",
+    "dd90d2159d72f633",
+    "168716bf77513a1d",
+    "174d6265bb55d1cd",
+    "ab4cc095057dc416",
+    "1d22a6cc0cd8748a",
+    "669f1fad7062ee66",
+    "98896051f8cebb3c"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_sludge.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.175,
+  "semitones": 5,
+  "width": 0.541,
+  "listen": {
+    "match": 0.543,
+    "clean": -4.781,
+    "faults": []
+  }
+}

@@ -1,0 +1,16 @@
+{ "creatures": [
+  { "id": "GlacierSentinel", "name": "Glacier Sentinel", "subtitle": "Ice Engine",
+    "description": "A golem of glacier ice run on stolen heat. Its blows draw the warmth out of whatever they hit.",
+    "type": "Supernatural", "role": "brawler", "healthPerLevel": 18, "health": 2.4,
+    "stats": { "Dodge": -5 }, "resists": { "Cryo": 75, "Fire": -25, "Crushing": 20, "Piercing": 20 },
+    "model": { "mesh": "models/glacier_sentinel.glb", "height": 1.6, "rotation": [0, 180, 0], "glow": "#7fdcff", "glowStrength": 0.35 },
+    "skills": [
+      { "id": "RimeFist", "name": "Rime Fist", "verb": "hammers an ice fist into", "target": "enemy", "range": 1.5,
+        "cooldown": 0, "priority": 1, "melee": true, "dodgeable": true, "clip": "attack2", "impactVfx": "KmFrostHit@0.6",
+        "actions": [ { "do": "damage", "type": "Crushing", "min": 2, "max": 4 }, { "do": "damage", "type": "Cryo", "min": 1, "max": 2 },
+                     { "do": "effect", "effect": "MOD_KelvinMagus@Supercooled" } ] },
+      { "id": "GlacialSlam", "name": "Glacial Slam", "verb": "brings both fists down on everyone around it", "target": "area",
+        "aroundSelf": true, "radius": 1.6, "range": 1.5, "cooldown": 4, "priority": 5, "melee": true, "clip": "attack",
+        "impactVfx": "KmShatter@0.5",
+        "actions": [ { "do": "damage", "type": "Crushing", "min": 3, "max": 5 }, { "do": "effect", "effect": "MOD_KelvinMagus@Supercooled", "stacks": 2 } ] } ] }
+] }

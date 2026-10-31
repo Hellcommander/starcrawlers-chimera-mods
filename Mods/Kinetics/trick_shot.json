@@ -1,0 +1,534 @@
+{
+  "id": "MOD_TrickShot",
+  "name": "Trick Shot",
+  "description": "Casino-deck show shooters who bank slugs off spinning credit chits. Coins get flicked, dropped by the dead and thrown at feet, and every bank shot ricochets off all of them.\n\nSetup gunslinger: coins, ricochets, a deadeye stance and a capstone that cashes in the room. Favors [AGL] and [REC].",
+  "archetype": "Guile",
+  "icon": "icons/trick_shot.png",
+  "attributePriorities": {
+    "Agility": 4,
+    "Recognition": 4
+  },
+  "effects": [
+    {
+      "id": "Deadeye",
+      "name": "Deadeye",
+      "description": "Every angle in the room lines up.",
+      "duration": 2,
+      "stats": {
+        "RangedAccuracy": 20,
+        "Crit": 15
+      }
+    },
+    {
+      "id": "Ante",
+      "name": "Ante",
+      "debuff": true,
+      "description": "You've had a shot at this one. If it drops, a coin drops with it.",
+      "duration": 2,
+      "onDeathActions": [
+        {
+          "do": "field",
+          "fieldName": "Coin",
+          "turns": 10,
+          "affects": "enemies",
+          "onEnter": false,
+          "model": {
+            "mesh": "models/coin.obj",
+            "texture": "models/coin.png",
+            "scale": 0.9,
+            "offset": [
+              0,
+              0.45,
+              0
+            ],
+            "bob": 0.06,
+            "spin": 140,
+            "glow": "#FFD966",
+            "glowStrength": 0.6
+          },
+          "actions": []
+        }
+      ]
+    },
+    {
+      "id": "Dazzled",
+      "name": "Dazzled",
+      "debuff": true,
+      "description": "Something shiny went past their eyes at the wrong moment.",
+      "duration": 2,
+      "stats": {
+        "RangedAccuracy": -15,
+        "Dodge": -10
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Lucky Streak",
+        "icon": "icons/lucky_streak.png",
+        "description": "Whatever you put down drops a coin where it falls, and a critical hit sometimes knocks a coin loose at their feet.",
+        "procs": [
+          {
+            "on": "hit",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Ante"
+              }
+            ]
+          },
+          {
+            "on": "crit",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "field",
+                "fieldName": "Coin",
+                "turns": 10,
+                "affects": "enemies",
+                "onEnter": false,
+                "model": {
+                  "mesh": "models/coin.obj",
+                  "texture": "models/coin.png",
+                  "scale": 0.9,
+                  "offset": [
+                    0,
+                    0.45,
+                    0
+                  ],
+                  "bob": 0.06,
+                  "spin": 140,
+                  "glow": "#FFD966",
+                  "glowStrength": 0.6
+                },
+                "actions": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Bank Shot",
+        "icon": "icons/bank_shot.png",
+        "range": 8,
+        "staminaCost": 8,
+        "cooldown": 0,
+        "description": "A clean shot at the target - and then the round bounces off every coin on the floor, each ricochet into the nearest enemy to that coin. The coins are spent.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact@0.6",
+        "sound": "audio_licensed/trick_bank_shot.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Ballistic",
+            "min": 3,
+            "max": 6,
+            "scale": "Agility+Recognition",
+            "scaleMult": 0.25,
+            "perRank": 1
+          },
+          {
+            "do": "ricochet",
+            "fieldName": "Coin",
+            "radius": 4,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Ballistic",
+                "min": 3,
+                "max": 5,
+                "scale": "Agility+Recognition",
+                "scaleMult": 0.15,
+                "perRank": 1
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Hot Loads",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Coin Flick",
+        "icon": "icons/coin_flick.png",
+        "range": 6,
+        "radius": 0,
+        "staminaCost": 3,
+        "cooldown": 1,
+        "instant": true,
+        "description": "Flick a coin onto the floor exactly where you want a bounce. Doesn't end your turn. Coins stay for ten turns.",
+        "actions": [
+          {
+            "do": "field",
+            "fieldName": "Coin",
+            "turns": 10,
+            "affects": "enemies",
+            "onEnter": false,
+            "model": {
+              "mesh": "models/coin.obj",
+              "texture": "models/coin.png",
+              "scale": 0.9,
+              "offset": [
+                0,
+                0.45,
+                0
+              ],
+              "bob": 0.06,
+              "spin": 140,
+              "glow": "#FFD966",
+              "glowStrength": 0.6
+            },
+            "actions": []
+          }
+        ],
+        "perk": {
+          "name": "Pocketful",
+          "rangeDelta": 2
+        },
+        "sound": "audio_licensed/trick_coin_flick.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Pocket Change",
+        "icon": "icons/pocket_change.png",
+        "range": 6,
+        "radius": 1.6,
+        "staminaCost": 10,
+        "cooldown": 5,
+        "description": "Hurl a fistful of coins at a group. Everyone in it is dazzled, and a coin lands at each of their feet - ready for the next bank shot.",
+        "impactVfx": "PA_Smuggler_Bounty.PS_cast@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 1,
+            "max": 3,
+            "scale": "Agility",
+            "scaleMult": 0.15
+          },
+          {
+            "do": "effect",
+            "effect": "@Dazzled"
+          },
+          {
+            "do": "field",
+            "fieldName": "Coin",
+            "turns": 10,
+            "affects": "enemies",
+            "onEnter": false,
+            "model": {
+              "mesh": "models/coin.obj",
+              "texture": "models/coin.png",
+              "scale": 0.9,
+              "offset": [
+                0,
+                0.45,
+                0
+              ],
+              "bob": 0.06,
+              "spin": 140,
+              "glow": "#FFD966",
+              "glowStrength": 0.6
+            },
+            "actions": []
+          }
+        ],
+        "perk": {
+          "name": "Big Spender",
+          "radiusDelta": 1
+        },
+        "sound": "audio_licensed/trick_pocket_change.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Deadeye",
+        "icon": "icons/deadeye.png",
+        "staminaCost": 8,
+        "cooldown": 8,
+        "description": "Read every angle in the room. Two turns of far better aim and crits, and a coin drops at your own feet.",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Deadeye"
+          },
+          {
+            "do": "field",
+            "fieldName": "Coin",
+            "turns": 10,
+            "affects": "enemies",
+            "onEnter": false,
+            "model": {
+              "mesh": "models/coin.obj",
+              "texture": "models/coin.png",
+              "scale": 0.9,
+              "offset": [
+                0,
+                0.45,
+                0
+              ],
+              "bob": 0.06,
+              "spin": 140,
+              "glow": "#FFD966",
+              "glowStrength": 0.6
+            },
+            "actions": []
+          }
+        ],
+        "perk": {
+          "name": "Steady Hands",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/trick_deadeye.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Jackpot",
+        "icon": "icons/jackpot.png",
+        "range": 8,
+        "radius": 2.5,
+        "staminaCost": 20,
+        "cooldown": 12,
+        "description": "Empty your pockets over the whole group, then fan the hammer: a coin under every one of them, and every coin in the room cashed in at once, every ricochet leaving them exposed.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact@0.6",
+        "sound": "audio_licensed/trick_jackpot.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Ballistic",
+            "min": 4,
+            "max": 7,
+            "scale": "Agility+Recognition",
+            "scaleMult": 0.3,
+            "perRank": 2
+          },
+          {
+            "do": "field",
+            "fieldName": "Coin",
+            "turns": 10,
+            "affects": "enemies",
+            "onEnter": false,
+            "model": {
+              "mesh": "models/coin.obj",
+              "texture": "models/coin.png",
+              "scale": 0.9,
+              "offset": [
+                0,
+                0.45,
+                0
+              ],
+              "bob": 0.06,
+              "spin": 140,
+              "glow": "#FFD966",
+              "glowStrength": 0.6
+            },
+            "actions": []
+          },
+          {
+            "do": "ricochet",
+            "to": "self",
+            "fieldName": "Coin",
+            "radius": 5,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Ballistic",
+                "min": 3,
+                "max": 5,
+                "scale": "Agility+Recognition",
+                "scaleMult": 0.15,
+                "perRank": 1
+              },
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "turns": 2
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "House Always Wins",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Cut the Deck",
+        "icon": "icons/cut_the_deck.png",
+        "instant": false,
+        "staminaCost": 12,
+        "cooldown": 10,
+        "description": "Hand on the holster, eyes on their hands. The next two enemies who try anything clever in front of you get shot mid-move - the trick is wasted, they're dazzled, and a coin spins down at their feet.",
+        "actions": [
+          {
+            "do": "arm",
+            "reaction": {
+              "name": "Cut the Deck",
+              "on": "special",
+              "range": 7,
+              "interrupt": true,
+              "charges": 2,
+              "turns": 8,
+              "priority": 60,
+              "vfx": "PA_Smuggler_Fistful.PS_impact@0.6",
+              "sound": "audio_licensed/trick_bank_shot.wav",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Ballistic",
+                  "min": 4,
+                  "max": 7,
+                  "scale": "Agility+Recognition",
+                  "scaleMult": 0.25,
+                  "perRank": 1
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Dazzled"
+                },
+                {
+                  "do": "field",
+                  "fieldName": "Coin",
+                  "turns": 10,
+                  "affects": "enemies",
+                  "onEnter": false,
+                  "model": {
+                    "mesh": "models/coin.obj",
+                    "texture": "models/coin.png",
+                    "scale": 0.9,
+                    "offset": [
+                      0,
+                      0.45,
+                      0
+                    ],
+                    "bob": 0.06,
+                    "spin": 140,
+                    "glow": "#FFD966",
+                    "glowStrength": 0.6
+                  },
+                  "actions": []
+                }
+              ]
+            }
+          }
+        ],
+        "perk": {
+          "name": "Stacked Deck",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/trick_deadeye.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Table Stakes",
+        "icon": "icons/table_stakes.png",
+        "description": "You play every room like the last hand of the night. A dazzled target is an open one, a critical hit puts you right back in the zone, and anyone who swings and misses leaves a coin behind.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 50,
+            "when": {
+              "has": "@Dazzled",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "victim",
+                "effect": "#Exposed",
+                "turns": 2
+              }
+            ]
+          },
+          {
+            "on": "crit",
+            "cooldown": 3,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Deadeye"
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "field",
+                "to": "attacker",
+                "fieldName": "Coin",
+                "turns": 10,
+                "affects": "enemies",
+                "onEnter": false,
+                "model": {
+                  "mesh": "models/coin.obj",
+                  "texture": "models/coin.png",
+                  "scale": 0.9,
+                  "offset": [
+                    0,
+                    0.45,
+                    0
+                  ],
+                  "bob": 0.06,
+                  "spin": 140,
+                  "glow": "#FFD966",
+                  "glowStrength": 0.6
+                },
+                "actions": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "prompt": "two rapid futuristic pistol shots, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, laser sound, two rapid futuristic pistol shots, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of voice, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.9,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.02215917967259884,
+  "archetype": "laser",
+  "references": [
+    {
+      "id": "b0306f966754052e",
+      "score": 0.39826664328575134,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/5/Dark Fantasy Studio- Sci fi voices 5- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "92af283c085d6724",
+      "score": 0.39826664328575134,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/2/Dark Fantasy Studio- Sci fi voices 2- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "8f8801162b233c2c",
+      "score": 0.39826664328575134,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/3/Dark Fantasy Studio- Sci fi voices 3- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "6724d9b491aeded7",
+      "score": 0.39826664328575134,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/1/Dark Fantasy Studio- Sci fi voices 1- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "fdd035969396320c",
+      "score": 0.39826664328575134,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/4/Dark Fantasy Studio- Sci fi voices 4- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "55e0a0b6d105a541",
+      "score": 0.291054904460907,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-47.wav",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "8b9599350ce35ac5",
+      "score": 0.2595055103302002,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-39.wav",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "71ed1770d5319add",
+      "score": 0.2591824531555176,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-35.wav",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "ce1e96d05dc5825f",
+      "score": 0.2579956650733948,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-46.wav",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "4bfb2845a4112e33",
+      "score": 0.2570264935493469,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-58.wav",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    }
+  ],
+  "used_ids": [
+    "b0306f966754052e",
+    "92af283c085d6724",
+    "8f8801162b233c2c",
+    "6724d9b491aeded7",
+    "fdd035969396320c",
+    "55e0a0b6d105a541",
+    "8b9599350ce35ac5",
+    "71ed1770d5319add",
+    "ce1e96d05dc5825f",
+    "4bfb2845a4112e33"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\gunkata_doubletap.wav",
+  "sample_rate": 44100
+}

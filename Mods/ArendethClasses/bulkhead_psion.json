@@ -1,0 +1,126 @@
+{
+  "id": "MOD_BulkheadPsion",
+  "name": "Bulkhead Psion",
+  "description": "Dockyard telekinetics who never learned to throw a punch, because they can throw the wall instead. They tear deck plating up into bulkheads, drive spikes out of the walls into whoever stands near them, and hurl enemies into steel until something gives.\n\nRaise and impale: shove foes against walls, raise bulkheads to make walls where there were none, and every wall beside an enemy is another spike waiting to come out. Scales with [STR] and [PSI].",
+  "archetype": "Muscle",
+  "icon": "bulkhead_psion.png",
+  "attributePriorities": { "Strength": 3, "PsiPower": 3, "Toughness": 1 },
+  "effects": [
+    { "id": "Pinned", "name": "Pinned to the Wall", "debuff": true, "duration": 2, "root": true, "stats": { "Dodge": -10 },
+      "description": "Smashed into the steel and held there by a mind that won't let go." },
+    { "id": "Braced", "name": "Back to the Steel", "duration": 1, "damageTakenMult": 0.8,
+      "description": "Back to the bulkhead. The wall takes some of it." }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Load-Bearing Mind", "icon": "bulkhead_psion_t0.png",
+        "description": "Every wall near you is part of your reach. Hitting an enemy that stands beside one may wrench a spike out of it, and with your own back to the steel you brace against it.",
+        "procs": [
+          { "on": "hit", "chance": 30, "maxPerTurn": 2, "when": { "value": "wallsNear", "of": "target", "atLeast": 1 }, "actions": [
+            { "do": "wallSpikes", "amount": 1, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
+              "actions": [ { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15 } ] } ] },
+          { "on": "turn", "when": { "all": [ { "inCombat": true }, { "value": "wallsNear", "atLeast": 1 } ] }, "actions": [ { "do": "effect", "to": "self", "effect": "@Braced" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Plate Shove", "icon": "bulkhead_psion_t1.png", "range": 3, "staminaCost": 8,
+        "description": "A wall of force that hurls the target away from you. If it hits steel, it stays there.",
+        "sound": "sfx/bp_shove.wav", "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "throw", "amount": 2, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.15 },
+            { "do": "effect", "effect": "@Pinned" } ] }
+        ],
+        "perk": { "name": "Heavier Hand", "description": "The force behind it doubles.", "addActions": [ { "do": "knockback", "amount": 1 } ] }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Raise Bulkhead", "icon": "bulkhead_psion_t2.png", "range": 5, "radius": 0, "staminaCost": 12, "cooldown": 6,
+        "description": "Rip the deck plating up into a wall three tiles wide across your aim. It blocks their way for a few turns, and it is a wall like any other.",
+        "sound": "sfx/bp_raise.wav",
+        "actions": [ { "do": "raiseWall", "amount": 3, "turns": 5, "model": { "mesh": "models/bp_bulkhead.glb", "scale": 1.7, "offset": [0, 0.85, 0], "glow": "#6FB8FF", "glowStrength": 0.25 } } ],
+        "perk": { "name": "Double Plating", "description": "Two more tiles of wall.", "addActions": [ { "do": "raiseWall", "amount": 5, "turns": 5, "model": { "mesh": "models/bp_bulkhead.glb", "scale": 1.7, "offset": [0, 0.85, 0], "glow": "#6FB8FF", "glowStrength": 0.25 } } ] }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Spike the Walls", "icon": "bulkhead_psion_t3.png", "range": 6, "staminaCost": 10, "cooldown": 2,
+        "description": "Every wall beside the target grows a spike, all at once. In a corner, that's two.",
+        "sound": "audio_licensed/bp_spike.wav",
+        "actions": [ { "do": "wallSpikes", "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
+          "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+                       { "do": "effect", "effect": "#Gashed" } ] } ],
+        "perk": { "name": "Barbed Steel", "description": "The spikes come out barbed.", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Crushing Corridor", "icon": "bulkhead_psion_t4.png", "range": 5, "radius": 2, "staminaCost": 16, "cooldown": 7,
+        "description": "Squeeze the space around the aim point: everyone in it is dragged together, and the walls nearby lash out at whoever ends up against them.",
+        "sound": "audio_licensed/bp_crush.wav",
+        "actions": [
+          { "do": "pull", "amount": 1, "pullToward": "center" },
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15, "perRank": 1 },
+          { "do": "wallSpikes", "amount": 2, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
+            "actions": [ { "do": "damage", "type": "Piercing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2 } ] }
+        ],
+        "perk": { "name": "Narrower", "radiusDelta": 0.5 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Smash", "name": "Hammer to the Wall", "icon": "bulkhead_psion_t5.png", "staminaCost": 14, "cooldown": 5,
+        "description": "One blow, a mind behind it: the target flies three tiles. Whatever wall it meets, a spike meets it back.",
+        "sound": "audio_licensed/bp_hammer.wav",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.3, "perRank": 2 },
+          { "do": "throw", "amount": 3, "actions": [
+            { "do": "stun", "turns": 1 },
+            { "do": "wallSpikes", "amount": 1, "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
+              "actions": [ { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Strength+PsiPower", "scaleMult": 0.25 } ] } ] }
+        ],
+        "perk": { "name": "Follow Through", "cooldownDelta": -2 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Entomb", "icon": "bulkhead_psion_t6.png", "range": 5, "staminaCost": 18, "cooldown": 9,
+        "description": "Raise steel on both sides of the target, then make every wall around it bite: the ones you just made, and any that were already there.",
+        "sound": "sfx/bp_raise.wav",
+        "actions": [
+          { "do": "raiseWall", "amount": 3, "turns": 3, "model": { "mesh": "models/bp_bulkhead.glb", "scale": 1.7, "offset": [0, 0.85, 0], "glow": "#6FB8FF", "glowStrength": 0.25 } },
+          { "do": "effect", "effect": "@Pinned" },
+          { "do": "wallSpikes", "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
+            "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 } ] }
+        ],
+        "perk": { "name": "Sealed In", "description": "The tomb stays shut a little longer.", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "The Station Answers", "icon": "bulkhead_psion_t7.png",
+        "description": "The whole hull listens to you now. Anything you kill that dies beside a wall drives one last spike into whoever stands nearest a wall around it, and walls you raise leave you a sliver of stamina when they go up.",
+        "procs": [
+          { "on": "kill", "when": { "value": "wallsNear", "of": "target", "atLeast": 1 }, "radius": 3, "actions": [
+            { "do": "wallSpikes", "amount": 1, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
+              "actions": [ { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Strength+PsiPower", "scaleMult": 0.2 } ] } ] },
+          { "on": "cast", "match": "Raise Bulkhead", "actions": [ { "do": "stamina", "to": "self", "amount": 6 } ] },
+          { "on": "cast", "match": "Entomb", "actions": [ { "do": "stamina", "to": "self", "amount": 6 } ] }
+        ]
+      }
+    }
+  ]
+}

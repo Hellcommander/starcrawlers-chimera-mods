@@ -1,0 +1,1064 @@
+{
+  "id": "MOD_RimelightSeer",
+  "name": "Rimelight Seer",
+  "description": "Seers who work the thin place between mind and matter, where starlight turns to frost. Frost compounds until it shatters, Hoarlights of cold light fight beside you and are spent as spells, tethers splinter minds, and the heavy spells cost Strain: push it to the limit and the cold turns on you. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "rimelight_seer.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "PsiPower": 3
+  },
+  "ignoresAllies": true,
+  "effects": [
+    {
+      "id": "Rimebite",
+      "name": "Rimebite",
+      "description": "Cold that feeds on itself: every layer bites harder and lays the bearer's weakness to frost a little barer. Ten layers and it shatters.",
+      "duration": 6,
+      "debuff": true,
+      "maxStacks": 10,
+      "dot": {
+        "type": "Cryo",
+        "min": 1,
+        "max": 1
+      },
+      "stats": {
+        "Dodge": -1
+      },
+      "resists": {
+        "Cryo": -1
+      },
+      "thresholds": [
+        {
+          "at": 5,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "#Chilled"
+            }
+          ]
+        }
+      ],
+      "burstAt": 10,
+      "burstRadius": 1.5,
+      "burstVfx": "PA_Elementalist_FrigidBlast.frozenRing@0.35",
+      "burstSound": "sfx/rime_overdraw.wav",
+      "burstActions": [
+        {
+          "do": "damage",
+          "type": "Cryo",
+          "min": 8,
+          "max": 14,
+          "scale": "PsiPower",
+          "scaleMult": 0.3,
+          "weapon": 0.2
+        }
+      ],
+      "onDeathActions": [
+        {
+          "do": "summon",
+          "creature": "Hoarlight",
+          "summonName": "Hoarlight",
+          "summonGroup": "Hoarlight",
+          "maxSummons": 3,
+          "effect": "@Hoarlit",
+          "turns": 25
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "Strain",
+      "name": "Rimelight Strain",
+      "description": "The heavy spells take their toll. It fades if you pace yourself; at six, the cold turns on you.",
+      "duration": 10,
+      "debuff": true,
+      "maxStacks": 6,
+      "resource": true,
+      "stats": {
+        "StaminaRegen": -1,
+        "Dodge": -2
+      },
+      "burstAt": 6,
+      "burstActions": [
+        {
+          "do": "effect",
+          "to": "self",
+          "effect": "@Rimeshock"
+        }
+      ]
+    },
+    {
+      "id": "Rimeshock",
+      "name": "Rimeshock",
+      "description": "You pushed the cold too hard and too fast. You hit softer and miss more, get hit harder, your guard against the elements cracks, and your stamina bleeds away.",
+      "duration": 4,
+      "debuff": true,
+      "damageDealtMult": 0.8,
+      "damageTakenMult": 1.25,
+      "stats": {
+        "StaminaRegen": -5,
+        "Dodge": -15,
+        "RangedAccuracy": -10,
+        "DodgeReduction": -10
+      },
+      "resists": {
+        "Cryo": -15,
+        "Psi": -15,
+        "Fire": -10,
+        "Shock": -10
+      },
+      "onApplyActions": [
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": -15
+        }
+      ]
+    },
+    {
+      "id": "Hoarlit",
+      "name": "Hoarlit",
+      "description": "Made of cold light, it grows with its Seer's Psi Power: hard to hit, it slowly mends itself, and its frost is the Seer's frost.",
+      "duration": -1,
+      "stats": {
+        "Dodge": 20
+      },
+      "hot": 1,
+      "procs": [
+        {
+          "on": "hit",
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Rimebite"
+            }
+          ]
+        },
+        {
+          "on": "hit",
+          "chance": 20,
+          "cooldown": 4,
+          "actions": [
+            {
+              "do": "silence",
+              "turns": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Shardlit",
+      "name": "Shardlit",
+      "description": "A splinter torn out of the cold between stars. It does not last: when it goes out, it cracks into everything nearby.",
+      "duration": -1,
+      "stats": {
+        "Dodge": 30
+      },
+      "onDeathActions": [
+        {
+          "do": "chain",
+          "jumps": 3,
+          "radius": 3,
+          "falloff": 0.9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Cryo",
+              "min": 3,
+              "max": 6,
+              "scale": "PsiPower",
+              "scaleMult": 0.3,
+              "weapon": 0.25
+            },
+            {
+              "do": "effect",
+              "effect": "@Rimebite"
+            },
+            {
+              "do": "knockback",
+              "amount": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Shardcharge",
+      "name": "Shard-Charged",
+      "description": "Every live shardspark lends your spells a sliver of its edge.",
+      "duration": 3,
+      "maxStacks": 3,
+      "damageDealtPerStack": 0.04
+    },
+    {
+      "id": "Zenithlit",
+      "name": "Zenith-Lit",
+      "description": "A perfected construct grown from its Seer's Psi Power: it hits far harder than a Hoarlight, and every blow it lands leaves frost in the wound.",
+      "duration": -1,
+      "damageDealtMult": 1.4,
+      "stats": {
+        "HealthMax": 15
+      },
+      "procs": [
+        {
+          "on": "hit",
+          "chance": 50,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Rimebite"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Rimeveil",
+      "name": "Rimeveil",
+      "description": "A mantle of cold light. You move and strike quicker and turn blows aside, frost bites everything near you each turn, moving shakes a Hoarlight loose now and then, and every Hoarlight near you sharpens your mind. Holding it open builds Strain.",
+      "duration": 8,
+      "stats": {
+        "Dodge": 15,
+        "Block": 10
+      },
+      "damageTakenMult": 0.9,
+      "vfx": "EFFECT_Aura_Shieldbot",
+      "onApplyActions": [
+        {
+          "do": "effect",
+          "to": "self",
+          "effect": "#Hasted"
+        }
+      ],
+      "procs": [
+        {
+          "on": "turn",
+          "radius": 2,
+          "when": {
+            "inCombat": true
+          },
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Rimebite"
+            }
+          ]
+        },
+        {
+          "on": "turn",
+          "every": 2,
+          "when": {
+            "inCombat": true
+          },
+          "actions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Strain"
+            }
+          ]
+        },
+        {
+          "on": "turn",
+          "actions": [
+            {
+              "do": "purge",
+              "to": "self",
+              "effect": "@VeilAttune"
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@VeilAttune",
+              "stacks": 0,
+              "bonusPerStack": 1,
+              "stacksOf": "group:Hoarlight"
+            }
+          ]
+        },
+        {
+          "on": "move",
+          "cooldown": 3,
+          "actions": [
+            {
+              "do": "summon",
+              "to": "self",
+              "creature": "Hoarlight",
+              "summonName": "Hoarlight",
+              "summonGroup": "Hoarlight",
+              "maxSummons": 3,
+              "effect": "@Hoarlit",
+              "turns": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "VeilAttune",
+      "name": "Veil-Attuned",
+      "description": "Each Hoarlight near your mantle adds to your Psi Power.",
+      "duration": 2,
+      "maxStacks": 3,
+      "stats": {
+        "PsiPower": 1
+      }
+    },
+    {
+      "id": "Galeward",
+      "name": "Galeward",
+      "description": "A gale of astral wind spins around you. It turns most blows aside and flings attackers back, now and then catches a shot or a bolt of energy and hurls it back at whoever fired it, chills everything near you, and drags at your own strikes.",
+      "duration": 6,
+      "stats": {
+        "Dodge": 10
+      },
+      "damageTakenMult": 0.7,
+      "damageDealtMult": 0.85,
+      "vfx": "EFFECT_Aura_Shieldbot",
+      "procs": [
+        {
+          "on": "hurt",
+          "chance": 50,
+          "actions": [
+            {
+              "do": "knockback",
+              "to": "attacker",
+              "amount": 1
+            },
+            {
+              "do": "effect",
+              "to": "attacker",
+              "effect": "@Rimebite"
+            }
+          ]
+        },
+        {
+          "on": "turn",
+          "radius": 2,
+          "when": {
+            "inCombat": true
+          },
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Rimebite"
+            }
+          ]
+        }
+      ],
+      "reflect": 35
+    },
+    {
+      "id": "SplinteredWill",
+      "name": "Splintered Will",
+      "description": "A tether of frost is working into this mind. At four, it snaps.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 4,
+      "damageDealtPerStack": -0.05,
+      "stats": {
+        "DodgeReduction": -3,
+        "RangedAccuracy": -3
+      },
+      "burstAt": 4,
+      "burstRadius": 1.5,
+      "burstVfx": "PA_Psykonics_Dominate.castParticle",
+      "burstActions": [
+        {
+          "do": "damage",
+          "type": "Psi",
+          "min": 5,
+          "max": 9,
+          "scale": "PsiPower",
+          "scaleMult": 0.3,
+          "weapon": 0.25
+        },
+        {
+          "do": "stun",
+          "turns": 1
+        }
+      ]
+    },
+    {
+      "id": "Starbinding",
+      "name": "Starbinding",
+      "debuff": true,
+      "description": "Threads of cold light are closing around this creature's mind. When they finish, it is bound to the Seer, or it tears free.",
+      "duration": 2,
+      "stats": {
+        "Dodge": -20
+      },
+      "vfx": "PA_Psykonics_Dominate.castParticle@0.5",
+      "onExpireActions": [
+        {
+          "do": "tame",
+          "amount": 30,
+          "scale": "PsiPower+Smarts",
+          "scaleMult": 1.0,
+          "summonName": "Starbound",
+          "summonGroup": "Starbound",
+          "maxSummons": 1,
+          "effect": "@Starbound",
+          "summonVfx": "PA_Psykonics_Dominate.castParticle",
+          "else": [
+            {
+              "do": "effect",
+              "effect": "#Enraged"
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Strain",
+              "stacks": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Starbound",
+      "name": "Starbound",
+      "description": "Bound to its Seer by threads of cold light: it fights with half of the Seer's strength and wits, and its wounds close over time the way the Seer's own do.",
+      "duration": -1,
+      "ownerShare": 0.5,
+      "damageDealtMult": 1.1
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Rimelance",
+        "icon": "rimelight_seer_t1.png",
+        "description": "A narrow lance of cold starlight that runs on through everyone in its path. Every Hoarlight at your side lends it an edge, and the frost you leave anywhere is always looking for more.",
+        "range": 6,
+        "shape": "line",
+        "width": 1,
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "sound": "sfx/rime_lance.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Cryo",
+            "min": 2,
+            "max": 5,
+            "scale": "PsiPower",
+            "scaleMult": 0.4,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "group:Hoarlight",
+            "weapon": 0.35
+          },
+          {
+            "do": "effect",
+            "effect": "@Rimebite",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Overreach Lance",
+          "description": "Force a second lance down the same line. It costs you Strain.",
+          "damageMult": 1.25,
+          "addActions": [
+            {
+              "do": "damage",
+              "type": "Cryo",
+              "min": 2,
+              "max": 5,
+              "scale": "PsiPower",
+              "scaleMult": 0.3,
+              "weapon": 0.35
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Strain"
+            }
+          ]
+        },
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Rimebite"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Rimelance",
+            "actions": [
+              {
+                "do": "summon",
+                "creature": "Shardspark",
+                "summonName": "Shardspark",
+                "summonGroup": "Shardspark",
+                "maxSummons": 3,
+                "turns": 2,
+                "effect": "@Shardlit",
+                "summonVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.6"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Shardcharge"
+              }
+            ],
+            "chance": 50
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Call the Hoarlight",
+        "icon": "rimelight_seer_t3.png",
+        "description": "Tear a flash of cold light open over your foes. It sears their wind away and jolts them aside, and a Hoarlight comes through the tear: one mote that grows with your Psi Power and stays a long while. With the perk the tear calls a Zenith Hoarlight instead, a perfected construct with tricks and offence of its own.",
+        "range": 7,
+        "radius": 1.5,
+        "cooldown": 8,
+        "staminaCost": 12,
+        "castVfx": "PA_Elementalist_FrigidBlast.castParticle",
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Energy",
+            "min": 1,
+            "max": 3,
+            "scale": "PsiPower",
+            "scaleMult": 0.2,
+            "perRank": 1,
+            "weapon": 0.2
+          },
+          {
+            "do": "exhaust",
+            "amount": 1
+          },
+          {
+            "do": "warp",
+            "warpTo": "random",
+            "amount": 1
+          },
+          {
+            "do": "summon",
+            "to": "self",
+            "creature": "Hoarlight",
+            "summonName": "Hoarlight",
+            "summonGroup": "Hoarlight",
+            "maxSummons": 3,
+            "effect": "@Hoarlit",
+            "turns": 40,
+            "when": {
+              "perk": false
+            }
+          },
+          {
+            "do": "summon",
+            "to": "self",
+            "creature": "ZenithHoarlight",
+            "summonName": "Zenith Hoarlight",
+            "summonGroup": "ZenithHoarlight",
+            "maxSummons": 1,
+            "turns": 40,
+            "effect": "@Zenithlit",
+            "summonVfx": "PA_Elementalist_FrigidBlast.castParticle",
+            "when": {
+              "perk": true
+            }
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain"
+          }
+        ],
+        "perk": {
+          "name": "Zenith Calling",
+          "description": "The tear calls a Zenith Hoarlight instead of a Hoarlight: it trades places with foes to confuse them, wraps itself in a gale, and casts your lance, tether and collapse."
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Rimeveil",
+        "icon": "rimelight_seer_t6.png",
+        "description": "Wrap yourself in a mantle of cold light for a while. You move and strike quicker and turn blows aside, frost bites everything near you, moving shakes Hoarlights loose, and every Hoarlight near you sharpens your mind. Holding it builds Strain.",
+        "cooldown": 10,
+        "staminaCost": 8,
+        "instant": false,
+        "castVfx": "PA_Elementalist_FrigidBlast.castParticle",
+        "sound": "event:/Abilities/Elementalist/Elementalist_FrigidBlast_Cast",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Rimeveil"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain",
+            "stacks": 2
+          }
+        ],
+        "procs": [
+          {
+            "on": "cast",
+            "chance": 8,
+            "actions": [
+              {
+                "do": "echo",
+                "falloff": 0.6
+              }
+            ]
+          }
+        ],
+        "rules": "You gain Rimeveil (8 turns: Hasted, +15 Dodge, +10 Block, take 10% less damage; each turn: Rimebite on enemies within 2, +1 Psi Power per Hoarlight near you (up to 3); every 2nd turn in combat: +1 Strain; moving: a Hoarlight condenses, at most every 3 turns). +2 Strain.\nAlways, once you know it: any spell you cast has an 8% chance to echo your last one at 60% power.",
+        "perk": {
+          "name": "Deep Veil",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Phase Swap",
+        "icon": "rimelight_seer_t0.png",
+        "description": "Pick one of your Hoarlights anywhere in sight. It panics and burns itself out to phase you into its place, bursting into frost fragments that tear at every foe around it and leave them reeling with fright.",
+        "target": "pet",
+        "petGroup": "Hoarlight",
+        "range": 10,
+        "radius": 1.6,
+        "cooldown": 6,
+        "staminaCost": 8,
+        "castVfx": "PA_Psykonics_Dominate.castParticle",
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          {
+            "do": "phase"
+          },
+          {
+            "do": "damage",
+            "type": "Cryo",
+            "min": 3,
+            "max": 6,
+            "scale": "PsiPower",
+            "scaleMult": 0.35,
+            "weapon": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "CONFUSE",
+            "turns": 2
+          },
+          {
+            "do": "effect",
+            "effect": "@Rimebite",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Far Phase",
+          "rangeDelta": 4,
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Galeward",
+        "icon": "rimelight_seer_t7.png",
+        "description": "Raise a gale of astral wind around yourself. It turns most blows aside and throws attackers back, can catch shots and energy bolts and hurl them back at the shooter, chills everything near you, and drags at your own strikes while it lasts. Calling it builds Strain.",
+        "cooldown": 12,
+        "staminaCost": 6,
+        "instant": false,
+        "castVfx": "PA_Elementalist_FrigidBlast.castParticle",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Galeward"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Eye of the Gale",
+          "description": "The gale opens with a skin of rimelight.",
+          "addActions": [
+            {
+              "do": "shield",
+              "to": "self",
+              "amount": 5,
+              "scale": "Smarts",
+              "scaleMult": 0.3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Fraying Tether",
+        "icon": "rimelight_seer_t2.png",
+        "description": "Lash out with a spectral chain in a straight line. It pierces everyone on it, splintering each one's will, knocking their special attacks out of their grip for a while and forcing them to sidestep.",
+        "cooldown": 6,
+        "staminaCost": 14,
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "sound": "event:/Abilities/Elementalist/Elementalist_FrigidBlast_Cast",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Cryo",
+            "min": 2,
+            "max": 4,
+            "scale": "PsiPower",
+            "scaleMult": 0.3,
+            "perRank": 1,
+            "weapon": 0.3
+          },
+          {
+            "do": "effect",
+            "effect": "@SplinteredWill",
+            "stacks": 2
+          },
+          {
+            "do": "exhaust",
+            "amount": 2
+          },
+          {
+            "do": "warp",
+            "warpTo": "random",
+            "amount": 1
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Long Tether",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Rimebite",
+              "stacks": 2
+            }
+          ]
+        },
+        "range": 7,
+        "shape": "line",
+        "width": 1,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Fraying Tether",
+            "actions": [
+              {
+                "do": "summon",
+                "creature": "Shardspark",
+                "summonName": "Shardspark",
+                "summonGroup": "Shardspark",
+                "maxSummons": 3,
+                "turns": 2,
+                "effect": "@Shardlit",
+                "summonVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.6"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Shardcharge"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Coldbound Choir",
+        "icon": "rimelight_seer_t5.png",
+        "description": "Tear open a conduit and lash a chain of up to five minds. Your Psi Power and Smarts together decide which ones you take: each taken mind becomes your thrall for a few turns, frostbitten, quickened by the stolen force and wide open once it wakes. A mind that resists, or one too strong to take at all, snaps back with a shock that stuns it.",
+        "cooldown": 25,
+        "staminaCost": 30,
+        "impactVfx": "PA_Psykonics_Dominate.castParticle",
+        "sound": "sfx/rime_thrall.wav",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 4,
+            "radius": 3,
+            "falloff": 1,
+            "actions": [
+              {
+                "do": "if",
+                "when": {
+                  "all": [
+                    {
+                      "not": {
+                        "tag": "boss"
+                      }
+                    },
+                    {
+                      "chance": 30,
+                      "chanceScale": "PsiPower+Smarts",
+                      "chancePer": 1
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "do": "effect",
+                    "effect": "CHARM",
+                    "turns": 4
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "#Hasted"
+                  }
+                ],
+                "else": [
+                  {
+                    "do": "damage",
+                    "type": "Psi",
+                    "min": 4,
+                    "max": 8,
+                    "scale": "PsiPower",
+                    "scaleMult": 0.4,
+                    "weapon": 0.3
+                  },
+                  {
+                    "do": "stun",
+                    "turns": 1
+                  }
+                ]
+              },
+              {
+                "do": "effect",
+                "effect": "#Exposed"
+              },
+              {
+                "do": "effect",
+                "effect": "@Rimebite",
+                "stacks": 3
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain",
+            "stacks": 3
+          }
+        ],
+        "perk": {
+          "name": "Deep Choir",
+          "cooldownDelta": -6
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Prism Charge",
+        "icon": "rimelight_seer_t4.png",
+        "dashAs": "Hoarlight",
+        "description": "Spend your brightest Hoarlight and become its light: you charge through the target and on to the foes beside it, landing next to each one, part blade and part spell. Every link is frosted and flung aside, every Hoarlight still with you sharpens the edge, and after the last strike you spring back a step.",
+        "range": 7,
+        "cooldown": 4,
+        "staminaCost": 12,
+        "requires": "summon:group:Hoarlight",
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "sound": "sfx/rime_lance.wav",
+        "actions": [
+          {
+            "do": "chain",
+            "leap": true,
+            "jumps": 3,
+            "radius": 3.5,
+            "falloff": 0.85,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Cryo",
+                "min": 2,
+                "max": 4,
+                "scale": "PsiPower+MeleePower",
+                "scaleMult": 0.25,
+                "weapon": 0.4,
+                "perRank": 1,
+                "bonusPerStack": 2,
+                "stacksOf": "group:Hoarlight"
+              },
+              {
+                "do": "effect",
+                "effect": "@Rimebite",
+                "stacks": 3
+              },
+              {
+                "do": "warp",
+                "warpTo": "random",
+                "amount": 2
+              }
+            ]
+          },
+          {
+            "do": "dismiss",
+            "to": "summon",
+            "ifSummonAlive": "group:Hoarlight"
+          },
+          {
+            "do": "warp",
+            "to": "self",
+            "warpTo": "away",
+            "amount": 1
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Strain",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Phase Prism",
+          "description": "At the end of the charge the spent Hoarlight panics and phases you into the first foe's place. That foe, thrown into yours, is left reeling with fright.",
+          "addActions": [
+            {
+              "do": "swap"
+            },
+            {
+              "do": "effect",
+              "effect": "CONFUSE",
+              "turns": 2
+            }
+          ]
+        },
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Prism Charge",
+            "actions": [
+              {
+                "do": "summon",
+                "creature": "Shardspark",
+                "summonName": "Shardspark",
+                "summonGroup": "Shardspark",
+                "maxSummons": 3,
+                "turns": 2,
+                "effect": "@Shardlit",
+                "summonVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.6"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Shardcharge"
+              }
+            ]
+          }
+        ]
+      },
+      "resistances": {
+        "Cryo": 10
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Starbind",
+        "icon": "rimelight_seer.png",
+        "description": "Spin threads of cold light around a beast's mind. Two turns later it is yours for good, fighting at your side with half of your strength and wits and healing over time like you do, or it tears free in a rage and the backlash strains you. Your Psi Power and Smarts together, and its wounds, decide which. Only one beast at a time, and never a boss.",
+        "range": 4,
+        "cooldown": 20,
+        "staminaCost": 15,
+        "usableWhen": {
+          "value": "summons:Starbound",
+          "below": 1
+        },
+        "targetWhen": {
+          "all": [
+            {
+              "kind": "Monster|Supernatural"
+            },
+            {
+              "not": {
+                "tag": "boss"
+              }
+            }
+          ]
+        },
+        "impactVfx": "PA_Psykonics_Dominate.castParticle",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Ascendance_Cast",
+        "actions": [
+          {
+            "do": "effect",
+            "effect": "@Starbinding"
+          }
+        ],
+        "rules": "Target a beast (a monster or supernatural creature, not a boss or elite) within 4 while you have no Starbound beast.\nIt gets Starbinding for 2 turns (-20 Dodge). When it ends: a 30% (+1% per point of your Psi Power and Smarts) chance, up to +50% more the more wounded it is, that it becomes your Starbound pet for good: healed, fighting with half of your attributes (kept current), +10% damage. It regenerates health by its own Health Regen the way you do, and your heals reach it. If it tears free it is Enraged and you take 3 Strain.",
+        "perk": {
+          "name": "Patient Binding",
+          "cooldownDelta": -8
+        }
+      }
+    }
+  ]
+}

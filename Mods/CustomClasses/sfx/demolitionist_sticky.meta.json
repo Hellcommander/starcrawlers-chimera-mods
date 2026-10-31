@@ -1,0 +1,182 @@
+{
+  "prompt": "sticky bomb slapped onto armor, quick electronic beeping, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, mech sound, sticky bomb slapped onto armor, quick electronic beeping, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of mech, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.001619697897695005,
+  "archetype": "mech",
+  "references": [
+    {
+      "id": "55af2a6c6a4a2886",
+      "score": 0.2893007695674896,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "bcb2ea355052e336",
+      "score": 0.2781115174293518,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 30.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "f849f4d5d5aed67d",
+      "score": 0.26419469714164734,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15_REV.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "91cde12895855d49",
+      "score": 0.26296716928482056,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 47.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "89fe587e87a00499",
+      "score": 0.26296716928482056,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Cyborg.zip",
+      "inner": "Dark Fantasy Studio- Cyborg/Dark Fantasy Studio- Cyborg 47.wav",
+      "tags": [
+        "cyborg",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a66057badbe664ba",
+      "score": 0.26132768392562866,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 21.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "ba9ac86138785c57",
+      "score": 0.25392356514930725,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 30_REV.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "b7b511d13d4fb4bc",
+      "score": 0.24782343208789825,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 22.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "56d4addfb5019731",
+      "score": 0.24770066142082214,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 20.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "947c9b4d887862f1",
+      "score": 0.24480471014976501,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 48.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "55af2a6c6a4a2886",
+    "bcb2ea355052e336",
+    "f849f4d5d5aed67d",
+    "91cde12895855d49",
+    "89fe587e87a00499",
+    "a66057badbe664ba",
+    "ba9ac86138785c57",
+    "b7b511d13d4fb4bc",
+    "56d4addfb5019731",
+    "947c9b4d887862f1"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\demolitionist_sticky.wav",
+  "sample_rate": 44100
+}

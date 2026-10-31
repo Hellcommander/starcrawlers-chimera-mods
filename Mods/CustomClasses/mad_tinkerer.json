@@ -1,0 +1,254 @@
+{
+  "id": "MOD_MadTinkerer",
+  "name": "Mad Tinkerer",
+  "description": "Builds gadgets out of scrap and confidence. Most of them work. A sentry drone shoots whatever gets close, Overclock makes everything hit harder until you crash, and the Doomsday Device occasionally sets you on fire too.\n\nChaotic gadget caster with backfire risk. Favors [SMT] and [TGH].",
+  "archetype": "Intellect",
+  "icon": "mad_tinkerer.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Toughness": 2
+  },
+  "effects": [
+    {
+      "id": "Overclock",
+      "name": "Redlined",
+      "description": "Everything is running at 140%. Including your heart.",
+      "duration": 4,
+      "damageDealtMult": 1.3,
+      "stats": {
+        "StaminaRegen": 3
+      },
+      "onExpireActions": [
+        { "do": "effect", "effect": "#Weakened" }
+      ]
+    },
+    {
+      "id": "Rattletrap",
+      "name": "Rattletrap Wiring",
+      "description": "Held together with tape, spite and exposed wiring. Punching it is a shocking experience.",
+      "duration": -1,
+      "stats": {
+        "HealthMax": 20,
+        "Armor": 2
+      },
+      "damageDealtMult": 1.3,
+      "procs": [
+        {
+          "on": "hurt",
+          "chance": 30,
+          "actions": [
+            { "do": "effect", "effect": "#Shocked" }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Spare Parts",
+        "icon": "mad_tinkerer_t0.png",
+        "description": "Wrecked enemies make excellent armor.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 3 }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 20,
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 5 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Zap Gun",
+        "icon": "mad_tinkerer_t1.png",
+        "description": "Point the dangerous end at them. Usually.",
+        "impactVfx": "PA_Engineer_Boltron.PS_shock",
+        "sound": "sfx/tinkerer_zap.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "#Shocked", "chance": 25 },
+          { "do": "effect", "to": "self", "effect": "#Shocked", "chance": 10 }
+        ],
+        "perk": {
+          "name": "Insulated Grip",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Prototype Grenade",
+        "icon": "mad_tinkerer_t2.png",
+        "description": "It does something different every time. Mostly explosions.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode",
+        "sound": "event:/Abilities/Soldier/Grenade_Explode",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 3, "max": 6, "chance": 50 },
+          { "do": "effect", "effect": "#Chilled", "chance": 50 },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "chance": 50 },
+          { "do": "effect", "effect": "#Burning", "chance": 30 }
+        ],
+        "perk": {
+          "name": "Mass Production",
+          "chanceBonus": 25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Overclock Rig",
+        "icon": "mad_tinkerer_t3.png",
+        "cooldown": 16,
+        "description": "Bypass the safeties. You'll hit very hard, then very much crash.",
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "sound": "event:/Abilities/Prototype/ArmCannon_Charge",
+        "actions": [
+          { "do": "effect", "effect": "@Overclock" }
+        ],
+        "perk": {
+          "name": "Liquid Cooling",
+          "cooldownDelta": -5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Sentry Drone",
+        "icon": "mad_tinkerer_t4.png",
+        "description": "A little drone orbits you and takes potshots at anything close.",
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "radius": 4,
+            "vfx": "PA_Engineer_Turret.PS_TargetLock",
+            "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Doomsday Device",
+        "icon": "mad_tinkerer_t5.png",
+        "radius": 3,
+        "range": 6,
+        "staminaCost": 40,
+        "cooldown": 22,
+        "description": "It was supposed to be a toaster.",
+        "impactVfx": "SOLDIER_ROCKET.explosionPrefab",
+        "sound": "sfx/tinkerer_doomsday.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 6, "max": 12, "scale": "Smarts", "scaleMult": 0.6, "perRank": 2 },
+          { "do": "stun", "turns": 1, "chance": 40 },
+          { "do": "effect", "to": "self", "effect": "#Burning", "chance": 15 }
+        ],
+        "perk": {
+          "name": "Mostly Safe",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Bolt Together",
+        "icon": "mad_tinkerer_t6.png",
+        "staminaCost": 25,
+        "cooldown": 10,
+        "description": "Weld the scrap pile into a Rattletrap and let it loose. Use it again while the Rattletrap stands to patch it up and take its safeties off.",
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "sound": "event:/Abilities/Prototype/ArmCannon_Charge",
+        "actions": [
+          { "do": "heal", "to": "summon", "ifSummonAlive": "self", "amount": 6, "scale": "Smarts", "scaleMult": 0.4 },
+          { "do": "effect", "to": "summon", "ifSummonAlive": "self", "effect": "@Overclock" },
+          { "do": "summon", "to": "self", "unlessSummonAlive": "self", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Rattletrap", "model": { "mesh": "models/rattletrap.glb", "height": 1.1, "keepParticles": false }, "turns": 25, "maxSummons": 1, "effect": "@Rattletrap" }
+        ],
+        "perk": {
+          "name": "Spare Chassis",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Failure Is Data",
+        "icon": "mad_tinkerer_t7.png",
+        "description": "Every accident teaches you something. Getting zapped jolts your other gadgets back to ready, catching fire hardens your plating, and the crash after Redlining hits less hard.",
+        "procs": [
+          {
+            "on": "effectGained",
+            "match": "#Shocked",
+            "cooldown": 3,
+            "actions": [
+              { "do": "cooldowns", "to": "self", "amount": 2 },
+              { "do": "stamina", "to": "self", "amount": 8 }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "#Burning",
+            "cooldown": 3,
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 6, "scale": "Smarts", "scaleMult": 0.4 }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "#Weakened",
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 15 },
+              { "do": "shield", "to": "self", "amount": 4, "scale": "Smarts", "scaleMult": 0.3 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

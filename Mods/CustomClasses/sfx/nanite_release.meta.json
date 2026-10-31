@@ -1,0 +1,192 @@
+{
+  "prompt": "swarm of tiny buzzing nanites released from a jar, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, alien sound, swarm of tiny buzzing nanites released from a jar, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of alien, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.012882078997790813,
+  "archetype": "alien",
+  "references": [
+    {
+      "id": "50333af7c0d570c3",
+      "score": 0.2833845019340515,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-47.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "8cde726730baef91",
+      "score": 0.26725733280181885,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-47.wav",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "eaa338b0befe83a6",
+      "score": 0.2558768391609192,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-39.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "4b1d9047dd7cf93c",
+      "score": 0.2556387484073639,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-35.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "53d8662b0fae8bbc",
+      "score": 0.2537824511528015,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-12.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "8cbdbf555cdb7f33",
+      "score": 0.244147390127182,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-15.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "0c66b77237373e97",
+      "score": 0.2379375696182251,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-39.wav",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "5c1210b0b60c0f76",
+      "score": 0.23768353462219238,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-35.wav",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "233cdd4d6fcf3d37",
+      "score": 0.23567423224449158,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Creature.zip",
+      "inner": "Dark Fantasy Studio- Creature/Dark Fantasy Studio- Creature 12.wav",
+      "tags": [
+        "creature",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d96f373314ca7f58",
+      "score": 0.23567423224449158,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-12.wav",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "50333af7c0d570c3",
+    "8cde726730baef91",
+    "eaa338b0befe83a6",
+    "4b1d9047dd7cf93c",
+    "53d8662b0fae8bbc",
+    "8cbdbf555cdb7f33",
+    "0c66b77237373e97",
+    "5c1210b0b60c0f76",
+    "233cdd4d6fcf3d37",
+    "d96f373314ca7f58"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\nanite_release.wav",
+  "sample_rate": 44100
+}

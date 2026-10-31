@@ -1,0 +1,985 @@
+{
+  "synergies": [
+    {
+      "id": "DoubleAct",
+      "name": "Double Act",
+      "trees": [
+        "MOD_BladeJuggler",
+        "MOD_TrickShot"
+      ],
+      "description": "Knives and coins work one routine: hits on Dazzled foes may leave them Nicked, and hits on Nicked foes may put an Ante on them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_DualWield_SinisterStrike.impactEffect@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BladeJuggler@Nicked",
+                "ifTargetHas": "MOD_TrickShot@Dazzled"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_TrickShot@Ante",
+                "ifTargetHas": "MOD_BladeJuggler@Nicked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PalmedBlades",
+      "name": "Palmed Blades",
+      "trees": [
+        "MOD_BladeJuggler",
+        "MOD_ShadowBroker"
+      ],
+      "description": "Nobody sees the knife leave your hand: hits while Unseen may open two Nicked cuts, and hits on Nicked foes may leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BladeJuggler@Nicked",
+                "stacks": 2,
+                "ifSelfHas": "MOD_ShadowBroker@Unseen"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "turns": 2,
+                "ifTargetHas": "MOD_BladeJuggler@Nicked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OffHandPatter",
+      "name": "Off-Hand Patter",
+      "trees": [
+        "MOD_BladeJuggler",
+        "SKILLTREE_DualWield"
+      ],
+      "description": "Your off hand keeps the act going: Sinister Strike hits may start you Juggling, and hits while Juggling may leave them Nicked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_BladeJuggler@Juggling",
+                "ifSelfHas": "EFFECT_DualWield_SinisterStrike"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BladeJuggler@Nicked",
+                "ifSelfHas": "MOD_BladeJuggler@Juggling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "WheelOfBlades",
+      "name": "Wheel of Blades",
+      "trees": [
+        "MOD_BladeJuggler",
+        "MOD_Ringmaster"
+      ],
+      "description": "The crowd counts every cut: hits may draw Applause, one per Nicked layer on the target, and with Applause in the house a dodge may start you Juggling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "MOD_BladeJuggler@Nicked",
+                "stacksFrom": "target"
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_BladeJuggler@Juggling",
+                "ifSelfHas": "MOD_Ringmaster@Applause"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChitAndChamber",
+      "name": "Chit and Chamber",
+      "trees": [
+        "MOD_TrickShot",
+        "SKILLTREE_Gunslinger"
+      ],
+      "description": "Coins fly with the brass: Spray 'n Pray hits may leave foes Dazzled, and hits on Dazzled foes may put an Ante on them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_TrickShot@Dazzled",
+                "ifSelfHas": "EFFECT_SprayPray"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_TrickShot@Ante",
+                "ifTargetHas": "MOD_TrickShot@Dazzled"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PocketThePot",
+      "name": "Pocket the Pot",
+      "trees": [
+        "MOD_TrickShot",
+        "SKILLTREE_LootHunter"
+      ],
+      "description": "Anyone with an Ante on them pays out twice: killing a foe carrying an Ante may slip extra credits into your pocket. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "when": {
+              "has": "MOD_TrickShot@Ante",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "credits",
+                "to": "self",
+                "amount": 2,
+                "perRank": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CompedRounds",
+      "name": "Comped Rounds",
+      "trees": [
+        "MOD_TrickShot",
+        "MOD_OddsBreaker"
+      ],
+      "description": "The house and the show share one table: hits in Deadeye may stretch your Lucky Run, and hits on Staked foes may leave them Dazzled. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_OddsBreaker@LuckyRun",
+                "ifSelfHas": "MOD_TrickShot@Deadeye"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_TrickShot@Dazzled",
+                "ifTargetHas": "MOD_OddsBreaker@Staked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "GoneOverTheRail",
+      "name": "Gone Over the Rail",
+      "trees": [
+        "MOD_ShadowBroker",
+        "MOD_Freerunner"
+      ],
+      "description": "Nobody saw which way you went: steps taken while Unseen may build extra Momentum, and hits on Tripped foes may leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "move",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum",
+                "ifSelfHas": "MOD_ShadowBroker@Unseen"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "turns": 2,
+                "ifTargetHas": "MOD_Freerunner@Tripped"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OffTheBooks",
+      "name": "Off the Books",
+      "trees": [
+        "MOD_ShadowBroker",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "A Stealth Field keeps you off every ledger: each turn inside one may make you Unseen, and hits on Exposed foes may put you back out of sight. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "vfx": "CYBERNINJA_DASH.particle_shadowstep@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ShadowBroker@Unseen",
+                "ifSelfHas": "PASSIVE_Cyberninja_Stealth"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "#Exposed"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ShadowBroker@Unseen"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LineAndLedge",
+      "name": "Line and Ledge",
+      "trees": [
+        "MOD_Freerunner",
+        "MOD_GrapnelAcrobat"
+      ],
+      "description": "Hooks and footwork run the same route: hits on Snagged foes may build Momentum, and hits on Tripped foes may leave a hook Snagged in them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum",
+                "when": {
+                  "has": "MOD_GrapnelAcrobat@Snagged",
+                  "of": "victim"
+                }
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GrapnelAcrobat@Snagged",
+                "ifTargetHas": "MOD_Freerunner@Tripped"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BlackoutSprint",
+      "name": "Blackout Sprint",
+      "trees": [
+        "MOD_Freerunner",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "You run the dark like it's lit: steps taken inside a Stealth Field may build extra Momentum, and kills made at speed may throw you forward with two more. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "move",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum",
+                "ifSelfHas": "PASSIVE_Cyberninja_Stealth"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum",
+                "stacks": 2,
+                "ifSelfHas": "MOD_Freerunner@Momentum"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TerminalVelocity",
+      "name": "Terminal Velocity",
+      "trees": [
+        "MOD_Freerunner",
+        "MOD_Juggernaut"
+      ],
+      "description": "The faster you go, the harder you are to stop: blows taken with Momentum may build Inertia, and hits carrying Inertia may add Momentum. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "ifSelfHas": "MOD_Freerunner@Momentum"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum",
+                "ifSelfHas": "MOD_Juggernaut@Inertia"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ReelAndLock",
+      "name": "Reel and Lock",
+      "trees": [
+        "MOD_GrapnelAcrobat",
+        "MOD_Grappler"
+      ],
+      "description": "Whatever you reel in, you keep: hits on Snagged foes may lock them Held, and whoever swings into your Iron Clinch may come away Snagged. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Grappler@Held",
+                "ifTargetHas": "MOD_GrapnelAcrobat@Snagged"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_GrapnelAcrobat@Snagged",
+                "ifSelfHas": "MOD_Grappler@Clinch"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OverTheGunwale",
+      "name": "Over the Gunwale",
+      "trees": [
+        "MOD_GrapnelAcrobat",
+        "SKILLTREE_SpacePirate"
+      ],
+      "description": "Boarding hooks are an old pirate habit: Black-Spotted foes may catch a Snagged hook, and with grog in your belly hits on Snagged foes may haul them in a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GrapnelAcrobat@Snagged",
+                "ifTargetHas": "EFFECT_Pirate_BlackSpot"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 1,
+                "ifSelfHas": "EFFECT_Pirate_GrogBottle",
+                "ifTargetHas": "MOD_GrapnelAcrobat@Snagged"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "GaleSwing",
+      "name": "Gale Swing",
+      "trees": [
+        "MOD_GrapnelAcrobat",
+        "MOD_Squallblade"
+      ],
+      "description": "A line in a gale swings wider: dodging while On the Line may pile Buffeted pressure on the attacker, and hits in Squallform may swing you back onto the line. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Buffeted",
+                "ifSelfHas": "MOD_GrapnelAcrobat@OnTheLine"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_GrapnelAcrobat@OnTheLine",
+                "ifSelfHas": "MOD_Squallblade@Squallform"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HandsOnDetail",
+      "name": "Hands-On Detail",
+      "trees": [
+        "MOD_Grappler",
+        "MOD_Bodyguard"
+      ],
+      "description": "Close protection, closer still: blows taken while Braced may leave the attacker Held, and hits on Staggered foes may tighten your Grip. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Grappler@Held",
+                "ifSelfHas": "MOD_Bodyguard@Braced"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Grappler@Grip",
+                "when": {
+                  "has": "MOD_Bodyguard@Staggered",
+                  "of": "victim"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ManyHandedHold",
+      "name": "Many-Handed Hold",
+      "trees": [
+        "MOD_Grappler",
+        "MOD_Conjoined"
+      ],
+      "description": "Every body you have joins the hold: hits on Held foes may add a layer of Grip for each other body up, and hits on Dazed foes may lock them Held. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Grappler@Grip",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "bodies",
+                "when": {
+                  "has": "MOD_Grappler@Held",
+                  "of": "victim"
+                }
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Grappler@Held",
+                "ifTargetHas": "MOD_Grappler@Dazed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ConcussiveLanding",
+      "name": "Concussive Landing",
+      "trees": [
+        "MOD_Grappler",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "Heavy hands and hard landings: hits on stunned foes may leave them Dazed, and a Backswing's follow-through may tighten your Grip. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Grappler@Dazed",
+                "ifTargetHas": "EFFECT_Stun"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Grappler@Grip",
+                "ifSelfHas": "EFFECT_Downswing"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BodiesOnDetail",
+      "name": "Bodies on Detail",
+      "trees": [
+        "MOD_Bodyguard",
+        "MOD_Conjoined"
+      ],
+      "description": "Your bodies cover for each other: blows you take may build a layer of Resolve for each other body up, and whoever hits someone fighting at your side may come away Staggered. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "vfx": "PA_Shieldbearer_Brace.PS_regen",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Bodyguard@Resolve",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "bodies"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "On Detail",
+        "description": "Covered by a protector who shares its mind, and it shows.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Bodyguard@Staggered"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "SwornRetinue",
+      "name": "Sworn Retinue",
+      "trees": [
+        "MOD_Bodyguard",
+        "SKILLTREE_ThoughtLeader"
+      ],
+      "description": "Your followers are your charges now: blows you take while Braced may build Resolve, and whoever hits a follower while it's Guarded may come away Staggered. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Bodyguard@Resolve",
+                "ifSelfHas": "MOD_Bodyguard@Braced"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Under Oath",
+        "description": "Sworn to a bodyguard, and quick to make an attacker regret it while Guarded.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Bodyguard@Staggered",
+                "ifSelfHas": "MOD_Bodyguard@Guarded"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "CoverDetail",
+      "name": "Cover Detail",
+      "trees": [
+        "MOD_Bodyguard",
+        "SKILLTREE_Shieldbearer"
+      ],
+      "description": "A shield is just a bigger shoulder: blows taken under Brace for Impact may build Resolve, and blows taken while Braced may leave the attacker Staggered. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Bodyguard@Resolve",
+                "ifSelfHas": "EFFECT_Shieldbearer_Brace"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Bodyguard@Staggered",
+                "ifSelfHas": "MOD_Bodyguard@Braced"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "UnhandledException",
+      "name": "Unhandled Exception",
+      "trees": [
+        "MOD_EntropyWeaver",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "Your viruses leave loose threads: hits on Mindmelted foes may fray them, and hits on Overheated foes may set Cinderlace smouldering. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Hacker_Hack.hackParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Mindmelt"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Cinderlace",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Overheat"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RiggedToUnravel",
+      "name": "Rigged to Unravel",
+      "trees": [
+        "MOD_EntropyWeaver",
+        "MOD_ReactionArchitect"
+      ],
+      "description": "Your traps run on spilled power: a reaction going off may fray that enemy and feed your Spillover, and hits on Frayed foes may leave them Profiled. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "reaction",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_EntropyWeaver@Spillover"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactionArchitect@Profiled",
+                "ifTargetHas": "MOD_EntropyWeaver@Frayed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CausalStatic",
+      "name": "Causal Static",
+      "trees": [
+        "MOD_EntropyWeaver",
+        "MOD_ParadoxWitch"
+      ],
+      "description": "Contradictions cancel on both ledgers: hits on foes carrying a Wound Ledger may fray them, and each turn in a Still Point may wipe away your Timeline Strain. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_EntropyWeaver@Frayed",
+                "ifTargetHas": "MOD_ParadoxWitch@Ledger"
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 35,
+            "vfx": "PA_Psykonics_Temporal.castParticle@0.3",
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "MOD_ParadoxWitch@Paradox",
+                "ifSelfHas": "MOD_EntropyWeaver@StillPoint"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SpottingEachOther",
+      "name": "Spotting Each Other",
+      "trees": [
+        "MOD_Conjoined",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "Your other bodies spot every lift: while Pumped Up your hits may shake off Spread Thin. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "MOD_Conjoined@SpreadThin",
+                "to": "self",
+                "ifSelfHas": "EFFECT_Bodybuilding_Pump"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DistributedTrance",
+      "name": "Distributed Trance",
+      "trees": [
+        "MOD_Conjoined",
+        "SKILLTREE_Psykonics"
+      ],
+      "description": "One mind can rest while its bodies keep watch: each turn spent Meditating may take a turn off your other cooldowns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "amount": 1,
+                "ifSelfHas": "EFFECT_Psykonics_Meditate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

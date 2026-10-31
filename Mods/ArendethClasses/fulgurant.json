@@ -1,0 +1,244 @@
+{
+  "id": "MOD_Fulgurant",
+  "name": "Fulgurant",
+  "description": "Duelists who let the lightning carry them. They cross a room in the time it takes to blink, every strike lands with a bolt in it, and the longer they keep moving the more charge they hold.\n\nZoom and strike: leaps, blinks and rail-dashes build Potential (it bleeds away when you stand still), your hits lay a Stepped Leader in the foe for the lightning to follow, and Return Stroke cashes in up to six Potential and every Leader at once. Strikes need a melee weapon in either hand and scale with your weapon, [AGL] and [PSI].",
+  "archetype": "Guile",
+  "icon": "fulgurant.png",
+  "attributePriorities": { "Agility": 4, "PsiPower": 3 },
+  "effects": [
+    {
+      "id": "Potential",
+      "name": "Potential",
+      "description": "Charge built up by moving fast. Each point makes you a little harder to hit. It bleeds off two at a time on any turn you don't move, and all of it when the fight ends.",
+      "duration": -1,
+      "maxStacks": 10,
+      "resource": true,
+      "resourceColor": "#7FD8FF",
+      "stats": { "Dodge": 1 }
+    },
+    {
+      "id": "Leader",
+      "name": "Stepped Leader",
+      "description": "A thread of ionised air left in the wound. Lightning finds it: each thread takes more from Shock, and Return Stroke follows them all.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 5,
+      "resists": { "Shock": -3 },
+      "vfx": "EFFECT_Shock"
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Quickened Nerves",
+        "icon": "fulgurant_t0.png",
+        "description": "Your nerves fire like a struck wire. Every skill that throws you across the floor stores a little of the speed as Potential, slipping a blow does too, and while you hold a blade the current rides along with your hits.",
+        "procs": [
+          { "on": "move", "match": "ability", "maxPerTurn": 3, "actions": [
+            { "do": "effect", "to": "self", "effect": "@Potential" },
+            { "do": "counter", "to": "self", "counter": "FulgurantMoved", "amount": 1, "counterSet": true } ] },
+          { "on": "move", "match": "step", "actions": [
+            { "do": "counter", "to": "self", "counter": "FulgurantMoved", "amount": 1, "counterSet": true } ] },
+          { "on": "dodge", "actions": [ { "do": "effect", "to": "self", "effect": "@Potential" } ] },
+          { "on": "hit", "chance": 40, "maxPerTurn": 2, "when": { "equipped": "melee" }, "actions": [
+            { "do": "damage", "type": "Shock", "min": 1, "max": 2, "scale": "Agility+PsiPower", "scaleMult": 0.1 } ] },
+          { "on": "turn", "actions": [
+            { "do": "if", "when": { "all": [ { "inCombat": true }, { "value": "counter:FulgurantMoved", "below": 1 } ] },
+              "then": [ { "do": "effect", "to": "self", "effect": "@Potential", "stacks": -2 } ] },
+            { "do": "counter", "to": "self", "counter": "FulgurantMoved", "amount": 0, "counterSet": true } ] },
+          { "on": "combatEnd", "actions": [ { "do": "purge", "to": "self", "effect": "@Potential" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Arc Step",
+        "icon": "fulgurant_t1.png",
+        "description": "Let the lightning take you: you are beside your target before it sees you move, and the strike lands with the bolt still in it. It leaves a Stepped Leader behind.",
+        "equipped": "melee",
+        "range": 5,
+        "staminaCost": 8,
+        "cooldown": 2,
+        "castVfx": "PA_Elementalist_ChainLightning.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "audio_licensed/fulg_step.wav",
+        "actions": [
+          { "do": "leap" },
+          { "do": "damage", "type": "Shock", "min": 1, "max": 3, "scale": "Agility+PsiPower", "scaleMult": 0.2, "weapon": 0.6, "perRank": 1 },
+          { "do": "effect", "effect": "@Leader" }
+        ],
+        "perk": {
+          "name": "Double Step",
+          "description": "You land so light the bolt has time to cross twice.",
+          "cooldownDelta": -1,
+          "addActions": [ { "do": "effect", "effect": "@Leader" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Crackle Feint",
+        "icon": "fulgurant_t2.png",
+        "description": "Show them a spark on one side and come in from the other. You blink to the far side of the target and strike its open back, leaving it reeling and wide open.",
+        "equipped": "melee",
+        "range": 3,
+        "staminaCost": 10,
+        "cooldown": 4,
+        "castVfx": "CYBERNINJA_DASH.particle_shadowstep",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "audio_licensed/fulg_feint.wav",
+        "actions": [
+          { "do": "warp", "warpTo": "behind", "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.6" },
+          { "do": "damage", "type": "Shock", "min": 2, "max": 4, "scale": "Agility+PsiPower", "scaleMult": 0.2, "weapon": 0.5, "perRank": 1 },
+          { "do": "effect", "effect": "#Exposed" },
+          { "do": "effect", "effect": "@Leader" }
+        ],
+        "perk": {
+          "name": "Sparks in the Eyes",
+          "description": "The spark you showed them was bright enough to leave them seeing it.",
+          "addActions": [ { "do": "blind", "chance": 50 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Forked Path",
+        "icon": "fulgurant_t3.png",
+        "description": "Ride the lightning from foe to foe: you land beside each one and strike before going on to the next, and every Stepped Leader already in a foe makes its bolt bite deeper.",
+        "equipped": "melee",
+        "range": 6,
+        "staminaCost": 14,
+        "cooldown": 5,
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "audio_licensed/fulg_fork.wav",
+        "actions": [
+          { "do": "chain", "leap": true, "jumps": 3, "radius": 3.5, "falloff": 0.9, "actions": [
+            { "do": "damage", "type": "Shock", "min": 1, "max": 3, "scale": "Agility+PsiPower", "scaleMult": 0.15, "weapon": 0.4, "perRank": 1,
+              "bonusPerStack": 1, "stacksOf": "@Leader" },
+            { "do": "effect", "effect": "@Leader" } ] }
+        ],
+        "perk": {
+          "name": "Branching Fork",
+          "description": "The path splits once more before it runs to ground.",
+          "staminaDelta": 2,
+          "addActions": [ { "do": "effect", "to": "self", "effect": "@Potential" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Ghost Spark",
+        "icon": "fulgurant_t4.png",
+        "description": "Dump a crackling flash into everyone next to you and blink clear. The ghost of the discharge stays crawling on the deck where you stood, biting whatever walks into it.",
+        "radius": 1.6,
+        "staminaCost": 12,
+        "cooldown": 7,
+        "instant": false,
+        "castVfx": "PA_Prototype_Thunderclap.impactParticle@0.5",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "sfx/fulg_ghost.wav",
+        "actions": [
+          { "do": "damage", "type": "Shock", "min": 2, "max": 4, "scale": "Agility+PsiPower", "scaleMult": 0.15, "perRank": 1 },
+          { "do": "blind", "chance": 35 },
+          { "do": "field", "to": "self", "fieldName": "Afterspark", "turns": 3, "radius": 1.1, "affects": "enemies", "look": "HAZARD_Shock@0.6",
+            "actions": [
+              { "do": "damage", "type": "Shock", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.15 },
+              { "do": "effect", "effect": "@Leader" } ] },
+          { "do": "warp", "to": "self", "warpTo": "away", "amount": 3 }
+        ],
+        "perk": {
+          "name": "Lingering Ghost",
+          "description": "The afterspark takes longer to run to ground.",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "floor",
+        "name": "Rail Dash",
+        "icon": "fulgurant_t5.png",
+        "description": "Become the bolt. You streak in a straight line to the spot you pick, striking everyone in the way, and arrive still crackling.",
+        "equipped": "melee",
+        "range": 6,
+        "shape": "line",
+        "width": 1,
+        "staminaCost": 16,
+        "cooldown": 6,
+        "castVfx": "PA_Elementalist_ChainLightning.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "travelVfx": "PA_Elementalist_ChainLightning.shockAttack",
+        "travelSpeed": 24,
+        "sound": "sfx/fulg_rail.wav",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Shock", "min": 2, "max": 5, "scale": "Agility+PsiPower", "scaleMult": 0.2, "weapon": 0.5, "perRank": 1 },
+          { "do": "effect", "effect": "@Leader" },
+          { "do": "effect", "to": "self", "effect": "@Potential" }
+        ],
+        "perk": {
+          "name": "Overvolted Rail",
+          "description": "You hit the line so hard it knocks them off their feet.",
+          "addActions": [ { "do": "knockback", "amount": 1 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Return Stroke",
+        "icon": "fulgurant_t6.png",
+        "description": "The flash comes back up the path you laid. Pour up to six Potential into one strike, then let it run along every Stepped Leader in the room. A foe carrying five Leaders is stunned by the stroke.",
+        "equipped": "melee",
+        "staminaCost": 15,
+        "cooldown": 6,
+        "usableWhen": { "value": "stacks:@Potential", "atLeast": 2 },
+        "impactVfx": "PA_Prototype_Thunderclap.impactParticle@0.6",
+        "sound": "sfx/fulg_stroke.wav",
+        "actions": [
+          { "do": "stun", "turns": 1, "when": { "value": "stacks:@Leader", "of": "target", "atLeast": 5 } },
+          { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Agility+PsiPower", "scaleMult": 0.25, "weapon": 1.0, "perRank": 2,
+            "bonusPerStack": 3, "stacksOf": "@Potential", "stacksFrom": "self", "stacksUsed": 6, "consumeStacks": true },
+          { "do": "damage", "type": "Shock", "min": 0, "max": 0, "bonusPerStack": 2, "stacksOf": "@Leader", "consumeStacks": true },
+          { "do": "chain", "jumps": 5, "radius": 6, "effect": "@Leader", "falloff": 1.0, "vfx": "PA_Elementalist_ChainLightning.shockImpact", "actions": [
+            { "do": "damage", "type": "Shock", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.2, "bonusPerStack": 2, "stacksOf": "@Leader", "consumeStacks": true } ] }
+        ],
+        "perk": {
+          "name": "Bright Return",
+          "description": "The returning flash keeps a little of itself for you.",
+          "addActions": [ { "do": "effect", "to": "self", "effect": "@Potential", "stacks": 2 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Living Discharge",
+        "icon": "fulgurant_t7.png",
+        "description": "At eight Potential you can't hold it all. Every hit throws a fork to the next foe, and every kill earths so cleanly it puts the charge straight back into you and your skills.",
+        "procs": [
+          { "on": "hit", "maxPerTurn": 3, "when": { "all": [ { "value": "stacks:@Potential", "atLeast": 8 }, { "equipped": "melee" } ] }, "actions": [
+            { "do": "chain", "jumps": 1, "radius": 3, "actions": [
+              { "do": "damage", "type": "Shock", "min": 1, "max": 3, "scale": "Agility+PsiPower", "scaleMult": 0.1 } ] } ] },
+          { "on": "kill", "when": { "value": "stacks:@Potential", "atLeast": 8 }, "actions": [
+            { "do": "cooldowns", "to": "self", "amount": 1 },
+            { "do": "effect", "to": "self", "effect": "@Potential", "stacks": 2 } ] }
+        ]
+      }
+    }
+  ]
+}

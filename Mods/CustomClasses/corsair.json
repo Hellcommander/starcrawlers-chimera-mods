@@ -1,0 +1,221 @@
+{
+  "id": "MOD_Corsair",
+  "name": "Corsair",
+  "description": "A blade in each hand and a bottle in the third. Every kill fills your pockets with Spoils, which sharpens your blade, sweetens your grog and loads the cannon for a point-blank Broadside.\n\nSwashbuckling brawler that snowballs on kills. Favors [SAV] and [AGL].",
+  "archetype": "Guile",
+  "icon": "corsair.png",
+  "attributePriorities": {
+    "Savvy": 3,
+    "Agility": 3,
+    "Crit": 1
+  },
+  "starterCredits": 50,
+  "effects": [
+    {
+      "id": "Spoils",
+      "name": "Spoils",
+      "description": "Your pockets jingle. So does your confidence.",
+      "duration": 12,
+      "maxStacks": 10,
+      "stats": {
+        "Crit": 1,
+        "LootFind": 1
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Pirate's Due",
+        "icon": "corsair_t0.png",
+        "description": "Dead men carry spare change.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Spoils", "stacks": 2 }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 15,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Spoils" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Cutlass Flourish",
+        "icon": "corsair_t1.png",
+        "description": "All style, plenty of substance.",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "#Gashed" }
+        ],
+        "perk": {
+          "name": "Twin Flourish",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/corsair_flourish.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Boarding Hook",
+        "icon": "corsair_t2.png",
+        "instant": false,
+        "radius": 1.5,
+        "cooldown": 7,
+        "description": "Swing across the room and land blade-first.",
+        "castVfx": "PA_Pirate_Grapple.particle_dash",
+        "sound": "event:/Abilities/SpacePirate/SpacePirate_Grapple",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Slashing", "min": 2, "max": 5, "scale": "Savvy", "scaleMult": 0.3 },
+          { "do": "effect", "effect": "#Reeling" }
+        ],
+        "perk": {
+          "name": "Quick Hook",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Swig of Grog",
+        "icon": "corsair_t3.png",
+        "cooldown": 12,
+        "description": "Liquid courage, with richer pirates getting the better vintage.",
+        "castVfx": "PA_Pirate_GrogBottle.PS_cast",
+        "sound": "event:/Abilities/SpacePirate/SpacePirate_GrogBottle",
+        "actions": [
+          { "do": "heal", "amount": 4, "bonusPerStack": 2, "stacksOf": "@Spoils" },
+          { "do": "effect", "effect": "#Enraged" }
+        ],
+        "perk": {
+          "name": "Bottomless Bottle",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Dodge": 5
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Sea Legs",
+        "icon": "corsair_t4.png",
+        "description": "Sidestep, then stab.",
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 40,
+            "actions": [
+              { "do": "damage", "type": "Slashing", "min": 2, "max": 4, "scale": "Agility", "scaleMult": 0.2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Point-Blank Volley",
+        "icon": "corsair_t5.png",
+        "radius": 2.5,
+        "staminaCost": 25,
+        "cooldown": 14,
+        "description": "Unload a hand cannon in every direction. Your Spoils pays for the powder.",
+        "castVfx": "PA_Pirate_Cacafuego.PS_explode",
+        "sound": "sfx/corsair_volley.wav",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Spoils", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "knockback", "amount": 2 }
+        ],
+        "perk": {
+          "name": "Full Volley",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Walk the Plank",
+        "icon": "corsair_t6.png",
+        "staminaCost": 20,
+        "cooldown": 10,
+        "resetOnKill": true,
+        "description": "A cut that sends the wounded overboard. Below 40% health they may not come back up, and the fatter your purse, the shorter the plank.",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 5, "max": 9, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "execute", "amount": 5, "bonusPerStack": 3, "stacksOf": "@Spoils", "stacksFrom": "self", "consumeStacks": true, "elitePercent": 15, "when": { "value": "health%", "of": "target", "below": 40 } }
+        ],
+        "perk": {
+          "name": "Feed the Sharks",
+          "chanceBonus": 10
+        },
+        "sound": "sfx/corsair_flourish.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Dread Reputation",
+        "icon": "corsair_t7.png",
+        "description": "Word travels. A rich captain's blade bites twice, and every kill rattles whoever was standing next to it.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": { "value": "stacks:@Spoils", "of": "self", "atLeast": 5 },
+            "actions": [
+              { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.3 },
+              { "do": "effect", "effect": "#Gashed" }
+            ]
+          },
+          {
+            "on": "kill",
+            "radius": 2.5,
+            "actions": [
+              { "do": "effect", "effect": "#Reeling" },
+              { "do": "cooldowns", "to": "self", "amount": 1 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

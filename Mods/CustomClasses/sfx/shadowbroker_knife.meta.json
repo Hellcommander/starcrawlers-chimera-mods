@@ -1,0 +1,187 @@
+{
+  "prompt": "quick silent knife stab with a dark whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, quick silent knife stab with a dark whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.9,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.015518522821366787,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "0f5c40ef8b8beb93",
+      "score": 0.34956851601600647,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 47.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "cae47f35266c68fd",
+      "score": 0.34956851601600647,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 47.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4516155c0bf00789",
+      "score": 0.3495684862136841,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 47.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b320874672146214",
+      "score": 0.320418119430542,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 39.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "e9d7e4b66d61819d",
+      "score": 0.320418119430542,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 39.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "7bc1c8d98882c4e1",
+      "score": 0.320418119430542,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 39.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "e461a485ef8953ec",
+      "score": 0.3201519250869751,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 35.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "98c63be9472c3766",
+      "score": 0.3201519250869751,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 35.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "d5db96a7c26ecf32",
+      "score": 0.3201519250869751,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 35.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "13bb30294afb0efa",
+      "score": 0.3182446360588074,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 77.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "0f5c40ef8b8beb93",
+    "cae47f35266c68fd",
+    "4516155c0bf00789",
+    "b320874672146214",
+    "e9d7e4b66d61819d",
+    "7bc1c8d98882c4e1",
+    "e461a485ef8953ec",
+    "98c63be9472c3766",
+    "d5db96a7c26ecf32",
+    "13bb30294afb0efa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\shadowbroker_knife.wav",
+  "sample_rate": 44100
+}

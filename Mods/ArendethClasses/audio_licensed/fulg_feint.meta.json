@@ -1,0 +1,228 @@
+{
+  "prompt": "quick crackle of sparks then a swift blade strike from behind, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 0.8,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "c885ae227f3c59c1",
+      "score": 0.5994102954864502,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Small C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "72c9d98676150f94",
+      "score": 0.5746316909790039,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 51.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "90bbf3c6a0b76a0f",
+      "score": 0.5732688903808594,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 45.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "66b8b68fc1cbcad4",
+      "score": 0.5683557987213135,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "124d5e445af877c1",
+      "score": 0.5654529333114624,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "6fb0eb3033fb7dd9",
+      "score": 0.5611523389816284,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Misc/Explosion 4.wav",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "explosion"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ba60544a04b987c1",
+      "score": 0.5551707744598389,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 80.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4afb2c16dee0804f",
+      "score": 0.5531566143035889,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 68.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "23f44fa185ce05e9",
+      "score": 0.5522906184196472,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 53.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "087d5f143548515c",
+      "score": 0.5476741194725037,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "c885ae227f3c59c1",
+    "72c9d98676150f94",
+    "90bbf3c6a0b76a0f",
+    "66b8b68fc1cbcad4",
+    "124d5e445af877c1",
+    "6fb0eb3033fb7dd9",
+    "ba60544a04b987c1",
+    "4afb2c16dee0804f",
+    "23f44fa185ce05e9",
+    "087d5f143548515c"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_feint.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.138,
+  "semitones": -4,
+  "width": 0.493,
+  "listen": {
+    "match": 0.667,
+    "clean": -3.526,
+    "faults": []
+  }
+}

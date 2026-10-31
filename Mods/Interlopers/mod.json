@@ -1,0 +1,9 @@
+{
+  "id": "Interlopers",
+  "name": "Interlopers",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "New enemies with their own skills, models and animations: a riot shield wall, overloading fuse drones, a spore cultivator and its burstcaps, shellbacks and their brood, medic drones, pouncing hounds and shift supervisors. Some of Chimera's own staff learn new tricks too.",
+  "loadAfter": ["SideAreas", "CustomClasses"]
+}

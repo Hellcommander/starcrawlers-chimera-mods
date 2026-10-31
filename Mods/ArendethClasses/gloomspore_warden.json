@@ -1,0 +1,808 @@
+{
+  "id": "MOD_GloomsporeWarden",
+  "name": "Gloomspore Warden",
+  "description": "Something grows in the dark between the hull plates, and it listens to you.\n\nSummoner built around spawning, bursting and colony size. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "gloomspore_warden.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "PsiPower": 2
+  },
+  "effects": [
+    {
+      "id": "Sporeload",
+      "name": "Sporeload",
+      "description": "The harm you do settles into you as spores. At three a Gloomcap sprouts beside you; at six the load breaks open and two more come up.",
+      "duration": 20,
+      "maxStacks": 6,
+      "thresholds": [
+        {
+          "at": 3,
+          "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Horror_Spawn",
+          "actions": [
+            {
+              "do": "summon",
+              "to": "self",
+              "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+              "summonName": "Gloomcap",
+              "scaleStat": "PsiPower",
+              "model": {
+                "mesh": "models/gloomcap.obj",
+                "texture": "models/gloomcap.png",
+                "scale": 1.0,
+                "glow": "#5cffb0",
+                "glowStrength": 0.35,
+                "pulse": 0.05,
+                "wobble": 2,
+                "randomYaw": true,
+                "keepParticles": false
+              },
+              "summonGroup": "Gloomcap",
+              "maxSummons": 4,
+              "turns": 10,
+              "effect": "@Capflesh"
+            }
+          ]
+        }
+      ],
+      "burstAt": 6,
+      "burstSound": "event:/Abilities/VoidPsyker/VoidPsyker_Horror_Spawn",
+      "burstActions": [
+        {
+          "do": "summon",
+          "to": "self",
+          "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+          "summonName": "Gloomcap",
+          "scaleStat": "PsiPower",
+          "model": {
+            "mesh": "models/gloomcap.obj",
+            "texture": "models/gloomcap.png",
+            "scale": 1.0,
+            "glow": "#5cffb0",
+            "glowStrength": 0.35,
+            "pulse": 0.05,
+            "wobble": 2,
+            "randomYaw": true,
+            "keepParticles": false
+          },
+          "summonGroup": "Gloomcap",
+          "amount": 2,
+          "maxSummons": 4,
+          "turns": 10,
+          "effect": "@Capflesh"
+        }
+      ]
+    },
+    {
+      "id": "Gloomrot",
+      "name": "Gloomrot",
+      "description": "Rot that eats deeper with every layer. Gloomcaps burst into anything carrying it. If the bearer dies, its last breath feeds you.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 8,
+      "dot": {
+        "type": "Bio",
+        "min": 1,
+        "max": 1
+      },
+      "stats": {
+        "Dodge": -1
+      },
+      "resists": {
+        "Bio": -2,
+        "Void": -2
+      },
+      "vfx": "EFFECT_Xeno_Debuff_Green",
+      "thresholds": [
+        {
+          "at": 6,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "CONFUSE",
+              "turns": 2
+            }
+          ]
+        }
+      ],
+      "onDeathActions": [
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 4
+        },
+        {
+          "do": "effect",
+          "to": "self",
+          "effect": "@Sporeload"
+        }
+      ]
+    },
+    {
+      "id": "Capflesh",
+      "name": "Capflesh",
+      "description": "A short-lived growth. When it dies, whether it is cut down or simply runs out of time, it bursts through every rotting thing near it, harder for every other Gloomcap standing, and spreads the rot to its neighbours. Sometimes it leaves a healing haze behind. Few at a time, but each one is dense and dangerous. Rot and poison can't take hold in it, and the colony's own bursts pass through it.",
+      "duration": -1,
+      "stats": {
+        "HealthMax": 20,
+        "Armor": 3
+      },
+      "damageDealtMult": 1.5,
+      "onDeathActions": [
+        {
+          "do": "chain",
+          "jumps": 3,
+          "radius": 2.5,
+          "effect": "@Gloomrot",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 5,
+              "max": 10,
+              "scale": "Smarts",
+              "scaleMult": 0.5,
+              "ifTargetHas": "@Gloomrot",
+              "bonusPerStack": 1,
+              "stacksOf": "group:Gloomcap"
+            },
+            {
+              "do": "effect",
+              "effect": "@Gloomrot",
+              "stacks": 2,
+              "ifTargetHas": "@Gloomrot"
+            }
+          ]
+        },
+        {
+          "do": "chain",
+          "jumps": 2,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Gloomrot"
+            }
+          ]
+        },
+        {
+          "do": "heal",
+          "to": "self",
+          "amount": 4,
+          "chance": 35
+        }
+      ],
+      "immune": [
+        "@Gloomrot",
+        "#Poisoned",
+        "EFFECT_Poison"
+      ],
+      "immuneToAllies": true
+    },
+    {
+      "id": "Sporepulse",
+      "name": "Sporepulse",
+      "description": "The colony breathes out through this cap.",
+      "duration": 2,
+      "maxStacks": 2,
+      "burstAt": 2,
+      "burstRadius": 2,
+      "burstVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+      "burstActions": [
+        {
+          "do": "damage",
+          "type": "Void",
+          "min": 4,
+          "max": 8,
+          "scale": "Smarts",
+          "scaleMult": 0.45,
+          "perRank": 1,
+          "ifTargetHas": "@Gloomrot"
+        },
+        {
+          "do": "effect",
+          "effect": "@Gloomrot",
+          "stacks": 2,
+          "ifTargetHas": "@Gloomrot"
+        }
+      ]
+    },
+    {
+      "id": "Sporeward",
+      "name": "Sporeward",
+      "description": "The colony knows you. Your own rot, spores and poison can't take hold in you, you can't be fogged by them, and nothing the colony bursts or spits ever harms you.",
+      "duration": -1,
+      "immune": [
+        "@Gloomrot",
+        "#Poisoned",
+        "EFFECT_Poison",
+        "CONFUSE"
+      ],
+      "immuneToAllies": true
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Fertile Dark",
+        "icon": "gloomspore_warden_t0.png",
+        "description": "The harm you do settles into you as Sporeload, and some of it takes root in the target as Gloomrot. Every kill is good soil, and once in a while a blow knocks a weak Spitspore loose from the target: it drifts and spits for a few turns, then withers without bursting. The colony knows you: its rot, poison and spores never take hold in you, and nothing it bursts or spits harms you or its own caps.",
+        "procs": [
+          {
+            "on": "turn",
+            "when": {
+              "lacks": "@Sporeward",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeward"
+              }
+            ]
+          },
+          {
+            "on": "combatStart",
+            "when": {
+              "lacks": "@Sporeward",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeward"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeload"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Gloomrot"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeload"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 10,
+            "cooldown": 8,
+            "when": {
+              "value": "summons:Gloomcap",
+              "of": "self",
+              "below": 4
+            },
+            "actions": [
+              {
+                "do": "summon",
+                "creature": "Spitcap",
+                "summonName": "Spitspore",
+                "summonGroup": "Gloomcap",
+                "maxSummons": 4,
+                "turns": 4,
+                "summonVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Tear the Seedrift",
+        "icon": "gloomspore_warden_t2.png",
+        "range": 7,
+        "cooldown": 3,
+        "staminaCost": 8,
+        "description": "Rip the dark open beside a distant foe. The rift bursts on everything standing near it, and its far end opens at your side, where a Spitcap drifts out: a floating knot of the colony that keeps its distance, spits rot at your foes and goads them into wasting blows on it. It counts as one of your Gloomcaps and bursts like one when it goes.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Horror_Spawn",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Void",
+            "min": 2,
+            "max": 4,
+            "scale": "Smarts",
+            "scaleMult": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Gloomrot"
+          },
+          {
+            "do": "chain",
+            "jumps": 2,
+            "radius": 1.6,
+            "falloff": 0.6,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Void",
+                "min": 1,
+                "max": 3,
+                "scale": "Smarts",
+                "scaleMult": 0.2
+              },
+              {
+                "do": "effect",
+                "effect": "@Gloomrot"
+              }
+            ]
+          },
+          {
+            "do": "summon",
+            "to": "self",
+            "creature": "Spitcap",
+            "summonName": "Spitcap",
+            "summonGroup": "Gloomcap",
+            "maxSummons": 4,
+            "turns": 10,
+            "effect": "@Capflesh",
+            "summonVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Sporeload"
+          }
+        ],
+        "perk": {
+          "name": "Wide Seedrift",
+          "damageMult": 1.2,
+          "cooldownDelta": -1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Rot Dart",
+        "icon": "gloomspore_warden_t1.png",
+        "staminaCost": 6,
+        "description": "A sliver of fungal dark. It roots Gloomrot in the target, feeds your Sporeload, and hits harder for every Gloomcap you have standing.",
+        "impactVfx": "EFFECT_Xeno_Debuff_Green",
+        "sound": "sfx/gloom_dart.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Bio",
+            "min": 2,
+            "max": 4,
+            "scale": "Smarts",
+            "scaleMult": 0.3,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "group:Gloomcap"
+          },
+          {
+            "do": "effect",
+            "effect": "@Gloomrot"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Sporeload"
+          }
+        ],
+        "perk": {
+          "name": "Virulent Dart",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Sow the Gloom",
+        "icon": "gloomspore_warden_t2.png",
+        "cooldown": 8,
+        "staminaCost": 14,
+        "description": "Pour your Sporeload out at your feet. A Gloomcap comes up, plus one more for every layer you spend, and the reek of fresh growth draws every nearby enemy's eye to the colony.",
+        "castVfx": "PA_PASSIVE_Psykonics_Telekinesis.castParticle",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Horror_Spawn",
+        "actions": [
+          {
+            "do": "summon",
+            "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+            "summonName": "Gloomcap",
+            "scaleStat": "PsiPower",
+            "model": {
+              "mesh": "models/gloomcap.obj",
+              "texture": "models/gloomcap.png",
+              "scale": 1.0,
+              "glow": "#5cffb0",
+              "glowStrength": 0.35,
+              "pulse": 0.05,
+              "wobble": 2,
+              "randomYaw": true,
+              "keepParticles": false
+            },
+            "summonGroup": "Gloomcap",
+            "amount": 1,
+            "maxSummons": 4,
+            "turns": 10,
+            "effect": "@Capflesh",
+            "bonusPerStack": 1,
+            "stacksOf": "@Sporeload",
+            "stacksFrom": "self",
+            "consumeStacks": true
+          },
+          {
+            "do": "taunt",
+            "to": "summons",
+            "ifSummonAlive": "group:Gloomcap",
+            "radius": 3,
+            "turns": 2
+          }
+        ],
+        "perk": {
+          "name": "Thick Harvest",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Rotline",
+        "icon": "gloomspore_warden_t4.png",
+        "cooldown": 5,
+        "staminaCost": 12,
+        "description": "A strand of rot runs from one victim to the next, deepening the Gloomrot in each. Every link feeds your Sporeload.",
+        "impactVfx": "VOID_PSYKER_SHADOWCOIL.impactParticle",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Shadowcoil_Impact",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3,
+            "falloff": 0.9,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Void",
+                "min": 2,
+                "max": 5,
+                "scale": "Smarts",
+                "scaleMult": 0.25,
+                "perRank": 1
+              },
+              {
+                "do": "effect",
+                "effect": "@Gloomrot",
+                "stacks": 2
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeload"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Long Rot",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "#Poisoned"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Colony Exhale",
+        "icon": "gloomspore_warden_t3.png",
+        "cooldown": 6,
+        "staminaCost": 14,
+        "requires": "summon:group:Gloomcap",
+        "description": "Every Gloomcap breathes out at once, wherever it stands: each one bursts into the rotting things around it and drives the rot deeper. The spore haze drifts back to mend you, more for every cap.",
+        "castVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "event:/Abilities/ChaoticMutant/Mutation_Charge_Impact",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "summons",
+            "ifSummonAlive": "group:Gloomcap",
+            "effect": "@Sporepulse",
+            "stacks": 2
+          },
+          {
+            "do": "heal",
+            "amount": 2,
+            "bonusPerStack": 1,
+            "stacksOf": "group:Gloomcap"
+          }
+        ],
+        "perk": {
+          "name": "Slow Exhale",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Black Canopy",
+        "icon": "gloomspore_warden_t5.png",
+        "radius": 3,
+        "range": 7,
+        "cooldown": 18,
+        "staminaCost": 28,
+        "description": "The colony flowers all at once over a wide patch of floor. Everything under it is rotted through, left open and reeling, harder for every Gloomcap you have, and the flowering reseeds the colony with two long-lived caps.",
+        "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
+        "sound": "sfx/gloom_unmaking.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Void",
+            "min": 5,
+            "max": 10,
+            "scale": "PsiPower",
+            "scaleMult": 0.5,
+            "perRank": 2,
+            "bonusPerStack": 3,
+            "stacksOf": "group:Gloomcap"
+          },
+          {
+            "do": "effect",
+            "effect": "@Gloomrot",
+            "stacks": 3
+          },
+          {
+            "do": "effect",
+            "effect": "#Exposed"
+          },
+          {
+            "do": "effect",
+            "effect": "CONFUSE",
+            "turns": 2,
+            "chance": 40
+          },
+          {
+            "do": "summon",
+            "to": "self",
+            "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+            "summonName": "Gloomcap",
+            "scaleStat": "PsiPower",
+            "model": {
+              "mesh": "models/gloomcap.obj",
+              "texture": "models/gloomcap.png",
+              "scale": 1.0,
+              "glow": "#5cffb0",
+              "glowStrength": 0.35,
+              "pulse": 0.05,
+              "wobble": 2,
+              "randomYaw": true,
+              "keepParticles": false
+            },
+            "summonGroup": "Gloomcap",
+            "amount": 2,
+            "maxSummons": 4,
+            "turns": 30,
+            "effect": "@Capflesh"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Sporeload",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Canopy Spread",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Reap the Bloom",
+        "icon": "gloomspore_warden_t6.png",
+        "instant": false,
+        "cooldown": 14,
+        "staminaCost": 16,
+        "requires": "summon:group:Gloomcap",
+        "description": "Call the harvest early. Every Gloomcap you have bursts where it stands, each one tearing through the rotting things around it, and the colony's last breath floods back into you as health and wind, more for every cap. One spore takes root in the ash.",
+        "castVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "event:/Abilities/ChaoticMutant/Mutation_Charge_Impact",
+        "actions": [
+          {
+            "do": "heal",
+            "amount": 3,
+            "bonusPerStack": 3,
+            "stacksOf": "group:Gloomcap"
+          },
+          {
+            "do": "stamina",
+            "amount": 0,
+            "bonusPerStack": 4,
+            "stacksOf": "group:Gloomcap"
+          },
+          {
+            "do": "detonate",
+            "to": "summons",
+            "ifSummonAlive": "group:Gloomcap"
+          },
+          {
+            "do": "summon",
+            "to": "self",
+            "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+            "summonName": "Gloomcap",
+            "scaleStat": "PsiPower",
+            "model": {
+              "mesh": "models/gloomcap.obj",
+              "texture": "models/gloomcap.png",
+              "scale": 1.0,
+              "glow": "#5cffb0",
+              "glowStrength": 0.35,
+              "pulse": 0.05,
+              "wobble": 2,
+              "randomYaw": true,
+              "keepParticles": false
+            },
+            "summonGroup": "Gloomcap",
+            "amount": 1,
+            "maxSummons": 4,
+            "turns": 10,
+            "effect": "@Capflesh"
+          }
+        ],
+        "perk": {
+          "name": "Second Flush",
+          "addActions": [
+            {
+              "do": "summon",
+              "to": "self",
+              "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+              "summonName": "Gloomcap",
+              "scaleStat": "PsiPower",
+              "model": {
+                "mesh": "models/gloomcap.obj",
+                "texture": "models/gloomcap.png",
+                "scale": 1.0,
+                "glow": "#5cffb0",
+                "glowStrength": 0.35,
+                "pulse": 0.05,
+                "wobble": 2,
+                "randomYaw": true,
+                "keepParticles": false
+              },
+              "summonGroup": "Gloomcap",
+              "amount": 1,
+              "maxSummons": 4,
+              "turns": 10,
+              "effect": "@Capflesh"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "resistances": {
+        "Bio": 10,
+        "Void": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Hyphal Bond",
+        "icon": "gloomspore_warden_t7.png",
+        "description": "Threads of the colony run under your skin. Whatever strikes you comes away with rot in the wound. When you are badly hurt the colony closes ranks: every Gloomcap draws the enemies near it, the threads mend you, more for every cap, and fresh spores load into you. Each fallen cap gives you a little wind back.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Gloomrot",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "lowHealth",
+            "threshold": 40,
+            "cooldown": 20,
+            "actions": [
+              {
+                "do": "taunt",
+                "to": "summons",
+                "ifSummonAlive": "group:Gloomcap",
+                "radius": 4,
+                "turns": 2
+              },
+              {
+                "do": "heal",
+                "to": "self",
+                "amount": 4,
+                "bonusPerStack": 2,
+                "stacksOf": "group:Gloomcap"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Sporeload",
+                "stacks": 3
+              }
+            ]
+          },
+          {
+            "on": "allyDeath",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 3
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

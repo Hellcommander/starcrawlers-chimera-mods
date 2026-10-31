@@ -1,0 +1,56 @@
+[ { "particles": [
+  { "id": "fx_freerunner_flying_knee_impact", "light": {"color": "#70E0A0", "range": 3.009, "intensity": 1.856, "time": 0.405},
+    "layers": [
+      {"texture": "fx/freerunner_burst.png", "count": 1, "life": [0.408], "speed": [0], "size": [1.107], "sizeCurve": "flat", "color": "#D0FFE0", "color2": "#20A060", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.333], "speed": [0], "size": [1.201], "sizeCurve": "grow", "color": "#D0FFE0", "color2": "#20A060", "shape": "point"},
+      {"texture": "fx/freerunner_bits.png", "count": 12, "life": [0.52, 0.906], "speed": [2.209, 5.363], "size": [0.1, 0.214], "gravity": 1.2, "spin": [-360, 360], "color": "#D0FFE0", "color2": "#20A060", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.891, 1.535], "speed": [0.281, 0.919], "size": [0.459, 0.793], "sizeCurve": "grow", "spin": [-50, 50], "color": "#18221C", "color2": "#18221C", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_freerunner_wall_run_cast", "light": {"color": "#C8E4FF", "range": 2.936, "intensity": 1.664, "time": 0.324},
+    "layers": [
+      {"texture": "mote", "count": 34, "life": [0.339, 0.538], "speed": [-3.5, -2.5], "size": [0.073, 0.184], "color": "#F4FBFF", "color2": "#8AB8E0", "shape": "sphere", "radius": 1.0},
+      {"texture": "soft", "count": 1, "life": [0.383], "speed": [0], "size": [1.239], "sizeCurve": "pop", "color": "#F4FBFF", "color2": "#8AB8E0", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.979, 1.399], "speed": [0.273, 0.808], "size": [0.597, 1.098], "sizeCurve": "grow", "spin": [-50, 50], "color": "#B8C8D8", "color2": "#B8C8D8", "alpha": 0.22000000000000003, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_freerunner_slide_tackle_cast",
+    "layers": [
+      {"texture": "spark", "count": 0, "rate": 180, "duration": 0.7, "life": [0.204, 0.37], "speed": [0.092, 0.293], "size": [0.094, 0.266], "gravity": 0.0, "color": "#D0FFE0", "color2": "#20A060", "shape": "sphere", "radius": 0.06, "stretch": 3},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 34, "duration": 0.7, "life": [0.424, 0.658], "speed": [0.103, 0.423], "size": [0.318, 0.619], "gravity": 0.0, "color": "#18221C", "color2": "#18221C", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_freerunner_slide_tackle_impact", "light": {"color": "#70E0A0", "range": 2.737, "intensity": 1.999, "time": 0.404},
+    "layers": [
+      {"texture": "fx/freerunner_burst.png", "count": 1, "life": [0.48], "speed": [0], "size": [1.256], "sizeCurve": "flat", "color": "#D0FFE0", "color2": "#20A060", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.362], "speed": [0], "size": [1.323], "sizeCurve": "grow", "color": "#D0FFE0", "color2": "#20A060", "shape": "point"},
+      {"texture": "fx/freerunner_bits.png", "count": 14, "life": [0.479, 1.002], "speed": [2.314, 4.852], "size": [0.109, 0.218], "gravity": 1.2, "spin": [-360, 360], "color": "#D0FFE0", "color2": "#20A060", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.839, 1.67], "speed": [0.335, 0.872], "size": [0.493, 0.838], "sizeCurve": "grow", "spin": [-50, 50], "color": "#18221C", "color2": "#18221C", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_freerunner_second_wind_cast", "light": {"color": "#70E0A0", "range": 2.954, "intensity": 1.582, "time": 0.744},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.656], "speed": [0], "size": [2.411], "sizeCurve": "grow", "color": "#D0FFE0", "color2": "#20A060", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 28, "life": [0.735, 1.186], "speed": [0.818, 1.622], "size": [0.079, 0.19], "gravity": -0.2, "color": "#D0FFE0", "color2": "#20A060", "shape": "cone", "angle": 8, "radius": 0.7, "ground": true},
+      {"texture": "star", "count": 3, "life": [0.282, 0.554], "speed": [0.0, 0.314], "size": [0.326, 0.461], "sizeCurve": "pop", "color": "#D0FFE0", "color2": "#20A060", "shape": "sphere", "radius": 0.6}
+    ] },
+  { "id": "fx_freerunner_vault_stomp_area", "light": {"color": "#70E0A0", "range": 4.776, "intensity": 1.696, "time": 0.466},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.429], "speed": [0], "size": [4.23], "sizeCurve": "grow", "color": "#D0FFE0", "color2": "#20A060", "shape": "point", "ground": true, "flat": true},
+      {"texture": "ring", "count": 1, "life": [0.547], "speed": [0], "size": [3.18], "sizeCurve": "grow", "color": "#D0FFE0", "color2": "#20A060", "shape": "point", "ground": true, "flat": true, "delay": 0.1},
+      {"texture": "fx/freerunner_bits.png", "count": 21, "life": [0.512, 0.847], "speed": [3.16, 5.904], "size": [0.133, 0.249], "gravity": 1.8, "spin": [-360, 360], "color": "#18221C", "color2": "#20A060", "shape": "disc", "radius": 0.96, "ground": true, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 10, "delay": 0.05, "life": [0.971, 1.674], "speed": [0.43, 0.921], "size": [1.106, 1.848], "sizeCurve": "grow", "spin": [-50, 50], "color": "#18221C", "color2": "#18221C", "alpha": 0.6, "shape": "disc", "radius": 0.96, "ground": true, "grid": [6, 6]},
+      {"texture": "soft", "count": 1, "life": [0.447], "speed": [0], "size": [1.755], "sizeCurve": "pop", "color": "#D0FFE0", "color2": "#20A060", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_freerunner_tic_tac_barrage_impact", "light": {"color": "#70E0A0", "range": 2.674, "intensity": 1.428, "time": 0.326},
+    "layers": [
+      {"texture": "fx/freerunner_burst.png", "count": 1, "life": [0.477], "speed": [0], "size": [0.857], "sizeCurve": "flat", "color": "#D0FFE0", "color2": "#20A060", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 6, "life": [0.292, 0.524], "speed": [0.0, 0.281], "size": [0.447, 0.745], "sizeCurve": "pop", "color": "#D0FFE0", "color2": "#20A060", "shape": "sphere", "radius": 0.25},
+      {"texture": "spark", "count": 2, "life": [0.346, 0.505], "speed": [0], "size": [1.003, 1.549], "sizeCurve": "pop", "color": "#D0FFE0", "color2": "#20A060", "shape": "point"}
+    ] }
+] },
+{ "id": "MOD_Freerunner", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_freerunner_flying_knee_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_freerunner_wall_run_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_freerunner_slide_tackle_cast", "impactVfx": "fx_freerunner_slide_tackle_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_freerunner_second_wind_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_freerunner_vault_stomp_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_freerunner_tic_tac_barrage_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

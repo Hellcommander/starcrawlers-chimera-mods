@@ -1,0 +1,314 @@
+{
+  "id": "MOD_Emberhorn",
+  "name": "Emberhorn",
+  "description": "A furnace-hearted charger with a horned helm and no brakes. Every charge and gore builds Head of Steam until it blows in a rampage; gored enemies bleed harder with every hook until they burst open.\n\nCharging fire-and-force bruiser with a self-feeding herd. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "emberhorn.png",
+  "attributePriorities": {
+    "Strength": 4,
+    "Toughness": 2,
+    "HealthMax": 1
+  },
+  "effects": [
+    {
+      "id": "Steam",
+      "name": "Head of Steam",
+      "description": "You are not stopping. Ever. At eight it blows: everything around you is flattened, the vent gives you your breath back, and the noise may bring another bull running.",
+      "duration": 8,
+      "maxStacks": 8,
+      "stats": {
+        "Dodge": 1
+      },
+      "damageDealtPerStack": 0.03,
+      "burstAt": 8,
+      "burstRadius": 2,
+      "burstVfx": "PA_Barbarian_RecklessCharge.impactParticle",
+      "burstSound": "sfx/ember_charge.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Crushing", "min": 5, "max": 10, "scale": "Strength", "scaleMult": 0.4 },
+        { "do": "knockback", "amount": 2 },
+        { "do": "stamina", "to": "self", "amount": 15 },
+        { "do": "summon", "to": "self", "chance": 50, "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "turns": 12, "maxSummons": 6 }
+      ]
+    },
+    {
+      "id": "Gored",
+      "name": "Horn-Torn",
+      "description": "A deep, ragged horn wound that bleeds harder with every hook. At four it splits open.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 4,
+      "dot": {
+        "type": "Piercing",
+        "min": 1,
+        "max": 2
+      },
+      "burstAt": 4,
+      "burstRadius": 1.6,
+      "burstVfx": "PA_SerratedSpines.PS_impact_perk",
+      "burstSound": "sfx/ember_gore.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Piercing", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.3 },
+        { "do": "effect", "effect": "#Gashed", "stacks": 2 },
+        { "do": "knockback", "amount": 1 },
+        { "do": "summon", "to": "self", "chance": 30, "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "turns": 12, "maxSummons": 6 }
+      ]
+    },
+    {
+      "id": "HerdHeat",
+      "name": "Herd Heat",
+      "description": "Every bull that joins the run drives the rest harder.",
+      "duration": -1,
+      "maxStacks": 6,
+      "damageDealtPerStack": 0.1,
+      "stats": {
+        "Dodge": 2
+      }
+    },
+    {
+      "id": "Redline",
+      "name": "Red-Lined",
+      "description": "Boiler pressure past the last mark on the gauge.",
+      "duration": 2,
+      "maxStacks": 2,
+      "burstAt": 2,
+      "burstRadius": 2,
+      "burstVfx": "PA_Pirate_Cacafuego.PS_explode@0.6",
+      "burstSound": "sfx/ember_quake.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Fire", "min": 6, "max": 12, "scale": "Strength", "scaleMult": 0.5, "perRank": 2 },
+        { "do": "knockback", "amount": 2 },
+        { "do": "effect", "effect": "#Burning", "stacks": 2 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "No Brakes",
+        "icon": "emberhorn_t0.png",
+        "description": "Every blow you land builds speed.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 40,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Steam" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Furnace Charge",
+        "icon": "emberhorn_t1.png",
+        "instant": false,
+        "range": 5,
+        "radius": 1.5,
+        "cooldown": 5,
+        "staminaCost": 12,
+        "description": "Barrel across the room, horns first, and flatten whatever is there. Hits harder for every bull running with you, and the thunder of it can call another.",
+        "castVfx": "PA_Barbarian_RecklessCharge.impactParticle",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
+        "sound": "sfx/ember_charge.wav",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 1, "stacksOf": "group:ScrapBull" },
+          { "do": "knockback", "amount": 2 },
+          { "do": "effect", "effect": "@Gored" },
+          { "do": "effect", "to": "self", "effect": "@Steam" },
+          { "do": "summon", "to": "self", "chance": 20, "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "turns": 12, "maxSummons": 6 }
+        ],
+        "perk": {
+          "name": "Runaway Furnace",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Horn Hook",
+        "icon": "emberhorn_t2.png",
+        "description": "Hook and twist. Every hook opens the wound wider and stokes the boiler.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@Gored" },
+          { "do": "knockback", "amount": 1 },
+          { "do": "effect", "to": "self", "effect": "@Steam" }
+        ],
+        "perk": {
+          "name": "Double Hook",
+          "addActions": [
+            { "do": "effect", "effect": "@Gored" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Armor": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Scrap Stampede",
+        "icon": "emberhorn_t4.png",
+        "instant": false,
+        "cooldown": 18,
+        "staminaCost": 18,
+        "description": "Whistle up the herd. Two scrap-bull drones come charging, and every bull already running gets hotter for it.",
+        "castVfx": "PA_Engineer_Junker.spawnParticle",
+        "sound": "event:/Abilities/Engineer/Engineer_Junker_Leap",
+        "actions": [
+          { "do": "summon", "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "amount": 2, "turns": 12, "maxSummons": 6 },
+          { "do": "effect", "to": "summons", "ifSummonAlive": "group:ScrapBull", "effect": "@HerdHeat" },
+          { "do": "effect", "to": "self", "effect": "@Steam" }
+        ],
+        "perk": {
+          "name": "Bigger Herd",
+          "cooldownDelta": -6
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Ember Quake",
+        "icon": "emberhorn_t5.png",
+        "radius": 2.5,
+        "staminaCost": 24,
+        "cooldown": 12,
+        "description": "Stamp with everything you've built up. The floor catches fire, everything is thrown back, and the vented steam comes back to you as breath.",
+        "castVfx": "PA_Pirate_Cacafuego.PS_explode@0.6",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Steam", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "knockback", "amount": 2 },
+          { "do": "stun", "turns": 1, "chance": 35 },
+          { "do": "effect", "effect": "#Burning" },
+          { "do": "stamina", "to": "self", "amount": 1, "bonusPerStack": 2, "stacksOf": "@Steam", "stacksFrom": "self" },
+          { "do": "summon", "to": "self", "chance": 30, "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "turns": 12, "maxSummons": 6 }
+        ],
+        "perk": {
+          "name": "Magma Quake",
+          "radiusDelta": 1
+        },
+        "sound": "sfx/ember_quake.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Herd Meltdown",
+        "icon": "emberhorn_t3.png",
+        "instant": false,
+        "cooldown": 20,
+        "staminaCost": 20,
+        "requires": "summon:group:ScrapBull",
+        "description": "Jam every bull's boiler past the red line. The whole herd blows apart at once, each one a ball of fire that hurls back everything around it. The herd is spent; sometimes one stray bull comes running out of the smoke.",
+        "castVfx": "PA_Pirate_Cacafuego.spawnParticle",
+        "sound": "event:/Abilities/ChaoticMutant/Mutant_Draconic_Fire",
+        "actions": [
+          { "do": "effect", "to": "summons", "ifSummonAlive": "group:ScrapBull", "effect": "@Redline", "stacks": 2 },
+          { "do": "dismiss", "to": "summons", "ifSummonAlive": "group:ScrapBull" },
+          { "do": "effect", "to": "self", "effect": "@Steam", "stacks": 2 },
+          { "do": "summon", "to": "self", "chance": 60, "creature": "PA_Engineer_Junker.characterPrefab", "summonName": "Scrap Bull", "model": { "mesh": "models/scrap_bull.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "ScrapBull", "turns": 12, "maxSummons": 6 }
+        ],
+        "perk": {
+          "name": "Chain Meltdown",
+          "cooldownDelta": -6
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Horn Toss",
+        "icon": "emberhorn_t6.png",
+        "cooldown": 6,
+        "staminaCost": 14,
+        "description": "Get your horns under them and heave. The deeper the horn wound already is, the harder it lands, and they go flying: whatever they crash into gets gored along with them. The effort stokes the boiler twice over.",
+        "impactVfx": "PA_Barbarian_FlyingSmash.triggerParticle",
+        "sound": "sfx/ember_gore.wav",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.45, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Gored" },
+          { "do": "throw", "amount": 3, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3 },
+            { "do": "effect", "effect": "@Gored" } ] },
+          { "do": "effect", "to": "self", "effect": "@Steam", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Branding Horns",
+          "addActions": [
+            { "do": "effect", "effect": "#Burning" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "resistances": {
+        "Fire": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Firebox Heart",
+        "icon": "emberhorn_t7.png",
+        "description": "The furnace in your chest burns on whatever it is fed. Kills patch you up and stoke it; when a bull drops out of the run, its boiler empties into yours; and while you have a real head of steam, the heat sheathes you against each blow.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 3, "scale": "Strength", "scaleMult": 0.3 },
+              { "do": "effect", "to": "self", "effect": "@Steam" }
+            ]
+          },
+          {
+            "on": "allyDeath",
+            "cooldown": 2,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Steam", "stacks": 2 },
+              { "do": "stamina", "to": "self", "amount": 5 }
+            ]
+          },
+          {
+            "on": "hurt",
+            "cooldown": 3,
+            "when": { "value": "stacks:@Steam", "of": "self", "atLeast": 5 },
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 3, "scale": "Toughness", "scaleMult": 0.4, "bonusPerStack": 1, "stacksOf": "@Steam", "stacksFrom": "self" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

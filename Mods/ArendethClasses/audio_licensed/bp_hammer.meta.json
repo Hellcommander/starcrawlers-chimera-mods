@@ -1,0 +1,217 @@
+{
+  "prompt": "massive psychic punch impact with a clang of steel, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.9,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "5a3ed87c43ffa221",
+      "score": 0.5819599032402039,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 20.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "a72bc9edf743cd47",
+      "score": 0.5810230374336243,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 41.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "2918768f269fd2bc",
+      "score": 0.5728789567947388,
+      "via": "clap+tag",
+      "pack": "Orchestral Impacts",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Orchestral Impacts/FL_GFX_Orchestral_Impact_16.wav",
+      "license": "direct",
+      "tags": [
+        "orchestral",
+        "impacts",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "impact"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "ef3ab7c5ee7809db",
+      "score": 0.5612106919288635,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 45.wav",
+      "license": "reference",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "c01f39d271d8b43f",
+      "score": 0.5531874299049377,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "fast"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "ae39015c887481e8",
+      "score": 0.5506926774978638,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "65c384599a6ed14b",
+      "score": 0.5506926774978638,
+      "via": "clap+tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "28b51368bc151d46",
+      "score": 0.5454422831535339,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 47.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "1ab8ea3964e3ccdf",
+      "score": 0.5419210195541382,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "fast"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "2d52d477c9a76fda",
+      "score": 0.5408830046653748,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 19.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "5a3ed87c43ffa221",
+    "a72bc9edf743cd47",
+    "2918768f269fd2bc",
+    "ef3ab7c5ee7809db",
+    "c01f39d271d8b43f",
+    "ae39015c887481e8",
+    "65c384599a6ed14b",
+    "28b51368bc151d46",
+    "1ab8ea3964e3ccdf",
+    "2d52d477c9a76fda"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_hammer.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.161,
+  "semitones": -3,
+  "width": 1.383,
+  "listen": {
+    "match": 0.562,
+    "clean": -6.0,
+    "faults": []
+  }
+}

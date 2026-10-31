@@ -1,0 +1,47 @@
+[ { "particles": [
+  { "id": "fx_corsair_cutlass_flourish_impact",
+    "layers": [
+      {"texture": "spark", "count": 2, "life": [0.411, 0.526], "speed": [0], "size": [1.128, 1.807], "sizeCurve": "pop", "color": "#FFF0B0", "color2": "#C88A10", "shape": "point"},
+      {"texture": "spark", "count": 16, "life": [0.33, 0.507], "speed": [1.906, 3.534], "size": [0.057, 0.113], "stretch": 4, "gravity": 0.0, "drag": 1.0, "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_corsair_boarding_hook_cast",
+    "layers": [
+      {"texture": "spark", "count": 0, "rate": 146, "duration": 0.7, "life": [0.196, 0.383], "speed": [0.091, 0.335], "size": [0.09, 0.262], "gravity": 0.0, "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.06, "stretch": 3},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 36, "duration": 0.7, "life": [0.435, 0.541], "speed": [0.103, 0.442], "size": [0.328, 0.649], "gravity": 0.0, "color": "#2A2418", "color2": "#2A2418", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_corsair_boarding_hook_impact",
+    "layers": [
+      {"texture": "spark", "count": 2, "life": [0.313, 0.505], "speed": [0], "size": [1.286, 1.463], "sizeCurve": "pop", "color": "#FFF0B0", "color2": "#C88A10", "shape": "point"},
+      {"texture": "spark", "count": 18, "life": [0.301, 0.531], "speed": [1.771, 3.865], "size": [0.066, 0.118], "stretch": 4, "gravity": 0.0, "drag": 1.0, "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.2},
+      {"texture": "spark", "count": 22, "life": [0.282, 0.601], "speed": [3.331, 6.038], "size": [0.087, 0.146], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_corsair_swig_of_grog_cast", "light": {"color": "#FFC060", "range": 3.088, "intensity": 1.519, "time": 0.726},
+    "layers": [
+      {"texture": "star", "count": 21, "life": [0.706, 1.157], "speed": [0.883, 1.853], "size": [0.167, 0.302], "gravity": -0.2, "color": "#FFE8B0", "color2": "#C07A20", "shape": "cone", "angle": 8, "radius": 0.6, "ground": true},
+      {"texture": "mote", "count": 20, "life": [0.705, 1.313], "speed": [0.885, 1.702], "size": [0.08, 0.197], "gravity": -0.2, "color": "#FFE8B0", "color2": "#C07A20", "shape": "cone", "angle": 8, "radius": 0.8, "ground": true},
+      {"texture": "ring", "count": 1, "life": [0.58], "speed": [0], "size": [2.069], "sizeCurve": "grow", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "ground": true, "flat": true}
+    ] },
+  { "id": "fx_corsair_point_blank_volley_area", "light": {"color": "#FFB040", "range": 6.564, "intensity": 3.233, "time": 0.552},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [6.591], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.47], "speed": [0], "size": [7.42], "sizeCurve": "grow", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 56, "life": [0.312, 0.534], "speed": [3.558, 9.192], "size": [0.095, 0.241], "stretch": 3, "gravity": 0.9, "drag": 1.5, "color": "#FFF0A0", "color2": "#FF6A10", "shape": "hemisphere", "radius": 1.25, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 11, "delay": 0.05, "life": [0.798, 1.439], "speed": [0.597, 1.374], "size": [1.093, 1.642], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2420", "color2": "#2A2420", "alpha": 0.65, "shape": "disc", "radius": 1.5, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_corsair_walk_the_plank_impact",
+    "layers": [
+      {"texture": "spark", "count": 3, "life": [0.32, 0.537], "speed": [0], "size": [1.142, 1.35], "sizeCurve": "pop", "color": "#FFF0B0", "color2": "#C88A10", "shape": "point"},
+      {"texture": "mote", "count": 15, "life": [0.582, 1.02], "speed": [0.419, 1.078], "size": [0.055, 0.155], "gravity": 2.0, "color": "#C88A10", "color2": "#2A2418", "shape": "sphere", "radius": 0.3},
+      {"texture": "spark", "count": 8, "life": [0.333, 0.641], "speed": [1.451, 2.802], "size": [0.079, 0.143], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.2},
+      {"texture": "star", "count": 7, "life": [0.299, 0.535], "speed": [0.0, 0.27], "size": [0.314, 0.549], "sizeCurve": "pop", "color": "#FFF0B0", "color2": "#C88A10", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_Corsair", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_corsair_cutlass_flourish_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_corsair_boarding_hook_cast", "impactVfx": "fx_corsair_boarding_hook_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_corsair_swig_of_grog_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_corsair_point_blank_volley_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_corsair_walk_the_plank_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

@@ -1,0 +1,1492 @@
+{
+  "id": "MOD_FluxSavant",
+  "name": "Flux Savant",
+  "description": "Half lab coat, half spellbook. Runes slotted into their techniques retune them - element, shape, power - and run flat with use, so every fight needs a moment at the bench; the reagents they lay react on contact.\n\nRune-socket caster with alchemical reactions and an Instability backfire meter. Spend stamina to recharge your runes, and your growing augment pool on how each spell behaves and lands. Scales with Smarts and Psi. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "icons/flux_savant.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "PsiPower": 4
+  },
+  "starterItems": [
+    "FsPyroRune",
+    "FsCryoRune",
+    "FsForkRune",
+    "FsCapacitorRune"
+  ],
+  "effects": [
+    {
+      "id": "Instability",
+      "name": "Instability",
+      "icon": "icons/instability.png",
+      "debuff": true,
+      "resource": true,
+      "description": "Overclocked runes and big experiments leave the rig humming. It settles if you pace yourself; at ten something gives - usually badly, sometimes brilliantly.",
+      "duration": 8,
+      "maxStacks": 10,
+      "burstAt": 10,
+      "resourceColor": "#FF9F43",
+      "burstActions": [
+        {
+          "do": "random",
+          "options": [
+            {
+              "name": "Feedback Spike",
+              "weight": 3,
+              "actions": [
+                {
+                  "do": "stamina",
+                  "amount": -15
+                },
+                {
+                  "do": "effect",
+                  "effect": "EFFECT_Shock"
+                }
+              ]
+            },
+            {
+              "name": "Runaway Flame",
+              "weight": 3,
+              "actions": [
+                {
+                  "do": "hazard",
+                  "hazard": "HAZARD_Fire_Mini",
+                  "radius": 1.6,
+                  "turns": 2
+                }
+              ]
+            },
+            {
+              "name": "Eureka!",
+              "weight": 2,
+              "actions": [
+                {
+                  "do": "cooldowns",
+                  "amount": 3
+                },
+                {
+                  "do": "stamina",
+                  "to": "self",
+                  "amount": 16
+                }
+              ]
+            },
+            {
+              "name": "Static Bloom",
+              "weight": 2,
+              "actions": [
+                {
+                  "do": "field",
+                  "fieldName": "Static Bloom",
+                  "turns": 2,
+                  "radius": 2.5,
+                  "affects": "enemies",
+                  "pulseVfx": "PA_Elementalist_ChainLightning.shockImpact",
+                  "actions": [
+                    {
+                      "do": "effect",
+                      "effect": "@Residue"
+                    },
+                    {
+                      "do": "effect",
+                      "effect": "EFFECT_Shock"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "EFFECT_Blind",
+                  "turns": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "burstSound": "audio_licensed/instability.wav"
+    },
+    {
+      "id": "Residue",
+      "name": "Aether Residue",
+      "icon": "icons/residue.png",
+      "debuff": true,
+      "description": "A violet film of spent aether. It reacts with fire, current, frost and acid alike.",
+      "duration": 5,
+      "resists": {
+        "Psi": -10,
+        "Energy": -10
+      }
+    },
+    {
+      "id": "Galvanized",
+      "name": "Galvanized",
+      "icon": "icons/galvanized.png",
+      "debuff": true,
+      "description": "Current drove the acid deep into the plating. It flakes away every turn.",
+      "duration": 4,
+      "stats": {
+        "Armor": -4
+      },
+      "dot": {
+        "type": "Bio",
+        "min": 2,
+        "max": 4
+      }
+    },
+    {
+      "id": "Brittle",
+      "name": "Brittle",
+      "icon": "icons/brittle.png",
+      "debuff": true,
+      "description": "Frozen through and eaten hollow. The next blows land on glass.",
+      "duration": 3,
+      "damageTakenMult": 1.25
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Plasma Flash",
+      "needs": [
+        "EFFECT_Fire",
+        "EFFECT_Shock"
+      ],
+      "radius": 1.5,
+      "description": "a blinding burst around the target",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_energy@0.4",
+      "sound": "audio_licensed/react_plasma_flash.wav",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Energy",
+          "min": 5,
+          "max": 9,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.3
+        },
+        {
+          "do": "effect",
+          "effect": "EFFECT_Blind",
+          "chance": 40,
+          "turns": 1
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "name": "Thermal Shock",
+      "needs": [
+        "EFFECT_Fire",
+        "EFFECT_Chill"
+      ],
+      "description": "a cracking blow that leaves them exposed",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Crushing",
+          "min": 8,
+          "max": 12,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.36
+        },
+        {
+          "do": "effect",
+          "effect": "#Exposed",
+          "turns": 3
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_thermal_shock.wav"
+    },
+    {
+      "name": "Caustic Vapour",
+      "needs": [
+        "EFFECT_Fire",
+        "EFFECT_Acid"
+      ],
+      "description": "boils off into a poison cloud",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Bio",
+          "min": 3,
+          "max": 5,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.18
+        },
+        {
+          "do": "field",
+          "fieldName": "Caustic Vapour",
+          "turns": 3,
+          "radius": 1.1,
+          "affects": "enemies",
+          "look": "HAZARD_Gas@0.5",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 1,
+              "max": 3
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned"
+            }
+          ]
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_caustic_vapour.wav"
+    },
+    {
+      "name": "Superconduct",
+      "needs": [
+        "EFFECT_Shock",
+        "EFFECT_Chill"
+      ],
+      "description": "shorts out their special attacks",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Shock",
+          "min": 4,
+          "max": 7,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.24
+        },
+        {
+          "do": "exhaust",
+          "amount": 1
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_superconduct.wav"
+    },
+    {
+      "name": "Galvanic Bloom",
+      "needs": [
+        "EFFECT_Shock",
+        "EFFECT_Acid"
+      ],
+      "description": "strips armor and keeps eating",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.4",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Bio",
+          "min": 3,
+          "max": 6,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.18
+        },
+        {
+          "do": "effect",
+          "effect": "@Galvanized"
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_galvanic_bloom.wav"
+    },
+    {
+      "name": "Brittle Lattice",
+      "needs": [
+        "EFFECT_Chill",
+        "EFFECT_Acid"
+      ],
+      "description": "freezes them in place, brittle",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle",
+      "actions": [
+        {
+          "do": "stun",
+          "turns": 1
+        },
+        {
+          "do": "effect",
+          "effect": "@Brittle"
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_brittle_lattice.wav"
+    },
+    {
+      "name": "Aether Arc",
+      "needs": [
+        "@Residue",
+        "EFFECT_Shock"
+      ],
+      "description": "arcs on, spreading the residue",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact",
+      "actions": [
+        {
+          "do": "chain",
+          "jumps": 2,
+          "radius": 3,
+          "falloff": 0.8,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Psi",
+              "min": 3,
+              "max": 6,
+              "scale": "Smarts+PsiPower",
+              "scaleMult": 0.24
+            },
+            {
+              "do": "effect",
+              "effect": "@Residue"
+            }
+          ]
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_aether_arc.wav"
+    },
+    {
+      "name": "Flashpoint",
+      "needs": [
+        "@Residue",
+        "EFFECT_Fire"
+      ],
+      "radius": 2,
+      "description": "detonates and throws them back",
+      "vfx": "PA_Pirate_Cacafuego.PS_explode@0.5",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Fire",
+          "min": 4,
+          "max": 8,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.24
+        },
+        {
+          "do": "knockback",
+          "amount": 1
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_flashpoint.wav"
+    },
+    {
+      "name": "Stasis Bloom",
+      "needs": [
+        "@Residue",
+        "EFFECT_Chill"
+      ],
+      "description": "locks them in aether-frost",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Cryo",
+          "min": 3,
+          "max": 5,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.18
+        },
+        {
+          "do": "stun",
+          "turns": 1
+        },
+        {
+          "do": "effect",
+          "effect": "@Brittle"
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_stasis_bloom.wav"
+    },
+    {
+      "name": "Dissolution",
+      "needs": [
+        "@Residue",
+        "EFFECT_Acid"
+      ],
+      "description": "melts straight through armor",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Bio",
+          "min": 4,
+          "max": 7,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.24,
+          "trueDamage": true
+        },
+        {
+          "do": "effect",
+          "effect": "#Weakened",
+          "turns": 3
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 2
+        }
+      ],
+      "sound": "audio_licensed/react_dissolution.wav"
+    }
+  ],
+  "augments": [
+    { "id": "Beamline", "kind": "delivery", "name": "Beamline", "points": 2, "rank": 2, "form": "line", "power": 0.85,
+      "resonance": [ { "rune": "FsLensRune", "name": "Focused", "range": 2, "power": 1.15 } ] },
+    { "id": "FlareCone", "kind": "delivery", "name": "Flare Cone", "points": 2, "rank": 2, "form": "cone", "angle": 70, "range": -2,
+      "resonance": [ { "rune": "element", "name": "Fanned Out", "angle": 110 } ] },
+    { "id": "PointBurst", "kind": "delivery", "name": "Point Burst", "points": 2, "rank": 3, "form": "area", "power": 0.8,
+      "areaVfx": "PA_Prototype_Thunderclap.impactParticle@0.4",
+      "resonance": [ { "rune": "FsBloomRune", "name": "Full Bloom", "radius": 0.8 } ] },
+    { "id": "DaisyChain", "kind": "delivery", "name": "Daisy Chain", "points": 3, "rank": 3, "form": "chain", "jumps": 2, "instability": 1,
+      "resonance": [ { "rune": "element", "name": "Conductive", "jumps": 1 } ] },
+    { "id": "Scattershot", "kind": "delivery", "name": "Scattershot", "points": 3, "rank": 4, "form": "scatter", "jumps": 2, "power": 0.7,
+      "drawback": "you don't choose who the extra hits land on",
+      "resonance": [ { "rune": "FsForkRune", "name": "Clean Split", "power": 1.2 } ] },
+    { "id": "SlowFuse", "kind": "delivery", "name": "Slow Fuse", "points": 3, "rank": 4, "form": "trap", "armTurns": 1, "turns": 8, "radius": 1, "cooldown": 1,
+      "look": "HAZARD_Security_Boobytrap", "areaVfx": "PA_Prototype_Thunderclap.impactParticle@0.4",
+      "drawback": "waits for an enemy to step on it",
+      "resonance": [ { "rune": "payload", "name": "Packed Charge", "radius": 0.6 } ] },
+    { "id": "FullDischarge", "kind": "delivery", "name": "Full Discharge", "points": 4, "rank": 6, "form": "nova", "radius": 0.5, "power": 0.6, "stamina": 6, "seal": 1,
+      "areaVfx": "PA_Prototype_Thunderclap.impactParticle@0.8",
+      "resonance": [ { "rune": "FsCoolantRune", "name": "Contained", "instability": -2, "stamina": -3 } ] },
+
+    { "id": "RecoilCoil", "name": "Recoil Coil", "points": 1, "rank": 1, "add": { "knockback": 1 } },
+    { "id": "ResidueTrace", "name": "Residue Trace", "points": 2, "rank": 2, "instability": 1, "add": { "effect": "@Residue" } },
+    { "id": "Redline", "name": "Redline", "points": 2, "rank": 3, "power": 1.35,
+      "when": { "value": "stacks:@Instability", "atLeast": 5 } },
+    { "id": "SiphonTrace", "name": "Siphon Trace", "points": 3, "rank": 3, "instability": 1, "add": { "lifesteal": 0.25 },
+      "resonance": [ { "rune": "FsSiphonRune", "name": "Closed Circuit", "add": { "stamina": 2 } } ] },
+    { "id": "RailRounds", "name": "Rail Rounds", "points": 2, "rank": 4, "power": 0.9, "add": { "pierce": 2 },
+      "drawback": "can't share a skill with a delivery" },
+    { "id": "StaticClamp", "name": "Static Clamp", "points": 3, "rank": 5, "cooldown": 2, "add": { "stun": 1 },
+      "resonance": [ { "rune": "FsVoltRune", "name": "Live Wire", "cooldown": -1 } ] },
+    { "id": "CleanKill", "name": "Clean Kill", "points": 3, "rank": 5, "stamina": 3, "add": { "resetOnKill": true } },
+    { "id": "Undercut", "name": "Undercut", "points": 3, "rank": 6, "power": 0.85, "add": { "trueDamage": true } },
+    { "id": "Quickdraw", "name": "Quickdraw", "points": 4, "rank": 7, "burn": 1, "instant": true,
+      "resonance": [ { "rune": "FsCapacitorRune", "name": "Steady Hands", "burn": -1 } ] },
+
+    { "id": "HotContacts", "kind": "flaw", "name": "Hot Contacts", "points": 2, "burn": 1 },
+    { "id": "LeakyHousing", "kind": "flaw", "name": "Leaky Housing", "points": 2, "instability": 2 },
+    { "id": "CrampedLattice", "kind": "flaw", "name": "Cramped Lattice", "points": 3, "seal": 1 },
+    { "id": "SlowReset", "kind": "flaw", "name": "Slow Reset", "points": 1, "cooldown": 2 }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Bench Instincts",
+        "icon": "icons/bench_instincts.png",
+        "description": "Step back to the bench and work on your rig: opens the rune matrix, where you can charge spent runes with stamina or discharge full ones to deactivate them, even mid-fight. A discharge pays its stamina back once every 8 turns. You never quite stop experimenting, either: your hits sometimes leave a film of aether residue, and kills and the reactions you set off give you stamina back.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Residue"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 4
+              }
+            ]
+          }
+        ],
+        "target": "self",
+        "instant": false,
+        "staminaCost": 0,
+        "cooldown": 0,
+        "actions": [
+          {
+            "do": "runepanel"
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Arc Lance",
+        "synergyPenalty": { "damage": 2 },
+        "icon": "icons/arc_lance.png",
+        "staminaCost": 7,
+        "runeSlots": 3,
+        "runeWear": 8,
+        "runeMeter": "@Instability",
+        "description": "Your workhorse: a lance of current that leaves the target electrified. Three rune sockets make it whatever you need - another element, a fork, a burst, an overclocked killing shot.",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "audio_licensed/arc_lance.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Energy",
+            "min": 3,
+            "max": 6,
+            "scale": "Smarts+PsiPower",
+            "scaleMult": 0.24,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Shock"
+          }
+        ],
+        "perk": {
+          "name": "Tight Coil",
+          "damageMult": 1.25
+        },
+        "runeSlotRanks": [
+          2,
+          4,
+          6
+        ],
+        "runeVariants": [
+          {
+            "rune": "FsTetherRune",
+            "name": "Harpoon Bolt",
+            "replace": true,
+            "description": "the lance hooks in and reels them all the way to you, stunned for a moment.",
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 4
+              },
+              {
+                "do": "stun",
+                "turns": 1,
+                "chance": 50
+              }
+            ]
+          },
+          {
+            "rune": "FsLensRune",
+            "name": "Rail Lance",
+            "description": "focused into a hypersonic rail shot: +2 more range, +30% damage, a little more Instability.",
+            "range": 2,
+            "power": 1.3,
+            "instability": 1
+          },
+          {
+            "rune": "FsBloomRune",
+            "name": "Ball Lightning",
+            "description": "the burst leaves a crackling ball behind that keeps shocking whoever stands near it for 2 turns.",
+            "actions": [
+              {
+                "do": "field",
+                "fieldName": "Ball Lightning",
+                "turns": 2,
+                "radius": 1.1,
+                "affects": "enemies",
+                "pulseVfx": "PA_Elementalist_ChainLightning.shockImpact",
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Shock",
+                    "min": 1,
+                    "max": 3,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "runeCharge": 2,
+        "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Rune Press",
+        "icon": "icons/rune_press.png",
+        "instant": false,
+        "staminaCost": 14,
+        "cooldown": 3,
+        "description": "Stamp fresh runes out of capacitor plate: always a common rune, and as you rank up, a chance of a rare one (rank 4) and a master rune (rank 6) as well. Socketed runes run flat after a handful of casts (master runes sooner) and stay put until you recharge them, so the press is how you get new kinds, not replacements.",
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "actions": [
+          {
+            "do": "random",
+            "options": [
+              {
+                "weight": 3,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsPyroRune"
+                  }
+                ]
+              },
+              {
+                "weight": 3,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsVoltRune"
+                  }
+                ]
+              },
+              {
+                "weight": 3,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsCryoRune"
+                  }
+                ]
+              },
+              {
+                "weight": 3,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsCausticRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsForkRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsBloomRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsLensRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsCapacitorRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsCoolantRune"
+                  }
+                ]
+              },
+              {
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsTetherRune"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "do": "random",
+            "options": [
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsAetherRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsOverclockRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsSiphonRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsMarkRune"
+                  }
+                ]
+              }
+            ],
+            "chance": 40,
+            "when": {
+              "value": "rank:MOD_FluxSavant",
+              "atLeast": 4
+            }
+          },
+          {
+            "do": "random",
+            "options": [
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsSingularityRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsPrismRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsCascadeRune"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "giveItem",
+                    "item": "FsParadoxRune"
+                  }
+                ]
+              }
+            ],
+            "chance": 25,
+            "when": {
+              "value": "rank:MOD_FluxSavant",
+              "atLeast": 6
+            }
+          }
+        ],
+        "perk": {
+          "name": "Batch Run",
+          "description": "The press runs cooler and is ready again sooner.",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/rune_press.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Catalyst Flask",
+        "icon": "icons/catalyst_flask.png",
+        "range": 6,
+        "radius": 1.5,
+        "staminaCost": 9,
+        "cooldown": 3,
+        "runeSlots": 2,
+        "runeWear": 8,
+        "runeMeter": "@Instability",
+        "description": "Lob a flask of catalyst that splashes acid over everyone near where it lands. Socket an element rune to change what is in the flask.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+        "sound": "audio_licensed/catalyst_flask.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Bio",
+            "min": 2,
+            "max": 4,
+            "scale": "Smarts+PsiPower",
+            "scaleMult": 0.15,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Acid"
+          }
+        ],
+        "perk": {
+          "name": "Wide Spill",
+          "radiusDelta": 0.8
+        },
+        "runeSlotRanks": [
+          4,
+          6
+        ],
+        "runeVariants": [
+          {
+            "rune": "FsTetherRune",
+            "name": "Gravity Well",
+            "replace": true,
+            "description": "the flask collapses into a gravity well: everyone splashed is dragged to the middle, and the well keeps pulling for 2 turns.",
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 2,
+                "pullToward": "center"
+              },
+              {
+                "do": "field",
+                "fieldName": "Gravity Well",
+                "turns": 2,
+                "radius": 2,
+                "affects": "enemies",
+                "look": "HAZARD_VoidRift@0.5",
+                "actions": [
+                  {
+                    "do": "pull",
+                    "amount": 1,
+                    "pullToward": "center"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rune": "FsSiphonRune",
+            "name": "Distillery",
+            "description": "the spill is distilled back into you: +4 stamina per cast on top of the Siphon.",
+            "selfActions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 4
+              }
+            ]
+          },
+          {
+            "rune": "FsCoolantRune",
+            "name": "Cryo Grenade",
+            "replace": true,
+            "description": "the flask is packed with coolant instead: it freezes rather than burns, and is ready a turn sooner.",
+            "element": "Cryo",
+            "reagent": "EFFECT_Chill",
+            "cooldown": -1,
+            "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle"
+          }
+        ],
+        "runeCharge": 2,
+        "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Lattice Field",
+        "icon": "icons/lattice_field.png",
+        "range": 6,
+        "staminaCost": 14,
+        "cooldown": 8,
+        "runeSlots": 2,
+        "runeWear": 8,
+        "runeKinds": [
+          "element",
+          "power",
+          "payload"
+        ],
+        "runeMeter": "@Instability",
+        "description": "Project a humming lattice around the target. For a few turns it chills whoever stands in it or walks in - or, with an element rune, burns, shocks or etches them instead, setting up reactions with your other techniques.",
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "actions": [
+          {
+            "do": "field",
+            "fieldName": "Lattice",
+            "turns": 4,
+            "radius": 1.6,
+            "affects": "enemies",
+            "look": "HAZARD_Cryo@0.4",
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Cryo",
+                "min": 1,
+                "max": 3,
+                "scale": "Smarts+PsiPower",
+                "scaleMult": 0.09
+              },
+              {
+                "do": "effect",
+                "effect": "EFFECT_Chill"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Chill"
+          }
+        ],
+        "perk": {
+          "name": "Standing Wave",
+          "cooldownDelta": -3
+        },
+        "runeSlotRanks": [
+          5,
+          6
+        ],
+        "runeVariants": [
+          {
+            "rune": "FsMarkRune",
+            "name": "Targeting Grid",
+            "replace": true,
+            "description": "the lattice paints everyone inside it as a target.",
+            "fieldActions": [
+              {
+                "do": "effect",
+                "effect": "#Marked",
+                "turns": 2
+              }
+            ]
+          },
+          {
+            "rune": "FsOverclockRune",
+            "name": "Overload Lattice",
+            "replace": true,
+            "description": "the lattice runs hot: two turns shorter, but it zaps hard every turn.",
+            "fieldTurns": -2,
+            "instability": 2,
+            "fieldActions": [
+              {
+                "do": "damage",
+                "type": "Energy",
+                "min": 3,
+                "max": 6,
+                "scale": "Smarts+PsiPower",
+                "scaleMult": 0.2
+              }
+            ]
+          },
+          {
+            "rune": "FsLensRune",
+            "name": "Grand Lattice",
+            "replace": true,
+            "description": "a wider, longer-lived lattice: +1 area and +1 turn.",
+            "fieldRadius": 1.0,
+            "fieldTurns": 1
+          }
+        ],
+        "sound": "audio_licensed/lattice_field.wav",
+        "runeCharge": 2,
+        "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 2
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Critical Mass",
+        "icon": "icons/critical_mass.png",
+        "range": 7,
+        "radius": 2.5,
+        "staminaCost": 22,
+        "cooldown": 14,
+        "runeSlots": 2,
+        "runeWear": 8,
+        "runeKinds": [
+          "shape",
+          "power",
+          "payload"
+        ],
+        "runeMeter": "@Instability",
+        "description": "Dump every reagent you carry over the area at once. Fire, current, frost and acid all land together, and whatever can react, does. The rig hates it.",
+        "castVfx": "VoidPsyker_Ascendance.impactParticle@0.5",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_energy@0.35",
+        "sound": "audio_licensed/critical_mass.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Energy",
+            "min": 4,
+            "max": 8,
+            "scale": "Smarts+PsiPower",
+            "scaleMult": 0.3,
+            "perRank": 2
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Fire"
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Shock"
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Chill"
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Acid"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Instability",
+            "stacks": 3
+          }
+        ],
+        "perk": {
+          "name": "Controlled Chain",
+          "description": "Some of the spent current flows back into the rig.",
+          "addActions": [
+            {
+              "do": "stamina",
+              "to": "self",
+              "amount": 6
+            }
+          ]
+        },
+        "runeSlotRanks": [
+          6,
+          6
+        ],
+        "runeVariants": [
+          {
+            "rune": "FsSingularityRune",
+            "name": "Event Horizon",
+            "description": "the whole area caves inward: everyone is dragged into one heap before the reagents land.",
+            "radius": 1.0,
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 3,
+                "pullToward": "center"
+              }
+            ]
+          },
+          {
+            "rune": "FsCoolantRune",
+            "name": "Contained Reaction",
+            "replace": true,
+            "description": "containment fields soak up the blast: Critical Mass adds no Instability.",
+            "instability": -3
+          },
+          {
+            "rune": "FsCascadeRune",
+            "name": "Chain Reaction",
+            "description": "the residue it lays reacts with everything else that lands, doubling the reactions.",
+            "power": 1.1
+          }
+        ],
+        "runeCharge": 2,
+        "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Glyph Shrapnel",
+        "icon": "icons/glyph_shrapnel.png",
+        "range": 7,
+        "radius": 1.8,
+        "staminaCost": 12,
+        "cooldown": 7,
+        "itemCost": [
+          {
+            "tag": "FLUX_RUNE_T1",
+            "count": 2
+          }
+        ],
+        "runeSlots": 2,
+        "runeWear": 6,
+        "runeKinds": [
+          "shape",
+          "power",
+          "payload"
+        ],
+        "runeMeter": "@Instability",
+        "description": "Crush two spare common runes and throw the shards. Each one carries residue and a live reagent, so everything hit reacts.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_energy@0.35",
+        "sound": "audio_licensed/catalyst_flask.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Energy",
+            "min": 5,
+            "max": 9,
+            "scale": "Smarts+PsiPower",
+            "scaleMult": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Residue"
+          },
+          {
+            "do": "random",
+            "options": [
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Fire"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Chill"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Acid"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Instability",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Fine Grit",
+          "description": "Ground finer, the shards spread wider.",
+          "radiusDelta": 0.7
+        },
+        "runeSlotRanks": [
+          7,
+          8
+        ],
+        "runeVariants": [
+          {
+            "rune": "FsCascadeRune",
+            "name": "Residue Storm",
+            "description": "a 2-turn cloud coats whoever stands in it with residue.",
+            "actions": [
+              {
+                "do": "field",
+                "fieldName": "Residue Storm",
+                "turns": 2,
+                "radius": 1.8,
+                "affects": "enemies",
+                "pulseVfx": "PA_Psykonics_Warp.castParticle@0.4",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_FluxSavant@Residue"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rune": "FsOverclockRune",
+            "name": "Hot Fragments",
+            "replace": true,
+            "description": "+60% damage and a burning floor, but +3 Instability.",
+            "power": 1.6,
+            "stamina": 2,
+            "instability": 3,
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Fire_Mini",
+                "radius": 1.2,
+                "turns": 2
+              }
+            ]
+          },
+          {
+            "rune": "FsCapacitorRune",
+            "name": "Salvaged Casing",
+            "replace": true,
+            "description": "each cast hands back a random common element rune.",
+            "selfActions": [
+              {
+                "do": "random",
+                "options": [
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsPyroRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsVoltRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsCryoRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsCausticRune"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "runeCharge": 2,
+        "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "PsiPower": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Closed Loop",
+        "icon": "icons/closed_loop.png",
+        "description": "Nothing in your lab goes to waste: kills can trickle a cast of charge back into every rune you've socketed, kills on residue-coated foes can yield a rare rune, and the Rune Press stamps an extra one.",
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "runerestore",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 12,
+            "when": {
+              "has": "@Residue",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "random",
+                "options": [
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsAetherRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsOverclockRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsSiphonRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsMarkRune"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "MOD_FluxSavant_T2",
+            "actions": [
+              {
+                "do": "random",
+                "options": [
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsPyroRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsVoltRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsCryoRune"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "FsCausticRune"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

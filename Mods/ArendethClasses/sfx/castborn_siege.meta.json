@@ -1,0 +1,186 @@
+{
+  "prompt": "massive iron joints locking, deep metallic clunk and hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, mech sound, massive iron joints locking, deep metallic clunk and hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of mech, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.01347065344452858,
+  "archetype": "mech",
+  "references": [
+    {
+      "id": "91cde12895855d49",
+      "score": 0.39053961634635925,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 47.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "8c406f0b74681c8c",
+      "score": 0.3505258560180664,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 39.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "6f375bee15a44107",
+      "score": 0.350290983915329,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 35.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "3446f4a9add05555",
+      "score": 0.3285307288169861,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 15.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "120550a544d33457",
+      "score": 0.32703596353530884,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 21.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "55af2a6c6a4a2886",
+      "score": 0.3246797025203705,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "ab604120ae832f1d",
+      "score": 0.32325613498687744,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 20.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "f849f4d5d5aed67d",
+      "score": 0.3216691315174103,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15_REV.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "cd1675adb15f42f9",
+      "score": 0.3183973431587219,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 5.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "c847e8b1e5391a64",
+      "score": 0.3183973431587219,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 3.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "91cde12895855d49",
+    "8c406f0b74681c8c",
+    "6f375bee15a44107",
+    "3446f4a9add05555",
+    "120550a544d33457",
+    "55af2a6c6a4a2886",
+    "ab604120ae832f1d",
+    "f849f4d5d5aed67d",
+    "cd1675adb15f42f9",
+    "c847e8b1e5391a64"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\castborn_siege.wav",
+  "sample_rate": 44100
+}

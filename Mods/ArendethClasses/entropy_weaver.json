@@ -1,0 +1,329 @@
+{
+  "id": "MOD_EntropyWeaver",
+  "name": "Entropy Weaver",
+  "description": "Weavers run raw, unshaped power through themselves and let it go where it likes. Every spell builds Spillover in you until it erupts, fraying everything nearby; frayed things come apart and set their neighbours smouldering, and smouldering things burst and fray theirs.\n\nVolatile chain-reaction caster. Favors [PSI] and [SMT].",
+  "archetype": "Intellect",
+  "icon": "entropy_weaver.png",
+  "attributePriorities": {
+    "PsiPower": 4,
+    "Smarts": 2,
+    "Crit": 1
+  },
+  "effects": [
+    {
+      "id": "Spillover",
+      "name": "Spillover",
+      "description": "Power you have pulled in and not yet let out. Every layer hits harder; at eight it erupts around you, frays everything it touches and sheds a Spillnode.",
+      "duration": 10,
+      "maxStacks": 8,
+      "stats": { "Crit": 2 },
+      "damageDealtPerStack": 0.03,
+      "burstAt": 8,
+      "burstRadius": 2.5,
+      "burstVfx": "VoidPsyker_Ascendance.impactParticle",
+      "burstSound": "audio_licensed/entropy_surge.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Energy", "min": 2, "max": 18, "scale": "PsiPower", "scaleMult": 0.4 },
+        { "do": "effect", "effect": "@Frayed", "stacks": 2 },
+        { "do": "knockback", "amount": 1 },
+        { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+        { "do": "stamina", "to": "self", "amount": 10 }
+      ]
+    },
+    {
+      "id": "Frayed",
+      "name": "Frayed",
+      "description": "Its edges are coming loose. At five layers it comes apart, and the pieces leave everything beside it smouldering.",
+      "duration": 6,
+      "debuff": true,
+      "maxStacks": 5,
+      "stats": { "Armor": -1, "Dodge": -3 },
+      "burstAt": 5,
+      "burstRadius": 1.6,
+      "burstVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+      "burstSound": "sfx/entropy_fray.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Energy", "min": 4, "max": 12, "scale": "PsiPower", "scaleMult": 0.4, "trueDamage": true },
+        { "do": "effect", "effect": "@Cinderlace", "stacks": 2 }
+      ]
+    },
+    {
+      "id": "Cinderlace",
+      "name": "Cinderlace",
+      "description": "A smoulder that feeds on itself. Every layer burns hotter; at five it bursts into flame and frays whatever stands beside it.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 5,
+      "dot": { "type": "Fire", "min": 1, "max": 1 },
+      "burstAt": 5,
+      "burstRadius": 1.6,
+      "burstVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+      "burstSound": "event:/Abilities/Soldier/Grenade_Explode",
+      "burstActions": [
+        { "do": "damage", "type": "Fire", "min": 4, "max": 14, "scale": "PsiPower", "scaleMult": 0.35 },
+        { "do": "effect", "effect": "#Burning" },
+        { "do": "effect", "effect": "@Frayed", "stacks": 2 }
+      ]
+    },
+    {
+      "id": "Crosstalk",
+      "name": "Crosstalk",
+      "description": "Every stray spark leaves a contradiction behind. Six of them cancel out into clarity.",
+      "duration": 10,
+      "maxStacks": 6,
+      "stats": { "Dodge": 1, "RangedAccuracy": 1 },
+      "burstAt": 6,
+      "burstActions": [
+        { "do": "effect", "to": "self", "effect": "@StillPoint" }
+      ]
+    },
+    {
+      "id": "StillPoint",
+      "name": "Still Point",
+      "description": "The contradictions cancel out. For a few turns everything lines up: you see every opening, shrug off harm and knit back together.",
+      "duration": 6,
+      "hot": 3,
+      "stats": { "RangedAccuracy": 30, "Crit": 10 },
+      "resists": { "Energy": 15, "Fire": 15, "Cryo": 15, "Shock": 15, "Psi": 15, "Void": 15 }
+    },
+    {
+      "id": "Spillwork",
+      "name": "Spillwork",
+      "description": "A scrap of running code with nothing to hold it together. When it winks out it snaps through every frayed thing near it, and sometimes copies itself on the way out.",
+      "duration": -1,
+      "stats": { "Dodge": 10 },
+      "onDeathActions": [
+        { "do": "chain", "jumps": 2, "radius": 2.5, "effect": "@Frayed", "actions": [
+          { "do": "damage", "type": "Shock", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.3, "ifTargetHas": "@Frayed" },
+          { "do": "effect", "effect": "@Frayed", "ifTargetHas": "@Frayed" } ] },
+        { "do": "summon", "chance": 30, "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 8, "effect": "@Spillwork" }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Loose Ends",
+        "icon": "entropy_weaver_t0.png",
+        "description": "Power leaks out of everything you do. Your hits pull a little more of it into you, and now and then a spark breaks loose, rolls a random element and leaves a contradiction behind. Every kill feeds the Spillover.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Spillover" } ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "random", "options": [
+                { "name": "Heatwash", "weight": 1, "actions": [
+                  { "do": "damage", "type": "Fire", "min": 1, "max": 7, "scale": "PsiPower", "scaleMult": 0.2 },
+                  { "do": "effect", "effect": "@Cinderlace" } ] },
+                { "name": "Coldsnap", "weight": 1, "actions": [
+                  { "do": "damage", "type": "Cryo", "min": 1, "max": 7, "scale": "PsiPower", "scaleMult": 0.2 },
+                  { "do": "effect", "effect": "#Chilled" } ] },
+                { "name": "Crackle", "weight": 1, "actions": [
+                  { "do": "chain", "jumps": 1, "radius": 3, "actions": [
+                    { "do": "damage", "type": "Shock", "min": 1, "max": 7, "scale": "PsiPower", "scaleMult": 0.2 },
+                    { "do": "effect", "effect": "@Frayed" } ] } ] }
+              ] },
+              { "do": "effect", "to": "self", "effect": "@Crosstalk" }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 2 } ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Coinflip Bolt",
+        "icon": "entropy_weaver_t1.png",
+        "staminaCost": 6,
+        "description": "Unshaped power thrown at a target. Might tickle, might not. Every Spillnode running adds to it.",
+        "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
+        "sound": "audio_licensed/entropy_coin.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 1, "max": 12, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 2,
+            "bonusPerStack": 1, "stacksOf": "group:Spillnode" },
+          { "do": "effect", "effect": "@Frayed" },
+          { "do": "effect", "to": "self", "effect": "@Spillover" }
+        ],
+        "perk": { "name": "Loaded Coin", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Seed the Static",
+        "icon": "entropy_weaver_t2.png",
+        "cooldown": 8,
+        "staminaCost": 12,
+        "description": "Spin up two Spillnodes beside you. While any are running, each one rolls its program every turn: lash a frayed foe, copy itself, patch you up, or sit there humming. When one winks out it snaps through the frayed things near it.",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "event:/Abilities/Hacker/Hacker_Hack",
+        "actions": [
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "amount": 2, "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+          { "do": "effect", "to": "self", "effect": "@Spillover" }
+        ],
+        "procs": [
+          {
+            "on": "turn",
+            "actions": [
+              { "do": "random", "to": "summons", "ifSummonAlive": "group:Spillnode", "options": [
+                { "name": "Spillnode: crackle", "weight": 4, "actions": [
+                  { "do": "chain", "jumps": 1, "radius": 3, "effect": "@Frayed", "actions": [
+                    { "do": "damage", "type": "Shock", "min": 2, "max": 6, "scale": "PsiPower", "scaleMult": 0.2, "perRank": 1,
+                      "bonusPerStack": 1, "stacksOf": "group:Spillnode", "ifTargetHas": "@Frayed" },
+                    { "do": "effect", "effect": "@Frayed", "ifTargetHas": "@Frayed" } ] } ] },
+                { "name": "Spillnode: copyloop", "weight": 2, "actions": [
+                  { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 6, "effect": "@Spillwork" } ] },
+                { "name": "Spillnode: selfmend", "weight": 1, "actions": [
+                  { "do": "heal", "to": "self", "amount": 3 } ] },
+                { "weight": 3, "actions": [] }
+              ] }
+            ]
+          }
+        ],
+        "perk": { "name": "Dense Code", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1, "Toughness": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Knotburst",
+        "icon": "entropy_weaver_t4.png",
+        "radius": 1.6,
+        "cooldown": 6,
+        "staminaCost": 16,
+        "description": "Power knots up at a spot you choose and goes off twice: a hot wash that leaves everything smouldering, then a snap that frays it and throws it back.",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+        "sound": "event:/Abilities/Soldier/Grenade_Explode",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 2, "max": 9, "scale": "PsiPower", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Cinderlace" },
+          { "do": "damage", "type": "Energy", "min": 1, "max": 9, "scale": "PsiPower", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Frayed" },
+          { "do": "knockback", "amount": 1 },
+          { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 2 }
+        ],
+        "perk": { "name": "Harder Knot", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Crossed Wires",
+        "icon": "entropy_weaver_t3.png",
+        "cooldown": 12,
+        "staminaCost": 10,
+        "description": "Scramble a target's senses so its blows turn on its own side, it forgets every trick it knows, and it opens up to everything. Sometimes the wires cross all the way and it fights for you for a moment.",
+        "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "effect", "effect": "CONFUSE", "turns": 3 },
+          { "do": "silence", "turns": 2 },
+          { "do": "effect", "effect": "#Exposed" },
+          { "do": "effect", "effect": "@Frayed", "stacks": 2 },
+          { "do": "effect", "effect": "CHARM", "turns": 2, "chance": 25 },
+          { "do": "effect", "to": "self", "effect": "@Crosstalk" }
+        ],
+        "perk": { "name": "Short Circuit", "chanceBonus": 25 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 2, "Smarts": 1 },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Snap the Loom",
+        "icon": "entropy_weaver_t5.png",
+        "radius": 3,
+        "staminaCost": 30,
+        "cooldown": 24,
+        "description": "Stop holding any of it back. Everything frayed around you comes undone at once, every Spillnode pulls taut, every other cooldown you have clears, and the power floods back in.",
+        "castVfx": "VoidPsyker_Ascendance.impactParticle",
+        "sound": "sfx/entropy_unravel.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 1, "max": 24, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "trueDamage": true,
+            "bonusPerStack": 4, "stacksOf": "@Frayed", "consumeStacks": true },
+          { "do": "damage", "type": "Shock", "min": 2, "max": 6, "scale": "PsiPower", "scaleMult": 0.2,
+            "bonusPerStack": 3, "stacksOf": "group:Spillnode" },
+          { "do": "effect", "effect": "@Cinderlace", "stacks": 2 },
+          { "do": "cooldowns", "to": "self", "amount": 99 },
+          { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 3 }
+        ],
+        "perk": { "name": "Nothing Held Back", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 2, "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Wild Tangent",
+        "icon": "entropy_weaver_t6.png",
+        "cooldown": 8,
+        "staminaCost": 14,
+        "description": "Bleed off the Spillover on purpose before it erupts on its own. The surplus leaves you as a stray thread that skips between three targets, rolling a new element at each, and the more you had pent up the harder every skip lands. You are left calm and empty.",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "sfx/entropy_fray.wav",
+        "actions": [
+          { "do": "chain", "jumps": 2, "radius": 3, "falloff": 0.8, "actions": [
+            { "do": "random", "options": [
+              { "name": "Tangent: scald", "weight": 1, "actions": [
+                { "do": "damage", "type": "Fire", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1 },
+                { "do": "effect", "effect": "@Cinderlace", "stacks": 2 } ] },
+              { "name": "Tangent: frost", "weight": 1, "actions": [
+                { "do": "damage", "type": "Cryo", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1 },
+                { "do": "effect", "effect": "#Chilled" },
+                { "do": "effect", "effect": "@Frayed" } ] },
+              { "name": "Tangent: snap", "weight": 1, "actions": [
+                { "do": "damage", "type": "Shock", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1 },
+                { "do": "effect", "effect": "@Frayed", "stacks": 2 } ] }
+            ] },
+            { "do": "damage", "type": "Energy", "min": 1, "max": 4, "bonusPerStack": 2, "stacksOf": "@Spillover", "stacksFrom": "self", "consumeStacks": true }
+          ] },
+          { "do": "effect", "to": "self", "effect": "@Crosstalk" }
+        ],
+        "perk": { "name": "Runaway Thread", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 2, "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Feedback Loom",
+        "icon": "entropy_weaver_t7.png",
+        "description": "Your mistakes have started feeding each other. Every critical hit frays its target twice over and leaves a contradiction behind, and the moment the contradictions cancel into a Still Point the loom kicks back: your cooldowns jump ahead, a fresh Spillnode spins up and a skin of static settles over you.",
+        "procs": [
+          {
+            "on": "crit",
+            "actions": [
+              { "do": "effect", "effect": "@Frayed", "stacks": 2 },
+              { "do": "effect", "to": "self", "effect": "@Crosstalk" }
+            ]
+          },
+          {
+            "on": "turn",
+            "cooldown": 8,
+            "when": { "has": "@StillPoint", "of": "self" },
+            "actions": [
+              { "do": "cooldowns", "to": "self", "amount": 3 },
+              { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+              { "do": "shield", "to": "self", "amount": 5, "scale": "PsiPower", "scaleMult": 0.4 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

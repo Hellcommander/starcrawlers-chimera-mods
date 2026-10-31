@@ -1,0 +1,338 @@
+{
+  "id": "MOD_Castborn",
+  "name": "Castborn",
+  "description": "Not born, poured. Castborn are walking foundry castings: no blood to poison, plating that reseals itself, and a hand that is a socket rather than a hand.\n\nModular construct tank with self-repair and poured allies. Favors [TGH] and [STR].",
+  "archetype": "Muscle",
+  "icon": "castborn.png",
+  "attributePriorities": {
+    "Toughness": 4,
+    "Strength": 2,
+    "HealthMax": 1
+  },
+  "effects": [
+    {
+      "id": "Mending",
+      "name": "Self-Mending",
+      "description": "Molten seams are knitting your plates back together.",
+      "duration": 4,
+      "hot": 3,
+      "stats": {
+        "Armor": 1
+      }
+    },
+    {
+      "id": "Slagged",
+      "name": "Slagged",
+      "description": "Coated in cooling slag. Heavy and hot.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Agility": -2
+      },
+      "dot": {
+        "type": "Fire",
+        "min": 1,
+        "max": 2
+      }
+    },
+    {
+      "id": "RamFitting",
+      "name": "Ram Fitting",
+      "description": "A piston ram is bolted into your hand socket. Your Ingot Fist lands heavier and can drop what it hits. It stays fitted until you swap it out.",
+      "duration": -1,
+      "group": "HandFitting",
+      "damageDealtMult": 1.15,
+      "stats": {
+        "Strength": 2,
+        "Dodge": -5
+      }
+    },
+    {
+      "id": "WardFitting",
+      "name": "Ward Fitting",
+      "description": "A broad ward plate is bolted into your hand socket. You shrug off blows, and your Ingot Fist shoves foes off you while you brace behind it. It stays fitted until you swap it out.",
+      "duration": -1,
+      "group": "HandFitting",
+      "damageTakenMult": 0.75,
+      "damageDealtMult": 0.9,
+      "stats": {
+        "Armor": 3,
+        "Dodge": -5
+      }
+    },
+    {
+      "id": "Castbond",
+      "name": "Castbond",
+      "description": "Poured from the same melt as its maker: thick-plated and slow to break.",
+      "duration": -1,
+      "damageTakenMult": 0.8,
+      "stats": {
+        "Armor": 3
+      }
+    },
+    {
+      "id": "Siege",
+      "name": "Siege Casting",
+      "description": "Your core is awake and your frame has grown into something the size of a bulkhead. You hit like a falling wall, each blow sends a tremor through the deck around your target, and very little gets through.",
+      "duration": 6,
+      "damageTakenMult": 0.5,
+      "damageDealtMult": 1.3,
+      "stats": {
+        "Armor": 5,
+        "Strength": 3,
+        "Dodge": -20
+      },
+      "procs": [
+        {
+          "on": "hit",
+          "chance": 35,
+          "radius": 1.6,
+          "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+          "actions": [
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3 },
+            { "do": "knockback", "amount": 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "resistances": {
+        "Bio": 15
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Poured Body",
+        "icon": "castborn_t0.png",
+        "description": "Nothing in you can sicken or rot. Your castings slowly reseal themselves, faster after a hard hit.",
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 25,
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 2 }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Mending" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Ingot Fist",
+        "icon": "castborn_t1.png",
+        "description": "A blow from whatever is bolted into your hand socket. With a ram fitted it lands heavier and can drop the target; with a ward fitted it shoves the target back and you brace behind the plate.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@Slagged", "chance": 40 },
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.2, "ifSelfHas": "@RamFitting" },
+          { "do": "stun", "turns": 1, "chance": 30, "ifSelfHas": "@RamFitting" },
+          { "do": "knockback", "amount": 1, "ifSelfHas": "@WardFitting" },
+          { "do": "shield", "to": "self", "amount": 3, "scale": "Toughness", "scaleMult": 0.3, "ifSelfHas": "@WardFitting" }
+        ],
+        "perk": {
+          "name": "Tempered Fist",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/castborn_fist.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Ram Fitting",
+        "icon": "castborn_t4.png",
+        "instant": false,
+        "cooldown": 8,
+        "staminaCost": 10,
+        "description": "Unbolt whatever is in your hand socket and seat a piston ram. Re-seating the plates around it patches you up and shakes off one ailment.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_regen",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Bash",
+        "actions": [
+          { "do": "effect", "to": "self", "effect": "@RamFitting" },
+          { "do": "heal", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.4 },
+          { "do": "cleanse", "to": "self", "amount": 1 }
+        ],
+        "perk": {
+          "name": "Quick Refit",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Ward Fitting",
+        "icon": "castborn_t2.png",
+        "instant": false,
+        "cooldown": 8,
+        "staminaCost": 10,
+        "description": "Unbolt whatever is in your hand socket and seat a broad ward plate. Re-seating it runs fresh molten seams through your frame.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Bash",
+        "actions": [
+          { "do": "effect", "to": "self", "effect": "@WardFitting" },
+          { "do": "heal", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.4 },
+          { "do": "effect", "to": "self", "effect": "@Mending" }
+        ],
+        "perk": {
+          "name": "Deep Seating",
+          "addActions": [
+            { "do": "shield", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.4 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Pour Watchmen",
+        "icon": "castborn_t3.png",
+        "instant": false,
+        "cooldown": 30,
+        "staminaCost": 20,
+        "description": "Tap your own melt and pour two foundry watchmen, heavy plated castings of your own kind, to hold the line beside you for a long while.",
+        "castVfx": "PA_Engineer_Junker.spawnParticle",
+        "sound": "event:/Abilities/Engineer/Engineer_Junker_Leap",
+        "actions": [
+          { "do": "summon", "creature": "LoaderBot", "summonName": "Foundry Watchman", "model": { "mesh": "models/foundry_watchman.glb", "height": 1.6, "keepParticles": false }, "summonGroup": "FoundryWatch", "amount": 2, "turns": 20, "maxSummons": 2, "effect": "@Castbond" }
+        ],
+        "perk": {
+          "name": "Rapid Casting",
+          "cooldownDelta": -8
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Siege Casting",
+        "icon": "castborn_t5.png",
+        "radius": 2.5,
+        "cooldown": 24,
+        "staminaCost": 28,
+        "description": "Wake the core. The deck caves in around you, stunning and throwing back everything near, and you rise as a siege casting for a few turns: half damage taken, far heavier blows, and every hit a tremor.",
+        "castVfx": "PA_Cursed_Avatar.PS_cast",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 5, "max": 10, "scale": "Strength", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "stun", "turns": 1 },
+          { "do": "knockback", "amount": 2 },
+          { "do": "effect", "to": "self", "effect": "@Siege" },
+          { "do": "shield", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.5 }
+        ],
+        "perk": {
+          "name": "Bastion Pour",
+          "cooldownDelta": -6
+        },
+        "sound": "sfx/castborn_siege.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Slagwall Bellow",
+        "icon": "castborn_t6.png",
+        "radius": 3,
+        "cooldown": 14,
+        "staminaCost": 18,
+        "description": "Open your vents and roar. Molten spatter coats everything near you and every one of them turns to fight you instead of your friends. Anything already slagged has its crust cracked off in a heavy, stunning blow, and you plate up behind the noise.",
+        "castVfx": "PA_Cursed_Avatar.PS_cast",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Toughness", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "taunt", "turns": 2 },
+          { "do": "stun", "turns": 1, "ifTargetHas": "@Slagged" },
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 1, "ifTargetHas": "@Slagged", "consume": true },
+          { "do": "effect", "effect": "@Slagged" },
+          { "do": "shield", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.4 },
+          { "do": "effect", "to": "self", "effect": "#Fortified", "ifSelfHas": "@WardFitting" },
+          { "do": "effect", "to": "self", "effect": "@Mending" }
+        ],
+        "perk": {
+          "name": "Foundry Roar",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "resistances": {
+        "Fire": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Annealed Core",
+        "icon": "castborn_t7.png",
+        "description": "Your core was tempered to outlast its shell. When your plating gives way it floods with fresh melt: you reseal, harden and throw off every ailment, though the core needs a long while to heat up again. Whatever strikes you comes away spattered with slag, and when something fighting beside you breaks, you take its melt back.",
+        "procs": [
+          {
+            "on": "lowHealth",
+            "threshold": 35,
+            "cooldown": 30,
+            "vfx": "PA_Shieldbearer_Brace.PS_regen",
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.6 },
+              { "do": "shield", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.5 },
+              { "do": "cleanse", "to": "self" },
+              { "do": "effect", "to": "self", "effect": "#Fortified" },
+              { "do": "effect", "to": "self", "effect": "@Mending" }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "effect": "@Slagged" }
+            ]
+          },
+          {
+            "on": "allyDeath",
+            "cooldown": 3,
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.3 },
+              { "do": "effect", "to": "self", "effect": "@Mending" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

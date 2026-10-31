@@ -1,0 +1,103 @@
+{
+  "id": "MOD_BountyHand",
+  "name": "Bounty Hand",
+  "description": "Collects what the galaxy owes, in blood and credits. Every kill goes in the ledger, and the ledger pays.\n\nExample class: its verbs, conditions and numbers come from a code plugin (see Mods/ExamplePlugin/src). Favors [SMT] and [TGH].",
+  "archetype": "Guile",
+  "iconFrom": "SKILLTREE_Hacker/4",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Toughness": 3
+  },
+  "effects": [
+    {
+      "id": "Paid",
+      "name": "Paid in Full",
+      "description": "Nothing steadies the hand like a settled account.",
+      "duration": 3,
+      "stats": {
+        "Crit": 3
+      }
+    },
+    {
+      "id": "Feared",
+      "name": "Feared Name",
+      "description": "They have heard of you.",
+      "duration": 5,
+      "stats": {
+        "Toughness": 2
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Collect Debt",
+        "description": "Take what they owe, and from whoever stands beside them.",
+        "cooldown": 2,
+        "actions": [
+          { "do": "ExamplePlugin:siphon", "amount": 3, "perRank": 1, "scale": "Smarts", "scaleMult": 0.5, "reach": 3 }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Second Notice",
+        "description": "Collecting is its own reward.",
+        "procs": [
+          {
+            "on": "ExamplePlugin:collected",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Paid" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Bad Odds",
+        "description": "You charge extra when they bring friends.",
+        "procs": [
+          {
+            "on": "turn",
+            "when": "ExamplePlugin:Outnumbered",
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 4 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Reputation",
+        "description": "Word gets around, and the ledger proves it.",
+        "procs": [
+          {
+            "on": "kill",
+            "when": { "value": "ExamplePlugin:ledger", "atLeast": 3 },
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Feared" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

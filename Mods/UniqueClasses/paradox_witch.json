@@ -1,0 +1,289 @@
+{
+  "id": "MOD_ParadoxWitch",
+  "name": "Paradox Witch",
+  "description": "They file complaints with causality and win. Paradox Witches borrow seconds, invoice wounds after the fact and leave appointments for their future selves. Every trick adds Timeline Strain, and the timeline only tolerates so much.\n\nHits log a Wound Ledger on enemies that Retroactive Wound cashes in as true damage. Timeline Strain (dodge per stack) resets cooldowns at 6 and snaps at 8, blasting enemies but leaving you unmoored. Plants delayed effects that trigger later. Favors [SMT] and [AGL].",
+  "archetype": "Intellect",
+  "icon": "paradox_witch.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Agility": 2,
+    "Dodge": 2
+  },
+  "effects": [
+    {
+      "id": "Paradox",
+      "name": "Timeline Strain",
+      "description": "The timeline is starting to notice you.",
+      "duration": 10,
+      "maxStacks": 8,
+      "stats": {
+        "Dodge": 2
+      },
+      "thresholds": [
+        {
+          "at": 6,
+          "message": "Time slips: your cooldowns jump ahead.",
+          "actions": [
+            { "do": "cooldowns", "to": "self", "amount": 3 }
+          ]
+        }
+      ],
+      "burstAt": 8,
+      "burstRadius": 2.5,
+      "burstVfx": "PA_Psykonics_Temporal.castParticle",
+      "burstSound": "event:/Abilities/Misc/Psykonics_Warp",
+      "burstActions": [
+        { "do": "damage", "type": "Energy", "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.5 },
+        { "do": "effect", "to": "self", "effect": "@Unmoored" }
+      ]
+    },
+    {
+      "id": "Unmoored",
+      "name": "Unmoored",
+      "description": "You are not fully in this second. Things hit harder.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Dodge": -20
+      },
+      "damageTakenMult": 1.25
+    },
+    {
+      "id": "Ledger",
+      "name": "Wound Ledger",
+      "description": "Every hit is written down, to be collected later.",
+      "duration": 6,
+      "debuff": true,
+      "maxStacks": 6
+    },
+    {
+      "id": "Revision",
+      "name": "Revision Point",
+      "description": "In three turns, you will have been fine.",
+      "duration": 3,
+      "onExpireActions": [
+        { "do": "heal", "amount": 10, "scale": "Smarts", "scaleMult": 0.5, "bonusPerStack": 3, "stacksOf": "@Paradox" },
+        { "do": "cleanse" }
+      ]
+    },
+    {
+      "id": "Aging",
+      "name": "Accelerated Aging",
+      "description": "Years pass for this one every turn. Soon all of them come due at once.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Strength": -3,
+        "Armor": -2
+      },
+      "vfx": "EFFECT_Freezing_Blood",
+      "onExpireRadius": 1.5,
+      "onExpireActions": [
+        { "do": "damage", "type": "Energy", "min": 6, "max": 12, "scale": "Smarts", "scaleMult": 0.5 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Loose Seconds",
+        "icon": "paradox_witch_t0.png",
+        "type": "passive",
+        "description": "You keep careful records of everything you do to people.",
+        "procs": [
+          {
+            "on": "hit",
+            "actions": [
+              { "do": "effect", "effect": "@Ledger" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Borrowed Second",
+        "icon": "paradox_witch_t1.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 10,
+        "cooldown": 8,
+        "description": "Take a second from later and spend it now. Later can complain.",
+        "castVfx": "CYBERNINJA_SURGE.particle",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Surge",
+        "actions": [
+          { "do": "cooldowns", "amount": 2 },
+          { "do": "stamina", "amount": 10 },
+          { "do": "effect", "effect": "@Paradox", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Borrowed Minute",
+          "addActions": [
+            { "do": "cooldowns", "amount": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Retroactive Wound",
+        "icon": "paradox_witch_t2.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 15,
+        "cooldown": 5,
+        "description": "Every wound you ever gave them, delivered again, all at once, with interest.",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "sfx/paradox_retro.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "trueDamage": true, "bonusPerStack": 4, "stacksOf": "@Ledger", "consumeStacks": true, "perRank": 1 },
+          { "do": "effect", "to": "self", "effect": "@Paradox" }
+        ],
+        "perk": {
+          "name": "Compound Interest",
+          "damageMult": 1.3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Revision Point",
+        "icon": "paradox_witch_t3.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 10,
+        "cooldown": 25,
+        "description": "Bookmark this moment. In three turns, reality reverts your wounds and woes to match it.",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "event:/Abilities/Misc/Acrobatics_Invigoration_Heal",
+        "actions": [
+          { "do": "effect", "effect": "@Revision" },
+          { "do": "effect", "effect": "@Paradox" }
+        ],
+        "perk": {
+          "name": "Saved Game",
+          "cooldownDelta": -8
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "name": "Dead Timeline",
+        "icon": "paradox_witch_t4.png",
+        "target": "enemy",
+        "range": 7,
+        "staminaCost": 20,
+        "cooldown": 9,
+        "description": "Pull the version of you from a timeline that already cast your last spell here, and let it cast it again.",
+        "castVfx": "PA_Psykonics_Warp.castParticle",
+        "sound": "sfx/paradox_timeline.wav",
+        "actions": [
+          { "do": "echo", "falloff": 0.7 },
+          { "do": "effect", "to": "self", "effect": "@Paradox" }
+        ],
+        "perk": {
+          "name": "Living Timeline",
+          "addActions": [
+            { "do": "echo", "falloff": 0.4 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Entropy Bloom",
+        "icon": "paradox_witch_t5.png",
+        "target": "floor",
+        "range": 6,
+        "radius": 2,
+        "staminaCost": 30,
+        "cooldown": 16,
+        "description": "Age a patch of the world by centuries. Whatever is standing there decays, then comes apart three turns later.",
+        "impactVfx": "EFFECT_Freezing_Blood",
+        "sound": "event:/Abilities/Elementalist/Elementalist_FrigidBlast_Cast",
+        "actions": [
+          { "do": "effect", "effect": "@Aging" },
+          { "do": "effect", "to": "self", "effect": "@Paradox", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Heat Death",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Collections Day",
+        "icon": "paradox_witch_t6.png",
+        "target": "self",
+        "radius": 5,
+        "staminaCost": 30,
+        "cooldown": 15,
+        "description": "Every open account in the room comes due at once. Each enemy pays back its whole Wound Ledger, and the timeline notices how much you collected.",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "sfx/paradox_retro.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "trueDamage": true, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1, "bonusPerStack": 3, "stacksOf": "@Ledger", "consumeStacks": true },
+          { "do": "effect", "to": "self", "effect": "@Paradox", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Late Fees",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Accrual Hex",
+        "icon": "paradox_witch_t7.png",
+        "type": "passive",
+        "description": "Debts compound around you. A blow that misses you is billed twice, and while the timeline strains, every enemy close by runs up a tab just by standing there.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              { "do": "effect", "effect": "@Ledger", "stacks": 2 }
+            ]
+          },
+          {
+            "on": "turn",
+            "radius": 3,
+            "when": { "value": "stacks:@Paradox", "of": "self", "atLeast": 5 },
+            "actions": [
+              { "do": "effect", "effect": "@Ledger" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

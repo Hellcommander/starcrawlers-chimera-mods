@@ -1,0 +1,207 @@
+{
+  "prompt": "cutlass slash swish and blade ring, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, cutlass slash swish and blade ring, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.025256238877773285,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "74a02a141bb3fe53",
+      "score": 0.4168415665626526,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 47.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "6116bb52b03030ac",
+      "score": 0.39482903480529785,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 39.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3798e9a53589b3dc",
+      "score": 0.39461657404899597,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 35.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "43f582ecdbfb5e03",
+      "score": 0.3803236186504364,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 15.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "33724dc9ea58ffa5",
+      "score": 0.3735205829143524,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 20.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "77bf85388a32eb16",
+      "score": 0.3734967112541199,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 21.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9fab20cfc4a2c1e5",
+      "score": 0.36888137459754944,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 3.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "bf4a4b69ffcf5673",
+      "score": 0.36888137459754944,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 1.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9110699f43d75c66",
+      "score": 0.36888137459754944,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 9.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1a184ffa32245d46",
+      "score": 0.36888137459754944,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 4.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "74a02a141bb3fe53",
+    "6116bb52b03030ac",
+    "3798e9a53589b3dc",
+    "43f582ecdbfb5e03",
+    "33724dc9ea58ffa5",
+    "77bf85388a32eb16",
+    "9fab20cfc4a2c1e5",
+    "bf4a4b69ffcf5673",
+    "9110699f43d75c66",
+    "1a184ffa32245d46"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\corsair_flourish.wav",
+  "sample_rate": 44100
+}

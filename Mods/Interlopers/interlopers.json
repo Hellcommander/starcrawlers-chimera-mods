@@ -1,0 +1,210 @@
+{
+  "mobEffects": [
+    { "id": "Infested", "name": "Infested", "icon": "icons/infested.png", "duration": 3, "debuff": true, "stackable": true, "maxStacks": 3,
+      "description": "Something is burrowing under your skin.", "dot": { "type": "Bio", "min": 1, "max": 2 } },
+    { "id": "Rallied", "name": "Rallied", "icon": "icons/rallied.png", "duration": 3,
+      "description": "The supervisor is watching. Hits harder, aims better.", "damageDealtMult": 1.25, "stats": { "RangedAccuracy": 10 } },
+    { "id": "Scanned", "name": "Scanned", "icon": "icons/scanned.png", "duration": 3, "debuff": true,
+      "description": "Your vitals are on someone's screen. Harder to dodge.", "stats": { "Dodge": -15 } },
+    { "id": "Hardened", "name": "Hardened Shell", "icon": "icons/hardened.png", "duration": 3,
+      "description": "Shell sealed. Takes far less damage and knits itself back together.", "damageTakenMult": 0.4, "hot": 4 },
+    { "id": "SporeSick", "name": "Spore-Sick", "icon": "icons/sporesick.png", "duration": 3, "debuff": true, "stackable": true, "maxStacks": 3,
+      "description": "Lungs full of spores: sick, and slow to dodge.", "dot": { "type": "Bio", "min": 1, "max": 3 }, "stats": { "Dodge": -5 } },
+    { "id": "Overloading", "name": "Overloading", "icon": "icons/overloading.png", "duration": -1,
+      "description": "Its core is going critical. Kill it, stun it, or get clear." }
+  ],
+
+  "enemies": [
+    { "id": "RiotBulwark", "base": "LoaderBot", "name": "Riot Bulwark", "subtitle": "Crowd Control Unit",
+      "description": "A walking wall. It plants its shield and keeps everyone behind it alive.",
+      "type": "Mechanical", "ai": "Brawler", "health": 1.6, "damage": 0.9, "xp": 1.5,
+      "resists": { "Ballistic": 25, "Piercing": 15, "Shock": -20 },
+      "model": { "mesh": "models/riot_bulwark.glb", "scale": 2.0, "keepParticles": false },
+      "skills": [
+        { "id": "ShieldWall", "name": "Shield Wall", "target": "allies", "radius": 3.5, "alliesNear": 1, "cooldown": 4, "priority": 6,
+          "verb": "locks its shield and projects a barrier over its squad", "castVfx": "PA_Shieldbearer_Brace.PS_cast@0.5",
+          "actions": [ { "do": "shield", "amount": 6, "perRank": 3 } ] },
+        { "id": "ShieldBash", "name": "Shield Bash", "melee": true, "range": 1.5, "cooldown": 3, "priority": 7, "dodgeable": true, "accuracy": 85,
+          "verb": "slams its riot shield into",
+          "actions": [ { "do": "damage", "type": "Crushing", "min": 4, "max": 7 }, { "do": "knockback", "amount": 1 }, { "do": "stun", "turns": 1, "chance": 35 } ] }
+      ] },
+
+    { "id": "FuseDrone", "base": "CORPSEC_DRONE", "name": "Fuse Drone", "subtitle": "Unlicensed Maintenance",
+      "description": "Its core runs far too hot. Hurt it and it decides to take you with it.",
+      "type": "Mechanical", "health": 0.8, "xp": 1.1,
+      "model": { "mesh": "models/fusebot.glb", "scale": 0.75, "offset": [0, 0.9, 0], "keepParticles": false, "glow": "#FF9F43", "glowStrength": 0.6 },
+      "skills": [
+        { "id": "CriticalOverload", "name": "Critical Overload", "target": "area", "aroundSelf": true, "range": 3.2, "radius": 2.0,
+          "healthBelow": 0.8, "uses": 1, "priority": 9, "cooldown": 0,
+          "windup": 3, "grow": true, "windupText": "starts to overload", "windupEffect": "Overloading",
+          "verb": "detonates, catching", "castVfx": "PA_Engineer_Spidermine.PS_explode_fire@0.6",
+          "actions": [ { "do": "damage", "type": "Fire", "min": 9, "max": 15 }, { "do": "knockback", "amount": 1 } ],
+          "die": true }
+      ] },
+
+    { "id": "SporecapCultivator", "base": "ChemLab_LabTech_Scientist", "name": "Sporecap Cultivator", "subtitle": "Field Mycologist",
+      "description": "Grows burstcaps wherever it stands, and throws flasks of what they release.",
+      "health": 1.1, "xp": 1.4,
+      "skills": [
+        { "id": "SowBurstcaps", "name": "Sow Burstcaps", "target": "self", "cooldown": 5, "priority": 8,
+          "verb": "scatters a handful of spores that swell into burstcaps",
+          "spawn": { "ids": ["Interlopers:Burstcap"], "count": 2, "max": 4 } },
+        { "id": "SporeFlask", "name": "Spore Flask", "target": "area", "range": 5, "radius": 1.5, "cooldown": 4, "priority": 6,
+          "verb": "hurls a flask of spores at", "impactVfx": "PA_Nanomancy_Plague.explosionPrefab@0.4",
+          "actions": [ { "do": "damage", "type": "Bio", "min": 2, "max": 4 }, { "do": "effect", "effect": "SporeSick", "stacks": 1 } ] }
+      ] },
+
+    { "id": "Burstcap", "base": "Slime_Bio", "name": "Burstcap", "subtitle": "Ripening",
+      "description": "Swells until it bursts. Best popped from a distance.",
+      "type": "Monster", "health": 0.6, "xp": 0.4, "removeAbilities": ["BioSlime_Clone", "BioSlime_Infuse"],
+      "model": { "mesh": "models/burstcap.glb", "scale": 0.8 },
+      "skills": [
+        { "id": "Ripen", "name": "Ripen", "target": "area", "aroundSelf": true, "range": 2.2, "radius": 1.6, "priority": 9, "cooldown": 0, "uses": 1,
+          "windup": 2, "grow": true, "windupText": "swells, its cap stretched tight",
+          "verb": "bursts in a cloud of spores over", "castVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5",
+          "actions": [ { "do": "damage", "type": "Bio", "min": 5, "max": 9 }, { "do": "effect", "effect": "SporeSick", "stacks": 2 } ],
+          "die": true }
+      ] },
+
+    { "id": "Shellback", "base": "MUTT_WOLF", "name": "Shellback", "subtitle": "Brood Mother",
+      "description": "Armoured, patient, and never alone for long: its brood answers when it calls.",
+      "type": "Monster", "health": 2.2, "damage": 1.0, "xp": 1.8,
+      "resists": { "Crushing": 15, "Slashing": 20, "Fire": -15 },
+      "model": { "mesh": "models/shellback.glb", "scale": 1.5 },
+      "skills": [
+        { "id": "HardenShell", "name": "Harden Shell", "target": "self", "healthBelow": 0.5, "uses": 2, "cooldown": 6, "priority": 9,
+          "verb": "draws into its shell, which seals and starts to mend",
+          "actions": [ { "do": "effect", "effect": "Hardened" } ] },
+        { "id": "BroodCall", "name": "Brood Call", "target": "self", "cooldown": 6, "priority": 6, "chance": 0.6,
+          "verb": "clicks, and skitterlings pour out of the vents",
+          "spawn": { "ids": ["Interlopers:Skitterling"], "count": 2, "max": 4 } }
+      ] },
+
+    { "id": "Skitterling", "base": "MUTT_PUP", "name": "Skitterling", "subtitle": "Brood",
+      "description": "Small, fast, and it burrows.",
+      "type": "Monster", "health": 0.5, "xp": 0.3, "scale": 0.8,
+      "model": { "mesh": "models/skitterling.glb", "scale": 0.6 },
+      "skills": [
+        { "id": "BurrowingBite", "name": "Burrowing Bite", "melee": true, "range": 1.5, "cooldown": 2, "priority": 6, "dodgeable": true,
+          "verb": "sinks its mandibles into",
+          "actions": [ { "do": "damage", "type": "Piercing", "min": 2, "max": 4 }, { "do": "effect", "effect": "Infested", "stacks": 1 } ] }
+      ] },
+
+    { "id": "MenderUnit", "base": "CORPSEC_DRONE", "name": "Mender Unit", "subtitle": "Field Medical",
+      "description": "Patches up anyone on its side and tells them where you're weak. Kill it first.",
+      "type": "Mechanical", "health": 0.9, "xp": 1.3,
+      "model": { "mesh": "models/mender_unit.glb", "scale": 0.95, "offset": [0, 0.8, 0], "keepParticles": false },
+      "skills": [
+        { "id": "PatchJob", "name": "Patch Job", "target": "ally", "range": 5, "cooldown": 2, "priority": 9,
+          "verb": "sprays nanite gel over its most hurt ally", "impactVfx": "PA_Nanomancy_Healing.explosionPrefab@0.3",
+          "actions": [ { "do": "heal", "amount": 8, "perRank": 4 } ] },
+        { "id": "VitalsScan", "name": "Vitals Scan", "range": 6, "cooldown": 4, "priority": 5,
+          "verb": "sweeps a scanning beam across",
+          "actions": [ { "do": "effect", "effect": "Scanned" } ] }
+      ] },
+
+    { "id": "Vaultback", "base": "MUTT_WOLF", "name": "Vaultback", "subtitle": "Breach Hound",
+      "description": "Jet-assisted hind legs: it closes any gap in one bound.",
+      "type": "Mechanical", "health": 1.2, "damage": 1.1, "xp": 1.4,
+      "model": { "mesh": "models/vaultback.glb", "scale": 1.3 },
+      "skills": [
+        { "id": "Pounce", "name": "Pounce", "range": 5, "cooldown": 4, "priority": 8, "dodgeable": true, "accuracy": 80,
+          "verb": "fires its leg jets and pounces on", "castVfx": "CYBERNINJA_DASH.particle_dash",
+          "actions": [ { "do": "leap" }, { "do": "damage", "type": "Slashing", "min": 5, "max": 9 }, { "do": "stun", "turns": 1, "chance": 40 } ] }
+      ] },
+
+    { "id": "Ventmaw", "base": "WORM_BASIC", "name": "Ventmaw", "subtitle": "Duct Fauna",
+      "description": "Lives in the ducts and comes out of them fast. Long, armoured, and mostly mouth.",
+      "type": "Monster", "ai": "Brawler", "health": 1.5, "damage": 1.1, "xp": 1.5,
+      "resists": { "Crushing": 15, "Piercing": 10, "Fire": -15 },
+      "model": { "mesh": "models/ventmaw.glb", "scale": 2.4 },
+      "skills": [
+        { "id": "BurrowLunge", "name": "Burrow Lunge", "range": 4, "cooldown": 4, "priority": 8, "dodgeable": true, "accuracy": 85,
+          "verb": "bursts across the floor and clamps onto", "castVfx": "CYBERNINJA_DASH.particle_dash",
+          "actions": [ { "do": "leap" }, { "do": "damage", "type": "Piercing", "min": 5, "max": 9 } ] },
+        { "id": "Constrict", "name": "Constrict", "melee": true, "range": 1.5, "cooldown": 5, "priority": 7,
+          "verb": "coils around and squeezes",
+          "actions": [ { "do": "damage", "type": "Crushing", "min": 3, "max": 6 }, { "do": "stun", "turns": 1, "chance": 70 } ] },
+        { "id": "AcidGush", "name": "Acid Gush", "target": "area", "range": 3, "radius": 1.5, "cooldown": 6, "priority": 6,
+          "verb": "retches a gush of stomach acid over", "impactVfx": "PA_Nanomancy_Plague.explosionPrefab@0.4",
+          "actions": [ { "do": "damage", "type": "Bio", "min": 2, "max": 5 }, { "do": "effect", "effect": "SporeSick", "stacks": 1 } ] }
+      ] },
+    { "id": "ShiftSupervisor", "base": "CORPSEC_COMMANDO", "name": "Shift Supervisor", "subtitle": "Middle Management",
+      "description": "Doesn't fight much. Makes everyone around it fight harder.",
+      "health": 1.2, "xp": 1.6,
+      "skills": [
+        { "id": "RallyTheShift", "name": "Rally the Shift", "target": "allies", "radius": 5, "alliesNear": 2, "cooldown": 6, "priority": 8,
+          "verb": "barks orders, and the shift picks up the pace",
+          "actions": [ { "do": "effect", "effect": "Rallied" } ] },
+        { "id": "Flashbang", "name": "Flashbang", "target": "area", "range": 5, "radius": 1.5, "cooldown": 7, "priority": 6,
+          "verb": "lobs a flashbang at", "impactVfx": "PA_Smuggler_Flashbang.explosionPrefab@0.5",
+          "actions": [ { "do": "stun", "turns": 1, "chance": 60 }, { "do": "effect", "effect": "Scanned" } ] }
+      ]
+      }
+  ],
+
+  "enemyPatches": [
+    // These only ever roll for enemies inside the side areas (set "onlyInSideAreas": false to let a patch out).
+    { "enemies": ["CORPSEC_TROOPER"], "chance": 0.25, "prefix": "Medic",
+      "skills": [ { "id": "FieldDressing", "name": "Field Dressing", "target": "ally", "range": 4, "cooldown": 3, "priority": 8,
+                    "verb": "slaps a field dressing on its most hurt squadmate", "actions": [ { "do": "heal", "amount": 6, "perRank": 3 } ] } ] },
+    { "enemies": ["CORPSEC_GUARD_PISTOL", "CORPSEC_GUARD_MELEE"], "chance": 0.15, "prefix": "Grenadier",
+      "skills": [ { "id": "FragToss", "name": "Frag Toss", "target": "area", "range": 5, "radius": 1.5, "cooldown": 6, "priority": 7,
+                    "verb": "pulls a pin and lobs a frag at", "impactVfx": "SOLDIER_FRAGOUT.explosionPrefab@0.4",
+                    "actions": [ { "do": "damage", "type": "Fire", "min": 4, "max": 7 } ] } ] },
+    { "enemies": ["WorkerBot", "CleanerBot", "LoaderBot", "MinerBot"], "chance": 0.15, "prefix": "Unstable",
+      "skills": [ { "id": "MeltDown", "name": "Meltdown", "target": "area", "aroundSelf": true, "range": 3.2, "radius": 1.8, "healthBelow": 0.5,
+                    "uses": 1, "priority": 9, "windup": 2, "grow": true, "windupText": "shudders, sparks pouring out of its seams", "windupEffect": "Overloading",
+                    "verb": "blows apart over", "castVfx": "PA_Engineer_Spidermine.PS_explode@0.5",
+                    "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 11 } ], "die": true } ] },
+    { "enemies": ["MUTT_WOLF", "MUTT_HELL"], "chance": 0.2, "prefix": "Alpha",
+      "skills": [ { "id": "PackHowl", "name": "Pack Howl", "target": "allies", "radius": 5, "alliesNear": 1, "cooldown": 7, "priority": 7,
+                    "verb": "howls, and the pack answers", "actions": [ { "do": "effect", "effect": "Rallied" } ] } ] },
+    { "enemies": ["ChemLab_LabTech", "ChemLab_LabTech_Ranged"], "chance": 0.2, "prefix": "Volatile",
+      "skills": [ { "id": "ToxicFlask", "name": "Toxic Flask", "target": "area", "range": 5, "radius": 1.5, "cooldown": 5, "priority": 7,
+                    "verb": "throws a fizzing flask at", "impactVfx": "PA_Nanomancy_Plague.explosionPrefab@0.4",
+                    "actions": [ { "do": "effect", "effect": "SporeSick", "stacks": 2 } ] } ] },
+    { "enemies": ["Slime_Bio", "Slime_Electric"], "chance": 0.2, "prefix": "Budding",
+      "skills": [ { "id": "Bud", "name": "Bud", "target": "self", "healthBelow": 0.7, "cooldown": 5, "priority": 7,
+                    "verb": "splits off a smaller copy of itself", "spawn": { "copies": true, "count": 1, "max": 2, "health": 0.35 } } ] },
+
+    { "enemies": ["CORPSEC_SHARPSHOOTER"], "chance": 0.2, "prefix": "Marksman",
+      "skills": [ { "id": "PinDown", "fromClass": "MOD_Longshot/Pin Down", "range": 7, "cooldown": 6, "priority": 7, "dodgeable": true, "verb": "takes careful aim at" } ] },
+    { "enemies": ["Enemy_Geotechnician_Ranged", "Nemesis_Smuggler"], "chance": 0.2, "prefix": "Demolitions",
+      "skills": [ { "id": "StickyCharge", "fromClass": "MOD_Demolitionist/Sticky Charge", "range": 6, "cooldown": 6, "priority": 7, "verb": "slaps a sticky charge on" } ] },
+    { "enemies": ["NPC_PirateBot_Ravager", "NPC_PirateBot"], "chance": 0.25, "prefix": "Corsair",
+      "skills": [ { "id": "CutlassFlourish", "fromClass": "MOD_Corsair/Cutlass Flourish", "melee": true, "range": 1.5, "cooldown": 4, "priority": 7, "dodgeable": true, "verb": "carves a flourish into" } ] },
+    { "enemies": ["CORPSEC_COMMANDO"], "chance": 0.15, "prefix": "Heavy",
+      "skills": [ { "id": "PileDriver", "fromClass": "MOD_Juggernaut/Pile Driver", "melee": true, "range": 1.5, "cooldown": 5, "priority": 7, "dodgeable": true, "verb": "drives a fist down into" } ] }
+  ],
+
+  "sideAreas": {
+    "rosters": [
+      { "id": "riotsquad", "name": "Riot Squad", "color": "#6FB7FF", "weight": 8, "minFloor": 1,
+        "text": "A riot squad holds this echo: shields up front, medics behind, a supervisor shouting.",
+        "tiers": [ ["CORPSEC_GUARD_PISTOL", "CORPSEC_GUARD_MELEE", "Interlopers:MenderUnit"],
+                   ["Interlopers:RiotBulwark", "CORPSEC_TROOPER", "Interlopers:MenderUnit", "CORPSEC_GUARD_PISTOL", "Interlopers:ShiftSupervisor"],
+                   ["Interlopers:RiotBulwark", "CORPSEC_COMMANDO", "Interlopers:MenderUnit", "Interlopers:ShiftSupervisor", "CORPSEC_SHARPSHOOTER"] ] },
+      { "id": "brood", "name": "The Brood", "color": "#B07CFF", "weight": 7, "minFloor": 1,
+        "text": "Shellbacks nested in here. Their brood is everywhere.",
+        "tiers": [ ["Interlopers:Skitterling", "Interlopers:Skitterling", "MUTT_PUP"],
+                   ["Interlopers:Skitterling", "Interlopers:Shellback", "Interlopers:Vaultback", "Interlopers:Burstcap", "Interlopers:Ventmaw"],
+                   ["Interlopers:Shellback", "Interlopers:Skitterling", "Interlopers:Vaultback", "Interlopers:SporecapCultivator", "Interlopers:Ventmaw"] ] },
+      { "id": "tunnels", "name": "Duct Nest", "color": "#C97A4A", "weight": 6, "minFloor": 1,
+        "text": "The ducts open into this echo, and things live in the ducts.",
+        "tiers": [ ["WORM_BASIC", "Interlopers:Skitterling", "WORM_BIO"],
+                   ["Interlopers:Ventmaw", "WORM_SHOCK", "Interlopers:Skitterling", "WORM_BIO"],
+                   ["Interlopers:Ventmaw", "WORM_FIRE", "WORM_VOID", "Interlopers:Vaultback"] ] },
+      { "id": "fusecrew", "name": "Fuse Crew", "color": "#FF9F43", "weight": 6,
+        "text": "Somebody let the maintenance drones run unsupervised. They run hot.",
+        "tiers": [ ["Interlopers:FuseDrone", "WorkerBot", "CleanerBot"],
+                   ["Interlopers:FuseDrone", "LoaderBot", "Interlopers:MenderUnit", "MinerBot"],
+                   ["Interlopers:FuseDrone", "LoaderBot_Cleaver", "Interlopers:RiotBulwark", "Enemy_Engineer_Junker"] ] },
+      { "id": "spores", "name": "Spore Garden", "color": "#9BE15D", "weight": 5, "minFloor": 2,
+        "text": "Someone has been cultivating here. Watch where you step.",
+        "tiers": [ ["Interlopers:Burstcap", "Slime_Bio", "ChemLab_LabTech"],
+                   ["Interlopers:SporecapCultivator", "Interlopers:Burstcap", "LABTECH_SLIME_WRANGLER", "Slime_Catalyst"],
+                   ["Interlopers:SporecapCultivator", "Interlopers:Burstcap", "BIOLAB_BIOSLIME_WRANGLER", "Ooze_Pollutant"] ] }
+    ]
+  }
+}

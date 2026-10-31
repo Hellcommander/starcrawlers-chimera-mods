@@ -1,0 +1,316 @@
+{
+  "id": "MOD_StarfireAdept",
+  "name": "Starfire Adept",
+  "description": "Adepts of the Sunward Order trap a sliver of stellar plasma inside their own bodies and conduct it like an orchestra. Damage only makes it burn hotter. The trick is letting it out before it lets itself out.\n\nSpells and incoming hits build Heat (Psi Power per stack); at 5 it wraps you in a corona shield, at 10 it erupts around you and burns out your systems. Ionized enemies conduct Prominence Lash from one to the next. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "starfire_adept.png",
+  "attributePriorities": {
+    "PsiPower": 4,
+    "Smarts": 3
+  },
+  "effects": [
+    {
+      "id": "Heat",
+      "name": "Stellar Heat",
+      "description": "A small sun is running warm inside you.",
+      "duration": 8,
+      "maxStacks": 10,
+      "stats": {
+        "PsiPower": 1
+      },
+      "thresholds": [
+        {
+          "at": 5,
+          "message": "A corona flares around you.",
+          "vfx": "PA_PASSIVE_RadiantBlock.PS_cast",
+          "actions": [
+            { "do": "shield", "to": "self", "amount": 8, "scale": "PsiPower", "scaleMult": 0.3 }
+          ]
+        }
+      ],
+      "burstAt": 10,
+      "burstRadius": 2.5,
+      "burstVfx": "PA_Elementalist_MagmaBurst.blastParticle",
+      "burstSound": "event:/Abilities/Soldier/Rocket_Explode",
+      "burstActions": [
+        { "do": "damage", "type": "Fire", "min": 8, "max": 14, "scale": "PsiPower", "scaleMult": 0.6 },
+        { "do": "effect", "effect": "@Ionized" },
+        { "do": "effect", "to": "self", "effect": "@Burnout" }
+      ]
+    },
+    {
+      "id": "Burnout",
+      "name": "Burnout",
+      "description": "Your systems are cooked. Give them a minute.",
+      "duration": 3,
+      "debuff": true,
+      "damageDealtMult": 0.7,
+      "resists": {
+        "Fire": -10
+      }
+    },
+    {
+      "id": "Ionized",
+      "name": "Ionized",
+      "description": "Charged plasma clings to them. It wants to arc.",
+      "duration": 4,
+      "debuff": true,
+      "resists": {
+        "Energy": -10,
+        "Fire": -5
+      },
+      "dot": {
+        "type": "Fire",
+        "min": 1,
+        "max": 2
+      },
+      "vfx": "EFFECT_Hacker_Virus_Overheat"
+    },
+    {
+      "id": "DwarfHeart",
+      "name": "White-Dwarf Heart",
+      "description": "You have collapsed the core into something denser and far hungrier.",
+      "duration": 4,
+      "damageDealtMult": 1.4,
+      "procs": [
+        {
+          "on": "turn",
+          "actions": [
+            { "do": "effect", "to": "self", "effect": "@Heat" }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "resistances": {
+        "Fire": 10,
+        "Energy": 10
+      },
+      "newAbility": {
+        "name": "Fusion Skin",
+        "icon": "starfire_adept_t0.png",
+        "type": "passive",
+        "description": "Energy that hits you doesn't get wasted. It gets added to the fire.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 40,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Heat" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "name": "Plasma Bolt",
+        "icon": "starfire_adept_t1.png",
+        "target": "enemy",
+        "range": 7,
+        "staminaCost": 10,
+        "description": "A thumb-sized star, thrown hard.",
+        "impactVfx": "PA_Hacker_Virus_Overheat.PS_overheat_impact",
+        "sound": "sfx/starfire_bolt.wav",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@Ionized" },
+          { "do": "effect", "to": "self", "effect": "@Heat" }
+        ],
+        "perk": {
+          "name": "Blue Star Bolt",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Prominence Lash",
+        "icon": "starfire_adept_t2.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 15,
+        "cooldown": 4,
+        "description": "A whip of solar plasma that leaps between ionized bodies like they were stepping stones.",
+        "castVfx": "PA_Elementalist_ChainLightning.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "event:/Abilities/Prototype/Thunderclap_Fire",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3.5,
+            "effect": "@Ionized",
+            "falloff": 0.8,
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1 }
+            ]
+          },
+          { "do": "effect", "to": "self", "effect": "@Heat" }
+        ],
+        "perk": {
+          "name": "Solar Whip",
+          "addActions": [
+            { "do": "effect", "effect": "@Ionized" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2
+      },
+      "newAbility": {
+        "name": "White-Dwarf Heart",
+        "icon": "starfire_adept_t3.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 15,
+        "cooldown": 20,
+        "description": "Crush your inner star down to its core. Everything you cast hits far harder, and the heat climbs every turn.",
+        "castVfx": "PA_Cursed_Avatar.PS_cast",
+        "sound": "event:/Abilities/Prototype/ArmCannon_Charge",
+        "actions": [
+          { "do": "effect", "effect": "@DwarfHeart" }
+        ],
+        "perk": {
+          "name": "Neutron Heart",
+          "cooldownDelta": -6
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Emergency Vent",
+        "icon": "starfire_adept_t4.png",
+        "target": "self",
+        "radius": 2,
+        "instant": true,
+        "cooldown": 8,
+        "description": "Blow the safety valves. All your heat comes out sideways, onto whoever is standing too close.",
+        "castVfx": "PA_Elementalist_MagmaBurst.castParticle",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+        "sound": "event:/Abilities/Soldier/Grenade_Explode",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 2, "max": 4, "bonusPerStack": 2, "stacksOf": "@Heat", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "knockback", "amount": 1 },
+          { "do": "cleanse", "to": "self", "amount": 1 }
+        ],
+        "perk": {
+          "name": "Pressure Release",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Coronal Eruption",
+        "icon": "starfire_adept_t5.png",
+        "target": "floor",
+        "range": 7,
+        "radius": 3,
+        "staminaCost": 40,
+        "cooldown": 20,
+        "description": "Open a hole to the surface of a star for exactly one second.",
+        "castVfx": "PA_Elementalist_MagmaBurst.castParticle",
+        "impactVfx": "PA_Elementalist_MagmaBurst.blastParticle",
+        "sound": "audio_licensed/starfire_eruption.wav",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 6, "max": 12, "scale": "PsiPower", "scaleMult": 0.6, "perRank": 2, "bonusPerStack": 1, "stacksOf": "@Heat", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@Ionized" },
+          { "do": "stun", "turns": 1, "chance": 30 },
+          { "do": "effect", "to": "self", "effect": "@Heat", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Solar Maximum",
+          "radiusDelta": 1,
+          "damageMult": 1.15
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "name": "Magnetic Reconnection",
+        "icon": "starfire_adept_t6.png",
+        "target": "self",
+        "radius": 5,
+        "staminaCost": 25,
+        "cooldown": 14,
+        "description": "Snap every ionized field line in the room back toward your core at once. The plasma riding them discharges, and whoever wore it gets dragged in close.",
+        "castVfx": "PA_Elementalist_ChainLightning.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "event:/Abilities/Prototype/Thunderclap_Fire",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 1, "ifTargetHas": "@Ionized" },
+          { "do": "pull", "amount": 2, "ifTargetHas": "@Ionized", "consume": true },
+          { "do": "effect", "to": "self", "effect": "@Heat", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Flux Rope",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Stellar Remnant",
+        "icon": "starfire_adept_t7.png",
+        "type": "passive",
+        "description": "A star that burns out still leaves something behind. When you hit Burnout, the floor around you keeps burning for a while, and while you run hot, anything that strikes you comes away charged.",
+        "procs": [
+          {
+            "on": "effectGained",
+            "match": "@Burnout",
+            "actions": [
+              {
+                "do": "field",
+                "to": "self",
+                "fieldName": "Remnant Flare",
+                "turns": 3,
+                "radius": 2.1,
+                "affects": "enemies",
+                "look": "HAZARD_Fire_Mini",
+                "actions": [
+                  { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3 },
+                  { "do": "effect", "effect": "@Ionized" }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 50,
+            "when": { "value": "stacks:@Heat", "of": "self", "atLeast": 5 },
+            "actions": [
+              { "do": "effect", "effect": "@Ionized" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

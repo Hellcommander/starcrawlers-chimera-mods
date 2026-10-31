@@ -1,0 +1,203 @@
+{
+  "prompt": "magical growing sound, deep descending stretching groan with sparkle",
+  "conditioned_prompt": "high quality game sound effect, magical growing sound, deep descending stretching groan with sparkle, timbre of water, ambience, horror, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.6,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.006998051889240742,
+  "source_corr": 0.010875893756747246,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "e386c2e427bc1c99",
+      "score": 0.463893324136734,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 11.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "dca99a063fc5da1c",
+      "score": 0.4621763229370117,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 1_REV.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "2209b9298ae4c47d",
+      "score": 0.4608783423900604,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Horror rising.zip",
+      "inner": "Dark Fantasy Studio- Horror rising/Dark Fantasy Studio- Horror rising 20.wav",
+      "license": "reference",
+      "tags": [
+        "horror",
+        "rising",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "634dcde971879777",
+      "score": 0.4585365951061249,
+      "via": "clap+tag",
+      "pack": "texturesnoisealchemy.zip",
+      "inner": "NOISE ALCHEMY- TEXTURES/NOISE ALCHEMY- TEXTURES 1 22_REV.wav",
+      "license": "reference",
+      "tags": [
+        "texturesnoisealchemy",
+        "noise",
+        "alchemy",
+        "textures",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "cd7d9c43aaf79c68",
+      "score": 0.4570194482803345,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 16_REV.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "3967d10d3773f396",
+      "score": 0.4531882107257843,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 14.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a153f52a3d3fbe34",
+      "score": 0.4481590688228607,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 23.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "e13b070e2b36b427",
+      "score": 0.44437599182128906,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 36.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "da146e5343636cd1",
+      "score": 0.4430803954601288,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Horror rising.zip",
+      "inner": "Dark Fantasy Studio- Horror rising/Dark Fantasy Studio- Horror rising 18.wav",
+      "license": "reference",
+      "tags": [
+        "horror",
+        "rising",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "5e1e0bbbaf8d0cdd",
+      "score": 0.43732786178588867,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 40.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    }
+  ],
+  "used_ids": [
+    "e386c2e427bc1c99",
+    "dca99a063fc5da1c",
+    "2209b9298ae4c47d",
+    "634dcde971879777",
+    "cd7d9c43aaf79c68",
+    "3967d10d3773f396",
+    "a153f52a3d3fbe34",
+    "e13b070e2b36b427",
+    "da146e5343636cd1",
+    "5e1e0bbbaf8d0cdd"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_grow.wav",
+  "sample_rate": 44100
+}

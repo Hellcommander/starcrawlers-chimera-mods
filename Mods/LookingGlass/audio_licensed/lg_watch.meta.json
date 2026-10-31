@@ -1,0 +1,233 @@
+{
+  "prompt": "pocket watch ticking very fast, clock spring winding back",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "8ccb9aaceaadc8b8",
+      "score": 0.5014130473136902,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Misc/Clock 1.wav",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "clock"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "e4346de2938689e4",
+      "score": 0.4687437415122986,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Misc/Clock 1.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "clock"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "deb3680f51a5d422",
+      "score": 0.46837300062179565,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Misc/Clock 3.wav",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "clock"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "a9a8be8de4af662d",
+      "score": 0.4368184208869934,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Misc/Clock 3.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "clock"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "70aa3969280d713c",
+      "score": 0.43556979298591614,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/06_UNSCREW/UNSCREW_1/NOISE_ALCHEMY_UNSCREW_1_7.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "unscrew"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "1bd23b143f941155",
+      "score": 0.4249655604362488,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/02_MECHANICAL_TOGGLE/MECHANICAL_TOOGLE_4/NOISE_ALCHEMY_MECHANICAL_TOGGLE_4.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "mechanical",
+        "toggle",
+        "toogle"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "efe95a093e237702",
+      "score": 0.424457848072052,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/06_UNSCREW/UNSCREW_1/NOISE_ALCHEMY_UNSCREW_1_4.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "unscrew"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "46b78facbc747ce7",
+      "score": 0.41971904039382935,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/06_UNSCREW/UNSCREW_1/NOISE_ALCHEMY_UNSCREW_1.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "unscrew"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "32c9ccd0c0d3a190",
+      "score": 0.4175466001033783,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/06_UNSCREW/UNSCREW_1/NOISE_ALCHEMY_UNSCREW_1_6.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "unscrew"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "648b056852801a76",
+      "score": 0.41709479689598083,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/02_MECHANICAL_TOGGLE/MECHANICAL_TOOGLE_1/NOISE_ALCHEMY_MECHANICAL_TOGGLE_1_2.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "mechanical",
+        "toggle",
+        "toogle"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    }
+  ],
+  "used_ids": [
+    "8ccb9aaceaadc8b8",
+    "e4346de2938689e4",
+    "deb3680f51a5d422",
+    "a9a8be8de4af662d",
+    "70aa3969280d713c",
+    "1bd23b143f941155",
+    "efe95a093e237702",
+    "46b78facbc747ce7",
+    "32c9ccd0c0d3a190",
+    "648b056852801a76"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_watch.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.096,
+  "semitones": 3,
+  "width": 0.18,
+  "listen": {
+    "match": 0.666,
+    "clean": -3.074,
+    "faults": []
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "prompt": "massive armored slam into a metal floor, deep seismic boom, debris rattle, sci-fi game sound effect",
+  "conditioned_prompt": "high quality game sound effect, impact sound, massive armored slam into a metal floor, deep seismic boom, debris rattle, sci-fi game sound effect, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.045013606548309326,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "cb57732ba740bcee",
+      "score": 0.31629708409309387,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 39.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1f26e5e2881b6380",
+      "score": 0.3159988224506378,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 35.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "065493491f9cd762",
+      "score": 0.2906648516654968,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 20.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "f37f4b67c8207e53",
+      "score": 0.2871420383453369,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 21.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "179ccb4b02018a14",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 9.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1cfa01d0d4b9529d",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 8.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "eed8297fdebe38a3",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 2.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "dfc7380295b2ed79",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 3.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8436c492a49d7eb6",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 4.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "6f95130812c405fa",
+      "score": 0.28388530015945435,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 7.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "cb57732ba740bcee",
+    "1f26e5e2881b6380",
+    "065493491f9cd762",
+    "f37f4b67c8207e53",
+    "179ccb4b02018a14",
+    "1cfa01d0d4b9529d",
+    "eed8297fdebe38a3",
+    "dfc7380295b2ed79",
+    "8436c492a49d7eb6",
+    "6f95130812c405fa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\juggernaut_earthshaker.wav",
+  "sample_rate": 44100
+}

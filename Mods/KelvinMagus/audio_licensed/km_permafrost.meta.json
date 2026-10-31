@@ -1,0 +1,245 @@
+{
+  "prompt": "ground freezing over, ice spreading and crackling across a metal floor",
+  "duration": 2.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "c7ad85e75f4934a7",
+      "score": 0.5020780563354492,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Loops/Freezing Loop.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "loops",
+        "freezing",
+        "loop"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "aac12afc3093600d",
+      "score": 0.45173314213752747,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "and",
+        "debris",
+        "slide"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "4a61518cac55bbac",
+      "score": 0.4287564158439636,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "288d2c663779e75c",
+      "score": 0.41813260316848755,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement G.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "be99dd3c39f87961",
+      "score": 0.41774559020996094,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Ice Lake/Ice Lake Cracking High F.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "lake",
+        "cracking",
+        "high"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "b429718b04895771",
+      "score": 0.41222482919692993,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Ice Lake/Ice Lake Cracking High C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "lake",
+        "cracking",
+        "high"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "e31382dd6e553a08",
+      "score": 0.4010542035102844,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "b5138f9f972ca931",
+      "score": 0.3974537253379822,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cracks and Hits/Ice Creaks Small B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cracks",
+        "and",
+        "hits",
+        "creaks",
+        "small"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "a52957be71ac3af3",
+      "score": 0.39450711011886597,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement F.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "a5271a46d505e990",
+      "score": 0.39314204454421997,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "and",
+        "debris",
+        "slide"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "c7ad85e75f4934a7",
+    "aac12afc3093600d",
+    "4a61518cac55bbac",
+    "288d2c663779e75c",
+    "be99dd3c39f87961",
+    "b429718b04895771",
+    "e31382dd6e553a08",
+    "b5138f9f972ca931",
+    "a52957be71ac3af3",
+    "a5271a46d505e990"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_permafrost.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.056,
+  "semitones": 4,
+  "width": 0.593,
+  "listen": {
+    "match": 0.557,
+    "clean": -1.774,
+    "faults": []
+  }
+}

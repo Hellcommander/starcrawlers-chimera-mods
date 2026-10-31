@@ -1,0 +1,186 @@
+{
+  "prompt": "sharp whip crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, sharp whip crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.00676843011751771,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "0f5c40ef8b8beb93",
+      "score": 0.30282142758369446,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 47.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4516155c0bf00789",
+      "score": 0.30282142758369446,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 47.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "cae47f35266c68fd",
+      "score": 0.30282142758369446,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 47.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "e9d7e4b66d61819d",
+      "score": 0.2703441381454468,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 39.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "7bc1c8d98882c4e1",
+      "score": 0.2703441381454468,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 39.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b320874672146214",
+      "score": 0.2703441381454468,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 39.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "98c63be9472c3766",
+      "score": 0.2699657082557678,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 35.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "e461a485ef8953ec",
+      "score": 0.2699657082557678,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 35.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "d5db96a7c26ecf32",
+      "score": 0.2699657082557678,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 35.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "bb0deb7254eaf10f",
+      "score": 0.26355278491973877,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 47.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "0f5c40ef8b8beb93",
+    "4516155c0bf00789",
+    "cae47f35266c68fd",
+    "e9d7e4b66d61819d",
+    "7bc1c8d98882c4e1",
+    "b320874672146214",
+    "98c63be9472c3766",
+    "e461a485ef8953ec",
+    "d5db96a7c26ecf32",
+    "bb0deb7254eaf10f"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\ringmaster_whip.wav",
+  "sample_rate": 44100
+}

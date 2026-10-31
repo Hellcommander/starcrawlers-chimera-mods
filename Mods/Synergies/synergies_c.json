@@ -1,0 +1,615 @@
+{
+  "synergies": [
+    {
+      "id": "MissedAppointment",
+      "name": "Missed Appointment",
+      "trees": [
+        "MOD_ParadoxWitch",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "Attacks you dodge may still be written into the attacker's Wound Ledger. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 40,
+            "vfx": "PA_Psykonics_Temporal.castParticle@0.3",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Ledger"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "StillPointMeditation",
+      "name": "Still Point",
+      "trees": [
+        "MOD_ParadoxWitch",
+        "SKILLTREE_Psykonics"
+      ],
+      "description": "Each turn spent Meditating may quiet the timeline and clear your Timeline Strain. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "MOD_ParadoxWitch@Paradox",
+                "ifSelfHas": "EFFECT_Psykonics_Meditate"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HalfStepTumble",
+      "name": "Half-Step Tumble",
+      "trees": [
+        "MOD_PhaseDrifter",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "Dodging may tumble you half out of reality, making you Phased. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Phased"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BetweenFrames",
+      "name": "Between Frames",
+      "trees": [
+        "MOD_PhaseDrifter",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "Kills may slip you out of phase, leaving an Afterimage where you stood. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Phased"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Afterimage"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RumSoakedOdds",
+      "name": "Rum-Soaked Odds",
+      "trees": [
+        "MOD_ProbabilityShaman",
+        "SKILLTREE_SpacePirate"
+      ],
+      "description": "Under Grog Bottle your hits may grant Possibility, and hits on Black Spot targets may load your Weighted Dice. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility",
+                "ifSelfHas": "EFFECT_Pirate_GrogBottle"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 40,
+            "when": {
+              "has": "EFFECT_Pirate_BlackSpot"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Weighted"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NobodyWasThere",
+      "name": "Nobody Was There",
+      "trees": [
+        "MOD_ProbabilityShaman",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "Hits while Unobserved may grant Possibility and leave the target Exposed to a blow from nowhere. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility",
+                "ifSelfHas": "MOD_ProbabilityShaman@Unobserved"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "ifSelfHas": "MOD_ProbabilityShaman@Unobserved"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ReverberantGuard",
+      "name": "Reverberant Guard",
+      "trees": [
+        "MOD_PsiKnight",
+        "SKILLTREE_ForcePsyker"
+      ],
+      "description": "Blows taken inside Kinetic Guard may sharpen your Poise. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PsiKnight@Poise",
+                "ifSelfHas": "MOD_PsiKnight@Guard"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "EdgeOfIntent",
+      "name": "Edge of Intent",
+      "trees": [
+        "MOD_PsiKnight",
+        "SKILLTREE_Blademaster"
+      ],
+      "description": "Your mind follows the cut: hits on bleeding enemies may sharpen your Poise. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_Bleed"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PsiKnight@Poise"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "MarionetteCongregation",
+      "name": "Marionette Congregation",
+      "trees": [
+        "MOD_Puppetmaster",
+        "SKILLTREE_ThoughtLeader"
+      ],
+      "description": "Your converts and pets may tie Strings to whatever they hit. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "description": "Its hits may tie Strings to the target for its master.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "StringsAndSpotlight",
+      "name": "Strings and Spotlight",
+      "trees": [
+        "MOD_Puppetmaster",
+        "MOD_Ringmaster"
+      ],
+      "description": "Hits on enemies tangled in Strings may draw Applause, one per String. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "MOD_Puppetmaster@Strings",
+                "stacksFrom": "target"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "StandingRepairs",
+      "name": "Standing Orders",
+      "trees": [
+        "MOD_ReactionArchitect",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Everything on the site works to your tolerances: reactions that go off may leave that enemy Profiled, and so may your pets' hits. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "reaction",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactionArchitect@Profiled"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "description": "Built to the Architect's tolerances, and it reports everything it hits.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactionArchitect@Profiled"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "LiveWirePerimeter",
+      "name": "Live-Wire Perimeter",
+      "trees": [
+        "MOD_ReactionArchitect",
+        "SKILLTREE_Security"
+      ],
+      "description": "Reactions may leave a crackling Shock hazard under the enemy that set them off. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "reaction",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Shock",
+                "turns": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChoirOfRelics",
+      "name": "Choir of Relics",
+      "trees": [
+        "MOD_RelicBearer",
+        "SKILLTREE_Cursed"
+      ],
+      "description": "Two relics share your mind: Idol-Ridden hits may leave foes Weakened and feed the idol another Whisper. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Weakened",
+                "ifSelfHas": "MOD_RelicBearer@Possessed"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RelicBearer@Whispers",
+                "ifSelfHas": "MOD_RelicBearer@Possessed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HollowFeast",
+      "name": "Hollow Feast",
+      "trees": [
+        "MOD_RelicBearer",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "The idol feasts on Essence-Drained enemies: hits on them may feed it a Whisper, and killing one may drain the foes around it. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_Void_Psyker_Drain"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RelicBearer@Whispers"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "radius": 2,
+            "when": {
+              "has": "EFFECT_Void_Psyker_Drain",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Void_Psyker_Drain"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SolarKindling",
+      "name": "Solar Kindling",
+      "trees": [
+        "MOD_ReliquaryKnight",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "While the Sun Engine is awake, attackers may be set on Fire. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "vfx": "EFFECT_Fire@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifSelfHas": "MOD_ReliquaryKnight@SunEngine"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NailAndBulwark",
+      "name": "Nail and Bulwark",
+      "trees": [
+        "MOD_ReliquaryKnight",
+        "SKILLTREE_Shieldbearer"
+      ],
+      "description": "While the World Nail is awake, blows you take may leave the attacker Reeling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "#Reeling",
+                "ifSelfHas": "MOD_ReliquaryKnight@WorldNail"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HoarfrostTheorem",
+      "name": "Hoarfrost Theorem",
+      "trees": [
+        "MOD_RimelightSeer",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Hits on Chilled enemies may add Rimebite. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@Rimebite",
+                "ifTargetHas": "EFFECT_Chill"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FrostworkRigging",
+      "name": "Frostwork Rigging",
+      "trees": [
+        "MOD_RimelightSeer",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Your pets and turrets may lace their targets with Rimebite, seeding new Hoarlights. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "description": "Rigged with the Seer's cold light: its hits may leave Rimebite.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@Rimebite"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "FireEatersEncore",
+      "name": "Fire-Eater's Encore",
+      "trees": [
+        "MOD_Ringmaster",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Hits on Burning enemies may set them on real Fire and earn Applause per Burning stack. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "EFFECT_Fire@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifTargetHas": "#Burning"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "#Burning",
+                "stacksFrom": "target"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LimelightAmbush",
+      "name": "Limelight Ambush",
+      "trees": [
+        "MOD_Ringmaster",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "Hits on blinded enemies may bring the house down for two Applause. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "EFFECT_Blind"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

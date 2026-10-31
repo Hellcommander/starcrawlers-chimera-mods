@@ -1,0 +1,210 @@
+{
+  "prompt": "electrical overload discharge pop with crackle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "3b62c0379f44a5ba",
+      "score": 0.5017968416213989,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 84.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "98b61e74566e2868",
+      "score": 0.5011704564094543,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 92.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "c79ff3dd219560c7",
+      "score": 0.49209505319595337,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 93.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a2ab53bd64df30eb",
+      "score": 0.4905804991722107,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 11.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "75df79e46cb6566d",
+      "score": 0.4871605634689331,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 7.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4d1a12c3ba78e14d",
+      "score": 0.4868221879005432,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio- Alien voices-13.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "40a64e5e66ccbba5",
+      "score": 0.47186756134033203,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 96.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "611c83a481bc18ce",
+      "score": 0.4680074453353882,
+      "via": "clap+tag",
+      "pack": "FL_NHW_KIT03_110BPM_STEMS",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_KIT03_110BPM_C#-G#-D#-Bb/FL_NHW_KIT03_110BPM_STEMS/FL_NHW_KIT03_110_STM_NOISEFALL.wav",
+      "license": "direct",
+      "tags": [
+        "fl",
+        "nhw",
+        "kit03",
+        "110bpm",
+        "stems",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "retro",
+        "music",
+        "production",
+        "bundle",
+        "function",
+        "loops",
+        "neon",
+        "highway",
+        "bb",
+        "stm",
+        "noisefall"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "67f8d2ce79fdefb1",
+      "score": 0.46777182817459106,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 24.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "b1d1232035874e5e",
+      "score": 0.4612100124359131,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio- Alien voices-16.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "3b62c0379f44a5ba",
+    "98b61e74566e2868",
+    "c79ff3dd219560c7",
+    "a2ab53bd64df30eb",
+    "75df79e46cb6566d",
+    "4d1a12c3ba78e14d",
+    "40a64e5e66ccbba5",
+    "611c83a481bc18ce",
+    "67f8d2ce79fdefb1",
+    "b1d1232035874e5e"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\coil_overload.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.069,
+  "semitones": -3,
+  "width": 0.3,
+  "listen": {
+    "match": 0.585,
+    "clean": -6.0,
+    "faults": []
+  }
+}

@@ -1,0 +1,53 @@
+[ { "particles": [
+  { "id": "fx_arc_gunner_arc_round_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.441], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "point", "duration": 0.7},
+      {"texture": "spark", "count": 0, "rate": 145, "duration": 0.7, "life": [0.089, 0.159], "speed": [0.053, 0.197], "size": [0.07, 0.127], "gravity": 0.0, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.06, "stretch": 2}
+    ] },
+  { "id": "fx_arc_gunner_arc_round_impact", "light": {"color": "#FFE066", "range": 3.155, "intensity": 2.228, "time": 0.326},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.454], "speed": [0], "size": [0.947], "sizeCurve": "pop", "color": "#FFFAC0", "color2": "#3A90FF", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/arc_crackle.png", "count": 5, "life": [0.278, 0.553], "speed": [0.0, 0.307], "size": [0.43, 0.863], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.4, "grid": [4, 4], "randomFrame": true},
+      {"texture": "spark", "count": 29, "life": [0.293, 0.501], "speed": [2.72, 6.457], "size": [0.061, 0.117], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_arc_gunner_forked_discharge_travel",
+    "layers": [
+      {"texture": "spark", "count": 1, "life": [0.7], "speed": [0], "size": [0.414], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 175, "duration": 0.7, "life": [0.139, 0.321], "speed": [0.0, 0.102], "size": [0.072, 0.135], "gravity": 0.0, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_arc_gunner_forked_discharge_impact", "light": {"color": "#FFE066", "range": 3.701, "intensity": 2.317, "time": 0.323},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.476], "speed": [0], "size": [0.786], "sizeCurve": "pop", "color": "#FFFAC0", "color2": "#3A90FF", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/arc_crackle.png", "count": 7, "life": [0.322, 0.502], "speed": [0.0, 0.326], "size": [0.443, 0.932], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.4, "grid": [4, 4], "randomFrame": true},
+      {"texture": "spark", "count": 30, "life": [0.268, 0.443], "speed": [2.816, 7.192], "size": [0.067, 0.126], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_arc_gunner_capacitor_cast", "light": {"color": "#FFE066", "range": 2.813, "intensity": 1.449, "time": 0.605},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.362], "speed": [0], "size": [2.163], "sizeCurve": "pop", "color": "#FFFAC0", "color2": "#3A90FF", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 10, "life": [0.294, 0.578], "speed": [0.0, 0.271], "size": [0.315, 0.607], "sizeCurve": "pop", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 19, "life": [0.737, 1.131], "speed": [0.094, 0.38], "size": [0.094, 0.222], "orbit": 0.929, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "ring", "radius": 0.9},
+      {"texture": "spark", "count": 17, "life": [0.272, 0.535], "speed": [2.945, 6.262], "size": [0.052, 0.101], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_arc_gunner_thunder_slug_travel",
+    "layers": [
+      {"texture": "spark", "count": 1, "life": [0.7], "speed": [0], "size": [0.465], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 177, "duration": 0.7, "life": [0.143, 0.286], "speed": [0.0, 0.107], "size": [0.079, 0.151], "gravity": 0.0, "color": "#FFFAC0", "color2": "#3A90FF", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_arc_gunner_thunder_slug_impact", "light": {"color": "#FFE066", "range": 4.097, "intensity": 2.764, "time": 0.503},
+    "layers": [
+      {"texture": "fx/arc_gunner_burst.png", "count": 1, "life": [0.437], "speed": [0], "size": [1.391], "sizeCurve": "flat", "color": "#FFFAC0", "color2": "#3A90FF", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.401], "speed": [0], "size": [1.545], "sizeCurve": "grow", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.474], "speed": [0], "size": [2.317], "sizeCurve": "grow", "color": "#FFFAC0", "color2": "#3A90FF", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/arc_gunner_bits.png", "count": 19, "life": [0.475, 0.991], "speed": [2.662, 5.586], "size": [0.105, 0.246], "gravity": 1.2, "spin": [-360, 360], "color": "#FFFAC0", "color2": "#3A90FF", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.799, 1.431], "speed": [0.297, 0.859], "size": [0.768, 1.337], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E28", "color2": "#1A1E28", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "spark", "count": 18, "life": [0.324, 0.498], "speed": [2.976, 6.669], "size": [0.045, 0.101], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] }
+] },
+{ "id": "MOD_ArcGunner", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_arc_gunner_arc_round_impact", "travelVfx": "fx_arc_gunner_arc_round_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_arc_gunner_forked_discharge_impact", "travelVfx": "fx_arc_gunner_forked_discharge_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_arc_gunner_capacitor_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_arc_gunner_thunder_slug_impact", "travelVfx": "fx_arc_gunner_thunder_slug_travel", "areaVfx": ""}}
+] } ]

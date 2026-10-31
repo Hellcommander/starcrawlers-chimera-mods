@@ -1,0 +1,202 @@
+{
+  "prompt": "heavy dense orb whoosh with deep gravity thud, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, heavy dense orb whoosh with deep gravity thud, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0040888129733502865,
+  "source_corr": 0.03913058713078499,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "d54cecf0e365dbc6",
+      "score": 0.5912178158760071,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 34.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "40f49507ff985094",
+      "score": 0.5904627442359924,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 48.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "696fd869ce95cda7",
+      "score": 0.583929717540741,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes vol 2.zip",
+      "inner": "Dark Fantasy Studio- Whooshes vol 2/Dark Fantasy Studio- Whooshes vol 2 13.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "vol",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3b7738edd0e1108e",
+      "score": 0.5829886198043823,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 30.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "f2174088f053e9e9",
+      "score": 0.5820165872573853,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 28.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "16aeb77af7a80261",
+      "score": 0.5808916091918945,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 32.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b5c2d1128cf5f324",
+      "score": 0.5804179906845093,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes vol 2.zip",
+      "inner": "Dark Fantasy Studio- Whooshes vol 2/Dark Fantasy Studio- Whooshes vol 2 20.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "vol",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "d053473b4e458547",
+      "score": 0.5802152752876282,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 38.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "2840ca8169ba1935",
+      "score": 0.5800082683563232,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 43.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8a2b006d2e5a4cf1",
+      "score": 0.5796021223068237,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 36.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "d54cecf0e365dbc6",
+    "40f49507ff985094",
+    "696fd869ce95cda7",
+    "3b7738edd0e1108e",
+    "f2174088f053e9e9",
+    "16aeb77af7a80261",
+    "b5c2d1128cf5f324",
+    "d053473b4e458547",
+    "2840ca8169ba1935",
+    "8a2b006d2e5a4cf1"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\gravemote_dart.wav",
+  "sample_rate": 44100
+}

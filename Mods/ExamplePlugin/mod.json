@@ -1,0 +1,13 @@
+{
+  "id": "ExamplePlugin",
+  "name": "Example Plugin",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "The Bounty Hand, a small class whose skills come from a code plugin: the worked example of a plugin, with its source in src/. Off by default. Safe to delete.",
+  "enabled": false,
+  "apiLevel": 1,
+  "requires": [
+    "Library"
+  ]
+}

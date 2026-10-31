@@ -1,0 +1,220 @@
+{
+  "id": "MOD_ShadowBroker",
+  "name": "Shadow Broker",
+  "description": "Information is currency and you are very rich. Vanish, strike from nowhere, and strip enemies of their advantages, turning every stolen buff into an edge of your own.\n\nStealth assassin: attacks from Unseen spend it for massive bonus damage. Favors [AGL] and [SAV].",
+  "archetype": "Guile",
+  "icon": "shadow_broker.png",
+  "attributePriorities": {
+    "Agility": 3,
+    "Savvy": 3,
+    "Stealth": 2
+  },
+  "effects": [
+    {
+      "id": "Unseen",
+      "name": "Unseen",
+      "description": "Nobody knows you're here. Yet.",
+      "duration": 3,
+      "stats": {
+        "Stealth": 10,
+        "Dodge": 15
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Soft Spots",
+        "icon": "shadow_broker_t0.png",
+        "description": "You always know where it hurts.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "effect": "#Exposed" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Knife in the Dark",
+        "icon": "shadow_broker_t1.png",
+        "description": "Much worse when they never saw you coming.",
+        "impactVfx": "PA_Blademaster_Coup.impactEffect",
+        "sound": "sfx/shadowbroker_knife.wav",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Agility", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 6, "stacksOf": "@Unseen", "stacksFrom": "self", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Thousand Cuts",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Slip Away",
+        "icon": "shadow_broker_t2.png",
+        "cooldown": 10,
+        "description": "Step out of sight. Your next strike comes from nowhere.",
+        "castVfx": "CYBERNINJA_STEALTH.particleOn",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Vanish",
+        "actions": [
+          { "do": "effect", "effect": "@Unseen" }
+        ],
+        "perk": {
+          "name": "Ghost",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Leverage",
+        "icon": "shadow_broker_t3.png",
+        "range": 6,
+        "cooldown": 8,
+        "staminaCost": 15,
+        "description": "Expose their secrets. Every advantage you strip from them sharpens your aim.",
+        "impactVfx": "PA_Smuggler_Bounty.PS_cast",
+        "sound": "event:/Abilities/Smuggler/Smugger_Steal",
+        "actions": [
+          { "do": "dispel", "amount": 2, "effect": "#Focused" },
+          { "do": "damage", "type": "Psi", "min": 1, "max": 3 },
+          { "do": "effect", "effect": "#Exposed" }
+        ],
+        "perk": {
+          "name": "Blackmail",
+          "addActions": [
+            { "do": "effect", "effect": "#Weakened" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Dirty Secrets",
+        "icon": "shadow_broker_t4.png",
+        "description": "Every body you leave behind buys you a moment of anonymity.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Unseen" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Silent Contract",
+        "icon": "shadow_broker_t5.png",
+        "staminaCost": 25,
+        "cooldown": 14,
+        "description": "The contract is fulfilled. Armor and shields don't get a say.",
+        "impactVfx": "PA_DualWield_DeadlyGambit.impactEffect",
+        "sound": "sfx/shadowbroker_contract.wav",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 6, "max": 10, "scale": "Agility", "scaleMult": 0.5, "perRank": 2, "trueDamage": true, "bonusPerStack": 8, "stacksOf": "@Unseen", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 2, "ifTargetHas": "#Exposed" }
+        ],
+        "perk": {
+          "name": "Paid in Full",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Fade Through",
+        "icon": "shadow_broker_t6.png",
+        "range": 5,
+        "staminaCost": 15,
+        "cooldown": 12,
+        "description": "Step out of the fight and reappear somewhere better, already gone from every mind that was tracking you, with a curtain of holo-smoke where you land.",
+        "castVfx": "CYBERNINJA_STEALTH.particleOn",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Vanish",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "hazard", "hazard": "HAZARD_Holosmoke", "radius": 1.1, "turns": 3 },
+          { "do": "effect", "to": "self", "effect": "@Unseen" },
+          { "do": "cleanse", "to": "self", "amount": 1 }
+        ],
+        "perk": {
+          "name": "Clean Exit",
+          "addActions": [
+            { "do": "cooldowns", "to": "self", "amount": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "No Witnesses",
+        "icon": "shadow_broker_t7.png",
+        "description": "A blow that misses you is a blow nobody saw land, and every body you drop clears the books for the next job.",
+        "procs": [
+          {
+            "on": "dodge",
+            "cooldown": 3,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Unseen" }
+            ]
+          },
+          {
+            "on": "kill",
+            "maxPerTurn": 1,
+            "actions": [
+              { "do": "cooldowns", "to": "self", "amount": 2 }
+            ]
+          },
+          {
+            "on": "crit",
+            "actions": [
+              { "do": "effect", "effect": "#Weakened" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

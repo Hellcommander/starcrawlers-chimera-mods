@@ -1,0 +1,231 @@
+{
+  "id": "MOD_PhaseDrifter",
+  "name": "Phase Drifter",
+  "description": "A teleporter accident left you slightly out of sync with the universe. You blink constantly, leave afterimages that detonate behind you, and hit hardest while Phased half out of reality.\n\nHit-and-run blinker. Favors [AGL] and [SMT]; its damage scales with Agility plus the higher of Smarts or Psi Power.",
+  "archetype": "Guile",
+  "icon": "phase_drifter.png",
+  "attributePriorities": {
+    "Agility": 4,
+    "Smarts": 2,
+    "Dodge": 2
+  },
+  "effects": [
+    {
+      "id": "Phased",
+      "name": "Phased",
+      "description": "Only partly here.",
+      "duration": 2,
+      "stats": {
+        "Dodge": 20
+      }
+    },
+    {
+      "id": "Afterimage",
+      "name": "Afterimage",
+      "description": "A copy of you lingers... and is about to go off.",
+      "duration": 2,
+      "onExpireRadius": 2,
+      "onExpireActions": [
+        { "do": "damage", "type": "Energy", "min": 4, "max": 7, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.2 },
+        { "do": "effect", "effect": "#Reeling" }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Out of Sync",
+        "icon": "phase_drifter_t0.png",
+        "description": "Dodging puts you a beat ahead.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 5 },
+              { "do": "cooldowns", "to": "self", "amount": 1 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Short Hop",
+        "icon": "phase_drifter_t1.png",
+        "range": 4,
+        "cooldown": 3,
+        "staminaCost": 8,
+        "description": "Blink a few steps away and arrive Phased.",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "effect", "to": "self", "effect": "@Phased" }
+        ],
+        "perk": {
+          "name": "Long Hop",
+          "rangeDelta": 2
+        },
+        "sound": "sfx/phase_hop.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Phase Cut",
+        "icon": "phase_drifter_t2.png",
+        "description": "A cut from slightly out of phase. Far worse while you are Phased.",
+        "impactVfx": "PA_Blademaster_Coup.impactEffect",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.25, "perRank": 1 },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 5, "trueDamage": true, "ifSelfHas": "@Phased" }
+        ],
+        "perk": {
+          "name": "Dimensional Edge",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Dodge": 3
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Leave an Afterimage",
+        "icon": "phase_drifter_t3.png",
+        "cooldown": 10,
+        "staminaCost": 12,
+        "description": "Leave a copy of yourself behind. In two turns it detonates, hitting everything near you.",
+        "castVfx": "CYBERNINJA_DASH.particle_shadowstep",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Dash_Shadowstep",
+        "actions": [
+          { "do": "effect", "effect": "@Afterimage" },
+          { "do": "effect", "effect": "@Phased" }
+        ],
+        "perk": {
+          "name": "Twin Image",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Drift Loose",
+        "icon": "phase_drifter_t4.png",
+        "description": "Sometimes you just drift out of phase on your own.",
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Phased" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Phase Storm",
+        "icon": "phase_drifter_t5.png",
+        "range": 6,
+        "radius": 2,
+        "instant": false,
+        "staminaCost": 30,
+        "cooldown": 16,
+        "description": "Blink into the middle of them and tear the space around you.",
+        "impactVfx": "PA_Psykonics_Warp.castParticle",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.3, "perRank": 2 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "to": "self", "effect": "@Phased" }
+        ],
+        "perk": {
+          "name": "Phase Tempest",
+          "radiusDelta": 1
+        },
+        "sound": "sfx/phase_storm.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Transposition",
+        "icon": "phase_drifter_t6.png",
+        "range": 5,
+        "staminaCost": 15,
+        "cooldown": 8,
+        "description": "Trade places with an enemy and leave it holding the bill for the trip. Already Phased, you also leave a primed Afterimage around you.",
+        "impactVfx": "PA_Psykonics_Warp.castParticle",
+        "sound": "sfx/phase_hop.wav",
+        "actions": [
+          { "do": "swap" },
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.25, "perRank": 2 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "stun", "turns": 1, "chance": 30 },
+          { "do": "effect", "to": "self", "effect": "@Afterimage", "ifSelfHas": "@Phased" },
+          { "do": "effect", "to": "self", "effect": "@Phased" }
+        ],
+        "perk": {
+          "name": "Clean Swap",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Smarts": 1,
+        "Dodge": 3
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Unanchored",
+        "icon": "phase_drifter_t7.png",
+        "description": "You've stopped trying to sync back up. Slipping a blow while Phased leaves an Afterimage in your wake, and every kill shakes you loose again.",
+        "procs": [
+          {
+            "on": "dodge",
+            "cooldown": 3,
+            "when": { "has": "@Phased", "of": "self" },
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Afterimage" }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Phased" },
+              { "do": "stamina", "to": "self", "amount": 5 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

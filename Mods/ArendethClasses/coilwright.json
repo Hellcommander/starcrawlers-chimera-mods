@@ -1,0 +1,298 @@
+{
+  "id": "MOD_Coilwright",
+  "name": "Coilwright",
+  "description": "A crossbow-tinkerer who wires every bolt to a capacitor. Shots stack Static on enemies until they overload in a stunning discharge. Every coil tower you plant feeds your rig, and the charge outlasts the tower.\n\nRanged trap-and-turret specialist. Favors [REC] and [SMT].",
+  "archetype": "Guile",
+  "icon": "coilwright.png",
+  "attributePriorities": {
+    "Recognition": 3,
+    "Smarts": 3,
+    "RangedAccuracy": 2
+  },
+  "effects": [
+    {
+      "id": "Static",
+      "name": "Static Load",
+      "description": "Crackling, twitching, one spark away from trouble.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 8,
+      "stats": {
+        "Dodge": -2
+      },
+      "resists": {
+        "Energy": -3
+      },
+      "burstAt": 8,
+      "burstRadius": 1.6,
+      "burstVfx": "PA_Engineer_Spidermine.PS_explode_shock",
+      "burstSound": "audio_licensed/coil_overload.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Energy", "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.4 },
+        { "do": "stun", "turns": 1 }
+      ]
+    },
+    {
+      "id": "GridFeed",
+      "name": "Grid Feed",
+      "description": "Every tower you plant ties into your rig. The charge stays banked long after the tower is gone.",
+      "duration": 30,
+      "maxStacks": 8,
+      "stats": {
+        "Smarts": 1
+      },
+      "damageDealtPerStack": 0.03
+    },
+    {
+      "id": "HotLoaded",
+      "name": "Hot Loaded",
+      "description": "Your bolts are wired live. Each hit leaves a charge in the target, and your towers chime in on whatever you shoot.",
+      "duration": 30,
+      "procs": [
+        { "on": "hit", "actions": [ { "do": "effect", "effect": "@Hotwired" } ] },
+        { "on": "hit", "chance": 25, "vfx": "PA_Engineer_Turret.PS_TargetLock",
+          "actions": [ { "do": "damage", "type": "Energy", "min": 2, "max": 3, "bonusPerStack": 1, "stacksOf": "summons" } ] }
+      ]
+    },
+    {
+      "id": "Hotwired",
+      "name": "Hotwired",
+      "description": "Live charge from a hot-loaded bolt. It bleeds away fast; three in quick succession and it rings out.",
+      "duration": 2,
+      "debuff": true,
+      "maxStacks": 3,
+      "burstAt": 3,
+      "burstRadius": 2,
+      "burstVfx": "PA_Elementalist_ChainLightning.shockImpact",
+      "burstSound": "sfx/coil_bolt.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.3 },
+        { "do": "effect", "effect": "#Exposed" },
+        { "do": "effect", "effect": "@Static", "stacks": 2 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Earthed Harness",
+        "icon": "coilwright_t0.png",
+        "description": "Your rig bleeds off stray current as energy, and every hit leaves a little behind.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 6 }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "effect": "@Static" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Capacitor Bolt",
+        "icon": "coilwright_t1.png",
+        "description": "A crossbow bolt with a charged head. Every tower standing boosts it.",
+        "impactVfx": "PA_Engineer_Boltron.PS_shock",
+        "sound": "sfx/coil_bolt.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Recognition", "scaleMult": 0.3, "perRank": 1, "bonusPerStack": 1, "stacksOf": "summons" },
+          { "do": "effect", "effect": "@Static", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Overwound Bolt",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Deploy Coil Tower",
+        "icon": "coilwright_t2.png",
+        "instant": false,
+        "cooldown": 10,
+        "staminaCost": 15,
+        "description": "Plant a self-aiming coil tower beside you and tie it into your rig. The banked charge stays with you when the tower goes.",
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "sound": "event:/Abilities/Engineer/Engineer_Spidermine_Ready",
+        "actions": [
+          { "do": "summon", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Coil Tower", "model": { "mesh": "models/coil_tower.glb", "height": 1.4, "keepParticles": false }, "summonGroup": "CoilTower", "turns": 15, "maxSummons": 3 },
+          { "do": "effect", "to": "self", "effect": "@GridFeed" }
+        ],
+        "perk": {
+          "name": "Paired Towers",
+          "addActions": [
+            { "do": "summon", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Coil Tower", "model": { "mesh": "models/coil_tower.glb", "height": 1.4, "keepParticles": false }, "summonGroup": "CoilTower", "turns": 15, "maxSummons": 3 },
+            { "do": "effect", "to": "self", "effect": "@GridFeed" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Snare Grid",
+        "icon": "coilwright_t3.png",
+        "radius": 1.6,
+        "cooldown": 8,
+        "staminaCost": 15,
+        "description": "Throw a net of live wire across a spot.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_shock",
+        "sound": "event:/Abilities/Smuggler/Smugger_Flashbang",
+        "actions": [
+          { "do": "stun", "turns": 1 },
+          { "do": "effect", "effect": "@Static", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Wide Grid",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Hot Loaded",
+        "icon": "coilwright_t4.png",
+        "cooldown": 6,
+        "staminaCost": 6,
+        "description": "Wire your quiver live for a long stretch. Every hit plants a fast-fading charge; land three on the same target before it bleeds off and it rings out, exposing everything nearby and loading it with Static.",
+        "castVfx": "PA_Engineer_Boltron.PS_shock",
+        "sound": "event:/Abilities/Engineer/Engineer_Spidermine_Ready",
+        "actions": [
+          { "do": "effect", "to": "self", "effect": "@HotLoaded" }
+        ],
+        "perk": {
+          "name": "Long Load",
+          "addActions": [
+            { "do": "effect", "to": "self", "effect": "@GridFeed" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Heavy Coil",
+        "icon": "coilwright_t5.png",
+        "cooldown": 5,
+        "staminaCost": 22,
+        "description": "First use calls in a Heavy Coil, a walking emplacement that anchors your line and banks two charges in your rig. While it stands, this fires an overload slug through it instead: every capacitor dumped into one shot, worth more for every stack of Static on the target and every tower you run.",
+        "impactVfx": "PA_Prototype_Thunderclap.impactParticle",
+        "sound": "audio_licensed/coil_slug.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Static", "consumeStacks": true, "ifSummonAlive": "group:HeavyCoil" },
+          { "do": "damage", "type": "Energy", "min": 1, "max": 1, "bonusPerStack": 2, "stacksOf": "summons", "ifSummonAlive": "group:HeavyCoil" },
+          { "do": "stun", "turns": 1, "ifSummonAlive": "group:HeavyCoil" },
+          { "do": "effect", "to": "self", "effect": "@GridFeed", "stacks": 2, "unlessSummonAlive": "group:HeavyCoil" },
+          { "do": "summon", "to": "self", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Heavy Coil", "model": { "mesh": "models/heavy_coil.glb", "height": 1.5, "keepParticles": false }, "summonGroup": "HeavyCoil", "turns": 20, "maxSummons": 1, "unlessSummonAlive": "group:HeavyCoil" }
+        ],
+        "perk": {
+          "name": "Supercharged Slug",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Fault Fence",
+        "icon": "coilwright_t6.png",
+        "instant": false,
+        "cooldown": 12,
+        "staminaCost": 14,
+        "description": "String a ring of live wire around you and your emplacements. The first few enemies to close in on you or a tower touch the fence: it bites, loads them with Static and throws them back off the line. Stringing it ties one more charge into your rig.",
+        "castVfx": "PA_Engineer_Boltron.PS_shock",
+        "sound": "event:/Abilities/Engineer/Engineer_Spidermine_Ready",
+        "actions": [
+          { "do": "arm", "reaction": {
+            "name": "Fence Arc",
+            "on": "approach",
+            "who": "allies",
+            "charges": 3,
+            "turns": 12,
+            "priority": 45,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "sound": "sfx/coil_bolt.wav",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 },
+              { "do": "effect", "effect": "@Static", "stacks": 2 },
+              { "do": "knockback", "amount": 1 }
+            ] } },
+          { "do": "effect", "to": "self", "effect": "@GridFeed" }
+        ],
+        "perk": {
+          "name": "Live Perimeter",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Grid Resonance",
+        "icon": "coilwright_t7.png",
+        "description": "Your whole network hums on one frequency now. Every turn each coil tower arcs to the nearest Static-loaded enemy, and a standing Heavy Coil arcs through two, piling on more Static until something overloads. Kills bank their last spark in your rig.",
+        "procs": [
+          {
+            "on": "turn",
+            "actions": [
+              { "do": "chain", "to": "summons", "ifSummonAlive": "group:CoilTower", "jumps": 1, "radius": 4, "effect": "@Static", "actions": [
+                { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1, "ifTargetHas": "@Static" },
+                { "do": "effect", "effect": "@Static", "ifTargetHas": "@Static" } ] },
+              { "do": "chain", "to": "summons", "ifSummonAlive": "group:HeavyCoil", "jumps": 2, "radius": 4, "effect": "@Static", "actions": [
+                { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1, "ifTargetHas": "@Static" },
+                { "do": "effect", "effect": "@Static", "ifTargetHas": "@Static" } ] }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 5 },
+              { "do": "effect", "to": "self", "effect": "@GridFeed" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

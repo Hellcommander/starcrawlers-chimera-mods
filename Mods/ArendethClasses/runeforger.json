@@ -1,0 +1,332 @@
+{
+  "id": "MOD_Runeforger",
+  "name": "Runeforger",
+  "description": "Smiths who etch sigils into hull plating and wake it up.\n\nItem-crafting caster with throwables, traps and constructs. Favors [SMT]. Glyphs and cells take bag space.",
+  "archetype": "Intellect",
+  "icon": "runeforger.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Strength": 1,
+    "Toughness": 1
+  },
+  "starterItems": [
+    "RfKineticGlyph", "RfKineticGlyph", "RfThermicGlyph", "RfThermicGlyph",
+    "RfCryicGlyph", "RfCryicGlyph", "RfVoltaicGlyph", "RfVoltaicGlyph",
+    "RfGlyphCell", "RfGlyphCell", "RfGlyphCell",
+    "RfKeyedKinetic", "RfKeyedKinetic"
+  ],
+  "effects": [
+    {
+      "id": "GraversFocus",
+      "name": "Graver's Focus",
+      "description": "Steady hands from drawing sigil after sigil: everything you set loose hits harder for every layer.",
+      "duration": 10,
+      "maxStacks": 5,
+      "damageDealtPerStack": 0.04
+    },
+    {
+      "id": "Residual",
+      "name": "Glyph Residue",
+      "description": "The afterimage of a sigil, hanging in the air. Hard to hit and quick to fade.",
+      "duration": -1,
+      "stats": {
+        "Dodge": 30
+      }
+    },
+    {
+      "id": "Socketed",
+      "name": "Socketed Glyph",
+      "description": "A keyed glyph seated in its chassis hardens the plating.",
+      "duration": -1,
+      "stats": {
+        "Armor": 3
+      },
+      "resists": {
+        "Fire": 15,
+        "Cryo": 15,
+        "Shock": 15
+      }
+    },
+    {
+      "id": "EtchedWard",
+      "name": "Etched Ward",
+      "description": "A ward sigil cut into your own armour plates and fed from a Glyph Cell. Blows skid off it, and whoever lands one gets the sigil's kick back.",
+      "duration": 4,
+      "damageTakenMult": 0.85,
+      "stats": {
+        "Armor": 3
+      },
+      "procs": [
+        {
+          "on": "hurt",
+          "chance": 50,
+          "actions": [
+            { "do": "damage", "to": "attacker", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.15 },
+            { "do": "knockback", "to": "attacker", "amount": 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Chisel Habit",
+        "icon": "runeforger_t0.png",
+        "description": "You can't help scratching a sigil into everything you hit, and now and then one comes away clean as a dormant glyph. Anything you kill might leave enough charge behind to fill a Glyph Cell.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 12,
+            "actions": [
+              { "do": "random", "to": "self", "options": [
+                { "name": "A kinetic glyph comes away clean", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKineticGlyph", "amount": 1 } ] },
+                { "name": "A thermic glyph comes away clean", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfThermicGlyph", "amount": 1 } ] },
+                { "name": "A cryic glyph comes away clean", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfCryicGlyph", "amount": 1 } ] },
+                { "name": "A voltaic glyph comes away clean", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfVoltaicGlyph", "amount": 1 } ] }
+              ] }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfGlyphCell", "amount": 1 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Glyphdraw",
+        "icon": "runeforger_t1.png",
+        "instant": false,
+        "staminaCost": 8,
+        "cooldown": 3,
+        "description": "Trace a ring in the air and pull a dormant glyph out of it: you never quite know which one. Each ring steadies your hand.",
+        "castVfx": "PA_Cybertechnician_NoN.castParticle",
+        "sound": "sfx/rune_kindle.wav",
+        "actions": [
+          { "do": "random", "to": "self", "options": [
+            { "name": "Kinetic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKineticGlyph", "amount": 1 } ] },
+            { "name": "Thermic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfThermicGlyph", "amount": 1 } ] },
+            { "name": "Cryic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfCryicGlyph", "amount": 1 } ] },
+            { "name": "Voltaic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfVoltaicGlyph", "amount": 1 } ] }
+          ] },
+          { "do": "effect", "to": "self", "effect": "@GraversFocus" }
+        ],
+        "perk": {
+          "name": "Double Ring",
+          "addActions": [
+            { "do": "random", "to": "self", "chance": 50, "options": [
+              { "name": "A second kinetic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKineticGlyph", "amount": 1 } ] },
+              { "name": "A second thermic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfThermicGlyph", "amount": 1 } ] },
+              { "name": "A second cryic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfCryicGlyph", "amount": 1 } ] },
+              { "name": "A second voltaic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfVoltaicGlyph", "amount": 1 } ] }
+            ] }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Pocket Anvil",
+        "icon": "runeforger_t3.png",
+        "instant": false,
+        "staminaCost": 12,
+        "cooldown": 6,
+        "description": "Unfold the anvil you carry. Squeeze a Glyph Cell out of your own stamina, then key dormant glyphs with cells, rework two spare glyphs into one of the next kind, and hammer keyed glyphs together into scripts. More of the anvil's patterns open as your rank grows.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Bash",
+        "actions": [
+          { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfGlyphCell", "amount": 1 },
+          { "do": "craft", "to": "self", "recipes": [
+            "RfKeyKinetic", "RfKeyThermic", "RfKeyCryic", "RfKeyVoltaic",
+            "RfReworkKinetic", "RfReworkThermic", "RfReworkCryic", "RfReworkVoltaic",
+            "RfScriptScorchline", "RfScriptStillfrost", "RfScriptOvervolt", "RfScriptTripglyph"
+          ] }
+        ],
+        "perk": {
+          "name": "Well-Worn Anvil",
+          "cooldownDelta": -2,
+          "staminaDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Unkeyed Sling",
+        "icon": "runeforger_t2.png",
+        "staminaCost": 6,
+        "cooldown": 0,
+        "description": "Burn a dormant glyph raw, without its element, and sling the flash at them. It shoves them back and leaves a residue hanging beside them; every scrap of residue in the room makes the next sling hit harder. Sometimes the sigil also sears itself into the deck where they stood and lies there live, bursting under the next one to step on it.",
+        "itemCost": [ { "tag": "RUNEFORGE_GLYPH", "count": 1 } ],
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_energy@0.5",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Shadowcoil_Impact",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 2, "stacksOf": "group:Residue" },
+          { "do": "hazard", "hazard": "CONSUME_UTL_Mine", "radius": 0, "turns": 0, "chance": 40 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Glyph Residue", "summonGroup": "Residue", "amount": 1, "maxSummons": 6, "turns": 8, "effect": "@Residual" }
+        ],
+        "perk": {
+          "name": "Clean Burn",
+          "damageMult": 1.25,
+          "chanceBonus": 20
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Socket Sentry",
+        "icon": "runeforger_t4.png",
+        "instant": false,
+        "cooldown": 12,
+        "staminaCost": 18,
+        "description": "Seat a keyed glyph (or a script) into a folding chassis and it stands up as a sentry that fires on its own. The seating leaves a ring of sigils on the deck around you that pulses every turn, jolting any enemy inside it and now and then throwing them back. While sentries stand, your hand stays steady.",
+        "itemCost": [ { "tag": "RUNEFORGE_LIVE", "count": 1 } ],
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          { "do": "summon", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Glyph Sentry", "model": { "mesh": "models/glyph_sentry.glb", "height": 1.3, "keepParticles": false }, "summonGroup": "GlyphSentry", "amount": 1, "maxSummons": 2, "turns": 20, "effect": "@Socketed" },
+          { "do": "field", "fieldName": "Repulse Sigil", "turns": 5, "radius": 1.5, "affects": "enemies",
+            "look": "HAZARD_Energy", "onEnter": true, "actions": [
+              { "do": "damage", "type": "Energy", "min": 2, "max": 3, "scale": "Smarts", "scaleMult": 0.15 },
+              { "do": "knockback", "amount": 1, "chance": 30 } ] },
+          { "do": "effect", "effect": "@GraversFocus", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Quick Socket",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Sigil Teardown",
+        "icon": "runeforger_t5.png",
+        "radius": 3,
+        "staminaCost": 28,
+        "cooldown": 16,
+        "description": "Tear down every sigil in the room at once. The blast feeds on each scrap of residue hanging in the air and on each sentry you have standing, it pins everyone it reaches, and sometimes the aftershock throws them off their feet as well.",
+        "castVfx": "PA_Elementalist_MagmaBurst.blastParticle@0.6",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 4, "stacksOf": "group:Residue" },
+          { "do": "damage", "type": "Fire", "min": 1, "max": 2, "bonusPerStack": 3, "stacksOf": "group:GlyphSentry" },
+          { "do": "stun", "turns": 1 },
+          { "do": "knockback", "amount": 2, "chance": 35 },
+          { "do": "stun", "turns": 1, "chance": 35 },
+          { "do": "effect", "to": "self", "effect": "@GraversFocus", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Master's Mark",
+          "radiusDelta": 1
+        },
+        "sound": "audio_licensed/rune_cascade.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Wardplate Etching",
+        "icon": "runeforger_t6.png",
+        "instant": false,
+        "staminaCost": 12,
+        "cooldown": 10,
+        "description": "Burn a Glyph Cell into a ward sigil on your own plating. The steadier your hand, the thicker the ward: all your Graver's Focus goes into it as a shield. The ward kicks back at whoever strikes you, and the burn leaves a scrap of residue hanging beside you.",
+        "itemCost": [ { "item": "ArendethClasses:RfGlyphCell", "count": 1 } ],
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "sfx/rune_kindle.wav",
+        "actions": [
+          { "do": "shield", "to": "self", "amount": 4, "scale": "Smarts", "scaleMult": 0.4, "bonusPerStack": 3, "stacksOf": "@GraversFocus", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "to": "self", "effect": "@EtchedWard" },
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Glyph Residue", "summonGroup": "Residue", "amount": 1, "maxSummons": 6, "turns": 8, "effect": "@Residual" }
+        ],
+        "perk": {
+          "name": "Double-Struck Plate",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Maker's Hallmark",
+        "icon": "runeforger_t7.png",
+        "description": "Your sigils come off the anvil already awake. Some of what you kill leaves a keyed glyph behind, ready to throw; now and then a raw glyph you sling survives the burn and drops back into your hand; and while your sentries stand guard, your hand keeps getting steadier.",
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 20,
+            "actions": [
+              { "do": "random", "to": "self", "options": [
+                { "name": "A keyed kinetic glyph falls free", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKeyedKinetic", "amount": 1 } ] },
+                { "name": "A keyed thermic glyph falls free", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKeyedThermic", "amount": 1 } ] },
+                { "name": "A keyed cryic glyph falls free", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKeyedCryic", "amount": 1 } ] },
+                { "name": "A keyed voltaic glyph falls free", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKeyedVoltaic", "amount": 1 } ] }
+              ] }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Unkeyed Sling",
+            "chance": 25,
+            "actions": [
+              { "do": "random", "to": "self", "options": [
+                { "name": "The kinetic sigil survives the burn", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKineticGlyph", "amount": 1 } ] },
+                { "name": "The thermic sigil survives the burn", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfThermicGlyph", "amount": 1 } ] },
+                { "name": "The cryic sigil survives the burn", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfCryicGlyph", "amount": 1 } ] },
+                { "name": "The voltaic sigil survives the burn", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfVoltaicGlyph", "amount": 1 } ] }
+              ] }
+            ]
+          },
+          {
+            "on": "turn",
+            "every": 2,
+            "when": { "all": [ { "value": "summons:GlyphSentry", "atLeast": 1 }, { "inCombat": true } ] },
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@GraversFocus" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

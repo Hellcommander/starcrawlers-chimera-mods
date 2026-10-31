@@ -1,0 +1,295 @@
+{
+  "id": "MOD_Squallblade",
+  "name": "Squallblade",
+  "description": "Pressure-sorcerers who learned their craft in the station's air recyclers. To them air is not something to call up but a mass to shove around.\n\nTwo-stack skirmisher with pulls, knockback, churning ground, storm constructs and a wind-body form. Favors [AGL] and [SMT].",
+  "archetype": "Guile",
+  "icon": "squallblade.png",
+  "attributePriorities": {
+    "Agility": 3,
+    "Smarts": 3,
+    "Dodge": 1
+  },
+  "effects": [
+    {
+      "id": "Crosswind",
+      "name": "Crosswind",
+      "description": "Turbulence tearing at them from every side. Each layer makes every blow land harder, and at four they can barely keep their feet.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 6,
+      "stats": { "Dodge": -2 },
+      "damageTakenPerStack": 0.03,
+      "thresholds": [ { "at": 4, "actions": [ { "do": "effect", "effect": "SLOW", "turns": 2 } ] } ]
+    },
+    {
+      "id": "Buffeted",
+      "name": "Buffeted",
+      "description": "Pressure piling up against them, waiting to be cashed in.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 6,
+      "stats": { "Agility": -1 }
+    },
+    {
+      "id": "Knotted",
+      "name": "Knotted Air",
+      "description": "A tight knot of spinning pressure, hard to pin down. When it comes apart, the pressure collapses into a Thunderhead.",
+      "duration": -1,
+      "stats": { "Dodge": 25 },
+      "onDeathActions": [
+        { "do": "summon", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Thunderhead", "model": { "mesh": "models/thunderhead.glb", "height": 1.2, "keepParticles": false }, "summonGroup": "Thunderhead", "maxSummons": 1, "turns": 12 }
+      ]
+    },
+    {
+      "id": "Squallform",
+      "name": "Squallform",
+      "description": "Your body is a moving pressure front. You are hard to touch, your strikes tear and pile up pressure, and anyone who swings and misses is thrown aside. You fight with the squall's own moves until it blows itself out, or until you settle.",
+      "duration": 8,
+      "damageDealtMult": 1.15,
+      "stats": { "Dodge": 20, "StaminaRegen": 2 },
+      "procs": [
+        { "on": "hit", "actions": [ { "do": "effect", "effect": "@Crosswind" }, { "do": "effect", "effect": "@Buffeted" } ] },
+        { "on": "dodge", "actions": [ { "do": "knockback", "amount": 1 }, { "do": "effect", "effect": "@Crosswind" } ] }
+      ],
+      "kit": [
+        {
+          "name": "Gust Lash",
+          "icon": "squallblade_t1.png",
+          "range": 5,
+          "staminaCost": 4,
+          "description": "A limb of wind snaps out and back. It costs a squall almost nothing.",
+          "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle",
+          "sound": "sfx/squall_cut.wav",
+          "actions": [
+            { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 },
+            { "do": "effect", "effect": "@Crosswind" },
+            { "do": "knockback", "amount": 1, "chance": 40 }
+          ]
+        },
+        {
+          "name": "Downdraft",
+          "icon": "squallblade_t4.png",
+          "target": "floor",
+          "range": 5,
+          "radius": 1.6,
+          "cooldown": 2,
+          "staminaCost": 8,
+          "instant": true,
+          "description": "Drop out of the air wherever you like. Everything you land beside is shoved flat and wound up tighter.",
+          "castVfx": "CYBERNINJA_DASH.particle_dash",
+          "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+          "sound": "event:/Abilities/Misc/Acrobatics_Jump",
+          "actions": [
+            { "do": "teleport" },
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "Agility", "scaleMult": 0.3 },
+            { "do": "knockback", "amount": 1 },
+            { "do": "effect", "effect": "@Buffeted", "stacks": 2 }
+          ]
+        },
+        {
+          "name": "Pressure Front",
+          "icon": "squallblade_t2.png",
+          "target": "self",
+          "radius": 2.6,
+          "cooldown": 3,
+          "staminaCost": 10,
+          "description": "Breathe the whole room in. Everyone near you is dragged closer, and the pressure piled on them is cashed in as one hard slam.",
+          "castVfx": "PA_Elementalist_Tempest.impactParticle@0.6",
+          "sound": "sfx/squall_gale.wav",
+          "actions": [
+            { "do": "pull", "amount": 1 },
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1,
+              "bonusPerStack": 3, "stacksOf": "@Buffeted", "consumeStacks": true },
+            { "do": "effect", "effect": "@Crosswind" }
+          ]
+        },
+        {
+          "name": "Settle",
+          "icon": "squallblade_t0.png",
+          "target": "self",
+          "staminaCost": 0,
+          "instant": true,
+          "description": "Let the squall go and pull yourself back together, still wrapped in its last eddies.",
+          "sound": "sfx/squall_cut.wav",
+          "actions": [
+            { "do": "purge", "effect": "@Squallform" },
+            { "do": "stamina", "amount": 10 },
+            { "do": "shield", "amount": 4 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Eddying Guard",
+        "icon": "squallblade_t0.png",
+        "description": "Swing at a Squallblade and the air turns on you. Their own blows leave pressure piled up in whatever they strike.",
+        "procs": [
+          { "on": "dodge", "actions": [ { "do": "effect", "effect": "@Crosswind" } ] },
+          { "on": "hurt", "chance": 50, "actions": [ { "do": "effect", "effect": "@Crosswind" } ] },
+          { "on": "hit", "chance": 50, "actions": [ { "do": "effect", "effect": "@Buffeted" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Edgewind",
+        "icon": "squallblade_t1.png",
+        "range": 6,
+        "staminaCost": 8,
+        "description": "A thin blade of compressed air that leaves turbulence and an open wound behind it.",
+        "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle",
+        "sound": "sfx/squall_cut.wav",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Crosswind" },
+          { "do": "effect", "effect": "#Gashed", "chance": 50 }
+        ],
+        "perk": { "name": "Twin Edge", "addActions": [ { "do": "effect", "effect": "@Crosswind" } ] }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Shove of Air",
+        "icon": "squallblade_t2.png",
+        "range": 4,
+        "cooldown": 4,
+        "staminaCost": 12,
+        "resetOnKill": true,
+        "description": "Slam them away with a wall of pressure. Turbulence already in them makes the landing hurt, and all the pressure piled on them is cashed in at once, giving you your second wind. If the landing finishes them, the wall is still standing for the next one.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1, "bonusPerStack": 2, "stacksOf": "@Crosswind" },
+          { "do": "damage", "type": "Crushing", "min": 1, "max": 2, "bonusPerStack": 3, "stacksOf": "@Buffeted" },
+          { "do": "knockback", "amount": 3 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "stamina", "to": "self", "amount": 1, "bonusPerStack": 2, "stacksOf": "@Buffeted", "stacksFrom": "target", "consumeStacks": true }
+        ],
+        "perk": { "name": "Hard Front", "cooldownDelta": -2 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Knot the Air",
+        "icon": "squallblade_t3.png",
+        "range": 6,
+        "cooldown": 7,
+        "staminaCost": 14,
+        "description": "Drop the pressure between you and your target so the low drags it toward you, then wring the air around it into knots of spinning pressure that harry it. When a knot comes apart, the pressure collapses into a Thunderhead that fights beside you.",
+        "impactVfx": "PA_Elementalist_Tempest.impactParticle",
+        "sound": "sfx/squall_rend.wav",
+        "actions": [
+          { "do": "pull", "amount": 2 },
+          { "do": "effect", "effect": "@Crosswind", "stacks": 2 },
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Air Knot", "summonGroup": "AirKnot", "amount": 2, "maxSummons": 4, "turns": 6, "effect": "@Knotted" }
+        ],
+        "perk": { "name": "Tighter Knots", "addActions": [
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Air Knot", "summonGroup": "AirKnot", "amount": 1, "maxSummons": 4, "turns": 6, "effect": "@Knotted" } ] }
+      }
+    },
+    {
+      "attributes": { "Agility": 1, "Toughness": 1 },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Drop Step",
+        "icon": "squallblade_t4.png",
+        "range": 4,
+        "radius": 1.5,
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Let a sudden low pull you across the room. You arrive still moving, anyone standing next to where you land is bowled over, and the air you dragged in behind you keeps churning there for a few turns, winding turbulence into any enemy that stands in it.",
+        "castVfx": "CYBERNINJA_DASH.particle_dash",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/Misc/Acrobatics_Jump",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Agility", "scaleMult": 0.3 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "effect", "effect": "@Buffeted", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "#Hasted", "turns": 2 },
+          { "do": "field", "to": "self", "fieldName": "Pressure Wake", "turns": 3, "radius": 1.6, "affects": "enemies",
+            "pulseVfx": "PA_Elementalist_Tempest.impactParticle",
+            "actions": [ { "do": "effect", "effect": "@Crosswind" } ] }
+        ],
+        "perk": { "name": "Long Fall", "rangeDelta": 2 }
+      }
+    },
+    {
+      "attributes": { "Agility": 2, "Smarts": 1 },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Wear the Storm",
+        "icon": "squallblade_t5.png",
+        "radius": 3,
+        "staminaCost": 25,
+        "cooldown": 18,
+        "description": "Let your body come apart into a moving pressure front. The turbulence in everything around you tears loose at once, and for a while you fight as the squall itself: every other move you know gives way to the squall's, Gust Lash, Downdraft and Pressure Front, until it blows out or you Settle.",
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle",
+        "sound": "sfx/squall_gale.wav",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Crosswind", "consumeStacks": true },
+          { "do": "knockback", "amount": 2 },
+          { "do": "effect", "effect": "@Buffeted", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@Squallform" }
+        ],
+        "perk": { "name": "Eye Wall", "cooldownDelta": -4 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "Agility": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Funnel Cloud",
+        "icon": "squallblade_t6.png",
+        "range": 6,
+        "radius": 2,
+        "cooldown": 10,
+        "staminaCost": 18,
+        "description": "Spin the air over a patch of deck into a narrow funnel. Everyone near it is hauled into the middle and flayed by the turbulence already in them, and the funnel keeps turning there for a few turns, dragging in whoever strays close and winding them tighter.",
+        "impactVfx": "PA_Elementalist_Tempest.impactParticle@0.6",
+        "sound": "sfx/squall_gale.wav",
+        "actions": [
+          { "do": "pull", "amount": 2, "pullToward": "center" },
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Crosswind" },
+          { "do": "effect", "effect": "@Buffeted", "stacks": 2 },
+          { "do": "field", "fieldName": "Funnel Eye", "turns": 3, "radius": 1.6, "affects": "enemies",
+            "pulseVfx": "PA_Elementalist_Tempest.impactParticle@0.5",
+            "actions": [
+              { "do": "pull", "amount": 1, "pullToward": "center" },
+              { "do": "effect", "effect": "@Crosswind" } ] }
+        ],
+        "perk": { "name": "Wider Funnel", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Agility": 2, "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Pressure Differential",
+        "icon": "squallblade_t7.png",
+        "description": "You live on the edge between high and low. A blow that misses you leaves a cushion of packed air around you; when something torn by your turbulence dies, its storm spills into everyone beside it; and anyone wound tight enough is sometimes simply blown off their feet by your strikes.",
+        "procs": [
+          { "on": "dodge", "maxPerTurn": 1, "actions": [
+            { "do": "shield", "to": "self", "amount": 3, "scale": "Agility", "scaleMult": 0.2 },
+            { "do": "effect", "to": "attacker", "effect": "@Buffeted" } ] },
+          { "on": "kill", "radius": 2, "actions": [
+            { "do": "effect", "effect": "@Crosswind", "stacks": 0, "bonusPerStack": 1, "stacksOf": "@Crosswind", "stacksFrom": "victim" } ] },
+          { "on": "hit", "chance": 30, "when": { "value": "stacks:@Crosswind", "of": "target", "atLeast": 4 }, "actions": [
+            { "do": "knockback", "amount": 1 },
+            { "do": "effect", "effect": "@Buffeted" } ] }
+        ]
+      }
+    }
+  ]
+}

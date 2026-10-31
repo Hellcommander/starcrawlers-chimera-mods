@@ -1,0 +1,210 @@
+{
+  "prompt": "scalding steam vent burst, pressurised hiss blast",
+  "conditioned_prompt": "high quality game sound effect, scalding steam vent burst, pressurised hiss blast, timbre of mech, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.6,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0011713890125975013,
+  "source_corr": 0.015489094890654087,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "e715d5dd5f9e4814",
+      "score": 0.4647331237792969,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 7.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "15cb757fec392aa2",
+      "score": 0.45697999000549316,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 4.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "dbec3090710bdcf1",
+      "score": 0.4457286596298218,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 29.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "197a78be91a5523e",
+      "score": 0.4440932273864746,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 23.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "4877a9a58f19f195",
+      "score": 0.4377661943435669,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 5.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "e32220fa8d1281b8",
+      "score": 0.43478819727897644,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 27.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "c2e63b0f3d6f3f41",
+      "score": 0.43470531702041626,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Farts!.zip",
+      "inner": "Dark Fantasy Studio- Farts!/Dark Fantasy Studio- Fart 21.wav",
+      "license": "reference",
+      "tags": [
+        "farts",
+        "dark",
+        "fantasy",
+        "studio",
+        "fart",
+        "bodily",
+        "gas",
+        "flatulence",
+        "waste",
+        "organic",
+        "accident",
+        "crapping",
+        "mess",
+        "sfmag"
+      ],
+      "archetypes": [
+        "bodily"
+      ]
+    },
+    {
+      "id": "4937df14399c809e",
+      "score": 0.4333062171936035,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 10.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "3d8aa276f906912b",
+      "score": 0.42876583337783813,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 15.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "936ab631a9dfe4c6",
+      "score": 0.4251842796802521,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Steam.zip",
+      "inner": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 30.wav",
+      "license": "reference",
+      "tags": [
+        "steam",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "e715d5dd5f9e4814",
+    "15cb757fec392aa2",
+    "dbec3090710bdcf1",
+    "197a78be91a5523e",
+    "4877a9a58f19f195",
+    "e32220fa8d1281b8",
+    "c2e63b0f3d6f3f41",
+    "4937df14399c809e",
+    "3d8aa276f906912b",
+    "936ab631a9dfe4c6"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_plume.wav",
+  "sample_rate": 44100
+}

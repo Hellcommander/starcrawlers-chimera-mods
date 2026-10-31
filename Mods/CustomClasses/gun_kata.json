@@ -1,0 +1,252 @@
+{
+  "id": "MOD_GunKata",
+  "name": "Gun-Kata",
+  "description": "Two pistols, zero cover. Every shot and every dodge builds Rhythm; dodges fire back automatically, and at full Rhythm you lock in. Bullet Ballet spends it all on everyone around you.\n\nDodge-heavy dual pistols. Favors [AGL] and [REC].",
+  "archetype": "Guile",
+  "icon": "gun_kata.png",
+  "attributePriorities": {
+    "Agility": 4,
+    "Recognition": 2,
+    "Dodge": 2
+  },
+  "effects": [
+    {
+      "id": "Rhythm",
+      "name": "Rhythm",
+      "description": "Step, shoot, step, shoot.",
+      "duration": 5,
+      "maxStacks": 8,
+      "stats": {
+        "Crit": 2,
+        "Dodge": 1
+      },
+      "thresholds": [
+        {
+          "at": 8,
+          "message": "You're locked in.",
+          "actions": [
+            { "do": "effect", "to": "self", "effect": "@Zone" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Zone",
+      "name": "Locked In",
+      "description": "Time slows down. You don't.",
+      "duration": 2,
+      "damageDealtMult": 1.3,
+      "stats": {
+        "Dodge": 20
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Counter-Fire",
+        "icon": "gun_kata_t0.png",
+        "description": "Every miss against you gets answered.",
+        "procs": [
+          {
+            "on": "dodge",
+            "vfx": "PA_Smuggler_Fistful.PS_impact",
+            "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "scale": "Agility", "scaleMult": 0.2 },
+              { "do": "effect", "to": "self", "effect": "@Rhythm" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Double Tap",
+        "icon": "gun_kata_t1.png",
+        "description": "Two shots, one breath.",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "scale": "Agility", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "damage", "type": "Ballistic", "min": 2, "max": 4 },
+          { "do": "effect", "to": "self", "effect": "@Rhythm" }
+        ],
+        "perk": {
+          "name": "Triple Tap",
+          "addActions": [
+            { "do": "damage", "type": "Ballistic", "min": 2, "max": 4 }
+          ]
+        },
+        "sound": "sfx/gunkata_doubletap.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Backflip",
+        "icon": "gun_kata_t2.png",
+        "range": 3,
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Flip away and land already moving.",
+        "castVfx": "PA_Acrobatics_Backflip.castParticle",
+        "sound": "event:/Abilities/Misc/Acrobatics_Jump",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "effect", "to": "self", "effect": "#Hasted", "turns": 2 },
+          { "do": "effect", "to": "self", "effect": "@Rhythm" }
+        ],
+        "perk": {
+          "name": "Double Flip",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Kneecap",
+        "icon": "gun_kata_t3.png",
+        "cooldown": 4,
+        "staminaCost": 10,
+        "description": "Aim low. Watch them wobble.",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 3, "max": 5, "scale": "Recognition", "scaleMult": 0.3 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "effect": "#Gashed" }
+        ],
+        "perk": {
+          "name": "Both Knees",
+          "addActions": [
+            { "do": "stun", "turns": 1, "chance": 30 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Flow State",
+        "icon": "gun_kata_t4.png",
+        "description": "Once you're moving, you don't stop.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Rhythm" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Bullet Ballet",
+        "icon": "gun_kata_t5.png",
+        "radius": 3,
+        "staminaCost": 25,
+        "cooldown": 14,
+        "description": "Spin. Shoot everyone. Bow.",
+        "castVfx": "PA_Gunslinger_GunFuMaster.particle",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "sound": "sfx/gunkata_ballet.wav",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 3, "max": 6, "scale": "Agility", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Rhythm", "stacksFrom": "self", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Encore Spin",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Carom Volley",
+        "icon": "gun_kata_t6.png",
+        "staminaCost": 18,
+        "cooldown": 8,
+        "description": "One trigger pull, four bodies. The round skips off armor and walls from enemy to enemy, and every hit keeps the beat. Locked In, the angles get cruel.",
+        "sound": "sfx/gunkata_doubletap.wav",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 4,
+            "falloff": 0.85,
+            "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 3, "max": 6, "scale": "Agility", "scaleMult": 0.4, "perRank": 2 },
+              { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "trueDamage": true, "ifSelfHas": "@Zone" },
+              { "do": "effect", "to": "self", "effect": "@Rhythm" }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Trick Angle",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Dodge": 3
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Unbroken Form",
+        "icon": "gun_kata_t7.png",
+        "description": "The form doesn't end, it loops. Crits feed the Rhythm, locking in quickens your feet, and every dodge while Locked In winds your other moves back.",
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 50,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Rhythm" }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@Zone",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "#Hasted" }
+            ]
+          },
+          {
+            "on": "dodge",
+            "when": { "has": "@Zone", "of": "self" },
+            "actions": [
+              { "do": "cooldowns", "to": "self", "amount": 1 },
+              { "do": "stamina", "to": "self", "amount": 5 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "Synergies",
+  "name": "Skill Synergies",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Pairs of skill trees that work together: take both and you get a bonus that grows with the lower of the two ranks."
+}

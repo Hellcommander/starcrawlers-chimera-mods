@@ -1,0 +1,595 @@
+{
+  "synergies": [
+    {
+      "id": "EtchedChassis",
+      "name": "Etched Chassis",
+      "trees": [
+        "MOD_Runeforger",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Your turrets, drones and glyph sentries wear etched plating: their shots may leave foes Exposed. Each level adds 5% to these odds.",
+      "allies": {
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed"
+              }
+            ]
+          }
+        ],
+        "description": "Etched plating, and every shot finds the seam.",
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "ScrapScribe",
+      "name": "Scrap Scribe",
+      "trees": [
+        "MOD_Runeforger",
+        "SKILLTREE_Gadgeteer"
+      ],
+      "description": "You strip every wreck for parts: kills sometimes yield a spare Glyph Cell. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "giveItem",
+                "to": "self",
+                "item": "ArendethClasses:RfGlyphCell",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BluntInstruments",
+      "name": "Blunt Instruments",
+      "trees": [
+        "MOD_Scrapper",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "Anything heavy will do: hits on Reeling enemies may knock them cold for a turn. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "cooldown": 3,
+            "when": {
+              "has": "#Reeling"
+            },
+            "actions": [
+              {
+                "do": "stun",
+                "turns": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SpiteReps",
+      "name": "Spite Reps",
+      "trees": [
+        "MOD_Scrapper",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "Pain is just another rep: getting hit sometimes builds Grit. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BlindSpotDealing",
+      "name": "Blind-Spot Dealing",
+      "trees": [
+        "MOD_ShadowBroker",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "Blinded marks are easy reading: your hits on blinded enemies sometimes leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "turns": 2,
+                "ifTargetHas": "EFFECT_Blind"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "GraftedHide",
+      "name": "Grafted Hide",
+      "trees": [
+        "MOD_SpliceHost",
+        "SKILLTREE_Biomods"
+      ],
+      "description": "Grafted glands meet spliced flesh: in Spines form attackers may come away bleeding. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "EFFECT_Bleed",
+                "turns": 2,
+                "ifSelfHas": "MOD_SpliceHost@Spines"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "UnstableHelix",
+      "name": "Unstable Helix",
+      "trees": [
+        "MOD_SpliceHost",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "Two mutations egg each other on: in Claws form your strikes sometimes inject a toxic mutagen. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned",
+                "ifSelfHas": "MOD_SpliceHost@Claws"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SlipstreamTumbler",
+      "name": "Slipstream Tumbler",
+      "trees": [
+        "MOD_Squallblade",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "You ride every gust: slipping a blow sometimes piles Buffeted pressure on the attacker. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Buffeted"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SquallAtSea",
+      "name": "Squall at Sea",
+      "trees": [
+        "MOD_Squallblade",
+        "MOD_Tidewright"
+      ],
+      "description": "Wind whips the brine: hits on Waterlogged foes sometimes add Crosswind, and hits on wind-torn foes sometimes soak them deeper. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Crosswind",
+                "ifTargetHas": "MOD_Tidewright@Soaked"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "ifTargetHas": "MOD_Squallblade@Crosswind"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SunspotKindling",
+      "name": "Sunspot Kindling",
+      "trees": [
+        "MOD_StarfireAdept",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Fire and starfire know each other: hits on burning enemies sometimes leave them Ionized. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_StarfireAdept@Ionized",
+                "ifTargetHas": "EFFECT_Fire"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PlasmaArcing",
+      "name": "Plasma Arcing",
+      "trees": [
+        "MOD_StarfireAdept",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Ionized plasma begs to arc: hits on Ionized enemies may Electrify them and the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_StarfireAdept@Ionized"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "MixedFleet",
+      "name": "Mixed Fleet",
+      "trees": [
+        "MOD_SwarmConductor",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Your built pets join the link: their hits on Designated targets may paint the next foe in reach. Each level adds 5% to these odds.",
+      "allies": {
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_SwarmConductor@Designated"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_SwarmConductor@Designated",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "RootAccess",
+      "name": "Root Access",
+      "trees": [
+        "MOD_SwarmConductor",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "You crack what your drones paint: hits on Designated targets sometimes delay their special attacks. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 1,
+                "ifTargetHas": "MOD_SwarmConductor@Designated"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HivePayload",
+      "name": "Hive Payload",
+      "trees": [
+        "MOD_SwarmConductor",
+        "MOD_VoidHacker"
+      ],
+      "description": "Your malware rides the swarm's link: your summons' attacks may infect their targets with Malware. Each level adds 5% to these odds.",
+      "allies": {
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_VoidHacker@Malware"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "BrineFrost",
+      "name": "Brine Frost",
+      "trees": [
+        "MOD_Tidewright",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Cold finds water: hits on Waterlogged enemies may chill them, and hits on Chilled enemies may soak them deeper. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Chill",
+                "turns": 2,
+                "ifTargetHas": "MOD_Tidewright@Soaked"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "ifTargetHas": "EFFECT_Chill"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BrackishBlood",
+      "name": "Brackish Blood",
+      "trees": [
+        "MOD_Tidewright",
+        "MOD_Vasculist"
+      ],
+      "description": "Salt and blood feed each other: weeping wounds sometimes take a Brinecut, and brine-cut veins sometimes swell with Vein Pressure. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Brinecut",
+                "ifTargetHas": "MOD_Vasculist@WeepingCut"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pressure",
+                "ifTargetHas": "MOD_Tidewright@Brinecut"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ArterialEdge",
+      "name": "Arterial Edge",
+      "trees": [
+        "MOD_Vasculist",
+        "SKILLTREE_Blademaster"
+      ],
+      "description": "Your blade finds the artery: hits on bleeding enemies sometimes spike their Vein Pressure. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pressure",
+                "ifTargetHas": "EFFECT_Bleed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AdrenalHeart",
+      "name": "Adrenal Heart",
+      "trees": [
+        "MOD_Vasculist",
+        "SKILLTREE_Biomods"
+      ],
+      "description": "A grafted adrenal gland and a hammering heart: taking a hit sometimes quickens your Racing Pulse. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Vasculist@Pulse"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PayloadChaining",
+      "name": "Payload Chaining",
+      "trees": [
+        "MOD_VoidHacker",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "Your viruses open the door for worse: hits on Overheat- or Snowcrash-infected enemies sometimes plant Malware. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_VoidHacker@Malware",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Overheat"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_VoidHacker@Malware",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Snowcrash"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AbyssalExploit",
+      "name": "Abyssal Exploit",
+      "trees": [
+        "MOD_VoidHacker",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "Code meets the abyss: hits on Malware-infected enemies may worm it into the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_VoidHacker@Malware"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_VoidHacker@Malware",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

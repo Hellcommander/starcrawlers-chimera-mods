@@ -1,0 +1,22 @@
+{
+  "enemies": [
+    { "id": "StaticHound", "base": "MUTT_BASIC",
+      "name": "Static Hound", "subtitle": "Arc-Collared",
+      "description": "Someone fitted a capacitor collar to a mutt and never came back for it.",
+      "health": 1.2, "xp": 1.3,
+      "resists": { "Shock": 50, "Fire": -20 },
+      "abilities": [ { "from": "Slime_Electric/Slime_Electric_Smash", "damage": [ { "type": "Shock", "min": 2, "max": 4 } ] } ],
+      "loot": { "items": ["ExampleItems:ArcbiteRounds"], "random": [ { "type": "Gear", "rarity": "Rare" } ] },
+      "spawn": [ { "floors": [0, 2], "chance": 8 } ] },
+
+    { "id": "OverseerDrone", "base": "CORPSEC_DRONE",
+      "name": "Overseer Drone", "subtitle": "Compliance Unit",
+      "description": "Hangs back, marks you, and lets the rest of the floor do the work.",
+      "ai": "Sniper", "scale": 1.3, "health": 1.5, "damage": 0.8, "xp": 1.5,
+      "stats": { "Dodge": 10 },
+      "abilities": [ { "from": "CORPSEC_FLYER/CORPSEC_FLYER_DEBUFF", "cooldown": 5, "priority": 5 } ],
+      "removeAbilities": ["CORPSEC_DRONE_MELEE"],
+      "loot": { "random": [ { "type": "Ammo", "rarity": "None" } ] },
+      "spawn": [ { "floors": [1, 4], "replaces": "CORPSEC_DRONE", "chance": 30 } ] }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "prompt": "gritty corrosive dust blast fizzing on metal, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.9,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "88cd5f5a125390fc",
+      "score": 0.5164246559143066,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Hammer A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "hammer"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "283fc076e25c10f1",
+      "score": 0.48985376954078674,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "0a07064b0e7b4ca8",
+      "score": 0.4895095229148865,
+      "via": "clap+tag",
+      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 01.wav",
+      "license": "direct",
+      "tags": [
+        "fl",
+        "nhw",
+        "one",
+        "shot",
+        "drums",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "retro",
+        "music",
+        "production",
+        "bundle",
+        "function",
+        "loops",
+        "neon",
+        "highway",
+        "crash"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "edc2d65970c1373a",
+      "score": 0.48943400382995605,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "185b9054e266a2a1",
+      "score": 0.4775083661079407,
+      "via": "clap+tag",
+      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 05.wav",
+      "license": "direct",
+      "tags": [
+        "fl",
+        "nhw",
+        "one",
+        "shot",
+        "drums",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "retro",
+        "music",
+        "production",
+        "bundle",
+        "function",
+        "loops",
+        "neon",
+        "highway",
+        "crash"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "9f05f34e968c80e5",
+      "score": 0.4774125814437866,
+      "via": "clap+tag",
+      "pack": "impact",
+      "inner": "made/impact/iron_gaol.wav",
+      "license": "own",
+      "tags": [
+        "impact",
+        "made",
+        "iron",
+        "gaol",
+        "heavy",
+        "prison",
+        "cage",
+        "bars",
+        "slamming",
+        "shut",
+        "deep",
+        "metallic",
+        "boom",
+        "with",
+        "echo",
+        "and",
+        "chain",
+        "rattle"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "056d4c890a01eb04",
+      "score": 0.4772319197654724,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Combat/Damage Deactivation 002.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "combat",
+        "damage",
+        "deactivation"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "3739082620f92290",
+      "score": 0.4728272259235382,
+      "via": "clap+tag",
+      "pack": "magic",
+      "inner": "made/magic/shatter_chains.wav",
+      "license": "own",
+      "tags": [
+        "magic",
+        "made",
+        "shatter",
+        "chains",
+        "magical",
+        "shattering",
+        "into",
+        "metal",
+        "shards",
+        "bright",
+        "burst",
+        "ringing",
+        "ghostly",
+        "echo"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "bd5597c5d787cb29",
+      "score": 0.4708491563796997,
+      "via": "clap+tag",
+      "pack": "ship",
+      "inner": "made/ship/iron_gaol.wav",
+      "license": "own",
+      "tags": [
+        "ship",
+        "made",
+        "iron",
+        "gaol",
+        "heavy",
+        "metal",
+        "garage",
+        "door",
+        "slamming",
+        "shut",
+        "metallic",
+        "boom"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    },
+    {
+      "id": "e2e3171663c49990",
+      "score": 0.4702342748641968,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 42.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "88cd5f5a125390fc",
+    "283fc076e25c10f1",
+    "0a07064b0e7b4ca8",
+    "edc2d65970c1373a",
+    "185b9054e266a2a1",
+    "9f05f34e968c80e5",
+    "056d4c890a01eb04",
+    "3739082620f92290",
+    "bd5597c5d787cb29",
+    "e2e3171663c49990"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_salt.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.203,
+  "semitones": 8,
+  "width": 0.519,
+  "listen": {
+    "match": 0.427,
+    "clean": -0.134,
+    "faults": []
+  }
+}

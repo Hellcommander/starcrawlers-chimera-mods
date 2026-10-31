@@ -1,0 +1,54 @@
+[ { "particles": [
+  { "id": "fx_puppetmaster_thread_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.501], "sizeCurve": "flat", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 312, "duration": 0.7, "life": [0.363, 0.571], "speed": [0.0, 0.033], "size": [0.057, 0.099], "gravity": 0.0, "color": "#FFB8F0", "color2": "#C020A0", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_puppetmaster_thread_impact",
+    "layers": [
+      {"texture": "star", "count": 3, "life": [0.305, 0.522], "speed": [0.0, 0.27], "size": [0.369, 0.699], "sizeCurve": "pop", "color": "#FFB8F0", "color2": "#C020A0", "shape": "sphere", "radius": 0.25},
+      {"texture": "spark", "count": 16, "life": [0.308, 0.643], "speed": [0.398, 1.096], "size": [0.078, 0.155], "stretch": 5, "gravity": 0.0, "drag": 1.0, "color": "#FFB8F0", "color2": "#C020A0", "shape": "line", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.399], "speed": [0], "size": [1.009], "sizeCurve": "shrink", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point"}
+    ] },
+  { "id": "fx_puppetmaster_dance_puppet_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.411], "sizeCurve": "flat", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 318, "duration": 0.7, "life": [0.429, 0.622], "speed": [0.0, 0.031], "size": [0.061, 0.116], "gravity": 0.0, "color": "#FFB8F0", "color2": "#C020A0", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_puppetmaster_dance_puppet_impact", "light": {"color": "#FF70D8", "range": 3.237, "intensity": 1.254, "time": 0.498},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.517], "speed": [0], "size": [0.952], "sizeCurve": "grow", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.653], "speed": [0], "size": [1.506], "sizeCurve": "grow", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "delay": 0.12},
+      {"texture": "star", "count": 5, "life": [0.292, 0.548], "speed": [0.0, 0.303], "size": [0.221, 0.516], "sizeCurve": "pop", "color": "#FFB8F0", "color2": "#C020A0", "shape": "sphere", "radius": 0.4}
+    ] },
+  { "id": "fx_puppetmaster_decoy_puppet_cast", "light": {"color": "#A0A0B0", "range": 4.051, "intensity": 2.043, "time": 0.724},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.671], "speed": [0], "size": [3.1], "sizeCurve": "grow", "color": "#D0D0D8", "color2": "#606070", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 47, "life": [0.396, 0.71], "speed": [2.142, 4.39], "size": [0.08, 0.187], "gravity": -0.2, "color": "#D0D0D8", "color2": "#606070", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.385], "speed": [0], "size": [1.484], "sizeCurve": "pop", "color": "#D0D0D8", "color2": "#606070", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.984, 1.497], "speed": [0.264, 0.965], "size": [0.668, 1.081], "sizeCurve": "grow", "spin": [-50, 50], "color": "#30303A", "color2": "#30303A", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_puppetmaster_cut_the_strings_area", "light": {"color": "#FF70D8", "range": 9.764, "intensity": 2.54, "time": 0.583},
+    "layers": [
+      {"texture": "fx/puppetmaster_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.906], "sizeCurve": "flat", "color": "#FFB8F0", "color2": "#C020A0", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.565], "speed": [0], "size": [14.622], "sizeCurve": "grow", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 38, "life": [0.333, 0.61], "speed": [4.269, 8.848], "size": [0.095, 0.217], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFB8F0", "color2": "#C020A0", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.971, 1.357], "speed": [0.811, 1.707], "size": [0.973, 1.743], "sizeCurve": "grow", "spin": [-50, 50], "color": "#24142A", "color2": "#24142A", "alpha": 0.5, "shape": "ring", "radius": 2.0, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 2, "life": [0.358, 0.54], "speed": [0], "size": [1.051, 1.35], "sizeCurve": "pop", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point"}
+    ] },
+  { "id": "fx_puppetmaster_tangleweave_area", "light": {"color": "#FF70D8", "range": 3.102, "intensity": 1.539, "time": 0.526},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.676], "speed": [0], "size": [5.844], "sizeCurve": "flat", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "ring", "count": 1, "life": [0.61], "speed": [0], "size": [3.102], "sizeCurve": "flat", "color": "#FFB8F0", "color2": "#C020A0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 32, "life": [0.276, 0.607], "speed": [0.468, 1.664], "size": [0.052, 0.095], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFB8F0", "color2": "#C020A0", "shape": "ring", "radius": 2.0, "ground": true, "offset": [0, 0.2, 0]}
+    ] }
+] },
+{ "id": "MOD_Puppetmaster", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_puppetmaster_thread_impact", "travelVfx": "fx_puppetmaster_thread_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_puppetmaster_dance_puppet_impact", "travelVfx": "fx_puppetmaster_dance_puppet_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_puppetmaster_decoy_puppet_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_puppetmaster_cut_the_strings_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_puppetmaster_tangleweave_area"}}
+] } ]

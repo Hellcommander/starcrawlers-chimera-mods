@@ -1,0 +1,219 @@
+{
+  "prompt": "wet sticky tongue lash and slurping pull, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.7,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "ab4cc095057dc416",
+      "score": 0.5966550707817078,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "4cae8958713c1768",
+      "score": 0.5921905636787415,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_28.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a6541571441f84e3",
+      "score": 0.5905628800392151,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_4.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "1e469cb2d33fd18b",
+      "score": 0.5895453095436096,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_5.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "ecd75e0151812767",
+      "score": 0.5793993473052979,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "168716bf77513a1d",
+      "score": 0.5686123967170715,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_3.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "1d22a6cc0cd8748a",
+      "score": 0.5685709118843079,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_2.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "e35e1cbc03e30b84",
+      "score": 0.5635092258453369,
+      "via": "clap+tag",
+      "pack": "Monsters, Boss & Zombies",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Monsters, Boss & Zombies/FL_GFX_Voice_Monster_Zombie_Bile_01.wav",
+      "license": "direct",
+      "tags": [
+        "monsters",
+        "boss",
+        "zombies",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "voice",
+        "monster",
+        "zombie",
+        "bile"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "59897aa355548482",
+      "score": 0.5632936954498291,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "dd90d2159d72f633",
+      "score": 0.552251398563385,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_5 (seamless).wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio",
+        "seamless"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "ab4cc095057dc416",
+    "4cae8958713c1768",
+    "a6541571441f84e3",
+    "1e469cb2d33fd18b",
+    "ecd75e0151812767",
+    "168716bf77513a1d",
+    "1d22a6cc0cd8748a",
+    "e35e1cbc03e30b84",
+    "59897aa355548482",
+    "dd90d2159d72f633"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_tongue.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.115,
+  "semitones": -3,
+  "width": 0.179,
+  "listen": {
+    "match": 0.737,
+    "clean": -2.057,
+    "faults": []
+  }
+}

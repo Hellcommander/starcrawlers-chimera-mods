@@ -1,0 +1,67 @@
+[ { "particles": [
+  { "id": "fx_vasculist_vein_spike_impact", "light": {"color": "#FF3040", "range": 2.613, "intensity": 1.17, "time": 0.231},
+    "layers": [
+      {"texture": "fx/vasculist_burst.png", "count": 1, "life": [0.406], "speed": [0], "size": [0.959], "sizeCurve": "flat", "color": "#FF8A8A", "color2": "#A00818", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 2, "life": [0.332, 0.533], "speed": [0.0, 0.283], "size": [0.57, 0.987], "sizeCurve": "pop", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "radius": 0},
+      {"texture": "spark", "count": 21, "life": [0.326, 0.511], "speed": [3.588, 8.514], "size": [0.089, 0.139], "stretch": 5, "gravity": 0.0, "drag": 1.0, "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 19, "life": [0.671, 1.115], "speed": [0.354, 1.336], "size": [0.054, 0.156], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_vasculist_bloodletting_release_area", "light": {"color": "#FF3040", "range": 4.752, "intensity": 2.057, "time": 0.61},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.555], "speed": [0], "size": [5.263], "sizeCurve": "shrink", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 44, "life": [0.386, 0.504], "speed": [-7.0, -5.0], "size": [0.085, 0.169], "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 2.0, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.438], "speed": [0], "size": [1.293], "sizeCurve": "pop", "color": "#FF8A8A", "color2": "#A00818", "alpha": 0.85, "shape": "point"},
+      {"texture": "mote", "count": 16, "life": [0.624, 1.096], "speed": [0.422, 1.313], "size": [0.066, 0.143], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_vasculist_clot_brood_cast", "light": {"color": "#FF3040", "range": 3.811, "intensity": 2.135, "time": 0.72},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.544], "speed": [0], "size": [2.771], "sizeCurve": "grow", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 35, "life": [0.362, 0.65], "speed": [2.166, 3.937], "size": [0.071, 0.161], "gravity": -0.2, "color": "#FF8A8A", "color2": "#A00818", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.435], "speed": [0], "size": [1.825], "sizeCurve": "pop", "color": "#FF8A8A", "color2": "#A00818", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.985, 1.624], "speed": [0.276, 0.839], "size": [0.677, 1.105], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A0A0E", "color2": "#2A0A0E", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 16, "life": [0.581, 1.008], "speed": [0.415, 1.119], "size": [0.062, 0.151], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_vasculist_tourniquet_hex_impact",
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.559], "speed": [0], "size": [1.726], "sizeCurve": "shrink", "color": "#FF8A8A", "color2": "#A00818", "shape": "point"},
+      {"texture": "mote", "count": 18, "life": [0.463, 0.892], "speed": [0.183, 0.613], "size": [0.071, 0.18], "gravity": 0.6, "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 0.5},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 3, "delay": 0.05, "life": [0.861, 1.335], "speed": [0.33, 0.983], "size": [0.391, 0.71], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A0A0E", "color2": "#2A0A0E", "alpha": 0.5, "shape": "sphere", "radius": 0.4, "grid": [6, 6]},
+      {"texture": "mote", "count": 19, "life": [0.634, 1.031], "speed": [0.382, 1.151], "size": [0.053, 0.139], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_vasculist_marionette_heart_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.462], "sizeCurve": "flat", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 317, "duration": 0.7, "life": [0.424, 0.586], "speed": [0.0, 0.031], "size": [0.064, 0.097], "gravity": 0.0, "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_vasculist_marionette_heart_impact", "light": {"color": "#FF3040", "range": 3.051, "intensity": 1.295, "time": 0.547},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.482], "speed": [0], "size": [0.944], "sizeCurve": "grow", "color": "#FF8A8A", "color2": "#A00818", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.54], "speed": [0], "size": [1.482], "sizeCurve": "grow", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "delay": 0.12},
+      {"texture": "star", "count": 5, "life": [0.272, 0.523], "speed": [0.0, 0.328], "size": [0.263, 0.545], "sizeCurve": "pop", "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 0.4}
+    ] },
+  { "id": "fx_vasculist_arterial_relay_impact", "light": {"color": "#FF3040", "range": 2.7, "intensity": 1.364, "time": 0.315},
+    "layers": [
+      {"texture": "fx/vasculist_burst.png", "count": 1, "life": [0.475], "speed": [0], "size": [0.821], "sizeCurve": "flat", "color": "#FF8A8A", "color2": "#A00818", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 5, "life": [0.295, 0.494], "speed": [0.0, 0.335], "size": [0.393, 0.742], "sizeCurve": "pop", "color": "#FF8A8A", "color2": "#A00818", "shape": "sphere", "radius": 0.25},
+      {"texture": "mote", "count": 18, "life": [0.655, 1.003], "speed": [0.411, 1.324], "size": [0.053, 0.143], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_vasculist_hammering_crescendo_impact", "light": {"color": "#FF3040", "range": 3.823, "intensity": 2.582, "time": 0.522},
+    "layers": [
+      {"texture": "fx/vasculist_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.66], "sizeCurve": "flat", "color": "#FF8A8A", "color2": "#A00818", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.358], "speed": [0], "size": [1.539], "sizeCurve": "grow", "color": "#FF8A8A", "color2": "#A00818", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.501], "speed": [0], "size": [2.509], "sizeCurve": "grow", "color": "#FF8A8A", "color2": "#A00818", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/vasculist_bits.png", "count": 14, "life": [0.462, 0.959], "speed": [2.761, 5.674], "size": [0.109, 0.246], "gravity": 1.2, "spin": [-360, 360], "color": "#FF8A8A", "color2": "#A00818", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.993, 1.539], "speed": [0.282, 0.965], "size": [0.655, 1.229], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A0A0E", "color2": "#2A0A0E", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "mote", "count": 19, "life": [0.624, 0.895], "speed": [0.418, 1.073], "size": [0.063, 0.125], "gravity": 2.0, "color": "#A00818", "color2": "#2A0A0E", "shape": "sphere", "radius": 0.3}
+    ] }
+] },
+{ "id": "MOD_Vasculist", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_vasculist_vein_spike_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_vasculist_bloodletting_release_area"}},
+  {"newAbility": {"castVfx": "fx_vasculist_clot_brood_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_vasculist_tourniquet_hex_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_vasculist_marionette_heart_impact", "travelVfx": "fx_vasculist_marionette_heart_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_vasculist_arterial_relay_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_vasculist_hammering_crescendo_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

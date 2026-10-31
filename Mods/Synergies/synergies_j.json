@@ -1,0 +1,1635 @@
+{
+  "synergies": [
+    {
+      "id": "LoadedAether",
+      "name": "Loaded Aether",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_OddsBreaker"
+      ],
+      "description": "The house backs the wild horse: critical hits may stretch your Lucky Run, and hits on Staked foes may shake a borrowed spell loose. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_OddsBreaker@LuckyRun"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_OddsBreaker@Staked"
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "notClass": "MOD_Wildcaster"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "EverySpellAtOnce",
+      "name": "Every Spell at Once",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_ProbabilityShaman"
+      ],
+      "description": "Every spell you might have cast is out there somewhere: casting with five or more Brimming may bank Possibility, and critical hits while Unobserved may shake a borrowed spell loose. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "chance": 35,
+            "when": {
+              "value": "stacks:MOD_Wildcaster@Brimming",
+              "of": "self",
+              "atLeast": 5
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility"
+              }
+            ]
+          },
+          {
+            "on": "crit",
+            "chance": 40,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_ProbabilityShaman@Unobserved",
+              "of": "self"
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "notClass": "MOD_Wildcaster"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BorrowedTeeth",
+      "name": "Borrowed Teeth",
+      "trees": [
+        "MOD_Wildcaster",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "The wild magic always had a monster in it, and now so do you: hits while Hangry may shake a monster's attack out of you, and kills while the Beast is Unleashed may burn off two Brimming. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 20,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_Hangry",
+              "of": "self"
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "pool": "monsters",
+                "amount": 1,
+                "falloff": 0.6
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "when": {
+              "has": "EFFECT_UnleashTheBeast",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Wildcaster@Brimming",
+                "stacks": -2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwoNeedlesInTheRed",
+      "name": "Two Needles in the Red",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_FluxSavant"
+      ],
+      "description": "Two gauges on one rig: hits with five or more Brimming or Instability may leave Aether Residue, and hits on residue-coated foes may shake a wild spell loose. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "value": "stacks:MOD_Wildcaster@Brimming",
+                  "of": "self",
+                  "atLeast": 5
+                },
+                {
+                  "value": "stacks:MOD_FluxSavant@Instability",
+                  "of": "self",
+                  "atLeast": 5
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_FluxSavant@Residue"
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "pool": "wild",
+                "amount": 1,
+                "falloff": 0.6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CuriouserSpells",
+      "name": "Curiouser Spells",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_LookingGlassRogue"
+      ],
+      "description": "Size is only a suggestion: hits made at the wrong size, or on foes wild magic has shrunk or swollen, may build Wonder, and hits with four or more Wonder may shake a borrowed spell loose. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_LookingGlassRogue@Shrunk",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_LookingGlassRogue@Grown",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Wildcaster@Shrunk"
+                },
+                {
+                  "has": "MOD_Wildcaster@Swollen"
+                }
+              ]
+            },
+            "vfx": "LgWhimsy@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_LookingGlassRogue@Wonder"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "maxPerTurn": 1,
+            "when": {
+              "value": "stacks:MOD_LookingGlassRogue@Wonder",
+              "of": "self",
+              "atLeast": 4
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "notClass": "MOD_Wildcaster"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "WildTemper",
+      "name": "Wild Temper",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_Spellsmith"
+      ],
+      "description": "You can't tame it, but you can work it hot: casting in a forge stance may draw off a Brimming, and hits in one with five or more Brimming may throw a borrowed spell like a spark off the anvil. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "chance": 40,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_Spellsmith@Lobbing",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Novaform",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Hammered",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Wildcaster@Brimming",
+                "stacks": -1
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "value": "stacks:MOD_Wildcaster@Brimming",
+                  "of": "self",
+                  "atLeast": 5
+                },
+                {
+                  "any": [
+                    {
+                      "has": "MOD_Spellsmith@Lobbing",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Spellsmith@Novaform",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Spellsmith@Hammered",
+                      "of": "self"
+                    }
+                  ]
+                }
+              ]
+            },
+            "vfx": "fx_wildcaster_stray@0.8",
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "notClass": "MOD_Wildcaster"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BenchAndAnvil",
+      "name": "Bench and Anvil",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_FluxSavant"
+      ],
+      "description": "Runes come off the anvil running hot: hits in a forge stance may leave Aether Residue, and foes that die coated in it may put a cast of charge back into your runes. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_Spellsmith@Lobbing",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Novaform",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Hammered",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "when": {
+              "has": "MOD_FluxSavant@Residue",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "runerestore",
+                "to": "self",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "StruckWhileHot",
+      "name": "Struck While Hot",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_Runeforger"
+      ],
+      "description": "Two smiths, one anvil: hits in a forge stance may steady your Graver's Focus, and kills in Hammer Form may leave enough charge to fill a Glyph Cell. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_Spellsmith@Lobbing",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Novaform",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Spellsmith@Hammered",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Runeforger@GraversFocus"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Spellsmith@Hammered",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "giveItem",
+                "to": "self",
+                "item": "ArendethClasses:RfGlyphCell",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ForgedSyntax",
+      "name": "Forged Syntax",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_Glyphrunner"
+      ],
+      "description": "A sigil takes the shape of whatever delivers it: hits in Lobbing Arm may inscribe a Mark, hits in Nova Form may write a Loop, and hits in Hammer Form may cut a Sever. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Spellsmith@Lobbing",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Mark"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Spellsmith@Novaform",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Loop"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Spellsmith@Hammered",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Sever"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Stormfront",
+      "name": "Stormfront",
+      "trees": [
+        "MOD_Fulgurant",
+        "MOD_Squallblade"
+      ],
+      "description": "Wind and lightning were always one weather: hits on foes carrying a Stepped Leader may pile on Buffeted pressure, and hits in Squallform may lay a Stepped Leader. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Buffeted",
+                "ifTargetHas": "MOD_Fulgurant@Leader"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Fulgurant@Leader",
+                "ifSelfHas": "MOD_Squallblade@Squallform"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RunningGround",
+      "name": "Running Ground",
+      "trees": [
+        "MOD_Fulgurant",
+        "MOD_Freerunner"
+      ],
+      "description": "The deck charges you as you cross it: steps taken with Momentum may store Potential, and hits with four or more Potential may add Momentum. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "move",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Fulgurant@Potential",
+                "ifSelfHas": "MOD_Freerunner@Momentum"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "value": "stacks:MOD_Fulgurant@Potential",
+              "of": "self",
+              "atLeast": 4
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Freerunner@Momentum"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CommonGround",
+      "name": "Common Ground",
+      "trees": [
+        "MOD_Fulgurant",
+        "MOD_ArcGunner"
+      ],
+      "description": "Lightning takes the path that's already there: hits on Electrified foes may lay a Stepped Leader, and while you hold Static, hits on foes carrying one may run it on to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Fulgurant@Leader",
+                "ifTargetHas": "EFFECT_Shock"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Fulgurant@Leader"
+                },
+                {
+                  "has": "MOD_ArcGunner@Static",
+                  "of": "self"
+                }
+              ]
+            },
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Fulgurant@Leader",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HeldLightning",
+      "name": "Held Lightning",
+      "trees": [
+        "MOD_Fulgurant",
+        "MOD_PsiKnight"
+      ],
+      "description": "A still mind holds a charge longer: blows taken inside your Kinetic Guard may store Potential, and hits while Poised may lay a Stepped Leader. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Fulgurant@Potential",
+                "ifSelfHas": "MOD_PsiKnight@Guard"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Fulgurant@Leader",
+                "ifSelfHas": "MOD_PsiKnight@Poise"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LoadPath",
+      "name": "Load Path",
+      "trees": [
+        "MOD_BulkheadPsion",
+        "SKILLTREE_ForcePsyker"
+      ],
+      "description": "Force travels along whatever will carry it: hits on Pinned foes may carry the load on and Pin the next foe in reach, and blows taken with your back to the steel may Pin your attacker where they stand. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_BulkheadPsion@Pinned"
+            },
+            "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_BulkheadPsion@Pinned",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_BulkheadPsion@Pinned",
+                "stacks": 1,
+                "ifSelfHas": "MOD_BulkheadPsion@Braced"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AgainstTheSteel",
+      "name": "Against the Steel",
+      "trees": [
+        "MOD_BulkheadPsion",
+        "MOD_Grappler"
+      ],
+      "description": "A wall is the best hold there is: hits on Pinned foes may lock them Held, and hits on Held foes beside a wall may tighten your Grip. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Grappler@Held",
+                "ifTargetHas": "MOD_BulkheadPsion@Pinned"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Grappler@Held"
+                },
+                {
+                  "value": "wallsNear",
+                  "of": "target",
+                  "atLeast": 1
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Grappler@Grip"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DeadWeight",
+      "name": "Dead Weight",
+      "trees": [
+        "MOD_BulkheadPsion",
+        "MOD_GravemoteAstronomer"
+      ],
+      "description": "Pin something hard enough and it starts to fall: hits on Pinned foes may start them Sagging, and hits on Sagging foes beside a wall may wrench a spike out of it. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GravemoteAstronomer@Sag",
+                "ifTargetHas": "MOD_BulkheadPsion@Pinned"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_GravemoteAstronomer@Sag"
+                },
+                {
+                  "value": "wallsNear",
+                  "of": "target",
+                  "atLeast": 1
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "wallSpikes",
+                "amount": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Piercing",
+                    "min": 2,
+                    "max": 4,
+                    "perRank": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThroughTheWall",
+      "name": "Through the Wall",
+      "trees": [
+        "MOD_BulkheadPsion",
+        "MOD_Juggernaut"
+      ],
+      "description": "Steel is just the last thing in the way: blows taken with your back to the steel may build Inertia, and hits on Pinned foes may spend Inertia to knock the wind out of them, setting back their special attacks two turns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "ifSelfHas": "MOD_BulkheadPsion@Braced"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_BulkheadPsion@Pinned"
+                },
+                {
+                  "has": "MOD_Juggernaut@Inertia",
+                  "of": "self"
+                }
+              ]
+            },
+            "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 2
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "stacks": -1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BlackCommunion",
+      "name": "Black Communion",
+      "trees": [
+        "MOD_Ichorborn",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "The ichor and the void know each other: hits on Tarred foes may drain them, and while Wingshorn, hits on drained foes may grow a torn wing back in the middle of the fight. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Void_Psyker_Drain",
+                "ifTargetHas": "MOD_Ichorborn@Tarred"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "cooldown": 4,
+            "when": {
+              "all": [
+                {
+                  "has": "EFFECT_Void_Psyker_Drain"
+                },
+                {
+                  "has": "MOD_Ichorborn@Shorn",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ichorborn@Pinion",
+                "stacks": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BlackCulture",
+      "name": "Black Culture",
+      "trees": [
+        "MOD_Ichorborn",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Tar is a rich growth medium: hits on Slimed foes may Tar them, and your summons' hits may Tar their targets. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ichorborn@Tarred",
+                "ifTargetHas": "EFFECT_Xeno_Debuff_Green"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Black Culture",
+        "description": "Everything it touches comes away tarred.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ichorborn@Tarred"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "Pitchfire",
+      "name": "Pitchfire",
+      "trees": [
+        "MOD_Ichorborn",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Tar burns, and you knew that: hits on Tarred foes may set them on Fire, and while Wingshorn, hits on burning foes may leave flames on the deck under them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "MOD_Ichorborn@Tarred"
+            },
+            "vfx": "EFFECT_Fire@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "EFFECT_Fire"
+                },
+                {
+                  "has": "MOD_Ichorborn@Shorn",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Fire_Mini",
+                "turns": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThickerThanBlood",
+      "name": "Thicker Than Blood",
+      "trees": [
+        "MOD_Ichorborn",
+        "MOD_Vasculist"
+      ],
+      "description": "Your veins have stopped asking what's in them: hits on Tarred foes may open a Weeping Cut, and while Wingshorn, hits on weeping foes may quicken your Racing Pulse. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@WeepingCut",
+                "ifTargetHas": "MOD_Ichorborn@Tarred"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Vasculist@WeepingCut"
+                },
+                {
+                  "has": "MOD_Ichorborn@Shorn",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Vasculist@Pulse"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FieldNotes",
+      "name": "Field Notes",
+      "trees": [
+        "MOD_Mimeticist",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "You still take notes, just from the inside: hits on Sample-Tagged foes may Slime them, and killing a Slimed foe in a borrowed shape may pass the culture on to the foes around it. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Xeno_Debuff_Green",
+                "ifTargetHas": "MOD_Mimeticist@Tagged"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "radius": 2,
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "MOD_Mimeticist@FormPanther",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormHound",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormHullback",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormLurker",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormWeaver",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormWyrm",
+                      "of": "self"
+                    }
+                  ]
+                },
+                {
+                  "has": "EFFECT_Xeno_Debuff_Green",
+                  "of": "victim"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Xeno_Debuff_Green",
+                "stacks": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BorrowedBones",
+      "name": "Borrowed Bones",
+      "trees": [
+        "MOD_Mimeticist",
+        "MOD_SpliceHost"
+      ],
+      "description": "Your flesh has had practice: blows taken in a borrowed shape may teach your body another Adaptation, and hits on Sample-Tagged foes in Claws form may rake the dart loose into the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_Mimeticist@FormPanther",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormHound",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormHullback",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormLurker",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormWeaver",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormWyrm",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_SpliceHost@Adaptation"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Mimeticist@Tagged"
+                },
+                {
+                  "has": "MOD_SpliceHost@Claws",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Mimeticist@Tagged",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HungryShapes",
+      "name": "Hungry Shapes",
+      "trees": [
+        "MOD_Mimeticist",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "Rebuilding yourself is hungry work, and you were hungry already: hits while the Beast is Unleashed may Sample-Tag your prey, and killing a Tagged foe while Hangry may wake the Beast again. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Mimeticist@Tagged",
+                "ifSelfHas": "EFFECT_UnleashTheBeast"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "cooldown": 6,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Mimeticist@Tagged",
+                  "of": "victim"
+                },
+                {
+                  "has": "EFFECT_Hangry",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "EFFECT_UnleashTheBeast",
+                "stacks": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ApexSample",
+      "name": "Apex Sample",
+      "trees": [
+        "MOD_Mimeticist",
+        "SKILLTREE_Biomods"
+      ],
+      "description": "The best graft is the one you took off something that was trying to eat you: hits on Sample-Tagged foes may bleed them, and blows taken in a borrowed shape may leave a dart in your attacker. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Bleed",
+                "ifTargetHas": "MOD_Mimeticist@Tagged"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "when": {
+              "any": [
+                {
+                  "has": "MOD_Mimeticist@FormPanther",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormHound",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormHullback",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormLurker",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormWeaver",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Mimeticist@FormWyrm",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Mimeticist@Tagged",
+                "stacks": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ForetoldPerimeter",
+      "name": "Foretold Perimeter",
+      "trees": [
+        "MOD_Snareseer",
+        "SKILLTREE_Security"
+      ],
+      "description": "You knew where the wire would need to go: a trap of yours that catches someone may leave a boobytrap in its place, and dodging an attacker may leave them Unnerved. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "trap",
+            "chance": 35,
+            "cooldown": 3,
+            "when": {
+              "value": "health",
+              "of": "victim",
+              "atLeast": 0
+            },
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Security_Boobytrap",
+                "turns": 4
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Snareseer@Unnerved"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ReadAhead",
+      "name": "Read Ahead",
+      "trees": [
+        "MOD_Snareseer",
+        "MOD_ReactionArchitect"
+      ],
+      "description": "A contingency is only a premonition with paperwork: a reaction going off may add a Premonition, and a trap of yours that catches someone may leave them Profiled. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "reaction",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Snareseer@Premonition"
+              }
+            ]
+          },
+          {
+            "on": "trap",
+            "chance": 40,
+            "when": {
+              "value": "health",
+              "of": "victim",
+              "atLeast": 0
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactionArchitect@Profiled"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AlreadyHappened",
+      "name": "Already Happened",
+      "trees": [
+        "MOD_Snareseer",
+        "MOD_ProbabilityShaman"
+      ],
+      "description": "You saw every way it could go: a trap going off may bank Possibility, and while Unobserved, hits on Unnerved foes may replay your last attack at half power, because it already landed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "trap",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Snareseer@Unnerved"
+                },
+                {
+                  "has": "MOD_ProbabilityShaman@Unobserved",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "echo",
+                "falloff": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ForegoneConclusion",
+      "name": "Foregone Conclusion",
+      "trees": [
+        "MOD_Snareseer",
+        "MOD_ParadoxWitch"
+      ],
+      "description": "It was written down before it happened: hits on Unnerved foes may open a Wound Ledger, and a trap catching a foe with a Ledger may add a Premonition. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Ledger",
+                "ifTargetHas": "MOD_Snareseer@Unnerved"
+              }
+            ]
+          },
+          {
+            "on": "trap",
+            "chance": 40,
+            "when": {
+              "has": "MOD_ParadoxWitch@Ledger"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Snareseer@Premonition"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BilgeWater",
+      "name": "Bilge Water",
+      "trees": [
+        "MOD_ReactantHauler",
+        "MOD_Tidewright"
+      ],
+      "description": "Salt finds salt: hits on Waterlogged foes may soak them in Brine, and hits on Brine-Soaked foes may leave them more Waterlogged. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactantHauler@Brined",
+                "ifTargetHas": "MOD_Tidewright@Soaked"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "ifTargetHas": "MOD_ReactantHauler@Brined"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Greasefire",
+      "name": "Greasefire",
+      "trees": [
+        "MOD_ReactantHauler",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Oil, coolant, it all goes up if you ask it right: hits on burning foes may splash them with oil, and hits on Coolant-Frosted foes may set them on Fire, either way setting off your reactions. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactantHauler@Slicked",
+                "ifTargetHas": "EFFECT_Fire"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifTargetHas": "MOD_ReactantHauler@Frosted"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HazmatManifest",
+      "name": "Hazmat Manifest",
+      "trees": [
+        "MOD_ReactantHauler",
+        "SKILLTREE_Chemistry"
+      ],
+      "description": "Somebody should really be writing this down: hits on Grit-Scoured foes may burn them with acid, and dropping an acid-burned foe may turn up another drum of oil. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Acid",
+                "ifTargetHas": "MOD_ReactantHauler@Gritted"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_Acid",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "giveItem",
+                "to": "self",
+                "item": "ArendethClasses:RhOilDrum",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

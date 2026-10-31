@@ -1,0 +1,260 @@
+{
+  "id": "MOD_Juggernaut",
+  "name": "Juggernaut",
+  "description": "A walking siege engine that gets harder to stop the longer the fight goes. Every blow you land or take builds Inertia; at full Inertia you become Unstoppable.\n\nBuilds Inertia (+Armor per stack) from hits and hurts; spend it on shields and an earth-splitting finisher. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "juggernaut.png",
+  "attributePriorities": {
+    "Strength": 4,
+    "Toughness": 3,
+    "Armor": 2
+  },
+  "effects": [
+    {
+      "id": "Inertia",
+      "name": "Inertia",
+      "description": "Mass in motion stays in motion.",
+      "duration": 6,
+      "maxStacks": 6,
+      "stats": {
+        "Armor": 1
+      },
+      "thresholds": [
+        {
+          "at": 6,
+          "message": "Nothing can stop you now.",
+          "actions": [
+            { "do": "effect", "to": "self", "effect": "@Unstoppable" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Unstoppable",
+      "name": "Unstoppable",
+      "description": "You are the immovable object AND the unstoppable force.",
+      "duration": 2,
+      "damageTakenMult": 0.6,
+      "damageDealtMult": 1.2
+    },
+    {
+      "id": "DugIn",
+      "name": "Dug In",
+      "description": "Feet planted, shoulders squared. Hitting you is a mistake they pay for.",
+      "duration": 3,
+      "damageTakenMult": 0.85,
+      "procs": [
+        {
+          "on": "hurt",
+          "actions": [
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Toughness", "scaleMult": 0.3 },
+            { "do": "effect", "to": "self", "effect": "@Inertia" }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1,
+        "HealthMax": 5
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Built to Last",
+        "icon": "juggernaut_t0.png",
+        "description": "Pain is just more momentum.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 50,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Inertia" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Smash",
+        "name": "Pile Driver",
+        "icon": "juggernaut_t1.png",
+        "description": "Hit it until it's flat.",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 7, "scale": "Strength", "scaleMult": 0.5, "perRank": 1 },
+          { "do": "effect", "to": "self", "effect": "@Inertia" }
+        ],
+        "perk": {
+          "name": "Bigger Driver",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/juggernaut_piledriver.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Bull Rush",
+        "icon": "juggernaut_t2.png",
+        "instant": false,
+        "radius": 1.5,
+        "staminaCost": 15,
+        "cooldown": 8,
+        "description": "Charge to a spot and flatten whatever is standing next to it.",
+        "castVfx": "PA_Barbarian_RecklessCharge.impactParticle",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
+        "sound": "event:/Abilities/Misc/Barbarian_Charge",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4 },
+          { "do": "knockback", "amount": 2 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "to": "self", "effect": "@Inertia" }
+        ],
+        "perk": {
+          "name": "Runaway Freight",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Brace",
+        "icon": "juggernaut_t3.png",
+        "cooldown": 12,
+        "description": "Plant your feet. The more momentum you carry, the thicker the plating.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Brace",
+        "actions": [
+          { "do": "effect", "effect": "#Fortified" },
+          { "do": "shield", "amount": 6, "bonusPerStack": 2, "stacksOf": "@Inertia" }
+        ],
+        "perk": {
+          "name": "Bulwark",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Armor": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Momentum Plating",
+        "icon": "juggernaut_t4.png",
+        "description": "Every swing feeds the engine.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Inertia" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Earthshaker",
+        "icon": "juggernaut_t5.png",
+        "radius": 2.5,
+        "staminaCost": 30,
+        "cooldown": 16,
+        "description": "Bring all that momentum down at once.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Inertia", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1, "chance": 50 },
+          { "do": "knockback", "amount": 1 }
+        ],
+        "perk": {
+          "name": "Worldsplitter",
+          "radiusDelta": 1
+        },
+        "sound": "sfx/juggernaut_earthshaker.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Line in the Sand",
+        "icon": "juggernaut_t6.png",
+        "staminaCost": 15,
+        "cooldown": 14,
+        "description": "Stamp the deck and dare them. Everything nearby that can see you comes at you for two turns, and every blow they land feeds the engine and comes back at them.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Brace",
+        "actions": [
+          { "do": "taunt", "to": "self", "radius": 4, "turns": 2 },
+          { "do": "effect", "to": "self", "effect": "@DugIn" },
+          { "do": "effect", "to": "self", "effect": "@Inertia", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Bedrock Stance",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1,
+        "Armor": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Rolling Mass",
+        "icon": "juggernaut_t7.png",
+        "description": "Once you get going, you stay going. Kills feed Inertia, becoming Unstoppable throws up plating, and while Unstoppable your blows bowl people over.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Inertia", "stacks": 2 }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@Unstoppable",
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.5 }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 40,
+            "when": { "has": "@Unstoppable", "of": "self" },
+            "actions": [
+              { "do": "knockback", "amount": 1 },
+              { "do": "stun", "turns": 1 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "prompt": "grotesque wet body transformation, bones cracking and flesh reshaping, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, grotesque wet body transformation, bones cracking and flesh reshaping, sci-fi fantasy game sound effect, clean, no music, no voice, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0007720651337876916,
+  "source_corr": 0.020403970032930374,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "4cae8958713c1768",
+      "score": 0.5989565253257751,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_28.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "98896051f8cebb3c",
+      "score": 0.5985067486763,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_25.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "168716bf77513a1d",
+      "score": 0.5838915705680847,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_3.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "be6615580807ca45",
+      "score": 0.5828177332878113,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 43.wav",
+      "license": "reference",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "669f1fad7062ee66",
+      "score": 0.5825398564338684,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_23.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "174d6265bb55d1cd",
+      "score": 0.5804792046546936,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_24.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "fdf1d8e62ba783bb",
+      "score": 0.5748528242111206,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_27.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4211285451ebf6a5",
+      "score": 0.5716382265090942,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_26.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a6541571441f84e3",
+      "score": 0.5672627687454224,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_4.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "1e469cb2d33fd18b",
+      "score": 0.5655625462532043,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_5.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "4cae8958713c1768",
+    "98896051f8cebb3c",
+    "168716bf77513a1d",
+    "be6615580807ca45",
+    "669f1fad7062ee66",
+    "174d6265bb55d1cd",
+    "fdf1d8e62ba783bb",
+    "4211285451ebf6a5",
+    "a6541571441f84e3",
+    "1e469cb2d33fd18b"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_shift.wav",
+  "sample_rate": 44100
+}

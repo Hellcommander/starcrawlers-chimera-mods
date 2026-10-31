@@ -1,0 +1,608 @@
+{
+  "synergies": [
+    {
+      "id": "ThermalShock",
+      "name": "Thermal Shock",
+      "trees": [
+        "MOD_KelvinMagus",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Hot and cold, back and forth: hits on Burning enemies may supercool them, and hits on Frozen Solid ones may set them on Fire. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "KmFrostHit@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled",
+                "ifTargetHas": "EFFECT_Fire"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "EFFECT_Fire@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 3,
+                "ifTargetHas": "MOD_KelvinMagus@FrozenSolid"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AbsoluteZero",
+      "name": "Absolute Zero",
+      "trees": [
+        "MOD_KelvinMagus",
+        "SKILLTREE_Elementalist"
+      ],
+      "description": "Two schools of cold, one result: hits on Chilled enemies may supercool them, and hits on Supercooled ones may chill them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "KmFrostHit@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled",
+                "ifTargetHas": "EFFECT_Chill"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Chill",
+                "ifTargetHas": "MOD_KelvinMagus@Supercooled"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FlashFreeze",
+      "name": "Flash Freeze",
+      "trees": [
+        "MOD_KelvinMagus",
+        "MOD_Tidewright"
+      ],
+      "description": "Water gives up its heat fastest: hits on Waterlogged enemies may supercool them twice over, and kills on frozen ones may supercool the foes around them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "KmFrostHit@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled",
+                "stacks": 2,
+                "ifTargetHas": "MOD_Tidewright@Soaked"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "radius": 2,
+            "when": {
+              "has": "MOD_KelvinMagus@FrozenSolid",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwoWinters",
+      "name": "Two Winters",
+      "trees": [
+        "MOD_KelvinMagus",
+        "MOD_RimelightSeer"
+      ],
+      "description": "Two kinds of cold feed each other: hits on Supercooled enemies may add Rimebite, and hits on Rimebitten ones may supercool them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@Rimebite",
+                "ifTargetHas": "MOD_KelvinMagus@Supercooled"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "KmFrostHit@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled",
+                "ifTargetHas": "MOD_RimelightSeer@Rimebite"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DownTheHole",
+      "name": "Down the Hole",
+      "trees": [
+        "MOD_LookingGlassRogue",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "A tumbler knows how to fall: while Shrunk, dodges may leave you Hasted, and while Grown, hits may knock the target a tile back. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 30,
+            "vfx": "LgSizePuff@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "#Hasted",
+                "ifSelfHas": "MOD_LookingGlassRogue@Shrunk"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "when": {
+                  "has": "MOD_LookingGlassRogue@Grown",
+                  "of": "self"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "WaywardThoughts",
+      "name": "Wayward Thoughts",
+      "trees": [
+        "MOD_LookingGlassRogue",
+        "SKILLTREE_Psykonics"
+      ],
+      "description": "A mind that's lost its bearings is easy to get into: hits on Topsy-Turvy enemies may scramble them, Silenced for two turns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "silence",
+                "turns": 2,
+                "ifTargetHas": "MOD_LookingGlassRogue@TopsyTurvy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "WrongSideOfTheGlass",
+      "name": "Wrong Side of the Glass",
+      "trees": [
+        "MOD_LookingGlassRogue",
+        "MOD_PhaseDrifter"
+      ],
+      "description": "You've both slipped out of true: hits while Phased may leave the target Topsy-Turvy, and dodges while Grinning may slip you Phased. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "LgWarp@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_LookingGlassRogue@TopsyTurvy",
+                "when": {
+                  "has": "MOD_PhaseDrifter@Phased",
+                  "of": "self"
+                }
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 35,
+            "vfx": "LgGrin@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_PhaseDrifter@Phased",
+                "ifSelfHas": "MOD_LookingGlassRogue@Grinning"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ImprobableTea",
+      "name": "Improbable Tea",
+      "trees": [
+        "MOD_LookingGlassRogue",
+        "MOD_ProbabilityShaman"
+      ],
+      "description": "Nobody can agree whether you're there or how big you are: dodges while Unobserved may build Wonder, and hits with four or more Wonder may bank Possibility. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 40,
+            "vfx": "LgWhimsy@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_LookingGlassRogue@Wonder",
+                "ifSelfHas": "MOD_ProbabilityShaman@Unobserved"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "value": "stacks:MOD_LookingGlassRogue@Wonder",
+              "of": "self",
+              "atLeast": 4
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "MutagenicBrew",
+      "name": "Mutagenic Brew",
+      "trees": [
+        "SKILLTREE_ChaoticMutant",
+        "MOD_Miasmancer"
+      ],
+      "description": "A mutant's gut is half a still already. With both, you can heave the brew straight up from your belly: Toxic Breath, a cone of poison that leaves the air choking.",
+      "bonus": {},
+      "icon": "toxic_breath.png",
+      "grants": [
+        {
+          "base": "Bolt",
+          "name": "Toxic Breath",
+          "icon": "toxic_breath.png",
+          "range": 4,
+          "shape": "cone",
+          "angle": 70,
+          "staminaCost": 12,
+          "cooldown": 5,
+          "description": "Heave up a gutful of mutated brew in a wide cone. It poisons deep and leaves the air thick and choking. The more of a mutant you are, the worse it gets: it hits harder with every Chaotic Mutant rank, rots their strength at rank 3, and at rank 5 can drop them retching.",
+          "sound": "sfx/toxic_breath.wav",
+          "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 4,
+              "max": 8,
+              "scale": "Smarts+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 3
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned",
+              "stacks": 3
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_Miasmancer@Choking"
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned",
+              "stacks": 2,
+              "when": {
+                "value": "rank:SKILLTREE_ChaoticMutant",
+                "atLeast": 3
+              }
+            },
+            {
+              "do": "effect",
+              "effect": "#Weakened",
+              "when": {
+                "value": "rank:SKILLTREE_ChaoticMutant",
+                "atLeast": 3
+              }
+            },
+            {
+              "do": "stun",
+              "turns": 1,
+              "chance": 40,
+              "when": {
+                "value": "rank:SKILLTREE_ChaoticMutant",
+                "atLeast": 5
+              }
+            }
+          ],
+          "attachTo": "Breath of the Station"
+        }
+      ]
+    },
+    {
+      "id": "EtchingVapours",
+      "name": "Etching Vapours",
+      "trees": [
+        "MOD_Etcher",
+        "MOD_Miasmancer"
+      ],
+      "icon": "acid_fog.png",
+      "description": "An etcher's acids carried on a miasmancer's vapour: you can lay a fog that etches everything breathing in it.",
+      "bonus": {},
+      "grants": [
+        {
+          "base": "Blast",
+          "name": "Acid Fog",
+          "icon": "acid_fog.png",
+          "range": 6,
+          "radius": 2,
+          "staminaCost": 14,
+          "cooldown": 6,
+          "description": "Roll a fog of etching acid over a group. It eats a layer into everything in it and hangs on the deck, etching anyone who walks through.",
+          "sound": "../ArendethClasses/sfx/mia_mist.wav",
+          "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 3,
+              "max": 6,
+              "scale": "Smarts+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_Etcher@Etched",
+              "stacks": 2
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Acid"
+            },
+            {
+              "do": "field",
+              "fieldName": "Acid Fog",
+              "turns": 3,
+              "radius": 2,
+              "affects": "enemies",
+              "look": "HAZARD_Acid@0.5",
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "MOD_Etcher@Etched"
+                }
+              ]
+            }
+          ],
+          "attachTo": "Caustic Mist"
+        }
+      ]
+    },
+    {
+      "id": "VolatileVapours",
+      "name": "Volatile Vapours",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_Miasmancer"
+      ],
+      "icon": "dissolving_catalyst.png",
+      "description": "Flux residue and drawn vapour don't sit together quietly: you can lay a catalyst cloud that dissolves on contact and leaves them primed for your other reactions.",
+      "bonus": {},
+      "grants": [
+        {
+          "base": "Blast",
+          "name": "Dissolving Catalyst",
+          "icon": "dissolving_catalyst.png",
+          "range": 6,
+          "radius": 1.6,
+          "staminaCost": 14,
+          "cooldown": 6,
+          "description": "Lay flux residue and acid over a group at once: they dissolve each other right there, and the acid left behind waits for your fire, shock or frost.",
+          "sound": "../ArendethClasses/sfx/mia_bloom.wav",
+          "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 3,
+              "max": 5,
+              "scale": "Smarts+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_FluxSavant@Residue"
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Acid"
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Acid"
+            }
+          ],
+          "attachTo": "Ichor Bloom"
+        }
+      ]
+    },
+    {
+      "id": "FumeDrums",
+      "name": "Fume Drums",
+      "trees": [
+        "MOD_ReactantHauler",
+        "MOD_Miasmancer"
+      ],
+      "icon": "vapour_drum.png",
+      "description": "A hauler's drums are better with a miasmancer's air in them: you can burn a reactant to throw a cloud of poisoned brine and coolant that freezes on whatever it soaks.",
+      "bonus": {},
+      "grants": [
+        {
+          "base": "Blast",
+          "name": "Vapour Drum",
+          "icon": "vapour_drum.png",
+          "range": 5,
+          "radius": 1.6,
+          "staminaCost": 12,
+          "cooldown": 5,
+          "itemCost": [
+            {
+              "tag": "REACTANT",
+              "count": 1
+            }
+          ],
+          "description": "Burn one reactant drum into a cloud of poisoned brine and coolant. It chokes them, and the brine freezes solid on everything it soaked.",
+          "sound": "../ArendethClasses/sfx/mia_grand.wav",
+          "areaVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5",
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 3,
+              "max": 6,
+              "scale": "Strength+Smarts+PsiPower",
+              "scaleMult": 0.12,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned",
+              "stacks": 2
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_Miasmancer@Choking"
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_ReactantHauler@Brined"
+            },
+            {
+              "do": "effect",
+              "effect": "MOD_ReactantHauler@Frosted"
+            }
+          ],
+          "attachTo": "Grand Compound"
+        }
+      ]
+    },
+    {
+      "id": "MiasmaContingency",
+      "name": "Miasma Contingency",
+      "trees": [
+        "MOD_ReactionArchitect",
+        "MOD_Miasmancer"
+      ],
+      "icon": "miasma_tripwire.png",
+      "description": "A reaction architect's contingencies with a miasmancer's vapour in them: you can rig the air around you to gas whoever steps up.",
+      "bonus": {},
+      "grants": [
+        {
+          "base": "Buff",
+          "name": "Miasma Tripwire",
+          "icon": "miasma_tripwire.png",
+          "staminaCost": 10,
+          "cooldown": 8,
+          "description": "Rig the air around you. The next two enemies to step up beside you are gassed: poisoned, choking and hurt.",
+          "sound": "../ArendethClasses/sfx/mia_mist.wav",
+          "actions": [
+            {
+              "do": "arm",
+              "reaction": {
+                "name": "Miasma Tripwire",
+                "on": "approach",
+                "charges": 2,
+                "turns": 10,
+                "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.4",
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Bio",
+                    "min": 4,
+                    "max": 7,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "#Poisoned",
+                    "stacks": 3
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "MOD_Miasmancer@Choking"
+                  }
+                ]
+              }
+            }
+          ],
+          "attachTo": "Caustic Mist"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "recipes": [
+    { "id": "LinemansCowl", "output": "LinemansCowl",
+      "inputs": [ { "item": "GEAR_HEAD_Heavy_Helmet", "count": 1 }, { "item": "WEAPON_AMMO_Shock", "count": 20 } ],
+      "credits": 25 },
+
+    { "id": "ArcbiteRounds", "output": "ArcbiteRounds", "amount": 30,
+      "inputs": [ { "item": "WEAPON_AMMO_Shock", "count": 30 }, { "item": "CONSUME_Small_Medkit", "count": 1 } ] },
+
+    { "id": "FieldPatches", "output": "FieldPatch", "amount": 2,
+      "inputs": [ { "item": "CONSUME_Small_Medkit", "count": 1 } ], "credits": 10, "stations": ["apartment"] },
+
+    { "id": "LinemansCowlMk2", "output": "LinemansCowlMk2",
+      "inputs": [ { "item": "LinemansCowl", "count": 1 }, { "item": "ArcbiteRounds", "count": 30 } ],
+      "requires": { "class": "SKILLTREE_Engineer", "rank": 0 } }
+  ]
+}

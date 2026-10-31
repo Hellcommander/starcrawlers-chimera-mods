@@ -1,0 +1,242 @@
+{
+  "id": "MOD_NaniteHerder",
+  "name": "Nanite Herder",
+  "description": "Somebody has to keep the station's escaped nanites fed, sorted and mostly in their jars. Release swarms that eat enemies from the inside and spread when their host dies, then Recall them to bring the stolen biomass home as healing.\n\nSpreading damage over time with a heal-back payoff. Favors [SMT].",
+  "archetype": "Intellect",
+  "icon": "nanite_herder.png",
+  "attributePriorities": {
+    "Smarts": 5,
+    "Toughness": 1
+  },
+  "effects": [
+    {
+      "id": "Swarm",
+      "name": "Nanite Swarm",
+      "description": "Millions of tiny mouths.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 6,
+      "dot": {
+        "type": "Bio",
+        "min": 1,
+        "max": 1
+      },
+      "stats": {
+        "Armor": -1
+      },
+      "vfx": "EFFECT_Nanite_Infest"
+    },
+    {
+      "id": "Shepherded",
+      "name": "Shepherded",
+      "description": "A swarm with a sense of direction, and appetite to spare for anything it passes.",
+      "duration": -1,
+      "stats": {
+        "HealthMax": 25,
+        "Armor": 3
+      },
+      "damageDealtMult": 1.5,
+      "procs": [
+        {
+          "on": "turn",
+          "radius": 2,
+          "actions": [
+            { "do": "effect", "effect": "@Swarm" }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Moving House",
+        "icon": "nanite_herder_t0.png",
+        "description": "When the host dies, the swarm moves house.",
+        "procs": [
+          {
+            "on": "kill",
+            "radius": 3,
+            "vfx": "EFFECT_Nanite_Infest",
+            "actions": [
+              { "do": "effect", "effect": "@Swarm", "stacks": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Release Swarm",
+        "icon": "nanite_herder_t1.png",
+        "staminaCost": 10,
+        "description": "Uncork a jar in their direction.",
+        "impactVfx": "PA_Nanomancy_Plague.shatterParticle",
+        "sound": "sfx/nanite_release.wav",
+        "actions": [
+          { "do": "effect", "effect": "@Swarm", "stacks": 2 },
+          { "do": "damage", "type": "Bio", "min": 1, "max": 2, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 }
+        ],
+        "perk": {
+          "name": "Bigger Jar",
+          "addActions": [
+            { "do": "effect", "effect": "@Swarm" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Nanite Mending",
+        "icon": "nanite_herder_t2.png",
+        "cooldown": 12,
+        "description": "Your personal swarm stitches you back together.",
+        "castVfx": "PA_Nanomancy_Healing.shatterParticle",
+        "sound": "event:/Abilities/Misc/Heal",
+        "actions": [
+          { "do": "effect", "effect": "#Regenerating" },
+          { "do": "heal", "amount": 4, "scale": "Smarts", "scaleMult": 0.4 }
+        ],
+        "perk": {
+          "name": "Surgical Swarm",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Recall",
+        "icon": "nanite_herder_t3.png",
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Call the swarm home from a target. Each nanite brings back a little of what it ate.",
+        "impactVfx": "PA_Nanomancy_Anger.shatterParticle",
+        "sound": "event:/Abilities/Nanomancy/Nanomancy_Banish_Success",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3 },
+          { "do": "heal", "to": "self", "amount": 2, "bonusPerStack": 3, "stacksOf": "@Swarm", "stacksFrom": "target", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Homing Instinct",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Hitchhikers",
+        "icon": "nanite_herder_t4.png",
+        "description": "Stray nanites hitch a ride on every attack.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "effect": "@Swarm" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Swarm Cloud",
+        "icon": "nanite_herder_t5.png",
+        "radius": 2.5,
+        "staminaCost": 30,
+        "cooldown": 16,
+        "description": "Release every jar at once over a whole area.",
+        "impactVfx": "EFFECT_Nanite_Infest",
+        "sound": "sfx/nanite_cloud.wav",
+        "actions": [
+          { "do": "effect", "effect": "@Swarm", "stacks": 3 },
+          { "do": "effect", "effect": "#Poisoned" }
+        ],
+        "perk": {
+          "name": "Plague Cloud",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Hive Rupture",
+        "icon": "nanite_herder_t6.png",
+        "range": 6,
+        "radius": 2.5,
+        "staminaCost": 25,
+        "cooldown": 12,
+        "description": "Tell every swarm in an area to stop eating and start bursting. The more nanites inside a host, the worse it goes, and a share of the spill comes home to you.",
+        "impactVfx": "PA_Nanomancy_Plague.shatterParticle",
+        "sound": "sfx/nanite_cloud.wav",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Swarm", "consumeStacks": true, "ifTargetHas": "@Swarm" },
+          { "do": "effect", "effect": "#Reeling", "chance": 50 },
+          { "do": "heal", "to": "self", "amount": 3, "scale": "Smarts", "scaleMult": 0.3 }
+        ],
+        "perk": {
+          "name": "Total Rupture",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "HealthMax": 5
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Bellwether Swarm",
+        "icon": "nanite_herder_t7.png",
+        "description": "One swarm finally learned to follow you. When a fight starts the Bellwether gathers at your side, seeding every enemy it drifts past, and if it is torn apart it slowly reforms.",
+        "procs": [
+          {
+            "on": "combatStart",
+            "actions": [
+              { "do": "summon", "to": "self", "unlessSummonAlive": "self", "creature": "nanite_cloud", "summonName": "Bellwether", "maxSummons": 1, "effect": "@Shepherded" }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 15,
+            "when": { "inCombat": true },
+            "actions": [
+              { "do": "summon", "to": "self", "unlessSummonAlive": "self", "creature": "nanite_cloud", "summonName": "Bellwether", "maxSummons": 1, "effect": "@Shepherded" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

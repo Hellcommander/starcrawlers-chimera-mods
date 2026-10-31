@@ -1,0 +1,51 @@
+[ { "particles": [
+  { "id": "fx_bodyguard_shoulder_check_impact", "light": {"color": "#7AA0E8", "range": 2.75, "intensity": 2.121, "time": 0.423},
+    "layers": [
+      {"texture": "fx/bodyguard_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.275], "sizeCurve": "flat", "color": "#D8E8FF", "color2": "#2858B8", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.372], "speed": [0], "size": [1.268], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point"},
+      {"texture": "fx/bodyguard_bits.png", "count": 13, "life": [0.46, 0.987], "speed": [2.608, 5.193], "size": [0.111, 0.2], "gravity": 1.2, "spin": [-360, 360], "color": "#D8E8FF", "color2": "#2858B8", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [1.004, 1.582], "speed": [0.286, 0.808], "size": [0.48, 0.836], "sizeCurve": "grow", "spin": [-50, 50], "color": "#181E28", "color2": "#181E28", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_bodyguard_close_protection_cast", "light": {"color": "#7AA0E8", "range": 2.713, "intensity": 1.67, "time": 0.543},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.428], "speed": [0], "size": [2.04], "sizeCurve": "pop", "color": "#D8E8FF", "color2": "#2858B8", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 8, "life": [0.306, 0.531], "speed": [0.0, 0.301], "size": [0.307, 0.648], "sizeCurve": "pop", "color": "#D8E8FF", "color2": "#2858B8", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 19, "life": [0.654, 1.208], "speed": [0.09, 0.377], "size": [0.095, 0.176], "orbit": 1.102, "color": "#D8E8FF", "color2": "#2858B8", "shape": "ring", "radius": 0.9}
+    ] },
+  { "id": "fx_bodyguard_over_here_cast", "light": {"color": "#7AA0E8", "range": 3.888, "intensity": 2.182, "time": 0.523},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.536], "speed": [0], "size": [3.06], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point", "ground": true, "flat": true},
+      {"texture": "ring", "count": 1, "life": [0.532], "speed": [0], "size": [4.749], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point", "ground": true, "flat": true, "delay": 0.15},
+      {"texture": "spark", "count": 20, "life": [0.286, 0.661], "speed": [3.062, 4.484], "size": [0.084, 0.163], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#D8E8FF", "color2": "#2858B8", "shape": "hemisphere", "radius": 0.3}
+    ] },
+  { "id": "fx_bodyguard_retort_stance_cast", "light": {"color": "#7AA0E8", "range": 2.473, "intensity": 1.251, "time": 0.465},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.761], "speed": [0], "size": [2.029], "sizeCurve": "pulse", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point", "ground": true, "flat": true, "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 7, "life": [0.299, 0.456], "speed": [0.0, 0.318], "size": [0.183, 0.367], "sizeCurve": "pop", "color": "#D8E8FF", "color2": "#2858B8", "shape": "ring", "radius": 0.8, "ground": true, "offset": [0, 0.3, 0]}
+    ] },
+  { "id": "fx_bodyguard_payback_impact", "light": {"color": "#7AA0E8", "range": 4.364, "intensity": 2.758, "time": 0.548},
+    "layers": [
+      {"texture": "fx/bodyguard_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.372], "sizeCurve": "flat", "color": "#D8E8FF", "color2": "#2858B8", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.371], "speed": [0], "size": [1.667], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.561], "speed": [0], "size": [2.29], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/bodyguard_bits.png", "count": 12, "life": [0.471, 0.992], "speed": [2.961, 5.911], "size": [0.111, 0.219], "gravity": 1.2, "spin": [-360, 360], "color": "#D8E8FF", "color2": "#2858B8", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 6, "delay": 0.05, "life": [0.929, 1.608], "speed": [0.316, 0.931], "size": [0.67, 1.364], "sizeCurve": "grow", "spin": [-50, 50], "color": "#181E28", "color2": "#181E28", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "fx/bodyguard_burst.png", "count": 1, "life": [0.483], "speed": [0], "size": [1.73], "sizeCurve": "flat", "color": "#D8E8FF", "color2": "#2858B8", "alpha": 0.85, "shape": "point", "grid": [5, 5]}
+    ] },
+  { "id": "fx_bodyguard_crowd_breaker_area", "light": {"color": "#7AA0E8", "range": 5.835, "intensity": 2.415, "time": 0.581},
+    "layers": [
+      {"texture": "fx/bodyguard_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [3.478], "sizeCurve": "flat", "color": "#D8E8FF", "color2": "#2858B8", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.49], "speed": [0], "size": [5.65], "sizeCurve": "grow", "color": "#D8E8FF", "color2": "#2858B8", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 38, "life": [0.33, 0.657], "speed": [3.732, 7.935], "size": [0.111, 0.219], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#D8E8FF", "color2": "#2858B8", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.875, 1.348], "speed": [0.826, 1.433], "size": [1.109, 1.875], "sizeCurve": "grow", "spin": [-50, 50], "color": "#181E28", "color2": "#181E28", "alpha": 0.5, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]}
+    ] }
+] },
+{ "id": "MOD_Bodyguard", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_bodyguard_shoulder_check_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_bodyguard_close_protection_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_bodyguard_over_here_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_bodyguard_retort_stance_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_bodyguard_payback_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_bodyguard_crowd_breaker_area"}}
+] } ]

@@ -1,0 +1,1069 @@
+{
+  "items": [
+    {
+      "id": "FsPyroRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Pyro Rune",
+      "description": "A capacitor-plate rune scored with a heat glyph. Socketed, it turns a technique to fire. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_pyro_rune.png",
+      "model": {
+        "mesh": "models/items/fs_pyro_rune.glb",
+        "scale": 0.28,
+        "glow": "#FF7A3D",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Fire",
+        "reagent": "EFFECT_Fire",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4",
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsVoltRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Volt Rune",
+      "description": "A rune that never stops buzzing. Socketed, it turns a technique to current. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_volt_rune.png",
+      "model": {
+        "mesh": "models/items/fs_volt_rune.glb",
+        "scale": 0.28,
+        "glow": "#FFE066",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Shock",
+        "reagent": "EFFECT_Shock",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsCryoRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Cryo Rune",
+      "description": "Frost grows on this rune even in your pocket. Socketed, it turns a technique to cold. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_cryo_rune.png",
+      "model": {
+        "mesh": "models/items/fs_cryo_rune.glb",
+        "scale": 0.28,
+        "glow": "#9FD8FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Cryo",
+        "reagent": "EFFECT_Chill",
+        "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsCausticRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Caustic Rune",
+      "description": "A rune etched by its own glyph. Socketed, it turns a technique to acid. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_caustic_rune.png",
+      "model": {
+        "mesh": "models/items/fs_caustic_rune.glb",
+        "scale": 0.28,
+        "glow": "#9BE15D",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Bio",
+        "reagent": "EFFECT_Acid",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsAetherRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Aether Rune",
+      "description": "A rune cut from something that was never quite metal. Socketed, the technique deals raw aether and leaves residue that reacts with everything. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_aether_rune.png",
+      "model": {
+        "mesh": "models/items/fs_aether_rune.glb",
+        "scale": 0.28,
+        "glow": "#B58CFF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Rare",
+      "value": 60,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T2": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            3,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Psi",
+        "reagent": "MOD_FluxSavant@Residue",
+        "power": 1.1,
+        "impactVfx": "PA_Psykonics_Warp.castParticle@0.4",
+        "tier": 2,
+        "wear": 6
+      }
+    },
+    {
+      "id": "FsForkRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Fork Rune",
+      "description": "A split glyph. The technique jumps on to one more enemy nearby, a little weaker. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_fork_rune.png",
+      "model": {
+        "mesh": "models/items/fs_fork_rune.glb",
+        "scale": 0.28,
+        "glow": "#6FE3FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "shape",
+        "jumps": 1,
+        "power": 0.85,
+        "instability": 1,
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsBloomRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Bloom Rune",
+      "description": "A starburst glyph. The technique bursts over everyone around the target, at reduced power. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_bloom_rune.png",
+      "model": {
+        "mesh": "models/items/fs_bloom_rune.glb",
+        "scale": 0.28,
+        "glow": "#FF9F43",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "shape",
+        "radius": 1.2,
+        "power": 0.8,
+        "cost": 1,
+        "instability": 1,
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsLensRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Lens Rune",
+      "description": "A focusing glyph. Longer reach, tighter hit. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_lens_rune.png",
+      "model": {
+        "mesh": "models/items/fs_lens_rune.glb",
+        "scale": 0.28,
+        "rotation": [
+          0,
+          90,
+          0
+        ],
+        "glow": "#6FE3FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "shape",
+        "range": 3,
+        "power": 1.1,
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsOverclockRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Overclock Rune",
+      "description": "A rune with its limiter filed off. Much more power; the rig pays for it. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_overclock_rune.png",
+      "model": {
+        "mesh": "models/items/fs_overclock_rune.glb",
+        "scale": 0.28,
+        "glow": "#FF5050",
+        "glowStrength": 0.4
+      },
+      "rarity": "Rare",
+      "value": 60,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T2": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            3,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "power",
+        "power": 1.5,
+        "stamina": 2,
+        "instability": 2,
+        "tier": 2,
+        "wear": 6
+      }
+    },
+    {
+      "id": "FsCapacitorRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Capacitor Rune",
+      "description": "A storage glyph. The technique costs less stamina. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_capacitor_rune.png",
+      "model": {
+        "mesh": "models/items/fs_capacitor_rune.glb",
+        "scale": 0.28,
+        "glow": "#6FE3FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "power",
+        "cost": -2,
+        "power": 0.9,
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsCoolantRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Coolant Rune",
+      "description": "A rune that stays cold to the touch. Shorter cooldown, and it soaks up some of the instability the other runes make. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_coolant_rune.png",
+      "model": {
+        "mesh": "models/items/fs_coolant_rune.glb",
+        "scale": 0.28,
+        "rotation": [
+          0,
+          90,
+          0
+        ],
+        "glow": "#9FD8FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "power",
+        "cooldown": -2,
+        "instability": -1,
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsSiphonRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Siphon Rune",
+      "description": "A glyph that drinks from the discharge. Each cast pours some stamina back into you. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_siphon_rune.png",
+      "model": {
+        "mesh": "models/items/fs_siphon_rune.glb",
+        "scale": 0.28,
+        "rotation": [
+          0,
+          90,
+          0
+        ],
+        "glow": "#B58CFF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Rare",
+      "value": 60,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T2": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            3,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "payload",
+        "instability": 1,
+        "selfActions": [
+          {
+            "do": "stamina",
+            "to": "self",
+            "amount": 4
+          }
+        ],
+        "tier": 2,
+        "wear": 6
+      }
+    },
+    {
+      "id": "FsTetherRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Tether Rune",
+      "description": "A linked glyph. Whatever the technique hits is dragged a step toward you. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_tether_rune.png",
+      "model": {
+        "mesh": "models/items/fs_tether_rune.glb",
+        "scale": 0.28,
+        "glow": "#6FE3FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Common",
+      "value": 25,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T1": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            0,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "payload",
+        "actions": [
+          {
+            "do": "pull",
+            "amount": 1
+          }
+        ],
+        "tier": 1
+      }
+    },
+    {
+      "id": "FsMarkRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Mark Rune",
+      "description": "A targeting glyph. Half the time it marks whatever it hits for everyone to see. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_mark_rune.png",
+      "model": {
+        "mesh": "models/items/fs_mark_rune.glb",
+        "scale": 0.28,
+        "glow": "#FF5050",
+        "glowStrength": 0.4
+      },
+      "rarity": "Rare",
+      "value": 60,
+      "stackMax": 10,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T2": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            3,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "payload",
+        "actions": [
+          {
+            "do": "effect",
+            "effect": "#Marked",
+            "chance": 50,
+            "turns": 3
+          }
+        ],
+        "tier": 2,
+        "wear": 6
+      }
+    },
+    {
+      "id": "FsSingularityRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Singularity Rune",
+      "description": "A master rune that folds space a little. The technique bursts wide and drags everything it hits into one heap. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_singularity_rune.png",
+      "model": {
+        "mesh": "models/items/fs_singularity_rune.glb",
+        "scale": 0.28,
+        "rotation": [
+          0,
+          90,
+          0
+        ],
+        "glow": "#B58CFF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Epic",
+      "value": 140,
+      "stackMax": 5,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T3": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            6,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "shape",
+        "radius": 1.5,
+        "power": 0.9,
+        "instability": 2,
+        "actions": [
+          {
+            "do": "pull",
+            "amount": 2,
+            "pullToward": "center"
+          }
+        ],
+        "tier": 3,
+        "wear": 4
+      }
+    },
+    {
+      "id": "FsPrismRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Prism Rune",
+      "description": "A master rune that splits the technique into every element at once. Each hit adds a random reagent on top of the usual one, so reactions go off on contact. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_prism_rune.png",
+      "model": {
+        "mesh": "models/items/fs_prism_rune.glb",
+        "scale": 0.28,
+        "glow": "#FFFFFF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Epic",
+      "value": 140,
+      "stackMax": 5,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T3": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            6,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "element",
+        "element": "Energy",
+        "instability": 1,
+        "actions": [
+          {
+            "do": "random",
+            "options": [
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Fire"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Chill"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Acid"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "tier": 3,
+        "wear": 4
+      }
+    },
+    {
+      "id": "FsCascadeRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Cascade Rune",
+      "description": "A master rune that leaves aether residue on everything it touches - fuel for the next reaction. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_cascade_rune.png",
+      "model": {
+        "mesh": "models/items/fs_cascade_rune.glb",
+        "scale": 0.28,
+        "glow": "#B58CFF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Epic",
+      "value": 140,
+      "stackMax": 5,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T3": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            6,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "payload",
+        "actions": [
+          {
+            "do": "effect",
+            "effect": "MOD_FluxSavant@Residue"
+          }
+        ],
+        "tier": 3,
+        "wear": 4
+      }
+    },
+    {
+      "id": "FsParadoxRune",
+      "base": "CONSUME_TemperedGlassPhial",
+      "name": "Paradox Rune",
+      "description": "A master rune that is never sure which timeline it is in. Much stronger, and every cast rolls: sometimes the rig resets itself, sometimes it shakes apart. Set it into a skill at the rune matrix. It runs flat after a number of casts, and does nothing until you recharge it.",
+      "icon": "items/fs_paradox_rune.png",
+      "model": {
+        "mesh": "models/items/fs_paradox_rune.glb",
+        "scale": 0.28,
+        "glow": "#6FE3FF",
+        "glowStrength": 0.4
+      },
+      "rarity": "Epic",
+      "value": 140,
+      "stackMax": 5,
+      "tags": {
+        "FLUX_RUNE": 1,
+        "FLUX_RUNE_T3": 1
+      },
+      "loot": [
+        {
+          "type": "Consumable",
+          "floors": [
+            6,
+            30
+          ],
+          "weight": 1
+        }
+      ],
+      "rune": {
+        "kind": "power",
+        "power": 1.35,
+        "selfActions": [
+          {
+            "do": "random",
+            "options": [
+              {
+                "name": "Lucky timeline",
+                "weight": 2,
+                "actions": [
+                  {
+                    "do": "cooldowns",
+                    "amount": 2
+                  },
+                  {
+                    "do": "stamina",
+                    "to": "self",
+                    "amount": 8
+                  }
+                ]
+              },
+              {
+                "weight": 3,
+                "actions": []
+              },
+              {
+                "name": "Bad timeline",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_FluxSavant@Instability",
+                    "stacks": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "tier": 3,
+        "wear": 4
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "id": "MakeFsPyroRune",
+      "output": "FsPyroRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsVoltRune",
+      "output": "FsVoltRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsCryoRune",
+      "output": "FsCryoRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsCausticRune",
+      "output": "FsCausticRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsAetherRune",
+      "output": "FsAetherRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 3
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 2
+      }
+    },
+    {
+      "id": "MakeFsForkRune",
+      "output": "FsForkRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsBloomRune",
+      "output": "FsBloomRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsLensRune",
+      "output": "FsLensRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsOverclockRune",
+      "output": "FsOverclockRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 3
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 2
+      }
+    },
+    {
+      "id": "MakeFsCapacitorRune",
+      "output": "FsCapacitorRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsCoolantRune",
+      "output": "FsCoolantRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsSiphonRune",
+      "output": "FsSiphonRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 3
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 2
+      }
+    },
+    {
+      "id": "MakeFsTetherRune",
+      "output": "FsTetherRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 0
+      }
+    },
+    {
+      "id": "MakeFsMarkRune",
+      "output": "FsMarkRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T1",
+          "count": 3
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 2
+      }
+    },
+    {
+      "id": "MakeFsSingularityRune",
+      "output": "FsSingularityRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T2",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 4
+      }
+    },
+    {
+      "id": "MakeFsPrismRune",
+      "output": "FsPrismRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T2",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 4
+      }
+    },
+    {
+      "id": "MakeFsCascadeRune",
+      "output": "FsCascadeRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T2",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 4
+      }
+    },
+    {
+      "id": "MakeFsParadoxRune",
+      "output": "FsParadoxRune",
+      "amount": 1,
+      "inputs": [
+        {
+          "tag": "FLUX_RUNE_T2",
+          "count": 2
+        }
+      ],
+      "requires": {
+        "class": "MOD_FluxSavant",
+        "rank": 4
+      }
+    }
+  ]
+}

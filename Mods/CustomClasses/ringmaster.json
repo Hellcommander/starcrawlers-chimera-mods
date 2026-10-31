@@ -1,0 +1,249 @@
+{
+  "id": "MOD_Ringmaster",
+  "name": "Ringmaster",
+  "description": "Every fight is a show, and the crowd is always watching. Flashy hits and kills build Applause; at five the crowd's roar heals you, and at ten the standing ovation stuns everyone around you. The Grand Finale cashes in the whole house.\n\nShowboating brawler that ramps through a fight. Favors [SAV] and [AGL].",
+  "archetype": "Guile",
+  "icon": "ringmaster.png",
+  "attributePriorities": {
+    "Savvy": 4,
+    "Agility": 2
+  },
+  "effects": [
+    {
+      "id": "Applause",
+      "name": "Applause",
+      "description": "The crowd loves you. Keep it that way.",
+      "duration": 8,
+      "maxStacks": 10,
+      "stats": {
+        "Savvy": 1
+      },
+      "thresholds": [
+        {
+          "at": 5,
+          "message": "The crowd roars!",
+          "actions": [
+            { "do": "heal", "to": "self", "amount": 6 }
+          ]
+        }
+      ],
+      "burstAt": 10,
+      "burstRadius": 3,
+      "burstVfx": "PA_ThoughtLeader_FI.castParticle",
+      "burstSound": "event:/Abilities/Smuggler/Smugger_Flashbang",
+      "burstActions": [
+        { "do": "stun", "turns": 2 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Showmanship",
+        "icon": "ringmaster_t0.png",
+        "description": "Make it look good and they'll cheer.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Applause" }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Applause", "stacks": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Whip Crack",
+        "icon": "ringmaster_t1.png",
+        "range": 3,
+        "description": "Reach out and touch someone, loudly.",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 2, "max": 5, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "#Reeling", "chance": 30 }
+        ],
+        "perk": {
+          "name": "Bullwhip",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/ringmaster_whip.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Ring of Fire",
+        "icon": "ringmaster_t2.png",
+        "description": "A hoop of flame around you. Jump through it if you dare.",
+        "castVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle",
+        "sound": "event:/Abilities/ChaoticMutant/Mutant_Draconic_Fire",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 2, "max": 5, "scale": "Savvy", "scaleMult": 0.3 },
+          { "do": "effect", "effect": "#Burning" },
+          { "do": "effect", "to": "self", "effect": "@Applause" }
+        ],
+        "perk": {
+          "name": "Bigger Hoop",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Cannon Act",
+        "icon": "ringmaster_t3.png",
+        "instant": false,
+        "range": 6,
+        "radius": 1.5,
+        "cooldown": 9,
+        "staminaCost": 15,
+        "description": "Get fired out of a cannon. Land on someone.",
+        "castVfx": "PA_Barbarian_RecklessCharge.impactParticle",
+        "sound": "event:/Abilities/Misc/Barbarian_Charge",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.3 },
+          { "do": "knockback", "amount": 2 },
+          { "do": "effect", "to": "self", "effect": "@Applause" }
+        ],
+        "perk": {
+          "name": "Double Cannon",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Work the Crowd",
+        "icon": "ringmaster_t4.png",
+        "cooldown": 14,
+        "description": "Wave, bow, and soak up the cheers.",
+        "castVfx": "PA_ThoughtLeader_FI.PS_Heal",
+        "sound": "event:/Abilities/Misc/Bloodlust",
+        "actions": [
+          { "do": "effect", "effect": "@Applause", "stacks": 3 },
+          { "do": "effect", "effect": "#Hasted" }
+        ],
+        "perk": {
+          "name": "Encore Bow",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Grand Finale",
+        "icon": "ringmaster_t5.png",
+        "radius": 3,
+        "staminaCost": 30,
+        "cooldown": 18,
+        "description": "Fireworks, confetti and a lot of shrapnel. The louder the crowd, the bigger the bang.",
+        "castVfx": "PA_Elementalist_MagmaBurst.castParticle",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+        "sound": "sfx/ringmaster_finale.wav",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Applause", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1, "chance": 40 }
+        ],
+        "perk": {
+          "name": "Grand Grand Finale",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Lion Taming",
+        "icon": "ringmaster_t6.png",
+        "range": 3,
+        "staminaCost": 20,
+        "cooldown": 10,
+        "description": "Snare the biggest brute in the room with the whip, haul it into the ring and make it look at nobody but you. The crowd lives for this part.",
+        "sound": "sfx/ringmaster_whip.wav",
+        "actions": [
+          { "do": "pull", "amount": 2 },
+          { "do": "damage", "type": "Slashing", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "taunt", "turns": 2 },
+          { "do": "exhaust", "amount": 2 },
+          { "do": "effect", "to": "self", "effect": "@Applause", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Head in the Jaws",
+          "addActions": [
+            { "do": "stun", "turns": 1, "chance": 40 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Ringside Nerve",
+        "icon": "ringmaster_t7.png",
+        "description": "A near miss is half the act. Every dodge and every lucky blow gets a cheer, and a loud enough house won't let its star go down.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Applause" }
+            ]
+          },
+          {
+            "on": "crit",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Applause" }
+            ]
+          },
+          {
+            "on": "hurt",
+            "cooldown": 4,
+            "when": { "value": "stacks:@Applause", "of": "self", "atLeast": 5 },
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 6, "bonusPerStack": 1, "stacksOf": "@Applause", "stacksFrom": "self" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "prompt": "brine freezing solid with a sharp crackle of ice, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.9,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "e100d204fcbb75e7",
+      "score": 0.5323379635810852,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "283fc076e25c10f1",
+      "score": 0.52642422914505,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e340505adc466282",
+      "score": 0.5210431218147278,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "6df0b747925c0918",
+      "score": 0.5183163285255432,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "b4ffa2ef836ed83e",
+      "score": 0.5181729197502136,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Big D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "6f7e7c72f0782982",
+      "score": 0.5154120326042175,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "271e8bc315770197",
+      "score": 0.513611912727356,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Big E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "742af9a026e9ca31",
+      "score": 0.5101405382156372,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "edc2d65970c1373a",
+      "score": 0.503145694732666,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "8ed4b1d9b2c53f15",
+      "score": 0.5016043186187744,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "e100d204fcbb75e7",
+    "283fc076e25c10f1",
+    "e340505adc466282",
+    "6df0b747925c0918",
+    "b4ffa2ef836ed83e",
+    "6f7e7c72f0782982",
+    "271e8bc315770197",
+    "742af9a026e9ca31",
+    "edc2d65970c1373a",
+    "8ed4b1d9b2c53f15"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_freeze.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.058,
+  "semitones": 6,
+  "width": 0.63,
+  "listen": {
+    "match": 0.336,
+    "clean": -2.439,
+    "faults": []
+  }
+}

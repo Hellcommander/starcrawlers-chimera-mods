@@ -1,0 +1,1100 @@
+{
+  "synergies": [
+    {
+      "id": "ControlledVariables",
+      "name": "Controlled Variables",
+      "trees": [
+        "MOD_Axiomancer",
+        "MOD_FluxSavant"
+      ],
+      "description": "Every experiment gets written up: hits on residue-coated foes may add a note to their Case Study, and hits on studied foes may leave a film of Aether Residue for your reactions to find. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@CaseStudy",
+                "ifTargetHas": "MOD_FluxSavant@Residue"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue",
+                "ifTargetHas": "MOD_Axiomancer@CaseStudy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FrozenPremise",
+      "name": "Frozen Premise",
+      "trees": [
+        "MOD_Axiomancer",
+        "MOD_RimelightSeer"
+      ],
+      "description": "A mind gone still is easy to read: hits on foes with a Splintered Will may add to their Case Study, and hits on studied foes may leave Rimebite in the thought. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@CaseStudy",
+                "ifTargetHas": "MOD_RimelightSeer@SplinteredWill"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@Rimebite",
+                "ifTargetHas": "MOD_Axiomancer@CaseStudy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OrbitalProof",
+      "name": "Orbital Proof",
+      "trees": [
+        "MOD_Axiomancer",
+        "MOD_GravemoteAstronomer"
+      ],
+      "description": "Gravity is only arithmetic done slowly: hits on Sagging foes may add to their Case Study, and skills you use while holding Insight may pull another mote into orbit. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@CaseStudy",
+                "ifTargetHas": "MOD_GravemoteAstronomer@Sag"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_GravemoteAstronomer@Orbit",
+                "ifSelfHas": "MOD_Axiomancer@Insight"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThinkingInSilence",
+      "name": "Thinking in Silence",
+      "trees": [
+        "MOD_Axiomancer",
+        "SKILLTREE_Psykonics"
+      ],
+      "description": "Meditation is only thinking without interruptions: each turn spent Meditating may grant Insight and break a circular argument, and hits on studied foes may leave you Lucid. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Axiomancer@Insight",
+                "ifSelfHas": "EFFECT_Psykonics_Meditate"
+              },
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "MOD_Axiomancer@Circular",
+                "ifSelfHas": "EFFECT_Psykonics_Meditate"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "has": "MOD_Axiomancer@CaseStudy"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Axiomancer@Lucidity"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SalvageCurrent",
+      "name": "Salvage Current",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_RigJockey"
+      ],
+      "description": "A hot rig makes a fine bench burner: with Rig Heat built up, hits on residue-coated foes may set them alight (and off), and killing a foe that was Stripped Down may vent two Rig Heat. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "EFFECT_Fire@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 2,
+                "ifSelfHas": "MOD_RigJockey@Heat",
+                "ifTargetHas": "MOD_FluxSavant@Residue"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "when": {
+              "has": "MOD_RigJockey@Stripped",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RigJockey@Heat",
+                "stacks": -2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SharedSolvent",
+      "name": "Shared Solvent",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_Etcher"
+      ],
+      "description": "Etchant is just a slower reagent: hits on Scored foes may splash them with acid for your reactions to catch, and hits on Galvanized foes may score another layer. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Acid",
+                "turns": 3,
+                "ifTargetHas": "MOD_Etcher@Etched"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "ifTargetHas": "MOD_FluxSavant@Galvanized"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PrimordialReagents",
+      "name": "Primordial Reagents",
+      "trees": [
+        "MOD_FluxSavant",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Every ooze is a reagent if you know the recipe: hits on foes carrying red, blue or green ooze may add fire, frost or acid to set off your reactions, and hits on Slimed foes may leave Aether Residue. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "turns": 2,
+                "ifTargetHas": "EFFECT_Xeno_Ooze_Red"
+              },
+              {
+                "do": "effect",
+                "effect": "EFFECT_Chill",
+                "turns": 2,
+                "ifTargetHas": "EFFECT_Xeno_Ooze_Blue"
+              },
+              {
+                "do": "effect",
+                "effect": "EFFECT_Acid",
+                "turns": 3,
+                "ifTargetHas": "EFFECT_Xeno_Ooze_Green"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "EFFECT_Xeno_Debuff_Green",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue",
+                "ifTargetHas": "EFFECT_Xeno_Debuff_Green"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "JunkyardRules",
+      "name": "Junkyard Rules",
+      "trees": [
+        "MOD_RigJockey",
+        "MOD_Scrapper"
+      ],
+      "description": "Anything that goes down is salvage: hits while you have Grit may pry a foe's plating Stripped Down, and blows taken while Plated Up may build Grit. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 20,
+            "vfx": "PA_Smuggler_Fistful.PS_impact@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RigJockey@Stripped",
+                "ifSelfHas": "MOD_Scrapper@Grit"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit",
+                "ifSelfHas": "MOD_RigJockey@Plated"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwinBoilers",
+      "name": "Twin Boilers",
+      "trees": [
+        "MOD_RigJockey",
+        "MOD_Emberhorn"
+      ],
+      "description": "Two boilers, one gauge: hits with Rig Heat built up may stoke your Head of Steam, and hits on Horn-Torn foes while the rig runs hot may ram them back a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Emberhorn@Steam",
+                "ifSelfHas": "MOD_RigJockey@Heat"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "ifSelfHas": "MOD_RigJockey@Heat",
+                "ifTargetHas": "MOD_Emberhorn@Gored"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BoltedOnArsenal",
+      "name": "Bolted-On Arsenal",
+      "trees": [
+        "MOD_RigJockey",
+        "SKILLTREE_Prototype"
+      ],
+      "description": "The rig and the arm cannon share one frame: blows taken while the Arm Cannon is charged may lock your plates down, and hits on Stripped Down foes may short out their special attacks for a turn. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_RigJockey@Plated",
+                "ifSelfHas": "EFFECT_Prototype_ArmCannon_Ready"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "MOD_RigJockey@Stripped"
+            },
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SigilCast",
+      "name": "Sigil-Cast",
+      "trees": [
+        "MOD_Castborn",
+        "MOD_Runeforger"
+      ],
+      "description": "Sigils set deepest in fresh metal: hits on Slagged foes may steady your Graver's Focus, blows taken behind an Etched Ward may start your plates mending, and whoever strikes your watchmen and sentries may come away Slagged. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Runeforger@GraversFocus",
+                "when": {
+                  "has": "MOD_Castborn@Slagged",
+                  "of": "victim"
+                }
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "vfx": "PA_Shieldbearer_Brace.PS_regen",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Castborn@Mending",
+                "ifSelfHas": "MOD_Runeforger@EtchedWard"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Sigil-Seamed",
+        "description": "Its plating was poured around a sigil, and the seams spit.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Castborn@Slagged"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "DropForge",
+      "name": "Drop Forge",
+      "trees": [
+        "MOD_Castborn",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "A Backswing is a forge hammer coming back up: hits during a Downswing may coat foes in slag, and with a ram fitted, hits on Slagged foes may crack the crust and leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Castborn@Slagged",
+                "ifSelfHas": "EFFECT_Downswing"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_Castborn@RamFitting",
+                  "of": "self"
+                },
+                {
+                  "has": "MOD_Castborn@Slagged"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "MOD_Castborn@Slagged"
+              },
+              {
+                "do": "effect",
+                "effect": "#Exposed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BulkingSeason",
+      "name": "Bulking Season",
+      "trees": [
+        "MOD_Emberhorn",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "Every rep goes in the boiler: while you're Pumped Up, the hits you land and the hits you take may both stoke your Head of Steam. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Emberhorn@Steam",
+                "ifSelfHas": "EFFECT_Bodybuilding_Pump"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Emberhorn@Steam",
+                "ifSelfHas": "EFFECT_Bodybuilding_Pump"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NaniteEtchant",
+      "name": "Nanite Etchant",
+      "trees": [
+        "MOD_Etcher",
+        "SKILLTREE_Nanomancy"
+      ],
+      "description": "Nanites make tireless engravers: hits on foes with a Nanite Hex or Nanite Plague may score another layer, and dropping a Scored foe may hand back some Reagent. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "EFFECT_Nanite_Infest",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "ifTargetHas": "EFFECT_Nanomancy_Hex"
+              },
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "ifTargetHas": "EFFECT_Nanite_Plague"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "when": {
+              "has": "MOD_Etcher@Etched",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Etcher@Reagent",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RotAndRoot",
+      "name": "Rot and Root",
+      "trees": [
+        "MOD_GloomsporeWarden",
+        "MOD_Graftwild"
+      ],
+      "description": "Fungus and heartwood share one soil: hits on Clogspore-choked foes may take root as Gloomrot, hits on rotting foes may clog them with spores, and your caps' and vines' hits may spread the rot. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot",
+                "ifTargetHas": "MOD_Graftwild@Clogspore"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Graftwild@Clogspore",
+                "ifTargetHas": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          }
+        ]
+      },
+      "allies": {
+        "name": "Deep-Rooted",
+        "description": "Its roots run into the same soil as the colony's.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "PetriBloom",
+      "name": "Petri Bloom",
+      "trees": [
+        "MOD_GloomsporeWarden",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Slime makes a rich culture: hits on Slimed foes may root Gloomrot in them, and hits on rotting foes that carry green ooze may burst, spreading the rot to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "EFFECT_Xeno_Debuff_Green",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot",
+                "ifTargetHas": "EFFECT_Xeno_Debuff_Green"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "MOD_GloomsporeWarden@Gloomrot"
+                },
+                {
+                  "has": "EFFECT_Xeno_Ooze_Green"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_GloomsporeWarden@Gloomrot",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HungryWood",
+      "name": "Hungry Wood",
+      "trees": [
+        "MOD_Graftwild",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "Mutation and grafting share one appetite: hits while the Beast is Unleashed may stoke Sap Fever, and hits while you're Hangry may tear a tendon. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Graftwild@SapFever",
+                "ifSelfHas": "EFFECT_UnleashTheBeast"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "PA_SerratedSpines.PS_impact@0.6",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Graftwild@Hockcut",
+                "ifSelfHas": "EFFECT_Hangry"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PlungingFire",
+      "name": "Plunging Fire",
+      "trees": [
+        "MOD_GravemoteAstronomer",
+        "SKILLTREE_BigGuns"
+      ],
+      "description": "Suppressing fire and falling stars pin the same foe: hits on Suppressed foes may start them Sagging, and hits on Cratered foes may keep their heads down, Suppressed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GravemoteAstronomer@Sag",
+                "ifTargetHas": "EFFECT_BigGuns_Suppression"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_BigGuns_Suppression",
+                "ifTargetHas": "MOD_GravemoteAstronomer@Cratered"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ColdBoot",
+      "name": "Cold Boot",
+      "trees": [
+        "MOD_RimelightSeer",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "A frozen system is an open system: hits on Snowcrashed foes may let Rimebite in, and hits on Mindmelted foes may splinter their will. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@Rimebite",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Snowcrash"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "PA_Hacker_Hack.hackParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@SplinteredWill",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Mindmelt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChromedSigils",
+      "name": "Chromed Sigils",
+      "trees": [
+        "MOD_Runeforger",
+        "SKILLTREE_Cybertechnician"
+      ],
+      "description": "Chrome takes an engraving beautifully: blows taken on your Unobtanium Chrome Job may steady your Graver's Focus, and hits while an Etched Ward holds may take a turn off your other cooldowns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Runeforger@GraversFocus",
+                "ifSelfHas": "EFFECT_Cybertechnician_Chrome"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "cooldown": 3,
+            "when": {
+              "has": "MOD_Runeforger@EtchedWard",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "cooldowns",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SandInTheEyes",
+      "name": "Sand in the Eyes",
+      "trees": [
+        "MOD_Scrapper",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "A flashbang is just a very bright chair: hits on Blinded foes may leave them Reeling, and dropping a Blinded foe may get your Grit right up. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling",
+                "turns": 2,
+                "ifTargetHas": "EFFECT_Blind"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "when": {
+              "has": "EFFECT_Blind",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ShrapnelCoil",
+      "name": "Shrapnel Coil",
+      "trees": [
+        "MOD_Coilwright",
+        "SKILLTREE_Soldier"
+      ],
+      "description": "Ordnance and current share a fuse: hits on Electrified foes may load them with Static, and hits on Static-loaded foes may rip them open, leaving them Gashed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Engineer_Boltron.PS_shock",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Coilwright@Static",
+                "ifTargetHas": "EFFECT_Shock"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Gashed",
+                "ifTargetHas": "MOD_Coilwright@Static"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwinGusts",
+      "name": "Twin Gusts",
+      "trees": [
+        "MOD_Squallblade",
+        "SKILLTREE_DualWield"
+      ],
+      "description": "Two blades cut two crosswinds: hits during a Sinister Strike may tear Crosswind into the target, and slipping a blow From the Shadows may pile Buffeted pressure on the attacker. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_DualWield_SinisterStrike.impactEffect@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Crosswind",
+                "ifSelfHas": "EFFECT_DualWield_SinisterStrike"
+              }
+            ]
+          },
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Buffeted",
+                "ifSelfHas": "EFFECT_DualWield_SinisterStrike_Dodge"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SaltAndGrog",
+      "name": "Salt and Grog",
+      "trees": [
+        "MOD_Tidewright",
+        "SKILLTREE_SpacePirate"
+      ],
+      "description": "Old sea-dogs drink from both barrels: hits on Black-Spotted foes may drench them Waterlogged, and with grog in your belly, hits on Waterlogged foes may open a Brinecut. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "stacks": 2,
+                "ifTargetHas": "EFFECT_Pirate_BlackSpot"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Brinecut",
+                "ifSelfHas": "EFFECT_Pirate_GrogBottle",
+                "ifTargetHas": "MOD_Tidewright@Soaked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BluntTrauma",
+      "name": "Blunt Trauma",
+      "trees": [
+        "MOD_Vasculist",
+        "SKILLTREE_Barbarian"
+      ],
+      "description": "A hard enough knock sends the blood rushing: hits on Smashed foes may push up their Vein Pressure, and kills made with a Racing Pulse may spike it in the foes around them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pressure",
+                "ifTargetHas": "EFFECT_Barbarian_Slow"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "radius": 2,
+            "when": {
+              "has": "MOD_Vasculist@Pulse",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pressure"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CrossScribed",
+      "name": "Cross-Scribed",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_Runeforger"
+      ],
+      "description": "Rune and glyph are two dialects of one script: foes that die coated in Aether Residue may leave enough current behind to fill a Glyph Cell, and hits made with Graver's Focus may leave Aether Residue. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "when": {
+              "has": "MOD_FluxSavant@Residue",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "giveItem",
+                "to": "self",
+                "item": "ArendethClasses:RfGlyphCell",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue",
+                "ifSelfHas": "MOD_Runeforger@GraversFocus"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

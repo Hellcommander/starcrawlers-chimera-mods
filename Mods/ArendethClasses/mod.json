@@ -1,0 +1,11 @@
+{
+  "id": "ArendethClasses",
+  "name": "Arendeth Classes",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "16 classes with summons, stack bursts, stances and traps: Coilwright, Emberhorn, Fulgurant, Snareseer, Tidewright and more.",
+  "requires": [
+    "Library"
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "prompt": "hypnotic shimmering psychic hum pulling inward, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "755c7ec98457091a",
+      "score": 0.40379780530929565,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sirens.zip",
+      "inner": "Dark Fantasy Studio- Sirens/Dark Fantasy Studio- Sirens 5.wav",
+      "license": "reference",
+      "tags": [
+        "sirens",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "84586092e81edbaf",
+      "score": 0.3949114978313446,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sirens.zip",
+      "inner": "Dark Fantasy Studio- Sirens/Dark Fantasy Studio- Sirens 6.wav",
+      "license": "reference",
+      "tags": [
+        "sirens",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "5e1e0bbbaf8d0cdd",
+      "score": 0.3909556269645691,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 40.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "0baec384aa1d3247",
+      "score": 0.38981184363365173,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind.zip",
+      "inner": "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 7.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "b2202583268f3220",
+      "score": 0.3881155550479889,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 21.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "5878b10bddd2231e",
+      "score": 0.3879663050174713,
+      "via": "clap+tag",
+      "pack": "Dreamy Whooshes",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Dreamy Whooshes/FL_GFX_Motion_Dreamy_Whoosh_12.wav",
+      "license": "direct",
+      "tags": [
+        "dreamy",
+        "whooshes",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "motion",
+        "whoosh"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9319a0293ae55509",
+      "score": 0.3863365948200226,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 19 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "b1a0f36ccf00092c",
+      "score": 0.3851304054260254,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/48/NOISE ALCHEMY - HOSTILE 19 48k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "0a30e549563926ea",
+      "score": 0.38503730297088623,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind.zip",
+      "inner": "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 4.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "18b015c358d2d343",
+      "score": 0.3823181092739105,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 25.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "755c7ec98457091a",
+    "84586092e81edbaf",
+    "5e1e0bbbaf8d0cdd",
+    "0baec384aa1d3247",
+    "b2202583268f3220",
+    "5878b10bddd2231e",
+    "9319a0293ae55509",
+    "b1a0f36ccf00092c",
+    "0a30e549563926ea",
+    "18b015c358d2d343"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_lure.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.23,
+  "semitones": 5,
+  "width": 1.041,
+  "listen": {
+    "match": 0.308,
+    "clean": 0.004,
+    "faults": []
+  }
+}

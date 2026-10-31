@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Breachwork Mod Manager: a desktop app for managing mods while the game is closed. It compiles the loader's own
+       ModCore.cs, so it finds, owns and orders mods exactly as the loader does. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>BreachworkModManager</AssemblyName>
+    <RootNamespace>ChimeraModManager</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <GameDir>$(MSBuildThisFileDirectory)..\..\</GameDir>
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ClassLoader\ModCore.cs" Link="ModCore.cs" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <!-- The game's own Newtonsoft.Json is a Unity build that won't load outside the game, so the manager carries one,
+         embedded so the exe stays a single file (loaded in Program.Main). -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <!-- Player build (pack.ps1): no self-test, and it never replaces the exe in the game folder. -->
+  <PropertyGroup Condition="'$(PlayerBuild)' == 'true'">
+    <DefineConstants>$(DefineConstants);PLAYER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(PlayerBuild)' == 'true'">
+    <Compile Remove="SelfTest.cs" />
+  </ItemGroup>
+
+  <Target Name="EmbedNewtonsoft" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <EmbeddedResource Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Filename)%(ReferenceCopyLocalPaths.Extension)' == 'Newtonsoft.Json.dll'" LogicalName="Newtonsoft.Json.dll" />
+    </ItemGroup>
+  </Target>
+
+  <!-- The exe goes next to the game's exe, where it finds the game on its own (pack.ps1 builds without this). -->
+  <Target Name="CopyToGame" AfterTargets="Build" Condition="'$(PlayerBuild)' != 'true' And '$(CopyToGameDir)' != 'false'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)" />
+  </Target>
+
+</Project>

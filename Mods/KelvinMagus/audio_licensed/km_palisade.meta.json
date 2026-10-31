@@ -1,0 +1,210 @@
+{
+  "prompt": "ice spikes bursting up out of the ground, sharp crystalline crunch",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7d341d978d0ec959",
+      "score": 0.5228740572929382,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "13ef5e56f48c798f",
+      "score": 0.5172048807144165,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b993652d2c3c8552",
+      "score": 0.48954641819000244,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "c7edf5dccda1e6bd",
+      "score": 0.4826173186302185,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "04fe0e94c826e350",
+      "score": 0.4823039174079895,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "4fc38c47e1138221",
+      "score": 0.4816548824310303,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "09f487901ae43052",
+      "score": 0.4744741916656494,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 8.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e71970cd5ed48958",
+      "score": 0.4740925431251526,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cracks and Hits/Ice Crunch B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cracks",
+        "and",
+        "hits",
+        "crunch"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "10e5b48440b049b0",
+      "score": 0.4732871353626251,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b4ffa2ef836ed83e",
+      "score": 0.4709559381008148,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Big D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "7d341d978d0ec959",
+    "13ef5e56f48c798f",
+    "b993652d2c3c8552",
+    "c7edf5dccda1e6bd",
+    "04fe0e94c826e350",
+    "4fc38c47e1138221",
+    "09f487901ae43052",
+    "e71970cd5ed48958",
+    "10e5b48440b049b0",
+    "b4ffa2ef836ed83e"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_palisade.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.184,
+  "semitones": -5,
+  "width": 0.524,
+  "listen": {
+    "match": 0.465,
+    "clean": -0.348,
+    "faults": []
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "prompt": "crossbow twang with electric capacitor zap, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, laser sound, crossbow twang with electric capacitor zap, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of voice, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.002303500659763813,
+  "archetype": "laser",
+  "references": [
+    {
+      "id": "6724d9b491aeded7",
+      "score": 0.38789933919906616,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/1/Dark Fantasy Studio- Sci fi voices 1- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "b0306f966754052e",
+      "score": 0.38789933919906616,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/5/Dark Fantasy Studio- Sci fi voices 5- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "8f8801162b233c2c",
+      "score": 0.38789933919906616,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/3/Dark Fantasy Studio- Sci fi voices 3- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "92af283c085d6724",
+      "score": 0.38789933919906616,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/2/Dark Fantasy Studio- Sci fi voices 2- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "fdd035969396320c",
+      "score": 0.38789933919906616,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/4/Dark Fantasy Studio- Sci fi voices 4- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "aae2c6798c5865b3",
+      "score": 0.3130413293838501,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 15.wav",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "8b012e807d29cc8c",
+      "score": 0.30096688866615295,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 21.wav",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "8dc1789f8944d945",
+      "score": 0.30096685886383057,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 20.wav",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "4bf3e29034861852",
+      "score": 0.2946341037750244,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 4.wav",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "420c51916af3b607",
+      "score": 0.2946341037750244,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 2.wav",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "6724d9b491aeded7",
+    "b0306f966754052e",
+    "8f8801162b233c2c",
+    "92af283c085d6724",
+    "fdd035969396320c",
+    "aae2c6798c5865b3",
+    "8b012e807d29cc8c",
+    "8dc1789f8944d945",
+    "4bf3e29034861852",
+    "420c51916af3b607"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\coil_bolt.wav",
+  "sample_rate": 44100
+}

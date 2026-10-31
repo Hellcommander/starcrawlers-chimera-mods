@@ -1,0 +1,9 @@
+{
+  "id": "Kinetics",
+  "name": "Kinetics",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Seven body-first classes: a cargo-dock grappler, an exo-rig jockey with bolt-on hardpoints, a bodyguard who takes the hits, a parkour freerunner, a ricochet trick shot, a throw-and-recall blade juggler and a grapnel acrobat.",
+  "requires": ["Library"]
+}

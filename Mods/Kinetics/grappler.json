@@ -1,0 +1,502 @@
+{
+  "id": "MOD_Grappler",
+  "name": "Grappler",
+  "description": "Cargo-dock wrestlers for whom a body is just freight with opinions. They drag enemies in, hold them so they can't act, and throw them into walls, each other and whatever burns.\n\nClose-range control bruiser. Grip builds from grabs and pays out in a deck-cracking Piledriver. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "icons/grappler.png",
+  "attributePriorities": {
+    "Strength": 5,
+    "Toughness": 3
+  },
+  "effects": [
+    {
+      "id": "Grip",
+      "name": "Grip",
+      "icon": "icons/grip.png",
+      "description": "Your hands know where to go. Every layer of grip makes your blows land harder; the Piledriver spends it all.",
+      "duration": 6,
+      "maxStacks": 5,
+      "resource": true,
+      "resourceColor": "#FFB347",
+      "stats": {
+        "MeleePower": 2
+      }
+    },
+    {
+      "id": "Held",
+      "name": "Held",
+      "debuff": true,
+      "description": "Locked in a hold. Hard to dodge anything like this.",
+      "duration": 1,
+      "stats": {
+        "Dodge": -20,
+        "Agility": -2
+      }
+    },
+    {
+      "id": "Dazed",
+      "name": "Dazed",
+      "debuff": true,
+      "description": "Their head is still ringing from the landing.",
+      "duration": 2,
+      "stats": {
+        "Dodge": -10,
+        "Agility": -2,
+        "MeleePower": -2
+      }
+    },
+    {
+      "id": "Clinch",
+      "name": "Iron Clinch",
+      "description": "You are braced and waiting. Anyone who swings at you is likely to get caught.",
+      "duration": 3,
+      "stats": {
+        "Block": 15,
+        "Armor": 3
+      },
+      "procs": [
+        {
+          "on": "hurt",
+          "chance": 50,
+          "actions": [
+            {
+              "do": "effect",
+              "to": "attacker",
+              "effect": "@Held"
+            },
+            {
+              "do": "stun",
+              "to": "attacker",
+              "turns": 1
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Grip"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Hauler's Frame",
+        "icon": "icons/haulers_frame.png",
+        "description": "Years of shifting cargo by hand. Your blows sometimes find a grip, and anyone who hits you in close can find themselves caught.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Grip"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 15,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "@Held"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Collar Grab",
+        "icon": "icons/collar_grab.png",
+        "range": 2.6,
+        "staminaCost": 8,
+        "cooldown": 2,
+        "description": "Reach out, take a fistful of collar and haul them in. They're held for a moment, and your Grip tightens.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "sound": "audio_licensed/grappler_collar_grab.wav",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#FFB347"
+          },
+          {
+            "do": "pull",
+            "amount": 2
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 1,
+            "max": 3,
+            "scale": "Strength",
+            "scaleMult": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Held"
+          },
+          {
+            "do": "stun",
+            "turns": 1,
+            "chance": 60
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Grip"
+          }
+        ],
+        "perk": {
+          "name": "Long Arms",
+          "rangeDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Body Slam",
+        "icon": "icons/body_slam.png",
+        "staminaCost": 12,
+        "cooldown": 3,
+        "description": "Lift them and throw. They fly up to three tiles; if they hit a wall or someone else on the way, everybody involved takes the landing.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "throw",
+            "amount": 3,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 4,
+                "max": 8,
+                "scale": "Strength",
+                "scaleMult": 0.4
+              },
+              {
+                "do": "effect",
+                "effect": "@Dazed"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Grip"
+          }
+        ],
+        "perk": {
+          "name": "Overhead",
+          "description": "Harder landings.",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/grappler_body_slam.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Iron Clinch",
+        "icon": "icons/iron_clinch.png",
+        "instant": false,
+        "staminaCost": 10,
+        "cooldown": 8,
+        "description": "Plant your feet and dare them. Nearby enemies come at you, and anyone who swings is likely to end up stunned in a hold.",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Clinch"
+          },
+          {
+            "do": "taunt",
+            "to": "self",
+            "radius": 2.5,
+            "turns": 2
+          }
+        ],
+        "perk": {
+          "name": "Bear Hug",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/grappler_iron_clinch.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Suplex",
+        "icon": "icons/suplex.png",
+        "staminaCost": 16,
+        "cooldown": 6,
+        "description": "Over the shoulder and down on their head. A long stun, and they're thrown out behind the landing.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 6,
+            "max": 10,
+            "scale": "Strength",
+            "scaleMult": 0.5,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "@Grip",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "stun",
+            "turns": 2
+          },
+          {
+            "do": "throw",
+            "amount": 2,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 5
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Grip"
+          }
+        ],
+        "perk": {
+          "name": "Bridge",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/grappler_suplex.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Piledriver",
+        "icon": "icons/piledriver.png",
+        "staminaCost": 22,
+        "cooldown": 12,
+        "description": "Upside down, both arms locked, and straight into the deck. Every layer of Grip goes into it, and the plating cracks around the impact.",
+        "impactVfx": "PA_Barbarian_FlyingSmash.triggerParticle@0.5",
+        "sound": "audio_licensed/grappler_piledriver.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 10,
+            "max": 16,
+            "scale": "Strength",
+            "scaleMult": 0.7,
+            "perRank": 2,
+            "bonusPerStack": 4,
+            "stacksOf": "@Grip",
+            "stacksFrom": "self",
+            "consumeStacks": true
+          },
+          {
+            "do": "stun",
+            "turns": 2
+          },
+          {
+            "do": "field",
+            "fieldName": "Cracked Deck",
+            "turns": 3,
+            "radius": 1.5,
+            "affects": "enemies",
+            "model": {
+              "mesh": "models/debris.obj",
+              "texture": "models/debris.png",
+              "scale": 1.6,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 1,
+                "max": 3
+              },
+              {
+                "do": "effect",
+                "effect": "@Dazed"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Ring Out",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Freight Swing",
+        "icon": "icons/freight_swing.png",
+        "staminaCost": 18,
+        "cooldown": 8,
+        "description": "Grab them by an ankle and use them as a club. The swing goes through everyone crowding you, then you let go and send them flying. Your Grip decides how hard the body lands.",
+        "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6",
+        "actions": [
+          {
+            "do": "effect",
+            "effect": "@Held"
+          },
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 2.5,
+            "falloff": 0.85,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 5,
+                "max": 9,
+                "scale": "Strength",
+                "scaleMult": 0.45,
+                "perRank": 1,
+                "bonusPerStack": 1,
+                "stacksOf": "@Grip",
+                "stacksFrom": "self"
+              },
+              {
+                "do": "effect",
+                "effect": "@Dazed"
+              }
+            ]
+          },
+          {
+            "do": "throw",
+            "amount": 3,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 6
+              },
+              {
+                "do": "stun",
+                "turns": 1
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Grip"
+          }
+        ],
+        "perk": {
+          "name": "Full Rotation",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/grappler_body_slam.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Longshoreman's Hold",
+        "icon": "icons/longshoremans_hold.png",
+        "description": "A grip that has held a falling crate for a shift's worth of seconds doesn't let go because something hurts. Grip turns into plating when you're hit, takedowns feed it, and when you're nearly down you lock up tighter than ever.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 2,
+                "bonusPerStack": 2,
+                "stacksOf": "@Grip",
+                "stacksFrom": "self"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Grip",
+                "stacks": 2
+              },
+              {
+                "do": "heal",
+                "to": "self",
+                "amount": 4,
+                "perRank": 1
+              }
+            ]
+          },
+          {
+            "on": "lowHealth",
+            "threshold": 35,
+            "cooldown": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Clinch"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Grip",
+                "stacks": 3
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

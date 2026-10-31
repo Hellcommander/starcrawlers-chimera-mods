@@ -1,0 +1,452 @@
+{
+  "id": "MOD_GrapnelAcrobat",
+  "name": "Grapnel Acrobat",
+  "description": "Hull riggers who work the outside of stations on a line and a hook, and fight the same way.\n\nHyper-mobile melee with hookshots: yank, zip, swing kicks, wall pins and a spinning finisher that reels everyone in and flings them back out. Favors [AGL] and [STR].",
+  "archetype": "Guile",
+  "icon": "icons/grapnel_acrobat.png",
+  "attributePriorities": {
+    "Agility": 4,
+    "Strength": 3
+  },
+  "effects": [
+    {
+      "id": "Snagged",
+      "name": "Snagged",
+      "debuff": true,
+      "description": "A hook is still caught in their gear.",
+      "duration": 2,
+      "stats": {
+        "Dodge": -10,
+        "Agility": -2
+      }
+    },
+    {
+      "id": "OnTheLine",
+      "name": "On the Line",
+      "description": "Swinging free. Hard to pin down.",
+      "duration": 1,
+      "stats": {
+        "Dodge": 25,
+        "Crit": 10
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Line Discipline",
+        "icon": "icons/line_discipline.png",
+        "description": "When something misses you, you answer with a boot on the way past. Your hits sometimes leave a hook snagged in their gear.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              {
+                "do": "damage",
+                "to": "attacker",
+                "type": "Crushing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility",
+                "scaleMult": 0.2
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Snagged"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Grapnel Yank",
+        "icon": "icons/grapnel_yank.png",
+        "range": 6,
+        "staminaCost": 8,
+        "cooldown": 2,
+        "description": "Fire the hook, catch them, and reel them all the way in. They arrive snagged.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.4",
+        "sound": "audio_licensed/grapnel_yank.wav",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#C8D0DA"
+          },
+          {
+            "do": "pull",
+            "amount": 5
+          },
+          {
+            "do": "damage",
+            "type": "Piercing",
+            "min": 2,
+            "max": 4,
+            "scale": "Agility+Strength",
+            "scaleMult": 0.2,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Snagged"
+          }
+        ],
+        "perk": {
+          "name": "Long Line",
+          "rangeDelta": 2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Zip Line",
+        "icon": "icons/zip_line.png",
+        "range": 7,
+        "staminaCost": 8,
+        "cooldown": 3,
+        "instant": true,
+        "description": "Hook the target and pull yourself to them instead. You land beside them on the line, very hard to hit. Doesn't end your turn.",
+        "castVfx": "CYBERNINJA_DASH.particle_dash",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#C8D0DA"
+          },
+          {
+            "do": "leap"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@OnTheLine"
+          }
+        ],
+        "perk": {
+          "name": "Quick Reel",
+          "cooldownDelta": -1
+        },
+        "sound": "audio_licensed/grapnel_zip_line.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Swing Kick",
+        "icon": "icons/swing_kick.png",
+        "range": 6,
+        "staminaCost": 12,
+        "cooldown": 4,
+        "description": "Swing in on the line, both feet first. You land beside them and kick them two tiles away - into a wall or a friend if you aimed well.",
+        "impactVfx": "PA_Barbarian_RecklessCharge.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#C8D0DA"
+          },
+          {
+            "do": "leap"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 4,
+            "max": 7,
+            "scale": "Agility+Strength",
+            "scaleMult": 0.25,
+            "perRank": 1
+          },
+          {
+            "do": "throw",
+            "amount": 2,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 5
+              },
+              {
+                "do": "effect",
+                "effect": "@Snagged"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@OnTheLine"
+          }
+        ],
+        "perk": {
+          "name": "Full Swing",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/grapnel_swing_kick.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Wall Pin",
+        "icon": "icons/wall_pin.png",
+        "range": 6,
+        "staminaCost": 12,
+        "cooldown": 6,
+        "description": "A barbed spike on the line. It carries them back up to four tiles; if they hit a wall or someone on the way, they're pinned there - stunned for two turns with the spike holding them in place.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.5",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#C8D0DA"
+          },
+          {
+            "do": "damage",
+            "type": "Piercing",
+            "min": 3,
+            "max": 6,
+            "scale": "Agility+Strength",
+            "scaleMult": 0.25,
+            "perRank": 1
+          },
+          {
+            "do": "throw",
+            "amount": 4,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 6
+              },
+              {
+                "do": "stun",
+                "turns": 2
+              },
+              {
+                "do": "field",
+                "fieldName": "Grapnel Spike",
+                "turns": 2,
+                "affects": "enemies",
+                "onEnter": false,
+                "model": {
+                  "mesh": "models/spike.obj",
+                  "texture": "models/spike.png",
+                  "scale": 0.8,
+                  "wobble": 10,
+                  "randomYaw": true
+                },
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "@Snagged"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Deep Barbs",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/grapnel_wall_pin.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Pendulum",
+        "icon": "icons/pendulum.png",
+        "instant": false,
+        "radius": 3,
+        "staminaCost": 20,
+        "cooldown": 12,
+        "description": "Anchor the hook overhead and swing a full circle. Everyone within three tiles is reeled in, kicked, and flung back out - stunned if they slam into anything.",
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.7",
+        "actions": [
+          {
+            "do": "pull",
+            "amount": 2
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 6,
+            "max": 10,
+            "scale": "Agility+Strength",
+            "scaleMult": 0.35,
+            "perRank": 2
+          },
+          {
+            "do": "throw",
+            "amount": 3,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 5
+              },
+              {
+                "do": "stun",
+                "turns": 1
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@OnTheLine"
+          }
+        ],
+        "perk": {
+          "name": "Wider Arc",
+          "radiusDelta": 1
+        },
+        "sound": "audio_licensed/grapnel_pendulum.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Cat's Cradle",
+        "icon": "icons/cats_cradle.png",
+        "range": 6,
+        "staminaCost": 16,
+        "cooldown": 8,
+        "description": "Every hook you've left in them is still on a line. Hook one and haul: the line runs through every snagged enemy nearby, tears the barbs loose and drags them all a step closer. A snagged target is jerked off its feet.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.5",
+        "actions": [
+          {
+            "do": "tether",
+            "look": "#C8D0DA"
+          },
+          {
+            "do": "chain",
+            "jumps": 4,
+            "radius": 4,
+            "falloff": 0.9,
+            "effect": "@Snagged",
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Piercing",
+                "min": 5,
+                "max": 9,
+                "scale": "Agility+Strength",
+                "scaleMult": 0.3,
+                "perRank": 2
+              },
+              {
+                "do": "pull",
+                "amount": 1
+              },
+              {
+                "do": "stun",
+                "turns": 1,
+                "ifTargetHas": "@Snagged",
+                "consume": true
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@OnTheLine"
+          }
+        ],
+        "perk": {
+          "name": "Second Strand",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/grapnel_yank.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Taut Line",
+        "icon": "icons/taut_line.png",
+        "description": "You never let the line go slack. Anyone with a hook in them takes an extra jerk on every hit, every hit on them keeps you swinging, and a takedown frees the hook for the next throw.",
+        "procs": [
+          {
+            "on": "hit",
+            "maxPerTurn": 2,
+            "when": {
+              "has": "@Snagged",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "to": "victim",
+                "type": "Crushing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility+Strength",
+                "scaleMult": 0.15
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@OnTheLine"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "cooldowns",
+                "amount": 1
+              },
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

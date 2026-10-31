@@ -1,0 +1,415 @@
+{
+  "id": "MOD_Ichorborn",
+  "name": "Ichorborn",
+  "description": "What crawled out of the Ichor Deep wearing a crawler's face. The doctor's black blood took them the way it took her: wings of wet ichor, an eye that unmakes what it holds, and a body that sinks into the deck and rises somewhere else.\n\nShed to grow stronger: you fight with two Ichor Pinions that shield you, and every one you lose (torn off by a deep wound, or ripped free and thrown) splashes your foes and leaves you Wingshorn, hitting harder. Shorn, your dives leave hellfire behind. Hold the Unmaking Gaze for as long as you dare stand still, and when you are brought low, molt into shadow. Scales with [PSI] and [SMT].",
+  "archetype": "Intellect",
+  "unlock": "win",
+  "icon": "ichorborn.png",
+  "attributePriorities": { "PsiPower": 4, "Smarts": 3 },
+  "effects": [
+    {
+      "id": "Pinion",
+      "name": "Ichor Pinion",
+      "description": "A wing of living ichor folded over you. Each one turns blows aside. They tear loose as you are wounded, and grow back once the fight is over.",
+      "duration": -1,
+      "maxStacks": 2,
+      "startStacks": 2,
+      "resource": true,
+      "resourceColor": "#B0204A",
+      "stats": { "Dodge": 5, "Armor": 2 }
+    },
+    {
+      "id": "Shorn",
+      "name": "Wingshorn",
+      "description": "Every wing you lose leaves you lighter and crueller: each one makes your attacks hit harder and land true more often. It lasts until the fight ends.",
+      "duration": -1,
+      "maxStacks": 2,
+      "resource": true,
+      "resourceColor": "#8A3AC8",
+      "damageDealtPerStack": 0.15,
+      "stats": { "Crit": 4 }
+    },
+    {
+      "id": "WingSplash",
+      "thirdPerson": 1.6,
+      "maxStacks": 2,
+      "name": "Torn Pinion",
+      "description": "A wing comes away in a gout of ichor.",
+      "duration": 1,
+      "burstAt": 2,
+      "burstRadius": 1.6,
+      "burstVfx": "IchWingTear",
+      "burstSound": "event:/Mobs/BOSS_Cerberus/Boss_Cerberus_Alert",
+      "burstActions": [
+        { "do": "damage", "type": "Bio", "min": 2, "max": 5, "scale": "PsiPower+Smarts", "scaleMult": 0.2 },
+        { "do": "knockback", "amount": 1 }
+      ]
+    },
+    {
+      "id": "Tarred",
+      "name": "Tarred",
+      "description": "Coated in clinging ichor. Each layer makes it harder to dodge, four layers set it fast, and Wingrend's blast bursts them all.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 4,
+      "stats": { "Dodge": -4 },
+      "thresholds": [ { "at": 4, "actions": [ { "do": "effect", "effect": "@Stuck" } ] } ]
+    },
+    {
+      "id": "Stuck",
+      "name": "Stuck",
+      "description": "Four layers of tar have set. It can't move.",
+      "duration": 2,
+      "debuff": true,
+      "root": true
+    },
+    {
+      "id": "IchorBody",
+      "name": "Ichor Body",
+      "description": "Nothing in here but ichor. When it dies it bursts into a pool.",
+      "duration": -1,
+      "onDeathActions": [
+        { "do": "vfx", "to": "victim", "vfx": "IchSplash" },
+        { "do": "field", "to": "victim", "fieldName": "Ichor Mire", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+          "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] }
+      ]
+    },
+    {
+      "id": "Doomsight",
+      "name": "Doomsight",
+      "description": "The Unmaking Gaze has found it. Every further look of the gaze bites deeper into what it marked.",
+      "duration": 4,
+      "debuff": true,
+      "resists": { "Meta": -10 },
+      "vfx": "EFFECT_Void_Psyker_Drain"
+    },
+    {
+      "id": "Gazing",
+      "name": "Unmaking Gaze",
+      "description": "Your eye is open and pouring. Hold still and each new look bites deeper; take a single step and it closes.",
+      "duration": 3,
+      "thirdPerson": 1.4,
+      "icon": "ichorborn_t5.png",
+      "stats": { "Dodge": -10 },
+      "procs": [
+        { "on": "move", "match": "any", "actions": [ { "do": "purge", "to": "self", "effect": "@Gazing" } ] }
+      ]
+    },
+    {
+      "id": "Surfacing",
+      "maxStacks": 2,
+      "name": "Surfacing",
+      "description": "You rise out of the deck in a wave of ichor.",
+      "duration": 1,
+      "burstAt": 2,
+      "burstRadius": 1.6,
+      "burstVfx": "IchSplash@0.8",
+      "burstActions": [
+        { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "PsiPower+Smarts", "scaleMult": 0.15 },
+        { "do": "knockback", "amount": 1 }
+      ]
+    },
+    {
+      "id": "Frenzy",
+      "name": "Shadow Molt",
+      "description": "Two shadow wings where the real ones were, and nothing left to hold back for.",
+      "duration": 6,
+      "damageDealtMult": 1.35,
+      "stats": { "Dodge": 10, "Crit": 10 },
+      "vfx": "EFFECT_Void_Psyker_Drain"
+    },
+    {
+      "id": "MoltBurst",
+      "thirdPerson": 2.2,
+      "maxStacks": 2,
+      "name": "Shadow Wings",
+      "description": "The shadow wings unfurl.",
+      "duration": 1,
+      "burstAt": 2,
+      "burstRadius": 4,
+      "burstVfx": "IchMolt",
+      "burstSound": "event:/Abilities/Elementalist/LightningStrike",
+      "burstActions": [
+        { "do": "vfx", "vfx": "IchStunHit" },
+        { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.2 },
+        { "do": "stun", "turns": 2 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Ichor Pinions",
+        "icon": "ichorborn_t0.png",
+        "description": "You go into every fight with two wings of living ichor. A deep wound tears one away (under 70% health, and again under 35%): it bursts over whoever is close, and you come out of it Wingshorn and hitting harder. The wings grow back when the fight is over.",
+        "procs": [
+          { "on": "combatStart", "actions": [
+            { "do": "effect", "to": "self", "effect": "@Pinion", "stacks": 2 },
+            { "do": "purge", "to": "self", "effect": "@Shorn" },
+            { "do": "counter", "to": "self", "counter": "GazeHeld", "amount": 0, "counterSet": true } ] },
+          { "on": "lowHealth", "threshold": 70, "when": { "value": "stacks:@Pinion", "atLeast": 1 }, "actions": [
+            { "do": "effect", "to": "self", "effect": "@Pinion", "stacks": -1 },
+            { "do": "effect", "to": "self", "effect": "@Shorn" },
+            { "do": "effect", "to": "self", "effect": "@WingSplash", "stacks": 2 },
+            { "do": "field", "to": "self", "fieldName": "Ichor Mire", "turns": 3, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+              "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 2 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] } ] },
+          { "on": "lowHealth", "threshold": 35, "when": { "value": "stacks:@Pinion", "atLeast": 1 }, "actions": [
+            { "do": "effect", "to": "self", "effect": "@Pinion", "stacks": -1 },
+            { "do": "effect", "to": "self", "effect": "@Shorn" },
+            { "do": "effect", "to": "self", "effect": "@WingSplash", "stacks": 2 },
+            { "do": "field", "to": "self", "fieldName": "Ichor Mire", "turns": 3, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+              "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 2 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] } ] },
+          { "on": "combatEnd", "actions": [
+            { "do": "purge", "to": "self", "effect": "@Shorn" },
+            { "do": "purge", "to": "self", "effect": "@Gazing" },
+            { "do": "effect", "to": "self", "effect": "@Pinion", "stacks": 2 } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Black Gout",
+        "icon": "ichorborn_t1.png",
+        "description": "Spit a mouthful of living tar. It bursts on your target, leaves it Tarred and drops a pool of Ichor Mire where it stands.",
+        "range": 6,
+        "staminaCost": 7,
+        "cooldown": 1,
+        "travelVfx": "IchTar",
+        "travelSpeed": 14,
+        "impactVfx": "IchSplash@0.6",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "PsiPower+Smarts", "scaleMult": 0.22, "perRank": 1 },
+          { "do": "effect", "effect": "@Tarred" },
+          { "do": "field", "fieldName": "Ichor Mire", "turns": 4, "radius": 0, "affects": "enemies", "look": "IchMireLook",
+            "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] }
+        ],
+        "perk": {
+          "name": "Thick Gout",
+          "description": "The tar lands in a heavier coat.",
+          "addActions": [ { "do": "effect", "effect": "@Tarred" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "floor",
+        "name": "Ichor Dive",
+        "icon": "ichorborn_t2.png",
+        "description": "Sink into the deck like it was water and rise wherever you choose. A pool of clinging ichor stays where you went down and where you came up. Once you are Wingshorn, the pools burn with hellfire instead.",
+        "range": 5,
+        "staminaCost": 10,
+        "cooldown": 4,
+        "castVfx": "IchSplash@0.7",
+        "impactVfx": "IchSplash@0.7",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "field", "to": "self", "fieldName": "Ichor Mire", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+            "when": { "value": "stacks:@Shorn", "below": 1 },
+            "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] },
+          { "do": "field", "to": "self", "fieldName": "Hellmouth", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchHellLook",
+            "when": { "value": "stacks:@Shorn", "atLeast": 1 },
+            "actions": [ { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.15 }, { "do": "effect", "effect": "#Burning" } ] },
+          { "do": "teleport" },
+          { "do": "field", "to": "self", "fieldName": "Ichor Mire", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+            "when": { "value": "stacks:@Shorn", "below": 1 },
+            "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] },
+          { "do": "field", "to": "self", "fieldName": "Hellmouth", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchHellLook",
+            "when": { "value": "stacks:@Shorn", "atLeast": 1 },
+            "actions": [ { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.15 }, { "do": "effect", "effect": "#Burning" } ] }
+        ],
+        "perk": {
+          "name": "Breaching Surface",
+          "description": "You come up through the floor hard enough to throw back whoever is waiting for you.",
+          "addActions": [ { "do": "effect", "to": "self", "effect": "@Surfacing", "stacks": 2 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Abyssal Drag",
+        "icon": "ichorborn_t3.png",
+        "description": "Reach across the room with a rope of ichor and haul your prey to your side, smashing it through whatever is in the way. It arrives off balance and open, and every Ichor Mire of yours is reeled in with it, tarring all it passes through.",
+        "range": 6,
+        "staminaCost": 10,
+        "cooldown": 5,
+        "dodgeable": false,
+        "travelVfx": "IchTar",
+        "travelSpeed": 22,
+        "impactVfx": "IchSplash@0.5",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "tether", "look": "#5A0E2A" },
+          { "do": "recall", "to": "self", "fieldName": "Ichor Mire", "actions": [
+            { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "PsiPower+Smarts", "scaleMult": 0.15, "perRank": 1 },
+            { "do": "effect", "effect": "@Tarred" } ] },
+          { "do": "pull", "amount": 6 },
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "PsiPower+Smarts", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "effect", "effect": "#Exposed" }
+        ],
+        "perk": {
+          "name": "Into the Claws",
+          "description": "It lands at your feet too dazed to strike back.",
+          "addActions": [ { "do": "stun", "turns": 1 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Smothering Tide",
+        "icon": "ichorborn_t4.png",
+        "description": "Heave a wave of tar across the deck. It shoves everyone in front of you back, coats them in two layers of Tarred and leaves Ichor Mire where it breaks.",
+        "range": 4,
+        "shape": "cone",
+        "angle": 70,
+        "staminaCost": 12,
+        "cooldown": 6,
+        "dodgeable": false,
+        "travelVfx": "IchTar",
+        "travelSpeed": 12,
+        "impactVfx": "IchSplash@0.5",
+        "sound": "event:/Mobs/BOSS_Cerberus/Boss_Cerberus_Alert",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "PsiPower+Smarts", "scaleMult": 0.25, "perRank": 1 },
+          { "do": "effect", "effect": "@Tarred", "stacks": 2 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "field", "fieldName": "Ichor Mire", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+            "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] }
+        ],
+        "perk": {
+          "name": "High Tide",
+          "description": "The wave comes back around sooner.",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Unmaking Gaze",
+        "icon": "ichorborn_t5.png",
+        "description": "Open the eye that unmakes. A beam of black light burns through everything in a line, feeds you what it takes and marks the one you looked at with Doomsight. Use it again while the eye is open and it bites deeper each time, up to four looks. Taking a single step closes the eye and starts it over.",
+        "range": 8,
+        "shape": "line",
+        "width": 1,
+        "staminaCost": 8,
+        "cooldown": 1,
+        "dodgeable": false,
+        "castVfx": "IchEye",
+        "travelVfx": "IchBeam",
+        "travelSpeed": 30,
+        "impactVfx": "IchBeamHit",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "counter", "to": "self", "counter": "GazeHeld", "amount": 0, "counterSet": true, "when": { "lacks": "@Gazing", "of": "self" } },
+          { "do": "damage", "type": "Meta", "min": 4, "max": 7, "scale": "PsiPower+Smarts", "scaleMult": 0.3, "perRank": 1, "lifesteal": 0.4,
+            "bonusPerStack": 8, "stacksOf": "counter:GazeHeld", "stacksFrom": "self" },
+          { "do": "damage", "type": "Meta", "min": 2, "max": 3, "ifTargetHas": "@Doomsight" },
+          { "do": "effect", "effect": "@Doomsight" },
+          { "do": "counter", "to": "self", "counter": "GazeHeld", "amount": 1, "counterMax": 3 },
+          { "do": "effect", "to": "self", "effect": "@Gazing" }
+        ],
+        "perk": {
+          "name": "Ever-Open Eye",
+          "description": "Holding the eye open costs you less.",
+          "staminaDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "floor",
+        "name": "Spawning Rift",
+        "icon": "ichorborn_t6.png",
+        "description": "Tear a wound in the air. Oozelings of black ichor spill out of it to fight for you and burst into pools when they fall, and the rift itself chews on any foe standing near it for a few turns.",
+        "range": 5,
+        "staminaCost": 14,
+        "cooldown": 10,
+        "castVfx": "IchRift",
+        "areaVfx": "IchRift",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "field", "fieldName": "Spawning Rift", "turns": 4, "radius": 1.6, "affects": "enemies", "look": "IchRiftLook",
+            "actions": [ { "do": "damage", "type": "Void", "min": 2, "max": 4, "scale": "PsiPower+Smarts", "scaleMult": 0.15 } ] },
+          { "do": "summon", "to": "self", "creature": "OOZE_VOID", "summonName": "Ichorling", "summonGroup": "Ichorling", "summonVfx": "IchRift", "effect": "@IchorBody", "amount": 2, "maxSummons": 3, "turns": 12,
+            "model": { "tint": "#3A1028", "glow": "#B0204A", "glowStrength": 0.8 } }
+        ],
+        "perk": {
+          "name": "Wider Wound",
+          "description": "One more ichorling crawls out of the rift.",
+          "addActions": [ { "do": "summon", "to": "self", "creature": "OOZE_VOID", "summonName": "Ichorling", "summonGroup": "Ichorling", "summonVfx": "IchRift", "effect": "@IchorBody", "amount": 1, "maxSummons": 3, "turns": 12,
+            "model": { "tint": "#3A1028", "glow": "#B0204A", "glowStrength": 0.8 } } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Wingrend",
+        "thirdPerson": 1.2,
+        "icon": "ichorborn_t7.png",
+        "description": "Rip one of your own wings free and hurl it. It bursts on impact in a blast of ichor that flattens everyone close by, bursts the tar on them for more and leaves the floor sodden. You are Wingshorn for the rest of the fight.",
+        "range": 6,
+        "radius": 1.6,
+        "staminaCost": 10,
+        "cooldown": 6,
+        "stackCost": { "effect": "@Pinion", "amount": 1 },
+        "travelVfx": "IchWingThrow",
+        "travelSpeed": 14,
+        "areaVfx": "IchSplash",
+        "impactVfx": "IchSplash@0.5",
+        "sound": "event:/Mobs/BOSS_Cerberus/Boss_Cerberus_Alert",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 5, "max": 9, "scale": "PsiPower+Smarts", "scaleMult": 0.3, "perRank": 2,
+            "bonusPerStack": 4, "stacksOf": "@Tarred", "consumeStacks": true },
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "field", "fieldName": "Ichor Mire", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "IchMireLook",
+            "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] },
+          { "do": "effect", "to": "self", "effect": "@Shorn" }
+        ],
+        "perk": {
+          "name": "Heavy Wing",
+          "description": "The wing comes down like a slab.",
+          "addActions": [ { "do": "stun", "turns": 1, "chance": 50 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Shadow Molt",
+        "icon": "ichorborn_t8.png",
+        "description": "Brought low, you stop holding back. The first time a fight takes you under 25% health, two shadow wings tear out of the wound: everything near you is struck and stunned, your Ichor Mires erupt, the wings shield you like your own, and for six turns you fight in a frenzy. With no wings left at all, every hit you land drinks a little back.",
+        "procs": [
+          { "on": "combatStart", "actions": [ { "do": "counter", "to": "self", "counter": "ShadowMolted", "amount": 0, "counterSet": true } ] },
+          { "on": "lowHealth", "threshold": 25, "when": { "value": "counter:ShadowMolted", "below": 1 }, "actions": [
+            { "do": "counter", "to": "self", "counter": "ShadowMolted", "amount": 1, "counterSet": true },
+            { "do": "effect", "to": "self", "effect": "@Pinion", "stacks": 2 },
+            { "do": "effect", "to": "self", "effect": "@Frenzy" },
+            { "do": "effect", "to": "self", "effect": "@MoltBurst", "stacks": 2 },
+            { "do": "recall", "to": "self", "fieldName": "Ichor Mire", "actions": [
+              { "do": "vfx", "vfx": "IchSplash" },
+              { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "PsiPower+Smarts", "scaleMult": 0.2 } ] } ] },
+          { "on": "hit", "maxPerTurn": 2, "when": { "value": "stacks:@Shorn", "atLeast": 2 }, "actions": [
+            { "do": "heal", "to": "self", "amount": 1, "scale": "PsiPower", "scaleMult": 0.1 } ] }
+        ]
+      }
+    }
+  ]
+}

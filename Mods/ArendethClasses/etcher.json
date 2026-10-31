@@ -1,0 +1,243 @@
+{
+  "id": "MOD_Etcher",
+  "name": "Etcher",
+  "description": "Hull-etchers carve circuitry into starship plating with conjured acid. Turned on living things, the same craft eats armor one layer at a time.\n\nMethodical armor shredding with lingering acid pools and a true-damage payoff, paced by a refilling Reagent pool. Favors [SMT].",
+  "archetype": "Intellect",
+  "icon": "etcher.png",
+  "attributePriorities": {
+    "Smarts": 5
+  },
+  "effects": [
+    {
+      "id": "Reagent",
+      "name": "Reagent",
+      "description": "Etchant, buffer and flasks: what is left of your working supply. You mix a little more every turn, and a finished job gives some of it back.",
+      "duration": -1,
+      "maxStacks": 20,
+      "capScale": { "scale": "Smarts", "perPoint": 0.35, "from": 16, "ceiling": 40 },
+      "startStacks": 20,
+      "regenPerTurn": 2,
+      "resourceColor": "#9BE15D"
+    },
+    {
+      "id": "Etched",
+      "name": "Scored",
+      "description": "Layer after layer, their protection is going. At five layers the wound opens up; at ten it is down to bare flesh. If they drop, every layer they carried runs on to whoever stands beside them.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 15,
+      "stats": { "Armor": -1 },
+      "resists": { "Bio": -2, "Slashing": -2, "Ballistic": -2, "Cryo": -1 },
+      "vfx": "EFFECT_Xeno_Debuff_Green",
+      "thresholds": [
+        { "at": 5, "actions": [ { "do": "effect", "effect": "#Exposed", "turns": 4 } ] },
+        { "at": 10, "actions": [ { "do": "effect", "effect": "#Marked", "turns": 4 } ] }
+      ],
+      "onDeathActions": [
+        { "do": "chain", "jumps": 2, "radius": 2.5, "actions": [
+          { "do": "effect", "effect": "@Etched", "stacks": 0, "bonusPerStack": 1, "stacksOf": "@Etched", "stacksFrom": "victim" },
+          { "do": "effect", "effect": "#Poisoned" } ] }
+      ]
+    },
+    {
+      "id": "Neutral",
+      "name": "Buffered",
+      "description": "Buffer solution coats your skin and fumes off it in a caustic haze that scores anything standing close.",
+      "duration": 6,
+      "resists": { "Bio": 25, "Fire": 10 },
+      "procs": [
+        { "on": "turn", "radius": 2, "vfx": "EFFECT_Xeno_Debuff_Green", "actions": [
+          { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.2 },
+          { "do": "effect", "effect": "@Etched" } ] }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Caustic Habit",
+        "icon": "etcher_t0.png",
+        "description": "Your hands are never entirely clean. Whatever you hit picks up a layer, and anything that drops while scored passes its acid on.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [ { "do": "effect", "effect": "@Etched" } ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Etching Needle",
+        "synergyPenalty": { "stamina": 1 },
+        "icon": "etcher_t1.png",
+        "staminaCost": 3,
+        "stackCost": { "effect": "@Reagent", "amount": 2 },
+        "description": "A thin stream that scores one more line into their armor. Bites deeper the more layers are already there.",
+        "impactVfx": "EFFECT_Xeno_Debuff_Green",
+        "sound": "sfx/etcher_needle.wav",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1,
+            "bonusPerStack": 1, "stacksOf": "@Etched" },
+          { "do": "effect", "effect": "@Etched" }
+        ],
+        "perk": {
+          "name": "Deep Line",
+          "addActions": [ { "do": "effect", "effect": "@Etched" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Splash Pattern",
+        "icon": "etcher_t2.png",
+        "cooldown": 4,
+        "staminaCost": 5,
+        "stackCost": { "effect": "@Reagent", "amount": 4 },
+        "description": "It drips from one victim to the next, scoring each one twice.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "event:/Abilities/Soldier/Glass_Container_Bounce",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 2,
+            "radius": 2.5,
+            "actions": [
+              { "do": "effect", "effect": "@Etched", "stacks": 2 },
+              { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.2 }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Wide Pattern",
+          "addActions": [ { "do": "effect", "effect": "#Poisoned" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Toughness": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Etching Bath",
+        "icon": "etcher_t3.png",
+        "range": 6,
+        "staminaCost": 6,
+        "stackCost": { "effect": "@Reagent", "amount": 6 },
+        "cooldown": 8,
+        "description": "Break a flask of etchant over your target and it spreads into a pool across the floor around them. The pool stays for a few turns, scoring and poisoning every enemy that stands in it or steps in.",
+        "impactVfx": "EFFECT_Xeno_Debuff_Green",
+        "sound": "event:/Abilities/Soldier/Glass_Container_Break",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "effect", "effect": "@Etched" },
+          { "do": "field", "fieldName": "Etchant Spill", "turns": 4, "radius": 2.1, "affects": "enemies", "look": "HAZARD_Acid",
+            "actions": [
+              { "do": "damage", "type": "Bio", "min": 1, "max": 2, "scale": "Smarts", "scaleMult": 0.1 },
+              { "do": "effect", "effect": "@Etched" },
+              { "do": "effect", "effect": "#Poisoned", "chance": 50 }
+            ] }
+        ],
+        "perk": { "name": "Flood the Floor", "description": "Keep a flask in every pocket: you can pour another pool sooner.", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "Toughness": 1, "Smarts": 1 },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Buffer Solution",
+        "icon": "etcher_t4.png",
+        "cooldown": 14,
+        "staminaCost": 4,
+        "stackCost": { "effect": "@Reagent", "amount": 3 },
+        "description": "Wash off the splashback and coat yourself in a buffer that fumes as it works. For a few turns you shrug off acid and fire, and the haze scores anything that stands close.",
+        "castVfx": "EFFECT_Xeno_Heal_Green",
+        "sound": "event:/Abilities/Misc/Chemistry_Homebrew",
+        "actions": [
+          { "do": "cleanse" },
+          { "do": "effect", "effect": "@Neutral" }
+        ],
+        "perk": { "name": "Clean Bench", "cooldownDelta": -5 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 3 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Last Layer",
+        "icon": "etcher_t5.png",
+        "cooldown": 12,
+        "staminaCost": 13,
+        "description": "Finish the job. Every scored layer goes at once, and the spent reagent comes back to you, one dose per layer. Poison in the wound is neutralized in a final burn. Then it runs on to one more scored target.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "sfx/etcher_dissolve.wav",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 1,
+            "radius": 3,
+            "effect": "@Etched",
+            "falloff": 0.6,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Reagent", "stacks": 0, "bonusPerStack": 1, "stacksOf": "@Etched", "stacksFrom": "target" },
+              { "do": "damage", "type": "Bio", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "trueDamage": true,
+                "bonusPerStack": 3, "stacksOf": "@Etched", "consumeStacks": true },
+              { "do": "damage", "type": "Bio", "min": 2, "max": 4, "ifTargetHas": "#Poisoned", "trueDamage": true,
+                "bonusPerStack": 3, "stacksOf": "#Poisoned", "consumeStacks": true }
+            ]
+          }
+        ],
+        "perk": { "name": "Down to Bare Metal", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "Agility": 1 },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Solvent Slip",
+        "icon": "etcher_t6.png",
+        "range": 5,
+        "cooldown": 9,
+        "staminaCost": 4,
+        "stackCost": { "effect": "@Reagent", "amount": 4 },
+        "description": "Thin the floor under your boots and skate across the room on it. You land in a hissing wake that scores anyone standing near, and the slide scrubs one ailment off you.",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "field", "fieldName": "Solvent Wake", "turns": 3, "radius": 1.6, "affects": "enemies", "look": "HAZARD_Acid",
+            "actions": [
+              { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.15 },
+              { "do": "effect", "effect": "@Etched" }
+            ] },
+          { "do": "cleanse", "to": "self", "amount": 1 }
+        ],
+        "perk": { "name": "Thin Film", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "Toughness": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Etch Through",
+        "icon": "etcher_t7.png",
+        "cooldown": 16,
+        "staminaCost": 12,
+        "targetWhen": { "value": "stacks:@Etched", "of": "target", "atLeast": 8 },
+        "description": "Only for a target scored eight layers deep or more. Trace the last line of the pattern and the whole thing may simply fall apart: the more layers, the better the odds. The tough ones lose a slice of themselves instead. Either way the cut goes straight through, and the layers stay for whatever comes next.",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "sound": "sfx/etcher_dissolve.wav",
+        "actions": [
+          { "do": "execute", "amount": 0, "bonusPerStack": 4, "stacksOf": "@Etched", "elitePercent": 15 },
+          { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2, "trueDamage": true },
+          { "do": "effect", "effect": "#Exposed" }
+        ],
+        "perk": { "name": "Final Pass", "chanceBonus": 15 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "prompt": "computer system crash, distorted glitch burst, power down, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, mech sound, computer system crash, distorted glitch burst, power down, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of mech, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.006615527905523777,
+  "archetype": "mech",
+  "references": [
+    {
+      "id": "55af2a6c6a4a2886",
+      "score": 0.29766765236854553,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "f849f4d5d5aed67d",
+      "score": 0.27183547616004944,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15_REV.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "91cde12895855d49",
+      "score": 0.2705724537372589,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 47.wav",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "89fe587e87a00499",
+      "score": 0.2705724537372589,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Cyborg.zip",
+      "inner": "Dark Fantasy Studio- Cyborg/Dark Fantasy Studio- Cyborg 47.wav",
+      "tags": [
+        "cyborg",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a66057badbe664ba",
+      "score": 0.25499072670936584,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 21.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "56d4addfb5019731",
+      "score": 0.2548644244670868,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 20.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "0b874b15fabe836b",
+      "score": 0.24823874235153198,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 4.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "77c19550edfa6a53",
+      "score": 0.24823874235153198,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 5.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "1708625e9e720947",
+      "score": 0.24823874235153198,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 7.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "eb9d7a4474320d09",
+      "score": 0.24823874235153198,
+      "via": "tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 1.wav",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "55af2a6c6a4a2886",
+    "f849f4d5d5aed67d",
+    "91cde12895855d49",
+    "89fe587e87a00499",
+    "a66057badbe664ba",
+    "56d4addfb5019731",
+    "0b874b15fabe836b",
+    "77c19550edfa6a53",
+    "1708625e9e720947",
+    "eb9d7a4474320d09"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\voidhacker_panic.wav",
+  "sample_rate": 44100
+}

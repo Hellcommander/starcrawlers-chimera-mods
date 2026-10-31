@@ -1,0 +1,59 @@
+[ { "particles": [
+  { "id": "fx_probability_shaman_coin_flip_bolt_travel",
+    "layers": [
+      {"texture": "mote", "count": 1, "life": [0.7], "speed": [0], "size": [0.459], "sizeCurve": "flat", "color": "#D0FFD8", "color2": "#D0A820", "shape": "point", "duration": 0.7, "spin": [720, 1080]},
+      {"texture": "star", "count": 0, "rate": 64, "duration": 0.7, "life": [0.104, 0.221], "speed": [0.102, 0.361], "size": [0.057, 0.094], "gravity": 0.0, "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_probability_shaman_coin_flip_bolt_impact", "light": {"color": "#60E080", "range": 2.501, "intensity": 1.327, "time": 0.291},
+    "layers": [
+      {"texture": "fx/probability_shaman_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.02], "sizeCurve": "flat", "color": "#D0FFD8", "color2": "#D0A820", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 5, "life": [0.318, 0.499], "speed": [0.0, 0.27], "size": [0.438, 0.718], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.25}
+    ] },
+  { "id": "fx_probability_shaman_better_outcome_cast", "light": {"color": "#60E080", "range": 2.647, "intensity": 1.13, "time": 0.547},
+    "layers": [
+      {"texture": "star", "count": 7, "life": [0.309, 0.501], "speed": [0.0, 0.31], "size": [0.208, 0.398], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.6},
+      {"texture": "star", "count": 16, "life": [0.652, 1.295], "speed": [0.11, 0.384], "size": [0.106, 0.236], "orbit": 1.559, "color": "#D0FFD8", "color2": "#D0A820", "shape": "ring", "radius": 0.6},
+      {"texture": "soft", "count": 1, "life": [0.48], "speed": [0], "size": [0.97], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_probability_shaman_unobserved_state_cast",
+    "layers": [
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 11, "delay": 0.0, "life": [1.07, 1.722], "speed": [0.316, 0.745], "size": [0.976, 1.787], "sizeCurve": "grow", "spin": [-50, 50], "color": "#16221A", "color2": "#16221A", "alpha": 0.7, "shape": "sphere", "radius": 0.6, "grid": [6, 6]},
+      {"texture": "mote", "count": 13, "life": [0.475, 1.084], "speed": [0.193, 0.618], "size": [0.083, 0.18], "gravity": 0.0, "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.7}
+    ] },
+  { "id": "fx_probability_shaman_branch_insurance_cast", "light": {"color": "#60E080", "range": 2.718, "intensity": 1.528, "time": 0.56},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.43], "speed": [0], "size": [2.007], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 8, "life": [0.336, 0.614], "speed": [0.0, 0.29], "size": [0.27, 0.668], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 22, "life": [0.684, 1.164], "speed": [0.098, 0.42], "size": [0.097, 0.188], "orbit": 0.975, "color": "#D0FFD8", "color2": "#D0A820", "shape": "ring", "radius": 0.9},
+      {"texture": "star", "count": 6, "life": [0.266, 0.558], "speed": [0.0, 0.286], "size": [0.316, 0.671], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_probability_shaman_wavefunction_collapse_area", "light": {"color": "#60E080", "range": 8.783, "intensity": 2.818, "time": 0.646},
+    "layers": [
+      {"texture": "fx/probability_shaman_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.51], "sizeCurve": "flat", "color": "#D0FFD8", "color2": "#D0A820", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.435], "speed": [0], "size": [11.004], "sizeCurve": "grow", "color": "#D0FFD8", "color2": "#D0A820", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 45, "life": [0.303, 0.592], "speed": [3.981, 8.797], "size": [0.109, 0.211], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#D0FFD8", "color2": "#D0A820", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.939, 1.433], "speed": [0.8, 1.608], "size": [1.046, 1.68], "sizeCurve": "grow", "spin": [-50, 50], "color": "#16221A", "color2": "#16221A", "alpha": 0.5, "shape": "ring", "radius": 1.6, "ground": true, "grid": [6, 6]},
+      {"texture": "star", "count": 6, "life": [0.323, 0.457], "speed": [0.0, 0.267], "size": [0.3, 0.614], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_probability_shaman_fork_in_the_road_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.606], "sizeCurve": "flat", "color": "#D0FFD8", "color2": "#D0A820", "shape": "point", "duration": 0.7, "spin": [90, 180]},
+      {"texture": "mote", "count": 0, "rate": 117, "duration": 0.7, "life": [0.266, 0.513], "speed": [0.099, 0.368], "size": [0.081, 0.188], "gravity": 0.0, "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.06},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 31, "duration": 0.7, "life": [0.419, 0.763], "speed": [0.089, 0.439], "size": [0.189, 0.44], "gravity": 0.0, "color": "#16221A", "color2": "#16221A", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_probability_shaman_fork_in_the_road_impact", "light": {"color": "#60E080", "range": 2.48, "intensity": 1.166, "time": 0.522},
+    "layers": [
+      {"texture": "star", "count": 6, "life": [0.305, 0.499], "speed": [0.0, 0.331], "size": [0.189, 0.441], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "shape": "sphere", "radius": 0.6},
+      {"texture": "star", "count": 17, "life": [0.634, 1.179], "speed": [0.1, 0.359], "size": [0.117, 0.219], "orbit": 1.458, "color": "#D0FFD8", "color2": "#D0A820", "shape": "ring", "radius": 0.6},
+      {"texture": "soft", "count": 1, "life": [0.387], "speed": [0], "size": [0.844], "sizeCurve": "pop", "color": "#D0FFD8", "color2": "#D0A820", "alpha": 0.85, "shape": "point"}
+    ] }
+] },
+{ "id": "MOD_ProbabilityShaman", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_probability_shaman_coin_flip_bolt_impact", "travelVfx": "fx_probability_shaman_coin_flip_bolt_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_probability_shaman_better_outcome_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_probability_shaman_unobserved_state_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_probability_shaman_branch_insurance_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_probability_shaman_wavefunction_collapse_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_probability_shaman_fork_in_the_road_impact", "travelVfx": "fx_probability_shaman_fork_in_the_road_travel", "areaVfx": ""}}
+] } ]

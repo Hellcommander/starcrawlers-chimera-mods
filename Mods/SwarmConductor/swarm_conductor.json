@@ -1,0 +1,145 @@
+{
+  "id": "MOD_SwarmConductor",
+  "name": "Swarm Conductor",
+  "description": "Neural-link specialists who treat CorpSec's drone fleet as spare hardware. They build a couple of drones of their own and steal the rest. Running the link is tiring: hijacks and orders cost stamina, and machines you recall or lose give some of it back.\n\nFavors [SMT] and [REC].",
+  "archetype": "Intellect",
+  "icon": "icons/swarm_conductor.png",
+  "iconFrom": "SKILLTREE_Hacker",
+  "attributePriorities": { "Smarts": 3, "Recognition": 2 },
+
+  "effects": [
+    { "id": "Designated", "name": "Designated", "icon": "icons/designated.png", "description": "Every linked drone has this one in its sights.",
+      "duration": 4, "debuff": true, "damageTakenMult": 1.2, "stats": { "Dodge": -10 } },
+    { "id": "Linked", "name": "Linked", "icon": "icons/linked.png", "description": "Running on your neural link instead of CorpSec's.",
+      "duration": -1, "stats": { "Dodge": 10, "RangedAccuracy": 10 } },
+    { "id": "Prioritized", "name": "Prioritized", "icon": "icons/prioritized.png", "description": "Full bandwidth on this drone. It hits harder and rarely misses.",
+      "duration": 3, "damageDealtMult": 1.4, "stats": { "RangedAccuracy": 15, "DodgeReduction": 15 } },
+    { "id": "Lattice", "name": "Lattice", "icon": "icons/lattice.png", "description": "Your own pattern, built for the link. Its shots paint targets for the swarm, and when it goes down its core dumps the link back to you in a burst of static.",
+      "duration": -1, "stats": { "HealthMax": 10, "Armor": 2 },
+      "procs": [ { "on": "hit", "chance": 35, "actions": [ { "do": "effect", "effect": "@Designated" } ] } ],
+      "onDeathActions": [
+        { "do": "stamina", "to": "self", "amount": 6 },
+        { "do": "chain", "jumps": 2, "radius": 2.5, "actions": [
+          { "do": "damage", "type": "Shock", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4 } ] } ] },
+    { "id": "Spearhead", "name": "Spearhead", "icon": "icons/spearhead.png", "description": "A heavy CorpSec walker running on your link: armoured, hard-hitting and in front.",
+      "duration": -1, "damageDealtMult": 1.3, "stats": { "Armor": 3, "Dodge": 5 } }
+  ],
+
+  "tiers": [
+    { "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "name": "Assemble Drone", "icon": "icons/assemble_drone.png", "description": "Bolt a drone together from whatever is lying around and wire it straight into your link. You can keep two of your own running, on top of any you hijack.",
+        "target": "self", "staminaCost": 12, "cooldown": 3, "instant": true,
+        "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "summon", "creature": "CORPSEC_DRONE", "summonName": "Scrap Drone", "summonGroup": "ScrapDrones", "maxSummons": 2, "effect": "@Linked" }
+        ],
+        "perk": { "name": "Spare Parts", "cooldownDelta": -1 }
+      } },
+
+    { "attributes": { "Smarts": 1, "Recognition": 1 },
+      "newAbility": {
+        "name": "Hijack Drone", "icon": "icons/hijack_drone.png", "description": "Reach into CorpSec's drone network, take one over and call it to your side.",
+        "target": "self", "staminaCost": 18, "cooldown": 2, "instant": true,
+        "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "summon", "creature": "CORPSEC_DRONE", "maxSummons": 4, "effect": "@Linked" }
+        ],
+        "perk": { "name": "Fast Handshake", "cooldownDelta": -1 }
+      } },
+
+    { "attributes": { "Smarts": 1, "Recognition": 1 },
+      "newAbility": {
+        "name": "Target Uplink", "icon": "icons/target_uplink.png", "description": "Paint one target over the link. Every drone you run fires through it.",
+        "target": "enemy", "range": 8, "staminaCost": 6, "cooldown": 1, "command": true,
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "event:/Abilities/Hacker/Hacker_Hack_Fail",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1,
+            "bonusPerStack": 4, "stacksOf": "summons" },
+          { "do": "effect", "effect": "@Designated" }
+        ],
+        "perk": { "name": "Shared Targeting", "damageMult": 1.25 }
+      } },
+
+    { "attributes": { "Smarts": 1, "Recognition": 1 },
+      "newAbility": {
+        "name": "Priority Override", "icon": "icons/priority_override.png", "description": "Push every spare cycle of the link into your drones for a few turns.",
+        "target": "self", "staminaCost": 6, "instant": true, "cooldown": 5,
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "event:/Abilities/Hacker/Hacker_Hack_Fail",
+        "actions": [
+          { "do": "effect", "to": "summons", "effect": "@Prioritized" }
+        ],
+        "perk": { "name": "Clean Channel", "cooldownDelta": -2 }
+      } },
+
+    { "attributes": { "Smarts": 1, "Dodge": 3 },
+      "newAbility": {
+        "name": "Recall Protocol", "icon": "icons/recall_protocol.png", "description": "Cut one drone loose before it is scrapped. The strain of running it lifts, and you get some stamina back.",
+        "target": "self", "instant": true, "cooldown": 2,
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "actions": [
+          { "do": "stamina", "to": "self", "amount": 6, "ifSummonAlive": "CORPSEC_DRONE" },
+          { "do": "dismiss", "to": "summon", "ifSummonAlive": "CORPSEC_DRONE" }
+        ],
+        "perk": { "name": "Hot Swap", "cooldownDelta": -1 }
+      } },
+
+    { "attributes": { "Smarts": 2, "Recognition": 1 },
+      "newAbility": {
+        "name": "Swarm Overload", "icon": "icons/swarm_overload.png", "description": "Push the whole swarm past its limits at once. The room lights up; the more drones, the brighter.",
+        "target": "self", "radius": 4, "staminaCost": 12, "cooldown": 8,
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact", "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "damage", "type": "Shock", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2,
+            "bonusPerStack": 3, "stacksOf": "summons" },
+          { "do": "stun", "turns": 1, "chance": 25 }
+        ],
+        "perk": { "name": "Full Saturation", "radiusDelta": 1, "damageMult": 1.2 }
+      } },
+
+    { "attributes": { "Smarts": 1, "Recognition": 1, "Armor": 1 },
+      "newAbility": {
+        "name": "Commandeer SPDR", "icon": "icons/commandeer_spdr.png", "description": "Break into a Tarantula walker's control loop and march it to your side: one heavy body to hold the line. Use it again while it stands to patch it up and give it full bandwidth.",
+        "target": "self", "staminaCost": 28, "cooldown": 12, "instant": true,
+        "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "heal", "to": "summon", "amount": 12, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "ifSummonAlive": "self" },
+          { "do": "effect", "to": "summon", "effect": "@Prioritized", "ifSummonAlive": "self" },
+          { "do": "summon", "creature": "CORPSEC_TARANTULA", "turns": 15, "maxSummons": 1, "effect": "@Spearhead", "unlessSummonAlive": "self" }
+        ],
+        "perk": { "name": "Heavy Clearance", "cooldownDelta": -3 }
+      } },
+
+    { "attributes": { "Smarts": 2, "Recognition": 1 },
+      "newAbility": {
+        "name": "Failover Mesh", "type": "passive", "icon": "icons/failover_mesh.png",
+        "description": "Your link routes around losses. Every enemy you drop gives you a little stamina back; when one of your machines goes down, you get more back along with a skin of shielding, and while you run any, they soak a little of what comes your way.",
+        "procs": [
+          { "on": "kill", "actions": [ { "do": "stamina", "to": "self", "amount": 3 } ] },
+          { "on": "allyDeath", "actions": [
+            { "do": "stamina", "to": "self", "amount": 6 },
+            { "do": "shield", "to": "self", "amount": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 } ] },
+          { "on": "hurt", "cooldown": 3, "when": { "value": "summons", "atLeast": 1 }, "actions": [
+            { "do": "shield", "to": "self", "amount": 3, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 } ] }
+        ]
+      } },
+
+    { "attributes": { "Smarts": 2, "Recognition": 2 },
+      "newAbility": {
+        "name": "Lattice Foundry", "icon": "icons/lattice_foundry.png",
+        "description": "Print a Lattice Drone: your own pattern, built to run on the link from the first bolt. Tougher and sharper than anything you can steal or scrape together, its shots paint targets for the swarm, and it gives you stamina back when it falls. Use it again with both up to strip them for repairs and full bandwidth.",
+        "target": "self", "staminaCost": 20, "cooldown": 5, "instant": true,
+        "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "heal", "to": "summons", "ifSummonAlive": "group:Lattice", "amount": 10, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2,
+            "when": { "value": "summons:Lattice", "atLeast": 2 } },
+          { "do": "effect", "to": "summons", "ifSummonAlive": "group:Lattice", "effect": "@Prioritized",
+            "when": { "value": "summons:Lattice", "atLeast": 2 } },
+          { "do": "summon", "creature": "SCCLMOB_SwarmConductor_LatticeDrone", "summonName": "Lattice Drone", "summonGroup": "Lattice",
+            "maxSummons": 2, "effect": "@Lattice" }
+        ],
+        "perk": { "name": "Tooling Up", "cooldownDelta": -2 }
+      } }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "prompt": "shuffling a deck of playing cards, cards snapping crisply into place",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "",
+  "references": [
+    {
+      "id": "0b46974bfeea8c47",
+      "score": 0.41450035572052,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Tomes-Books/Close Scroll 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "tomes",
+        "books",
+        "close",
+        "scroll"
+      ],
+      "archetypes": [
+        "magic",
+        "voice"
+      ]
+    },
+    {
+      "id": "5c86c6cddf4bb8b8",
+      "score": 0.4142553210258484,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Tomes-Books/Close Scroll 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "tomes",
+        "books",
+        "close",
+        "scroll"
+      ],
+      "archetypes": [
+        "magic",
+        "voice"
+      ]
+    },
+    {
+      "id": "2d912ff2f3cf0743",
+      "score": 0.4018125534057617,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Books & Scrolls/ScrollOpen2.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "books",
+        "scrolls",
+        "scrollopen2"
+      ],
+      "archetypes": [
+        "ui",
+        "voice"
+      ]
+    },
+    {
+      "id": "82ffa5f6072a8506",
+      "score": 0.39046168327331543,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Books & Scrolls/ScrollClose3.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "books",
+        "scrolls",
+        "scrollclose3"
+      ],
+      "archetypes": [
+        "ui",
+        "voice"
+      ]
+    },
+    {
+      "id": "6e1caf65b0f14376",
+      "score": 0.37273648381233215,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Books & Scrolls/TurnPage5.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "books",
+        "scrolls",
+        "turnpage5"
+      ],
+      "archetypes": [
+        "ui",
+        "voice"
+      ]
+    },
+    {
+      "id": "2b522453b5c74e3c",
+      "score": 0.36982399225234985,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Tomes-Books/Turn Page 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "tomes",
+        "books",
+        "turn",
+        "page"
+      ],
+      "archetypes": [
+        "magic",
+        "voice"
+      ]
+    },
+    {
+      "id": "910e331a095a336b",
+      "score": 0.36922335624694824,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Tomes-Books/Turn Page 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "tomes",
+        "books",
+        "turn",
+        "page"
+      ],
+      "archetypes": [
+        "magic",
+        "voice"
+      ]
+    },
+    {
+      "id": "a4de743a0e5f1343",
+      "score": 0.36765509843826294,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Books & Scrolls/ScrollClose1.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "books",
+        "scrolls",
+        "scrollclose1"
+      ],
+      "archetypes": [
+        "ui",
+        "voice"
+      ]
+    },
+    {
+      "id": "83afe41175e9e9d8",
+      "score": 0.36545825004577637,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Books & Scrolls/TurnPage7.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "books",
+        "scrolls",
+        "turnpage7"
+      ],
+      "archetypes": [
+        "ui",
+        "voice"
+      ]
+    },
+    {
+      "id": "a18e5ce1fe8b280e",
+      "score": 0.35904526710510254,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Misc/Papers 2.wav",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "papers"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    }
+  ],
+  "used_ids": [
+    "0b46974bfeea8c47",
+    "5c86c6cddf4bb8b8",
+    "2d912ff2f3cf0743",
+    "82ffa5f6072a8506",
+    "6e1caf65b0f14376",
+    "2b522453b5c74e3c",
+    "910e331a095a336b",
+    "a4de743a0e5f1343",
+    "83afe41175e9e9d8",
+    "a18e5ce1fe8b280e"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_guard.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.092,
+  "semitones": 4,
+  "width": 0.532,
+  "listen": {
+    "match": 0.408,
+    "clean": 4.575,
+    "faults": []
+  }
+}

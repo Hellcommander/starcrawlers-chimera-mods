@@ -1,0 +1,208 @@
+{
+  "prompt": "frozen block shattering into ice shards, bright glassy smash",
+  "conditioned_prompt": "high quality game sound effect, frozen block shattering into ice shards, bright glassy smash, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.03039822354912758,
+  "source_corr": 0.014603903517127037,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "ff890c7bf77a90f5",
+      "score": 0.63054358959198,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 15.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b20f7281c83fd62f",
+      "score": 0.625397801399231,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 24.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "ca2805ed41c415c0",
+      "score": 0.6223329305648804,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 25.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "7a3fff175839de6b",
+      "score": 0.6071507334709167,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 38.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1db69546f4b5be4c",
+      "score": 0.6053615808486938,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 26.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "bae2bec9e1f9be97",
+      "score": 0.5838700532913208,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 40.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1cf6fc7316375578",
+      "score": 0.5824881196022034,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 35.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "24aee9f98804c5ea",
+      "score": 0.5794705152511597,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 66.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b0c5559bb4cf9eef",
+      "score": 0.5791867971420288,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 14.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "17177cf1360920aa",
+      "score": 0.5782150626182556,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 13.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "ff890c7bf77a90f5",
+    "b20f7281c83fd62f",
+    "ca2805ed41c415c0",
+    "7a3fff175839de6b",
+    "1db69546f4b5be4c",
+    "bae2bec9e1f9be97",
+    "1cf6fc7316375578",
+    "24aee9f98804c5ea",
+    "b0c5559bb4cf9eef",
+    "17177cf1360920aa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_shatter.wav",
+  "sample_rate": 44100
+}

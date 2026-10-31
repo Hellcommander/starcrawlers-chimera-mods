@@ -1,0 +1,85 @@
+{
+  "id": "MOD_Conjoined",
+  "name": "Conjoined",
+  "description": "One mind spread over several bodies. Each body is a character of its own: its own level, classes, skill and perk points, gear and hotbar. Inventory, credits and quests are shared. You play one body; the others fight beside you and earn the same XP, and you can step into any of them.\n\nFavors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "icons/conjoined.png",
+  "iconFrom": "SKILLTREE_Bodybuilding",
+  "attributePriorities": { "Strength": 3, "Toughness": 2 },
+
+  "effects": [
+    { "id": "SpreadThin", "name": "Spread Thin", "icon": "icons/spread_thin.png", "description": "Your mind is running more than one body. Each other body that's up weakens this one.",
+      "duration": -1, "debuff": true, "maxStacks": 6, "damageDealtPerStack": -0.12, "stats": { "HealthMax": -4 } }
+  ],
+
+  "tiers": [
+    { "attributes": { "Strength": 1, "Toughness": 1 },
+      "newAbility": {
+        "name": "Shared Marrow", "type": "passive", "icon": "icons/shared_marrow.png",
+        "description": "A second body pulls free of you. Every body that's up earns the XP you earn, and when the body you play would die, you wake up in another that still stands. A fallen body stays down until it is knitted back together."
+      } },
+
+    { "attributes": { "Agility": 1 },
+      "newAbility": {
+        "name": "Trade Bodies", "icon": "icons/trade_bodies.png", "description": "Trade places with the nearest of your other bodies and take it over: it arrives where you stand, and the body you let go of takes its spot and keeps fighting. Switching from the party panel leaves everyone where they are.",
+        "target": "self", "instant": true, "cooldown": 6, "requires": "livingBody",
+        "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [ { "do": "swapBody" } ],
+        "perk": { "name": "Practiced Handover", "cooldownDelta": -2 }
+      } },
+
+    { "attributes": { "Strength": 1, "Toughness": 1 },
+      "newAbility": {
+        "name": "Converging Blow", "icon": "icons/converging_blow.png", "description": "Strike while your other bodies close in from every side. The more of you there are, the harder it lands. A third body pulls free.",
+        "target": "enemy", "range": 2, "cooldown": 3, "staminaCost": 12,
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3, "perRank": 1,
+            "bonusPerStack": 4, "stacksOf": "bodies" }
+        ],
+        "perk": { "name": "Closing Ring", "damageMult": 1.25 }
+      } },
+
+    { "attributes": { "Toughness": 2 },
+      "newAbility": {
+        "name": "Knit Together", "icon": "icons/knit_together.png", "description": "Pull a fallen body of yours back to its feet beside you. It takes a long time before you can do it again.",
+        "target": "self", "instant": true, "cooldown": 40, "requires": "downedBody",
+        "castVfx": "PA_Engineer_Boltron.PS_summon",
+        "actions": [ { "do": "reviveBody", "amount": 50 } ],
+        "perk": { "name": "Quick Stitch", "cooldownDelta": -10 }
+      } },
+
+    { "attributes": { "Strength": 2, "Toughness": 1 },
+      "newAbility": {
+        "name": "One Pulse", "type": "passive", "icon": "icons/one_pulse.png",
+        "description": "Your bodies stop pulling against each other: one body's worth of Spread Thin is forgiven. A fourth body pulls free."
+      } },
+
+    { "attributes": { "Strength": 2, "Toughness": 1 },
+      "newAbility": {
+        "name": "Rout of Many Hands", "icon": "icons/rout_of_many_hands.png", "description": "Every arm you have swings at once. Everyone around you is battered and shoved back, harder for each other body still standing, and the blows you trade turn into a skin of shielding.",
+        "target": "self", "radius": 2, "cooldown": 7, "staminaCost": 18,
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6", "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5", "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.3, "perRank": 1,
+            "bonusPerStack": 3, "stacksOf": "bodies" },
+          { "do": "knockback", "amount": 1 },
+          { "do": "shield", "to": "self", "amount": 4, "perRank": 1, "bonusPerStack": 3, "stacksOf": "bodies" }
+        ],
+        "perk": { "name": "Crushing Circle", "radiusDelta": 1 }
+      } },
+
+    { "attributes": { "Toughness": 2, "Strength": 1 },
+      "newAbility": {
+        "name": "Borrowed Blood", "type": "passive", "icon": "icons/borrowed_blood.png",
+        "description": "Your bodies share more than a mind now. Each kill sends a little of their strength back into the one you play, and when it is close to falling, the others brace it: a shield that grows with every body still up, and a moment of hardened skin.",
+        "procs": [
+          { "on": "kill", "actions": [
+            { "do": "heal", "to": "self", "amount": 3, "perRank": 1, "bonusPerStack": 2, "stacksOf": "bodies" } ] },
+          { "on": "lowHealth", "threshold": 35, "cooldown": 15, "actions": [
+            { "do": "shield", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.4, "bonusPerStack": 4, "stacksOf": "bodies" },
+            { "do": "effect", "to": "self", "effect": "#Fortified" } ] }
+        ]
+      } }
+  ]
+}

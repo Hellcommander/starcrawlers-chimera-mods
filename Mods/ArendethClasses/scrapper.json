@@ -1,0 +1,201 @@
+{
+  "id": "MOD_Scrapper",
+  "name": "Scrapper",
+  "description": "Brawlers who fight with whatever is bolted down, then rip it loose. Every hit a Scrapper lands builds Grit, and every hit they take makes them harder to put down.\n\nStun-heavy brawler who spends Grit on a room-clearing finisher. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "scrapper.png",
+  "attributePriorities": {
+    "Strength": 3,
+    "Toughness": 3,
+    "Agility": 1
+  },
+  "effects": [
+    {
+      "id": "Grit",
+      "name": "Grit",
+      "description": "Warmed up and swinging harder with every blow that lands.",
+      "duration": 6,
+      "maxStacks": 6,
+      "damageDealtPerStack": 0.04,
+      "stats": { "Strength": 1 }
+    },
+    {
+      "id": "Cornered",
+      "name": "Cornered",
+      "description": "Hurt, angry and too stubborn to drop. The worse it gets, the less the hits land and the faster you knit.",
+      "duration": 4,
+      "maxStacks": 5,
+      "damageTakenPerStack": -0.04,
+      "stats": { "HealthRegen": 1 }
+    },
+    {
+      "id": "Unbowed",
+      "name": "Unbowed",
+      "description": "Spitting blood and still upright. For a few turns every hit lands soft, as if you'd stopped feeling them.",
+      "duration": 3,
+      "damageTakenMult": 0.6
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Toughness": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Took Worse",
+        "icon": "scrapper_t0.png",
+        "description": "Anything in reach is a weapon, and anything that hits you only makes you meaner. Heavy blows sometimes ring a skull outright, and a kill gets you straight back into the fight.",
+        "procs": [
+          { "on": "hit", "chance": 60, "actions": [ { "do": "effect", "to": "self", "effect": "@Grit" } ] },
+          { "on": "hit", "chance": 10, "actions": [ { "do": "stun", "turns": 1 } ] },
+          { "on": "hurt", "actions": [ { "do": "effect", "to": "self", "effect": "@Cornered" } ] },
+          { "on": "kill", "actions": [
+            { "do": "cooldowns", "amount": 1 },
+            { "do": "effect", "to": "self", "effect": "@Grit" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Pipe to the Knee",
+        "icon": "scrapper_t1.png",
+        "description": "A length of conduit, swung low. The jagged end leaves splinters.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "sound": "sfx/scrapper_pipe.wav",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Grit", "stacksFrom": "self" },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "effect": "#Gashed", "chance": 35 },
+          { "do": "stun", "turns": 1, "chance": 25 }
+        ],
+        "perk": { "name": "Heavier Pipe", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Chuck Something",
+        "icon": "scrapper_t2.png",
+        "range": 5,
+        "cooldown": 4,
+        "staminaCost": 10,
+        "description": "A wrench, a pot, a small chair. Whatever's handy, thrown hard enough to ring a skull.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 7, "scale": "Strength", "scaleMult": 0.3, "bonusPerStack": 1, "stacksOf": "@Grit", "stacksFrom": "self" },
+          { "do": "stun", "turns": 1, "chance": 60 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "effect", "to": "self", "effect": "@Grit" }
+        ],
+        "perk": { "name": "Bigger Chair", "cooldownDelta": -1 }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Below the Belt",
+        "icon": "scrapper_t3.png",
+        "cooldown": 5,
+        "staminaCost": 8,
+        "description": "A thumb where the visor seal is, a heel on the ankle joint, a knee where the plating stops. It hardly hurts, but afterwards they're limping, winded, seeing double and wide open, and whatever big move they were saving up has to wait.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 1, "max": 3, "scale": "Strength", "scaleMult": 0.2 },
+          { "do": "exhaust", "amount": 2 },
+          { "do": "effect", "effect": "#Reeling", "turns": 3 },
+          { "do": "effect", "effect": "SLOW", "turns": 3 },
+          { "do": "effect", "effect": "#Exposed", "turns": 4 },
+          { "do": "effect", "effect": "#Gashed" },
+          { "do": "effect", "to": "self", "effect": "@Grit" }
+        ],
+        "perk": { "name": "No Rules", "addActions": [ { "do": "stun", "turns": 1, "chance": 50 } ] }
+      }
+    },
+    {
+      "attributes": { "Strength": 1, "Toughness": 1 },
+      "newAbility": {
+        "base": "Smash",
+        "name": "Bar Clear",
+        "icon": "scrapper_t4.png",
+        "radius": 1.6,
+        "cooldown": 7,
+        "staminaCost": 16,
+        "description": "Swing wide and wild with whatever's in your hands. Everybody close gets some, and some of them don't get back up for a moment.",
+        "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "knockback", "amount": 1 },
+          { "do": "stun", "turns": 1, "chance": 40 },
+          { "do": "effect", "to": "self", "effect": "@Grit" }
+        ],
+        "perk": { "name": "Last Call", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Strength": 2, "Toughness": 1 },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Not Bolted Down",
+        "icon": "scrapper_t5.png",
+        "radius": 2.5,
+        "cooldown": 14,
+        "staminaCost": 24,
+        "resetOnKill": true,
+        "description": "Rip up the furniture, the fixtures and the floor plating and bring all of it down on everyone at once. All your Grit goes into it, and you drink in the carnage. If anyone stays down, there's more furniture.",
+        "castVfx": "PA_Barbarian_FlyingSmash.triggerParticle@0.6",
+        "sound": "sfx/scrapper_haymaker.wav",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Grit", "stacksFrom": "self", "consumeStacks": true, "lifesteal": 0.25 },
+          { "do": "knockback", "amount": 2 },
+          { "do": "stun", "turns": 1 }
+        ],
+        "perk": { "name": "Wall to Wall", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1, "Agility": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Shoulder Through",
+        "icon": "scrapper_t6.png",
+        "range": 4,
+        "cooldown": 8,
+        "staminaCost": 14,
+        "description": "Put your head down and go through whatever's between you and them. You arrive at a run, drive a shoulder into their middle and send them backwards into the nearest wall or the nearest friend of theirs, and both of them feel it.",
+        "impactVfx": "PA_Barbarian_RecklessCharge.impactParticle@0.5",
+        "sound": "event:/Abilities/Misc/Barbarian_Charge",
+        "actions": [
+          { "do": "leap" },
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 1, "stacksOf": "@Grit", "stacksFrom": "self" },
+          { "do": "throw", "amount": 2, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.2 },
+            { "do": "stun", "turns": 1 } ] },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "to": "self", "effect": "@Grit" }
+        ],
+        "perk": { "name": "Running Start", "rangeDelta": 2 }
+      }
+    },
+    {
+      "attributes": { "Toughness": 2, "Strength": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Won't Stay Down",
+        "icon": "scrapper_t7.png",
+        "description": "The worse it gets, the less it takes. When a fight drags you under a third of your health, everything you've been soaking up as Cornered comes back as a second wind, and for a few turns the blows barely register. While you're cornered, your hits sometimes land a second, uglier blow.",
+        "procs": [
+          { "on": "lowHealth", "threshold": 30, "cooldown": 25, "actions": [
+            { "do": "heal", "to": "self", "amount": 3, "bonusPerStack": 3, "stacksOf": "@Cornered", "stacksFrom": "self", "consumeStacks": true },
+            { "do": "effect", "to": "self", "effect": "@Unbowed" },
+            { "do": "effect", "to": "self", "effect": "@Grit", "stacks": 2 } ] },
+          { "on": "hit", "chance": 25, "when": { "value": "stacks:@Cornered", "of": "self", "atLeast": 3 }, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Toughness", "scaleMult": 0.3 },
+            { "do": "effect", "effect": "#Gashed" } ] }
+        ]
+      }
+    }
+  ]
+}

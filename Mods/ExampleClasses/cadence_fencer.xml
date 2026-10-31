@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Example class written in XML, showing conditions, counters and the extra triggers.
+  Everything here works the same in a .json file; see Mods/README.md, "Conditions, counters and triggers".
+
+  Cadence is a counter (a plain number on you, 0-5): Feint and Cut builds it, misses cost it,
+  Closing Line spends all of it. No status effect is needed to track it.
+-->
+<class id="MOD_CadenceFencer" name="Cadence Fencer" archetype="Guile" iconFrom="SKILLTREE_Blademaster">
+  <description>A duelist who keeps count. Every clean cut adds to your Cadence; a miss costs you one. Spend the whole count on a finishing line against a wounded foe.
+
+Example class written in XML (conditions, counters, triggers). Favors [AGL] and [STR].</description>
+  <attributePriorities Agility="4" Strength="2" />
+
+  <!-- named conditions: usable by name in any "when" -->
+  <conditions>
+    <Wounded>
+      <any>
+        <check value="health%" of="target" below="40" />
+        <check tag="boss" of="target" />
+      </any>
+    </Wounded>
+    <InRhythm value="counter:Cadence" of="self" atLeast="3" />
+  </conditions>
+
+  <tiers>
+    <tier>
+      <attributes Agility="1" />
+      <newAbility base="Passive" name="Measure" icon="SKILLTREE_Blademaster/0" description="You start every fight on the back foot, on purpose.">
+        <procs>
+          <proc on="combatStart">
+            <actions>
+              <action do="counter" to="self" counter="Cadence" amount="0" counterSet="true" />
+              <action do="shield" to="self" amount="3" perRank="1" />
+            </actions>
+          </proc>
+          <proc on="lowHealth" threshold="35" cooldown="12">
+            <actions>
+              <action do="shield" to="self" amount="6" perRank="2" />
+            </actions>
+          </proc>
+        </procs>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Strength="1" />
+      <newAbility base="Strike" name="Feint and Cut" icon="SKILLTREE_Blademaster/1" description="Draw the guard one way, cut the other.">
+        <actions>
+          <action do="damage" type="Slashing" min="3" max="5" perRank="1" scale="Agility" scaleMult="0.3" />
+          <action do="damage" type="Slashing" min="2" max="3">
+            <when value="health%" of="target" below="50" />
+          </action>
+          <action do="counter" to="self" counter="Cadence" amount="1" counterMax="5" />
+        </actions>
+        <perk name="Long Feint" chanceBonus="0" damageMult="1.2" />
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Agility="1" />
+      <newAbility base="Passive" name="Riposte" icon="SKILLTREE_DualWield/3" description="Every second dodge comes back with an edge on it; a whiff breaks your count.">
+        <procs>
+          <proc on="dodge" every="2">
+            <actions>
+              <action do="damage" type="Slashing" min="3" max="5" perRank="1" />
+            </actions>
+          </proc>
+          <proc on="miss">
+            <actions>
+              <action do="counter" to="self" counter="Cadence" amount="-1" counterMin="0" />
+            </actions>
+          </proc>
+        </procs>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Toughness="1" />
+      <newAbility base="Buff" name="Hold the Line" icon="SKILLTREE_Shieldbearer/1" cooldown="10" description="Plant your feet. In rhythm, the guard is solid.">
+        <usableWhen inCombat="true" />
+        <actions>
+          <action do="if" to="self" when="InRhythm">
+            <then>
+              <action do="shield" amount="8" perRank="1" />
+            </then>
+            <else>
+              <action do="shield" amount="3" />
+            </else>
+          </action>
+        </actions>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Agility="1" Recognition="1" />
+      <newAbility base="Passive" name="Read the Room" icon="SKILLTREE_Acrobatics/2" description="Every third feint buys you breath.">
+        <procs>
+          <proc on="cast" match="Feint and Cut" every="3">
+            <actions>
+              <action do="stamina" to="self" amount="5" perRank="1" />
+            </actions>
+          </proc>
+        </procs>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Strength="2" Agility="1" />
+      <newAbility base="Strike" name="Closing Line" icon="SKILLTREE_Blademaster/4" cooldown="8" staminaCost="20" description="The count was always leading here.">
+        <usableWhen value="counter:Cadence" of="self" atLeast="2" />
+        <targetWhen>Wounded</targetWhen>
+        <actions>
+          <action do="damage" type="Slashing" min="6" max="9" perRank="2" bonusPerStack="3" stacksOf="counter:Cadence" stacksFrom="self" consumeStacks="true" />
+        </actions>
+      </newAbility>
+    </tier>
+  </tiers>
+</class>

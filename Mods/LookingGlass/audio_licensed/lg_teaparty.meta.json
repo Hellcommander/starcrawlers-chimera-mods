@@ -1,0 +1,237 @@
+{
+  "prompt": "porcelain teacups clinking and rattling, tea pouring, whimsical",
+  "duration": 2.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "38d05add6a113e4f",
+      "score": 0.42869749665260315,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Household/Ice Cubes In Glass A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "household",
+        "cubes",
+        "in",
+        "glass"
+      ],
+      "archetypes": [
+        "impact",
+        "water"
+      ]
+    },
+    {
+      "id": "3cdf5192a5ee368c",
+      "score": 0.39630812406539917,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Little Mech 004.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "voice",
+        "little",
+        "mech"
+      ],
+      "archetypes": [
+        "mech",
+        "water"
+      ]
+    },
+    {
+      "id": "8e76355785fcc9c4",
+      "score": 0.3851698637008667,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Mech Bug 002.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "voice",
+        "mech",
+        "bug"
+      ],
+      "archetypes": [
+        "mech",
+        "water"
+      ]
+    },
+    {
+      "id": "937112aea26cffa3",
+      "score": 0.3701399266719818,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Household/Ice Cubes In Glass C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "household",
+        "cubes",
+        "in",
+        "glass"
+      ],
+      "archetypes": [
+        "impact",
+        "water"
+      ]
+    },
+    {
+      "id": "8d7a20b62413173e",
+      "score": 0.3461501896381378,
+      "via": "clap+tag",
+      "pack": "inventorysfxbundle_audio.zip",
+      "inner": "inventorysfxbundle/Assets/Potions/PotionUse5.mp3",
+      "license": "direct",
+      "tags": [
+        "inventorysfxbundle",
+        "assets",
+        "potions",
+        "potionuse5"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "a3565bcc21348e9a",
+      "score": 0.34601545333862305,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Venom/Venom 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "venom"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "c72ff688002585f0",
+      "score": 0.34548431634902954,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Mech Bug 003.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "voice",
+        "mech",
+        "bug"
+      ],
+      "archetypes": [
+        "mech",
+        "water"
+      ]
+    },
+    {
+      "id": "e701ced284fcc443",
+      "score": 0.3416222333908081,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Events/Event 21.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "events",
+        "event"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "a5d9e0cca06c8679",
+      "score": 0.3412560224533081,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Venom/Venom 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "venom"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "8b6d9e5599c60ff1",
+      "score": 0.3396531939506531,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Events/Event 20.mp3",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "events",
+        "event"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    }
+  ],
+  "used_ids": [
+    "38d05add6a113e4f",
+    "3cdf5192a5ee368c",
+    "8e76355785fcc9c4",
+    "937112aea26cffa3",
+    "8d7a20b62413173e",
+    "a3565bcc21348e9a",
+    "c72ff688002585f0",
+    "e701ced284fcc443",
+    "a5d9e0cca06c8679",
+    "8b6d9e5599c60ff1"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_teaparty.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.049,
+  "semitones": 6,
+  "width": 0.317,
+  "listen": {
+    "match": 0.585,
+    "clean": 2.82,
+    "faults": []
+  }
+}

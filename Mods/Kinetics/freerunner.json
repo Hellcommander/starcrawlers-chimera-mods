@@ -1,0 +1,430 @@
+{
+  "id": "MOD_Freerunner",
+  "name": "Freerunner",
+  "description": "Station kids who learned the vents and stairwells before they could read. Every tile they cover builds Momentum; standing still lets it bleed away.\n\nMovement-driven skirmisher: dodge and crit from Momentum, mobility that builds it, finishers that spend it. Favors [AGL].",
+  "archetype": "Guile",
+  "icon": "icons/freerunner.png",
+  "attributePriorities": {
+    "Agility": 5,
+    "Strength": 2
+  },
+  "effects": [
+    {
+      "id": "Momentum",
+      "name": "Momentum",
+      "icon": "icons/momentum.png",
+      "resource": true,
+      "resourceColor": "#7CFFB2",
+      "description": "You're on the move. Every stack makes you harder to hit and your strikes sharper. Stop moving for a couple of turns and it's gone.",
+      "duration": 2,
+      "maxStacks": 8,
+      "stats": {
+        "Dodge": 3,
+        "Crit": 2
+      }
+    },
+    {
+      "id": "Airborne",
+      "name": "Airborne",
+      "description": "Mid-vault. Very hard to hit.",
+      "duration": 1,
+      "stats": {
+        "Dodge": 25
+      }
+    },
+    {
+      "id": "Tripped",
+      "name": "Tripped",
+      "debuff": true,
+      "description": "Swept off their feet.",
+      "duration": 2,
+      "stats": {
+        "Dodge": -15,
+        "Agility": -2
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Flow State",
+        "icon": "icons/flow_state.png",
+        "description": "Every step you take builds Momentum. Waiting in place throws it away.",
+        "procs": [
+          {
+            "on": "move",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Momentum"
+              }
+            ]
+          },
+          {
+            "on": "wait",
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "@Momentum"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Flying Knee",
+        "icon": "icons/flying_knee.png",
+        "staminaCost": 6,
+        "cooldown": 0,
+        "description": "A jumping knee that hits harder the faster you're going, and keeps you going.",
+        "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 2,
+            "max": 5,
+            "scale": "Agility",
+            "scaleMult": 0.4,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "@Momentum",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Momentum"
+          }
+        ],
+        "perk": {
+          "name": "Double Knee",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/run_flying_knee.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Wall Run",
+        "icon": "icons/wall_run.png",
+        "range": 4,
+        "staminaCost": 8,
+        "cooldown": 4,
+        "description": "Run up the wall and drop somewhere else in the room. Lands you airborne and with two more Momentum. Doesn't end your turn.",
+        "actions": [
+          {
+            "do": "teleport"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Momentum",
+            "stacks": 2
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Airborne"
+          }
+        ],
+        "perk": {
+          "name": "Rail Grind",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/run_wall_run.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Slide Tackle",
+        "icon": "icons/slide_tackle.png",
+        "range": 4,
+        "staminaCost": 10,
+        "cooldown": 4,
+        "description": "Close the gap feet first. You slide in beside them, sweep their legs and knock them a tile away.",
+        "impactVfx": "PA_Barbarian_RecklessCharge.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "leap"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 3,
+            "max": 6,
+            "scale": "Agility",
+            "scaleMult": 0.35,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "@Momentum",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "effect",
+            "effect": "@Tripped"
+          },
+          {
+            "do": "throw",
+            "amount": 1,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 2,
+                "max": 3
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Momentum"
+          }
+        ],
+        "perk": {
+          "name": "Long Slide",
+          "rangeDelta": 2
+        },
+        "sound": "audio_licensed/run_slide_tackle.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Second Wind",
+        "icon": "icons/second_wind.png",
+        "staminaCost": 0,
+        "cooldown": 8,
+        "stackCost": {
+          "effect": "@Momentum",
+          "amount": 3
+        },
+        "description": "Turn speed into breath. Spend three Momentum: your other cooldowns tick down, you catch some stamina back, and you're airborne for a moment.",
+        "actions": [
+          {
+            "do": "cooldowns",
+            "amount": 2
+          },
+          {
+            "do": "stamina",
+            "to": "self",
+            "amount": 20
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Airborne"
+          }
+        ],
+        "perk": {
+          "name": "Endless Run",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/run_second_wind.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Vault Stomp",
+        "icon": "icons/vault_stomp.png",
+        "range": 5,
+        "radius": 1.6,
+        "staminaCost": 16,
+        "cooldown": 10,
+        "description": "Vault high and come down on top of them. Everyone around the landing is stunned and hit with every bit of Momentum you were carrying.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.5",
+        "sound": "audio_licensed/run_vault_stomp.wav",
+        "actions": [
+          {
+            "do": "teleport"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 6,
+            "max": 10,
+            "scale": "Agility",
+            "scaleMult": 0.5,
+            "perRank": 2,
+            "bonusPerStack": 2,
+            "stacksOf": "@Momentum",
+            "stacksFrom": "self",
+            "consumeStacks": true
+          },
+          {
+            "do": "stun",
+            "turns": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Tripped"
+          }
+        ],
+        "perk": {
+          "name": "Big Air",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Tic-Tac Barrage",
+        "icon": "icons/tic_tac_barrage.png",
+        "range": 5,
+        "staminaCost": 14,
+        "cooldown": 7,
+        "resetOnKill": true,
+        "description": "Kick off the nearest wall into them, then off them into the next one, and the next. Every kick is as hard as your Momentum, nobody you touch stays standing, and if the first one drops you can go again.",
+        "impactVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.5",
+        "actions": [
+          {
+            "do": "leap"
+          },
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3,
+            "falloff": 0.8,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 4,
+                "max": 7,
+                "scale": "Agility",
+                "scaleMult": 0.4,
+                "perRank": 1,
+                "bonusPerStack": 1,
+                "stacksOf": "@Momentum",
+                "stacksFrom": "self"
+              },
+              {
+                "do": "effect",
+                "effect": "@Tripped"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Momentum"
+          }
+        ],
+        "perk": {
+          "name": "Off the Walls",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Airborne"
+            }
+          ]
+        },
+        "sound": "audio_licensed/run_flying_knee.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Untouchable Pace",
+        "icon": "icons/untouchable_pace.png",
+        "description": "At full tilt you stop being a target and start being a hazard. A miss gets a heel in return, a takedown keeps you rolling, and with enough Momentum you're barely touching the floor.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              {
+                "do": "damage",
+                "to": "attacker",
+                "type": "Crushing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility",
+                "scaleMult": 0.25,
+                "bonusPerStack": 1,
+                "stacksOf": "@Momentum",
+                "stacksFrom": "self"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Momentum"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Momentum",
+                "stacks": 2
+              },
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 6
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 35,
+            "when": {
+              "value": "stacks:@Momentum",
+              "of": "self",
+              "atLeast": 6
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Airborne"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

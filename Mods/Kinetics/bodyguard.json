@@ -1,0 +1,445 @@
+{
+  "id": "MOD_Bodyguard",
+  "name": "Bodyguard",
+  "description": "Close protection for people who can afford it, and for crews who can't.\n\nProtector tank: taunts, guards your summons and pets by taking half their damage, armed retorts, and Resolve built from punishment that pays out in Payback. Favors [TGH] and [STR].",
+  "archetype": "Muscle",
+  "icon": "icons/bodyguard.png",
+  "attributePriorities": {
+    "Toughness": 5,
+    "Strength": 3
+  },
+  "effects": [
+    {
+      "id": "Resolve",
+      "name": "Resolve",
+      "icon": "icons/resolve.png",
+      "resource": true,
+      "resourceColor": "#7FB2FF",
+      "description": "Every hit you soak hardens you. More armor per layer; Payback spends it all.",
+      "duration": 8,
+      "maxStacks": 8,
+      "stats": {
+        "Armor": 1
+      }
+    },
+    {
+      "id": "Guarded",
+      "name": "Guarded",
+      "description": "A bodyguard is covering this one: half of every hit goes to them instead.",
+      "duration": 4,
+      "redirect": 0.5,
+      "stats": {
+        "Dodge": 5
+      }
+    },
+    {
+      "id": "Braced",
+      "name": "Braced",
+      "description": "Feet set, guard up.",
+      "duration": 2,
+      "damageTakenMult": 0.8,
+      "stats": {
+        "Block": 20
+      }
+    },
+    {
+      "id": "Staggered",
+      "name": "Staggered",
+      "debuff": true,
+      "description": "Knocked off balance.",
+      "duration": 2,
+      "stats": {
+        "Dodge": -10,
+        "MeleePower": -3,
+        "RangedAccuracy": -10
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Thick Skin",
+        "icon": "icons/thick_skin.png",
+        "description": "Getting hit is part of the job. Every hit you take builds Resolve, and a hard block shoves the attacker off balance.",
+        "procs": [
+          {
+            "on": "hurt",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Resolve"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "@Staggered"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Shoulder Check",
+        "icon": "icons/shoulder_check.png",
+        "staminaCost": 8,
+        "cooldown": 1,
+        "description": "Lead with the shoulder. They're shoved back a tile and staggered, and you gain Resolve for the contact.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "sound": "audio_licensed/guard_shoulder_check.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 3,
+            "max": 6,
+            "scale": "Strength+Toughness",
+            "scaleMult": 0.25,
+            "perRank": 1
+          },
+          {
+            "do": "throw",
+            "amount": 1,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 2,
+                "max": 4
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "effect": "@Staggered"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Resolve"
+          }
+        ],
+        "perk": {
+          "name": "Linebacker",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Close Protection",
+        "icon": "icons/close_protection.png",
+        "staminaCost": 10,
+        "cooldown": 6,
+        "description": "Step in and cover your people. Every summon and pet of yours is Guarded for a few turns - half of each hit they take comes to you instead - and you brace for it.",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "summons",
+            "effect": "@Guarded"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Braced"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Resolve",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Detail Lead",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/guard_close_protection.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Over Here!",
+        "icon": "icons/over_here.png",
+        "staminaCost": 8,
+        "cooldown": 7,
+        "description": "Make yourself the biggest thing in the room. Every enemy nearby that can see you comes for you for two turns, and you brace.",
+        "actions": [
+          {
+            "do": "taunt",
+            "to": "self",
+            "radius": 4,
+            "turns": 2
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Braced"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Resolve",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Booming Voice",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/guard_over_here.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Retort Stance",
+        "icon": "icons/retort_stance.png",
+        "staminaCost": 10,
+        "cooldown": 8,
+        "description": "Set yourself to answer back. For the next few turns, whoever hurts you or one of your people eats a counter-punch - harder the more Resolve you carry.",
+        "actions": [
+          {
+            "do": "arm",
+            "reaction": {
+              "name": "Counter-Punch",
+              "on": "hurt",
+              "who": "allies",
+              "charges": 3,
+              "turns": 6,
+              "priority": 55,
+              "vfx": "PA_Shieldbearer_Charge.impactParticle@0.4",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Crushing",
+                  "min": 4,
+                  "max": 7,
+                  "scale": "Strength+Toughness",
+                  "scaleMult": 0.25,
+                  "perRank": 1,
+                  "bonusPerStack": 1,
+                  "stacksOf": "@Resolve",
+                  "stacksFrom": "self"
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Staggered"
+                }
+              ]
+            }
+          }
+        ],
+        "perk": {
+          "name": "Quick Hands",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/guard_retort_stance.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Payback",
+        "icon": "icons/payback.png",
+        "staminaCost": 20,
+        "cooldown": 10,
+        "description": "Everything they put into you, back out at once. Every layer of Resolve goes into one punch that stuns and sends them flying.",
+        "impactVfx": "PA_Barbarian_FlyingSmash.triggerParticle@0.5",
+        "sound": "audio_licensed/guard_payback.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 8,
+            "max": 12,
+            "scale": "Strength+Toughness",
+            "scaleMult": 0.35,
+            "perRank": 2,
+            "bonusPerStack": 4,
+            "stacksOf": "@Resolve",
+            "stacksFrom": "self",
+            "consumeStacks": true
+          },
+          {
+            "do": "stun",
+            "turns": 1
+          },
+          {
+            "do": "throw",
+            "amount": 3,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 4,
+                "max": 6
+              },
+              {
+                "do": "effect",
+                "effect": "@Staggered"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Paid in Full",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Crowd Breaker",
+        "icon": "icons/crowd_breaker.png",
+        "instant": false,
+        "radius": 2,
+        "staminaCost": 16,
+        "cooldown": 8,
+        "description": "Plant your feet and clear a circle. Everyone pressing in around you is shoved back a tile and staggered, harder the more Resolve you carry, and you set yourself for what comes next.",
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 4,
+            "max": 7,
+            "scale": "Strength+Toughness",
+            "scaleMult": 0.25,
+            "perRank": 1,
+            "bonusPerStack": 1,
+            "stacksOf": "@Resolve",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "throw",
+            "amount": 1,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 2,
+                "max": 3
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "effect": "@Staggered"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Braced"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Resolve",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Make Some Room",
+          "radiusDelta": 1
+        },
+        "sound": "audio_licensed/guard_shoulder_check.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Iron Oath",
+        "icon": "icons/iron_oath.png",
+        "description": "You swore nobody gets past you, and you meant it. When you are close to dropping, you dig in: a shield built from your Resolve, a brace, and more Resolve. When one of your people falls anyway, the anger hardens you and puts weight behind your hands.",
+        "procs": [
+          {
+            "on": "lowHealth",
+            "threshold": 35,
+            "cooldown": 18,
+            "actions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 8,
+                "perRank": 1,
+                "bonusPerStack": 2,
+                "stacksOf": "@Resolve",
+                "stacksFrom": "self"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Braced"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Resolve",
+                "stacks": 3
+              }
+            ]
+          },
+          {
+            "on": "allyDeath",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Resolve",
+                "stacks": 2
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "#Enraged"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

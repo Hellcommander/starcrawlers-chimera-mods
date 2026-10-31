@@ -1,0 +1,244 @@
+{
+  "prompt": "rapid string of lightning zaps jumping between targets, each with a blade impact, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "4b847fefc685929c",
+      "score": 0.5505663752555847,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Snow Impact Big A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "2e6f790b3a16d7e0",
+      "score": 0.5495929718017578,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Electric/Electric 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "electric"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "c885ae227f3c59c1",
+      "score": 0.5492161512374878,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Small C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "386805d32d168962",
+      "score": 0.5449104905128479,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Electric/Electric 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "electric"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "b8c446d45433b05f",
+      "score": 0.540194571018219,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Small D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "6fb0eb3033fb7dd9",
+      "score": 0.5327415466308594,
+      "via": "clap+tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Misc/Explosion 4.wav",
+      "license": "direct",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "misc",
+        "explosion"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "90bbf3c6a0b76a0f",
+      "score": 0.5302671790122986,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 45.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9f05f34e968c80e5",
+      "score": 0.5279053449630737,
+      "via": "clap+tag",
+      "pack": "impact",
+      "inner": "made/impact/iron_gaol.wav",
+      "license": "own",
+      "tags": [
+        "impact",
+        "made",
+        "iron",
+        "gaol",
+        "heavy",
+        "prison",
+        "cage",
+        "bars",
+        "slamming",
+        "shut",
+        "deep",
+        "metallic",
+        "boom",
+        "with",
+        "echo",
+        "and",
+        "chain",
+        "rattle"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "0c744a9fa5519786",
+      "score": 0.5230216383934021,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Small A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e15eb56be1521934",
+      "score": 0.5183811187744141,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "4b847fefc685929c",
+    "2e6f790b3a16d7e0",
+    "c885ae227f3c59c1",
+    "386805d32d168962",
+    "b8c446d45433b05f",
+    "6fb0eb3033fb7dd9",
+    "90bbf3c6a0b76a0f",
+    "9f05f34e968c80e5",
+    "0c744a9fa5519786",
+    "e15eb56be1521934"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_fork.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.203,
+  "semitones": -3,
+  "width": 0.454,
+  "listen": {
+    "match": 0.613,
+    "clean": -1.487,
+    "faults": []
+  }
+}

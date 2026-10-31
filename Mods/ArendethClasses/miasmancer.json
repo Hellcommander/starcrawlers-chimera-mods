@@ -1,0 +1,137 @@
+{
+  "id": "MOD_Miasmancer",
+  "name": "Miasmancer",
+  "description": "Chemists of the unclean air. They breathe the station's foul atmosphere like a tonic, wring the strength out of whatever they touch, and mix it mid-fight into clouds that eat everything inside them.\n\nDraw and compound: breathe and extract to refill your stamina, then spend it on area compounds. In time your blood shrugs off poison and acid entirely; mutants make better brewers. Scales with [SMT] and [PSI].",
+  "archetype": "Guile",
+  "icon": "miasmancer.png",
+  "attributePriorities": { "Smarts": 3, "PsiPower": 3, "Agility": 1 },
+  "effects": [
+    { "id": "Corroded", "name": "Salt-Corroded", "debuff": true, "duration": 4, "maxStacks": 4, "stats": { "Armor": -2 }, "resists": { "Bio": -5 },
+      "description": "Rust salts eating into its plating and hide." },
+    { "id": "Choking", "name": "Choking", "debuff": true, "duration": 2, "stats": { "RangedAccuracy": -10, "Dodge": -5 },
+      "description": "Coughing up whatever you mixed." },
+    { "id": "Inured", "name": "Mithridatic Blood", "duration": 2,
+      "description": "Years of breathing your own brews: poison and acid no longer take.",
+      "immune": [ "#Poisoned", "EFFECT_Poison", "EFFECT_Acid", "@Choking" ] }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Air Sieve", "icon": "miasmancer_t0.png",
+        "description": "You breathe the station in and keep what's useful: a little stamina every turn of a fight, and more from everything you kill.",
+        "procs": [
+          { "on": "turn", "when": { "inCombat": true }, "actions": [ { "do": "stamina", "to": "self", "amount": 2 } ] },
+          { "on": "kill", "actions": [ { "do": "stamina", "to": "self", "amount": 5 } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Breath of the Station", "icon": "miasmancer_t1.png", "staminaCost": 2,
+        "description": "Pull a lungful of foul air out of the room and spit it at someone. It stings, and what you keep back leaves you stronger than before.",
+        "sound": "audio_licensed/mia_draw.wav", "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.25",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "stamina", "to": "self", "amount": 6 }
+        ],
+        "perk": { "name": "Deep Lungs", "addActions": [ { "do": "stamina", "to": "self", "amount": 3 } ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Caustic Mist", "synergyPenalty": { "stamina": 1 }, "icon": "miasmancer_t2.png", "range": 6, "radius": 2, "staminaCost": 16, "cooldown": 3,
+        "description": "Let a held breath go over a group. It poisons whoever breathes it, and hangs there a while.",
+        "sound": "sfx/mia_mist.wav", "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+          { "do": "effect", "effect": "#Poisoned", "stacks": 2 },
+          { "do": "field", "fieldName": "Caustic Mist", "turns": 3, "radius": 2, "affects": "enemies", "look": "HAZARD_Gas@0.6",
+            "actions": [ { "do": "effect", "effect": "#Poisoned" }, { "do": "effect", "effect": "@Choking" } ] }
+        ],
+        "perk": { "name": "Lingering Mist", "radiusDelta": 0.5 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Extract", "icon": "miasmancer_t3.png", "range": 4, "staminaCost": 8, "cooldown": 2,
+        "description": "Reach in with your mind and pull out what it's made of, flesh or machine. It hurts them a great deal more than it hurts you, and the strength you take is yours.",
+        "sound": "audio_licensed/mia_extract.wav", "impactVfx": "PA_Psykonics_Temporal.castParticle@0.4",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+          { "do": "stamina", "to": "self", "amount": 10 },
+          { "do": "heal", "to": "self", "amount": 4, "ifSkill": "SKILLTREE_ChaoticMutant" }
+        ],
+        "perk": { "name": "Deeper Extraction", "addActions": [ { "do": "stamina", "to": "self", "amount": 4 } ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Ichor Bloom", "icon": "miasmancer_t4.png", "range": 6, "radius": 1.6, "staminaCost": 22, "cooldown": 4,
+        "description": "Blood and foul air mixed above them: a red bloom that rots flesh and leaves them weak.",
+        "sound": "audio_licensed/mia_bloom.wav", "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.6",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2 },
+          { "do": "effect", "effect": "#Weakened" }, { "do": "effect", "effect": "#Poisoned", "stacks": 2 }
+        ],
+        "perk": { "name": "Arterial Bloom", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Rust Salt Cloud", "icon": "miasmancer_t5.png", "range": 4, "shape": "cone", "angle": 70, "staminaCost": 22, "cooldown": 4,
+        "description": "Blow a cloud of rust salts out on one breath. The cloud eats plating and hide alike.",
+        "sound": "audio_licensed/mia_salt.wav", "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.3",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 4, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 2 },
+          { "do": "effect", "effect": "@Corroded", "stacks": 2 }
+        ],
+        "perk": { "name": "Finer Salts", "addActions": [ { "do": "effect", "effect": "@Corroded" } ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Grand Compound", "icon": "miasmancer_t6.png", "range": 6, "radius": 2.5, "staminaCost": 36, "cooldown": 9,
+        "description": "Everything at once: foul air to carry it, blood and rust salts to make it bite. It leaves you gasping and them worse.",
+        "sound": "sfx/mia_grand.wav", "areaVfx": "PA_Prototype_Thunderclap.impactParticle@0.5",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 12, "max": 18, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2 },
+          { "do": "effect", "effect": "@Corroded", "stacks": 3 },
+          { "do": "effect", "effect": "#Poisoned", "stacks": 3 }, { "do": "effect", "effect": "@Choking" },
+          { "do": "heal", "to": "self", "amount": 8, "scale": "Smarts", "scaleMult": 0.4, "ifSkill": "SKILLTREE_ChaoticMutant" }
+        ],
+        "perk": { "name": "Saturated Compound", "radiusDelta": 0.5 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1, "Toughness": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Mithridatic Blood", "icon": "miasmancer_t7.png",
+        "description": "You have breathed enough of your own brews that poison and acid simply don't take any more, yours or anyone's, and walking through your own clouds costs you nothing.",
+        "procs": [
+          { "on": "turn", "actions": [ { "do": "effect", "to": "self", "effect": "@Inured" }, { "do": "purge", "to": "self", "effect": "#Poisoned" }, { "do": "purge", "to": "self", "effect": "EFFECT_Poison" }, { "do": "purge", "to": "self", "effect": "EFFECT_Acid" } ] },
+          { "on": "combatStart", "actions": [ { "do": "effect", "to": "self", "effect": "@Inured" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Saturated Air", "icon": "miasmancer_t8.png",
+        "description": "Your clouds feed you back. Anything that dies poisoned gives you more stamina, and every third compound you mix hands some of its cost back.",
+        "procs": [
+          { "on": "kill", "when": { "has": "#Poisoned", "of": "victim" }, "actions": [ { "do": "stamina", "to": "self", "amount": 4 } ] },
+          { "on": "cast", "match": "Grand Compound", "every": 3, "actions": [ { "do": "stamina", "to": "self", "amount": 18 } ] },
+          { "on": "cast", "match": "Ichor Bloom", "every": 3, "actions": [ { "do": "stamina", "to": "self", "amount": 11 } ] },
+          { "on": "cast", "match": "Rust Salt Cloud", "every": 3, "actions": [ { "do": "stamina", "to": "self", "amount": 11 } ] }
+        ]
+      }
+    }
+  ]
+}

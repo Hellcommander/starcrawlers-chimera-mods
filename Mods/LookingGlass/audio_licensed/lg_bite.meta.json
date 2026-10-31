@@ -1,0 +1,258 @@
+{
+  "prompt": "huge monstrous jaws snapping shut, heavy crunching bite with a hiss",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "22fd8da768bb07ac",
+      "score": 0.5765807628631592,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "tick",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "ab4cc095057dc416",
+      "score": 0.5601248741149902,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "59897aa355548482",
+      "score": 0.5475802421569824,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "481946b69d59b973",
+      "score": 0.5469558238983154,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "spider",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "085a0d4edaf70364",
+      "score": 0.5451720356941223,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Needle Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "needle",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "64914a20bc91a299",
+      "score": 0.5368821620941162,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "tick",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d9698b65eec033b2",
+      "score": 0.5356104373931885,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "spider",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "5371da91d7763d33",
+      "score": 0.5035368800163269,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "tick",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "3fa80377bf8126fc",
+      "score": 0.5018589496612549,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Close Bug Eating Flesh A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "close",
+        "bug",
+        "flesh"
+      ],
+      "archetypes": [
+        "alien",
+        "organic"
+      ]
+    },
+    {
+      "id": "ecd75e0151812767",
+      "score": 0.5004748106002808,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "22fd8da768bb07ac",
+    "ab4cc095057dc416",
+    "59897aa355548482",
+    "481946b69d59b973",
+    "085a0d4edaf70364",
+    "64914a20bc91a299",
+    "d9698b65eec033b2",
+    "5371da91d7763d33",
+    "3fa80377bf8126fc",
+    "ecd75e0151812767"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_bite.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.091,
+  "semitones": 4,
+  "width": 0.227,
+  "listen": {
+    "match": 0.641,
+    "clean": 0.557,
+    "faults": []
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ExampleScript",
+  "name": "Example Script",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "The Spark Tinker, a small class whose skills come from a Lua script: the worked example of a script mod, with its scripts in scripts/. Safe to delete.",
+  "requires": [
+    "Library"
+  ]
+}

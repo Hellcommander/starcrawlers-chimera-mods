@@ -1,0 +1,206 @@
+{
+  "prompt": "quick whimsical sword swishes, two fast blade cuts with a sparkle",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "90bbf3c6a0b76a0f",
+      "score": 0.596773624420166,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 45.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3e4eb67a6b4990df",
+      "score": 0.5776569843292236,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 30.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "25d727a9381c1719",
+      "score": 0.5457256436347961,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 24.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3f09188c9953e57c",
+      "score": 0.5250765085220337,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 44.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "0ce27ba397fe772e",
+      "score": 0.5107626914978027,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Shield/Shield 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "shield"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "16995152f6ea6fb8",
+      "score": 0.5100721120834351,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 6.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8306ba8f69ec147e",
+      "score": 0.5089291334152222,
+      "via": "clap+tag",
+      "pack": "Dreamy Whooshes",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Dreamy Whooshes/FL_GFX_Motion_Dreamy_Whoosh_19.wav",
+      "license": "direct",
+      "tags": [
+        "dreamy",
+        "whooshes",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "motion",
+        "whoosh"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b7d320b614739414",
+      "score": 0.5084517002105713,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Shield/Shield 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "shield"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "4b6c1848bd152120",
+      "score": 0.5083574652671814,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Wind/Wind 7 (fast).mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "wind",
+        "fast"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "736d5a34b81fce7c",
+      "score": 0.5079712867736816,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Wind/Wind 7 (fast).mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "wind",
+        "fast"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "used_ids": [
+    "90bbf3c6a0b76a0f",
+    "3e4eb67a6b4990df",
+    "25d727a9381c1719",
+    "3f09188c9953e57c",
+    "0ce27ba397fe772e",
+    "16995152f6ea6fb8",
+    "8306ba8f69ec147e",
+    "b7d320b614739414",
+    "4b6c1848bd152120",
+    "736d5a34b81fce7c"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_flurry.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.078,
+  "semitones": 5,
+  "width": 0.694,
+  "listen": {
+    "match": 0.623,
+    "clean": 0.759,
+    "faults": []
+  }
+}

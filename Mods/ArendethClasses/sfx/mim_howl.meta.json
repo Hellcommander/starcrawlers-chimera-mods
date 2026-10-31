@@ -1,0 +1,197 @@
+{
+  "prompt": "eerie mechanical-sounding wolf howl echoing down a metal corridor, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, eerie mechanical-sounding wolf howl echoing down a metal corridor, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of horror, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.6,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.00022634188644587994,
+  "source_corr": 0.018230516463518143,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "6c822b68105eac0a",
+      "score": 0.5620588064193726,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 1.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "efef1c0978799f39",
+      "score": 0.5599962472915649,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 10.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "019381a3a998e66f",
+      "score": 0.5588745474815369,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DREKAVAC.zip",
+      "inner": "NOISE ALCHEMY- DREKAVAC/NOISE ALCHEMY- DREKAVAC 4.wav",
+      "license": "reference",
+      "tags": [
+        "drekavac",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "bac987d9ec7afecc",
+      "score": 0.5579778552055359,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 9.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "b95534d9cd2b8e18",
+      "score": 0.5551441311836243,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/48/NOISE ALCHEMY - HOSTILE 12 48k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "0bcc38570c89ffa1",
+      "score": 0.5541965961456299,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 12 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "b7b23a20e579450c",
+      "score": 0.5425683856010437,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 38.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "cf68e286f1903dab",
+      "score": 0.5414966940879822,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 49.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "68d3e956f9455367",
+      "score": 0.5384947657585144,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DREKAVAC.zip",
+      "inner": "NOISE ALCHEMY- DREKAVAC/NOISE ALCHEMY- DREKAVAC 10.wav",
+      "license": "reference",
+      "tags": [
+        "drekavac",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "81af71884a41c80c",
+      "score": 0.5361713767051697,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 28.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    }
+  ],
+  "used_ids": [
+    "6c822b68105eac0a",
+    "efef1c0978799f39",
+    "019381a3a998e66f",
+    "bac987d9ec7afecc",
+    "b95534d9cd2b8e18",
+    "0bcc38570c89ffa1",
+    "b7b23a20e579450c",
+    "cf68e286f1903dab",
+    "68d3e956f9455367",
+    "81af71884a41c80c"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_howl.wav",
+  "sample_rate": 44100
+}

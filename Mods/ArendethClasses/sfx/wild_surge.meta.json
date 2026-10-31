@@ -1,0 +1,202 @@
+{
+  "prompt": "huge distant magic detonation rolling in like thunder with a monstrous roar inside it, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, huge distant magic detonation rolling in like thunder with a monstrous roar inside it, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of magic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.5,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.009504382498562336,
+  "source_corr": 0.02056422457098961,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "81881b3f1733f4ad",
+      "score": 0.5732950568199158,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 34.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "7caf014a1ef45bee",
+      "score": 0.5716961622238159,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 29.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "7335f624a2783b9b",
+      "score": 0.5632911324501038,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 4.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "1919849aa8c01e74",
+      "score": 0.5600546598434448,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 38.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "380c78e8855db74f",
+      "score": 0.556803822517395,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 41.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "ba1fbcda22537c2a",
+      "score": 0.5566086173057556,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 27.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "8b95c05f195ced37",
+      "score": 0.5563990473747253,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 33.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "72c4f344ef003af4",
+      "score": 0.5411604046821594,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 47.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "ca508c480b01e5e1",
+      "score": 0.5378804206848145,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 44.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "d58f77258b38824d",
+      "score": 0.5361717343330383,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 6.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "81881b3f1733f4ad",
+    "7caf014a1ef45bee",
+    "7335f624a2783b9b",
+    "1919849aa8c01e74",
+    "380c78e8855db74f",
+    "ba1fbcda22537c2a",
+    "8b95c05f195ced37",
+    "72c4f344ef003af4",
+    "ca508c480b01e5e1",
+    "d58f77258b38824d"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_surge.wav",
+  "sample_rate": 44100
+}

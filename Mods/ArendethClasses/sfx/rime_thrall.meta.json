@@ -1,0 +1,196 @@
+{
+  "prompt": "deep freezing crackle with eerie mind control shimmer, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, deep freezing crackle with eerie mind control shimmer, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of magic, water, organic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0018065811600536108,
+  "source_corr": 0.011038551107048988,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "0c032e8dd27ff3aa",
+      "score": 0.47016388177871704,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 2.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "bf5fe691363fc65d",
+      "score": 0.46740713715553284,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DRAGON WINGS.zip",
+      "inner": "NOISE ALCHEMY- DRAGON WINGS/NOISE ALCHEMY- DRAGON WINGS 21.wav",
+      "license": "reference",
+      "tags": [
+        "dragon",
+        "wings",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "3e5565dc5874f103",
+      "score": 0.4601980447769165,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_14.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "cc05318df535b489",
+      "score": 0.45825695991516113,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_19_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "92e71bc045d7a519",
+      "score": 0.45218151807785034,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 13 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "a5cab30448cc34a8",
+      "score": 0.452020525932312,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 25.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "0ffd10e359dddeab",
+      "score": 0.44468897581100464,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_14_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "174d6265bb55d1cd",
+      "score": 0.4437182545661926,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_24.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "00c9078e053f551c",
+      "score": 0.4432383179664612,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DRAGON WINGS.zip",
+      "inner": "NOISE ALCHEMY- DRAGON WINGS/NOISE ALCHEMY- DRAGON WINGS 28.wav",
+      "license": "reference",
+      "tags": [
+        "dragon",
+        "wings",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "3d96f67e38e8a7f7",
+      "score": 0.4411374032497406,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DRAGON WINGS.zip",
+      "inner": "NOISE ALCHEMY- DRAGON WINGS/NOISE ALCHEMY- DRAGON WINGS 24.wav",
+      "license": "reference",
+      "tags": [
+        "dragon",
+        "wings",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "0c032e8dd27ff3aa",
+    "bf5fe691363fc65d",
+    "3e5565dc5874f103",
+    "cc05318df535b489",
+    "92e71bc045d7a519",
+    "a5cab30448cc34a8",
+    "0ffd10e359dddeab",
+    "174d6265bb55d1cd",
+    "00c9078e053f551c",
+    "3d96f67e38e8a7f7"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rime_thrall.wav",
+  "sample_rate": 44100
+}

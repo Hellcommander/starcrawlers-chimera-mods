@@ -1,0 +1,189 @@
+{
+  "prompt": "electronic stutter and short-circuit fizzle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, electronic stutter and short-circuit fizzle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of ui, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0019302968867123127,
+  "source_corr": 0.021701712161302567,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "4c94075e35ad56dd",
+      "score": 0.5490157604217529,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 47.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "79ea5c5d78cb13dd",
+      "score": 0.5143036246299744,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 50.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "51e308ffc899079b",
+      "score": 0.5112597942352295,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Interface.zip",
+      "inner": "Dark Fantasy Studio- Interface/Dark Fantasy Studio-Interface-37.wav",
+      "license": "reference",
+      "tags": [
+        "interface",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "49fde019824180ac",
+      "score": 0.5101881623268127,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 8 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "75df79e46cb6566d",
+      "score": 0.5050294995307922,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 7.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "01d2db8cc59b536c",
+      "score": 0.5030890107154846,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "f8eaeeb01dcf8d6a",
+      "score": 0.5015106797218323,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- UI.zip",
+      "inner": "NOISE ALCHEMY- UI/NOISE ALCHEMY- UI 129.wav",
+      "license": "reference",
+      "tags": [
+        "ui",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "e3b2e41615f6c632",
+      "score": 0.49871698021888733,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- UI.zip",
+      "inner": "NOISE ALCHEMY- UI/NOISE ALCHEMY- UI 145.wav",
+      "license": "reference",
+      "tags": [
+        "ui",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "291f5dc1aad44ede",
+      "score": 0.4960719645023346,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 15.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "3013b4ea73c84e2a",
+      "score": 0.49551934003829956,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 8 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "4c94075e35ad56dd",
+    "79ea5c5d78cb13dd",
+    "51e308ffc899079b",
+    "49fde019824180ac",
+    "75df79e46cb6566d",
+    "01d2db8cc59b536c",
+    "f8eaeeb01dcf8d6a",
+    "e3b2e41615f6c632",
+    "291f5dc1aad44ede",
+    "3013b4ea73c84e2a"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\voidhacker_crash.wav",
+  "sample_rate": 44100
+}

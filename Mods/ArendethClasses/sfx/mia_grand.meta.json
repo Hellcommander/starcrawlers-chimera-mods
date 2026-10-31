@@ -1,0 +1,198 @@
+{
+  "prompt": "big alchemical explosion with bubbling, hissing and a deep boom, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, big alchemical explosion with bubbling, hissing and a deep boom, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of ambience, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.5,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.07284598797559738,
+  "source_corr": 0.05722609534859657,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "37d8c868de372260",
+      "score": 0.5182538628578186,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/NOISE_ALCHEMY_DOOM_22.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "8c47e9d049063615",
+      "score": 0.5165694952011108,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/NOISE_ALCHEMY_DOOM_8.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "fb2144ea5e13b514",
+      "score": 0.5153391361236572,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/NOISE_ALCHEMY_DOOM_10.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "92e71bc045d7a519",
+      "score": 0.506018340587616,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/44.1/NOISE ALCHEMY - HOSTILE 13 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "62a0e465afc30a3e",
+      "score": 0.5017313361167908,
+      "via": "clap+tag",
+      "pack": "hostile.zip",
+      "inner": "NOISE ALCHEMY- HOSTILE/48/NOISE ALCHEMY - HOSTILE 13 48k.wav",
+      "license": "reference",
+      "tags": [
+        "hostile",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "ef7e2eff1628d20f",
+      "score": 0.49844807386398315,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_22_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "f62901da2dace663",
+      "score": 0.49818429350852966,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_13_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "5f001264dd047948",
+      "score": 0.4963613748550415,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_8_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "8f9fba4cf2ac19f8",
+      "score": 0.49547141790390015,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 12.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "5a89fc22e4785aed",
+      "score": 0.49025195837020874,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 38.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "37d8c868de372260",
+    "8c47e9d049063615",
+    "fb2144ea5e13b514",
+    "92e71bc045d7a519",
+    "62a0e465afc30a3e",
+    "ef7e2eff1628d20f",
+    "f62901da2dace663",
+    "5f001264dd047948",
+    "8f9fba4cf2ac19f8",
+    "5a89fc22e4785aed"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_grand.wav",
+  "sample_rate": 44100
+}

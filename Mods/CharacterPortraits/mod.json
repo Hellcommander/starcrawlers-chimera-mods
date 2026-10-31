@@ -1,0 +1,10 @@
+{
+  "id": "CharacterPortraits",
+  "name": "AI Character Portraits",
+  "author": "Arendeth",
+  "version": "1.0.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Adds Paint Portrait to the character picture picker: your classes, skills and gear go to the AI asset toolkit, which paints a portrait and puts it on your character. Needs that toolkit on this computer (set its folder in Mod Settings). Off by default.",
+  "enabled": false,
+  "apiLevel": 2
+}

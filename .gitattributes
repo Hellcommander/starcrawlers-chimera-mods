@@ -1,0 +1,14 @@
+* text=auto
+*.cs text eol=crlf
+*.csproj text eol=crlf
+*.ps1 text eol=crlf
+*.json text
+*.xml text
+*.md text
+*.py text
+*.obj text
+*.png binary
+*.wav binary
+*.ogg binary
+*.glb binary
+*.dll binary

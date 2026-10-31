@@ -1,0 +1,611 @@
+{
+  "synergies": [
+    {
+      "id": "ZeroDaySigils",
+      "name": "Zero-Day Sigils",
+      "trees": [
+        "SKILLTREE_Hacker",
+        "MOD_Glyphrunner"
+      ],
+      "description": "Your viruses write glyphs: hits on Overheated, Snowcrashed or Mindmelted targets may inscribe Loop, Sever or Mark. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Hacker_Hack.hackParticle@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Loop",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Overheat"
+              },
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Sever",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Snowcrash"
+              },
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Mark",
+                "ifTargetHas": "EFFECT_Hacker_Virus_Mindmelt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PolyglotPayload",
+      "name": "Polyglot Payload",
+      "trees": [
+        "MOD_Glyphrunner",
+        "MOD_VoidHacker"
+      ],
+      "description": "Malware and glyphs parse each other: hits on infected targets may Mark them, and hits on Compiled targets may add Malware. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Mark",
+                "ifTargetHas": "MOD_VoidHacker@Malware"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_VoidHacker@Malware",
+                "ifTargetHas": "MOD_Glyphrunner@Compiled"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BarkAndChitin",
+      "name": "Bark and Chitin",
+      "trees": [
+        "SKILLTREE_Biomods",
+        "MOD_Graftwild"
+      ],
+      "description": "Carapace glands grow into your heartwood: whoever strikes your spines may come away coated in Clogspore. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "vfx": "PA_SerratedSpines.PS_impact@0.6",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "MOD_Graftwild@Clogspore"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "GreenhouseRig",
+      "name": "Greenhouse Rig",
+      "trees": [
+        "SKILLTREE_Engineer",
+        "MOD_Graftwild"
+      ],
+      "description": "Bolts and bark share sap: your summons' hits may seed Clogspore. Each level adds 5% to these odds.",
+      "allies": {
+        "description": "Sap-sealed plating and spore-laced attacks.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Graftwild@Clogspore"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "MassDriver",
+      "name": "Mass Driver",
+      "trees": [
+        "SKILLTREE_ForcePsyker",
+        "MOD_GravemoteAstronomer"
+      ],
+      "description": "Telekinetic force rides your gravity: hits on Sagging foes may drag them a tile toward you. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 1,
+                "ifTargetHas": "MOD_GravemoteAstronomer@Sag"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HymnOfInfall",
+      "name": "Hymn of Infall",
+      "trees": [
+        "MOD_GravemoteAstronomer",
+        "MOD_NullChorister"
+      ],
+      "description": "Gravity keeps time with the choir: Crushing Hymn victims start to Sag, and striking Sagging foes builds Dissonance. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GravemoteAstronomer@Sag",
+                "ifTargetHas": "MOD_NullChorister@Heavy"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_NullChorister@Dissonance",
+                "when": {
+                  "has": "MOD_GravemoteAstronomer@Sag",
+                  "of": "victim"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AirborneReload",
+      "name": "Airborne Reload",
+      "trees": [
+        "SKILLTREE_Acrobatics",
+        "MOD_GunKata"
+      ],
+      "description": "Flips and gunplay share one tempo: dodging while in Rhythm may lock you In the Zone. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_GunKata@Zone",
+                "ifSelfHas": "MOD_GunKata@Rhythm"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LeadWaltz",
+      "name": "Lead Waltz",
+      "trees": [
+        "SKILLTREE_Gunslinger",
+        "MOD_GunKata"
+      ],
+      "description": "Twin-gun drills sharpen the dance: hits while in Rhythm may send the foes around your target Reeling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "radius": 2,
+            "when": {
+              "has": "MOD_GunKata@Rhythm",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RammingBulwark",
+      "name": "Ramming Bulwark",
+      "trees": [
+        "SKILLTREE_Shieldbearer",
+        "MOD_Juggernaut"
+      ],
+      "description": "Blows on your shield become momentum: getting hit may grant Inertia, and under Brace for Impact it may dig you in. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@DugIn",
+                "ifSelfHas": "EFFECT_Shieldbearer_Brace"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FreightBreaker",
+      "name": "Freight Breaker",
+      "trees": [
+        "SKILLTREE_Barbarian",
+        "MOD_Juggernaut"
+      ],
+      "description": "Reckless kills keep the engine rolling: kills may add two stacks of Inertia. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Juggernaut@Inertia",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OverwatchDoctrine",
+      "name": "Overwatch Doctrine",
+      "trees": [
+        "SKILLTREE_BigGuns",
+        "MOD_Longshot"
+      ],
+      "description": "Suppressed targets are easy to paint: hits on Suppressed foes may Mark them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked",
+                "ifTargetHas": "EFFECT_BigGuns_Suppression"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "StillPoint",
+      "name": "Unbroken Breath",
+      "trees": [
+        "SKILLTREE_Acrobatics",
+        "MOD_Longshot"
+      ],
+      "description": "A shot you slip never breaks your breathing: dodging may settle another stack of Steady Aim. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Longshot@Steady"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "JuryRiggedCoils",
+      "name": "Jury-Rigged Coils",
+      "trees": [
+        "SKILLTREE_Engineer",
+        "MOD_MadTinkerer"
+      ],
+      "description": "You bolt spare zap coils onto every pet: their hits may leave targets Shocked. Each level adds 5% to these odds.",
+      "allies": {
+        "description": "Overvolted servos, and attacks that may leave targets Shocked.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "vfx": "PA_Engineer_Boltron.PS_shock@0.5",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "GroundedChassis",
+      "name": "Grounded Chassis",
+      "trees": [
+        "SKILLTREE_Prototype",
+        "MOD_MadTinkerer"
+      ],
+      "description": "Your metal frame conducts your zaps: hits on Shocked foes may short out their special attacks for a turn. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "#Shocked"
+            },
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CommonHive",
+      "name": "Common Hive",
+      "trees": [
+        "SKILLTREE_Nanomancy",
+        "MOD_NaniteHerder"
+      ],
+      "description": "Your herd and your jars run the same code: hits on Hexed or Plagued targets may add Nanite Swarm. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "EFFECT_Nanite_Infest",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm",
+                "ifTargetHas": "EFFECT_Nanomancy_Hex"
+              },
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm",
+                "ifTargetHas": "EFFECT_Nanite_Plague"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DroneborneSwarm",
+      "name": "Droneborne Swarm",
+      "trees": [
+        "MOD_NaniteHerder",
+        "MOD_SwarmConductor"
+      ],
+      "description": "Your nanites ride along inside hijacked drones: your summons' hits may seed Nanite Swarm. Each level adds 5% to these odds.",
+      "allies": {
+        "description": "Carrying a nanite colony: its attacks may seed Nanite Swarm.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NaniteHerder@Swarm"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "AbyssalOverture",
+      "name": "Abyssal Overture",
+      "trees": [
+        "SKILLTREE_VoidPsyker",
+        "MOD_NullChorister"
+      ],
+      "description": "The void sings along: hits on Off-Key foes may drain them, and hits on drained foes may build Dissonance. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Void_Psyker_Drain",
+                "ifTargetHas": "MOD_NullChorister@OffKey"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_Void_Psyker_Drain"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_NullChorister@Dissonance"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CongregationOfStatic",
+      "name": "Congregation of Static",
+      "trees": [
+        "SKILLTREE_ThoughtLeader",
+        "MOD_NullChorister"
+      ],
+      "description": "Your followers learn the wrong hymn: the hits of your summons and converts may leave targets Off-Key. Each level adds 5% to these odds.",
+      "allies": {
+        "description": "Singing along off-key: its attacks may leave targets Off-Key.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@OffKey"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "SkimTheTake",
+      "name": "Skimming the Take",
+      "trees": [
+        "SKILLTREE_LootHunter",
+        "MOD_OddsBreaker"
+      ],
+      "description": "A treasure hunter knows where the money hides: kills during a Lucky Run may pay extra credits. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "credits",
+                "to": "self",
+                "amount": 2,
+                "perRank": 1,
+                "ifSelfHas": "MOD_OddsBreaker@LuckyRun"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LoadedBranches",
+      "name": "Loaded Branches",
+      "trees": [
+        "MOD_OddsBreaker",
+        "MOD_ProbabilityShaman"
+      ],
+      "description": "Luck leaks between timelines: dodges may extend your Lucky Run, and lucky hits may build Possibility. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_OddsBreaker@LuckyRun"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_ProbabilityShaman@Possibility",
+                "ifSelfHas": "MOD_OddsBreaker@LuckyRun"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

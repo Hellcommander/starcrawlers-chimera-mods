@@ -1,0 +1,164 @@
+{
+  "id": "MOD_ArcGunner",
+  "name": "Arc Gunner",
+  "description": "Pistols in one hand, lightning in the other. Gun hits charge a static capacitor; Shocked enemies conduct forked discharges between each other, and Thunder Slug dumps the whole capacitor into one target.\n\nExample class: built on the shared library (#Shocked, 'Shot' and 'Bolt' templates). Favors [SMT] and [REC].",
+  "archetype": "Intellect",
+  "icon": "arc_gunner.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "RangedAccuracy": 3
+  },
+  "effects": [
+    {
+      "id": "Static",
+      "name": "Static Build-up",
+      "description": "Your hair is standing up.",
+      "duration": 8,
+      "maxStacks": 6,
+      "stats": {
+        "Crit": 2
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Static Grip",
+        "equipped": "ranged",
+        "icon": "arc_gunner_t0.png",
+        "description": "Every shot builds a little charge in the grip.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Static" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Arc Round",
+        "equipped": "ranged",
+        "icon": "arc_gunner_t1.png",
+        "description": "A bullet with a spark in it.",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "perRank": 1, "weapon": 0.5 },
+          { "do": "damage", "type": "Energy", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.3 },
+          { "do": "effect", "effect": "#Shocked" }
+        ],
+        "perk": {
+          "name": "Hot Round",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/arcgunner_round.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Forked Discharge",
+        "icon": "arc_gunner_t2.png",
+        "cooldown": 5,
+        "staminaCost": 15,
+        "description": "Lightning that hops between anything already Shocked.",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 2,
+            "radius": 3.5,
+            "effect": "#Shocked",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3 }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Branching Bolt",
+          "addActions": [
+            { "do": "effect", "effect": "#Shocked" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Capacitor",
+        "icon": "arc_gunner_t3.png",
+        "cooldown": 14,
+        "description": "Wrap yourself in stored charge.",
+        "actions": [
+          { "do": "shield", "amount": 4, "bonusPerStack": 3, "stacksOf": "@Static" }
+        ],
+        "perk": {
+          "name": "Supercapacitor",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Conductive",
+        "icon": "arc_gunner_t4.png",
+        "description": "Shocked targets leak current into their neighbours.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 20,
+            "radius": 2,
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 2, "max": 3, "ifTargetHas": "#Shocked" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Thunder Slug",
+        "equipped": "ranged",
+        "icon": "arc_gunner_t5.png",
+        "staminaCost": 25,
+        "cooldown": 12,
+        "description": "Dump the whole capacitor into one round.",
+        "impactVfx": "PA_Prototype_Thunderclap.impactParticle",
+        "sound": "sfx/arcgunner_slug.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Static", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1, "ifTargetHas": "#Shocked" }
+        ],
+        "perk": {
+          "name": "Lightning Slug",
+          "damageMult": 1.25
+        }
+      }
+    }
+  ]
+}

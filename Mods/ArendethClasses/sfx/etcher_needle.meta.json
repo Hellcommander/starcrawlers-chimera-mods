@@ -1,0 +1,203 @@
+{
+  "prompt": "thin hissing acid stream sizzling on metal, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, organic sound, thin hissing acid stream sizzling on metal, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of organic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.002212687162682414,
+  "archetype": "organic",
+  "references": [
+    {
+      "id": "096ad02bb9b8a164",
+      "score": 0.29437509179115295,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 47.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "53b7e40a65abb529",
+      "score": 0.2720009982585907,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 39.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "d60acee13e4dfa31",
+      "score": 0.2664562165737152,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dragon.zip",
+      "inner": "Dark Fantasy Studio- Dragon/Dark Fantasy Studio-Dragon 47.wav",
+      "tags": [
+        "dragon",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "3ebb431185cdfaa5",
+      "score": 0.2664562165737152,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 47.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "ad444217442ee389",
+      "score": 0.2639411985874176,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 15.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "67052090b0d73055",
+      "score": 0.25440847873687744,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 35.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "be6615580807ca45",
+      "score": 0.2506297528743744,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 43.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "94bd920a71b9f918",
+      "score": 0.250453382730484,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 21.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "0416e08e79cf61e5",
+      "score": 0.2504342198371887,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 20.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "256585101b22dc56",
+      "score": 0.2442922443151474,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 9.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "096ad02bb9b8a164",
+    "53b7e40a65abb529",
+    "d60acee13e4dfa31",
+    "3ebb431185cdfaa5",
+    "ad444217442ee389",
+    "67052090b0d73055",
+    "be6615580807ca45",
+    "94bd920a71b9f918",
+    "0416e08e79cf61e5",
+    "256585101b22dc56"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\etcher_needle.wav",
+  "sample_rate": 44100
+}

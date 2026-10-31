@@ -1,0 +1,248 @@
+{
+  "id": "MOD_Snareseer",
+  "name": "Snareseer",
+  "description": "Psychics who don't fight the moment in front of them: they have already seen where you will step. They leave thoughts lying on the deck like mines, and every one that goes off sharpens the next premonition.\n\nLay and spring: psychic glyphs that wound and unnerve, a phantom that drags them in, latches that pin, mines that echo themselves, and a cascade that sets the whole web off at once. Every trap that fires builds Premonition, which makes the next one hit harder. Scales with [PSI]; favors [AGL] to stay clear.",
+  "archetype": "Guile",
+  "icon": "snareseer.png",
+  "attributePriorities": { "PsiPower": 4, "Agility": 2 },
+  "effects": [
+    {
+      "id": "Premonition",
+      "name": "Premonition",
+      "description": "Every trap that goes off confirms what you saw coming. Each point adds to your traps' damage. It fades when the fight ends.",
+      "duration": -1,
+      "maxStacks": 8,
+      "resource": true,
+      "resourceColor": "#C08CFF",
+      "stats": { "Dodge": 1 }
+    },
+    {
+      "id": "Unnerved",
+      "name": "Unnerved",
+      "description": "It saw something it shouldn't have: clumsy, slow to land a blow, and hitting softer.",
+      "duration": 3,
+      "debuff": true,
+      "maxStacks": 3,
+      "damageDealtPerStack": -0.08,
+      "stats": { "Dodge": -3, "RangedAccuracy": -5 }
+    },
+    {
+      "id": "Latched",
+      "name": "Mind-Latched",
+      "description": "A thought has hooked its legs to the floor and its voice to its throat.",
+      "duration": 2,
+      "debuff": true,
+      "root": true
+    },
+    {
+      "id": "Foreseen",
+      "name": "Foreseen",
+      "description": "Its every move already read. Your traps find it easier each time.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 5,
+      "damageTakenPerStack": 0.06
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Forethought",
+        "icon": "snareseer_t0.png",
+        "description": "You saw it coming. Every one of your traps that goes off gives you Premonition, and the fight's end lets it go.",
+        "procs": [
+          { "on": "trap", "actions": [ { "do": "effect", "to": "self", "effect": "@Premonition" } ] },
+          { "on": "combatEnd", "actions": [ { "do": "purge", "to": "self", "effect": "@Premonition" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Dread Glyph",
+        "icon": "snareseer_t1.png",
+        "description": "Draw a thought on the deck that nobody should step on. Whoever does takes it straight into the mind and comes away unnerved.",
+        "range": 6,
+        "radius": 0,
+        "staminaCost": 8,
+        "cooldown": 1,
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "impactVfx": "PA_Psykonics_Temporal.castParticle@0.5",
+        "sound": "sfx/snare_glyph.wav",
+        "actions": [
+          { "do": "trap", "fieldName": "Dread Glyph", "affects": "enemies", "armTurns": 1, "charges": 1, "maxTraps": 3,
+            "look": "HAZARD_VoidRift@0.35", "vfx": "PA_Psykonics_Temporal.castParticle@0.7", "sound": "audio_licensed/snare_spring.wav",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1,
+                "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+              { "do": "effect", "effect": "@Unnerved" } ] }
+        ],
+        "perk": {
+          "name": "Deeper Dread",
+          "description": "The thought you leave is darker: the glyph hits a quarter harder.",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Lure Phantom",
+        "icon": "snareseer_t2.png",
+        "description": "Plant the image of something they want to kill. Everyone near it is drawn two steps toward it, and the first to come close enough to swing at it finds there is nothing there but a psychic snare.",
+        "range": 6,
+        "radius": 3,
+        "staminaCost": 14,
+        "cooldown": 6,
+        "areaVfx": "PA_Psykonics_Temporal.castParticle",
+        "impactVfx": "PA_Psykonics_Temporal.castParticle@0.4",
+        "sound": "audio_licensed/snare_lure.wav",
+        "actions": [
+          { "do": "pull", "amount": 2, "pullToward": "center" },
+          { "do": "trap", "fieldName": "Lure Phantom", "affects": "enemies", "triggerRadius": 1.5, "radius": 1.6, "charges": 1, "turns": 6, "maxTraps": 1,
+            "look": "HAZARD_Holosmoke@0.45", "vfx": "PA_Psykonics_Temporal.castParticle", "sound": "audio_licensed/snare_spring.wav",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.3, "perRank": 1,
+                "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+              { "do": "effect", "effect": "@Unnerved" },
+              { "do": "effect", "effect": "@Foreseen" } ] }
+        ],
+        "perk": {
+          "name": "Irresistible",
+          "description": "The phantom calls louder: they're drawn in a step further.",
+          "addActions": [ { "do": "pull", "amount": 1, "pullToward": "center" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Mindlatch",
+        "icon": "snareseer_t3.png",
+        "description": "A hook of thought that waits for a passing mind. It catches twice before it lets go: each catch pins the victim to the floor and steals its voice.",
+        "range": 6,
+        "radius": 0,
+        "staminaCost": 12,
+        "cooldown": 5,
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "sfx/snare_latch.wav",
+        "actions": [
+          { "do": "trap", "fieldName": "Mindlatch", "affects": "enemies", "armTurns": 1, "charges": 2, "maxTraps": 2,
+            "look": "HAZARD_Horror@0.4", "vfx": "PA_Psykonics_Temporal.castParticle@0.6", "sound": "audio_licensed/snare_spring.wav",
+            "actions": [
+              { "do": "effect", "effect": "@Latched" },
+              { "do": "silence", "turns": 1 },
+              { "do": "damage", "type": "Psi", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.2,
+                "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" } ] }
+        ],
+        "perk": {
+          "name": "Barbed Latch",
+          "description": "The hook bites deeper going in: its sting hits half again as hard.",
+          "damageMult": 1.5
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Foreknown Step",
+        "icon": "snareseer_t4.png",
+        "description": "Step to where you already saw yourself standing. Anyone waiting next to that spot is unnerved to find you there, and the certainty of it is one more Premonition.",
+        "range": 5,
+        "staminaCost": 10,
+        "cooldown": 6,
+        "radius": 1.6,
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "audio_licensed/snare_step.wav",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "effect", "effect": "@Unnerved", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@Premonition" }
+        ],
+        "perk": {
+          "name": "Seen Twice",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": { "Agility": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Recursion Mine",
+        "icon": "snareseer_t5.png",
+        "description": "A thought that thinks itself again. When it goes off it blasts everyone around it, then leaves an echo of itself on the same spot, live a turn later, for whoever is still standing there.",
+        "range": 6,
+        "radius": 0,
+        "staminaCost": 16,
+        "cooldown": 7,
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "sfx/snare_glyph.wav",
+        "actions": [
+          { "do": "trap", "fieldName": "Recursion Mine", "affects": "enemies", "armTurns": 1, "charges": 1, "radius": 1.6, "maxTraps": 1,
+            "look": "HAZARD_VoidRift@0.5", "vfx": "PA_Prototype_Thunderclap.impactParticle@0.25", "sound": "audio_licensed/snare_burst.wav",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 4, "max": 8, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 2,
+                "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+              { "do": "effect", "effect": "@Foreseen" },
+              { "do": "trap", "fieldName": "Echo Mine", "affects": "enemies", "armTurns": 1, "charges": 1, "radius": 1.6, "turns": 6,
+                "look": "HAZARD_VoidRift@0.3", "vfx": "PA_Psykonics_Temporal.castParticle@0.7", "sound": "audio_licensed/snare_spring.wav",
+                "actions": [
+                  { "do": "damage", "type": "Psi", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.25,
+                    "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" } ] } ] }
+        ],
+        "perk": {
+          "name": "Deeper Recursion",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Cascade of Futures",
+        "icon": "snareseer_t6.png",
+        "description": "Let every future you laid out arrive at once. All of your traps on this floor go off now, armed or not, whoever is on them, and each one that fires is another Premonition.",
+        "staminaCost": 18,
+        "cooldown": 8,
+        "instant": false,
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "audio_licensed/snare_cascade.wav",
+        "actions": [
+          { "do": "springTraps", "to": "self" }
+        ],
+        "perk": {
+          "name": "Clear Sight",
+          "description": "After the cascade the next futures come easier.",
+          "addActions": [ { "do": "cooldowns", "to": "self", "amount": 2 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Web of the Inevitable",
+        "icon": "snareseer_t7.png",
+        "description": "With six Premonitions in you the web weaves itself: whoever sets off one of your traps is foreseen, and a fresh Dread Glyph forms under their feet.",
+        "procs": [
+          { "on": "trap", "when": { "all": [ { "value": "stacks:@Premonition", "atLeast": 6 }, { "value": "distance", "above": 0.5 } ] }, "actions": [
+            { "do": "effect", "effect": "@Foreseen" },
+            { "do": "trap", "fieldName": "Dread Glyph", "affects": "enemies", "armTurns": 1, "charges": 1, "maxTraps": 3,
+              "look": "HAZARD_VoidRift@0.35", "vfx": "PA_Psykonics_Temporal.castParticle@0.7", "sound": "audio_licensed/snare_spring.wav",
+              "actions": [
+                { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.35,
+                  "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+                { "do": "effect", "effect": "@Unnerved" } ] } ] }
+        ]
+      }
+    }
+  ]
+}

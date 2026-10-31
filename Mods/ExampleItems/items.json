@@ -1,0 +1,43 @@
+{
+  "effects": [
+    { "id": "Grounded", "name": "Grounded", "description": "Insulated lining bleeds stray current into the floor.",
+      "duration": -1, "resists": { "Shock": 10, "Energy": 5 } },
+    { "id": "Steadied", "name": "Steadied", "description": "Hands stop shaking; sights stop drifting.",
+      "duration": 6, "stats": { "RangedAccuracy": 10, "Crit": 5 } }
+  ],
+
+  "items": [
+    { "id": "LinemansCowl", "base": "GEAR_HEAD_Heavy_Helmet",
+      "name": "Lineman's Cowl", "description": "Rubberised hood from a maintenance crew that clearly expected trouble.",
+      "rarity": "Rare", "level": 2, "value": 60,
+      "stats": { "Toughness": 1, "Recognition": 2 }, "resists": { "Shock": 15 },
+      "equipEffect": "@Grounded",
+      "loot": [ { "type": "Gear", "floors": [0, 3], "weight": 2 } ] },
+
+    { "id": "LinemansCowlMk2", "base": "LinemansCowl",
+      "name": "Lineman's Cowl Mk II", "rarity": "Epic", "level": 5, "value": 140,
+      "stats": { "Toughness": 2, "Recognition": 3 },
+      "loot": [ { "floors": [3, 6] } ] },
+
+    { "id": "ArcStitcher", "base": "WEAPON_R_Epistol",
+      "name": "Arc Stitcher", "description": "Sews a seam of lightning between muzzle and target.",
+      "rarity": "Rare", "level": 3, "value": 120,
+      "damage": [ { "type": "Shock", "min": 2, "max": 6 }, { "type": "Energy", "min": 1, "max": 2 } ],
+      "accuracy": { "close": 10, "long": -10 },
+      "loot": [ { "floors": [1, 4] } ] },
+
+    { "id": "ArcbiteRounds", "base": "WEAPON_AMMO_Shock",
+      "name": "Arcbite Rounds", "description": "Each round carries a [X]% chance to leave the target Shocked.",
+      "damage": [ { "type": "Shock", "min": 2, "max": 3 } ],
+      "onHit": { "effect": "#Shocked", "chance": 20 }, "glow": "#7FE0FF", "stack": 30, "value": 2,
+      "loot": [ { "floors": [0, 5], "weight": 2 } ] },
+
+    { "id": "SteadyDraught", "base": "CONSUME_CHEM_Zerk",
+      "name": "Steady Draught", "description": "Tastes of copper and good decisions.", "category": "Stimulant",
+      "use": { "effect": "@Steadied", "duration": 6 }, "stackMax": 5, "value": 30,
+      "loot": [ { "floors": [0, 6] } ] },
+
+    { "id": "FieldPatch", "base": "CONSUME_Small_Medkit",
+      "name": "Field Patch", "description": "Glue, gauze and optimism.", "heal": 0.2, "value": 25 }
+  ]
+}

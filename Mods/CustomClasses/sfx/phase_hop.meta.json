@@ -1,0 +1,197 @@
+{
+  "prompt": "dimensional blink zip, short phase whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, magic sound, dimensional blink zip, short phase whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of magic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.02195107564330101,
+  "archetype": "magic",
+  "references": [
+    {
+      "id": "4bd69661da3912ee",
+      "score": 0.4940834641456604,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 47.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "d857dcac6f548504",
+      "score": 0.46747398376464844,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 39.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "e3e46a5306c7d520",
+      "score": 0.4672171175479889,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 35.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "5eb505f346e5080f",
+      "score": 0.44464367628097534,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 15.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "1768e5b5a17c814b",
+      "score": 0.4417179226875305,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 20.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "bfe188733c5faf11",
+      "score": 0.44168275594711304,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 30.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "c0c90362ca6071b4",
+      "score": 0.44168275594711304,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 21.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "d15185363a1a354f",
+      "score": 0.43750667572021484,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 5.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "dc78222aecff1e24",
+      "score": 0.43750667572021484,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 1.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "04fde9904a9c231f",
+      "score": 0.43750667572021484,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 2.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "4bd69661da3912ee",
+    "d857dcac6f548504",
+    "e3e46a5306c7d520",
+    "5eb505f346e5080f",
+    "1768e5b5a17c814b",
+    "bfe188733c5faf11",
+    "c0c90362ca6071b4",
+    "d15185363a1a354f",
+    "dc78222aecff1e24",
+    "04fde9904a9c231f"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\phase_hop.wav",
+  "sample_rate": 44100
+}

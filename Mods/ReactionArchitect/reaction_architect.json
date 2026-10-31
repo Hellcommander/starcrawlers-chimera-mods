@@ -1,0 +1,256 @@
+{
+  "id": "MOD_ReactionArchitect",
+  "name": "Reaction Architect",
+  "description": "Architects don't win fights on their own turn. They spend it wiring the room: tripwires on the approaches, cut-offs waiting for the enemy's big move, standing retorts for anyone who lays a hand on their crew. Then the enemy moves, and the room answers. Every reaction that goes off teaches the Architect a little more about how the enemy fights.\n\nSet-up controller with reaction slots that fire on enemy actions (closing in, backing off, shooting from afar, hitting, debuffing, missing, winding up a big move), interrupts and a room-wide release. Favors [SMT].",
+  "archetype": "Intellect",
+  "icon": "icons/reaction_architect.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Recognition": 2,
+    "Dodge": 1
+  },
+  "effects": [
+    {
+      "id": "Foresight",
+      "name": "Foresight",
+      "icon": "icons/foresight.png",
+      "description": "Each reaction that goes off shows you more of how they fight: you find the gaps and step out of the swings.",
+      "duration": 8,
+      "maxStacks": 5,
+      "stats": { "Crit": 2, "Dodge": 2 }
+    },
+    {
+      "id": "Profiled",
+      "name": "Profiled",
+      "icon": "icons/profiled.png",
+      "description": "Its habits are on file. It's easier to catch out, and your reactions hit it harder.",
+      "duration": 5,
+      "debuff": true,
+      "stats": { "Dodge": -5 }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Standing Orders",
+        "icon": "icons/standing_orders.png",
+        "description": "You keep three reactions armed at once instead of two. Every reaction that goes off gives you Foresight.",
+        "reactionSlots": 3,
+        "procs": [
+          { "on": "reaction", "actions": [ { "do": "effect", "to": "self", "effect": "@Foresight" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Probe Bolt",
+        "icon": "icons/probe_bolt.png",
+        "range": 7,
+        "staminaCost": 6,
+        "description": "A test shot to see how they flinch. It puts them on file, and it hits harder the more you have already learned.",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
+        "sound": "event:/Abilities/Hacker/Hacker_Hack",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1,
+            "bonusPerStack": 1, "stacksOf": "@Foresight", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@Profiled" }
+        ],
+        "perk": { "name": "Snapline", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Recognition": 1 },
+      "newAbility": {
+        "base": "Buff", "instant": false,
+        "name": "Tripwire Clause",
+        "icon": "icons/tripwire_clause.png",
+        "cooldown": 5,
+        "staminaCost": 8,
+        "description": "String the approaches. The first enemies to step up to you or anyone fighting beside you get a jolt, a stumble and a shove back where they came from.",
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "arm", "reaction": {
+            "name": "Tripwire", "on": "approach", "who": "allies", "charges": 2, "turns": 8, "priority": 40,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "damage", "type": "Shock", "min": 2, "max": 3, "ifTargetHas": "@Profiled" },
+              { "do": "effect", "effect": "SLOW", "turns": 2 },
+              { "do": "knockback", "amount": 1 }
+            ] } }
+        ],
+        "perk": { "name": "Hair Trigger", "cooldownDelta": -2 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "Recognition": 1 },
+      "newAbility": {
+        "base": "Buff", "instant": false,
+        "name": "Interdict",
+        "icon": "icons/interdict.png",
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Watch for the wind-up. The next enemy near you that goes for its big move is cut off mid-motion: the move is wasted, and for a turn it can't remember any other.",
+        "castVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "arm", "reaction": {
+            "name": "Interdict", "on": "special", "range": 8, "interrupt": true, "charges": 1, "turns": 8, "priority": 80,
+            "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
+              { "do": "silence", "turns": 1 },
+              { "do": "effect", "effect": "@Profiled" }
+            ] } }
+        ],
+        "perk": { "name": "Hard Stop", "cooldownDelta": -2 }
+      }
+    },
+    {
+      "attributes": { "Toughness": 1, "Smarts": 1 },
+      "newAbility": {
+        "base": "Buff", "instant": false,
+        "name": "Retort Protocol",
+        "icon": "icons/retort_protocol.png",
+        "cooldown": 5,
+        "staminaCost": 10,
+        "description": "Anyone who hits you or your crew gets an answer: a shot straight back, and a skin of shielding for whoever took the hit.",
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
+        "sound": "event:/Abilities/Hacker/Hacker_Hack",
+        "actions": [
+          { "do": "arm", "reaction": {
+            "name": "Retort", "on": "hurt", "who": "allies", "charges": 3, "turns": 6, "priority": 60,
+            "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "damage", "type": "Ballistic", "min": 2, "max": 3, "ifTargetHas": "@Profiled" },
+              { "do": "shield", "to": "victim", "amount": 3 }
+            ] } }
+        ],
+        "perk": { "name": "Counterclaim", "cooldownDelta": -2,
+          "description": "Also arms Rebuttal: the next enemies to put a debuff on you or your crew get it read back to them. One debuff comes off whoever it landed on, and the sender takes a jolt and goes on file.",
+          "addActions": [
+            { "do": "arm", "reaction": {
+              "name": "Rebuttal", "on": "debuff", "who": "allies", "charges": 2, "turns": 8, "priority": 70,
+              "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4",
+              "actions": [
+                { "do": "cleanse", "to": "victim", "amount": 1 },
+                { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
+                { "do": "effect", "effect": "@Profiled" }
+              ] } }
+          ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "Recognition": 1 },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Cascade Failure",
+        "icon": "icons/cascade_failure.png",
+        "radius": 3,
+        "cooldown": 14,
+        "staminaCost": 22,
+        "description": "Pull every wire at once. Everything you have learned goes into one burst through the room, then every reaction you have armed goes off on its own, and the Foresight starts building again.",
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2,
+            "bonusPerStack": 3, "stacksOf": "@Foresight", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "effect": "@Profiled" },
+          { "do": "spring", "to": "self" }
+        ],
+        "perk": { "name": "Full Cascade", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Agility": 1, "Smarts": 1, "Dodge": 3 },
+      "newAbility": {
+        "base": "Buff", "instant": false,
+        "name": "Slip Contract",
+        "icon": "icons/slip_contract.png",
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Write the miss into the plan. You get light on your feet, and every enemy that swings at you and finds nothing takes a jolt for its trouble, goes on file, and may lock up for a moment.",
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "effect", "to": "self", "effect": "#Hasted" },
+          { "do": "arm", "reaction": {
+            "name": "Slip", "on": "dodge", "charges": 3, "turns": 8, "priority": 50,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "damage", "type": "Energy", "min": 2, "max": 3, "ifTargetHas": "@Profiled" },
+              { "do": "effect", "effect": "@Profiled" },
+              { "do": "stun", "turns": 1, "chance": 35 }
+            ] } }
+        ],
+        "perk": { "name": "Clean Escape", "cooldownDelta": -2,
+          "description": "Also arms Fail-Safe: the first hit that takes you under 40% health throws up a shield around you and blasts the one who dealt it two tiles back, maybe stunned.",
+          "addActions": [
+            { "do": "arm", "reaction": {
+              "name": "Fail-Safe", "on": "lowHealth", "threshold": 40, "charges": 1, "turns": 10, "priority": 90,
+              "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
+              "actions": [
+                { "do": "shield", "to": "self", "amount": 8, "scale": "Smarts", "scaleMult": 0.3 },
+                { "do": "knockback", "amount": 2 },
+                { "do": "stun", "turns": 1, "chance": 50 }
+              ] } }
+          ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "Recognition": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Contingency Lattice",
+        "icon": "icons/contingency_lattice.png",
+        "description": "The plans start covering each other. You keep four reactions armed at once, every reaction that goes off on an enemy already on file hits it again, and now and then one going off buys back time on your other tools.",
+        "reactionSlots": 4,
+        "procs": [
+          { "on": "reaction", "when": { "has": "@Profiled", "of": "target" }, "actions": [
+            { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 } ] },
+          { "on": "reaction", "chance": 25, "cooldown": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 1 } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "Agility": 1 },
+      "newAbility": {
+        "base": "Buff", "instant": false,
+        "name": "Exit Clause",
+        "icon": "icons/exit_clause.png",
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Nobody walks out of a fight you planned. The next enemies to step away from you or your crew are caught by the clause: a jolt, a slow, and they go on file. Those who hang back and shoot get pulled in for it.",
+        "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "arm", "reaction": {
+            "name": "Severance", "on": "retreat", "who": "allies", "charges": 2, "turns": 8, "priority": 55,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "damage", "type": "Shock", "min": 2, "max": 3, "ifTargetHas": "@Profiled" },
+              { "do": "effect", "effect": "SLOW", "turns": 2 },
+              { "do": "effect", "effect": "@Profiled" }
+            ] } },
+          { "do": "arm", "reaction": {
+            "name": "Counterbattery", "on": "ranged", "who": "allies", "charges": 2, "turns": 8, "priority": 55,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "pull", "amount": 2 },
+              { "do": "effect", "effect": "@Profiled" }
+            ] } }
+        ],
+        "perk": { "name": "Binding Terms", "cooldownDelta": -2 }
+      }
+    }
+  ]
+}

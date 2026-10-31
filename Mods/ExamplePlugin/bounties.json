@@ -1,0 +1,10 @@
+{
+  "pluginData": {
+    "ExamplePlugin:bounties": [
+      { "kind": "Monster", "credits": 4 },
+      { "kind": "Humanoid", "credits": 6 },
+      { "kind": "Mechanical", "credits": 8 },
+      { "kind": "Supernatural", "credits": 12 }
+    ]
+  }
+}

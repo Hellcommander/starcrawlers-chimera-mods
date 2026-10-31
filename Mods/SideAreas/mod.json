@@ -1,0 +1,8 @@
+{
+  "id": "SideAreas",
+  "name": "Breaches and Echoes",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "The side areas behind the breaches: kinds of echo (derelicts, server farms, sieges, bounties, a grey market, rifts that go deeper), their anomalies and their vaults. Other mods can add or replace any of them by id."
+}

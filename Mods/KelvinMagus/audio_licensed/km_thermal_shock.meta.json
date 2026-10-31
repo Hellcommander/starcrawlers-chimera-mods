@@ -1,0 +1,219 @@
+{
+  "prompt": "ice cracking explosively from sudden heat, sharp glassy crack and a burst of hissing steam",
+  "duration": 1.8,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "5873ec600e7f9ad1",
+      "score": 0.49490606784820557,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "edc2d65970c1373a",
+      "score": 0.49103981256484985,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "impact",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "90c6976203ac7fc2",
+      "score": 0.4847969114780426,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 8.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "b993652d2c3c8552",
+      "score": 0.47459518909454346,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "c7edf5dccda1e6bd",
+      "score": 0.4737488627433777,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 4.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "174f7b1590defab1",
+      "score": 0.472763329744339,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 9.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4a4221d7e3e9795e",
+      "score": 0.4678667187690735,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Hammer C.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "hammer"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "7d341d978d0ec959",
+      "score": 0.4645877480506897,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "13ef5e56f48c798f",
+      "score": 0.46367400884628296,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "0c032e8dd27ff3aa",
+      "score": 0.45799219608306885,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 2.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "5873ec600e7f9ad1",
+    "edc2d65970c1373a",
+    "90c6976203ac7fc2",
+    "b993652d2c3c8552",
+    "c7edf5dccda1e6bd",
+    "174f7b1590defab1",
+    "4a4221d7e3e9795e",
+    "7d341d978d0ec959",
+    "13ef5e56f48c798f",
+    "0c032e8dd27ff3aa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_thermal_shock.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.108,
+  "semitones": 5,
+  "width": 0.834,
+  "listen": {
+    "match": 0.598,
+    "clean": 1.876,
+    "faults": []
+  }
+}

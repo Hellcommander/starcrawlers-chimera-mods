@@ -1,0 +1,58 @@
+[ { "particles": [
+  { "id": "fx_reliquary_knight_wake_the_sun_engine_cast", "light": {"color": "#FF8A3D", "range": 3.066, "intensity": 1.703, "time": 0.704},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.53], "speed": [0], "size": [2.496], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 28, "life": [0.767, 1.221], "speed": [0.719, 1.904], "size": [0.079, 0.17], "gravity": -0.2, "color": "#FFE08A", "color2": "#FF4A10", "shape": "cone", "angle": 8, "radius": 0.7, "ground": true},
+      {"texture": "star", "count": 4, "life": [0.335, 0.486], "speed": [0.0, 0.3], "size": [0.269, 0.484], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.6}
+    ] },
+  { "id": "fx_reliquary_knight_relic_strike_impact", "light": {"color": "#FFE090", "range": 4.235, "intensity": 2.641, "time": 0.482},
+    "layers": [
+      {"texture": "fx/reliquary_knight_burst.png", "count": 1, "life": [0.464], "speed": [0], "size": [1.288], "sizeCurve": "flat", "color": "#FFF8D8", "color2": "#E0A020", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.414], "speed": [0], "size": [1.642], "sizeCurve": "grow", "color": "#FFF8D8", "color2": "#E0A020", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.488], "speed": [0], "size": [2.217], "sizeCurve": "grow", "color": "#FFF8D8", "color2": "#E0A020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/reliquary_knight_bits.png", "count": 14, "life": [0.471, 0.89], "speed": [2.905, 6.575], "size": [0.09, 0.233], "gravity": 1.2, "spin": [-360, 360], "color": "#FFF8D8", "color2": "#E0A020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.933, 1.679], "speed": [0.296, 0.972], "size": [0.619, 1.17], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2618", "color2": "#2A2618", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_reliquary_knight_wake_the_moon_mirror_cast", "light": {"color": "#C8D4FF", "range": 3.152, "intensity": 1.636, "time": 0.725},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.578], "speed": [0], "size": [2.218], "sizeCurve": "grow", "color": "#F0F4FF", "color2": "#8090C0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 24, "life": [0.7, 1.145], "speed": [0.764, 1.797], "size": [0.076, 0.175], "gravity": -0.2, "color": "#F0F4FF", "color2": "#8090C0", "shape": "cone", "angle": 8, "radius": 0.7, "ground": true},
+      {"texture": "star", "count": 3, "life": [0.302, 0.541], "speed": [0.0, 0.312], "size": [0.301, 0.486], "sizeCurve": "pop", "color": "#F0F4FF", "color2": "#8090C0", "shape": "sphere", "radius": 0.6}
+    ] },
+  { "id": "fx_reliquary_knight_wake_the_world_nail_cast", "light": {"color": "#D0A060", "range": 3.294, "intensity": 1.644, "time": 0.586},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.386], "speed": [0], "size": [2.117], "sizeCurve": "pop", "color": "#E8D0A8", "color2": "#806040", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 8, "life": [0.268, 0.595], "speed": [0.0, 0.305], "size": [0.282, 0.625], "sizeCurve": "pop", "color": "#E8D0A8", "color2": "#806040", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 22, "life": [0.734, 1.287], "speed": [0.089, 0.36], "size": [0.109, 0.2], "orbit": 1.002, "color": "#E8D0A8", "color2": "#806040", "shape": "ring", "radius": 0.9}
+    ] },
+  { "id": "fx_reliquary_knight_relic_unbound_area", "light": {"color": "#FFE090", "range": 6.419, "intensity": 2.834, "time": 0.627},
+    "layers": [
+      {"texture": "fx/reliquary_knight_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.43], "sizeCurve": "flat", "color": "#FFF8D8", "color2": "#E0A020", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.525], "speed": [0], "size": [7.363], "sizeCurve": "grow", "color": "#FFF8D8", "color2": "#E0A020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 35, "life": [0.328, 0.535], "speed": [4.013, 7.091], "size": [0.101, 0.209], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFF8D8", "color2": "#E0A020", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.875, 1.37], "speed": [0.807, 1.724], "size": [0.96, 1.697], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2618", "color2": "#2A2618", "alpha": 0.5, "shape": "ring", "radius": 1.0, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_reliquary_knight_pilgrim_s_advance_cast",
+    "layers": [
+      {"texture": "spark", "count": 0, "rate": 168, "duration": 0.7, "life": [0.187, 0.356], "speed": [0.107, 0.303], "size": [0.091, 0.239], "gravity": 0.0, "color": "#FFF8D8", "color2": "#E0A020", "shape": "sphere", "radius": 0.06, "stretch": 3},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 34, "duration": 0.7, "life": [0.4, 0.651], "speed": [0.09, 0.425], "size": [0.287, 0.649], "gravity": 0.0, "color": "#2A2618", "color2": "#2A2618", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_reliquary_knight_pilgrim_s_advance_impact", "light": {"color": "#FFE090", "range": 3.678, "intensity": 2.437, "time": 0.539},
+    "layers": [
+      {"texture": "fx/reliquary_knight_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.299], "sizeCurve": "flat", "color": "#FFF8D8", "color2": "#E0A020", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.425], "speed": [0], "size": [1.65], "sizeCurve": "grow", "color": "#FFF8D8", "color2": "#E0A020", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.46], "speed": [0], "size": [2.467], "sizeCurve": "grow", "color": "#FFF8D8", "color2": "#E0A020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/reliquary_knight_bits.png", "count": 14, "life": [0.487, 0.91], "speed": [3.041, 6.652], "size": [0.106, 0.201], "gravity": 1.2, "spin": [-360, 360], "color": "#FFF8D8", "color2": "#E0A020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.818, 1.341], "speed": [0.297, 0.793], "size": [0.716, 1.387], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2618", "color2": "#2A2618", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "fx/reliquary_knight_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.83], "sizeCurve": "flat", "color": "#FFF8D8", "color2": "#E0A020", "alpha": 0.85, "shape": "point", "grid": [5, 5]}
+    ] }
+] },
+{ "id": "MOD_ReliquaryKnight", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "fx_reliquary_knight_wake_the_sun_engine_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_reliquary_knight_relic_strike_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_reliquary_knight_wake_the_moon_mirror_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_reliquary_knight_wake_the_world_nail_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_reliquary_knight_relic_unbound_area"}},
+  {"newAbility": {"castVfx": "fx_reliquary_knight_pilgrim_s_advance_cast", "impactVfx": "fx_reliquary_knight_pilgrim_s_advance_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

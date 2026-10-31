@@ -1,0 +1,103 @@
+{
+  "id": "MOD_SparkTinker",
+  "name": "Spark Tinker",
+  "description": "Builds a charge with every lash, and lets it all go at once. Everything that falls is scrap, and scrap sells.\n\nExample class: its verbs, conditions and numbers come from a Lua script (see Mods/ExampleScript/scripts). Favors [SMT] and [AGI].",
+  "archetype": "Guile",
+  "iconFrom": "SKILLTREE_Engineer/3",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Agility": 3
+  },
+  "effects": [
+    {
+      "id": "Charged",
+      "name": "Charged",
+      "description": "Static crawls over your hands.",
+      "duration": 3,
+      "stats": {
+        "Crit": 3
+      }
+    },
+    {
+      "id": "Scrapper",
+      "name": "Scrapper's Eye",
+      "description": "You see what everything is worth.",
+      "duration": 5,
+      "stats": {
+        "Smarts": 2
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Arc Lash",
+        "description": "A whip of current, and whoever stands close enough feels it too.",
+        "cooldown": 2,
+        "actions": [
+          { "do": "ExampleScript:arc", "amount": 3, "perRank": 1, "scale": "Smarts", "scaleMult": 0.5, "reach": 3 }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Capacitor",
+        "description": "Every charge steadies your aim.",
+        "procs": [
+          {
+            "on": "ExampleScript:charged",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Charged" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Overload",
+        "description": "Three charges is too many to hold.",
+        "procs": [
+          {
+            "on": "turn",
+            "when": "ExampleScript:FullCharge",
+            "actions": [
+              { "do": "ExampleScript:discharge", "amount": 2, "reach": 4 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Scrapper's Eye",
+        "description": "Enough scrap, and you start to see the value in everything.",
+        "procs": [
+          {
+            "on": "kill",
+            "when": { "value": "ExampleScript:salvaged", "atLeast": 3 },
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Scrapper" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

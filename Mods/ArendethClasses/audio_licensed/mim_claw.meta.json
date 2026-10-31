@@ -1,0 +1,217 @@
+{
+  "prompt": "vicious claw slash with a feral snarl, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.7,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "09893d2831c5f543",
+      "score": 0.5885587930679321,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-1.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "2a28a9f95847b8ad",
+      "score": 0.5753527283668518,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-50.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "b74ffa8b4f79cf28",
+      "score": 0.573501706123352,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-6.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "4cae8958713c1768",
+      "score": 0.5655908584594727,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_28.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "23b2a442e7d9c11e",
+      "score": 0.5577312707901001,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Venom/Venom (DPS).mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "venom",
+        "dps"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "73b6d1cc6bc1a0e9",
+      "score": 0.556229293346405,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_19.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "8f18a1a179ff1a68",
+      "score": 0.555226743221283,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Venom/Venom (DPS).mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "venom",
+        "dps"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "17bb507d7748fc96",
+      "score": 0.55428147315979,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-2.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "0ac22f22f7e2481b",
+      "score": 0.5541275143623352,
+      "via": "clap+tag",
+      "pack": "Cozy Mechanics",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Cozy Mechanics/FL_GFX_Cozy_Mechanic_Dig_Stack_Drop_01.wav",
+      "license": "direct",
+      "tags": [
+        "cozy",
+        "mechanics",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "mechanic",
+        "dig",
+        "stack",
+        "drop"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "3328dfc1de484e87",
+      "score": 0.5467058420181274,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-42.wav",
+      "license": "reference",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "09893d2831c5f543",
+    "2a28a9f95847b8ad",
+    "b74ffa8b4f79cf28",
+    "4cae8958713c1768",
+    "23b2a442e7d9c11e",
+    "73b6d1cc6bc1a0e9",
+    "8f18a1a179ff1a68",
+    "17bb507d7748fc96",
+    "0ac22f22f7e2481b",
+    "3328dfc1de484e87"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_claw.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.092,
+  "semitones": 3,
+  "width": 0.324,
+  "listen": {
+    "match": 0.657,
+    "clean": -4.0,
+    "faults": []
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "prompt": "heavy metal canister thrown and smashing open with a slosh, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.7,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "8ed4b1d9b2c53f15",
+      "score": 0.5251957774162292,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "e100d204fcbb75e7",
+      "score": 0.5209060311317444,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "283fc076e25c10f1",
+      "score": 0.5141583681106567,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "6f7e7c72f0782982",
+      "score": 0.5088132619857788,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "jrpg"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "bf4a4b69ffcf5673",
+      "score": 0.5078650712966919,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 1.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9292821f134c5e40",
+      "score": 0.507797122001648,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 11.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1ab8ea3964e3ccdf",
+      "score": 0.506500244140625,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "fast"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "081b28f9cad9f68e",
+      "score": 0.5063731074333191,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Ice Lake/Falling Through Ice D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "lake",
+        "falling",
+        "through"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "284bf8c696e5aef3",
+      "score": 0.50286465883255,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 3.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "6df0b747925c0918",
+      "score": 0.500963032245636,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "8ed4b1d9b2c53f15",
+    "e100d204fcbb75e7",
+    "283fc076e25c10f1",
+    "6f7e7c72f0782982",
+    "bf4a4b69ffcf5673",
+    "9292821f134c5e40",
+    "1ab8ea3964e3ccdf",
+    "081b28f9cad9f68e",
+    "284bf8c696e5aef3",
+    "6df0b747925c0918"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_throw.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.113,
+  "semitones": 5,
+  "width": 0.616,
+  "listen": {
+    "match": 0.406,
+    "clean": -3.388,
+    "faults": []
+  }
+}

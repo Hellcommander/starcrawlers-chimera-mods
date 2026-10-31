@@ -1,0 +1,258 @@
+{
+  "prompt": "fast feline claw swipe, three sharp scratching slashes",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "42bc7192c05d8ded",
+      "score": 0.482430636882782,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Actions/Spider Leg Rub B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "actions",
+        "spider",
+        "leg",
+        "rub"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "a4e6a046572382da",
+      "score": 0.48240506649017334,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Actions/Spider Leg Rub Short C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "actions",
+        "spider",
+        "leg",
+        "rub",
+        "short"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "7a8892ce864b7218",
+      "score": 0.48109695315361023,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Movement/Ant Step Grass D.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "movement",
+        "ant",
+        "step",
+        "grass"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "8306ba8f69ec147e",
+      "score": 0.46384328603744507,
+      "via": "clap+tag",
+      "pack": "Dreamy Whooshes",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Dreamy Whooshes/FL_GFX_Motion_Dreamy_Whoosh_19.wav",
+      "license": "direct",
+      "tags": [
+        "dreamy",
+        "whooshes",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "motion",
+        "whoosh"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "a01aa47a54bcbd34",
+      "score": 0.45988336205482483,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Actions/Spider Leg Rub A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "actions",
+        "spider",
+        "leg",
+        "rub"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "89e9e8915692ad07",
+      "score": 0.4594661593437195,
+      "via": "clap+tag",
+      "pack": "Cozy Mechanics",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Cozy Mechanics/FL_GFX_Cozy_Mechanic_Dig_Stack_Drop_04.wav",
+      "license": "direct",
+      "tags": [
+        "cozy",
+        "mechanics",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "mechanic",
+        "dig",
+        "stack",
+        "drop"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a8dc2162196320f1",
+      "score": 0.4535302519798279,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 27.wav",
+      "license": "reference",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "f06fa5e43e1b0b3c",
+      "score": 0.4495089650154114,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Actions/Spider Leg Rub Short D.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "actions",
+        "spider",
+        "leg",
+        "rub",
+        "short"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "e415e824c7073b34",
+      "score": 0.4484185576438904,
+      "via": "clap+tag",
+      "pack": "Cozy Mechanics",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Cozy Mechanics/FL_GFX_Cozy_Mechanic_Dig_Stack_Drop_02.wav",
+      "license": "direct",
+      "tags": [
+        "cozy",
+        "mechanics",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "mechanic",
+        "dig",
+        "stack",
+        "drop"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "79a3140427565eb6",
+      "score": 0.4468506872653961,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Actions/Grasshopper Jump Close D.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "actions",
+        "grasshopper",
+        "jump",
+        "close"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "42bc7192c05d8ded",
+    "a4e6a046572382da",
+    "7a8892ce864b7218",
+    "8306ba8f69ec147e",
+    "a01aa47a54bcbd34",
+    "89e9e8915692ad07",
+    "a8dc2162196320f1",
+    "f06fa5e43e1b0b3c",
+    "e415e824c7073b34",
+    "79a3140427565eb6"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_claw.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.079,
+  "semitones": -3,
+  "width": 0.188,
+  "listen": {
+    "match": 0.379,
+    "clean": 0.133,
+    "faults": []
+  }
+}

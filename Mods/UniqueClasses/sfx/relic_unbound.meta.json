@@ -1,0 +1,197 @@
+{
+  "prompt": "massive relic shockwave, heavy holy boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, massive relic shockwave, heavy holy boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.04063669964671135,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "0776f13b9c53ac2c",
+      "score": 0.3853389620780945,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 47.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "cb57732ba740bcee",
+      "score": 0.36088651418685913,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 39.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "1f26e5e2881b6380",
+      "score": 0.3606504797935486,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 35.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "67b7c2b356872947",
+      "score": 0.34717172384262085,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 15.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "f37f4b67c8207e53",
+      "score": 0.3403506875038147,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 21.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "065493491f9cd762",
+      "score": 0.337218314409256,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 20.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9994acdc7de0ac4c",
+      "score": 0.3371860086917877,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 23.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "82415f9cce586b6d",
+      "score": 0.3371860086917877,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 46.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8436c492a49d7eb6",
+      "score": 0.331518292427063,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 4.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "6f95130812c405fa",
+      "score": 0.331518292427063,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 7.wav",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "0776f13b9c53ac2c",
+    "cb57732ba740bcee",
+    "1f26e5e2881b6380",
+    "67b7c2b356872947",
+    "f37f4b67c8207e53",
+    "065493491f9cd762",
+    "9994acdc7de0ac4c",
+    "82415f9cce586b6d",
+    "8436c492a49d7eb6",
+    "6f95130812c405fa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\relic_unbound.wav",
+  "sample_rate": 44100
+}

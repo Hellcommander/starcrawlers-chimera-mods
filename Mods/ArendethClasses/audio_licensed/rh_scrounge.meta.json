@@ -1,0 +1,229 @@
+{
+  "prompt": "rummaging through metal junk, panel ripped open, clinking canisters, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "003570940952a4b9",
+      "score": 0.4567972719669342,
+      "via": "clap+tag",
+      "pack": "Foley",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Foley/FL_GFX_Home_Foley_Trash.wav",
+      "license": "direct",
+      "tags": [
+        "foley",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "home",
+        "trash"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "0d51166a439b4018",
+      "score": 0.4089796543121338,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Movement/Bulky Dreadnought 003.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "movement",
+        "bulky",
+        "dreadnought"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a0fc9493a4285c07",
+      "score": 0.39391493797302246,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 19.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "947c9b4d887862f1",
+      "score": 0.39052146673202515,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 48.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "e3dd172793f142dc",
+      "score": 0.38444748520851135,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Robot Parts/Cyborg Dissolve 001.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "robot",
+        "parts",
+        "cyborg",
+        "dissolve"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a638d2017269928a",
+      "score": 0.3843454420566559,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 4.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "5b145490dc09dbd8",
+      "score": 0.38329610228538513,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 18.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "284bf8c696e5aef3",
+      "score": 0.3821936845779419,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 3.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "9bb5831f1d0bf4af",
+      "score": 0.3815644383430481,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Broken glass.zip",
+      "inner": "Dark Fantasy Studio- Broken glass/Dark Fantasy Studio- Broken glass 20.wav",
+      "license": "reference",
+      "tags": [
+        "broken",
+        "glass",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "d00c4da02a75e035",
+      "score": 0.3784562349319458,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 2.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "003570940952a4b9",
+    "0d51166a439b4018",
+    "a0fc9493a4285c07",
+    "947c9b4d887862f1",
+    "e3dd172793f142dc",
+    "a638d2017269928a",
+    "5b145490dc09dbd8",
+    "284bf8c696e5aef3",
+    "9bb5831f1d0bf4af",
+    "d00c4da02a75e035"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_scrounge.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.077,
+  "semitones": 3,
+  "width": 0.292,
+  "listen": {
+    "match": 0.407,
+    "clean": 0.728,
+    "faults": []
+  }
+}

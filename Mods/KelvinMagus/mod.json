@@ -1,0 +1,9 @@
+{
+  "id": "KelvinMagus",
+  "name": "Kelvin Magus",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "A frost mage who treats cold as heat taken away: freeze enemies solid, bank the heat you steal, and spend it on an ice golem or vent it to crack the frozen apart.",
+  "requires": ["Library"]
+}

@@ -1,0 +1,70 @@
+[ { "particles": [
+  { "id": "fx_ringmaster_whip_crack_impact",
+    "layers": [
+      {"texture": "spark", "count": 2, "life": [0.409, 0.545], "speed": [0], "size": [1.164, 1.507], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "shape": "point"},
+      {"texture": "spark", "count": 18, "life": [0.285, 0.552], "speed": [1.784, 3.749], "size": [0.062, 0.114], "stretch": 4, "gravity": 0.0, "drag": 1.0, "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.2},
+      {"texture": "star", "count": 4, "life": [0.288, 0.459], "speed": [0.0, 0.3], "size": [0.268, 0.631], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_ringmaster_ring_of_fire_area", "light": {"color": "#FF8A3D", "range": 6.004, "intensity": 2.433, "time": 0.654},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [3.947], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.436], "speed": [0], "size": [5.167], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 46, "life": [0.273, 0.668], "speed": [3.949, 8.866], "size": [0.089, 0.215], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFE08A", "color2": "#FF4A10", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.867, 1.545], "speed": [0.861, 1.414], "size": [0.903, 1.761], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.5, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 17, "life": [0.459, 1.032], "speed": [1.005, 2.604], "size": [0.071, 0.181], "gravity": -0.6, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_ringmaster_ring_of_fire_impact", "light": {"color": "#FF8A3D", "range": 3.328, "intensity": 1.956, "time": 0.564},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.4], "speed": [0], "size": [1.329], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/flame_lick.png", "count": 14, "life": [0.398, 0.703], "speed": [0.547, 1.392], "size": [0.42, 0.739], "sizeCurve": "flat", "gravity": -0.6, "color": "#FFFFFF", "color2": "#FF4A10", "shape": "cone", "angle": 20, "radius": 0.3, "grid": [6, 6]},
+      {"texture": "mote", "count": 13, "life": [0.526, 1.103], "speed": [0.992, 2.231], "size": [0.084, 0.17], "gravity": -0.4, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.2, "life": [0.867, 1.399], "speed": [0.328, 0.936], "size": [0.628, 1.019], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_ringmaster_cannon_act_cast",
+    "layers": [
+      {"texture": "spark", "count": 0, "rate": 155, "duration": 0.7, "life": [0.206, 0.35], "speed": [0.088, 0.271], "size": [0.102, 0.223], "gravity": 0.0, "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.06, "stretch": 3},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 43, "duration": 0.7, "life": [0.43, 0.653], "speed": [0.1, 0.413], "size": [0.328, 0.533], "gravity": 0.0, "color": "#2A1A14", "color2": "#2A1A14", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_ringmaster_cannon_act_area", "light": {"color": "#FF9040", "range": 5.626, "intensity": 3.178, "time": 0.659},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.566], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.405], "speed": [0], "size": [4.337], "sizeCurve": "grow", "color": "#FFE880", "color2": "#E02020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 56, "life": [0.277, 0.652], "speed": [4.137, 8.114], "size": [0.1, 0.211], "stretch": 3, "gravity": 0.9, "drag": 1.5, "color": "#FFE880", "color2": "#E02020", "shape": "hemisphere", "radius": 0.75, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 14, "delay": 0.05, "life": [0.857, 1.558], "speed": [0.647, 1.253], "size": [0.981, 1.597], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1A14", "color2": "#2A1A14", "alpha": 0.65, "shape": "disc", "radius": 0.8999999999999999, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_ringmaster_work_the_crowd_cast", "light": {"color": "#FF9040", "range": 3.224, "intensity": 1.698, "time": 0.652},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.583], "speed": [0], "size": [2.338], "sizeCurve": "grow", "color": "#FFE880", "color2": "#E02020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 21, "life": [0.773, 1.332], "speed": [0.874, 1.589], "size": [0.085, 0.201], "gravity": -0.2, "color": "#FFE880", "color2": "#E02020", "shape": "cone", "angle": 8, "radius": 0.7, "ground": true},
+      {"texture": "star", "count": 4, "life": [0.308, 0.531], "speed": [0.0, 0.283], "size": [0.32, 0.47], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.6},
+      {"texture": "star", "count": 7, "life": [0.269, 0.554], "speed": [0.0, 0.32], "size": [0.275, 0.559], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_ringmaster_grand_finale_area", "light": {"color": "#FF9040", "range": 4.952, "intensity": 2.809, "time": 0.59},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.639], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "spark", "count": 43, "life": [0.274, 0.55], "speed": [5.067, 8.179], "size": [0.104, 0.204], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#FFE880", "color2": "#E02020", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/ringmaster_bits.png", "count": 10, "life": [0.497, 0.984], "speed": [2.424, 5.067], "size": [0.091, 0.204], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE880", "color2": "#E02020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.991, 1.559], "speed": [0.484, 1.204], "size": [0.809, 1.792], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1A14", "color2": "#2A1A14", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "star", "count": 6, "life": [0.317, 0.549], "speed": [0.0, 0.304], "size": [0.296, 0.53], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_ringmaster_lion_taming_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.428], "sizeCurve": "flat", "color": "#FFE880", "color2": "#E02020", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 238, "duration": 0.7, "life": [0.362, 0.654], "speed": [0.0, 0.028], "size": [0.053, 0.112], "gravity": 0.0, "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_ringmaster_lion_taming_impact",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.36], "speed": [0], "size": [0.608], "sizeCurve": "pop", "color": "#FFE880", "color2": "#E02020", "alpha": 0.85, "shape": "point"},
+      {"texture": "spark", "count": 15, "life": [0.278, 0.511], "speed": [1.389, 2.764], "size": [0.063, 0.129], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE880", "color2": "#E02020", "shape": "sphere", "radius": 0.2},
+      {"texture": "ring", "count": 1, "life": [0.43], "speed": [0], "size": [0.961], "sizeCurve": "shrink", "color": "#FFE880", "color2": "#E02020", "shape": "point"}
+    ] }
+] },
+{ "id": "MOD_Ringmaster", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_ringmaster_whip_crack_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_ringmaster_ring_of_fire_impact", "travelVfx": "", "areaVfx": "fx_ringmaster_ring_of_fire_area"}},
+  {"newAbility": {"castVfx": "fx_ringmaster_cannon_act_cast", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_ringmaster_cannon_act_area"}},
+  {"newAbility": {"castVfx": "fx_ringmaster_work_the_crowd_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_ringmaster_grand_finale_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_ringmaster_lion_taming_impact", "travelVfx": "fx_ringmaster_lion_taming_travel", "areaVfx": ""}}
+] } ]

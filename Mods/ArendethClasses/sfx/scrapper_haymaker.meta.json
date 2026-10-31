@@ -1,0 +1,192 @@
+{
+  "prompt": "massive punch impact with heavy bone crunch and whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, massive punch impact with heavy bone crunch and whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.08089709281921387,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "bb0deb7254eaf10f",
+      "score": 0.3449692726135254,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 47.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "74a02a141bb3fe53",
+      "score": 0.33052074909210205,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 47.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "44197668a2d5a29f",
+      "score": 0.3195539712905884,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 39.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "5783f8d3c1e56000",
+      "score": 0.3193444311618805,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 35.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4516155c0bf00789",
+      "score": 0.3112461268901825,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 47.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "cae47f35266c68fd",
+      "score": 0.3112461268901825,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 47.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "0f5c40ef8b8beb93",
+      "score": 0.3112461268901825,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 47.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "6116bb52b03030ac",
+      "score": 0.3081456422805786,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 39.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "3798e9a53589b3dc",
+      "score": 0.3079613149166107,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 35.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "c071b2a231fffd8d",
+      "score": 0.3063697814941406,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 53.wav",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "bb0deb7254eaf10f",
+    "74a02a141bb3fe53",
+    "44197668a2d5a29f",
+    "5783f8d3c1e56000",
+    "4516155c0bf00789",
+    "cae47f35266c68fd",
+    "0f5c40ef8b8beb93",
+    "6116bb52b03030ac",
+    "3798e9a53589b3dc",
+    "c071b2a231fffd8d"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\scrapper_haymaker.wav",
+  "sample_rate": 44100
+}

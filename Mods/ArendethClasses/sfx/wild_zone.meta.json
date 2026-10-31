@@ -1,0 +1,190 @@
+{
+  "prompt": "reality tearing open with chaotic crackles of many elements, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, reality tearing open with chaotic crackles of many elements, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of magic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.004615652374923229,
+  "source_corr": 0.016307737678289413,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "cd41068be7b6c438",
+      "score": 0.5094717741012573,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 5.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "4713cf3c31677d8e",
+      "score": 0.5087620615959167,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 36.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "98b61e74566e2868",
+      "score": 0.5026323795318604,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 92.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "291f5dc1aad44ede",
+      "score": 0.4870726466178894,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 15.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "c79ff3dd219560c7",
+      "score": 0.4827069640159607,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 93.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "e3246e43c5f5fd79",
+      "score": 0.48063504695892334,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 10.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "edac45a6c49abe7e",
+      "score": 0.4804345369338989,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 88.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "3b62c0379f44a5ba",
+      "score": 0.4752243161201477,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 84.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "403fb40e020c61cc",
+      "score": 0.474873423576355,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 4.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "e1cba131c5aa2e75",
+      "score": 0.46836212277412415,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 14.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "cd41068be7b6c438",
+    "4713cf3c31677d8e",
+    "98b61e74566e2868",
+    "291f5dc1aad44ede",
+    "c79ff3dd219560c7",
+    "e3246e43c5f5fd79",
+    "edac45a6c49abe7e",
+    "3b62c0379f44a5ba",
+    "403fb40e020c61cc",
+    "e1cba131c5aa2e75"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_zone.wav",
+  "sample_rate": 44100
+}

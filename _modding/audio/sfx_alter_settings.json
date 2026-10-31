@@ -1,0 +1,433 @@
+{
+ "about": "Settings for sfx_alter.py. Chosen by an AI from sfx_features.json only: numbers and text, never audio.",
+ "classes": {
+  "impact": {
+   "steps": [
+    -4,
+    -3,
+    -5,
+    3,
+    -6
+   ],
+   "layer": 0.35,
+   "spread": 0.2,
+   "knots": 64,
+   "eq_db": 3.0
+  },
+  "sharp": {
+   "steps": [
+    3,
+    4,
+    5,
+    -3,
+    6
+   ],
+   "layer": 0.3,
+   "spread": 0.2,
+   "knots": 48,
+   "eq_db": 3.0
+  },
+  "whoosh": {
+   "steps": [
+    -5,
+    -4,
+    -3,
+    3,
+    4,
+    5
+   ],
+   "layer": 0.5,
+   "spread": 0.45,
+   "knots": 128,
+   "eq_db": 4.5
+  },
+  "magic": {
+   "steps": [
+    -6,
+    -5,
+    -4,
+    4,
+    5,
+    6
+   ],
+   "layer": 0.55,
+   "spread": 0.5,
+   "knots": 160,
+   "eq_db": 5.0
+  },
+  "texture": {
+   "steps": [
+    -6,
+    -4,
+    4,
+    6
+   ],
+   "layer": 0.5,
+   "spread": 0.4,
+   "knots": 192,
+   "eq_db": 5.0
+  }
+ },
+ "sounds": {
+  "grappler_collar_grab": {
+   "class": "texture"
+  },
+  "grappler_body_slam": {
+   "class": "impact"
+  },
+  "grappler_iron_clinch": {
+   "class": "sharp"
+  },
+  "grappler_suplex": {
+   "class": "whoosh"
+  },
+  "grappler_piledriver": {
+   "class": "impact"
+  },
+  "rig_piston_jab": {
+   "class": "sharp"
+  },
+  "rig_hydraulic_charge": {
+   "class": "texture"
+  },
+  "rig_plate_up": {
+   "class": "texture"
+  },
+  "rig_vent_blast": {
+   "class": "texture"
+  },
+  "rig_hammerfall": {
+   "class": "impact"
+  },
+  "rig_overheat": {
+   "class": "texture"
+  },
+  "guard_shoulder_check": {
+   "class": "impact"
+  },
+  "guard_close_protection": {
+   "class": "texture"
+  },
+  "guard_over_here": {
+   "class": "texture"
+  },
+  "guard_retort_stance": {
+   "class": "texture"
+  },
+  "guard_payback": {
+   "class": "impact"
+  },
+  "run_flying_knee": {
+   "class": "sharp"
+  },
+  "run_wall_run": {
+   "class": "whoosh"
+  },
+  "run_slide_tackle": {
+   "class": "whoosh"
+  },
+  "run_second_wind": {
+   "class": "texture"
+  },
+  "run_vault_stomp": {
+   "class": "impact"
+  },
+  "trick_bank_shot": {
+   "class": "sharp"
+  },
+  "trick_coin_flick": {
+   "class": "sharp"
+  },
+  "trick_pocket_change": {
+   "class": "sharp"
+  },
+  "trick_deadeye": {
+   "class": "sharp"
+  },
+  "trick_jackpot": {
+   "class": "sharp"
+  },
+  "blade_knife_toss": {
+   "class": "sharp"
+  },
+  "blade_recall": {
+   "class": "whoosh"
+  },
+  "blade_fan_of_knives": {
+   "class": "sharp"
+  },
+  "blade_pinning_throw": {
+   "class": "sharp"
+  },
+  "blade_thousand_returns": {
+   "class": "whoosh"
+  },
+  "grapnel_yank": {
+   "class": "texture"
+  },
+  "grapnel_zip_line": {
+   "class": "whoosh"
+  },
+  "grapnel_swing_kick": {
+   "class": "whoosh"
+  },
+  "grapnel_wall_pin": {
+   "class": "sharp"
+  },
+  "grapnel_pendulum": {
+   "class": "whoosh"
+  },
+  "arc_lance": {
+   "class": "sharp"
+  },
+  "rune_press": {
+   "class": "magic"
+  },
+  "catalyst_flask": {
+   "class": "texture"
+  },
+  "lattice_field": {
+   "class": "magic"
+  },
+  "critical_mass": {
+   "class": "impact"
+  },
+  "instability": {
+   "class": "magic"
+  },
+  "react_plasma_flash": {
+   "class": "impact"
+  },
+  "react_thermal_shock": {
+   "class": "magic"
+  },
+  "react_caustic_vapour": {
+   "class": "texture"
+  },
+  "react_superconduct": {
+   "class": "magic"
+  },
+  "react_galvanic_bloom": {
+   "class": "texture"
+  },
+  "react_brittle_lattice": {
+   "class": "magic"
+  },
+  "react_aether_arc": {
+   "class": "sharp"
+  },
+  "react_flashpoint": {
+   "class": "whoosh"
+  },
+  "react_stasis_bloom": {
+   "class": "magic"
+  },
+  "react_dissolution": {
+   "class": "texture"
+  },
+  "moves_throw_impact": {
+   "class": "impact"
+  },
+  "moves_leap": {
+   "class": "whoosh"
+  },
+  "moves_recall": {
+   "class": "whoosh"
+  },
+  "moves_ricochet": {
+   "class": "sharp"
+  },
+  "moves_tether": {
+   "class": "texture"
+  },
+  "bp_crush": {
+   "class": "impact"
+  },
+  "bp_hammer": {
+   "class": "impact"
+  },
+  "bp_spike": {
+   "class": "magic"
+  },
+  "coil_overload": {
+   "class": "impact"
+  },
+  "coil_slug": {
+   "class": "impact"
+  },
+  "entropy_coin": {
+   "class": "impact"
+  },
+  "entropy_surge": {
+   "class": "impact"
+  },
+  "fulg_feint": {
+   "class": "impact"
+  },
+  "fulg_fork": {
+   "class": "impact"
+  },
+  "fulg_step": {
+   "class": "impact"
+  },
+  "mia_bloom": {
+   "class": "magic"
+  },
+  "mia_draw": {
+   "class": "magic"
+  },
+  "mia_extract": {
+   "class": "magic"
+  },
+  "mia_salt": {
+   "class": "magic"
+  },
+  "mim_bite": {
+   "class": "sharp"
+  },
+  "mim_breath": {
+   "class": "magic"
+  },
+  "mim_claw": {
+   "class": "sharp"
+  },
+  "mim_dart": {
+   "class": "sharp"
+  },
+  "mim_stomp": {
+   "class": "impact"
+  },
+  "mim_tongue": {
+   "class": "sharp"
+  },
+  "mim_web": {
+   "class": "sharp"
+  },
+  "rh_arc": {
+   "class": "magic"
+  },
+  "rh_flare": {
+   "class": "whoosh"
+  },
+  "rh_freeze": {
+   "class": "magic"
+  },
+  "rh_scrounge": {
+   "class": "sharp"
+  },
+  "rh_sludge": {
+   "class": "magic"
+  },
+  "rh_steam": {
+   "class": "magic"
+  },
+  "rh_throw": {
+   "class": "magic"
+  },
+  "rune_cascade": {
+   "class": "impact"
+  },
+  "snare_burst": {
+   "class": "impact"
+  },
+  "snare_cascade": {
+   "class": "impact"
+  },
+  "snare_lure": {
+   "class": "magic"
+  },
+  "snare_spring": {
+   "class": "impact"
+  },
+  "snare_step": {
+   "class": "whoosh"
+  },
+  "vasculist_spike": {
+   "class": "impact"
+  },
+  "wild_bolt": {
+   "class": "magic"
+  },
+  "wild_borrow": {
+   "class": "whoosh"
+  },
+  "wild_cascade": {
+   "class": "impact"
+  },
+  "wild_ward": {
+   "class": "sharp"
+  },
+  "longshot_measured": {
+   "class": "impact"
+  },
+  "psiknight_psiblade": {
+   "class": "whoosh"
+  },
+  "puppet_cut": {
+   "class": "impact"
+  },
+  "arcgunner_round": {
+   "class": "impact"
+  },
+  "km_overheat": {
+   "class": "sharp"
+  },
+  "km_palisade": {
+   "class": "magic"
+  },
+  "km_permafrost": {
+   "class": "magic"
+  },
+  "km_sentinel": {
+   "class": "magic"
+  },
+  "km_siphon": {
+   "class": "whoosh"
+  },
+  "km_thermal_shock": {
+   "class": "magic"
+  },
+  "lg_bite": {
+   "class": "sharp"
+  },
+  "lg_cat": {
+   "class": "magic"
+  },
+  "lg_claw": {
+   "class": "sharp"
+  },
+  "lg_flurry": {
+   "class": "whoosh"
+  },
+  "lg_grin": {
+   "class": "magic"
+  },
+  "lg_guard": {
+   "class": "sharp"
+  },
+  "lg_mad_here": {
+   "class": "sharp"
+  },
+  "lg_shrink": {
+   "class": "whoosh"
+  },
+  "lg_teaparty": {
+   "class": "sharp"
+  },
+  "lg_warp": {
+   "class": "whoosh"
+  },
+  "lg_watch": {
+   "class": "sharp"
+  },
+  "glyph_mark": {
+   "class": "impact"
+  },
+  "relic_sun": {
+   "class": "impact"
+  },
+  "starfire_eruption": {
+   "class": "impact"
+  }
+ }
+}

@@ -1,0 +1,210 @@
+{
+  "prompt": "crushing gravity slam pinning to floor, deep thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, crushing gravity slam pinning to floor, deep thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.015663642436265945,
+  "source_corr": 0.02123863436281681,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "2d52d477c9a76fda",
+      "score": 0.567313551902771,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 19.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "feddfc761cf8558f",
+      "score": 0.5624395608901978,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 61.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "76abfcffbc2e8e83",
+      "score": 0.5598436594009399,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 48.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9b609d3458f91a6a",
+      "score": 0.5591481924057007,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 64.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8088fa49c190197f",
+      "score": 0.5530214309692383,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DRAGON WINGS.zip",
+      "inner": "NOISE ALCHEMY- DRAGON WINGS/NOISE ALCHEMY- DRAGON WINGS 30.wav",
+      "license": "reference",
+      "tags": [
+        "dragon",
+        "wings",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "8f9fba4cf2ac19f8",
+      "score": 0.5494174957275391,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 12.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "539275d5008d200f",
+      "score": 0.5457483530044556,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 16.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "250d22c3b9053549",
+      "score": 0.5440024137496948,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 23.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "abf842914c959a46",
+      "score": 0.543941855430603,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 31.wav",
+      "license": "reference",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "5a89fc22e4785aed",
+      "score": 0.5437133312225342,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 38.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "2d52d477c9a76fda",
+    "feddfc761cf8558f",
+    "76abfcffbc2e8e83",
+    "9b609d3458f91a6a",
+    "8088fa49c190197f",
+    "8f9fba4cf2ac19f8",
+    "539275d5008d200f",
+    "250d22c3b9053549",
+    "abf842914c959a46",
+    "5a89fc22e4785aed"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\gravemote_pin.wav",
+  "sample_rate": 44100
+}

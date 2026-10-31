@@ -1,0 +1,15 @@
+{ "creatures": [
+  { "id": "PaintedGuard", "name": "Painted Guard", "subtitle": "Card Soldier",
+    "description": "A playing-card soldier with a spear, dealt out of thin air. Every blow it lands paints its target red.",
+    "type": "Supernatural", "role": "brawler", "healthPerLevel": 15,
+    "stats": { "Dodge": 10 },
+    "model": { "mesh": "models/painted_guard.glb", "height": 1.2, "rotation": [0, 180, 0] },
+    "skills": [
+      { "id": "SpearThrust", "name": "Spear Thrust", "verb": "thrusts its spear at", "target": "enemy", "range": 1.5,
+        "cooldown": 0, "priority": 1, "melee": true, "dodgeable": true, "clip": "attack", "impactVfx": "LgSlash",
+        "actions": [ { "do": "damage", "type": "Piercing", "min": 2, "max": 4 } ] },
+      { "id": "CardSweep", "name": "Card Sweep", "verb": "sweeps its spear through everyone around", "target": "area",
+        "aroundSelf": true, "radius": 1.6, "range": 1.5, "cooldown": 3, "priority": 5, "melee": true, "clip": "attack2",
+        "impactVfx": "LgCardBurst@0.5",
+        "actions": [ { "do": "damage", "type": "Slashing", "min": 2, "max": 3 }, { "do": "effect", "effect": "MOD_LookingGlassRogue@PaintedRed" } ] } ] }
+] }

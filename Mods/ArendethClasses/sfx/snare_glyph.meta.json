@@ -1,0 +1,199 @@
+{
+  "prompt": "eerie psychic rune being etched with a low whispering hum, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, eerie psychic rune being etched with a low whispering hum, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of ambience, water, horror, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0010343121830374002,
+  "source_corr": 0.013877350836992264,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "6c4c8d9c7561d47d",
+      "score": 0.4147600531578064,
+      "via": "clap+tag",
+      "pack": "breathingdarkness.zip",
+      "inner": "breathingdarkness/NOISE ALCHEMY- BREATHING DARKNESS 9.wav",
+      "license": "reference",
+      "tags": [
+        "breathingdarkness",
+        "noise",
+        "alchemy",
+        "breathing",
+        "darkness"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "4d70ec09a57019af",
+      "score": 0.40061962604522705,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 16.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "7b8f08f22a748a95",
+      "score": 0.39731428027153015,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 16.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "c35b8df53d9c80d8",
+      "score": 0.39593926072120667,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 17.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "50c7af20a452a27e",
+      "score": 0.39392662048339844,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 21.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "18b015c358d2d343",
+      "score": 0.3892335891723633,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 25.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "84586092e81edbaf",
+      "score": 0.3882303833961487,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sirens.zip",
+      "inner": "Dark Fantasy Studio- Sirens/Dark Fantasy Studio- Sirens 6.wav",
+      "license": "reference",
+      "tags": [
+        "sirens",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "0db01d20c8e453f6",
+      "score": 0.3859516382217407,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 4.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "75938172c20fbc4c",
+      "score": 0.3819637894630432,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 34.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "ca9e448127efa981",
+      "score": 0.3814495801925659,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 27.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "6c4c8d9c7561d47d",
+    "4d70ec09a57019af",
+    "7b8f08f22a748a95",
+    "c35b8df53d9c80d8",
+    "50c7af20a452a27e",
+    "18b015c358d2d343",
+    "84586092e81edbaf",
+    "0db01d20c8e453f6",
+    "75938172c20fbc4c",
+    "ca9e448127efa981"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_glyph.wav",
+  "sample_rate": 44100
+}

@@ -1,0 +1,62 @@
+[ { "particles": [
+  { "id": "fx_grappler_collar_grab_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.444], "sizeCurve": "flat", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 281, "duration": 0.7, "life": [0.42, 0.572], "speed": [0.0, 0.027], "size": [0.067, 0.118], "gravity": 0.0, "color": "#FFE0A0", "color2": "#C06A10", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_grappler_collar_grab_impact",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.358], "speed": [0], "size": [0.625], "sizeCurve": "pop", "color": "#FFE0A0", "color2": "#C06A10", "alpha": 0.85, "shape": "point"},
+      {"texture": "spark", "count": 16, "life": [0.316, 0.443], "speed": [1.406, 2.985], "size": [0.071, 0.142], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE0A0", "color2": "#C06A10", "shape": "sphere", "radius": 0.2},
+      {"texture": "ring", "count": 1, "life": [0.346], "speed": [0], "size": [0.923], "sizeCurve": "shrink", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"}
+    ] },
+  { "id": "fx_grappler_body_slam_impact", "light": {"color": "#FFB347", "range": 4.171, "intensity": 2.64, "time": 0.51},
+    "layers": [
+      {"texture": "fx/grappler_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.642], "sizeCurve": "flat", "color": "#FFE0A0", "color2": "#C06A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.372], "speed": [0], "size": [1.54], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.55], "speed": [0], "size": [2.342], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/grappler_bits.png", "count": 16, "life": [0.451, 0.999], "speed": [2.785, 5.968], "size": [0.111, 0.205], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE0A0", "color2": "#C06A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.981, 1.386], "speed": [0.31, 0.919], "size": [0.721, 1.23], "sizeCurve": "grow", "spin": [-50, 50], "color": "#262016", "color2": "#262016", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_grappler_iron_clinch_cast", "light": {"color": "#FFB347", "range": 3.675, "intensity": 1.983, "time": 0.494},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.459], "speed": [0], "size": [2.976], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "ring", "count": 1, "life": [0.514], "speed": [0], "size": [4.279], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true, "delay": 0.15},
+      {"texture": "spark", "count": 16, "life": [0.264, 0.669], "speed": [3.046, 4.503], "size": [0.083, 0.164], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE0A0", "color2": "#C06A10", "shape": "hemisphere", "radius": 0.3}
+    ] },
+  { "id": "fx_grappler_suplex_impact", "light": {"color": "#FFB347", "range": 3.976, "intensity": 2.36, "time": 0.485},
+    "layers": [
+      {"texture": "fx/grappler_burst.png", "count": 1, "life": [0.429], "speed": [0], "size": [1.313], "sizeCurve": "flat", "color": "#FFE0A0", "color2": "#C06A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.383], "speed": [0], "size": [1.548], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.506], "speed": [0], "size": [2.387], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/grappler_bits.png", "count": 16, "life": [0.5, 0.881], "speed": [2.766, 5.311], "size": [0.089, 0.23], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE0A0", "color2": "#C06A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.934, 1.406], "speed": [0.335, 0.944], "size": [0.628, 1.301], "sizeCurve": "grow", "spin": [-50, 50], "color": "#262016", "color2": "#262016", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "star", "count": 6, "life": [0.276, 0.486], "speed": [0.0, 0.327], "size": [0.324, 0.644], "sizeCurve": "pop", "color": "#FFE0A0", "color2": "#C06A10", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_grappler_piledriver_impact", "light": {"color": "#FFB347", "range": 4.176, "intensity": 2.393, "time": 0.504},
+    "layers": [
+      {"texture": "fx/grappler_burst.png", "count": 1, "life": [0.426], "speed": [0], "size": [1.584], "sizeCurve": "flat", "color": "#FFE0A0", "color2": "#C06A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.36], "speed": [0], "size": [1.709], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.554], "speed": [0], "size": [2.372], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/grappler_bits.png", "count": 17, "life": [0.559, 0.845], "speed": [3.289, 6.178], "size": [0.109, 0.199], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE0A0", "color2": "#C06A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 6, "delay": 0.05, "life": [0.793, 1.328], "speed": [0.297, 0.895], "size": [0.691, 1.199], "sizeCurve": "grow", "spin": [-50, 50], "color": "#262016", "color2": "#262016", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.471], "speed": [0], "size": [2.479], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point", "ground": true, "flat": true}
+    ] },
+  { "id": "fx_grappler_freight_swing_impact", "light": {"color": "#FFB347", "range": 2.73, "intensity": 2.107, "time": 0.401},
+    "layers": [
+      {"texture": "fx/grappler_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [1.301], "sizeCurve": "flat", "color": "#FFE0A0", "color2": "#C06A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.338], "speed": [0], "size": [1.326], "sizeCurve": "grow", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"},
+      {"texture": "fx/grappler_bits.png", "count": 9, "life": [0.482, 0.877], "speed": [2.753, 5.528], "size": [0.107, 0.244], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE0A0", "color2": "#C06A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.932, 1.555], "speed": [0.317, 0.903], "size": [0.453, 0.946], "sizeCurve": "grow", "spin": [-50, 50], "color": "#262016", "color2": "#262016", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]},
+      {"texture": "spark", "count": 2, "life": [0.346, 0.486], "speed": [0], "size": [1.102, 1.388], "sizeCurve": "pop", "color": "#FFE0A0", "color2": "#C06A10", "shape": "point"}
+    ] }
+] },
+{ "id": "MOD_Grappler", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grappler_collar_grab_impact", "travelVfx": "fx_grappler_collar_grab_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grappler_body_slam_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_grappler_iron_clinch_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grappler_suplex_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grappler_piledriver_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grappler_freight_swing_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

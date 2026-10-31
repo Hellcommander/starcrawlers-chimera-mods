@@ -1,0 +1,178 @@
+{
+  "id": "MOD_OddsBreaker",
+  "name": "Odds Breaker",
+  "description": "Back-room bookies who decided the house always wins because they are the house. Every trick costs credits up front; winning builds a Lucky Run (Crit per stack) that makes the jackpots likelier and feeds Cash Out, the finisher. Loaded Dice left on the floor roll for whoever steps on them.\n\nStarts with a small bankroll. Favors [SAV] and [AGL].",
+  "archetype": "Guile",
+  "iconFrom": "SKILLTREE_Smuggler",
+  "starterCredits": 75,
+  "attributePriorities": { "Savvy": 3, "Agility": 2, "Crit": 2 },
+
+  "effects": [
+    { "id": "LuckyRun", "name": "Lucky Run", "description": "The cards keep falling your way.",
+      "duration": 8, "maxStacks": 5, "stats": { "Crit": 3 } },
+    { "id": "Jinxed", "name": "Jinxed", "description": "Nothing is landing. Five of these and you are tapped out.",
+      "duration": 10, "debuff": true, "maxStacks": 5, "stats": { "Dodge": -3 },
+      "burstAt": 5, "burstActions": [ { "do": "effect", "to": "self", "effect": "@TappedOut" } ] },
+    { "id": "TappedOut", "name": "Tapped Out", "description": "Your luck has run dry, and everyone can see it.",
+      "duration": 3, "debuff": true, "damageTakenMult": 1.3, "stats": { "Dodge": -15, "RangedAccuracy": -10 } },
+    { "id": "Staked", "name": "Staked", "description": "Somebody put money on this one going down.",
+      "duration": 6, "debuff": true, "damageTakenMult": 1.25, "stats": { "Dodge": -10 } }
+  ],
+
+  "tiers": [
+    { "attributes": { "Savvy": 1 },
+      "newAbility": {
+        "name": "Flip Chip", "description": "Flick a casino chip at them. Heads, it stings and you feel lucky. Tails, it bounces off.",
+        "target": "enemy", "range": 6, "staminaCost": 5, "creditCost": 2,
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "random", "options": [
+            { "name": "Heads!", "weight": 1, "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "effect", "to": "self", "effect": "@LuckyRun" } ] },
+            { "name": "Tails.", "weight": 1, "actions": [
+              { "do": "damage", "type": "Energy", "min": 1, "max": 3 },
+              { "do": "effect", "to": "self", "effect": "@Jinxed" } ] }
+          ] }
+        ],
+        "perk": { "name": "Chip Back", "addActions": [ { "do": "credits", "amount": 1 } ] }
+      } },
+
+    { "attributes": { "Agility": 1 },
+      "newAbility": {
+        "name": "Reel Rattle", "description": "A pocket slot machine wired to a projector. Pull the lever and see what it fires. A Lucky Run makes the sevens likelier.",
+        "target": "enemy", "range": 7, "staminaCost": 10, "cooldown": 2, "creditCost": 10,
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "random", "stacksOf": "@LuckyRun", "stacksFrom": "self", "options": [
+            { "name": "Cherries", "weight": 5, "actions": [
+              { "do": "damage", "type": "Fire", "min": 3, "max": 7, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "effect", "effect": "#Burning" } ] },
+            { "name": "Bells", "weight": 3, "actions": [
+              { "do": "damage", "type": "Shock", "min": 4, "max": 8, "perRank": 1 },
+              { "do": "stun", "turns": 1, "chance": 50 } ] },
+            { "name": "Triple Seven!", "weight": 1, "weightPerStack": 1, "actions": [
+              { "do": "damage", "type": "Energy", "min": 10, "max": 18, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+              { "do": "credits", "to": "self", "amount": 35 } ] },
+            { "name": "Lemons.", "weight": 3, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Jinxed" } ] }
+          ] }
+        ],
+        "perk": { "name": "Rigged Reels", "damageMult": 1.25 }
+      } },
+
+    { "attributes": { "Savvy": 1, "Crit": 2 },
+      "newAbility": {
+        "name": "Stake Out", "description": "Put money on a target. It gets easier to hit, and the bet clears your bad luck.",
+        "target": "enemy", "range": 6, "staminaCost": 8, "cooldown": 6, "creditCost": 15,
+        "castVfx": "CYBERNINJA_DEADLY_FOCUS.particle",
+        "actions": [
+          { "do": "effect", "effect": "@Staked" },
+          { "do": "purge", "to": "self", "effect": "@Jinxed" },
+          { "do": "effect", "to": "self", "effect": "@LuckyRun" }
+        ],
+        "perk": { "name": "Insider Tip", "cooldownDelta": -2 }
+      } },
+
+    { "attributes": { "Agility": 1, "Dodge": 3 },
+      "newAbility": {
+        "name": "Double or Nothing", "description": "Bet big on one shot. It lands hard and pays out, or it doesn't and the jinxes pile up.",
+        "target": "enemy", "range": 6, "staminaCost": 12, "cooldown": 3, "creditCost": 25,
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "random", "options": [
+            { "name": "Double!", "weight": 1, "actions": [
+              { "do": "damage", "type": "Energy", "min": 8, "max": 16, "scale": "Savvy", "scaleMult": 0.6, "perRank": 2,
+                "bonusPerStack": 3, "stacksOf": "@LuckyRun", "stacksFrom": "self" },
+              { "do": "credits", "to": "self", "amount": 50 } ] },
+            { "name": "Nothing.", "weight": 1, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Jinxed", "stacks": 2 } ] }
+          ] }
+        ],
+        "perk": { "name": "Loaded Odds", "damageMult": 1.3 }
+      } },
+
+    { "attributes": { "Savvy": 1, "LootFind": 5 },
+      "newAbility": {
+        "name": "House Rules", "type": "passive",
+        "description": "Every fight is a game, and the house takes a cut.",
+        "procs": [
+          { "on": "kill", "actions": [
+            { "do": "credits", "to": "self", "amount": 6, "perRank": 2 },
+            { "do": "effect", "to": "self", "effect": "@LuckyRun" } ] },
+          { "on": "hit", "chance": 10, "actions": [ { "do": "credits", "to": "self", "amount": 2 } ] }
+        ]
+      } },
+
+    { "attributes": { "Agility": 1, "Savvy": 1, "Crit": 3 },
+      "newAbility": {
+        "name": "Cash Out", "description": "Call in the whole winning streak at once, and every Loaded Die still on the floor stops rolling. Ordinary targets simply stop. The big ones feel it.",
+        "target": "enemy", "range": 6, "staminaCost": 15, "cooldown": 5,
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "springTraps", "fieldName": "Loaded Dice" },
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "execute", "amount": 10, "bonusPerStack": 12, "stacksOf": "@LuckyRun", "stacksFrom": "self",
+            "consumeStacks": true, "elitePercent": 20 }
+        ],
+        "perk": { "name": "All In", "cooldownDelta": -2, "chanceBonus": 10 }
+      } },
+
+    { "attributes": { "Savvy": 1, "Agility": 1, "Dodge": 3 },
+      "newAbility": {
+        "name": "Busted Flush", "description": "Throw the losing hand back across the table, hard. Every Jinx you were carrying goes into the throw, hitting everyone around you, and your bad luck turns into a Lucky Run.",
+        "target": "self", "radius": 2.5, "staminaCost": 15, "cooldown": 7, "creditCost": 20,
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6", "impactVfx": "PA_Smuggler_Fistful.PS_impact", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1,
+            "bonusPerStack": 4, "stacksOf": "@Jinxed", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "effect": "#Reeling", "chance": 50 },
+          { "do": "purge", "to": "self", "effect": "@TappedOut" },
+          { "do": "effect", "to": "self", "effect": "@LuckyRun", "stacks": 2 }
+        ],
+        "perk": { "name": "Sore Winner", "radiusDelta": 1, "damageMult": 1.2 }
+      } },
+
+    { "attributes": { "Savvy": 2, "LootFind": 5 },
+      "newAbility": {
+        "name": "Line of Credit", "type": "passive",
+        "description": "The house never lets a regular walk out broke. Every fight opens with the odds in your favour, a crit pays a small tip, and when you are close to going under the house buys you a shield, at a price.",
+        "procs": [
+          { "on": "combatStart", "actions": [ { "do": "effect", "to": "self", "effect": "@LuckyRun", "stacks": 2 } ] },
+          { "on": "crit", "chance": 50, "maxPerTurn": 1, "actions": [
+            { "do": "credits", "to": "self", "amount": 3 },
+            { "do": "effect", "to": "self", "effect": "@LuckyRun" } ] },
+          { "on": "lowHealth", "threshold": 30, "cooldown": 15, "when": { "value": "credits", "atLeast": 40 }, "actions": [
+            { "do": "credits", "to": "self", "amount": -40 },
+            { "do": "shield", "to": "self", "amount": 10, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+            { "do": "purge", "to": "self", "effect": "@TappedOut" } ] }
+        ]
+      } },
+
+    { "attributes": { "Agility": 1, "Savvy": 1 },
+      "newAbility": {
+        "name": "Loaded Dice", "description": "Roll a weighted pair across the deck. The first enemy to step on them gets the roll, and so does everyone around it; if nobody does, they stop rolling on their own three turns later. A Lucky Run loads them further. Two pairs on the floor at most.",
+        "target": "floor", "range": 5, "staminaCost": 8, "cooldown": 3, "creditCost": 8,
+        "castVfx": "PA_Smuggler_Fistful.PS_impact@0.4", "sound": "event:/UI/UI_CashRegister",
+        "actions": [
+          { "do": "trap", "fieldName": "Loaded Dice", "fuse": 3, "radius": 1.6, "maxTraps": 2,
+            "vfx": "PA_Smuggler_Fistful.PS_impact@0.3", "sound": "event:/UI/UI_CashRegister",
+            "model": { "mesh": "models/loaded_dice.obj", "texture": "models/loaded_dice.png", "scale": 0.45, "randomYaw": true, "glow": "#FF3040", "glowStrength": 0.35 },
+            "actions": [
+              { "do": "random", "stacksOf": "@LuckyRun", "stacksFrom": "self", "options": [
+                { "name": "Boxcars!", "weight": 1, "weightPerStack": 1, "actions": [
+                  { "do": "damage", "type": "Energy", "min": 8, "max": 14, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+                  { "do": "stun", "turns": 1 } ] },
+                { "name": "Seven", "weight": 3, "actions": [
+                  { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+                  { "do": "effect", "effect": "#Reeling", "chance": 50 } ] },
+                { "name": "Snake Eyes.", "weight": 1, "actions": [
+                  { "do": "damage", "type": "Energy", "min": 1, "max": 3 },
+                  { "do": "effect", "to": "self", "effect": "@Jinxed" } ] }
+              ] }
+            ] }
+        ],
+        "perk": { "name": "Shaved Corners", "damageMult": 1.25, "cooldownDelta": -1 }
+      } }
+  ]
+}

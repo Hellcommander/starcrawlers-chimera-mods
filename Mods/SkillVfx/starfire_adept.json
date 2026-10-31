@@ -1,0 +1,64 @@
+[ { "particles": [
+  { "id": "fx_starfire_adept_plasma_bolt_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.728], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "point", "duration": 0.7, "spin": [90, 180]},
+      {"texture": "mote", "count": 0, "rate": 116, "duration": 0.7, "life": [0.264, 0.494], "speed": [0.09, 0.372], "size": [0.08, 0.202], "gravity": 0.0, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.06},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 26, "duration": 0.7, "life": [0.368, 0.623], "speed": [0.097, 0.36], "size": [0.209, 0.369], "gravity": 0.0, "color": "#2A1E14", "color2": "#2A1E14", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_starfire_adept_plasma_bolt_impact", "light": {"color": "#FFB050", "range": 3.526, "intensity": 1.691, "time": 0.483},
+    "layers": [
+      {"texture": "fx/starfire_adept_burst.png", "count": 1, "life": [0.423], "speed": [0], "size": [1.239], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FF7A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 33, "life": [0.293, 0.65], "speed": [2.967, 5.907], "size": [0.073, 0.157], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 19, "life": [0.477, 1.083], "speed": [0.902, 2.239], "size": [0.084, 0.184], "gravity": 0.0, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_starfire_adept_prominence_lash_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.51], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 295, "duration": 0.7, "life": [0.434, 0.596], "speed": [0.0, 0.029], "size": [0.056, 0.111], "gravity": 0.0, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_starfire_adept_prominence_lash_impact", "light": {"color": "#FFB050", "range": 3.493, "intensity": 2.22, "time": 0.287},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.4], "speed": [0], "size": [0.818], "sizeCurve": "pop", "color": "#FFFFFF", "color2": "#FF7A10", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/arc_crackle.png", "count": 8, "life": [0.271, 0.511], "speed": [0.0, 0.327], "size": [0.428, 0.962], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.4, "grid": [4, 4], "randomFrame": true},
+      {"texture": "spark", "count": 29, "life": [0.304, 0.524], "speed": [3.092, 6.286], "size": [0.064, 0.128], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_starfire_adept_white_dwarf_heart_cast", "light": {"color": "#FFB050", "range": 3.999, "intensity": 2.419, "time": 0.753},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.553], "speed": [0], "size": [1.723], "sizeCurve": "pop", "color": "#FFFFFF", "color2": "#FF7A10", "alpha": 0.8, "shape": "point"},
+      {"texture": "mote", "count": 47, "life": [0.35, 0.513], "speed": [-3.2, -2.2], "size": [0.11, 0.264], "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 1.4},
+      {"texture": "star", "count": 6, "life": [0.284, 0.527], "speed": [0.0, 0.291], "size": [0.41, 0.777], "sizeCurve": "pop", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.506], "speed": [0], "size": [2.432], "sizeCurve": "grow", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "point", "ground": true, "flat": true, "delay": 0.3}
+    ] },
+  { "id": "fx_starfire_adept_emergency_vent_area", "light": {"color": "#FFB050", "range": 5.481, "intensity": 2.591, "time": 0.576},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.167], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.505], "speed": [0], "size": [5.805], "sizeCurve": "grow", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 47, "life": [0.293, 0.542], "speed": [4.365, 8.814], "size": [0.107, 0.246], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 9, "delay": 0.05, "life": [0.895, 1.611], "speed": [0.741, 1.677], "size": [0.881, 1.767], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E14", "color2": "#2A1E14", "alpha": 0.5, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 13, "life": [0.452, 1.057], "speed": [0.904, 2.538], "size": [0.086, 0.173], "gravity": -0.4, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_starfire_adept_coronal_eruption_area", "light": {"color": "#FFB050", "range": 5.448, "intensity": 2.997, "time": 0.555},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.002], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "spark", "count": 41, "life": [0.295, 0.546], "speed": [4.657, 8.751], "size": [0.101, 0.186], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#FFFFFF", "color2": "#FF7A10", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/starfire_adept_bits.png", "count": 9, "life": [0.476, 0.794], "speed": [2.73, 4.999], "size": [0.094, 0.224], "gravity": 1.2, "spin": [-360, 360], "color": "#FFFFFF", "color2": "#FF7A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 9, "delay": 0.05, "life": [0.861, 1.383], "speed": [0.476, 1.295], "size": [0.838, 1.512], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E14", "color2": "#2A1E14", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "mote", "count": 18, "life": [0.534, 0.97], "speed": [1.102, 2.496], "size": [0.085, 0.172], "gravity": -0.6, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_starfire_adept_magnetic_reconnection_area", "light": {"color": "#FFB050", "range": 8.56, "intensity": 2.095, "time": 0.566},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.523], "speed": [0], "size": [14.13], "sizeCurve": "shrink", "color": "#FFFFFF", "color2": "#FF7A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 57, "life": [0.342, 0.521], "speed": [-17.5, -12.5], "size": [0.079, 0.197], "color": "#FFFFFF", "color2": "#FF7A10", "shape": "sphere", "radius": 5.0, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.389], "speed": [0], "size": [1.517], "sizeCurve": "pop", "color": "#FFFFFF", "color2": "#FF7A10", "alpha": 0.85, "shape": "point"},
+      {"texture": "spark", "count": 19, "life": [0.266, 0.482], "speed": [3.171, 6.26], "size": [0.046, 0.089], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] }
+] },
+{ "id": "MOD_StarfireAdept", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_starfire_adept_plasma_bolt_impact", "travelVfx": "fx_starfire_adept_plasma_bolt_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_starfire_adept_prominence_lash_impact", "travelVfx": "fx_starfire_adept_prominence_lash_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_starfire_adept_white_dwarf_heart_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_starfire_adept_emergency_vent_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_starfire_adept_coronal_eruption_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_starfire_adept_magnetic_reconnection_area"}}
+] } ]

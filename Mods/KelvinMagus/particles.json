@@ -1,0 +1,855 @@
+{
+ "particles": [
+  {
+   "id": "KmFrostHit",
+   "light": {
+    "color": "#9FD8FF",
+    "range": 4,
+    "intensity": 2,
+    "time": 0.5
+   },
+   "layers": [
+    {
+     "texture": "fx/km_frost_burst.png",
+     "grid": [
+      5,
+      5
+     ],
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.5,
+      0.55
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      1.1,
+      1.3
+     ],
+     "sizeCurve": "flat",
+     "color": "#E8F8FF",
+     "color2": "#7FC8FF",
+     "shape": "point"
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 10,
+     "life": [
+      0.5,
+      0.8
+     ],
+     "speed": [
+      2,
+      4
+     ],
+     "size": [
+      0.08,
+      0.16
+     ],
+     "sizeCurve": "shrink",
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "sphere",
+     "radius": 0.15,
+     "gravity": 1.6,
+     "spin": [
+      -360,
+      360
+     ]
+    },
+    {
+     "texture": "mote",
+     "blend": "add",
+     "count": 14,
+     "life": [
+      0.5,
+      0.9
+     ],
+     "speed": [
+      0.6,
+      1.6
+     ],
+     "size": [
+      0.05,
+      0.1
+     ],
+     "color": "#F0FBFF",
+     "color2": "#5AB8FF",
+     "shape": "sphere",
+     "radius": 0.3,
+     "drag": 1.5
+    }
+   ]
+  },
+  {
+   "id": "KmSiphonCast",
+   "layers": [
+    {
+     "texture": "mote",
+     "blend": "add",
+     "count": 24,
+     "life": [
+      0.4,
+      0.7
+     ],
+     "speed": [
+      0.5,
+      1.2
+     ],
+     "size": [
+      0.05,
+      0.11
+     ],
+     "color": "#FFB070",
+     "color2": "#9FD8FF",
+     "shape": "sphere",
+     "radius": 0.6,
+     "radial": -2.5,
+     "orbit": 120
+    }
+   ]
+  },
+  {
+   "id": "KmSiphonBolt",
+   "layers": [
+    {
+     "texture": "soft",
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.6,
+      0.6
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      0.35,
+      0.35
+     ],
+     "sizeCurve": "flat",
+     "color": "#E8F8FF",
+     "color2": "#5AB8FF",
+     "shape": "point"
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 0,
+     "rate": 40,
+     "duration": 2,
+     "life": [
+      0.3,
+      0.5
+     ],
+     "speed": [
+      0.1,
+      0.4
+     ],
+     "size": [
+      0.05,
+      0.1
+     ],
+     "color": "#FFFFFF",
+     "color2": "#B8E0FF",
+     "shape": "sphere",
+     "radius": 0.08,
+     "spin": [
+      -200,
+      200
+     ]
+    },
+    {
+     "texture": "spark",
+     "blend": "add",
+     "count": 0,
+     "rate": 60,
+     "duration": 2,
+     "life": [
+      0.2,
+      0.35
+     ],
+     "speed": [
+      0.2,
+      0.6
+     ],
+     "size": [
+      0.04,
+      0.08
+     ],
+     "stretch": 2,
+     "color": "#FFFFFF",
+     "color2": "#9FD8FF",
+     "shape": "point"
+    }
+   ]
+  },
+  {
+   "id": "KmFrostMist",
+   "layers": [
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 3,
+     "life": [
+      1.2,
+      1.6
+     ],
+     "speed": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.7,
+      1.0
+     ],
+     "sizeCurve": "grow",
+     "color": "#DDF2FF",
+     "color2": "#AFD6F0",
+     "alpha": 0.45,
+     "shape": "disc",
+     "radius": 0.6,
+     "ground": true,
+     "gravity": -0.05
+    },
+    {
+     "texture": "mote",
+     "blend": "add",
+     "count": 8,
+     "life": [
+      0.8,
+      1.4
+     ],
+     "speed": [
+      0.1,
+      0.4
+     ],
+     "size": [
+      0.04,
+      0.08
+     ],
+     "color": "#FFFFFF",
+     "color2": "#9FD8FF",
+     "shape": "disc",
+     "radius": 0.7,
+     "ground": true,
+     "gravity": -0.2
+    }
+   ]
+  },
+  {
+   "id": "KmPermafrostCast",
+   "light": {
+    "color": "#9FD8FF",
+    "range": 6,
+    "intensity": 2,
+    "time": 0.8
+   },
+   "layers": [
+    {
+     "texture": "ring",
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.6,
+      0.6
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      3.2,
+      3.2
+     ],
+     "sizeCurve": "grow",
+     "color": "#F0FBFF",
+     "color2": "#5AB8FF",
+     "shape": "point",
+     "flat": true,
+     "ground": true
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 18,
+     "life": [
+      0.6,
+      1.0
+     ],
+     "speed": [
+      1,
+      2.5
+     ],
+     "size": [
+      0.1,
+      0.2
+     ],
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "disc",
+     "radius": 1.2,
+     "ground": true,
+     "gravity": 2,
+     "spin": [
+      -300,
+      300
+     ]
+    },
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 5,
+     "life": [
+      1.0,
+      1.4
+     ],
+     "speed": [
+      0.3,
+      0.7
+     ],
+     "size": [
+      1.0,
+      1.4
+     ],
+     "sizeCurve": "grow",
+     "color": "#E8F6FF",
+     "color2": "#B8D8F0",
+     "alpha": 0.5,
+     "shape": "disc",
+     "radius": 1.2,
+     "ground": true
+    }
+   ]
+  },
+  {
+   "id": "KmFreeze",
+   "light": {
+    "color": "#BFE6FF",
+    "range": 3,
+    "intensity": 2,
+    "time": 0.6
+   },
+   "layers": [
+    {
+     "texture": "fx/km_frost_burst.png",
+     "grid": [
+      5,
+      5
+     ],
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.55,
+      0.6
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      1.4,
+      1.4
+     ],
+     "sizeCurve": "flat",
+     "color": "#FFFFFF",
+     "color2": "#9FD8FF",
+     "shape": "point"
+    },
+    {
+     "texture": "star",
+     "blend": "add",
+     "count": 8,
+     "life": [
+      0.4,
+      0.7
+     ],
+     "speed": [
+      1.2,
+      2.2
+     ],
+     "size": [
+      0.1,
+      0.2
+     ],
+     "color": "#FFFFFF",
+     "color2": "#5AB8FF",
+     "shape": "sphere",
+     "radius": 0.2,
+     "drag": 2
+    }
+   ]
+  },
+  {
+   "id": "KmShatter",
+   "light": {
+    "color": "#CDEBFF",
+    "range": 5,
+    "intensity": 3,
+    "time": 0.6
+   },
+   "layers": [
+    {
+     "texture": "fx/km_frost_burst.png",
+     "grid": [
+      5,
+      5
+     ],
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.5,
+      0.55
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      1.6,
+      1.8
+     ],
+     "sizeCurve": "flat",
+     "color": "#FFFFFF",
+     "color2": "#7FC8FF",
+     "shape": "point"
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 26,
+     "life": [
+      0.6,
+      1.1
+     ],
+     "speed": [
+      3,
+      6
+     ],
+     "size": [
+      0.1,
+      0.24
+     ],
+     "sizeCurve": "shrink",
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "sphere",
+     "radius": 0.25,
+     "gravity": 2.4,
+     "drag": 0.6,
+     "spin": [
+      -540,
+      540
+     ]
+    },
+    {
+     "texture": "spark",
+     "blend": "add",
+     "count": 20,
+     "life": [
+      0.3,
+      0.5
+     ],
+     "speed": [
+      4,
+      7
+     ],
+     "size": [
+      0.05,
+      0.1
+     ],
+     "stretch": 3,
+     "color": "#FFFFFF",
+     "color2": "#9FD8FF",
+     "shape": "sphere",
+     "radius": 0.2
+    }
+   ]
+  },
+  {
+   "id": "KmSentinelCall",
+   "light": {
+    "color": "#7FDCFF",
+    "range": 6,
+    "intensity": 3,
+    "time": 1.0
+   },
+   "layers": [
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 6,
+     "life": [
+      1.0,
+      1.5
+     ],
+     "speed": [
+      0.4,
+      0.9
+     ],
+     "size": [
+      0.9,
+      1.3
+     ],
+     "sizeCurve": "grow",
+     "color": "#E6F6FF",
+     "color2": "#A8D0EC",
+     "alpha": 0.55,
+     "shape": "ring",
+     "radius": 0.8,
+     "ground": true
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 24,
+     "life": [
+      0.8,
+      1.2
+     ],
+     "speed": [
+      0.5,
+      1.5
+     ],
+     "size": [
+      0.1,
+      0.22
+     ],
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "ring",
+     "radius": 1.0,
+     "radial": -1.2,
+     "orbit": 160,
+     "gravity": -0.8,
+     "ground": true,
+     "spin": [
+      -300,
+      300
+     ]
+    }
+   ]
+  },
+  {
+   "id": "KmSteamJet",
+   "light": {
+    "color": "#FFB070",
+    "range": 4,
+    "intensity": 2,
+    "time": 0.6
+   },
+   "layers": [
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 4,
+     "life": [
+      0.6,
+      0.9
+     ],
+     "speed": [
+      0.6,
+      1.3
+     ],
+     "size": [
+      0.3,
+      0.5
+     ],
+     "sizeCurve": "grow",
+     "color": "#FFFFFF",
+     "color2": "#D8D8D8",
+     "alpha": 0.5,
+     "shape": "cone",
+     "angle": 25,
+     "radius": 0.1,
+     "drag": 1.6,
+     "gravity": -0.4
+    },
+    {
+     "texture": "spark",
+     "blend": "add",
+     "count": 14,
+     "life": [
+      0.3,
+      0.5
+     ],
+     "speed": [
+      3,
+      6
+     ],
+     "size": [
+      0.05,
+      0.1
+     ],
+     "stretch": 3,
+     "color": "#FFE0A0",
+     "color2": "#FF6A20",
+     "shape": "cone",
+     "angle": 30
+    }
+   ]
+  },
+  {
+   "id": "KmSteamBolt",
+   "layers": [
+    {
+     "texture": "soft",
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.6,
+      0.6
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      0.4,
+      0.4
+     ],
+     "sizeCurve": "flat",
+     "color": "#FFE8C8",
+     "color2": "#FF8A3D",
+     "shape": "point"
+    },
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 0,
+     "rate": 14,
+     "duration": 2,
+     "life": [
+      0.35,
+      0.55
+     ],
+     "speed": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.18,
+      0.3
+     ],
+     "sizeCurve": "grow",
+     "color": "#FFFFFF",
+     "color2": "#D0D0D0",
+     "alpha": 0.4,
+     "shape": "point"
+    }
+   ]
+  },
+  {
+   "id": "KmPalisade",
+   "layers": [
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 22,
+     "life": [
+      0.5,
+      0.9
+     ],
+     "speed": [
+      2.5,
+      4.5
+     ],
+     "size": [
+      0.1,
+      0.2
+     ],
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "cone",
+     "angle": 35,
+     "radius": 0.8,
+     "ground": true,
+     "gravity": 3,
+     "spin": [
+      -400,
+      400
+     ]
+    },
+    {
+     "texture": "ring",
+     "blend": "add",
+     "count": 1,
+     "life": [
+      0.45,
+      0.45
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      2.6
+     ],
+     "sizeCurve": "grow",
+     "color": "#F0FBFF",
+     "color2": "#5AB8FF",
+     "shape": "point",
+     "flat": true,
+     "ground": true
+    }
+   ]
+  },
+  {
+   "id": "KmZeroPoint",
+   "light": {
+    "color": "#5AB8FF",
+    "range": 8,
+    "intensity": 4,
+    "time": 1.2
+   },
+   "layers": [
+    {
+     "texture": "fx/km_steam.png",
+     "grid": [
+      6,
+      6
+     ],
+     "blend": "alpha",
+     "count": 14,
+     "life": [
+      0.9,
+      1.3
+     ],
+     "speed": [
+      0.2,
+      0.5
+     ],
+     "size": [
+      1.0,
+      1.5
+     ],
+     "sizeCurve": "shrink",
+     "color": "#E6F6FF",
+     "color2": "#8FB8E0",
+     "alpha": 0.45,
+     "shape": "ring",
+     "radius": 2.4,
+     "radial": -3.5,
+     "orbit": 90,
+     "ground": true
+    },
+    {
+     "texture": "fx/km_ice_shards.png",
+     "grid": [
+      2,
+      2
+     ],
+     "randomFrame": true,
+     "blend": "alpha",
+     "count": 18,
+     "life": [
+      0.8,
+      1.1
+     ],
+     "speed": [
+      0.3,
+      0.8
+     ],
+     "size": [
+      0.07,
+      0.13
+     ],
+     "color": "#FFFFFF",
+     "color2": "#CDEBFF",
+     "shape": "ring",
+     "radius": 2.4,
+     "radial": -4,
+     "orbit": 140,
+     "spin": [
+      -400,
+      400
+     ],
+     "ground": true,
+     "gravity": -0.3
+    },
+    {
+     "texture": "fx/km_frost_burst.png",
+     "grid": [
+      5,
+      5
+     ],
+     "blend": "add",
+     "count": 1,
+     "delay": 0.7,
+     "life": [
+      0.5,
+      0.55
+     ],
+     "speed": [
+      0,
+      0
+     ],
+     "size": [
+      2.4,
+      2.4
+     ],
+     "sizeCurve": "flat",
+     "color": "#FFFFFF",
+     "color2": "#5AB8FF",
+     "shape": "point"
+    }
+   ]
+  }
+ ]
+}

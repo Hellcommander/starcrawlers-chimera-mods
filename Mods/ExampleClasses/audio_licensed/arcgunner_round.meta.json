@@ -1,0 +1,240 @@
+{
+  "prompt": "electric bullet zap, gunshot with spark, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "124d5e445af877c1",
+      "score": 0.610991358757019,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "66b8b68fc1cbcad4",
+      "score": 0.5973230600357056,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "ee1b3c7abbe46e6e",
+      "score": 0.5962876677513123,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-30.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "924fdedca2bfd547",
+      "score": 0.5776636004447937,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "5b6a4c09eab2e860",
+      "score": 0.5770793557167053,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-41.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "087d5f143548515c",
+      "score": 0.5742127895355225,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "3344916f57b73ab7",
+      "score": 0.5724191665649414,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-28.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "8790a6bf24d01a0e",
+      "score": 0.5689746737480164,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e11572c72c739502",
+      "score": 0.5686443448066711,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e15eb56be1521934",
+      "score": 0.5630002617835999,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "124d5e445af877c1",
+    "66b8b68fc1cbcad4",
+    "ee1b3c7abbe46e6e",
+    "924fdedca2bfd547",
+    "5b6a4c09eab2e860",
+    "087d5f143548515c",
+    "3344916f57b73ab7",
+    "8790a6bf24d01a0e",
+    "e11572c72c739502",
+    "e15eb56be1521934"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ExampleClasses\\sfx\\arcgunner_round.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.204,
+  "semitones": -4,
+  "width": 0.479,
+  "listen": {
+    "match": 0.692,
+    "clean": -3.066,
+    "faults": []
+  }
+}

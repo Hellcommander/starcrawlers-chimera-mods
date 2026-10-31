@@ -1,0 +1,238 @@
+{
+  "id": "MOD_PsiKnight",
+  "name": "Psi Knight",
+  "description": "A duelist whose blade is only the second most dangerous thing they swing. Every clean hit sharpens their Poise; Kinetic Guard turns incoming blows back on attackers, and Mindbreaker spends all that Poise in one psychic strike.\n\nMelee plus telekinesis, built around Poise (+Psi Power per stack). Favors [STR] and [PSI].",
+  "archetype": "Muscle",
+  "icon": "psi_knight.png",
+  "attributePriorities": {
+    "PsiPower": 4,
+    "Strength": 2,
+    "Agility": 2
+  },
+  "effects": [
+    {
+      "id": "Poise",
+      "name": "Poise",
+      "description": "Mind and blade, perfectly aligned.",
+      "duration": 6,
+      "maxStacks": 5,
+      "stats": {
+        "PsiPower": 2
+      }
+    },
+    {
+      "id": "Guard",
+      "name": "Kinetic Guard",
+      "description": "A shell of force that hits back.",
+      "duration": 3,
+      "damageTakenMult": 0.8,
+      "procs": [
+        {
+          "on": "hurt",
+          "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+          "actions": [
+            { "do": "damage", "type": "Psi", "min": 3, "max": 5, "scale": "PsiPower", "scaleMult": 0.3 },
+            { "do": "knockback", "amount": 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Mind Over Blade",
+        "icon": "psi_knight_t0.png",
+        "description": "Each clean hit clears the mind a little more.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 40,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Poise" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Psiblade",
+        "icon": "psi_knight_t1.png",
+        "description": "Steel edge, telekinetic follow-through.",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "damage", "type": "Psi", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.3 },
+          { "do": "effect", "to": "self", "effect": "@Poise" }
+        ],
+        "perk": {
+          "name": "Singing Blade",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/psiknight_psiblade.wav"
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Telekinetic Shove",
+        "icon": "psi_knight_t2.png",
+        "range": 5,
+        "staminaCost": 12,
+        "cooldown": 4,
+        "description": "Push them across the room with your mind.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.3 },
+          { "do": "knockback", "amount": 3 },
+          { "do": "effect", "effect": "#Reeling" }
+        ],
+        "perk": {
+          "name": "Hurl",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Kinetic Guard",
+        "icon": "psi_knight_t3.png",
+        "cooldown": 12,
+        "description": "Wrap yourself in a shell of force that strikes back at anyone who hits you.",
+        "castVfx": "PA_Force_Psyker_Smite.impactEffect",
+        "sound": "event:/Abilities/ForcePsyker/Smite_PowerUp",
+        "actions": [
+          { "do": "effect", "effect": "@Guard" }
+        ],
+        "perk": {
+          "name": "Iron Will",
+          "addActions": [
+            { "do": "effect", "effect": "@Poise", "stacks": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Clarity",
+        "icon": "psi_knight_t4.png",
+        "description": "Even resting, your mind sharpens itself.",
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Poise" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Mindbreaker",
+        "icon": "psi_knight_t5.png",
+        "staminaCost": 25,
+        "cooldown": 10,
+        "description": "Pour every ounce of Poise through the blade and into their skull.",
+        "impactVfx": "PA_Force_Psyker_Judgement.PS_Attack",
+        "sound": "sfx/psiknight_mindbreaker.wav",
+        "actions": [
+          { "do": "damage", "type": "Psi", "min": 6, "max": 10, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Poise", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1, "chance": 50 }
+        ],
+        "perk": {
+          "name": "Shatter Mind",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Gravity Reave",
+        "icon": "psi_knight_t6.png",
+        "radius": 2.5,
+        "staminaCost": 25,
+        "cooldown": 12,
+        "description": "Clench your mind like a fist and drag the whole room onto your blade. The calmer you are, the harder it hits, and none of that calm is spent.",
+        "castVfx": "PA_Force_Psyker_Smite.impactEffect",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "pull", "amount": 1 },
+          { "do": "damage", "type": "Psi", "min": 4, "max": 7, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Poise", "stacksFrom": "self" },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "to": "self", "effect": "@Poise" }
+        ],
+        "perk": {
+          "name": "Collapsing Orbit",
+          "addActions": [
+            { "do": "stun", "turns": 1, "chance": 35 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Mirror-Still Mind",
+        "icon": "psi_knight_t7.png",
+        "description": "Past a certain calm, nothing is wasted: every surplus thought becomes force, and a strong enough Poise raises your guard before you've decided to.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 50,
+            "when": { "value": "stacks:@Poise", "of": "self", "atLeast": 5 },
+            "vfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3 }
+            ]
+          },
+          {
+            "on": "hurt",
+            "cooldown": 8,
+            "when": { "value": "stacks:@Poise", "of": "self", "atLeast": 3, "lacks": "@Guard" },
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Guard" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

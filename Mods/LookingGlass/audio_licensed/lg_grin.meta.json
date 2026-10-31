@@ -1,0 +1,187 @@
+{
+  "prompt": "magical vanishing shimmer fading away, soft mischievous purr",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "",
+  "references": [
+    {
+      "id": "8466ac6d90521096",
+      "score": 0.4871801435947418,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Heal/Heal 11.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "heal"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "542cd140f91cd9f2",
+      "score": 0.481711208820343,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Revive/Revive 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "revive"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "6d5ec264e794cdd8",
+      "score": 0.4815070629119873,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Revive/Revive 5.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "revive"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "0ccfb885bec58617",
+      "score": 0.4806235730648041,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Generic/Regenerate 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "generic",
+        "regenerate"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "43338115408414c6",
+      "score": 0.47820356488227844,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Heal/Heal 11.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "heal"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "0033ef298b7973c4",
+      "score": 0.4780530631542206,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Generic/Regenerate 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "generic",
+        "regenerate"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "fea7651f6498bd64",
+      "score": 0.47448256611824036,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Heal/Heal 7.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "heal"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "8f9c6fd6590b08c4",
+      "score": 0.47343936562538147,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Heal/Heal 7.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "heal"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "072c872b5dc4ac77",
+      "score": 0.467825710773468,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Heal/Heal 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "heal"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "3ccea1d0b64a7618",
+      "score": 0.46213993430137634,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Shield/Shield 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "shield"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "8466ac6d90521096",
+    "542cd140f91cd9f2",
+    "6d5ec264e794cdd8",
+    "0ccfb885bec58617",
+    "43338115408414c6",
+    "0033ef298b7973c4",
+    "fea7651f6498bd64",
+    "8f9c6fd6590b08c4",
+    "072c872b5dc4ac77",
+    "3ccea1d0b64a7618"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_grin.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.047,
+  "semitones": 5,
+  "width": 0.523,
+  "listen": {
+    "match": 0.597,
+    "clean": 2.384,
+    "faults": []
+  }
+}

@@ -1,0 +1,39 @@
+{
+  // The Ichorborn's effect ids, pointed at Doctor Cerberus's own particles and hazards.
+  // "Creature/Ability.field" names a particle on that enemy's ability; a hazard id borrows its look.
+  // The Gaze keeps the class's own eye and beam: the doctor's play at her eye, which in first person is your face.
+  // The Ichor Mire keeps the class's own puddles: her void-rift hazard stands at chest height when borrowed as a look.
+  "particles": [
+  // Her tar on the class's own emitters: these layers borrow the material of her goo (lit, heavy, black) by reference, with her smoke and violet motes.
+  // Splashes are geysers of her tar: a column from the floor, a falling crown, then flat pools.
+  { "id": "IchSplash", "layers": [
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "rate": 170, "duration": 0.4, "life": [0.6, 0.95], "speed": [6.0, 9.0], "size": [0.20, 0.42], "stretch": 1, "gravity": 2.2, "shape": "cone", "angle": 11, "radius": 0.14, "ground": true },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "count": 34, "delay": 0.1, "life": [0.5, 0.9], "speed": [2.5, 4.5], "size": [0.14, 0.30], "stretch": 0.8, "gravity": 2.2, "shape": "cone", "angle": 45, "radius": 0.25, "ground": true },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:GoopPool", "count": 5, "life": [2.5, 3.5], "speed": [0, 0], "size": [0.55, 0.95], "sizeCurve": "flat", "shape": "disc", "radius": 0.45, "flat": true, "ground": true, "offset": [0, -0.02, 0] },
+    { "texture": "mote", "blend": "add", "count": 12, "life": [0.8, 1.6], "speed": [0.4, 1], "size": [0.03, 0.05], "color": "#6A20FF", "color2": "#20086A", "shape": "sphere", "radius": 0.4, "gravity": -0.2, "ground": true } ] },
+  { "id": "IchWingTear", "layers": [
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "rate": 221, "duration": 0.4, "life": [0.6, 0.95], "speed": [6.8, 10.3], "size": [0.26, 0.55], "stretch": 1, "gravity": 2.2, "shape": "cone", "angle": 11, "radius": 0.18, "ground": true },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "count": 44, "delay": 0.1, "life": [0.5, 0.9], "speed": [2.9, 5.1], "size": [0.18, 0.39], "stretch": 0.8, "gravity": 2.2, "shape": "cone", "angle": 45, "radius": 0.33, "ground": true },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:GoopPool", "count": 5, "life": [2.5, 3.5], "speed": [0, 0], "size": [0.72, 1.23], "sizeCurve": "flat", "shape": "disc", "radius": 0.59, "flat": true, "ground": true, "offset": [0, -0.02, 0] },
+    { "texture": "mote", "blend": "add", "count": 12, "life": [0.8, 1.6], "speed": [0.4, 1], "size": [0.03, 0.05], "color": "#6A20FF", "color2": "#20086A", "shape": "sphere", "radius": 0.4, "gravity": -0.2, "ground": true } ] },
+  { "id": "IchTar", "layers": [
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Pull.PS_cast:Particle System", "rate": 18, "duration": 0.7, "life": [0.6, 1.1], "speed": [0.05, 0.3], "size": [0.20, 0.40], "sizeCurve": "grow", "shape": "sphere", "radius": 0.10 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:Particle System (1)", "rate": 18, "duration": 0.7, "life": [0.8, 1.4], "speed": [0.1, 0.4], "size": [0.03, 0.05], "shape": "sphere", "radius": 0.18, "gravity": -0.15 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:GoopPool", "count": 6, "life": [0.7, 0.7], "speed": [0, 0], "size": [0.1, 0.2], "sizeCurve": "flat", "spin": [-200, 200], "shape": "sphere", "radius": 0.1 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "rate": 70, "duration": 0.7, "life": [0.3, 0.6], "speed": [0.2, 0.8], "size": [0.1, 0.22], "stretch": 0.6, "gravity": 1.4, "shape": "sphere", "radius": 0.14 } ] },
+  { "id": "IchWingThrow", "layers": [
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Pull.PS_cast:Particle System", "rate": 22, "duration": 1.0, "life": [0.6, 1.1], "speed": [0.05, 0.3], "size": [0.28, 0.56], "sizeCurve": "grow", "shape": "sphere", "radius": 0.14 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:Particle System (1)", "rate": 22, "duration": 1.0, "life": [0.8, 1.4], "speed": [0.1, 0.4], "size": [0.03, 0.05], "shape": "sphere", "radius": 0.25, "gravity": -0.15 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:GoopPool", "count": 8, "life": [1.0, 1.0], "speed": [0, 0], "size": [0.14, 0.3], "sizeCurve": "flat", "spin": [-300, 300], "shape": "sphere", "radius": 0.18 },
+    { "borrow": "Enemy_BOSS_Cerberus/Cerberus_Warp.impactParticle:BloodGlobs", "rate": 80, "duration": 1.0, "life": [0.4, 0.7], "speed": [0.2, 0.9], "size": [0.12, 0.26], "stretch": 0.6, "gravity": 1.4, "shape": "sphere", "radius": 0.25 } ] },
+  { "id": "IchClaw",      "use": "Enemy_BOSS_Cerberus/Cerberus_Swipe.impactParticle" },
+  { "id": "IchHellLook",  "use": "HAZARD_Inferno_Mobile@0.7" },
+  { "id": "IchBeamHit",   "use": "Enemy_BOSS_Cerberus/Cerberus_Annihilation.PS_Impact" },
+  { "id": "IchStorm",     "use": "Enemy_BOSS_Cerberus/Cerberus_Thundercrunch.PS_charging" },
+  { "id": "IchZap",       "use": "Enemy_BOSS_Cerberus/Cerberus_Thundercrunch.impactParticle@0.6" },
+  { "id": "IchStrike",    "use": "Enemy_BOSS_Cerberus/Cerberus_Thundercrunch.PS_LightningStrike" },
+  { "id": "IchRift",      "use": "Enemy_BOSS_Cerberus/Cerberus_Portals.impactParticle@0.8" },
+  { "id": "IchRiftLook",  "use": "HAZARD_Cerberus_Portal@0.8" },
+  { "id": "IchMolt",      "use": "Enemy_BOSS_Cerberus/Boss_Cerberus.PS_StunStrike" },
+  { "id": "IchStunHit",   "use": "Enemy_BOSS_Cerberus/Boss_Cerberus.PS_StunImpact@0.7" }
+] }

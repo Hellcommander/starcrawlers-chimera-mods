@@ -1,0 +1,380 @@
+{
+  "items": [
+    { "id": "DeadDropCase", "base": "CONSUME_TemperedGlassPhial", "name": "Dead Drop Case", "icon": "items/dead_drop_case.png", "model": {"mesh": "models/items/dead_drop_case.glb", "scale": 0.45},
+      "description": "A sealed case left for someone who isn't coming. Your employer wants it back unopened.",
+      "rarity": "Common", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "NOSTASH": 1, "SCCLF_CASE": 1 } },
+    { "id": "PrototypeCore", "base": "CONSUME_TemperedGlassPhial", "name": "Kessler-Vane Prototype Core", "icon": "items/prototype_core.png", "model": {"mesh": "models/items/prototype_core.glb", "scale": 0.34},
+      "description": "A sealed research core with a corporate serial still on it. Worth a lot to the right buyer, and to the people who want it back.",
+      "rarity": "Rare", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "SCCLF_GOODS": 1, "SCCLF_OWNER_KesslerVane": 1 } },
+    { "id": "ManifestCrate", "base": "CONSUME_TemperedGlassPhial", "name": "Halyard Manifest Crate", "icon": "items/manifest_crate.png", "model": {"mesh": "models/items/manifest_crate.glb", "scale": 0.45},
+      "description": "A courier crate, seal intact, routing code scratched off. Somebody's shipment never arrived.",
+      "rarity": "Rare", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "SCCLF_GOODS": 1, "SCCLF_OWNER_Halyard": 1 } },
+    { "id": "BountyLedger", "base": "CONSUME_TemperedGlassPhial", "name": "Brassjaw Bounty Ledger", "icon": "items/bounty_ledger.png", "model": {"mesh": "models/items/bounty_ledger.glb", "scale": 0.3},
+      "description": "Names, prices and last known positions. Half the people in it would pay to see it burn.",
+      "rarity": "Rare", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "SCCLF_GOODS": 1, "SCCLF_OWNER_Brassjaw": 1 } },
+    { "id": "TestimonyDrive", "base": "CONSUME_TemperedGlassPhial", "name": "Open Ward Testimony Drive", "icon": "items/testimony_drive.png", "model": {"mesh": "models/items/testimony_drive.glb", "scale": 0.2},
+      "description": "Recorded statements from people Chimera says never existed. The Ward wants them back; others want them quiet.",
+      "rarity": "Rare", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "SCCLF_GOODS": 1, "SCCLF_OWNER_OpenWard": 1 } },
+    { "id": "ColdWallet", "base": "CONSUME_TemperedGlassPhial", "name": "Nullrow Cold Wallet", "icon": "items/cold_wallet.png", "model": {"mesh": "models/items/cold_wallet.glb", "scale": 0.18},
+      "description": "An offline key store, still warm. Whatever's in it, Nullrow will notice it's gone.",
+      "rarity": "Rare", "value": 0, "stackMax": 1, "tags": { "NOSELL": 1, "SCCLF_GOODS": 1, "SCCLF_OWNER_Nullrow": 1 } }
+  ],
+  "factions": [
+    {
+      "id": "KesslerVane",
+      "name": "Kessler-Vane Holdings",
+      "short": "Kessler-Vane",
+      "color": "#6FB7FF",
+      "discovered": false,
+      "operative": "fixer",
+      "description": "A biotech conglomerate that has wanted Chimera's research for years and is happy to pay deniable people to get it.",
+      "rivals": [ { "id": "OpenWard", "weight": 10 }, { "id": "Nullrow", "weight": 5 } ],
+      "runsFor": [ "retrieve", "collect", "plant" ],
+      "runsAgainst": [ "retrieve", "assassinate", "plant" ],
+      "goods": "PrototypeCore",
+      "boon": { "name": "Kessler-Vane Sponsorship", "description": "Corporate-grade kit flows your way.", "damageDealtPerStack": 0.03 },
+      "contact": {
+        "name": "Ilse Varrow",
+        "title": "Acquisitions liaison",
+        "bio": "Speaks in deliverables and deadlines. Has never once used your name on an open line, and never will.",
+        "mood": {
+          "hostile": "You're a line item now. Line items get written off.",
+          "cold": "Our risk people have flagged you. I'd keep this brief.",
+          "neutral": "We pay for results. Bring some.",
+          "warm": "The board has noticed the numbers. Keep them coming.",
+          "close": "You've done more for our quarter than half the people on payroll. Ask, and we'll see.",
+          "betrayed": "We have a long memory and an excellent legal department."
+        },
+        "favourLines": {
+          "owed": "You owe us. We keep a ledger.",
+          "none": "Nothing on account.",
+          "some": "There's a little goodwill on file.",
+          "plenty": "You've earned a discretionary budget."
+        }
+      },
+      "rewards": [
+        { "name": "Expense account", "text": "A transfer clears with no memo line.", "favour": 3, "minRep": -10, "credits": 120 },
+        { "name": "Corporate kit", "text": "A crate of field-tested corporate gear arrives in a plain wrapper.", "favour": 4, "minRep": 11, "loot": "Gear", "rarity": "Rare" },
+        { "name": "Prototype loan", "text": "\"Don't scratch it. Actually, scratch it all you like.\"", "favour": 7, "minRep": 51, "loot": "Weapon", "rarity": "Epic" },
+        { "name": "Make it go away", "text": "A memo is retracted. Nobody admits it existed.", "favour": 2, "minRep": -50, "callOff": true }
+      ],
+      "operations": [
+        { "id": "denial", "name": "Asset denial", "type": "ambush", "favourAtMost": -2, "repAtMost": -26, "delay": [1, 3], "strength": 3,
+          "warning": "A Kessler-Vane memo with your name on it is doing the rounds.", "text": "Kessler-Vane's asset-denial team was waiting for you." },
+        { "id": "freeze", "name": "Account freeze", "type": "squeeze", "favourAtMost": -5, "repAtMost": -51, "delay": [2, 4], "strength": 15,
+          "warning": "Kessler-Vane's lawyers are asking questions about where your credits come from.", "text": "Kessler-Vane's lawyers freeze one of your accounts." }
+      ],
+      "encounters": [
+        {
+          "id": "stalled",
+          "title": "Stalled extraction",
+          "text": "A Kessler-Vane fixer crouches behind a crate with a sealed sample case, waiting on an extraction that clearly isn't coming. They see you and raise empty hands: \"Get me to a vent shaft and the case gets you paid. Or don't, and we both find out what happens.\"",
+          "options": [
+            { "text": "Get them out", "requires": { "repAtLeast": -25 }, "outcome": [ { "rep": 4, "favour": 1, "credits": 40 } ],
+              "result": "You walk them to a vent. They're gone without a thank-you, but the credits arrive anyway." },
+            { "text": "Take the case off them", "outcome": [ { "rep": -6, "goods": true } ],
+              "result": "They don't fight you for it. They just memorise your face." },
+            { "text": "Sell their position to Open Ward", "outcome": [ { "rep": -4 }, { "faction": "OpenWard", "rep": 3, "credits": 30 } ],
+              "result": "The Ward pays a little, and thanks you a lot." },
+            { "text": "Leave them to it", "outcome": [], "result": "Not your extraction." }
+          ]
+        },
+        {
+          "id": "notice",
+          "title": "Recovery notice",
+          "maxRep": -26,
+          "text": "Two Kessler-Vane fixers step out ahead of you, one already reading from a tablet: \"You are in possession of company interests. You can settle this privately.\"",
+          "options": [
+            { "text": "Settle privately", "requires": { "credits": 80 }, "outcome": [ { "rep": 3 } ], "result": "They take the transfer and make a note. The note is not complimentary." },
+            { "text": "Talk them in circles", "requires": { "skill": "SKILLTREE_ThoughtLeader" }, "outcome": [ { "rep": 2, "xp": 25 } ],
+              "result": "By the end, they're apologising for the inconvenience." },
+            { "text": "Refuse", "outcome": [ { "fight": true } ], "result": "They put the tablet away. The guns come out." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Halyard",
+      "name": "Halyard Freight Union",
+      "short": "Halyard",
+      "color": "#FFB35C",
+      "discovered": true,
+      "operative": "runner",
+      "description": "Couriers, smugglers and dock crews who move anything through Chimera's loading bays for a price.",
+      "rivals": [ { "id": "Brassjaw", "weight": 10 }, { "id": "KesslerVane", "weight": 5 } ],
+      "runsFor": [ "retrieve", "collect" ],
+      "runsAgainst": [ "retrieve", "collect", "exterminate" ],
+      "goods": "ManifestCrate",
+      "boon": { "name": "Halyard Routing", "description": "Things fall off trucks near you.", "stats": { "LootFind": 4 } },
+      "contact": {
+        "name": "Mags Ondrey",
+        "title": "Dispatcher, Loading Dock C",
+        "bio": "Runs half the off-book freight through Chimera's bays from a folding chair and three cracked screens. Remembers every debt, including the small ones.",
+        "mood": {
+          "hostile": "You're not getting through my docks. Not upright, anyway.",
+          "cold": "Shipments go missing around you. I notice that.",
+          "neutral": "Freight's freight. You carrying or what?",
+          "warm": "Good to hear your voice. I've got work if you want it.",
+          "close": "You're family now, crawler. Family doesn't pay for loading.",
+          "betrayed": "I put you on the manifest as cargo. Don't come by."
+        },
+        "favourLines": {
+          "owed": "You're in the red with me.",
+          "none": "We're square.",
+          "some": "I've got a crate with your name on it, if you ask.",
+          "plenty": "You've got more favours banked here than most crews."
+        }
+      },
+      "rewards": [
+        { "name": "Spare parts", "text": "A box of medkits and odds and ends, no paperwork.", "favour": 3, "minRep": -10, "loot": "Consumable", "rarity": "Rare" },
+        { "name": "Off the manifest", "text": "A crate turns up in your bag that was never on any manifest.", "favour": 4, "minRep": 11, "loot": "Random", "rarity": "Rare", "credits": 40 },
+        { "name": "Priority freight", "text": "The good stuff, from the top shelf of somebody else's order.", "favour": 6, "minRep": 26, "loot": "Gear", "rarity": "Epic" },
+        { "name": "Lose the paperwork", "text": "Mags tears something up on the line. You hear it.", "favour": 2, "minRep": -50, "callOff": true }
+      ],
+      "operations": [
+        { "id": "missed", "name": "Missed delivery", "type": "squeeze", "favourAtMost": -2, "repAtMost": -26, "delay": [1, 2], "strength": 10,
+          "warning": "Halyard's dispatchers are routing your supply orders the long way round.", "text": "A Halyard 'storage fee' comes out of your account." },
+        { "id": "rats", "name": "Dock rats", "type": "ambush", "favourAtMost": -4, "repAtMost": -51, "delay": [1, 3], "strength": 3,
+          "warning": "Halyard runners have been asking which breach you'll use next.", "text": "Halyard dock rats jump you." }
+      ],
+      "encounters": [
+        {
+          "id": "pinned",
+          "title": "Pinned runner",
+          "text": "A Halyard runner is wedged behind a cargo lifter with a crate of medical supplies, waiting for Chimera's patrol to move on. \"Help me clear out and the crate gets where it's going. You'll be remembered, crawler.\"",
+          "options": [
+            { "text": "Clear a way out", "requires": { "repAtLeast": -25 }, "outcome": [ { "rep": 4, "favour": 1, "heal": 0.25 } ],
+              "result": "The runner tosses you a medkit on the way past and doesn't look back." },
+            { "text": "Take the crate", "outcome": [ { "rep": -5, "goods": true } ], "result": "Halyard will hear about this by the next shift change." },
+            { "text": "Point the patrol at them and slip by", "outcome": [ { "rep": -6, "xp": 20 } ], "result": "It works. It's not something you'll mention to Mags." },
+            { "text": "Let them be", "outcome": [], "result": "They'll find their own way out. Probably." }
+          ]
+        },
+        {
+          "id": "toll",
+          "title": "Dock toll",
+          "maxRep": -11,
+          "text": "Three Halyard runners have chained a door shut and are charging anyone who wants through it. They know who you are. The price has gone up.",
+          "options": [
+            { "text": "Pay the toll", "requires": { "credits": 60 }, "outcome": [ { "rep": 3 } ], "result": "They take your credits and unchain the door, grinning." },
+            { "text": "Call in what they owe you", "requires": { "favour": 1, "spendFavour": true }, "outcome": [ { "rep": 2 } ], "result": "One of them makes a call. The chain comes off." },
+            { "text": "Go through them", "outcome": [ { "fight": true } ], "result": "The chain comes off the door and goes round a fist." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Brassjaw",
+      "name": "Brassjaw Recovery",
+      "short": "Brassjaw",
+      "color": "#FF6F5C",
+      "discovered": false,
+      "operative": "collector",
+      "description": "Bounty hunters and repo crews. They collect people, debts and anything left lying in a dead man's hands.",
+      "rivals": [ { "id": "Halyard", "weight": 10 }, { "id": "OpenWard", "weight": 5 } ],
+      "runsFor": [ "exterminate", "assassinate" ],
+      "runsAgainst": [ "exterminate", "assassinate" ],
+      "goods": "BountyLedger",
+      "boon": { "name": "Brassjaw Tips", "description": "You know where to hit.", "stats": { "Crit": 2 } },
+      "contact": {
+        "name": "Teodor Kvass",
+        "title": "Recovery agent, licensed",
+        "bio": "Keeps the licence framed. Keeps the rest of his business in a ledger he will not show you.",
+        "mood": {
+          "hostile": "Your file's on my desk. It's a thick file.",
+          "cold": "You're not a mark. Yet. Don't make me reconsider.",
+          "neutral": "Everybody's worth something to someone. What are you worth?",
+          "warm": "You bring them in clean. I respect clean.",
+          "close": "If anyone ever posts paper on you, I'll tear it down myself.",
+          "betrayed": "I don't post bounties on friends. You're not one."
+        },
+        "favourLines": {
+          "owed": "You've got a balance with me. Balances come due.",
+          "none": "Nothing on your tab.",
+          "some": "I can spare something from the evidence locker.",
+          "plenty": "You've earned a cut of the good jobs."
+        }
+      },
+      "rewards": [
+        { "name": "Spare iron", "text": "A weapon that's seen a lot of work, cleaned up for you.", "favour": 3, "minRep": -10, "loot": "Weapon", "rarity": "Rare" },
+        { "name": "Hunter's cut", "text": "A share of a bounty you didn't have to collect.", "favour": 4, "minRep": 11, "credits": 150 },
+        { "name": "Kill-team issue", "text": "\"Don't tell anyone where you got it.\"", "favour": 7, "minRep": 51, "loot": "Weapon", "rarity": "Epic" },
+        { "name": "Close the file", "text": "Kvass marks your file as settled. For now.", "favour": 2, "minRep": -50, "callOff": true }
+      ],
+      "operations": [
+        { "id": "posted", "name": "Bounty posted", "type": "hunter", "favourAtMost": -2, "repAtMost": -26, "delay": [1, 3], "strength": 3,
+          "warning": "Brassjaw just posted paper on you. Somebody's going to want the money.", "text": "A Brassjaw bounty hunter has picked up your trail." },
+        { "id": "open", "name": "Open contract", "type": "hunter", "favourAtMost": -6, "repAtMost": -51, "delay": [2, 4], "strength": 4,
+          "warning": "Brassjaw doubled the price on your head.", "text": "A Brassjaw specialist comes to collect, personally." }
+      ],
+      "encounters": [
+        {
+          "id": "split",
+          "title": "Bounty on the loose",
+          "text": "A Brassjaw collector is tracking a mark through this level and doesn't fancy the odds alone. \"Help me bring them in and you get a cut. Get in my way and you get a file.\"",
+          "options": [
+            { "text": "Help bring the mark in", "requires": { "repAtLeast": -25 }, "outcome": [ { "rep": 3, "credits": 60, "xp": 30 } ],
+              "result": "It's ugly work, and quick. The collector pays out on the spot." },
+            { "text": "Warn the mark", "outcome": [ { "rep": -5 }, { "faction": "OpenWard", "rep": 3 } ], "result": "The mark gets away. The collector knows exactly who to blame." },
+            { "text": "Buy back your own file", "requires": { "repAtMost": -26, "credits": 120 }, "outcome": [ { "rep": 6 } ],
+              "result": "The collector shrugs and pockets the credits. \"Business is business.\"" },
+            { "text": "Walk away", "outcome": [], "result": "Not your mark." }
+          ]
+        },
+        {
+          "id": "collection",
+          "title": "Debt collection",
+          "maxRep": -26,
+          "text": "Brassjaw collectors have your description and an itemised list of what you supposedly owe. The total is creative.",
+          "options": [
+            { "text": "Pay up", "requires": { "credits": 100 }, "outcome": [ { "rep": 5 } ], "result": "They tick a box. The list gets shorter." },
+            { "text": "Give them a Halyard name instead", "outcome": [ { "rep": 3 }, { "faction": "Halyard", "rep": -4 } ], "result": "They like the new name better. Halyard won't." },
+            { "text": "Settle it the other way", "outcome": [ { "fight": true } ], "result": "The collectors put the list away." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OpenWard",
+      "name": "Open Ward",
+      "short": "Open Ward",
+      "color": "#7CE08A",
+      "discovered": true,
+      "operative": "volunteer",
+      "description": "Whistleblowers and former test subjects trying to get Chimera's records, and Chimera's prisoners, out.",
+      "rivals": [ { "id": "KesslerVane", "weight": 10 }, { "id": "Brassjaw", "weight": 5 } ],
+      "runsFor": [ "plant", "collect", "assassinate" ],
+      "runsAgainst": [ "plant", "exterminate" ],
+      "goods": "TestimonyDrive",
+      "boon": { "name": "Open Ward Medics", "description": "The Ward's street clinics patch you up.", "stats": { "HealthMax": 3 } },
+      "contact": {
+        "name": "Ren Ashby",
+        "title": "Ward organiser",
+        "bio": "Spent two years as a Chimera trial number. Now runs safehouses out of laundromats and answers every call on the second ring.",
+        "mood": {
+          "hostile": "We know what you did. So will everyone, soon.",
+          "cold": "I want to believe you're on our side. Show me.",
+          "neutral": "Everyone who walks out of Chimera alive is a witness. Including you.",
+          "warm": "People got out because of you. They asked me to say so.",
+          "close": "You're one of us now, whether you like it or not.",
+          "betrayed": "We trusted you with names. Real names."
+        },
+        "favourLines": {
+          "owed": "You took more than you gave. We noticed.",
+          "none": "We don't keep score. Much.",
+          "some": "The clinic put something aside for you.",
+          "plenty": "Half the safehouses would open their doors for you."
+        }
+      },
+      "rewards": [
+        { "name": "Field kit", "text": "A Ward medic leaves you what they could spare.", "favour": 3, "minRep": -10, "loot": "Consumable", "rarity": "Rare" },
+        { "name": "Safehouse stash", "text": "A locker key, and a note: \"take what helps.\"", "favour": 5, "minRep": 11, "loot": "Random", "rarity": "Rare", "credits": 30 },
+        { "name": "Testimony", "text": "Survivors walk you through the floors they escaped from, room by room.", "favour": 6, "minRep": 26, "xp": 150 },
+        { "name": "Ask them to stand down", "text": "Ren calls off the people who were waiting for you.", "favour": 2, "minRep": -50, "callOff": true }
+      ],
+      "operations": [
+        { "id": "action", "name": "Direct action", "type": "ambush", "favourAtMost": -3, "repAtMost": -26, "delay": [1, 3], "strength": 3,
+          "warning": "Ward safehouses have stopped answering your name.", "text": "Open Ward volunteers have decided you're part of the problem." },
+        { "id": "leak", "name": "Leak", "type": "squeeze", "favourAtMost": -5, "repAtMost": -51, "delay": [2, 4], "strength": 10,
+          "warning": "The Ward has your name on a list they're about to publish.", "text": "The Ward leaks your name to Chimera's debt office." }
+      ],
+      "encounters": [
+        {
+          "id": "cell",
+          "title": "Holding cell",
+          "text": "A Ward volunteer is working at a jammed cell door. Behind it, four people in Chimera trial gowns. \"I can't get it open. Please.\"",
+          "options": [
+            { "text": "Force the door", "requires": { "repAtLeast": -25 }, "outcome": [ { "rep": 5, "favour": 1, "xp": 25 } ],
+              "result": "The door gives. Four people walk out who weren't supposed to." },
+            { "text": "Hack the lock", "requires": { "skill": "SKILLTREE_Hacker" }, "outcome": [ { "rep": 6, "favour": 2, "xp": 30 } ],
+              "result": "The lock clicks open without a sound. The volunteer stares at you like you did a miracle." },
+            { "text": "Tip off Kessler-Vane: these are their test subjects too", "outcome": [ { "rep": -8 }, { "faction": "KesslerVane", "rep": 4, "credits": 50 } ],
+              "result": "Kessler-Vane pay well for the information. You don't stay to see what they do with it." },
+            { "text": "Walk away", "outcome": [ { "rep": -2 } ], "result": "The volunteer doesn't call after you." }
+          ]
+        },
+        {
+          "id": "records",
+          "title": "Records drop",
+          "minRep": 11,
+          "text": "A volunteer presses a drive into your hand. \"Testimony. It has to leave the building and I'm being watched. A courier's waiting outside the breach.\"",
+          "options": [
+            { "text": "Carry it out", "outcome": [ { "rep": 3, "favour": 2, "xp": 20 } ], "result": "You hand it off at the breach. The volunteer's message just says: thank you." },
+            { "text": "Carry it out, and copy it for Nullrow", "outcome": [ { "rep": 1 }, { "faction": "Nullrow", "rep": 3, "credits": 60, "discover": "Nullrow" } ],
+              "result": "Nullrow pays for the copy. The Ward never finds out. Probably." },
+            { "text": "Too risky", "outcome": [], "result": "The volunteer finds someone else." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Nullrow",
+      "name": "Nullrow Exchange",
+      "short": "Nullrow",
+      "color": "#C38CFF",
+      "discovered": false,
+      "operative": "tap tech",
+      "description": "Data brokers who buy taps on every network they can't own outright, and sell what they hear.",
+      "rivals": [ { "id": "KesslerVane", "weight": 10 }, { "id": "Halyard", "weight": 5 } ],
+      "runsFor": [ "plant", "retrieve" ],
+      "runsAgainst": [ "plant", "collect" ],
+      "goods": "ColdWallet",
+      "boon": { "name": "Nullrow Feeds", "description": "You see them coming.", "stats": { "Dodge": 2 } },
+      "contact": {
+        "name": "Pell",
+        "title": "Broker of record",
+        "bio": "Nobody has met Pell in person. Pell's voice is different every call. Pell is never wrong about a price.",
+        "mood": {
+          "hostile": "Everything about you is for sale now. Everything.",
+          "cold": "Your data is depreciating. So is your credit with us.",
+          "neutral": "Information wants to be expensive.",
+          "warm": "Your feeds are good. We like good feeds.",
+          "close": "We've scrubbed you from three databases this week. You're welcome.",
+          "betrayed": "We sold your file twice already. We'll sell it again."
+        },
+        "favourLines": {
+          "owed": "Your balance is negative. Interest is accruing.",
+          "none": "Account open. Balance zero.",
+          "some": "You have a little credit with the Exchange.",
+          "plenty": "Your account is in very good standing."
+        }
+      },
+      "rewards": [
+        { "name": "Back-room gadget", "text": "A package arrives with no return address and a very good gadget inside.", "favour": 3, "minRep": -10, "loot": "Consumable", "rarity": "Epic" },
+        { "name": "Wire transfer", "text": "Credits appear. The transfer history doesn't.", "favour": 4, "minRep": 11, "credits": 160 },
+        { "name": "Black-box hardware", "text": "Hardware that officially doesn't exist.", "favour": 7, "minRep": 51, "loot": "Gear", "rarity": "Epic" },
+        { "name": "Scrub the order", "text": "Pell deletes a contract. There's no record it existed.", "favour": 2, "minRep": -50, "callOff": true }
+      ],
+      "operations": [
+        { "id": "drain", "name": "Account drain", "type": "squeeze", "favourAtMost": -2, "repAtMost": -26, "delay": [1, 2], "strength": 15,
+          "warning": "Something is crawling through your accounts.", "text": "Nullrow empties a slice of your accounts." },
+        { "id": "doxx", "name": "Sold your route", "type": "ambush", "favourAtMost": -5, "repAtMost": -51, "delay": [1, 3], "strength": 4,
+          "warning": "Nullrow is auctioning your movements to whoever bids highest.", "text": "Somebody bought your route from Nullrow, and they're here." }
+      ],
+      "encounters": [
+        {
+          "id": "tap",
+          "title": "Dead tap",
+          "text": "A Nullrow tap tech has a junction box open and a dozen wires in their teeth. \"Two minutes. I need two minutes nobody walks round that corner.\"",
+          "options": [
+            { "text": "Stand watch", "requires": { "repAtLeast": -25 }, "outcome": [ { "rep": 3, "favour": 1, "credits": 30 } ], "result": "Nobody walks round the corner. The tech pays on the spot." },
+            { "text": "Splice it yourself, faster", "requires": { "skill": "SKILLTREE_Hacker" }, "outcome": [ { "rep": 4, "favour": 2, "xp": 30 } ], "result": "The tech watches you work and quietly takes notes." },
+            { "text": "Pull the tap and sell it to Kessler-Vane", "outcome": [ { "rep": -6 }, { "faction": "KesslerVane", "rep": 2, "credits": 80, "discover": "KesslerVane" } ],
+              "result": "Kessler-Vane pays well for Nullrow hardware. Nullrow will price that in." },
+            { "text": "Not your problem", "outcome": [], "result": "You leave them to their wires." }
+          ]
+        },
+        {
+          "id": "trade",
+          "title": "Data for data",
+          "text": "A tap tech flags you down. \"Pell says you've been places. Pell pays for places.\"",
+          "options": [
+            { "text": "Tell them about Halyard's routes", "outcome": [ { "rep": 3 }, { "faction": "Halyard", "rep": -3 } ], "result": "The tech listens, nods, and transfers a little something." },
+            { "text": "Tell them about Kessler-Vane's people", "outcome": [ { "rep": 3, "credits": 20 }, { "faction": "KesslerVane", "rep": -3 } ], "result": "\"Pell will like that.\"" },
+            { "text": "Keep your mouth shut", "outcome": [], "result": "\"Your loss. Literally.\"" }
+          ]
+        }
+      ]
+    }
+  ]
+}

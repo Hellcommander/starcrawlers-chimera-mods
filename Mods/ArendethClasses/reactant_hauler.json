@@ -1,0 +1,184 @@
+{
+  "id": "MOD_ReactantHauler",
+  "name": "Reactant Hauler",
+  "description": "Dockhands who learned their chemistry by throwing it. They haul whatever spills out of the station's machinery (oil, coals, coolant, brine, blasting grit) and hurl it by the drum. None of it is very dangerous alone. Together it all reacts.\n\nScrounge and hurl: every throw spends a reactant you carry and leaves its mark on the enemy and the deck; mark the same foe twice and the reactants go off against each other. Oil meets fire, coolant meets fire, brine meets coolant or a current, grit meets oil. Scales with [STR], [SMT] and [PSI].",
+  "archetype": "Muscle",
+  "icon": "reactant_hauler.png",
+  "attributePriorities": { "Strength": 3, "Smarts": 2, "PsiPower": 2 },
+  "starterItems": [ "ArendethClasses:RhOilDrum", "ArendethClasses:RhOilDrum", "ArendethClasses:RhEmberPot", "ArendethClasses:RhEmberPot" ],
+  "effects": [
+    { "id": "Slicked", "name": "Oil-Slicked", "debuff": true, "duration": 4, "stats": { "Dodge": -8 }, "resists": { "Fire": -20 },
+      "description": "Dripping with engine oil: slippery underfoot and dreadfully flammable." },
+    { "id": "Frosted", "name": "Coolant-Frosted", "debuff": true, "duration": 4, "stats": { "Dodge": -5, "RangedAccuracy": -5 }, "resists": { "Cryo": -15 },
+      "description": "Rimed with reactor coolant, stiff and slow." },
+    { "id": "Brined", "name": "Brine-Soaked", "debuff": true, "duration": 4, "resists": { "Shock": -20 },
+      "description": "Soaked in salt brine. Current goes through it like a wire." },
+    { "id": "Gritted", "name": "Grit-Scoured", "debuff": true, "duration": 3, "stats": { "Armor": -2, "RangedAccuracy": -10 },
+      "description": "Grit in the eyes and the joints." },
+    { "id": "Mired", "name": "Mired in Sludge", "debuff": true, "duration": 2, "root": true, "stats": { "Dodge": -10 },
+      "description": "Oil and grit set into a sucking sludge around its feet." }
+  ],
+  "reactions": [
+    { "name": "Oil Flare", "needs": [ "@Slicked", "EFFECT_Fire" ], "radius": 1.6, "description": "the oil goes up in a gout of flame",
+      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "audio_licensed/rh_flare.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 },
+                   { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
+    { "name": "Steam Burst", "needs": [ "@Frosted", "EFFECT_Fire" ], "radius": 2, "description": "the coolant flashes to scalding steam",
+      "vfx": "PA_Smuggler_Flashbang.explosionPrefab@0.4", "sound": "audio_licensed/rh_steam.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1 }, { "do": "blind" } ] },
+    { "name": "Brine Arc", "needs": [ "@Brined", "EFFECT_Shock" ], "description": "the current races through the brine to everything nearby",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/rh_arc.wav",
+      "actions": [ { "do": "chain", "jumps": 3, "radius": 3.5, "actions": [
+        { "do": "damage", "type": "Shock", "min": 4, "max": 8, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 } ] } ] },
+    { "name": "Sludge Set", "needs": [ "@Gritted", "@Slicked" ], "description": "oil and grit set into sucking sludge",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35", "sound": "audio_licensed/rh_sludge.wav",
+      "actions": [ { "do": "effect", "effect": "@Mired" }, { "do": "damage", "type": "Crushing", "min": 2, "max": 4 } ] },
+    { "name": "Brine Freeze", "needs": [ "@Brined", "@Frosted" ], "description": "the brine freezes solid around it",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "sound": "audio_licensed/rh_freeze.wav",
+      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 4, "max": 7, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 } ] }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Scavenger's Eye", "icon": "reactant_hauler_t0.png",
+        "description": "You know what's worth taking off a body. Kills sometimes leave you a reactant, and every reaction you set off puts a little wind back in you.",
+        "procs": [
+          { "on": "kill", "chance": 40, "actions": [ { "do": "random", "options": [
+            { "name": "an oil drum", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhOilDrum", "amount": 1 } ] },
+            { "name": "an ember pot", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhEmberPot", "amount": 1 } ] },
+            { "name": "a coolant keg", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhCoolantKeg", "amount": 1 } ] },
+            { "name": "a brine jug", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhBrineJug", "amount": 1 } ] },
+            { "name": "a grit sack", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhGritSack", "amount": 1 } ] } ] } ] },
+          { "on": "reaction", "actions": [ { "do": "stamina", "to": "self", "amount": 4 } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Hurl Oil Drum", "icon": "reactant_hauler_t1.png", "range": 5, "staminaCost": 8, "cooldown": 1,
+        "itemCost": [ { "item": "ArendethClasses:RhOilDrum", "count": 1 } ],
+        "description": "Split a drum of oil across them and the deck around them. Anything that steps in it comes out slicked.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12, "perRank": 1 },
+          { "do": "effect", "effect": "@Slicked" },
+          { "do": "field", "fieldName": "Oil Slick", "turns": 4, "radius": 1.1, "affects": "enemies", "look": "HAZARD_Acid@0.5", "actions": [ { "do": "effect", "effect": "@Slicked" } ] }
+        ],
+        "perk": { "name": "Full Drum", "description": "More oil, wider slick.", "addActions": [ { "do": "effect", "effect": "@Slicked", "stacks": 1 } ] }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Buff", "name": "Scrounge", "icon": "reactant_hauler_t2.png", "staminaCost": 10, "cooldown": 6,
+        "description": "Rip open a panel, a pipe, a locker: there's always something to throw. You come away with two reactants.",
+        "sound": "audio_licensed/rh_scrounge.wav",
+        "actions": [
+          { "do": "random", "options": [
+            { "name": "an oil drum", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhOilDrum", "amount": 1 } ] },
+            { "name": "an ember pot", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhEmberPot", "amount": 1 } ] },
+            { "name": "a coolant keg", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhCoolantKeg", "amount": 1 } ] },
+            { "name": "a brine jug", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhBrineJug", "amount": 1 } ] },
+            { "name": "a grit sack", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhGritSack", "amount": 1 } ] } ] },
+          { "do": "random", "options": [
+            { "name": "an oil drum", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhOilDrum", "amount": 1 } ] },
+            { "name": "an ember pot", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhEmberPot", "amount": 1 } ] },
+            { "name": "a coolant keg", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhCoolantKeg", "amount": 1 } ] },
+            { "name": "a brine jug", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhBrineJug", "amount": 1 } ] },
+            { "name": "a grit sack", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhGritSack", "amount": 1 } ] } ] }
+        ],
+        "perk": { "name": "Locker Raider", "cooldownDelta": -2 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Hurl Ember Pot", "icon": "reactant_hauler_t3.png", "range": 5, "staminaCost": 8, "cooldown": 1,
+        "itemCost": [ { "item": "ArendethClasses:RhEmberPot", "count": 1 } ],
+        "description": "A pot of live coals that bursts into flame where it lands. Anything oiled or frosted on that spot reacts at once.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.3",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12, "perRank": 1 },
+          { "do": "effect", "effect": "EFFECT_Fire" },
+          { "do": "hazard", "hazard": "HAZARD_Fire_Mini" }
+        ],
+        "perk": { "name": "Hotter Coals", "damageMult": 1.25 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Hurl Coolant Keg", "icon": "reactant_hauler_t4.png", "range": 5, "radius": 1.5, "staminaCost": 10, "cooldown": 3,
+        "itemCost": [ { "item": "ArendethClasses:RhCoolantKeg", "count": 1 } ],
+        "description": "Burst a keg of reactor coolant over a group. It frosts and slows them, and turns to scalding steam if fire touches it.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4",
+        "actions": [
+          { "do": "damage", "type": "Cryo", "min": 2, "max": 5, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 },
+          { "do": "effect", "effect": "@Frosted" }, { "do": "effect", "effect": "SLOW", "turns": 2 }
+        ],
+        "perk": { "name": "Wider Splash", "radiusDelta": 0.5 }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Hurl Brine Jug", "icon": "reactant_hauler_t5.png", "range": 5, "radius": 1.5, "staminaCost": 10, "cooldown": 3,
+        "itemCost": [ { "item": "ArendethClasses:RhBrineJug", "count": 1 } ],
+        "description": "Smash a jug of brine over them. Frost freezes it solid; any current, yours or anyone's, races through it to everyone nearby.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_Elementalist_Tempest.impactParticle@0.4",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 },
+          { "do": "effect", "effect": "@Brined" }
+        ],
+        "perk": { "name": "Live Wire Cap", "description": "The jug's lid is wired to a spare cell: it sparks when it breaks.", "addActions": [ { "do": "effect", "effect": "EFFECT_Shock", "chance": 50 } ] }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt", "name": "Hurl Grit Sack", "icon": "reactant_hauler_t6.png", "range": 4, "shape": "cone", "angle": 60, "staminaCost": 10, "cooldown": 3,
+        "itemCost": [ { "item": "ArendethClasses:RhGritSack", "count": 1 } ],
+        "description": "Swing the sack open in a wide arc. The grit scours armour and eyes, and sets any oil it lands in into sludge.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.4",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 },
+          { "do": "effect", "effect": "@Gritted" }, { "do": "blind", "chance": 30 }
+        ],
+        "perk": { "name": "Coarse Grit", "addActions": [ { "do": "effect", "effect": "#Gashed" } ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Blast", "name": "Kitchen-Sink Barrel", "icon": "reactant_hauler_t7.png", "range": 5, "radius": 2, "staminaCost": 20, "cooldown": 10,
+        "itemCost": [ { "tag": "REACTANT", "count": 3 } ],
+        "description": "Tip three reactants of any kind into one barrel and throw the lot. Oil, coolant, brine and fire all land at once, and everything that can react, does.",
+        "sound": "sfx/rh_barrel.wav", "impactVfx": "PA_Prototype_Thunderclap.impactParticle@0.4",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15, "perRank": 2 },
+          { "do": "effect", "effect": "@Slicked" }, { "do": "effect", "effect": "@Brined" }, { "do": "effect", "effect": "@Frosted" },
+          { "do": "effect", "effect": "EFFECT_Fire" }
+        ],
+        "perk": { "name": "Bigger Barrel", "radiusDelta": 0.5 }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Passive", "name": "Chain Reaction Handling", "icon": "reactant_hauler_t8.png",
+        "description": "You've learned to stand at the right distance and pick up what's left. Every reaction may hand you back a reactant, and those you set off hit harder for knowing exactly what you threw.",
+        "procs": [
+          { "on": "reaction", "chance": 35, "actions": [ { "do": "random", "options": [
+            { "name": "an oil drum", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhOilDrum", "amount": 1 } ] },
+            { "name": "an ember pot", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhEmberPot", "amount": 1 } ] },
+            { "name": "a coolant keg", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhCoolantKeg", "amount": 1 } ] },
+            { "name": "a brine jug", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhBrineJug", "amount": 1 } ] },
+            { "name": "a grit sack", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhGritSack", "amount": 1 } ] } ] } ] },
+          { "on": "reaction", "actions": [ { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 } ] }
+        ]
+      }
+    }
+  ]
+}

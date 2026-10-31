@@ -1,0 +1,204 @@
+{
+  "prompt": "star collapsing implosion then deep cosmic boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, magic sound, star collapsing implosion then deep cosmic boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of magic, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.4,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0003824373707175255,
+  "archetype": "magic",
+  "references": [
+    {
+      "id": "4bd69661da3912ee",
+      "score": 0.37824004888534546,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 47.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "a7205830e7606461",
+      "score": 0.37769293785095215,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 14.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "d857dcac6f548504",
+      "score": 0.35382044315338135,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 39.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "e3e46a5306c7d520",
+      "score": 0.3535974621772766,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 35.wav",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "11afa0acf5929d2e",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 4.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "0241de2428053624",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 9.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "32f7b2ce8128ff62",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 3.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "3a81cb6a92b9f364",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 2.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "36546004f201076a",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 1.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "cbd9b4723f0b75c5",
+      "score": 0.3533596396446228,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 8.wav",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "4bd69661da3912ee",
+    "a7205830e7606461",
+    "d857dcac6f548504",
+    "e3e46a5306c7d520",
+    "11afa0acf5929d2e",
+    "0241de2428053624",
+    "32f7b2ce8128ff62",
+    "3a81cb6a92b9f364",
+    "36546004f201076a",
+    "cbd9b4723f0b75c5"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\gravemote_collapse.wav",
+  "sample_rate": 44100
+}

@@ -1,0 +1,74 @@
+[ { "particles": [
+  { "id": "fx_swarm_conductor_assemble_drone_cast", "light": {"color": "#6FE3FF", "range": 2.694, "intensity": 1.544, "time": 0.391},
+    "layers": [
+      {"texture": "spark", "count": 30, "life": [0.291, 0.622], "speed": [1.788, 3.658], "size": [0.046, 0.106], "stretch": 3, "gravity": 1.2, "drag": 1.0, "color": "#C8F8FF", "color2": "#E09020", "shape": "cone", "radius": 0.1, "angle": 35},
+      {"texture": "soft", "count": 1, "life": [0.472], "speed": [0], "size": [0.981], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 3, "delay": 0.05, "life": [0.837, 1.607], "speed": [0.294, 0.992], "size": [0.378, 0.729], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_swarm_conductor_hijack_drone_cast", "light": {"color": "#6FE3FF", "range": 3.905, "intensity": 2.322, "time": 0.642},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.658], "speed": [0], "size": [2.86], "sizeCurve": "grow", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 47, "life": [0.372, 0.631], "speed": [2.22, 4.294], "size": [0.083, 0.162], "gravity": -0.2, "color": "#C8F8FF", "color2": "#E09020", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.451], "speed": [0], "size": [1.433], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.84, 1.56], "speed": [0.292, 0.939], "size": [0.745, 1.268], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 16, "life": [0.275, 0.469], "speed": [3.115, 5.738], "size": [0.05, 0.108], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_swarm_conductor_target_uplink_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.415], "sizeCurve": "flat", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 244, "duration": 0.7, "life": [0.18, 0.385], "speed": [0.0, 0.048], "size": [0.065, 0.109], "gravity": 0.0, "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_swarm_conductor_target_uplink_impact", "light": {"color": "#6FE3FF", "range": 2.177, "intensity": 1.082, "time": 0.397},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.445], "speed": [0], "size": [1.122], "sizeCurve": "shrink", "color": "#C8F8FF", "color2": "#E09020", "shape": "point"},
+      {"texture": "star", "count": 0, "life": [0.326, 0.441], "speed": [0.0, 0.275], "size": [0.877, 1.008], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "radius": 0}
+    ] },
+  { "id": "fx_swarm_conductor_priority_override_cast", "light": {"color": "#6FE3FF", "range": 4.328, "intensity": 2.2, "time": 0.822},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.483], "speed": [0], "size": [1.804], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.8, "shape": "point"},
+      {"texture": "mote", "count": 49, "life": [0.335, 0.513], "speed": [-3.2, -2.2], "size": [0.125, 0.213], "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 1.4},
+      {"texture": "star", "count": 4, "life": [0.302, 0.56], "speed": [0.0, 0.286], "size": [0.433, 0.74], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.543], "speed": [0], "size": [2.757], "sizeCurve": "grow", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "ground": true, "flat": true, "delay": 0.3}
+    ] },
+  { "id": "fx_swarm_conductor_recall_protocol_cast", "light": {"color": "#6FE3FF", "range": 2.79, "intensity": 1.704, "time": 0.271},
+    "layers": [
+      {"texture": "mote", "count": 32, "life": [0.385, 0.529], "speed": [-3.5, -2.5], "size": [0.082, 0.165], "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 1.0},
+      {"texture": "soft", "count": 1, "life": [0.433], "speed": [0], "size": [1.459], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.913, 1.351], "speed": [0.297, 0.849], "size": [0.538, 1.103], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.4, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_swarm_conductor_swarm_overload_area", "light": {"color": "#6FE3FF", "range": 8.784, "intensity": 2.487, "time": 0.616},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [5.508], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.532], "speed": [0], "size": [11.961], "sizeCurve": "grow", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 39, "life": [0.331, 0.658], "speed": [4.249, 8.136], "size": [0.088, 0.243], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#C8F8FF", "color2": "#E09020", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.942, 1.38], "speed": [0.73, 1.597], "size": [1.058, 1.78], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.5, "shape": "ring", "radius": 1.6, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 15, "life": [0.293, 0.452], "speed": [3.084, 6.658], "size": [0.053, 0.099], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_swarm_conductor_commandeer_spdr_cast", "light": {"color": "#6FE3FF", "range": 3.713, "intensity": 2.114, "time": 0.681},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.68], "speed": [0], "size": [3.1], "sizeCurve": "grow", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 36, "life": [0.425, 0.628], "speed": [1.871, 3.533], "size": [0.081, 0.171], "gravity": -0.2, "color": "#C8F8FF", "color2": "#E09020", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.423], "speed": [0], "size": [1.493], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.97, 1.653], "speed": [0.318, 0.975], "size": [0.722, 1.332], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 23, "life": [0.326, 0.541], "speed": [2.938, 6.648], "size": [0.078, 0.148], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_swarm_conductor_lattice_foundry_cast", "light": {"color": "#6FE3FF", "range": 3.914, "intensity": 2.188, "time": 0.645},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.689], "speed": [0], "size": [3.01], "sizeCurve": "grow", "color": "#C8F8FF", "color2": "#E09020", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 44, "life": [0.372, 0.627], "speed": [1.831, 3.572], "size": [0.085, 0.179], "gravity": -0.2, "color": "#C8F8FF", "color2": "#E09020", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.435], "speed": [0], "size": [1.759], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.813, 1.362], "speed": [0.285, 1.004], "size": [0.678, 1.146], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A1E24", "color2": "#1A1E24", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "star", "count": 6, "life": [0.316, 0.5], "speed": [0.0, 0.334], "size": [0.269, 0.58], "sizeCurve": "pop", "color": "#C8F8FF", "color2": "#E09020", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_SwarmConductor", "tiers": [
+  {"newAbility": {"castVfx": "fx_swarm_conductor_assemble_drone_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_swarm_conductor_hijack_drone_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_swarm_conductor_target_uplink_impact", "travelVfx": "fx_swarm_conductor_target_uplink_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_swarm_conductor_priority_override_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_swarm_conductor_recall_protocol_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_swarm_conductor_swarm_overload_area"}},
+  {"newAbility": {"castVfx": "fx_swarm_conductor_commandeer_spdr_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "fx_swarm_conductor_lattice_foundry_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}}
+] } ]

@@ -1,0 +1,218 @@
+{
+  "prompt": "magic portal ripping open and a stolen spell whooshing out, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "43a2ef6b4573bac8",
+      "score": 0.6090224981307983,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Madness/Madness 6.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "madness"
+      ],
+      "archetypes": [
+        "magic",
+        "horror"
+      ]
+    },
+    {
+      "id": "3648852cfac1cf4f",
+      "score": 0.6073909401893616,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Madness/Madness 6.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "madness"
+      ],
+      "archetypes": [
+        "magic",
+        "horror"
+      ]
+    },
+    {
+      "id": "2f64bc7170cb227d",
+      "score": 0.6058745980262756,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 36.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "c47f81d592bb75e9",
+      "score": 0.5918363928794861,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 48.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "1bedd19cb266acc5",
+      "score": 0.5797721147537231,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 28.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "4525d64f0f1271b7",
+      "score": 0.5796140432357788,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 31.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "90e982038a913daf",
+      "score": 0.5693416595458984,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 26.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "06a091914234f454",
+      "score": 0.5687382221221924,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 1.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "a2c14b5de740f9f2",
+      "score": 0.5656614899635315,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 29.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "7d0eb2d187deab35",
+      "score": 0.5570442080497742,
+      "via": "clap+tag",
+      "pack": "Dreamy Whooshes",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Dreamy Whooshes/FL_GFX_Motion_Dreamy_Whoosh_15.wav",
+      "license": "direct",
+      "tags": [
+        "dreamy",
+        "whooshes",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "motion",
+        "whoosh"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "43a2ef6b4573bac8",
+    "3648852cfac1cf4f",
+    "2f64bc7170cb227d",
+    "c47f81d592bb75e9",
+    "1bedd19cb266acc5",
+    "4525d64f0f1271b7",
+    "90e982038a913daf",
+    "06a091914234f454",
+    "a2c14b5de740f9f2",
+    "7d0eb2d187deab35"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_borrow.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.194,
+  "semitones": 5,
+  "width": 0.707,
+  "listen": {
+    "match": 0.523,
+    "clean": -0.901,
+    "faults": []
+  }
+}

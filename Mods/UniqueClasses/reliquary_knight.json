@@ -1,0 +1,288 @@
+{
+  "id": "MOD_ReliquaryKnight",
+  "name": "Reliquary Knight",
+  "description": "Their armor is a reliquary: three sealed artifacts from a civilization that never learned the difference between engines and prayers. Only one can be awake at a time, and each one turns the knight into something different.\n\nSwitch between three relic stances. Sun Engine burns attackers, Moon Mirror dodges and returns psychic damage, and World Nail is an immovable wall. Changing stance triggers an awakening effect, and Relic Strike and Relic Unbound change with the active relic. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "reliquary_knight.png",
+  "attributePriorities": {
+    "Strength": 4,
+    "Toughness": 3,
+    "Armor": 1
+  },
+  "effects": [
+    {
+      "id": "SunEngine",
+      "name": "Relic: Sun Engine",
+      "description": "The sun relic is awake. Everything that touches you gets burned.",
+      "duration": 30,
+      "group": "relic",
+      "damageDealtMult": 1.1,
+      "resists": {
+        "Fire": 15
+      },
+      "onApplyActions": [
+        { "do": "heal", "to": "self", "amount": 3 }
+      ],
+      "procs": [
+        {
+          "on": "hurt",
+          "vfx": "PA_Pirate_Cacafuego.PS_explode",
+          "actions": [
+            { "do": "damage", "type": "Fire", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.2 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MoonMirror",
+      "name": "Relic: Moon Mirror",
+      "description": "The moon relic is awake. Blows slide off a reflection of you.",
+      "duration": 30,
+      "group": "relic",
+      "stats": {
+        "Dodge": 12
+      },
+      "resists": {
+        "Psi": 20
+      },
+      "onApplyActions": [
+        { "do": "cleanse", "amount": 2 }
+      ],
+      "procs": [
+        {
+          "on": "dodge",
+          "vfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+          "actions": [
+            { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WorldNail",
+      "name": "Relic: World Nail",
+      "description": "The nail relic is awake. You are pinned to the world, and the world is pinned to you.",
+      "duration": 30,
+      "group": "relic",
+      "stats": {
+        "Armor": 3
+      },
+      "damageTakenMult": 0.7,
+      "onApplyActions": [
+        { "do": "shield", "amount": 10, "scale": "Toughness", "scaleMult": 0.5 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Reliquary Vow",
+        "icon": "reliquary_knight_t0.png",
+        "type": "passive",
+        "description": "Whatever relic is sleeping still listens. Sometimes it catches a blow for you.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 20,
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 3, "scale": "Toughness", "scaleMult": 0.3 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Wake the Sun Engine",
+        "icon": "reliquary_knight_t1.png",
+        "target": "self",
+        "instant": true,
+        "cooldown": 4,
+        "description": "Unseal the burning relic. It warms you as it wakes.",
+        "castVfx": "PA_Pirate_Cacafuego.spawnParticle",
+        "sound": "audio_licensed/relic_sun.wav",
+        "actions": [
+          { "do": "effect", "effect": "@SunEngine" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Relic Strike",
+        "icon": "reliquary_knight_t2.png",
+        "target": "enemy",
+        "range": 1.5,
+        "melee": true,
+        "dodgeable": true,
+        "staminaCost": 10,
+        "description": "A heavy blow that carries whichever relic is awake.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Bash",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 7, "scale": "Strength", "scaleMult": 0.5, "perRank": 1 },
+          { "do": "damage", "type": "Fire", "min": 2, "max": 4, "ifSelfHas": "@SunEngine" },
+          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "ifSelfHas": "@MoonMirror" },
+          { "do": "blind", "chance": 25, "ifSelfHas": "@MoonMirror" },
+          { "do": "shield", "to": "self", "amount": 4, "ifSelfHas": "@WorldNail" },
+          { "do": "knockback", "amount": 1, "ifSelfHas": "@WorldNail" }
+        ],
+        "perk": {
+          "name": "Relic Fury",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Wake the Moon Mirror",
+        "icon": "reliquary_knight_t3.png",
+        "target": "self",
+        "instant": true,
+        "cooldown": 4,
+        "description": "Unseal the silver relic. It washes away what ails you as it wakes.",
+        "castVfx": "PA_ThoughtLeader_FI.PS_Heal",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          { "do": "effect", "effect": "@MoonMirror" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2
+      },
+      "newAbility": {
+        "name": "Wake the World Nail",
+        "icon": "reliquary_knight_t4.png",
+        "target": "self",
+        "instant": true,
+        "cooldown": 4,
+        "description": "Unseal the iron relic. It plates you in stone as it wakes.",
+        "castVfx": "PA_Shieldbearer_Brace.PS_cast",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Brace",
+        "actions": [
+          { "do": "effect", "effect": "@WorldNail" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Relic Unbound",
+        "icon": "reliquary_knight_t5.png",
+        "target": "self",
+        "radius": 2.5,
+        "staminaCost": 35,
+        "cooldown": 16,
+        "description": "Unleash the waking relic all at once. Its shape decides what the blast does.",
+        "castVfx": "PA_Prototype_Thunderclap.impactParticle",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "sfx/relic_unbound.wav",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "ifSelfHas": "@SunEngine" },
+          { "do": "stun", "turns": 1, "ifSelfHas": "@MoonMirror" },
+          { "do": "knockback", "amount": 2, "ifSelfHas": "@WorldNail" },
+          { "do": "shield", "to": "self", "amount": 10, "ifSelfHas": "@WorldNail" }
+        ],
+        "perk": {
+          "name": "Apocalypse Relic",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Pilgrim's Advance",
+        "icon": "reliquary_knight_t6.png",
+        "target": "enemy",
+        "range": 5,
+        "staminaCost": 20,
+        "cooldown": 7,
+        "description": "Cross the room in three strides and arrive like a dropped bell. The waking relic decides how the arrival lands.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
+        "sound": "event:/Abilities/Misc/Shieldbearer_Bash",
+        "actions": [
+          { "do": "leap" },
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.5, "perRank": 1 },
+          { "do": "effect", "effect": "#Burning", "stacks": 2, "ifSelfHas": "@SunEngine" },
+          { "do": "effect", "effect": "#Reeling", "ifSelfHas": "@MoonMirror" },
+          { "do": "stun", "turns": 1, "ifSelfHas": "@WorldNail" },
+          { "do": "taunt", "turns": 2, "ifSelfHas": "@WorldNail" }
+        ],
+        "perk": {
+          "name": "Crusade Step",
+          "cooldownDelta": -3,
+          "rangeDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Liturgy of Waking",
+        "icon": "reliquary_knight_t7.png",
+        "type": "passive",
+        "description": "A relic that wakes now wakes loudly. Each time you change relics, the new one announces itself to everyone standing close: the sun scorches, the moon dazzles, the nail demands to be struck.",
+        "procs": [
+          {
+            "on": "effectGained",
+            "match": "@SunEngine",
+            "radius": 2.5,
+            "cooldown": 6,
+            "vfx": "PA_Pirate_Cacafuego.PS_explode",
+            "actions": [
+              { "do": "damage", "type": "Fire", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.3 },
+              { "do": "effect", "effect": "#Burning" }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@MoonMirror",
+            "radius": 2.5,
+            "cooldown": 6,
+            "vfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.3 },
+              { "do": "effect", "effect": "#Reeling" }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@WorldNail",
+            "radius": 2.5,
+            "cooldown": 6,
+            "vfx": "PA_Shieldbearer_Brace.PS_cast",
+            "actions": [
+              { "do": "taunt", "turns": 2 },
+              { "do": "effect", "effect": "#Weakened" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

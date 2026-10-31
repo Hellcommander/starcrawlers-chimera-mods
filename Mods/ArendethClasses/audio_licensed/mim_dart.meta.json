@@ -1,0 +1,220 @@
+{
+  "prompt": "quick pneumatic dart shot with a small sting, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.5,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "3344916f57b73ab7",
+      "score": 0.6111802458763123,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-28.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "ee1b3c7abbe46e6e",
+      "score": 0.6020261645317078,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-30.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "9778b6b1ebb757b8",
+      "score": 0.5926051139831543,
+      "via": "clap+tag",
+      "pack": "Bluster Shots",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Bluster Shots/FL_GFX_Bluster_Shot_19.wav",
+      "license": "direct",
+      "tags": [
+        "bluster",
+        "shots",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "shot"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "cd6c24299aca89cd",
+      "score": 0.5914567708969116,
+      "via": "clap+tag",
+      "pack": "Bluster Shots",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Bluster Shots/FL_GFX_Bluster_Shot_23.wav",
+      "license": "direct",
+      "tags": [
+        "bluster",
+        "shots",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "shot"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "d4c3cd85ceca5e0e",
+      "score": 0.5883656740188599,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 19.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "124d5e445af877c1",
+      "score": 0.5872691869735718,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "small"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "e0ea497b5bbbe68e",
+      "score": 0.5852267742156982,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-38.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "5b6a4c09eab2e860",
+      "score": 0.5811033248901367,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-41.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "95df9c070f321f8c",
+      "score": 0.5807030200958252,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 28.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "e7e7b09f08d30e42",
+      "score": 0.5795685648918152,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-29.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    }
+  ],
+  "used_ids": [
+    "3344916f57b73ab7",
+    "ee1b3c7abbe46e6e",
+    "9778b6b1ebb757b8",
+    "cd6c24299aca89cd",
+    "d4c3cd85ceca5e0e",
+    "124d5e445af877c1",
+    "e0ea497b5bbbe68e",
+    "5b6a4c09eab2e860",
+    "95df9c070f321f8c",
+    "e7e7b09f08d30e42"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_dart.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.192,
+  "semitones": -7,
+  "width": 0.571,
+  "listen": {
+    "match": 0.614,
+    "clean": -2.105,
+    "faults": []
+  }
+}

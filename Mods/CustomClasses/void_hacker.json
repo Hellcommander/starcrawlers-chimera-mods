@@ -1,0 +1,247 @@
+{
+  "id": "MOD_VoidHacker",
+  "name": "Void Hacker",
+  "description": "Found a backdoor into reality and kept typing. Infect targets with Malware that stacks up until their systems crash, stunned and sparking, then let Worm carry the infection through the whole crowd.\n\nStacking malware with a crash at 5 stacks. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "void_hacker.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "PsiPower": 2
+  },
+  "effects": [
+    {
+      "id": "Malware",
+      "name": "Malware",
+      "description": "Running processes: way too many.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 5,
+      "dot": {
+        "type": "Energy",
+        "min": 1,
+        "max": 1
+      },
+      "vfx": "EFFECT_Hacker_Virus_Snowcrash",
+      "burstAt": 5,
+      "burstVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+      "burstSound": "sfx/voidhacker_crash.wav",
+      "burstActions": [
+        { "do": "stun", "turns": 2 },
+        { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4 }
+      ]
+    },
+    {
+      "id": "Rootkit",
+      "name": "Hijacked Firmware",
+      "description": "Its targeting still says station security. Its payload says otherwise.",
+      "duration": -1,
+      "damageTakenMult": 0.8,
+      "procs": [
+        {
+          "on": "hit",
+          "actions": [
+            { "do": "effect", "effect": "@Malware" }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Backdoor",
+        "icon": "void_hacker_t0.png",
+        "description": "Everything you touch gets a little bit owned.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              { "do": "effect", "effect": "@Malware" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Inject",
+        "icon": "void_hacker_t1.png",
+        "staminaCost": 8,
+        "description": "Push a payload straight into their nervous system.",
+        "impactVfx": "PA_Hacker_Hack.hackParticle",
+        "sound": "sfx/voidhacker_inject.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Malware" }
+        ],
+        "perk": {
+          "name": "Double Payload",
+          "addActions": [
+            { "do": "effect", "effect": "@Malware" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Worm",
+        "icon": "void_hacker_t2.png",
+        "cooldown": 5,
+        "staminaCost": 15,
+        "description": "Self-replicating, self-delivering, self-satisfied.",
+        "impactVfx": "PA_Hacker_Virus_Snowcrash.PS_snowcrash_impact",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3.5,
+            "actions": [
+              { "do": "effect", "effect": "@Malware" },
+              { "do": "damage", "type": "Energy", "min": 1, "max": 2 }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Botnet",
+          "addActions": [
+            { "do": "effect", "effect": "#Shocked" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Quarantine",
+        "icon": "void_hacker_t3.png",
+        "cooldown": 14,
+        "description": "Block incoming traffic and quarantine whatever got through.",
+        "castVfx": "PA_Hacker_Command.PS_heal",
+        "sound": "event:/Abilities/Hacker/Hacker_Hack",
+        "actions": [
+          { "do": "shield", "amount": 8, "scale": "Smarts", "scaleMult": 0.5 },
+          { "do": "cleanse" }
+        ],
+        "perk": {
+          "name": "Hardened Kernel",
+          "cooldownDelta": -5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Zero-Day",
+        "icon": "void_hacker_t4.png",
+        "description": "When a host dies, the infection looks for a new one.",
+        "procs": [
+          {
+            "on": "kill",
+            "radius": 3,
+            "actions": [
+              { "do": "effect", "effect": "@Malware", "stacks": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Kernel Panic",
+        "icon": "void_hacker_t5.png",
+        "staminaCost": 25,
+        "cooldown": 12,
+        "description": "Force every bit of malware to execute at once.",
+        "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+        "sound": "sfx/voidhacker_panic.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Malware", "consumeStacks": true },
+          { "do": "damage", "type": "Void", "min": 2, "max": 4 }
+        ],
+        "perk": {
+          "name": "Blue Screen",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Turncoat Turret",
+        "icon": "void_hacker_t6.png",
+        "instant": false,
+        "staminaCost": 25,
+        "cooldown": 20,
+        "description": "Pull a security turret out of the station's inventory and flash it with your own firmware. Every round it fires carries a payload. Use it again while it stands to patch it back up.",
+        "castVfx": "PA_Hacker_Command.PS_heal",
+        "sound": "event:/Abilities/Hacker/Hacker_Hack",
+        "actions": [
+          { "do": "summon", "to": "self", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Hijacked Sentry", "model": { "mesh": "models/hijacked_sentry.glb", "height": 1.2, "keepParticles": false }, "summonGroup": "HijackedSentry", "turns": 15, "maxSummons": 1, "effect": "@Rootkit", "unlessSummonAlive": "group:HijackedSentry" },
+          { "do": "heal", "to": "summons", "ifSummonAlive": "group:HijackedSentry", "amount": 10, "scale": "Smarts", "scaleMult": 0.5 }
+        ],
+        "perk": {
+          "name": "Admin Rights",
+          "cooldownDelta": -6
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Segmentation Fault",
+        "icon": "void_hacker_t7.png",
+        "description": "Infections near you start leaking into each other's memory. Every infected system around you takes damage each turn, and some of it spreads.",
+        "procs": [
+          {
+            "on": "turn",
+            "radius": 3,
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.2, "ifTargetHas": "@Malware" },
+              { "do": "effect", "effect": "@Malware", "chance": 25, "ifTargetHas": "@Malware" }
+            ]
+          },
+          {
+            "on": "crit",
+            "actions": [
+              { "do": "effect", "effect": "@Malware", "stacks": 2 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

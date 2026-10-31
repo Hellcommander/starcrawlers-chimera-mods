@@ -1,0 +1,214 @@
+{
+  "prompt": "ghostly chain hook latching with a metallic psychic clank, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, ghostly chain hook latching with a metallic psychic clank, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of horror, magic, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.8,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0063034952618181705,
+  "source_corr": 0.0037369891069829464,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7b8f08f22a748a95",
+      "score": 0.48148906230926514,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 16.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "9d8f8f1cab8e35bf",
+      "score": 0.4699133336544037,
+      "via": "clap+tag",
+      "pack": "magic",
+      "inner": "made/magic/bind.wav",
+      "license": "own",
+      "tags": [
+        "magic",
+        "made",
+        "bind",
+        "metal",
+        "chains",
+        "coiling",
+        "and",
+        "cinching",
+        "tight",
+        "around",
+        "body",
+        "links",
+        "grinding",
+        "low",
+        "ghostly",
+        "hum"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "0db01d20c8e453f6",
+      "score": 0.4634159803390503,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 4.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "50c7af20a452a27e",
+      "score": 0.4524998068809509,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 21.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "6afe1f4adb9bde54",
+      "score": 0.4445144534111023,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 29.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "3ac96c78a73cf9e0",
+      "score": 0.43480950593948364,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 6.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "4d70ec09a57019af",
+      "score": 0.4304712414741516,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 16.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "6f548378591ff5ef",
+      "score": 0.4298636317253113,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/03_FLICKERING_LIGHT/FLICKERING_LIGHT_1/NOISE_ALCHEMY_FLICKERING_LIGHT_1_8.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "flickering"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "5c2669d6b8631d73",
+      "score": 0.42817485332489014,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/03_FLICKERING_LIGHT/FLICKERING_LIGHT_1/NOISE_ALCHEMY_FLICKERING_LIGHT_1_7.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "flickering"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "5aeedae5a4f25664",
+      "score": 0.4255611300468445,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Bell.zip",
+      "inner": "Dark Fantasy Studio- Bell/Dark Fantasy Studio- Bell (3).wav",
+      "license": "reference",
+      "tags": [
+        "bell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "7b8f08f22a748a95",
+    "9d8f8f1cab8e35bf",
+    "0db01d20c8e453f6",
+    "50c7af20a452a27e",
+    "6afe1f4adb9bde54",
+    "3ac96c78a73cf9e0",
+    "4d70ec09a57019af",
+    "6f548378591ff5ef",
+    "5c2669d6b8631d73",
+    "5aeedae5a4f25664"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_latch.wav",
+  "sample_rate": 44100
+}

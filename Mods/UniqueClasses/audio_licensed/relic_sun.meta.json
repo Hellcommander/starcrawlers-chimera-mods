@@ -1,0 +1,240 @@
+{
+  "prompt": "sun relic awakening, fire roar and holy hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "1ab8ea3964e3ccdf",
+      "score": 0.5138025283813477,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "fast"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "2e8172de9db472f8",
+      "score": 0.5055676102638245,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 22.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "a5cab30448cc34a8",
+      "score": 0.5054303407669067,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 25.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "b2202583268f3220",
+      "score": 0.4986798167228699,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Shipwreck.zip",
+      "inner": "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 21.wav",
+      "license": "reference",
+      "tags": [
+        "shipwreck",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "c01f39d271d8b43f",
+      "score": 0.4904453754425049,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "fast"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "e84bb0fa73f19715",
+      "score": 0.48769867420196533,
+      "via": "clap+tag",
+      "pack": "Magic Spells & Attack SFX",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Magic Spells & Attack SFX/FL_GFX_Magic_Spell_Attack_Sfx_01.wav",
+      "license": "direct",
+      "tags": [
+        "magic",
+        "spells",
+        "attack",
+        "sfx",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "spell"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "1a5c0b28df39d51d",
+      "score": 0.48676133155822754,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 26.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "661a6ee53e9434df",
+      "score": 0.4866691529750824,
+      "via": "clap+tag",
+      "pack": "Kit 02",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Modern Music Kits/Function Loops - Indie Vibes/Kit 02/FL_DRMB_104_electro_guitar_revers_said_\u0421#Maj.wav",
+      "license": "direct",
+      "tags": [
+        "kit",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "modern",
+        "music",
+        "kits",
+        "function",
+        "loops",
+        "indie",
+        "vibes",
+        "fl",
+        "drmb",
+        "electro",
+        "guitar",
+        "revers",
+        "said",
+        "maj"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "0a07064b0e7b4ca8",
+      "score": 0.4818275570869446,
+      "via": "clap+tag",
+      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 01.wav",
+      "license": "direct",
+      "tags": [
+        "fl",
+        "nhw",
+        "one",
+        "shot",
+        "drums",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "retro",
+        "music",
+        "production",
+        "bundle",
+        "function",
+        "loops",
+        "neon",
+        "highway",
+        "crash"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "f1b39915f793b893",
+      "score": 0.480688214302063,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "1ab8ea3964e3ccdf",
+    "2e8172de9db472f8",
+    "a5cab30448cc34a8",
+    "b2202583268f3220",
+    "c01f39d271d8b43f",
+    "e84bb0fa73f19715",
+    "1a5c0b28df39d51d",
+    "661a6ee53e9434df",
+    "0a07064b0e7b4ca8",
+    "f1b39915f793b893"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\relic_sun.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.246,
+  "semitones": -6,
+  "width": 0.961,
+  "listen": {
+    "match": 0.386,
+    "clean": -1.021,
+    "faults": []
+  }
+}

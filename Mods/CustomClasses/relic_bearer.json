@@ -1,0 +1,246 @@
+{
+  "id": "MOD_RelicBearer",
+  "name": "Relic Bearer",
+  "description": "You pried a humming idol out of a cargo crate and it has been whispering ever since. Each spell feeds it Whispers, making you stronger; let them reach eight and the idol takes over for a while. Its gifts drain life from your enemies to feed yours.\n\nLifesteal caster with a dangerous power buildup. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "relic_bearer.png",
+  "attributePriorities": {
+    "PsiPower": 3,
+    "Smarts": 3
+  },
+  "effects": [
+    {
+      "id": "Whispers",
+      "name": "Whispers",
+      "description": "It's telling you things. Useful, terrible things.",
+      "duration": 8,
+      "maxStacks": 8,
+      "stats": {
+        "PsiPower": 1,
+        "Smarts": 1
+      },
+      "burstAt": 8,
+      "burstRadius": 2.5,
+      "burstVfx": "PA_Cursed_Avatar.PS_cast",
+      "burstSound": "event:/Abilities/VoidPsyker/VoidPsyker_Horror_Spawn",
+      "burstActions": [
+        { "do": "damage", "type": "Void", "min": 6, "max": 10, "scale": "PsiPower", "scaleMult": 0.4 },
+        { "do": "effect", "to": "self", "effect": "@Possessed" }
+      ]
+    },
+    {
+      "id": "Possessed",
+      "name": "Idol-Ridden",
+      "description": "The idol is driving. You are watching.",
+      "duration": 3,
+      "debuff": true,
+      "damageTakenMult": 1.3,
+      "damageDealtMult": 1.3,
+      "dot": {
+        "type": "Psi",
+        "min": 1,
+        "max": 2
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "It Hungers",
+        "icon": "relic_bearer_t0.png",
+        "description": "Every death is a meal, and the idol shares.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 3 },
+              { "do": "effect", "to": "self", "effect": "@Whispers" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Siphon",
+        "icon": "relic_bearer_t1.png",
+        "description": "Drink a little of their life through the idol.",
+        "impactVfx": "VOID_PSYKER_IGNITE.impactParticle",
+        "sound": "sfx/relic_siphon.wav",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1, "lifesteal": 0.4 },
+          { "do": "effect", "to": "self", "effect": "@Whispers" }
+        ],
+        "perk": {
+          "name": "Deep Siphon",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Curse of Want",
+        "icon": "relic_bearer_t2.png",
+        "cooldown": 5,
+        "staminaCost": 12,
+        "description": "The idol shows them what they'll never have.",
+        "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Cast",
+        "actions": [
+          { "do": "effect", "effect": "#Weakened" },
+          { "do": "effect", "effect": "#Exposed" },
+          { "do": "damage", "type": "Psi", "min": 1, "max": 2 },
+          { "do": "effect", "to": "self", "effect": "@Whispers" }
+        ],
+        "perk": {
+          "name": "Covet",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Appease the Idol",
+        "icon": "relic_bearer_t3.png",
+        "cooldown": 15,
+        "staminaCost": 0,
+        "description": "Offer it quiet. It gives back life in return for each whisper you let go.",
+        "castVfx": "PA_ThoughtLeader_FI.PS_Heal",
+        "sound": "event:/Abilities/Misc/Heal",
+        "actions": [
+          { "do": "heal", "amount": 3, "bonusPerStack": 3, "stacksOf": "@Whispers" },
+          { "do": "stamina", "amount": 5, "bonusPerStack": 3, "stacksOf": "@Whispers", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Sweet Offering",
+          "cooldownDelta": -5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Borrowed Vigor",
+        "icon": "relic_bearer_t4.png",
+        "description": "Some of every blow comes back to you.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Idol's Due",
+        "icon": "relic_bearer_t5.png",
+        "radius": 3,
+        "staminaCost": 30,
+        "cooldown": 18,
+        "description": "Let the idol collect from everyone nearby at once.",
+        "castVfx": "PA_Cursed_Avatar.PS_cast",
+        "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
+        "sound": "sfx/relic_due.wav",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 4, "max": 8, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "lifesteal": 0.3, "bonusPerStack": 3, "stacksOf": "@Whispers", "stacksFrom": "self", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Tithe",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "The Idol Speaks",
+        "icon": "relic_bearer_t6.png",
+        "range": 7,
+        "staminaCost": 20,
+        "cooldown": 8,
+        "description": "Open your mouth and let the idol say one word through it. While it rides you, the word carries on to whoever stands nearby.",
+        "castVfx": "PA_Cursed_Avatar.PS_cast",
+        "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Cast",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 5, "max": 9, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "lifesteal": 0.3 },
+          {
+            "do": "chain",
+            "jumps": 2,
+            "radius": 3.5,
+            "ifSelfHas": "@Possessed",
+            "actions": [
+              { "do": "damage", "type": "Void", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3, "lifesteal": 0.3 }
+            ]
+          },
+          { "do": "effect", "to": "self", "effect": "@Whispers" }
+        ],
+        "perk": {
+          "name": "Glossolalia",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Idol's Favourite",
+        "icon": "relic_bearer_t7.png",
+        "description": "The idol has grown fond of you. When it takes the wheel now, it keeps its vessel in one piece, and every death it drives hurries your next gift along.",
+        "procs": [
+          {
+            "on": "turn",
+            "when": { "has": "@Possessed", "of": "self" },
+            "actions": [
+              { "do": "heal", "to": "self", "amount": 3 },
+              { "do": "shield", "to": "self", "amount": 4, "scale": "PsiPower", "scaleMult": 0.3 }
+            ]
+          },
+          {
+            "on": "kill",
+            "when": { "has": "@Possessed", "of": "self" },
+            "actions": [
+              { "do": "cooldowns", "to": "self", "amount": 2 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

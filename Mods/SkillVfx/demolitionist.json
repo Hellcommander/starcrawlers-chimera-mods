@@ -1,0 +1,61 @@
+[ { "particles": [
+  { "id": "fx_demolitionist_sticky_charge_travel",
+    "layers": [
+      {"texture": "mote", "count": 1, "life": [0.7], "speed": [0], "size": [0.344], "sizeCurve": "flat", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point", "duration": 0.7, "spin": [200, 400]},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 34, "duration": 0.7, "life": [0.268, 0.509], "speed": [0.109, 0.447], "size": [0.114, 0.26], "gravity": 0.0, "color": "#2A2420", "color2": "#2A2420", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_demolitionist_sticky_charge_impact", "light": {"color": "#FFB040", "range": 2.112, "intensity": 1.074, "time": 0.389},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.471], "speed": [0], "size": [1.111], "sizeCurve": "shrink", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point"},
+      {"texture": "star", "count": 0, "life": [0.379, 0.457], "speed": [0.0, 0.302], "size": [0.858, 1.21], "sizeCurve": "pop", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point", "radius": 0}
+    ] },
+  { "id": "fx_demolitionist_frag_toss_travel",
+    "layers": [
+      {"texture": "mote", "count": 1, "life": [0.7], "speed": [0], "size": [0.405], "sizeCurve": "flat", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point", "duration": 0.7, "spin": [200, 400]},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 42, "duration": 0.7, "life": [0.282, 0.467], "speed": [0.088, 0.408], "size": [0.123, 0.267], "gravity": 0.0, "color": "#2A2420", "color2": "#2A2420", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_demolitionist_frag_toss_area", "light": {"color": "#FFB040", "range": 5.608, "intensity": 3.035, "time": 0.652},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.647], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.39], "speed": [0], "size": [5.594], "sizeCurve": "grow", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 47, "life": [0.307, 0.568], "speed": [3.81, 8.674], "size": [0.11, 0.233], "stretch": 3, "gravity": 0.9, "drag": 1.5, "color": "#FFF0A0", "color2": "#FF6A10", "shape": "hemisphere", "radius": 1.0, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 10, "delay": 0.05, "life": [0.818, 1.322], "speed": [0.601, 1.541], "size": [1.065, 1.619], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2420", "color2": "#2A2420", "alpha": 0.65, "shape": "disc", "radius": 1.2, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_demolitionist_det_cord_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.408], "sizeCurve": "flat", "color": "#FFD8A0", "color2": "#E05010", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 320, "duration": 0.7, "life": [0.36, 0.601], "speed": [0.0, 0.029], "size": [0.062, 0.116], "gravity": 0.0, "color": "#FFD8A0", "color2": "#E05010", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_demolitionist_det_cord_impact", "light": {"color": "#FFB040", "range": 2.564, "intensity": 1.495, "time": 0.293},
+    "layers": [
+      {"texture": "fx/demolitionist_burst.png", "count": 1, "life": [0.411], "speed": [0], "size": [0.848], "sizeCurve": "flat", "color": "#FFF0A0", "color2": "#FF6A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 4, "life": [0.321, 0.542], "speed": [0.0, 0.328], "size": [0.422, 0.645], "sizeCurve": "pop", "color": "#FFF0A0", "color2": "#FF6A10", "shape": "sphere", "radius": 0.25}
+    ] },
+  { "id": "fx_demolitionist_dead_man_s_switch_cast", "light": {"color": "#FF9050", "range": 2.66, "intensity": 1.149, "time": 0.547},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.68], "speed": [0], "size": [2.285], "sizeCurve": "pulse", "color": "#FFD8A0", "color2": "#E05010", "shape": "point", "ground": true, "flat": true, "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 6, "life": [0.316, 0.492], "speed": [0.0, 0.29], "size": [0.218, 0.353], "sizeCurve": "pop", "color": "#FFD8A0", "color2": "#E05010", "shape": "ring", "radius": 0.8, "ground": true, "offset": [0, 0.3, 0]}
+    ] },
+  { "id": "fx_demolitionist_remote_detonator_area", "light": {"color": "#FFB040", "range": 5.183, "intensity": 3.002, "time": 0.6},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.183], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "spark", "count": 41, "life": [0.305, 0.604], "speed": [4.447, 9.724], "size": [0.104, 0.205], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#FFF0A0", "color2": "#FF6A10", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/demolitionist_bits.png", "count": 9, "life": [0.443, 0.801], "speed": [2.487, 5.326], "size": [0.104, 0.214], "gravity": 1.2, "spin": [-360, 360], "color": "#FFF0A0", "color2": "#FF6A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.928, 1.468], "speed": [0.448, 1.337], "size": [0.933, 1.72], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A2420", "color2": "#2A2420", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_demolitionist_welcome_mat_area", "light": {"color": "#FF9050", "range": 4.685, "intensity": 1.118, "time": 0.844},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.681], "speed": [0], "size": [4.823], "sizeCurve": "flat", "color": "#FFD8A0", "color2": "#E05010", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 29, "life": [0.74, 1.33], "speed": [0.329, 0.741], "size": [0.079, 0.182], "gravity": -0.2, "color": "#FFD8A0", "color2": "#E05010", "shape": "cone", "angle": 8, "radius": 1.2800000000000002, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.984, 1.381], "speed": [0.048, 0.189], "size": [0.842, 1.261], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.4, "shape": "disc", "radius": 1.1199999999999999, "ground": true, "grid": [6, 6]}
+    ] }
+] },
+{ "id": "MOD_Demolitionist", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_demolitionist_sticky_charge_impact", "travelVfx": "fx_demolitionist_sticky_charge_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "fx_demolitionist_frag_toss_travel", "areaVfx": "fx_demolitionist_frag_toss_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_demolitionist_det_cord_impact", "travelVfx": "fx_demolitionist_det_cord_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_demolitionist_dead_man_s_switch_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_demolitionist_remote_detonator_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_demolitionist_welcome_mat_area"}}
+] } ]

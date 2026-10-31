@@ -1,0 +1,226 @@
+{
+  "prompt": "huge nanite swarm cloud rushing hiss and buzz, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, alien sound, huge nanite swarm cloud rushing hiss and buzz, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of alien, voice, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.008635696955025196,
+  "archetype": "alien",
+  "references": [
+    {
+      "id": "50333af7c0d570c3",
+      "score": 0.28300172090530396,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-47.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "17bb507d7748fc96",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-2.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "b74ffa8b4f79cf28",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-6.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "cfa7dcf97542da09",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-5.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "efba1e9b18b61cc2",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-1.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "0652f9923139df05",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-4.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "d79c224e10952359",
+      "score": 0.27724701166152954,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-3.wav",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "hit",
+        "and",
+        "death"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "8cde726730baef91",
+      "score": 0.2673236131668091,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Beast.zip",
+      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-47.wav",
+      "tags": [
+        "beast",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "eaa338b0befe83a6",
+      "score": 0.25548723340034485,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-39.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "4b1d9047dd7cf93c",
+      "score": 0.2552490830421448,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-35.wav",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "50333af7c0d570c3",
+    "17bb507d7748fc96",
+    "b74ffa8b4f79cf28",
+    "cfa7dcf97542da09",
+    "efba1e9b18b61cc2",
+    "0652f9923139df05",
+    "d79c224e10952359",
+    "8cde726730baef91",
+    "eaa338b0befe83a6",
+    "4b1d9047dd7cf93c"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\nanite_cloud.wav",
+  "sample_rate": 44100
+}

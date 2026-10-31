@@ -1,0 +1,3187 @@
+{
+  "id": "MOD_Wildcaster",
+  "name": "Wildcaster",
+  "description": "Magic doesn't come to them clean. Every spell they reach for drags something else along: somebody else's spell, from somebody else's art, a monster's bite, or the spell itself bent into a shape they never asked for. They have learned to aim it, roughly.\n\nCast and gamble: your spells sometimes come out as a random spell from any other class or as a wild spell found nowhere else, change form on the way out (a beam, a burst, a trap, or back at you), and late on surge on their own every turn. Spell Fever goes further: for a few turns your attacks won't keep their shape at all. Every cast builds Brimming; pace yourself or at ten it backlashes. Wild magic loves a lucky strike: critical hits set it off and hit harder. Scales with [SMT] and [PSI].\n\nInspired by the Wild Magic skill of Compleat Essential Skills (a Dungeons of Dredmor mod by Essence) and by the wild magic of D&D's sorcerers and Baldur's Gate II's Wild Mage.",
+  "archetype": "Intellect",
+  "icon": "wildcaster.png",
+  "attributePriorities": {
+    "Smarts": 3,
+    "PsiPower": 3,
+    "Savvy": 1
+  },
+  "effects": [
+    {
+      "id": "Brimming",
+      "name": "Brimming",
+      "duration": 5,
+      "maxStacks": 10,
+      "resource": true,
+      "resourceColor": "#E59CFF",
+      "description": "Wild magic piling up behind your teeth. It drains away if you give it a few turns; at ten it all comes out at once, and rarely the way you'd like.",
+      "burstAt": 10,
+      "burstActions": [
+        {
+          "do": "random",
+          "to": "self",
+          "options": [
+            {
+              "name": "Backlash: the spell eats your stamina",
+              "weight": 3,
+              "actions": [
+                {
+                  "do": "stamina",
+                  "to": "self",
+                  "amount": -25
+                }
+              ]
+            },
+            {
+              "name": "Backlash: your hands shake",
+              "weight": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Fizzled"
+                }
+              ]
+            },
+            {
+              "name": "Backlash: everything goes quiet",
+              "weight": 2,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Unspelled"
+                }
+              ]
+            },
+            {
+              "name": "Backlash... the other way: it sings",
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Unbound"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "do": "purge",
+          "to": "self",
+          "effect": "@Brimming"
+        }
+      ]
+    },
+    {
+      "id": "Fizzled",
+      "name": "Fizzled",
+      "debuff": true,
+      "duration": 3,
+      "damageDealtMult": 0.7,
+      "description": "The magic slips through your fingers: your spells hit softer for a while."
+    },
+    {
+      "id": "Unspelled",
+      "name": "Spell-Shy",
+      "debuff": true,
+      "duration": 2,
+      "stats": {
+        "Dodge": -10
+      },
+      "damageTakenMult": 1.15,
+      "description": "The backlash left you open and rattled."
+    },
+    {
+      "id": "Unbound",
+      "name": "Unbound",
+      "duration": 3,
+      "damageDealtMult": 1.3,
+      "stats": {
+        "Dodge": 10
+      },
+      "description": "For once the wild magic went your way. Make the most of it."
+    },
+    {
+      "id": "SpellFever",
+      "name": "Spell Fever",
+      "duration": 5,
+      "icon": "wildcaster_t3.png",
+      "description": "Your attacks won't hold their shape. Each one shows in its tooltip what it has turned into; casting it turns it into something else. Every cast feeds your Brimming.",
+      "modifies": [
+        {
+          "skills": "attacks",
+          "name": "Fevered",
+          "summary": "+1 Brimming a cast",
+          "selfActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Brimming"
+            }
+          ]
+        },
+        {
+          "skills": "attacks",
+          "name": "a new form",
+          "summary": "may come out a new way",
+          "chance": 90,
+          "roll": [
+            {
+              "name": "Sunk",
+              "weight": 4,
+              "form": "trap",
+              "armTurns": 1,
+              "turns": 8,
+              "radius": 1,
+              "look": "HAZARD_VoidRift@0.35",
+              "areaVfx": "fx_wildcaster_form_trap"
+            },
+            {
+              "name": "Lobbed",
+              "weight": 4,
+              "form": "grenade",
+              "radius": 1.5,
+              "travelVfx": "fx_wildcaster_form_line",
+              "areaVfx": "fx_wildcaster_form_area"
+            },
+            {
+              "name": "Burst",
+              "weight": 2,
+              "form": "area",
+              "radius": 1.5,
+              "areaVfx": "fx_wildcaster_form_area"
+            },
+            {
+              "name": "Bursting Out of You",
+              "weight": 4,
+              "form": "nova",
+              "radius": 2.5,
+              "power": 0.7,
+              "stamina": 8,
+              "travelVfx": "fx_wildcaster_form_line",
+              "areaVfx": "fx_wildcaster_form_area"
+            },
+            {
+              "name": "Beamed",
+              "weight": 2,
+              "form": "line",
+              "travelVfx": "fx_wildcaster_form_line"
+            },
+            {
+              "name": "Fanned",
+              "weight": 2,
+              "form": "cone",
+              "angle": 90,
+              "travelVfx": "fx_wildcaster_form_line"
+            },
+            {
+              "name": "Piercing Once",
+              "weight": 2,
+              "add": {
+                "pierce": 1
+              },
+              "travelVfx": "fx_wildcaster_form_line"
+            },
+            {
+              "name": "Piercing Twice",
+              "weight": 2,
+              "add": {
+                "pierce": 2
+              },
+              "travelVfx": "fx_wildcaster_form_line"
+            },
+            {
+              "name": "Piercing Thrice",
+              "weight": 1,
+              "add": {
+                "pierce": 3
+              },
+              "travelVfx": "fx_wildcaster_form_line"
+            },
+            {
+              "name": "Scattered",
+              "weight": 2,
+              "form": "scatter",
+              "travelVfx": "fx_wildcaster_form_retarget"
+            },
+            {
+              "name": "Leaping",
+              "weight": 2,
+              "form": "chain",
+              "jumps": 2,
+              "travelVfx": "fx_wildcaster_form_retarget"
+            },
+            {
+              "name": "Loose",
+              "weight": 2,
+              "form": "drifter",
+              "turns": 5,
+              "radius": 1.1,
+              "travelVfx": "fx_wildcaster_drifter"
+            },
+            {
+              "name": "Walking",
+              "weight": 3,
+              "form": "monster",
+              "creature": "PA_Engineer_Spidermine.characterPrefab",
+              "summonName": "Scuttling Spell",
+              "turns": 4,
+              "radius": 1.5,
+              "burstOn": "contact",
+              "areaVfx": "fx_wildcaster_form_area"
+            },
+            {
+              "name": "Fused",
+              "weight": 3,
+              "form": "monster",
+              "creature": "PA_Engineer_Spidermine.characterPrefab",
+              "summonName": "Fused Spell",
+              "turns": 4,
+              "radius": 2,
+              "areaVfx": "fx_wildcaster_form_area"
+            }
+          ]
+        },
+        {
+          "skills": "attacks",
+          "name": "a gift",
+          "summary": "may gain a behavior",
+          "chance": 80,
+          "roll": [
+            {
+              "name": "Cannonball",
+              "weight": 1,
+              "power": 1.4,
+              "actions": [
+                {
+                  "do": "throw",
+                  "amount": 3,
+                  "actions": [
+                    {
+                      "do": "damage",
+                      "type": "Crushing",
+                      "min": 10,
+                      "max": 16,
+                      "scale": "Smarts+PsiPower",
+                      "scaleMult": 0.5,
+                      "perRank": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Thirsty",
+              "weight": 2,
+              "add": {
+                "lifesteal": 0.3
+              }
+            },
+            {
+              "name": "Armour-Blind",
+              "weight": 2,
+              "add": {
+                "trueDamage": true
+              }
+            },
+            {
+              "name": "Stunning",
+              "weight": 2,
+              "add": {
+                "stun": 1
+              }
+            },
+            {
+              "name": "Shoving",
+              "weight": 2,
+              "add": {
+                "knockback": 2
+              }
+            },
+            {
+              "name": "Grasping",
+              "weight": 2,
+              "add": {
+                "pull": 2
+              }
+            },
+            {
+              "name": "Blinding",
+              "weight": 2,
+              "add": {
+                "blind": 2
+              }
+            },
+            {
+              "name": "Hushing",
+              "weight": 2,
+              "add": {
+                "silence": 2
+              }
+            },
+            {
+              "name": "Brittling",
+              "weight": 2,
+              "add": {
+                "effect": "@Glassy"
+              }
+            },
+            {
+              "name": "Weightless",
+              "weight": 2,
+              "add": {
+                "instant": true
+              }
+            },
+            {
+              "name": "Ravenous",
+              "weight": 2,
+              "add": {
+                "resetOnKill": true
+              }
+            },
+            {
+              "name": "Fatal",
+              "weight": 2,
+              "add": {
+                "execute": 15
+              }
+            },
+            {
+              "name": "Smouldering",
+              "weight": 2,
+              "add": {
+                "hazard": "HAZARD_Fire"
+              }
+            },
+            {
+              "name": "Far-Flung",
+              "weight": 2,
+              "range": 3
+            },
+            {
+              "name": "Overcharged",
+              "weight": 4,
+              "power": 1.35
+            },
+            {
+              "name": "Warding",
+              "weight": 4,
+              "selfActions": [
+                {
+                  "do": "shield",
+                  "amount": 8,
+                  "scale": "Smarts+PsiPower",
+                  "scaleMult": 0.4,
+                  "perRank": 2
+                }
+              ]
+            },
+            {
+              "name": "Refreshing",
+              "weight": 2,
+              "add": {
+                "stamina": 8
+              }
+            },
+            {
+              "name": "Time-Slipped",
+              "weight": 2,
+              "add": {
+                "cooldowns": 1
+              }
+            },
+            {
+              "name": "Singing",
+              "weight": 2,
+              "add": {
+                "selfEffect": "@Unbound"
+              }
+            }
+          ]
+        },
+        {
+          "skills": "attacks",
+          "name": "a loss",
+          "summary": "may lose one",
+          "chance": 65,
+          "roll": [
+            {
+              "name": "Frayed",
+              "weight": 3,
+              "power": 0.7
+            },
+            {
+              "name": "Stripped",
+              "weight": 3,
+              "remove": [
+                "effect"
+              ]
+            },
+            {
+              "name": "Unscaled",
+              "weight": 2,
+              "remove": [
+                "scale"
+              ]
+            },
+            {
+              "name": "Unchained",
+              "weight": 2,
+              "remove": [
+                "chain"
+              ]
+            },
+            {
+              "name": "Toothless",
+              "weight": 1,
+              "remove": [
+                "stun"
+              ]
+            },
+            {
+              "name": "Pushless",
+              "weight": 1,
+              "remove": [
+                "knockback"
+              ]
+            },
+            {
+              "name": "Greedy",
+              "weight": 3,
+              "stamina": 8
+            },
+            {
+              "name": "Sticky",
+              "weight": 3,
+              "cooldown": 2
+            },
+            {
+              "name": "Short",
+              "weight": 2,
+              "range": -2
+            },
+            {
+              "name": "Slippery",
+              "weight": 2,
+              "add": {
+                "dodgeable": true
+              }
+            },
+            {
+              "name": "Unreliable",
+              "weight": 2,
+              "add": {
+                "chance": 65
+              }
+            },
+            {
+              "name": "Shaky",
+              "weight": 2,
+              "add": {
+                "selfEffect": "@Fizzled"
+              }
+            }
+          ]
+        },
+        {
+          "skills": "attacks",
+          "name": "another element",
+          "summary": "may turn to another element",
+          "chance": 35,
+          "roll": [
+            {
+              "name": "Burning",
+              "weight": 1,
+              "element": "Fire"
+            },
+            {
+              "name": "Freezing",
+              "weight": 1,
+              "element": "Cryo"
+            },
+            {
+              "name": "Crackling",
+              "weight": 1,
+              "element": "Shock"
+            },
+            {
+              "name": "Rotting",
+              "weight": 1,
+              "element": "Bio"
+            },
+            {
+              "name": "Thinking",
+              "weight": 1,
+              "element": "Psi"
+            },
+            {
+              "name": "Hollow",
+              "weight": 1,
+              "element": "Void"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FeverPitch",
+      "name": "Fever Pitch",
+      "duration": 5,
+      "icon": "wildcaster_t3.png",
+      "description": "The fever has you by the throat: your attacks land harder.",
+      "modifies": [
+        {
+          "skills": "attacks",
+          "name": "Fever Pitch",
+          "power": 1.25
+        }
+      ]
+    },
+    {
+      "id": "WildEdge",
+      "name": "Wild Edge",
+      "duration": 2,
+      "stats": {
+        "Crit": 12
+      },
+      "critDamage": 0.35,
+      "description": "With this much wild magic in you, every lucky strike lands like a thunderclap: more critical hits, and they hit harder."
+    },
+    {
+      "id": "LuckyPull",
+      "name": "Lucky Pull",
+      "duration": 3,
+      "stats": {
+        "Crit": 20
+      },
+      "description": "You've pulled on your luck to open the fight. It will want paying back: when it runs out, your Brimming jumps."
+    },
+    {
+      "id": "Shrunk",
+      "name": "Shrunk",
+      "debuff": true,
+      "duration": 3,
+      "icon": "wildcaster_shrunk.png",
+      "modelScale": 0.6,
+      "damageDealtMult": 0.6,
+      "damageTakenMult": 1.25,
+      "description": "Wild magic has made them much smaller: weak blows, and everything hurts more."
+    },
+    {
+      "id": "Swollen",
+      "name": "Swollen",
+      "duration": 3,
+      "icon": "wildcaster_swollen.png",
+      "modelScale": 1.4,
+      "damageDealtMult": 1.35,
+      "damageTakenMult": 1.2,
+      "stats": {
+        "Dodge": -15
+      },
+      "description": "Wild magic has made them much bigger: heavy blows, but a very easy target."
+    },
+    {
+      "id": "SpilledLuck",
+      "name": "Spilled Luck",
+      "duration": 2,
+      "icon": "wildcaster_luck.png",
+      "stats": {
+        "Crit": 30
+      },
+      "description": "Somebody's luck is all over them. Their next few blows are likely to land true."
+    },
+    {
+      "id": "Glassy",
+      "name": "Glassy",
+      "debuff": true,
+      "duration": 2,
+      "icon": "wildcaster_glass.png",
+      "damageTakenMult": 1.3,
+      "description": "Brittle for a moment. Everything hurts more."
+    },
+    {
+      "id": "GoldTouch",
+      "name": "Golden Touch",
+      "duration": 3,
+      "icon": "wildcaster_gold.png",
+      "damageDealtMult": 1.25,
+      "stats": {
+        "Dodge": -10
+      },
+      "description": "A dragon's blessing, landed on whoever was nearest: harder blows, and a bright shine that's easy to aim at."
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Wild Blood",
+        "icon": "wildcaster_t0.png",
+        "description": "Every spell you cast, from any of your arts, builds Brimming, and now and then comes out as somebody else's spell aimed at the same foe, or as a wild spell, one of the strange ones that exist only in wild magic.",
+        "procs": [
+          {
+            "on": "cast",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Brimming"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "chance": 15,
+            "when": {
+              "value": "health",
+              "of": "other",
+              "above": 0
+            },
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.7
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Erratic Bolt",
+        "icon": "wildcaster_t1.png",
+        "staminaCost": 7,
+        "description": "A bolt of whatever comes to hand: fire, frost, current, rot or raw thought. You find out when it lands.",
+        "sound": "audio_licensed/wild_bolt.wav",
+        "actions": [
+          {
+            "do": "random",
+            "options": [
+              {
+                "name": "fire",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Fire",
+                    "min": 3,
+                    "max": 6,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Fire",
+                    "chance": 30
+                  }
+                ]
+              },
+              {
+                "name": "frost",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Cryo",
+                    "min": 3,
+                    "max": 6,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "#Chilled"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Shock",
+                    "min": 3,
+                    "max": 6,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock",
+                    "chance": 30
+                  }
+                ]
+              },
+              {
+                "name": "rot",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Bio",
+                    "min": 3,
+                    "max": 6,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "#Poisoned"
+                  }
+                ]
+              },
+              {
+                "name": "raw thought",
+                "weight": 1,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Psi",
+                    "min": 4,
+                    "max": 7,
+                    "scale": "Smarts+PsiPower",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Double-Barrelled",
+          "description": "Sometimes it's two things at once.",
+          "addActions": [
+            {
+              "do": "damage",
+              "type": "Energy",
+              "min": 2,
+              "max": 4,
+              "chance": 35
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Borrowed Spell",
+        "icon": "wildcaster_t2.png",
+        "range": 7,
+        "staminaCost": 12,
+        "cooldown": 3,
+        "description": "Reach past your own art into someone else's and throw whatever you grab at the target.",
+        "sound": "audio_licensed/wild_borrow.wav",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "actions": [
+          {
+            "do": "wildCast",
+            "amount": 1
+          }
+        ],
+        "perk": {
+          "name": "Sticky Fingers",
+          "cooldownDelta": -1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Spell Fever",
+        "icon": "wildcaster_t3.png",
+        "staminaCost": 10,
+        "cooldown": 9,
+        "instant": true,
+        "thirdPerson": 1.4,
+        "description": "Stop holding your spells to their shape. For five turns every attack you aim, from any of your arts, can come out a new way: laid as a trap, lobbed as a grenade, carried by a minion that bursts into it, or blown out of you in every direction as a dearer, weaker nova. It can also gain a behavior, lose one or turn to another element. Its tooltip shows what it has become, and casting it rerolls it. Skills from the original game keep their shape.",
+        "sound": "sfx/wild_surge.wav",
+        "castVfx": "fx_wildcaster_riot_self",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@SpellFever"
+          }
+        ],
+        "perk": {
+          "name": "Fever Pitch",
+          "description": "It comes back sooner, and your attacks hit a quarter harder while it burns.",
+          "cooldownDelta": -2,
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@FeverPitch"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Unmoored Ground",
+        "icon": "wildcaster_t4.png",
+        "range": 6,
+        "radius": 2,
+        "staminaCost": 16,
+        "cooldown": 8,
+        "description": "Cut a patch of deck loose from any one art. For a few turns, anyone standing in it may be hit by any spell at all.",
+        "sound": "sfx/wild_zone.wav",
+        "areaVfx": "PA_Psykonics_Temporal.castParticle",
+        "actions": [
+          {
+            "do": "field",
+            "fieldName": "Unmoored Ground",
+            "turns": 4,
+            "radius": 2,
+            "affects": "enemies",
+            "look": "HAZARD_VoidRift@0.5",
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "chance": 40
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Wider Rift",
+          "radiusDelta": 0.5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Crit": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Stray Magic",
+        "icon": "wildcaster_t5.png",
+        "description": "The wild magic doesn't wait for you to cast any more. Striking, killing, getting hit, slipping a blow or landing a critical hit can all shake a borrowed spell loose at whoever was involved. And when your Brimming drains away, you keep a little stamina from it.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 10,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6
+              }
+            ],
+            "vfx": "fx_wildcaster_stray@0.8"
+          },
+          {
+            "on": "crit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.8
+              }
+            ],
+            "vfx": "fx_wildcaster_stray@0.8"
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "radius": 3,
+            "pick": 1,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.7
+              }
+            ],
+            "vfx": "fx_wildcaster_stray@0.8"
+          },
+          {
+            "on": "hurt",
+            "chance": 20,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.7
+              }
+            ],
+            "vfx": "fx_wildcaster_stray@0.8"
+          },
+          {
+            "on": "dodge",
+            "chance": 35,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.7
+              }
+            ],
+            "vfx": "fx_wildcaster_stray@0.8"
+          },
+          {
+            "on": "effectLost",
+            "match": "@Brimming",
+            "actions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Cascade of Spells",
+        "icon": "wildcaster_t6.png",
+        "range": 7,
+        "staminaCost": 24,
+        "cooldown": 10,
+        "description": "Let the wild magic all out at one target: two borrowed spells, and one more for every two Brimming you pour in (up to four in all). It drains the Brimming it uses.",
+        "sound": "audio_licensed/wild_cascade.wav",
+        "castVfx": "PA_Prototype_Thunderclap.impactParticle@0.35",
+        "actions": [
+          {
+            "do": "wildCast",
+            "amount": 2,
+            "falloff": 0.85,
+            "bonusPerStack": 1,
+            "stacksOf": "@Brimming",
+            "stacksFrom": "self",
+            "stacksUsed": 2,
+            "consumeStacks": true
+          }
+        ],
+        "perk": {
+          "name": "Deeper Well",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1,
+        "Crit": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Unruly Casting",
+        "icon": "wildcaster_t7.png",
+        "wildForm": 25,
+        "description": "A quarter of your attack spells change shape as they leave you: a burst over everything near the target, a beam through a whole line, a split onto other foes, a swerve onto someone else, a trap sunk into the deck where you aimed, or, now and then, the whole spell turned back on you.\nHolding five or more Brimming, your casts also throw borrowed spells more often and give you Wild Edge (more and harder critical hits). Each fight opens with a Lucky Pull of critical chance that leaves you Brimming when it runs out.",
+        "procs": [
+          {
+            "on": "cast",
+            "when": {
+              "value": "stacks:@Brimming",
+              "atLeast": 5
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@WildEdge"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "chance": 25,
+            "when": {
+              "all": [
+                {
+                  "value": "stacks:@Brimming",
+                  "atLeast": 5
+                },
+                {
+                  "value": "health",
+                  "of": "other",
+                  "above": 0
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.8
+              }
+            ]
+          },
+          {
+            "on": "combatStart",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@LuckyPull"
+              }
+            ]
+          },
+          {
+            "on": "effectLost",
+            "match": "@LuckyPull",
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Brimming",
+                "stacks": 3
+              }
+            ]
+          }
+        ],
+        "formVfx": {
+          "area": "fx_wildcaster_form_area",
+          "line": "fx_wildcaster_form_line",
+          "scatter": "fx_wildcaster_form_scatter",
+          "retarget": "fx_wildcaster_form_retarget",
+          "trap": "fx_wildcaster_form_trap",
+          "backfire": "fx_wildcaster_form_backfire"
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "PsiPower": 1,
+        "Crit": 3
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Riot of Aether",
+        "icon": "wildcaster_t8.png",
+        "description": "You no longer cast so much as leak. Every turn of a fight a Loose Spell may spin off you toward a foe and then wander the deck on its own for a few turns, two tiles a turn. On each tile it may go off on whoever is on or beside it, friend, foe or you: raw energy, a stray curse, a monster's attack, somebody else's spell, a wild spell, or an echo of a boss's attack, from Doctor Cerberus's Annihilation to Zahndethus's mending. The echoes grow with your [PSI] and your Crit.\nNow and then a blast goes off all around you, and sometimes the magic does something to you instead, for good or ill. Critical hits set off a surge half the time, and that can be an echo too, even one that lands on you.",
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 40,
+            "when": {
+              "inCombat": true
+            },
+            "radius": 6,
+            "pick": 1,
+            "actions": [
+              {
+                "do": "drifter",
+                "fieldName": "Loose Spell",
+                "vfx": "fx_wildcaster_drifter",
+                "turns": 4,
+                "steps": 2,
+                "stepChance": 45,
+                "radius": 1.1,
+                "actions": [
+                  {
+                    "do": "random",
+                    "options": [
+                      {
+                        "name": "a spark of raw energy",
+                        "weight": 3,
+                        "actions": [
+                          {
+                            "do": "vfx",
+                            "vfx": "fx_wildcaster_riot_spark"
+                          },
+                          {
+                            "do": "damage",
+                            "type": "Energy",
+                            "min": 4,
+                            "max": 8,
+                            "scale": "Smarts+PsiPower",
+                            "scaleMult": 0.3,
+                            "perRank": 1
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a lash of current",
+                        "weight": 2,
+                        "actions": [
+                          {
+                            "do": "vfx",
+                            "vfx": "fx_wildcaster_riot_lash"
+                          },
+                          {
+                            "do": "damage",
+                            "type": "Shock",
+                            "min": 4,
+                            "max": 8,
+                            "scale": "Smarts+PsiPower",
+                            "scaleMult": 0.3,
+                            "perRank": 1
+                          },
+                          {
+                            "do": "effect",
+                            "effect": "EFFECT_Shock",
+                            "chance": 40
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a cold flare",
+                        "weight": 2,
+                        "actions": [
+                          {
+                            "do": "vfx",
+                            "vfx": "fx_wildcaster_riot_frost"
+                          },
+                          {
+                            "do": "damage",
+                            "type": "Cryo",
+                            "min": 4,
+                            "max": 8,
+                            "scale": "Smarts+PsiPower",
+                            "scaleMult": 0.3,
+                            "perRank": 1
+                          },
+                          {
+                            "do": "effect",
+                            "effect": "#Chilled"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a void snap",
+                        "weight": 1,
+                        "actions": [
+                          {
+                            "do": "vfx",
+                            "vfx": "fx_wildcaster_riot_void"
+                          },
+                          {
+                            "do": "damage",
+                            "type": "Void",
+                            "min": 6,
+                            "max": 10,
+                            "scale": "Smarts+PsiPower",
+                            "scaleMult": 0.3,
+                            "perRank": 1
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a stray curse",
+                        "weight": 2,
+                        "actions": [
+                          {
+                            "do": "vfx",
+                            "vfx": "fx_wildcaster_riot_curse"
+                          },
+                          {
+                            "do": "random",
+                            "options": [
+                              {
+                                "name": "frozen in place",
+                                "weight": 1,
+                                "actions": [
+                                  {
+                                    "do": "stun",
+                                    "turns": 1
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "struck dumb",
+                                "weight": 1,
+                                "actions": [
+                                  {
+                                    "do": "silence",
+                                    "turns": 2
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "lost its mind",
+                                "weight": 1,
+                                "actions": [
+                                  {
+                                    "do": "effect",
+                                    "effect": "CONFUSE",
+                                    "turns": 2
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "blinded",
+                                "weight": 1,
+                                "actions": [
+                                  {
+                                    "do": "blind"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a monster's attack",
+                        "weight": 2,
+                        "actions": [
+                          {
+                            "do": "wildCast",
+                            "amount": 1,
+                            "pool": "monsters",
+                            "falloff": 0.8
+                          }
+                        ]
+                      },
+                      {
+                        "name": "someone else's spell",
+                        "weight": 2,
+                        "actions": [
+                          {
+                            "do": "wildCast",
+                            "amount": 1,
+                            "falloff": 0.8
+                          }
+                        ]
+                      },
+                      {
+                        "name": "a wild spell",
+                        "weight": 5,
+                        "actions": [
+                          {
+                            "do": "wildCast",
+                            "amount": 1,
+                            "pool": "wild",
+                            "falloff": 0.8
+                          }
+                        ]
+                      },
+                      {
+                        "name": "an echo of a boss's attack",
+                        "weight": 7,
+                        "actions": [
+                          {
+                            "do": "wildCast",
+                            "amount": 1,
+                            "pool": "bosses"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 12,
+            "when": {
+              "inCombat": true
+            },
+            "radius": 3,
+            "vfx": "fx_wildcaster_riot_blast",
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Energy",
+                "min": 8,
+                "max": 14,
+                "scale": "Smarts+PsiPower",
+                "scaleMult": 0.4,
+                "perRank": 1,
+                "levelCap": 9
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 18,
+            "when": {
+              "inCombat": true
+            },
+            "actions": [
+              {
+                "do": "random",
+                "to": "self",
+                "options": [
+                  {
+                    "name": "Surge: fresh wind",
+                    "weight": 3,
+                    "actions": [
+                      {
+                        "do": "stamina",
+                        "to": "self",
+                        "amount": 15
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Surge: a shimmer of shield",
+                    "weight": 2,
+                    "actions": [
+                      {
+                        "do": "shield",
+                        "to": "self",
+                        "amount": 10,
+                        "scale": "PsiPower",
+                        "scaleMult": 0.4
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Surge: the edge comes early",
+                    "weight": 2,
+                    "actions": [
+                      {
+                        "do": "effect",
+                        "to": "self",
+                        "effect": "@WildEdge"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Surge: it sings",
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "effect",
+                        "to": "self",
+                        "effect": "@Unbound"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Surge: it drinks your breath",
+                    "weight": 2,
+                    "actions": [
+                      {
+                        "do": "stamina",
+                        "to": "self",
+                        "amount": -10
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Surge: your hands shake",
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "effect",
+                        "to": "self",
+                        "effect": "@Fizzled"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "vfx": "fx_wildcaster_riot_self"
+          },
+          {
+            "on": "crit",
+            "chance": 50,
+            "maxPerTurn": 2,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "pool": "all",
+                "falloff": 0.8,
+                "atYou": 20
+              }
+            ],
+            "vfx": "fx_wildcaster_stray"
+          }
+        ]
+      }
+    }
+  ],
+  "wildSpells": [
+    {
+      "name": "Changed Places",
+      "say": "you and your target wake up in each other's boots.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_places",
+      "actions": [
+        {
+          "do": "swap"
+        },
+        {
+          "do": "stun",
+          "turns": 1,
+          "chance": 50
+        }
+      ],
+      "sound": "audio_licensed/wild_borrow.wav"
+    },
+    {
+      "name": "Second Helping",
+      "say": "your last spell decides it wasn't finished.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_second",
+      "actions": [
+        {
+          "do": "echo",
+          "falloff": 0.75
+        },
+        {
+          "do": "damage",
+          "type": "Energy",
+          "min": 3,
+          "max": 6,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.25,
+          "perRank": 1
+        }
+      ],
+      "sound": "audio_licensed/wild_borrow.wav"
+    },
+    {
+      "name": "Stolen Minute",
+      "say": "a minute that belonged to someone else drops into your hands.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_minute",
+      "actions": [
+        {
+          "do": "cooldowns",
+          "to": "self",
+          "amount": 3
+        },
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 12
+        }
+      ],
+      "sound": "audio_licensed/wild_ward.wav"
+    },
+    {
+      "name": "Coin Toss",
+      "say": "heads it mends, tails it bites.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_coin",
+      "actions": [
+        {
+          "do": "random",
+          "options": [
+            {
+              "name": "heads",
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "heal",
+                  "amount": 8,
+                  "scale": "Smarts+PsiPower",
+                  "scaleMult": 0.3
+                }
+              ]
+            },
+            {
+              "name": "tails",
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Energy",
+                  "min": 8,
+                  "max": 12,
+                  "scale": "Smarts+PsiPower",
+                  "scaleMult": 0.3,
+                  "perRank": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "sfx/wild_hex.wav"
+    },
+    {
+      "name": "Sudden Winter",
+      "say": "the air forgets what warm was.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_winter",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Cryo",
+          "min": 6,
+          "max": 10,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.3,
+          "perRank": 1
+        },
+        {
+          "do": "effect",
+          "effect": "#Chilled"
+        },
+        {
+          "do": "hazard",
+          "hazard": "HAZARD_Cryo",
+          "turns": 3
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "sfx/wild_zone.wav"
+    },
+    {
+      "name": "Hot Floor",
+      "say": "the deck remembers being a star.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_floor",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Fire",
+          "min": 4,
+          "max": 7,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.25,
+          "perRank": 1
+        },
+        {
+          "do": "hazard",
+          "hazard": "HAZARD_Fire",
+          "turns": 3
+        }
+      ],
+      "radius": 1.5,
+      "friendlyFire": true,
+      "sound": "sfx/wild_zone.wav"
+    },
+    {
+      "name": "Gravity Hiccup",
+      "say": "down is, briefly, over there.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_hiccup",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Crushing",
+          "min": 4,
+          "max": 8,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.25,
+          "perRank": 1
+        },
+        {
+          "do": "pull",
+          "amount": 2,
+          "pullToward": "center"
+        }
+      ],
+      "radius": 3,
+      "friendlyFire": true,
+      "sound": "sfx/wild_surge.wav"
+    },
+    {
+      "name": "Wandering Door",
+      "say": "a door opens under them and lets out somewhere else.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_door",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Void",
+          "min": 3,
+          "max": 5,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.25,
+          "perRank": 1
+        },
+        {
+          "do": "warp",
+          "warpTo": "random",
+          "amount": 4
+        }
+      ],
+      "radius": 1.5,
+      "sound": "audio_licensed/wild_borrow.wav"
+    },
+    {
+      "name": "Spectrum Spill",
+      "say": "every colour at once, none of them politely.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_spectrum",
+      "actions": [
+        {
+          "do": "damage",
+          "type": "Fire",
+          "min": 2,
+          "max": 4,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.1,
+          "perRank": 1
+        },
+        {
+          "do": "damage",
+          "type": "Cryo",
+          "min": 2,
+          "max": 4,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.1,
+          "perRank": 1
+        },
+        {
+          "do": "damage",
+          "type": "Shock",
+          "min": 2,
+          "max": 4,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.1,
+          "perRank": 1
+        },
+        {
+          "do": "damage",
+          "type": "Bio",
+          "min": 2,
+          "max": 4,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.1,
+          "perRank": 1
+        },
+        {
+          "do": "damage",
+          "type": "Psi",
+          "min": 2,
+          "max": 4,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.1,
+          "perRank": 1
+        },
+        {
+          "do": "effect",
+          "effect": "EFFECT_Fire",
+          "chance": 25
+        },
+        {
+          "do": "effect",
+          "effect": "#Chilled",
+          "chance": 25
+        },
+        {
+          "do": "effect",
+          "effect": "EFFECT_Shock",
+          "chance": 25
+        },
+        {
+          "do": "effect",
+          "effect": "#Poisoned",
+          "chance": 25
+        }
+      ],
+      "sound": "audio_licensed/wild_cascade.wav"
+    },
+    {
+      "name": "Shrinking Feeling",
+      "say": "someone nearby is suddenly a good deal smaller.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_shrink",
+      "actions": [
+        {
+          "do": "effect",
+          "effect": "@Shrunk"
+        }
+      ],
+      "radius": 1,
+      "friendlyFire": true,
+      "sound": "sfx/wild_hex.wav"
+    },
+    {
+      "name": "Growth Spurt",
+      "say": "someone nearby no longer fits their clothes.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_grow",
+      "actions": [
+        {
+          "do": "effect",
+          "effect": "@Swollen"
+        }
+      ],
+      "radius": 1,
+      "friendlyFire": true,
+      "sound": "sfx/wild_hex.wav"
+    },
+    {
+      "name": "Luck Spill",
+      "say": "good fortune hits the deck and everyone slips on it.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_luck",
+      "actions": [
+        {
+          "do": "effect",
+          "effect": "@SpilledLuck"
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "audio_licensed/wild_ward.wav"
+    },
+    {
+      "name": "Glass Moment",
+      "say": "for a moment everyone here is made of something brittle.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_glass",
+      "actions": [
+        {
+          "do": "effect",
+          "effect": "@Glassy"
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "sfx/wild_hex.wav"
+    },
+    {
+      "name": "Postponed Spell",
+      "say": "it will happen. Just not yet.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_postponed",
+      "actions": [
+        {
+          "do": "trap",
+          "fieldName": "Postponed Spell",
+          "affects": "enemies",
+          "armTurns": 1,
+          "charges": 1,
+          "turns": 8,
+          "look": "HAZARD_VoidRift@0.35",
+          "actions": [
+            {
+              "do": "wildCast",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "sound": "sfx/wild_zone.wav"
+    },
+    {
+      "name": "Wellspring",
+      "say": "something kind leaks through, and it doesn't check sides.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_well",
+      "actions": [
+        {
+          "do": "heal",
+          "amount": 6,
+          "scale": "Smarts+PsiPower",
+          "scaleMult": 0.3
+        },
+        {
+          "do": "shield",
+          "amount": 5,
+          "scale": "PsiPower",
+          "scaleMult": 0.3
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "audio_licensed/wild_ward.wav"
+    },
+    {
+      "name": "Held Tongue",
+      "say": "every word in the room goes missing.",
+      "weight": 1,
+      "impactVfx": "fx_wildcaster_wild_tongue",
+      "actions": [
+        {
+          "do": "silence",
+          "turns": 2
+        }
+      ],
+      "radius": 2,
+      "friendlyFire": true,
+      "sound": "sfx/wild_hex.wav"
+    },
+    {
+      "name": "The Horror",
+      "say": "something that should not be here pushes through.",
+      "weight": 1,
+      "minLevel": 15,
+      "impactVfx": "fx_wildcaster_brood_horror",
+      "sound": "sfx/wild_surge.wav",
+      "actions": [
+        {
+          "do": "horror",
+          "turns": 6,
+          "anySide": true,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 14,
+              "max": 22,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.6,
+              "perRank": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thundercrunch, an echo of Doctor Cerberus",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Thundercrunch, an echo of Doctor Cerberus",
+          "atYou": 0,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Shock",
+              "min": 10,
+              "max": 18,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.5,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Shock",
+              "chance": 50
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_thundercrunch",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Gigaslam, an echo of Ughstein",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Gigaslam, an echo of Ughstein",
+          "atYou": 0,
+          "radius": 1.5,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Crushing",
+              "min": 7,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Shock",
+              "min": 7,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "stun",
+              "turns": 1
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_gigaslam",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Smorn's Blast, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Smorn's Blast, echoed",
+          "atYou": 0,
+          "radius": 2.5,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Energy",
+              "min": 18,
+              "max": 28,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.7,
+              "perRank": 1
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_smorn_blast",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Smorn's Wave, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Smorn's Wave, echoed",
+          "atYou": 0,
+          "radius": 3,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Piercing",
+              "min": 4,
+              "max": 7,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 4,
+              "max": 7,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Energy",
+              "min": 4,
+              "max": 7,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_smorn_wave",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Straha's Laser, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Straha's Laser, echoed",
+          "atYou": 0,
+          "radius": 0,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 16,
+              "max": 26,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.6,
+              "perRank": 1
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_straha_laser",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Zahndethus's Firebolt, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Zahndethus's Firebolt, echoed",
+          "atYou": 0,
+          "radius": 1,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Fire",
+              "min": 7,
+              "max": 11,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Energy",
+              "min": 7,
+              "max": 11,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Fire",
+              "chance": 40
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_firebolt",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Mazurek's Twisting Tendrils, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Mazurek's Twisting Tendrils, echoed",
+          "atYou": 0,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "SLOW",
+              "turns": 2
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_tendrils",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "The Lapis Lump's spit, echoed",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Lapis Lump's spit, echoed",
+          "atYou": 0,
+          "radius": 1.5,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Cryo",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "#Chilled"
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_spit",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Stormcrown, an echo from the deep",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Stormcrown, an echo from the deep",
+          "atYou": 0,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Shock",
+              "min": 12,
+              "max": 20,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.5,
+              "perRank": 1
+            },
+            {
+              "do": "stun",
+              "turns": 1,
+              "chance": 50
+            }
+          ],
+          "vfx": "IchStrike",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Rending Sweep, an echo from the deep",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Rending Sweep, an echo from the deep",
+          "atYou": 0,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 12,
+              "max": 20,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.5,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 1,
+              "chance": 50
+            }
+          ],
+          "vfx": "IchClaw",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "Annihilation, an echo of Doctor Cerberus",
+      "group": "boss",
+      "weight": 1,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Annihilation, an echo of Doctor Cerberus",
+          "atYou": 0,
+          "radius": 2,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 28,
+              "max": 40,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 1.0,
+              "perRank": 1
+            }
+          ],
+          "vfx": "fx_wildcaster_echo_annihilation",
+          "levelCap": 9
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Swipe",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Swipe",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_swipe",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 9,
+              "max": 15,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Piercing",
+              "min": 5,
+              "max": 8,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Pull",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Pull",
+          "atYou": 0,
+          "radius": 4,
+          "vfx": "fx_wildcaster_echo_pull",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 5,
+              "max": 8,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.2,
+              "perRank": 1
+            },
+            {
+              "do": "pull",
+              "amount": 3,
+              "pullToward": "center"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Inferno",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Inferno",
+          "atYou": 0,
+          "radius": 2,
+          "vfx": "fx_wildcaster_echo_inferno",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Fire",
+              "min": 10,
+              "max": 16,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.4,
+              "perRank": 1
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_Shadowflame",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Shock Field",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Shock Field",
+          "atYou": 0,
+          "radius": 2,
+          "vfx": "fx_wildcaster_echo_shockfield",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Shock",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_Shock",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Straha's Warp",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Straha's Warp",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_warp",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 8,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "warp",
+              "warpTo": "random",
+              "amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Straha's Eldritch Conduit",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Straha's Eldritch Conduit",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_conduit",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 9,
+              "max": 14,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_VoidRift",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Straha's Obsidian Shell",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Straha's Obsidian Shell",
+          "atYou": 0,
+          "radius": 2,
+          "vfx": "fx_wildcaster_echo_shell",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "shield",
+              "amount": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Touch of Zahndethus",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Touch of Zahndethus",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_touch",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@GoldTouch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zahndethus's Mending",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Zahndethus's Mending",
+          "atYou": 0,
+          "radius": 2,
+          "vfx": "fx_wildcaster_echo_mending",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "heal",
+              "amount": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mazurek's Flurry",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Mazurek's Flurry",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_flurry",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 3,
+              "max": 5,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.12,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 3,
+              "max": 5,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.12,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 3,
+              "max": 5,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.12,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 3,
+              "max": 5,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.12,
+              "perRank": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Billious Blob's spit",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Billious Blob's spit",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_spit_bio",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Crimson Crud's spit",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Crimson Crud's spit",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_spit_fire",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Fire",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Fire",
+              "chance": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3R4-WND0's Pulse Blast",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "3R4-WND0's Pulse Blast",
+          "atYou": 0,
+          "radius": 3,
+          "vfx": "fx_wildcaster_echo_pulse",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Shock",
+              "min": 8,
+              "max": 13,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "EFFECT_Shock",
+              "chance": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ButcherBot's Charge",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "ButcherBot's Charge",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_charge",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 12,
+              "max": 18,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.45,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ughstein's Smash",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Ughstein's Smash",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_smash",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Crushing",
+              "min": 8,
+              "max": 13,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Piercing",
+              "min": 8,
+              "max": 13,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            },
+            {
+              "do": "stun",
+              "turns": 1,
+              "chance": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Th-3 Widow's Teleport",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Th-3 Widow's Teleport",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_widow",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "warp",
+              "warpTo": "behind"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Portals",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Portals",
+          "atYou": 0,
+          "radius": 2,
+          "vfx": "fx_wildcaster_echo_portals",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "warp",
+              "warpTo": "random",
+              "amount": 5
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_VoidRift",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Warp",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Warp",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_docwarp",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Void",
+              "min": 8,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 1
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_FelFire",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Doctor's Quick Stab",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "The Doctor's Quick Stab",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_stab",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 10,
+              "max": 16,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Piercing",
+              "min": 4,
+              "max": 7,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.15,
+              "perRank": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mazurek's Conduit",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Mazurek's Conduit",
+          "atYou": 0,
+          "radius": 1.5,
+          "vfx": "fx_wildcaster_echo_rot",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Bio",
+              "min": 8,
+              "max": 13,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.35,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "#Poisoned",
+              "chance": 50
+            },
+            {
+              "do": "hazard",
+              "hazard": "HAZARD_SeethingRot_Static",
+              "turns": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ughstein's Charge",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Ughstein's Charge",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_ugh_charge",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Crushing",
+              "min": 12,
+              "max": 18,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.45,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 2
+            },
+            {
+              "do": "stun",
+              "turns": 1,
+              "chance": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3R4-WND0's Shot",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "3R4-WND0's Shot",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_shot",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Ballistic",
+              "min": 7,
+              "max": 11,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Cryo",
+              "min": 4,
+              "max": 6,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.15,
+              "perRank": 1
+            },
+            {
+              "do": "effect",
+              "effect": "#Chilled",
+              "chance": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3R4-WND0's Charge",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "3R4-WND0's Charge",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_mut_charge",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Crushing",
+              "min": 11,
+              "max": 17,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.4,
+              "perRank": 1
+            },
+            {
+              "do": "knockback",
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ButcherBot's Rip and Tear",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "ButcherBot's Rip and Tear",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_rip",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 8,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 8,
+              "max": 12,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Smorn's Glide",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Smorn's Glide",
+          "atYou": 0,
+          "radius": 1,
+          "vfx": "fx_wildcaster_echo_glide",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Energy",
+              "min": 6,
+              "max": 10,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.3,
+              "perRank": 1
+            },
+            {
+              "do": "warp",
+              "warpTo": "random",
+              "amount": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Smorn's Strike",
+      "group": "boss",
+      "weight": 2,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Smorn's Strike",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_echo_strike",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "damage",
+              "type": "Slashing",
+              "min": 7,
+              "max": 11,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            },
+            {
+              "do": "damage",
+              "type": "Piercing",
+              "min": 7,
+              "max": 11,
+              "scale": "Crit+PsiPower",
+              "scaleMult": 0.25,
+              "perRank": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Th-3 Widow's brood",
+      "group": "boss",
+      "weight": 1,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Th-3 Widow's brood",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_brood_widow",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "summon",
+              "creature": "BOSS_WIDOW_HATCHLING",
+              "amount": 2,
+              "turns": 4,
+              "maxSummons": 3,
+              "anySide": true,
+              "summonGroup": "WildEcho",
+              "summonVfx": "fx_wildcaster_brood_widow"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Straha's tentacles",
+      "group": "boss",
+      "weight": 1,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Straha's tentacles",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_brood_straha",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "summon",
+              "creature": "boss:DRAGON_CHROMA",
+              "amount": 2,
+              "turns": 4,
+              "maxSummons": 3,
+              "anySide": true,
+              "summonGroup": "WildEcho",
+              "summonVfx": "fx_wildcaster_brood_straha"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Smorn's reinforcements",
+      "group": "boss",
+      "weight": 1,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Smorn's reinforcements",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_brood_smorn",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "summon",
+              "creature": "boss:Enemy_BOSS_Smorn",
+              "amount": 1,
+              "turns": 4,
+              "maxSummons": 3,
+              "anySide": true,
+              "summonGroup": "WildEcho",
+              "summonVfx": "fx_wildcaster_brood_smorn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ughstein's reinforcements",
+      "group": "boss",
+      "weight": 1,
+      "actions": [
+        {
+          "do": "surge",
+          "surgeName": "Ughstein's reinforcements",
+          "atYou": 0,
+          "radius": 0,
+          "vfx": "fx_wildcaster_brood_ughstein",
+          "levelCap": 9,
+          "actions": [
+            {
+              "do": "summon",
+              "creature": "boss:Enemy_BOSS_Ughstein",
+              "amount": 1,
+              "turns": 4,
+              "maxSummons": 3,
+              "anySide": true,
+              "summonGroup": "WildEcho",
+              "summonVfx": "fx_wildcaster_brood_ughstein"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

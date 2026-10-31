@@ -1,0 +1,289 @@
+{
+  "id": "MOD_ProbabilityShaman",
+  "name": "Probability Shaman",
+  "description": "Shamans of the Many Roads talk to the versions of themselves that made different choices, and trade favors across the gap. A miss here is a hit somewhere else. A death here can be swapped for a near miss over there.\n\nDodging and landing hits build Possibility (Crit per stack). Spend it to load the dice, collapse it into damage, or insure your own death so another branch takes the hit. Favors [AGL] and [SAV].",
+  "archetype": "Guile",
+  "icon": "probability_shaman.png",
+  "attributePriorities": {
+    "Agility": 3,
+    "Savvy": 3,
+    "Crit": 2,
+    "Dodge": 2
+  },
+  "effects": [
+    {
+      "id": "Possibility",
+      "name": "Possibility",
+      "description": "Other outcomes are within reach.",
+      "duration": 10,
+      "maxStacks": 6,
+      "stats": {
+        "Crit": 3
+      }
+    },
+    {
+      "id": "Weighted",
+      "name": "Weighted Dice",
+      "description": "You picked the timeline where this hits harder.",
+      "duration": 2,
+      "damageDealtMult": 1.6,
+      "stats": {
+        "Crit": 15
+      }
+    },
+    {
+      "id": "Unobserved",
+      "name": "Unobserved",
+      "description": "Nobody can quite agree whether you are here.",
+      "duration": 2,
+      "stats": {
+        "Dodge": 60,
+        "Stealth": 10
+      }
+    },
+    {
+      "id": "Insurance",
+      "name": "Branch Insurance",
+      "description": "If you are brought under 30% health, another version of you takes the worst of it.",
+      "duration": 20,
+      "procs": [
+        { "on": "lowHealth", "threshold": 30, "actions": [
+          { "do": "heal", "to": "self", "amount": 10, "bonusPerStack": 4, "stacksOf": "@Possibility", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "to": "self", "effect": "@Unobserved" },
+          { "do": "purge", "to": "self", "effect": "@Insurance" } ] }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Superposition",
+        "icon": "probability_shaman_t0.png",
+        "type": "passive",
+        "description": "Every near miss gives you a peek at the branch where it hit, and the luck you stole from it.",
+        "procs": [
+          {
+            "on": "dodge",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Possibility" }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 15,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Possibility" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "name": "Coin-Flip Bolt",
+        "icon": "probability_shaman_t1.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 8,
+        "description": "Heads it hurts, tails it hurts twice.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "sound": "sfx/shaman_coin.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 1, "max": 8, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "chance": 50 }
+        ],
+        "perk": {
+          "name": "Two-Headed Coin",
+          "chanceBonus": 30
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Better Outcome",
+        "icon": "probability_shaman_t2.png",
+        "target": "self",
+        "instant": true,
+        "cooldown": 10,
+        "description": "Spend your stored luck to step into the branch where your next blows land perfectly.",
+        "castVfx": "CYBERNINJA_DEADLY_FOCUS.particle",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_DeadlyFocus",
+        "actions": [
+          { "do": "effect", "effect": "@Weighted" },
+          { "do": "stamina", "amount": 5, "bonusPerStack": 4, "stacksOf": "@Possibility", "consumeStacks": true }
+        ],
+        "perk": {
+          "name": "Best Outcome",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Dodge": 5
+      },
+      "newAbility": {
+        "name": "Unobserved State",
+        "icon": "probability_shaman_t3.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 15,
+        "cooldown": 16,
+        "description": "Stop being definitely anywhere. Enemies shoot at where you probably were.",
+        "castVfx": "CYBERNINJA_STEALTH.particleOn",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Vanish",
+        "actions": [
+          { "do": "effect", "effect": "@Unobserved" },
+          { "do": "effect", "effect": "@Possibility" }
+        ],
+        "perk": {
+          "name": "Schrodinger's Shaman",
+          "cooldownDelta": -5
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Branch Insurance",
+        "icon": "probability_shaman_t4.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 10,
+        "cooldown": 40,
+        "description": "Take out a policy on yourself with a version of you who owes you a favor.",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "sound": "event:/Abilities/Misc/Acrobatics_DodgeDeath",
+        "actions": [
+          { "do": "effect", "effect": "@Insurance" }
+        ],
+        "perk": {
+          "name": "Full Coverage",
+          "cooldownDelta": -15
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "name": "Wavefunction Collapse",
+        "icon": "probability_shaman_t5.png",
+        "target": "self",
+        "radius": 4,
+        "staminaCost": 30,
+        "cooldown": 18,
+        "description": "Force every outcome in the room to resolve at once, all of them in your favor.",
+        "castVfx": "PA_Psykonics_Temporal.castParticle",
+        "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+        "sound": "sfx/shaman_collapse.wav",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Possibility", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1, "chance": 40 }
+        ],
+        "perk": {
+          "name": "Total Collapse",
+          "damageMult": 1.2,
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Fork in the Road",
+        "icon": "probability_shaman_t6.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 18,
+        "cooldown": 6,
+        "description": "Throw a bolt down every branch at once and keep whichever one landed best. The more Possibility you hold, the better the branches within reach.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "sound": "sfx/shaman_coin.wav",
+        "actions": [
+          {
+            "do": "random",
+            "stacksOf": "@Possibility",
+            "stacksFrom": "self",
+            "options": [
+              {
+                "name": "Glancing Branch",
+                "weight": 4,
+                "actions": [
+                  { "do": "damage", "type": "Energy", "min": 4, "max": 7, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 }
+                ]
+              },
+              {
+                "name": "Clean Branch",
+                "weight": 2,
+                "weightPerStack": 1,
+                "actions": [
+                  { "do": "damage", "type": "Energy", "min": 7, "max": 11, "scale": "Savvy", "scaleMult": 0.5, "perRank": 1 },
+                  { "do": "effect", "effect": "#Reeling" }
+                ]
+              },
+              {
+                "name": "Perfect Branch",
+                "weight": 1,
+                "weightPerStack": 1,
+                "actions": [
+                  { "do": "damage", "type": "Energy", "min": 10, "max": 15, "scale": "Savvy", "scaleMult": 0.6, "perRank": 2 },
+                  { "do": "stun", "turns": 1 }
+                ]
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Every Road Leads Here",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "name": "Conservation of Luck",
+        "icon": "probability_shaman_t7.png",
+        "type": "passive",
+        "description": "Luck is never lost, only moved. A miss here banks its hit in another branch for later, and a perfect blow pulls its twin through from the branch next door.",
+        "procs": [
+          {
+            "on": "miss",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Possibility", "stacks": 2 }
+            ]
+          },
+          {
+            "on": "crit",
+            "maxPerTurn": 1,
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4 },
+              { "do": "effect", "to": "self", "effect": "@Possibility" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

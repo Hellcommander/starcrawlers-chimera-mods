@@ -1,0 +1,53 @@
+[ { "particles": [
+  { "id": "fx_void_hacker_inject_travel",
+    "layers": [
+      {"texture": "shard", "count": 1, "life": [0.7], "speed": [0], "size": [0.455], "sizeCurve": "flat", "color": "#F0A0FF", "color2": "#FF2050", "shape": "point", "duration": 0.7, "spin": [600, 900]},
+      {"texture": "spark", "count": 0, "rate": 87, "duration": 0.7, "life": [0.155, 0.248], "speed": [0.1, 0.379], "size": [0.075, 0.158], "gravity": 0.0, "color": "#F0A0FF", "color2": "#FF2050", "shape": "sphere", "radius": 0.06, "stretch": 3}
+    ] },
+  { "id": "fx_void_hacker_inject_impact", "light": {"color": "#C040FF", "range": 3.837, "intensity": 2.349, "time": 0.278},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.371], "speed": [0], "size": [0.983], "sizeCurve": "pop", "color": "#F0A0FF", "color2": "#FF2050", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/arc_crackle.png", "count": 8, "life": [0.326, 0.497], "speed": [0.0, 0.314], "size": [0.41, 0.966], "sizeCurve": "flat", "color": "#F0A0FF", "color2": "#FF2050", "shape": "sphere", "radius": 0.4, "grid": [4, 4], "randomFrame": true},
+      {"texture": "spark", "count": 23, "life": [0.277, 0.498], "speed": [2.712, 7.262], "size": [0.063, 0.114], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#F0A0FF", "color2": "#FF2050", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_void_hacker_worm_travel",
+    "layers": [
+      {"texture": "mote", "count": 0, "rate": 230, "duration": 0.7, "life": [0.287, 0.52], "speed": [0.382, 0.911], "size": [0.037, 0.089], "gravity": 0.0, "color": "#F0A0FF", "color2": "#FF2050", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_void_hacker_worm_impact", "light": {"color": "#C040FF", "range": 2.302, "intensity": 1.363, "time": 0.53},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.58], "speed": [0], "size": [1.491], "sizeCurve": "pulse", "color": "#F0A0FF", "color2": "#FF2050", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 7, "life": [0.284, 0.535], "speed": [0.0, 0.325], "size": [0.18, 0.415], "sizeCurve": "pop", "color": "#F0A0FF", "color2": "#FF2050", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 12, "life": [0.325, 0.648], "speed": [0.536, 1.132], "size": [0.045, 0.107], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#F0A0FF", "color2": "#FF2050", "shape": "ring", "radius": 0.5}
+    ] },
+  { "id": "fx_void_hacker_quarantine_cast", "light": {"color": "#C040FF", "range": 2.93, "intensity": 1.67, "time": 0.606},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.456], "speed": [0], "size": [1.716], "sizeCurve": "pop", "color": "#F0A0FF", "color2": "#FF2050", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 8, "life": [0.284, 0.612], "speed": [0.0, 0.295], "size": [0.299, 0.631], "sizeCurve": "pop", "color": "#F0A0FF", "color2": "#FF2050", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 21, "life": [0.748, 1.08], "speed": [0.103, 0.39], "size": [0.107, 0.212], "orbit": 1.053, "color": "#F0A0FF", "color2": "#FF2050", "shape": "ring", "radius": 0.9}
+    ] },
+  { "id": "fx_void_hacker_kernel_panic_impact", "light": {"color": "#C040FF", "range": 5.224, "intensity": 2.747, "time": 0.577},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.109], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "spark", "count": 46, "life": [0.328, 0.536], "speed": [4.608, 9.984], "size": [0.091, 0.201], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#F0A0FF", "color2": "#FF2050", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/void_hacker_bits.png", "count": 10, "life": [0.53, 0.931], "speed": [2.788, 5.042], "size": [0.094, 0.208], "gravity": 1.2, "spin": [-360, 360], "color": "#F0A0FF", "color2": "#FF2050", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.938, 1.647], "speed": [0.486, 1.267], "size": [0.961, 1.645], "sizeCurve": "grow", "spin": [-50, 50], "color": "#180E20", "color2": "#180E20", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_void_hacker_turncoat_turret_cast", "light": {"color": "#C040FF", "range": 3.784, "intensity": 2.414, "time": 0.727},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.52], "speed": [0], "size": [2.988], "sizeCurve": "grow", "color": "#F0A0FF", "color2": "#FF2050", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 40, "life": [0.408, 0.737], "speed": [1.913, 4.059], "size": [0.086, 0.169], "gravity": -0.2, "color": "#F0A0FF", "color2": "#FF2050", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.401], "speed": [0], "size": [1.366], "sizeCurve": "pop", "color": "#F0A0FF", "color2": "#FF2050", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.964, 1.357], "speed": [0.273, 0.886], "size": [0.668, 1.061], "sizeCurve": "grow", "spin": [-50, 50], "color": "#180E20", "color2": "#180E20", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 21, "life": [0.308, 0.535], "speed": [3.108, 6.05], "size": [0.051, 0.108], "stretch": 6, "gravity": 0.0, "drag": 1.0, "color": "#E0FAFF", "color2": "#2A8CFF", "shape": "sphere", "radius": 0.2}
+    ] }
+] },
+{ "id": "MOD_VoidHacker", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_void_hacker_inject_impact", "travelVfx": "fx_void_hacker_inject_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_void_hacker_worm_impact", "travelVfx": "fx_void_hacker_worm_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_void_hacker_quarantine_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_void_hacker_kernel_panic_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_void_hacker_turncoat_turret_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}}
+] } ]

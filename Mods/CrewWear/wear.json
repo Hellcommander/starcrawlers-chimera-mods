@@ -1,0 +1,54 @@
+{
+  "wear": [
+    {
+      "items": [
+        "GEAR_TORSO_Worker",
+        "GEAR_TORSO_Lab",
+        "GEAR_TORSO_Biologist",
+        "GEAR_TORSO_Geotechnician"
+      ],
+      "mesh": "models/sf3d/wear_chest_cloth.glb",
+      "share": 0.24,
+      "kinds": [
+        "Soldier"
+      ]
+    },
+    {
+      "items": [
+        "GEAR_TORSO_Guard",
+        "GEAR_TORSO_Trooper",
+        "GEAR_TORSO_Commando"
+      ],
+      "mesh": "models/sf3d/wear_chest_guard.glb",
+      "share": 0.24,
+      "kinds": [
+        "Soldier"
+      ]
+    },
+    {
+      "items": [
+        "GEAR_TORSO_Heavy",
+        "GEAR_TORSO_CSF",
+        "GEAR_TORSO_Officer",
+        "GEAR_TORSO_Wrangler",
+        "GEAR_TORSO_BioWrangler"
+      ],
+      "mesh": "models/sf3d/wear_chest_heavy.glb",
+      "share": 0.28,
+      "kinds": [
+        "Soldier"
+      ]
+    },
+    {
+      "items": [
+        "GEAR_TORSO_Cyberninja"
+      ],
+      "mesh": "models/sf3d/wear_chest_shroud.glb",
+      "share": 0.24,
+      "kinds": [
+        "Soldier"
+      ]
+    }
+  ],
+  "_note": "Chest armour only, on Soldier crew: its armoured body takes fitted pieces well; slimmer or bulkier crawlers keep the rarity tint."
+}

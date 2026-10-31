@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>StarCrawlersClassLoader</AssemblyName>
+    <RootNamespace>SCClassLoader</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GameDir>$(MSBuildThisFileDirectory)..\..\</GameDir>
+    <Managed>$(GameDir)StarCrawlers Chimera_Data\Managed\</Managed>
+    <BepCore>$(GameDir)BepInEx\core\</BepCore>
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp"><HintPath>$(Managed)Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="com.rlabrecque.steamworks.net"><HintPath>$(Managed)com.rlabrecque.steamworks.net.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>$(Managed)Assembly-CSharp-firstpass.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(Managed)UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(Managed)UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(Managed)UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(Managed)UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(Managed)UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule"><HintPath>$(Managed)UnityEngine.ParticleSystemModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(Managed)UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>$(Managed)UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(Managed)UnityEngine.UIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule"><HintPath>$(Managed)UnityEngine.ScreenCaptureModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.TextMeshPro"><HintPath>$(Managed)Unity.TextMeshPro.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(Managed)UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(Managed)UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="netstandard"><HintPath>$(FrameworkPathOverride)\Facades\netstandard.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Newtonsoft.Json"><HintPath>$(Managed)Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx.Core"><HintPath>$(BepCore)BepInEx.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx.Unity"><HintPath>$(BepCore)BepInEx.Unity.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(BepCore)0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <!-- The Lua interpreter behind script mods (BSD 3-clause, lib/MoonSharp-LICENSE.txt); ships next to the loader's dll. -->
+    <Reference Include="MoonSharp.Interpreter"><HintPath>lib\MoonSharp.Interpreter.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+
+  <!-- Player build (pack.ps1): no self-test harness in the shipped dll, and it never replaces the dev install's plugin. -->
+  <PropertyGroup Condition="'$(PlayerBuild)' == 'true'">
+    <DefineConstants>$(DefineConstants);PLAYER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(PlayerBuild)' == 'true'">
+    <Compile Remove="DevTest*.cs" />
+  </ItemGroup>
+
+  <!-- The sound archives' key (_modding/audio/archive.key, not in the repository) becomes ModArchives.KeyHex, written into
+       obj/ at build. Without the file the constant is empty: that loader skips sound archives and plays the fallbacks. -->
+  <PropertyGroup>
+    <ArchiveKeyFile>$(MSBuildThisFileDirectory)..\audio\archive.key</ArchiveKeyFile>
+  </PropertyGroup>
+  <Target Name="ArchiveKey" BeforeTargets="CoreCompile">
+    <ReadLinesFromFile File="$(ArchiveKeyFile)" Condition="Exists('$(ArchiveKeyFile)')">
+      <Output TaskParameter="Lines" ItemName="ArchiveKeyLine" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <ArchiveKeyHex>@(ArchiveKeyLine)</ArchiveKeyHex>
+      <ArchiveKeyHex>$(ArchiveKeyHex.Trim())</ArchiveKeyHex>
+      <ArchiveKeySource>$(IntermediateOutputPath)ArchiveKey.g.cs</ArchiveKeySource>
+    </PropertyGroup>
+    <Warning Condition="'$(ArchiveKeyHex)' == ''" Text="No _modding/audio/archive.key: this loader will skip sound archives and play the fallback sounds (run _modding/audio/sfx_archive.py once to make one)." />
+    <Error Condition="'$(ArchiveKeyHex)' != '' And $(ArchiveKeyHex.Length) != 64" Text="$(ArchiveKeyFile) must hold 32 bytes as 64 hex digits." />
+    <WriteLinesToFile File="$(ArchiveKeySource)" Overwrite="true" WriteOnlyWhenDifferent="true"
+      Lines="// Generated by ClassLoader.csproj from _modding/audio/archive.key. Not in the repository.;namespace SCClassLoader { internal static partial class ModArchives { private const string KeyHex = &quot;$(ArchiveKeyHex)&quot;%3B } }" />
+    <ItemGroup>
+      <Compile Include="$(ArchiveKeySource)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(PlayerBuild)' != 'true'">
+    <MakeDir Directories="$(GameDir)BepInEx\plugins\StarCrawlersClassLoader" />
+    <!-- A running game keeps the dlls open: then the build still succeeds and only warns, so a compile check needs no restart. -->
+    <Copy SourceFiles="$(TargetPath);$(MSBuildThisFileDirectory)lib\MoonSharp.Interpreter.dll" DestinationFolder="$(GameDir)BepInEx\plugins\StarCrawlersClassLoader" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+</Project>

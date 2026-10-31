@@ -1,0 +1,872 @@
+{
+  "synergies": [
+    {
+      "id": "ReagentGrade",
+      "name": "Reagent Grade",
+      "trees": [
+        "SKILLTREE_Chemistry",
+        "SKILLTREE_Xenobiologist"
+      ],
+      "description": "Ooze is just chemistry that crawls: your hits on Slimed enemies sometimes leave them Poisoned. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned",
+                "ifTargetHas": "EFFECT_Xeno_Debuff_Green"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PreWorkout",
+      "name": "Pre-Workout",
+      "trees": [
+        "SKILLTREE_Chemistry",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "A scoop of Zerk before every set: while Zerk runs in you, your hits may knock foes back a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "ifSelfHas": "ZERK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "IronGut",
+      "name": "Iron Gut",
+      "trees": [
+        "SKILLTREE_Chemistry",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "Your stomach has seen worse than any chem: while Hangry your kills may spatter the foes around you with Poison. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "radius": 2,
+            "when": {
+              "has": "EFFECT_Hangry",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Titration",
+      "name": "Titration",
+      "trees": [
+        "SKILLTREE_Chemistry",
+        "MOD_Etcher"
+      ],
+      "description": "Measured drop by drop: your hits on Etched enemies sometimes add an acid burn to the engraving. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Acid",
+                "ifTargetHas": "MOD_Etcher@Etched"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwoButtonCombo",
+      "name": "Two-Button Combo",
+      "trees": [
+        "SKILLTREE_Combology",
+        "SKILLTREE_DualWield"
+      ],
+      "description": "One button per hand: while you hold a Combo Point, your hits may leave the target Gashed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Gashed",
+                "ifSelfHas": "EFFECT_ComboPoint"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "JuggleFinisher",
+      "name": "Juggle Finisher",
+      "trees": [
+        "SKILLTREE_Combology",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "A stunned enemy is a free combo: hits on stunned foes may bank a Combo Point, and with one banked they may set back the foe's special attacks two turns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "when": {
+              "has": "EFFECT_Stun"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "EFFECT_ComboPoint"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "when": {
+              "all": [
+                {
+                  "has": "EFFECT_Stun"
+                },
+                {
+                  "has": "EFFECT_ComboPoint",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CrowdPleaser",
+      "name": "Crowd Pleaser",
+      "trees": [
+        "SKILLTREE_Combology",
+        "MOD_Ringmaster"
+      ],
+      "description": "The audience loves a long chain: hits while you hold a Combo Point sometimes earn you Applause. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Ringmaster@Applause",
+                "ifSelfHas": "EFFECT_ComboPoint"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BeltFedHarvest",
+      "name": "Belt-Fed Harvest",
+      "trees": [
+        "SKILLTREE_BulletFarmer",
+        "SKILLTREE_BigGuns"
+      ],
+      "description": "Every belt is hand-loaded: suppressed enemies may catch Reaper Rounds, and your shots on reaped foes may pass them to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_ReaperRounds",
+                "ifTargetHas": "EFFECT_BigGuns_Suppression"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_ReaperRounds"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_ReaperRounds",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BrassRain",
+      "name": "Brass Rain",
+      "trees": [
+        "SKILLTREE_BulletFarmer",
+        "SKILLTREE_Gunslinger"
+      ],
+      "description": "Two guns, one forge: your hits on foes carrying Reaper Rounds may leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "ifTargetHas": "EFFECT_ReaperRounds"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SalvagedCasings",
+      "name": "Salvaged Casings",
+      "trees": [
+        "SKILLTREE_BulletFarmer",
+        "MOD_Scrapper"
+      ],
+      "description": "Nothing goes to waste: killing a foe that carried Reaper Rounds may give you two Grit. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 50,
+            "when": {
+              "has": "EFFECT_ReaperRounds",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "AftermarketParts",
+      "name": "Aftermarket Parts",
+      "trees": [
+        "SKILLTREE_Modder",
+        "SKILLTREE_Engineer"
+      ],
+      "description": "Nothing you build leaves the bench stock: your turrets' and robots' hits may leave targets Shocked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "name": "Aftermarket Kit",
+        "description": "Bolted full of parts its maker wasn't supposed to have, and they arc.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "Jailbroken",
+      "name": "Jailbroken",
+      "trees": [
+        "SKILLTREE_Modder",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "Their firmware, your rules: your hits on Hacked enemies may set back their special attacks two turns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_Hacker_Hack_Weakness"
+            },
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "VoidedWarranty",
+      "name": "Voided Warranty",
+      "trees": [
+        "SKILLTREE_Modder",
+        "MOD_MadTinkerer"
+      ],
+      "description": "Every safety limiter, removed: while Overclocked your hits sometimes set the target on fire. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire",
+                "ifSelfHas": "MOD_MadTinkerer@Overclock"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "InsideJob",
+      "name": "Inside Job",
+      "trees": [
+        "SKILLTREE_Security",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "You know where they keep the good stuff: kills sometimes turn up a stash of credits. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "credits",
+                "amount": 4,
+                "perRank": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SilentAlarm",
+      "name": "Silent Alarm",
+      "trees": [
+        "SKILLTREE_Security",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "You never stand where they aim: dodging an attacker sometimes leaves a boobytrap at its feet. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 30,
+            "cooldown": 3,
+            "actions": [
+              {
+                "do": "hazard",
+                "to": "attacker",
+                "hazard": "HAZARD_Security_Boobytrap",
+                "turns": 4
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BackdoorAccess",
+      "name": "Backdoor Access",
+      "trees": [
+        "SKILLTREE_Security",
+        "MOD_ShadowBroker"
+      ],
+      "description": "You came in through a door nobody knew was there: while Unseen, your hits sometimes leave the target Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "ifSelfHas": "MOD_ShadowBroker@Unseen"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TripwireKit",
+      "name": "Tripwire Kit",
+      "trees": [
+        "SKILLTREE_Security",
+        "SKILLTREE_Gadgeteer"
+      ],
+      "description": "Spare wire, spare charges: getting hit sometimes leaves a live mine under whoever hit you. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "cooldown": 4,
+            "actions": [
+              {
+                "do": "hazard",
+                "to": "attacker",
+                "hazard": "CONSUME_UTL_Mine",
+                "turns": 5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "WhisperingDark",
+      "name": "Whispering Dark",
+      "trees": [
+        "SKILLTREE_Cursed",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "The relic and the void speak the same tongue: your hits on drained enemies may bring the Evil Eye down on them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_EvilEye_Curse",
+                "ifTargetHas": "EFFECT_Void_Psyker_Drain"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CultOfTheRelic",
+      "name": "Cult of the Relic",
+      "trees": [
+        "SKILLTREE_Cursed",
+        "SKILLTREE_ThoughtLeader"
+      ],
+      "description": "Your followers worship what you carry: their hits may carry the Evil Eye. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "name": "Relic-Sworn",
+        "description": "Has heard the relic speak, and liked what it said.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_EvilEye_Curse"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "HymnOfTheDamned",
+      "name": "Hymn of the Damned",
+      "trees": [
+        "SKILLTREE_Cursed",
+        "MOD_NullChorister"
+      ],
+      "description": "The relic hums along with your choir: your hits on Off-Key enemies sometimes leave them Weakened. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Weakened",
+                "ifTargetHas": "MOD_NullChorister@OffKey"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThermiteLoadout",
+      "name": "Thermite Loadout",
+      "trees": [
+        "SKILLTREE_Soldier",
+        "SKILLTREE_Pyromaniac"
+      ],
+      "description": "Swap the frag for something meaner: your hits on burning enemies sometimes leave a pool of fire under them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Fire_Mini",
+                "turns": 3,
+                "ifTargetHas": "EFFECT_Fire"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HoldoutPiece",
+      "name": "Holdout Piece",
+      "trees": [
+        "SKILLTREE_Pistolier",
+        "SKILLTREE_Smuggler"
+      ],
+      "description": "There's always a second gun in the boot: dodging an attack may leave the attacker Exposed to it. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "#Exposed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "QuickdrawShadow",
+      "name": "Quickdraw Shadow",
+      "trees": [
+        "SKILLTREE_Pistolier",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "The first they see of you is the muzzle flash: crits from stealth may leave the target Reeling. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling",
+                "ifSelfHas": "PASSIVE_Cyberninja_Stealth"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PsychicHammer",
+      "name": "Psychic Hammer",
+      "trees": [
+        "SKILLTREE_ForcePsyker",
+        "SKILLTREE_Smashmaster"
+      ],
+      "description": "The mind swings with the arm: your hits on stunned enemies may scramble them, Silenced for two turns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "silence",
+                "turns": 2,
+                "ifTargetHas": "EFFECT_Stun"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "MeatAndMetal",
+      "name": "Meat and Metal",
+      "trees": [
+        "SKILLTREE_Prototype",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "Muscle over machinery: while Pumped Up, blows you take may throw the attacker back a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "ifSelfHas": "EFFECT_Bodybuilding_Pump",
+                "to": "attacker"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ScrapIntake",
+      "name": "Scrap Intake",
+      "trees": [
+        "SKILLTREE_Prototype",
+        "MOD_Scrapper"
+      ],
+      "description": "Anything can be fuel: kills may feed your frame Grit, and twice that while you're Cornered. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "MOD_Scrapper@Grit",
+                "stacks": 2,
+                "ifSelfHas": "MOD_Scrapper@Cornered"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NanitePayload",
+      "name": "Nanite Payload",
+      "trees": [
+        "SKILLTREE_Nanomancy",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "The virus rides in on the swarm: your hits on hexed enemies may pass the Hex to the next foe in reach, and hits on Hacked enemies may poison them. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_Nanomancy_Hex"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Nanomancy_Hex",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned",
+                "ifTargetHas": "EFFECT_Hacker_Hack_Weakness"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BenchCapacitor",
+      "name": "Bench Capacitor",
+      "trees": [
+        "SKILLTREE_Gadgeteer",
+        "MOD_Coilwright"
+      ],
+      "description": "Every gadget gets a spare coil: your hits on Static-loaded enemies may discharge it all and stun them for a turn. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "cooldown": 3,
+            "when": {
+              "has": "MOD_Coilwright@Static"
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "MOD_Coilwright@Static"
+              },
+              {
+                "do": "stun",
+                "turns": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "EarthedFrame",
+      "name": "Earthed Frame",
+      "trees": [
+        "SKILLTREE_Cybertechnician",
+        "MOD_ArcGunner"
+      ],
+      "description": "Chrome makes a good earth: while you hold Static your hits sometimes leave the target Shocked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked",
+                "ifSelfHas": "MOD_ArcGunner@Static"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TreasureMap",
+      "name": "Treasure Map",
+      "trees": [
+        "SKILLTREE_LootHunter",
+        "SKILLTREE_Security"
+      ],
+      "description": "No lock between you and the loot: kills sometimes shake loose a few credits. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "credits",
+                "amount": 3,
+                "perRank": 2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

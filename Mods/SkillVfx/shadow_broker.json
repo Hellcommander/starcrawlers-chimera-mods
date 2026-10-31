@@ -1,0 +1,49 @@
+[ { "particles": [
+  { "id": "fx_shadow_broker_knife_in_the_dark_impact",
+    "layers": [
+      {"texture": "spark", "count": 3, "life": [0.349, 0.478], "speed": [0], "size": [1.01, 1.311], "sizeCurve": "pop", "color": "#C8A8FF", "color2": "#3A1870", "shape": "point"},
+      {"texture": "mote", "count": 11, "life": [0.528, 1.113], "speed": [0.409, 1.242], "size": [0.054, 0.129], "gravity": 2.0, "color": "#3A1870", "color2": "#0E0A16", "shape": "sphere", "radius": 0.3},
+      {"texture": "spark", "count": 9, "life": [0.296, 0.64], "speed": [1.65, 2.75], "size": [0.078, 0.147], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_shadow_broker_slip_away_cast",
+    "layers": [
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 13, "delay": 0.0, "life": [1.043, 1.618], "speed": [0.292, 0.744], "size": [1.112, 1.9], "sizeCurve": "grow", "spin": [-50, 50], "color": "#0E0A16", "color2": "#0E0A16", "alpha": 0.7, "shape": "sphere", "radius": 0.6, "grid": [6, 6]},
+      {"texture": "mote", "count": 11, "life": [0.491, 0.952], "speed": [0.198, 0.65], "size": [0.079, 0.184], "gravity": 0.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.7}
+    ] },
+  { "id": "fx_shadow_broker_leverage_travel",
+    "layers": [
+      {"texture": "shard", "count": 1, "life": [0.7], "speed": [0], "size": [0.562], "sizeCurve": "flat", "color": "#C8A8FF", "color2": "#3A1870", "shape": "point", "duration": 0.7, "spin": [600, 900]},
+      {"texture": "spark", "count": 0, "rate": 86, "duration": 0.7, "life": [0.148, 0.277], "speed": [0.101, 0.424], "size": [0.079, 0.149], "gravity": 0.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.06, "stretch": 3}
+    ] },
+  { "id": "fx_shadow_broker_leverage_impact",
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.439], "speed": [0], "size": [1.521], "sizeCurve": "shrink", "color": "#C8A8FF", "color2": "#3A1870", "shape": "point"},
+      {"texture": "mote", "count": 16, "life": [0.548, 1.047], "speed": [0.208, 0.541], "size": [0.074, 0.162], "gravity": 0.6, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.5},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.855, 1.331], "speed": [0.329, 0.931], "size": [0.434, 0.776], "sizeCurve": "grow", "spin": [-50, 50], "color": "#0E0A16", "color2": "#0E0A16", "alpha": 0.5, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_shadow_broker_silent_contract_impact",
+    "layers": [
+      {"texture": "spark", "count": 2, "life": [0.346, 0.504], "speed": [0], "size": [1.157, 1.55], "sizeCurve": "pop", "color": "#C8A8FF", "color2": "#3A1870", "shape": "point"},
+      {"texture": "spark", "count": 17, "life": [0.287, 0.524], "speed": [2.178, 3.93], "size": [0.066, 0.127], "stretch": 4, "gravity": 0.0, "drag": 1.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 27, "life": [0.354, 0.529], "speed": [-4.5, -3], "size": [0.072, 0.163], "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 1.0}
+    ] },
+  { "id": "fx_shadow_broker_fade_through_cast",
+    "layers": [
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 15, "delay": 0.0, "life": [0.973, 1.666], "speed": [0.275, 0.837], "size": [1.017, 1.908], "sizeCurve": "grow", "spin": [-50, 50], "color": "#0E0A16", "color2": "#0E0A16", "alpha": 0.7, "shape": "sphere", "radius": 0.6, "grid": [6, 6]},
+      {"texture": "mote", "count": 14, "life": [0.473, 1.105], "speed": [0.184, 0.66], "size": [0.081, 0.16], "gravity": 0.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 0.7}
+    ] },
+  { "id": "fx_shadow_broker_fade_through_area",
+    "layers": [
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 17, "delay": 0.05, "life": [1.46, 1.963], "speed": [0.108, 0.423], "size": [1.242, 2.339], "sizeCurve": "grow", "spin": [-50, 50], "color": "#0E0A16", "color2": "#0E0A16", "alpha": 0.6, "shape": "disc", "radius": 1.2000000000000002, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 12, "life": [0.559, 0.951], "speed": [0.09, 0.315], "size": [0.079, 0.2], "gravity": 0.0, "color": "#C8A8FF", "color2": "#3A1870", "shape": "sphere", "radius": 1.0}
+    ] }
+] },
+{ "id": "MOD_ShadowBroker", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_shadow_broker_knife_in_the_dark_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_shadow_broker_slip_away_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_shadow_broker_leverage_impact", "travelVfx": "fx_shadow_broker_leverage_travel", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_shadow_broker_silent_contract_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_shadow_broker_fade_through_cast", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_shadow_broker_fade_through_area"}}
+] } ]

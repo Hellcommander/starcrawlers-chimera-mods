@@ -1,0 +1,780 @@
+{
+  "id": "MOD_RigJockey",
+  "name": "Rig Jockey",
+  "description": "Salvage crews strapped into cargo exo-rigs. Every hydraulic move takes bolt-on hardpoints - flamer nozzles, arc coils, magnet clamps - that change how it hits and are never used up.\n\nHeavy melee with hardware sockets and a Heat meter that raises damage until it overheats. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "icons/rig_jockey.png",
+  "attributePriorities": {
+    "Strength": 5,
+    "Toughness": 3,
+    "Smarts": 1
+  },
+  "starterItems": [
+    "KnFlamerNozzle",
+    "KnPistonOverdrive",
+    "KnHeatSink",
+    "KnMagnetClamp"
+  ],
+  "effects": [
+    {
+      "id": "Heat",
+      "name": "Rig Heat",
+      "icon": "icons/heat.png",
+      "debuff": true,
+      "resource": true,
+      "resourceColor": "#FF6A3D",
+      "description": "The rig is running hot. Every point makes your hits land harder; at ten it overheats and you burn. It cools off if you give it a few turns, or vent it all at once.",
+      "duration": 5,
+      "maxStacks": 10,
+      "burstAt": 10,
+      "damageDealtPerStack": 0.04,
+      "burstActions": [
+        {
+          "do": "effect",
+          "effect": "EFFECT_Fire"
+        },
+        {
+          "do": "stamina",
+          "amount": -20
+        }
+      ],
+      "burstSound": "audio_licensed/rig_overheat.wav"
+    },
+    {
+      "id": "Plated",
+      "name": "Plated Up",
+      "description": "Every plate locked down. Hits slide off.",
+      "duration": 2,
+      "damageTakenMult": 0.75,
+      "stats": {
+        "Armor": 4,
+        "Block": 10
+      }
+    },
+    {
+      "id": "Stripped",
+      "name": "Stripped Down",
+      "debuff": true,
+      "description": "Plating pried off and wiring hanging out. If it dies like this, there's a working hardpoint in the wreck half the time.",
+      "duration": 4,
+      "stats": {
+        "Armor": -5,
+        "Block": -10
+      },
+      "onDeathActions": [
+        {
+          "do": "random",
+          "chance": 50,
+          "options": [
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnFlamerNozzle"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnArcCoil"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnCryoJacket"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnPistonOverdrive"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnHeatSink"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnMagnetClamp"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnKineticRam"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnShieldEmitter"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "actions": [
+                {
+                  "do": "giveItem",
+                  "item": "KnSpreadChoke"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Rig Harness",
+        "icon": "icons/rig_harness.png",
+        "description": "The rig takes some of the punishment for you: getting hit sometimes snaps a plate into place. Kills dump the built-up heat into the frame, and now and then you strip a working hardpoint off the wreck.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 3,
+                "scale": "Toughness",
+                "scaleMult": 0.3
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "@Heat"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 15,
+            "actions": [
+              {
+                "do": "random",
+                "options": [
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnFlamerNozzle"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnArcCoil"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnCryoJacket"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnPistonOverdrive"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnHeatSink"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnMagnetClamp"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnKineticRam"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnShieldEmitter"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "actions": [
+                      {
+                        "do": "giveItem",
+                        "item": "KnSpreadChoke"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Piston Jab",
+        "icon": "icons/piston_jab.png",
+        "staminaCost": 6,
+        "cooldown": 0,
+        "runeSlots": 2,
+        "runeSlotRanks": [
+          2,
+          4
+        ],
+        "runeMeter": "@Heat",
+        "description": "A hydraulic jab. Two hardpoints turn it into whatever you need: a flame-spitting punch, a magnetic yank, an overdriven bone-breaker.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 3,
+            "max": 6,
+            "scale": "Strength",
+            "scaleMult": 0.4,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Heat"
+          }
+        ],
+        "runeVariants": [
+          {
+            "rune": "KnKineticRam",
+            "name": "Pile Bunker",
+            "replace": true,
+            "description": "the ram fires a spike through the jab: they're thrown four tiles and stunned if they slam into anything.",
+            "instability": 2,
+            "actions": [
+              {
+                "do": "throw",
+                "amount": 4,
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Crushing",
+                    "min": 5,
+                    "max": 8
+                  },
+                  {
+                    "do": "stun",
+                    "turns": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rune": "KnMagnetClamp",
+            "name": "Yo-Yo",
+            "description": "yank them in, then jab them right back out a tile.",
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Double Stroke",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/rig_piston_jab.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Hydraulic Charge",
+        "icon": "icons/hydraulic_charge.png",
+        "range": 5,
+        "staminaCost": 12,
+        "cooldown": 5,
+        "runeSlots": 2,
+        "runeSlotRanks": [
+          3,
+          5
+        ],
+        "runeMeter": "@Heat",
+        "description": "The legs kick and the rig covers the distance in one bound, shoulder first. They're thrown back by the impact.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.6",
+        "sound": "audio_licensed/rig_hydraulic_charge.wav",
+        "actions": [
+          {
+            "do": "leap"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 4,
+            "max": 7,
+            "scale": "Strength",
+            "scaleMult": 0.45,
+            "perRank": 1
+          },
+          {
+            "do": "throw",
+            "amount": 2,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 3,
+                "max": 5
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Heat",
+            "stacks": 2
+          }
+        ],
+        "runeVariants": [
+          {
+            "rune": "KnSpreadChoke",
+            "name": "Bulldozer",
+            "replace": true,
+            "description": "you plough through: everyone around the target is hit and shoved back two tiles.",
+            "radius": 1.5,
+            "power": 0.85,
+            "instability": 1,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Long Stride",
+          "rangeDelta": 2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Plate Up",
+        "icon": "icons/plate_up.png",
+        "staminaCost": 10,
+        "cooldown": 8,
+        "runeSlots": 1,
+        "runeSlotRanks": [
+          4
+        ],
+        "runeKinds": [
+          "power",
+          "payload"
+        ],
+        "runeMeter": "@Heat",
+        "description": "Lock every plate down: a shield and two turns of hard armor. One hardpoint for something extra.",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Plated"
+          },
+          {
+            "do": "shield",
+            "to": "self",
+            "amount": 6,
+            "scale": "Toughness",
+            "scaleMult": 0.5,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Heat"
+          }
+        ],
+        "perk": {
+          "name": "Quick Release",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/rig_plate_up.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Vent Blast",
+        "icon": "icons/vent_blast.png",
+        "instant": false,
+        "radius": 2.5,
+        "staminaCost": 10,
+        "cooldown": 6,
+        "description": "Blow every vent at once. All the built-up heat goes out as a scalding blast around you - the hotter the rig, the worse it is for them.",
+        "castVfx": "PA_Pirate_Cacafuego.PS_explode@0.5",
+        "sound": "audio_licensed/rig_vent_blast.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Fire",
+            "min": 2,
+            "max": 4,
+            "scale": "Strength",
+            "scaleMult": 0.3,
+            "perRank": 1,
+            "bonusPerStack": 3,
+            "stacksOf": "@Heat",
+            "stacksFrom": "self",
+            "consumeStacks": true
+          },
+          {
+            "do": "effect",
+            "effect": "EFFECT_Fire",
+            "chance": 50
+          },
+          {
+            "do": "knockback",
+            "amount": 1
+          }
+        ],
+        "perk": {
+          "name": "Wide Vents",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Hammerfall",
+        "icon": "icons/hammerfall.png",
+        "staminaCost": 22,
+        "cooldown": 12,
+        "runeSlots": 2,
+        "runeSlotRanks": [
+          6,
+          6
+        ],
+        "runeMeter": "@Heat",
+        "description": "Both rig arms come down together. A huge hit that stuns, throws them out of the crater and pushes the rig hard toward overheating.",
+        "impactVfx": "PA_Barbarian_FlyingSmash.triggerParticle@0.5",
+        "sound": "audio_licensed/rig_hammerfall.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 10,
+            "max": 16,
+            "scale": "Strength",
+            "scaleMult": 0.7,
+            "perRank": 2
+          },
+          {
+            "do": "stun",
+            "turns": 1
+          },
+          {
+            "do": "throw",
+            "amount": 2,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 4,
+                "max": 6
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Heat",
+            "stacks": 3
+          }
+        ],
+        "runeVariants": [
+          {
+            "rune": "KnArcCoil",
+            "name": "Thunderclap",
+            "description": "the crater crackles with current for two turns, shocking anyone who stands in it.",
+            "actions": [
+              {
+                "do": "field",
+                "fieldName": "Thunderclap",
+                "turns": 2,
+                "radius": 1.6,
+                "affects": "enemies",
+                "pulseVfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Shock",
+                    "min": 2,
+                    "max": 4
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Shock"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rune": "KnHeatSink",
+            "name": "Cold Drop",
+            "replace": true,
+            "description": "the sinks swallow the whole impact's heat: Hammerfall adds no Heat.",
+            "instability": -3
+          }
+        ],
+        "perk": {
+          "name": "Seismic",
+          "damageMult": 1.2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 2
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Strip for Parts",
+        "icon": "icons/strip_for_parts.png",
+        "staminaCost": 14,
+        "cooldown": 7,
+        "runeSlots": 2,
+        "runeSlotRanks": [
+          7,
+          8
+        ],
+        "runeMeter": "@Heat",
+        "description": "The rig's claw gets under their plating and pulls. It tears off a buff and a strip of armor, and anything that dies Stripped Down often leaves you a working hardpoint - the salvage crew's way to restock.",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 7,
+            "max": 11,
+            "scale": "Strength",
+            "scaleMult": 0.5,
+            "perRank": 1
+          },
+          {
+            "do": "dispel",
+            "amount": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Stripped"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Heat",
+            "stacks": 2
+          }
+        ],
+        "runeVariants": [
+          {
+            "rune": "KnPistonOverdrive",
+            "name": "Ripsaw",
+            "description": "the overdriven claw rips components out with the plating: their special attacks are set back 2 turns.",
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 2
+              }
+            ]
+          },
+          {
+            "rune": "KnShieldEmitter",
+            "name": "Scrap Plating",
+            "replace": true,
+            "description": "the plating you tear off goes straight onto your own frame: you're Plated Up for 2 turns.",
+            "selfActions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RigJockey@Plated"
+              }
+            ]
+          },
+          {
+            "rune": "KnCryoJacket",
+            "name": "Cold Fracture",
+            "description": "frozen metal shears instead of bending: a third of the time they're locked in place for a turn.",
+            "actions": [
+              {
+                "do": "stun",
+                "turns": 1,
+                "chance": 35
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Pry Bar",
+          "description": "Better leverage: the claw is ready again sooner.",
+          "cooldownDelta": -3
+        },
+        "sound": "audio_licensed/rig_piston_jab.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Red Zone",
+        "icon": "icons/red_zone.png",
+        "description": "You've learned to live just under the overheat line. At 7 Heat or more your hits often set them alight, and at 6 or more the glowing plates harden into a little shielding every turn. If you're badly hurt, the rig dumps all its heat into an emergency shield, more for every point it had.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 50,
+            "when": {
+              "value": "stacks:@Heat",
+              "of": "self",
+              "atLeast": 7
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire"
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "when": {
+              "value": "stacks:@Heat",
+              "of": "self",
+              "atLeast": 6
+            },
+            "actions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 2,
+                "scale": "Toughness",
+                "scaleMult": 0.25
+              }
+            ]
+          },
+          {
+            "on": "lowHealth",
+            "threshold": 35,
+            "cooldown": 20,
+            "actions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 4,
+                "scale": "Toughness",
+                "scaleMult": 0.4,
+                "bonusPerStack": 3,
+                "stacksOf": "@Heat",
+                "stacksFrom": "self",
+                "consumeStacks": true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

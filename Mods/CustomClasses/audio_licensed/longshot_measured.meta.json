@@ -1,0 +1,238 @@
+{
+  "prompt": "heavy sniper rifle shot with mechanical bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "4ec99c679b3fbdf7",
+      "score": 0.6241710186004639,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 31.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "d5a4390e174e64d6",
+      "score": 0.6231823563575745,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 17.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "d4c3cd85ceca5e0e",
+      "score": 0.6224581599235535,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 19.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "fe039de5ecee275b",
+      "score": 0.6060442924499512,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 9.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "5bd187297610a6b9",
+      "score": 0.6025856137275696,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 10.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "5b6a4c09eab2e860",
+      "score": 0.5981786251068115,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-41.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "95df9c070f321f8c",
+      "score": 0.5883679389953613,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 28.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "14f7a59d56eb15a2",
+      "score": 0.5872217416763306,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "8790a6bf24d01a0e",
+      "score": 0.5858514308929443,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "medium"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "924fdedca2bfd547",
+      "score": 0.5850164294242859,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "magic",
+        "shots",
+        "big"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "4ec99c679b3fbdf7",
+    "d5a4390e174e64d6",
+    "d4c3cd85ceca5e0e",
+    "fe039de5ecee275b",
+    "5bd187297610a6b9",
+    "5b6a4c09eab2e860",
+    "95df9c070f321f8c",
+    "14f7a59d56eb15a2",
+    "8790a6bf24d01a0e",
+    "924fdedca2bfd547"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\longshot_measured.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.198,
+  "semitones": -6,
+  "width": 0.253,
+  "listen": {
+    "match": 0.758,
+    "clean": -0.721,
+    "faults": []
+  }
+}

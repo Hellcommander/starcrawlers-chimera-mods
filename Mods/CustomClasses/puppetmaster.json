@@ -1,0 +1,236 @@
+{
+  "id": "MOD_Puppetmaster",
+  "name": "Puppetmaster",
+  "description": "Why fight when they can fight for you? Tie psychic Strings to your enemies; at four strings they're yours, charmed and turned against their friends. Cut the Strings snaps every thread in the room for damage.\n\nMind-control caster built on stacking Strings. Favors [SAV] and [SMT].",
+  "archetype": "Intellect",
+  "icon": "puppetmaster.png",
+  "attributePriorities": {
+    "Savvy": 4,
+    "Smarts": 3
+  },
+  "effects": [
+    {
+      "id": "Strings",
+      "name": "Strings",
+      "description": "Faint threads of light tug at their limbs.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 4,
+      "stats": {
+        "Dodge": -3
+      },
+      "vfx": "EFFECT_ThoughtLeader_Minion",
+      "burstAt": 4,
+      "burstVfx": "PA_Psykonics_Dominate.castParticle",
+      "burstSound": "event:/Abilities/Misc/Psykonics_Dominate",
+      "burstActions": [
+        { "do": "effect", "effect": "CHARM", "turns": 4 }
+      ]
+    },
+    {
+      "id": "Decoy",
+      "name": "Puppet Decoy",
+      "description": "They're attacking a puppet that looks just like you.",
+      "duration": 2,
+      "stats": {
+        "Dodge": 30
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Tug",
+        "icon": "puppetmaster_t0.png",
+        "description": "Every touch leaves a thread behind.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "effect": "@Strings" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Thread",
+        "icon": "puppetmaster_t1.png",
+        "staminaCost": 8,
+        "description": "Flick a psychic thread onto them.",
+        "impactVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+        "sound": "sfx/puppet_thread.wav",
+        "actions": [
+          { "do": "damage", "type": "Psi", "min": 1, "max": 3, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Strings" }
+        ],
+        "perk": {
+          "name": "Silk Thread",
+          "damageMult": 1.3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Dance, Puppet",
+        "icon": "puppetmaster_t2.png",
+        "cooldown": 6,
+        "staminaCost": 15,
+        "description": "Yank the threads hard. They stumble, and you tie two more.",
+        "impactVfx": "PA_Psykonics_Dominate.castParticle",
+        "sound": "event:/Abilities/Misc/Psykonics_Dominate",
+        "actions": [
+          { "do": "effect", "effect": "@Strings", "stacks": 2 },
+          { "do": "effect", "effect": "#Reeling" }
+        ],
+        "perk": {
+          "name": "Jig",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Decoy Puppet",
+        "icon": "puppetmaster_t3.png",
+        "cooldown": 12,
+        "description": "Leave a puppet of yourself to take the blows.",
+        "castVfx": "CYBERNINJA_STEALTH.particleOn",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Vanish",
+        "actions": [
+          { "do": "effect", "effect": "@Decoy" }
+        ],
+        "perk": {
+          "name": "Lifelike Puppet",
+          "addActions": [
+            { "do": "shield", "amount": 8 }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Marionette Mastery",
+        "icon": "puppetmaster_t4.png",
+        "description": "When a puppet breaks, its threads find a new host.",
+        "procs": [
+          {
+            "on": "kill",
+            "radius": 3,
+            "actions": [
+              { "do": "effect", "effect": "@Strings" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Cut the Strings",
+        "icon": "puppetmaster_t5.png",
+        "radius": 5,
+        "staminaCost": 30,
+        "cooldown": 16,
+        "description": "Snap every thread at once. It hurts in proportion to how tangled they were.",
+        "castVfx": "PA_ThoughtLeader_FI.castParticle",
+        "impactVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+        "sound": "audio_licensed/puppet_cut.wav",
+        "actions": [
+          { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Strings", "consumeStacks": true, "ifTargetHas": "@Strings" }
+        ],
+        "perk": {
+          "name": "Final Bow",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Tangleweave",
+        "icon": "puppetmaster_t6.png",
+        "range": 6,
+        "radius": 2,
+        "staminaCost": 22,
+        "cooldown": 12,
+        "description": "Cast a whole net of threads over a crowd. For a moment their hands are yours, and nobody gets to do anything clever.",
+        "castVfx": "PA_ThoughtLeader_FI.castParticle",
+        "impactVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+        "sound": "sfx/puppet_thread.wav",
+        "actions": [
+          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "@Strings" },
+          { "do": "silence", "turns": 1 }
+        ],
+        "perk": {
+          "name": "Spider's Parlour",
+          "addActions": [
+            { "do": "effect", "effect": "@Strings" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Backlash Rigging",
+        "icon": "puppetmaster_t7.png",
+        "description": "Anyone who lays a hand on you gets a thread tied to it, and a puppet one string short of yours fights the tension in every limb.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 50,
+            "actions": [
+              { "do": "effect", "effect": "@Strings" }
+            ]
+          },
+          {
+            "on": "hit",
+            "maxPerTurn": 1,
+            "when": { "value": "stacks:@Strings", "of": "victim", "atLeast": 3 },
+            "vfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "Savvy", "scaleMult": 0.25 },
+              { "do": "exhaust", "amount": 1 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+[ { "particles": [
+  { "id": "fx_grapnel_acrobat_grapnel_yank_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.418], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 272, "duration": 0.7, "life": [0.44, 0.572], "speed": [0.0, 0.032], "size": [0.06, 0.12], "gravity": 0.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_grapnel_acrobat_grapnel_yank_impact",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.404], "speed": [0], "size": [0.674], "sizeCurve": "pop", "color": "#C8FFF8", "color2": "#108888", "alpha": 0.85, "shape": "point"},
+      {"texture": "spark", "count": 13, "life": [0.276, 0.443], "speed": [1.539, 3.002], "size": [0.065, 0.123], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.2},
+      {"texture": "ring", "count": 1, "life": [0.347], "speed": [0], "size": [0.906], "sizeCurve": "shrink", "color": "#C8FFF8", "color2": "#108888", "shape": "point"}
+    ] },
+  { "id": "fx_grapnel_acrobat_zip_line_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.499], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 273, "duration": 0.7, "life": [0.408, 0.549], "speed": [0.0, 0.032], "size": [0.065, 0.123], "gravity": 0.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_grapnel_acrobat_zip_line_impact", "light": {"color": "#50D8D0", "range": 2.521, "intensity": 1.404, "time": 0.275},
+    "layers": [
+      {"texture": "fx/grapnel_acrobat_burst.png", "count": 1, "life": [0.4], "speed": [0], "size": [0.801], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 5, "life": [0.301, 0.544], "speed": [0.0, 0.322], "size": [0.359, 0.753], "sizeCurve": "pop", "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.25}
+    ] },
+  { "id": "fx_grapnel_acrobat_swing_kick_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.409], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 295, "duration": 0.7, "life": [0.445, 0.563], "speed": [0.0, 0.028], "size": [0.057, 0.113], "gravity": 0.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_grapnel_acrobat_swing_kick_impact", "light": {"color": "#50D8D0", "range": 3.097, "intensity": 2.194, "time": 0.437},
+    "layers": [
+      {"texture": "fx/grapnel_acrobat_burst.png", "count": 1, "life": [0.402], "speed": [0], "size": [1.168], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.384], "speed": [0], "size": [1.235], "sizeCurve": "grow", "color": "#C8FFF8", "color2": "#108888", "shape": "point"},
+      {"texture": "fx/grapnel_acrobat_bits.png", "count": 12, "life": [0.551, 1.004], "speed": [2.272, 5.481], "size": [0.091, 0.222], "gravity": 1.2, "spin": [-360, 360], "color": "#C8FFF8", "color2": "#108888", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.96, 1.618], "speed": [0.274, 0.909], "size": [0.551, 0.913], "sizeCurve": "grow", "spin": [-50, 50], "color": "#162222", "color2": "#162222", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_grapnel_acrobat_wall_pin_travel",
+    "layers": [
+      {"texture": "shard", "count": 1, "life": [0.7], "speed": [0], "size": [0.549], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "duration": 0.7, "spin": [600, 900]},
+      {"texture": "spark", "count": 0, "rate": 111, "duration": 0.7, "life": [0.168, 0.267], "speed": [0.11, 0.356], "size": [0.083, 0.163], "gravity": 0.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.06, "stretch": 3}
+    ] },
+  { "id": "fx_grapnel_acrobat_wall_pin_impact", "light": {"color": "#50D8D0", "range": 3.878, "intensity": 2.839, "time": 0.491},
+    "layers": [
+      {"texture": "fx/grapnel_acrobat_burst.png", "count": 1, "life": [0.404], "speed": [0], "size": [1.45], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.447], "speed": [0], "size": [1.665], "sizeCurve": "grow", "color": "#C8FFF8", "color2": "#108888", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.523], "speed": [0], "size": [2.225], "sizeCurve": "grow", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/grapnel_acrobat_bits.png", "count": 18, "life": [0.456, 0.893], "speed": [2.92, 5.553], "size": [0.09, 0.211], "gravity": 1.2, "spin": [-360, 360], "color": "#C8FFF8", "color2": "#108888", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [1.001, 1.569], "speed": [0.273, 0.845], "size": [0.748, 1.227], "sizeCurve": "grow", "spin": [-50, 50], "color": "#162222", "color2": "#162222", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_grapnel_acrobat_pendulum_area", "light": {"color": "#50D8D0", "range": 6.066, "intensity": 1.499, "time": 0.746},
+    "layers": [
+      {"texture": "mote", "count": 52, "life": [0.628, 1.311], "speed": [0.109, 0.409], "size": [0.11, 0.21], "orbit": 0.88, "color": "#C8FFF8", "color2": "#108888", "shape": "ring", "radius": 3.0, "ground": true, "offset": [0, 0.3, 0]},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.948, 1.624], "speed": [0.091, 0.307], "size": [0.825, 1.497], "sizeCurve": "grow", "spin": [-50, 50], "color": "#162222", "color2": "#162222", "alpha": 0.45, "shape": "ring", "radius": 2.4000000000000004, "ground": true, "orbit": 0.6, "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.65], "speed": [0], "size": [8.923], "sizeCurve": "pulse", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "ground": true, "flat": true}
+    ] },
+  { "id": "fx_grapnel_acrobat_cat_s_cradle_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.44], "sizeCurve": "flat", "color": "#C8FFF8", "color2": "#108888", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 303, "duration": 0.7, "life": [0.402, 0.653], "speed": [0.0, 0.032], "size": [0.055, 0.115], "gravity": 0.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_grapnel_acrobat_cat_s_cradle_impact",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.386], "speed": [0], "size": [0.743], "sizeCurve": "pop", "color": "#C8FFF8", "color2": "#108888", "alpha": 0.85, "shape": "point"},
+      {"texture": "spark", "count": 15, "life": [0.302, 0.452], "speed": [1.657, 3.027], "size": [0.07, 0.125], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.2},
+      {"texture": "ring", "count": 1, "life": [0.373], "speed": [0], "size": [0.945], "sizeCurve": "shrink", "color": "#C8FFF8", "color2": "#108888", "shape": "point"},
+      {"texture": "spark", "count": 17, "life": [0.289, 0.6], "speed": [2.903, 5.305], "size": [0.073, 0.152], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFF8", "color2": "#108888", "shape": "sphere", "radius": 0.2}
+    ] }
+] },
+{ "id": "MOD_GrapnelAcrobat", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grapnel_acrobat_grapnel_yank_impact", "travelVfx": "fx_grapnel_acrobat_grapnel_yank_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grapnel_acrobat_zip_line_impact", "travelVfx": "fx_grapnel_acrobat_zip_line_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grapnel_acrobat_swing_kick_impact", "travelVfx": "fx_grapnel_acrobat_swing_kick_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grapnel_acrobat_wall_pin_impact", "travelVfx": "fx_grapnel_acrobat_wall_pin_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_grapnel_acrobat_pendulum_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_grapnel_acrobat_cat_s_cradle_impact", "travelVfx": "fx_grapnel_acrobat_cat_s_cradle_travel", "areaVfx": ""}}
+] } ]

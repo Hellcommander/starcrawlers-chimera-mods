@@ -1,0 +1,9 @@
+{
+  "id": "BossLooks",
+  "name": "Boss Looks",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Classes made from a boss's attacks wear that boss's own effects. Nothing is copied: each entry names a particle or hazard inside the installed game, read when it is first played. Turn it off and those classes use their own effects again.",
+  "loadAfter": ["ArendethClasses", "SkillVfx"]
+}

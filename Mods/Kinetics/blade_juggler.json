@@ -1,0 +1,529 @@
+{
+  "id": "MOD_BladeJuggler",
+  "name": "Blade Juggler",
+  "description": "Knife-act performers from the orbital circuses. Thrown knives stick in the deck and cut whoever steps on them, until one call brings every blade home through everything in the way.\n\nThrow-and-recall skirmisher: the more knives out, the worse the return. Favors [AGL].",
+  "archetype": "Guile",
+  "icon": "icons/blade_juggler.png",
+  "attributePriorities": {
+    "Agility": 5,
+    "Recognition": 2
+  },
+  "effects": [
+    {
+      "id": "Nicked",
+      "name": "Nicked",
+      "debuff": true,
+      "description": "A thin cut that keeps opening. More of them, more bleeding.",
+      "duration": 3,
+      "maxStacks": 5,
+      "dot": {
+        "type": "Slashing",
+        "min": 1,
+        "max": 2
+      }
+    },
+    {
+      "id": "Juggling",
+      "name": "Juggling",
+      "description": "Knives in the air and a rhythm in your hands.",
+      "duration": 2,
+      "stats": {
+        "Dodge": 10,
+        "Crit": 10
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Juggler's Rhythm",
+        "icon": "icons/jugglers_rhythm.png",
+        "description": "Your hits often leave thin cuts that keep bleeding, and stack up the more you land.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Knife Toss",
+        "icon": "icons/knife_toss.png",
+        "range": 6,
+        "staminaCost": 6,
+        "cooldown": 0,
+        "description": "A throwing knife into the target. It sticks in the deck at their feet afterwards, cutting whoever stands on it, until you call it back.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Slashing",
+            "min": 3,
+            "max": 5,
+            "scale": "Agility",
+            "scaleMult": 0.35,
+            "perRank": 1
+          },
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Weighted Blades",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/blade_knife_toss.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Recall",
+        "icon": "icons/recall.png",
+        "instant": false,
+        "staminaCost": 6,
+        "cooldown": 1,
+        "description": "Every knife on the floor flies back to your hand at once, slicing through every enemy standing on it or in the line between it and you. More knives out, more cuts.",
+        "castVfx": "CYBERNINJA_DASH.particle_dash",
+        "actions": [
+          {
+            "do": "recall",
+            "fieldName": "Knife",
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility",
+                "scaleMult": 0.2,
+                "perRank": 1
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Juggling"
+          }
+        ],
+        "perk": {
+          "name": "Snap Return",
+          "description": "Recall is ready again every turn.",
+          "cooldownDelta": -1
+        },
+        "sound": "audio_licensed/blade_recall.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Fan of Knives",
+        "icon": "icons/fan_of_knives.png",
+        "instant": false,
+        "radius": 2.6,
+        "staminaCost": 12,
+        "cooldown": 5,
+        "description": "A spinning throw in every direction: every enemy around you is cut, and a knife sticks at each one's feet.",
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Slashing",
+            "min": 2,
+            "max": 4,
+            "scale": "Agility",
+            "scaleMult": 0.25,
+            "perRank": 1
+          },
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Wider Arc",
+          "radiusDelta": 1
+        },
+        "sound": "audio_licensed/blade_fan_of_knives.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Pinning Throw",
+        "icon": "icons/pinning_throw.png",
+        "range": 6,
+        "staminaCost": 10,
+        "cooldown": 6,
+        "description": "A knife through the sleeve and into the deck. They're pinned in place for a turn, and two knives stay behind.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Piercing",
+            "min": 3,
+            "max": 6,
+            "scale": "Agility",
+            "scaleMult": 0.35,
+            "perRank": 1
+          },
+          {
+            "do": "stun",
+            "turns": 1
+          },
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          },
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Through and Through",
+          "cooldownDelta": -2
+        },
+        "sound": "audio_licensed/blade_pinning_throw.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Thousand Returns",
+        "icon": "icons/thousand_returns.png",
+        "instant": false,
+        "radius": 4,
+        "staminaCost": 18,
+        "cooldown": 12,
+        "description": "The finale. A knife lands at the feet of every enemy within four tiles - and then every knife on the floor comes home at once, each one cutting twice.",
+        "castVfx": "PA_Barbarian_SweepingStrike.triggerParticle@0.6",
+        "actions": [
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          },
+          {
+            "do": "recall",
+            "to": "self",
+            "fieldName": "Knife",
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility",
+                "scaleMult": 0.15,
+                "perRank": 1
+              },
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 2,
+                "max": 4,
+                "scale": "Agility",
+                "scaleMult": 0.15,
+                "perRank": 1
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Juggling"
+          }
+        ],
+        "perk": {
+          "name": "Encore",
+          "damageMult": 1.2
+        },
+        "sound": "audio_licensed/blade_thousand_returns.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Dodge": 3
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Unstitch",
+        "icon": "icons/unstitch.png",
+        "range": 6,
+        "staminaCost": 12,
+        "cooldown": 5,
+        "description": "One knife drawn along every cut already on them. Each layer of Nicked tears wide open at once and is used up, some of what spills patches you up, and the knife stays in the deck afterwards.",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.5",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Slashing",
+            "min": 4,
+            "max": 7,
+            "scale": "Agility",
+            "scaleMult": 0.35,
+            "perRank": 1,
+            "bonusPerStack": 3,
+            "stacksOf": "@Nicked",
+            "consumeStacks": true,
+            "lifesteal": 0.25
+          },
+          {
+            "do": "field",
+            "fieldName": "Knife",
+            "turns": 12,
+            "affects": "enemies",
+            "onEnter": true,
+            "model": {
+              "mesh": "models/knife.obj",
+              "texture": "models/knife.png",
+              "scale": 1.3,
+              "wobble": 14,
+              "randomYaw": true
+            },
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Slashing",
+                "min": 1,
+                "max": 2
+              },
+              {
+                "do": "effect",
+                "effect": "@Nicked"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Juggling"
+          }
+        ],
+        "perk": {
+          "name": "Seam Ripper",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/blade_pinning_throw.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Never Drop One",
+        "icon": "icons/never_drop_one.png",
+        "description": "The act never stops. When a swing misses you, you are already juggling again and a knife lands at the swinger's feet. When something carrying your cuts goes down, the blade passes on: everyone next to it gets two fresh layers of Nicked.",
+        "procs": [
+          {
+            "on": "dodge",
+            "maxPerTurn": 1,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "@Juggling"
+              },
+              {
+                "do": "field",
+                "fieldName": "Knife",
+                "turns": 12,
+                "affects": "enemies",
+                "onEnter": true,
+                "model": {
+                  "mesh": "models/knife.obj",
+                  "texture": "models/knife.png",
+                  "scale": 1.3,
+                  "wobble": 14,
+                  "randomYaw": true
+                },
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Slashing",
+                    "min": 1,
+                    "max": 2
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "@Nicked"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "radius": 2,
+            "when": {
+              "has": "@Nicked",
+              "of": "victim"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Nicked",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ExampleEnemies",
+  "name": "Example Enemies",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Two enemies showing the enemy format: one joins the spawn pool, one replaces a vanilla enemy. Safe to delete.",
+  "requires": ["ExampleItems"]
+}

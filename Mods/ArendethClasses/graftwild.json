@@ -1,0 +1,384 @@
+{
+  "id": "MOD_Graftwild",
+  "name": "Graftwild",
+  "description": "Hydroponics went feral and took a gardener with it. Graftwilds traded their own flesh for grafted heartwood: it shrugs off toxins and slowly knits itself back together, but it burns.\n\nShapeshifting nature bruiser with summoned vines and stacking spores. Favors [STR] and [TGH]. Weak to fire.",
+  "archetype": "Muscle",
+  "icon": "graftwild.png",
+  "attributePriorities": {
+    "Strength": 3,
+    "Toughness": 3,
+    "Agility": 1
+  },
+  "effects": [
+    {
+      "id": "Clogspore",
+      "name": "Clogspore",
+      "description": "Clinging spores clog joints and lenses, a little more with every layer. At five the bearer reels; at ten the bloom bursts and seeds everyone nearby.",
+      "duration": 6,
+      "debuff": true,
+      "maxStacks": 10,
+      "stats": {
+        "Dodge": -2,
+        "RangedAccuracy": -1
+      },
+      "vfx": "EFFECT_Xeno_Debuff_Green",
+      "thresholds": [
+        { "at": 5, "actions": [ { "do": "effect", "effect": "#Reeling" } ] }
+      ],
+      "burstAt": 10,
+      "burstRadius": 1.5,
+      "burstVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+      "burstActions": [
+        { "do": "damage", "type": "Bio", "min": 6, "max": 10, "scale": "Toughness", "scaleMult": 0.3 },
+        { "do": "stun", "turns": 1 },
+        { "do": "effect", "effect": "@Clogspore", "stacks": 3 }
+      ]
+    },
+    {
+      "id": "Hockcut",
+      "name": "Hockcut",
+      "description": "A torn tendon. Every layer slows them down further.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 4,
+      "stats": {
+        "Agility": -2,
+        "Dodge": -4
+      }
+    },
+    {
+      "id": "SapFever",
+      "name": "Sap Fever",
+      "description": "The beast's blood runs hot in the wood: more damage and quicker feet for every layer.",
+      "duration": 8,
+      "maxStacks": 8,
+      "damageDealtPerStack": 0.04,
+      "stats": {
+        "Dodge": 1
+      }
+    },
+    {
+      "id": "ProwlerGraft",
+      "name": "Prowler Graft",
+      "description": "Long limbs, quiet steps, hooked claws. Your lash hamstrings, and every blow you land stokes Sap Fever. When the shape lets go, the wood mends.",
+      "duration": 10,
+      "group": "graft",
+      "stats": {
+        "Dodge": 12,
+        "Crit": 10
+      },
+      "procs": [
+        { "on": "hit", "chance": 35, "actions": [ { "do": "effect", "to": "self", "effect": "@SapFever" } ] }
+      ],
+      "onExpireActions": [
+        { "do": "heal", "to": "self", "amount": 5, "scale": "Toughness", "scaleMult": 0.4 }
+      ]
+    },
+    {
+      "id": "HulkwoodGraft",
+      "name": "Hulkwood Graft",
+      "description": "Shoulders like a cargo loader, bark like hull plate. Your lash bowls them over, whoever hits you gets a fistful of barbs, and every wound stokes Sap Fever. When the shape lets go, the wood mends.",
+      "duration": 10,
+      "group": "graft",
+      "stats": {
+        "Armor": 3,
+        "Dodge": -5
+      },
+      "damageTakenMult": 0.8,
+      "procs": [
+        { "on": "hurt", "chance": 100, "vfx": "PA_SerratedSpines.PS_impact", "actions": [
+          { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Toughness", "scaleMult": 0.3 },
+          { "do": "effect", "to": "self", "effect": "@SapFever" } ] }
+      ],
+      "onExpireActions": [
+        { "do": "heal", "to": "self", "amount": 5, "scale": "Toughness", "scaleMult": 0.4 }
+      ]
+    },
+    {
+      "id": "RotwyrmGraft",
+      "name": "Rotwyrm Graft",
+      "description": "You are a coil of fungus-grown wood the length of a corridor. Spores pour off you every turn, your hide mends as you fight, and your lash leaves them choking. When the shape lets go, the wood mends.",
+      "duration": 8,
+      "group": "graft",
+      "stats": {
+        "Armor": 2
+      },
+      "damageTakenMult": 0.85,
+      "hot": 3,
+      "procs": [
+        { "on": "turn", "radius": 2, "actions": [ { "do": "effect", "effect": "@Clogspore" } ] }
+      ],
+      "onExpireActions": [
+        { "do": "heal", "to": "self", "amount": 8, "scale": "Toughness", "scaleMult": 0.5 }
+      ]
+    },
+    {
+      "id": "Barbvined",
+      "name": "Barbvine",
+      "description": "A knot of barbed, spitting vine rooted into the deck plating. It burns easily.",
+      "duration": -1,
+      "resists": {
+        "Bio": 25,
+        "Fire": -25
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1,
+        "HealthRegen": 1
+      },
+      "resistances": {
+        "Bio": 20,
+        "Fire": -15
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Heartwood Graft",
+        "icon": "graftwild_t0.png",
+        "description": "Your flesh is mostly grafted heartwood now: it shrugs off toxins and slowly knits itself back together, but it catches fire far too easily. Hitting you is a lot like hugging a cactus, and the spores you shed get into everything you strike.",
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 50,
+            "vfx": "PA_SerratedSpines.PS_impact",
+            "actions": [
+              { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Toughness", "scaleMult": 0.2 }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              { "do": "effect", "effect": "@Clogspore" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Briar Whip",
+        "icon": "graftwild_t1.png",
+        "range": 2.5,
+        "description": "A thorny lash that leaves barbs and spores behind. It changes with your shape: a prowler hamstrings, a hulk bowls them over, a rot-wyrm chokes them.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "#Gashed" },
+          { "do": "effect", "effect": "@Clogspore" },
+          { "do": "effect", "effect": "#Gashed", "ifSelfHas": "@ProwlerGraft" },
+          { "do": "effect", "effect": "@Hockcut", "ifSelfHas": "@ProwlerGraft" },
+          { "do": "knockback", "amount": 1, "ifSelfHas": "@HulkwoodGraft" },
+          { "do": "stun", "turns": 1, "chance": 30, "ifSelfHas": "@HulkwoodGraft" },
+          { "do": "effect", "effect": "@Clogspore", "stacks": 2, "ifSelfHas": "@RotwyrmGraft" }
+        ],
+        "perk": {
+          "name": "Bramble Lash",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/graftwild_whip.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Seed the Deck",
+        "icon": "graftwild_t4.png",
+        "range": 6,
+        "radius": 1.5,
+        "cooldown": 10,
+        "staminaCost": 18,
+        "description": "Spit a fistful of seed into the plating. Roots grab every ankle in reach, spores puff up around them, and barbed vines sprout among them and start spitting thorns.",
+        "impactVfx": "EFFECT_Xeno_Debuff_Green",
+        "sound": "event:/Abilities/Biomods/Biomods_Spine_Throw",
+        "actions": [
+          { "do": "stun", "turns": 1 },
+          { "do": "effect", "effect": "@Clogspore", "stacks": 2 },
+          { "do": "summon", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Barbvine", "model": { "mesh": "models/barbvine.glb", "height": 1.2, "keepParticles": false }, "summonGroup": "Barbvine", "amount": 1, "maxSummons": 2, "turns": 15, "effect": "@Barbvined" }
+        ],
+        "perk": {
+          "name": "Strangler Fig",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Prowler's Leap",
+        "icon": "graftwild_t3.png",
+        "range": 4,
+        "radius": 1.2,
+        "cooldown": 6,
+        "staminaCost": 12,
+        "instant": false,
+        "description": "Your legs lengthen mid-stride and you land on them claws first, tearing tendons. The leap pulls you into the Prowler Graft.",
+        "castVfx": "PA_Mutant_Unleash.castParticle",
+        "impactVfx": "PA_DualWield_SinisterStrike.impactEffect",
+        "sound": "event:/Abilities/Biomods/Biomods_ApexPredator",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@Hockcut", "stacks": 2 },
+          { "do": "effect", "effect": "#Gashed", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@ProwlerGraft" }
+        ],
+        "perk": {
+          "name": "Long Haunches",
+          "rangeDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Hulkwood Charge",
+        "icon": "graftwild_t2.png",
+        "range": 3,
+        "radius": 1.6,
+        "cooldown": 9,
+        "staminaCost": 16,
+        "instant": false,
+        "description": "Swell into something with too many shoulders and plough through the room. Everything around where you stop gets trampled flat. The charge pulls you into the Hulkwood Graft.",
+        "castVfx": "PA_Mutant_HoldItIn.castParticle",
+        "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
+        "sound": "event:/Abilities/ChaoticMutant/Mutation_HornCharge",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "knockback", "amount": 2 },
+          { "do": "stun", "turns": 1 },
+          { "do": "effect", "to": "self", "effect": "@HulkwoodGraft" }
+        ],
+        "perk": {
+          "name": "Stampede Heart",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Rotwyrm Uncoiling",
+        "icon": "graftwild_t5.png",
+        "radius": 3,
+        "staminaCost": 30,
+        "cooldown": 20,
+        "description": "Everything grafted into you lets go at once and you uncoil into a great fungal wyrm. The roar burns off all your Sap Fever as a choking wave of spores, barbed vines burst up around you, and for a while you are the Rotwyrm Graft.",
+        "castVfx": "PA_Force_Psyker_Kinetic_Slam.castParticle",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@SapFever", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "effect": "@Clogspore", "stacks": 4 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "summon", "to": "self", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Barbvine", "model": { "mesh": "models/barbvine.glb", "height": 1.2, "keepParticles": false }, "summonGroup": "Barbvine", "amount": 2, "maxSummons": 4, "turns": 15, "effect": "@Barbvined" },
+          { "do": "effect", "to": "self", "effect": "@RotwyrmGraft" }
+        ],
+        "perk": {
+          "name": "Old Growth",
+          "radiusDelta": 1
+        },
+        "sound": "sfx/graftwild_heartgrain.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Rootsnare",
+        "icon": "graftwild_t6.png",
+        "range": 5,
+        "melee": false,
+        "cooldown": 7,
+        "staminaCost": 12,
+        "description": "Fling a rooting tendril across the room, hook it into something that thinks it is out of reach and reel it in through a puff of spores. A hamstrung target tears worse on the way. It changes with your shape: a prowler cuts the tendon again, a hulk slams them down, a rot-wyrm chokes them.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "sound": "sfx/graftwild_whip.wav",
+        "actions": [
+          { "do": "tether", "look": "#5E7F2F" },
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 2, "stacksOf": "@Hockcut" },
+          { "do": "pull", "amount": 3 },
+          { "do": "effect", "effect": "@Clogspore", "stacks": 2 },
+          { "do": "effect", "effect": "@Hockcut", "ifSelfHas": "@ProwlerGraft" },
+          { "do": "stun", "turns": 1, "ifSelfHas": "@HulkwoodGraft" },
+          { "do": "effect", "effect": "@Clogspore", "stacks": 2, "ifSelfHas": "@RotwyrmGraft" },
+          { "do": "effect", "to": "self", "effect": "@SapFever" }
+        ],
+        "perk": {
+          "name": "Deep Roots",
+          "rangeDelta": 2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "resistances": {
+        "Bio": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Turning Season",
+        "icon": "graftwild_t7.png",
+        "description": "Every shape you shed leaves something behind in the wood. Letting the prowler go leaves you quick on your feet, letting the hulk go leaves a crust of bark, and letting the rot-wyrm go flushes every ailment out of you. Each one stokes your Sap Fever, and so does every kill.",
+        "procs": [
+          {
+            "on": "effectLost",
+            "match": "@ProwlerGraft",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@SapFever", "stacks": 2 },
+              { "do": "effect", "to": "self", "effect": "#Hasted" }
+            ]
+          },
+          {
+            "on": "effectLost",
+            "match": "@HulkwoodGraft",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@SapFever", "stacks": 2 },
+              { "do": "shield", "to": "self", "amount": 5, "scale": "Toughness", "scaleMult": 0.4 }
+            ]
+          },
+          {
+            "on": "effectLost",
+            "match": "@RotwyrmGraft",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@SapFever", "stacks": 3 },
+              { "do": "cleanse", "to": "self" }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@SapFever" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

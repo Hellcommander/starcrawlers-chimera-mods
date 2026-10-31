@@ -1,0 +1,261 @@
+{
+  "id": "MOD_Vasculist",
+  "name": "Vasculist",
+  "description": "Blood-pressure sorcery from the station's black-market surgeons. Every spike raises the Vein Pressure inside a target until its circulation ruptures, stunning it and everything beside it.\n\nBuild, burst and pay in blood. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "vasculist.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "PsiPower": 2,
+    "Toughness": 1
+  },
+  "effects": [
+    {
+      "id": "Pressure",
+      "name": "Vein Pressure",
+      "description": "Their veins are standing out like cables. At twelve they rupture, and everything you have bled so far comes back through them.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 12,
+      "stats": { "Agility": -1 },
+      "vfx": "EFFECT_Bleed",
+      "burstAt": 12,
+      "burstRadius": 1.5,
+      "burstVfx": "PA_SerratedSpines.PS_impact_perk",
+      "burstSound": "event:/Abilities/Biomods/Biomods_ApexPredator",
+      "burstActions": [
+        { "do": "damage", "type": "Piercing", "min": 8, "max": 14, "trueDamage": true, "scale": "Smarts", "scaleMult": 0.5, "bonusPerStack": 2, "stacksOf": "@Backflow", "stacksFrom": "self" },
+        { "do": "stun", "turns": 2 },
+        { "do": "effect", "effect": "#Exposed" }
+      ]
+    },
+    {
+      "id": "WeepingCut",
+      "name": "Weeping Cut",
+      "description": "Blood that won't stop. If they die with it running, the last of their pulse is yours.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 8,
+      "dot": { "type": "Piercing", "min": 1, "max": 1 },
+      "vfx": "EFFECT_Bleed",
+      "onDeathActions": [ { "do": "stamina", "to": "self", "amount": 4 } ]
+    },
+    {
+      "id": "Backflow",
+      "name": "Backflow",
+      "description": "Every wound you take is held in your veins, ready to be pushed back out through someone else.",
+      "duration": 6,
+      "maxStacks": 10
+    },
+    {
+      "id": "Pulse",
+      "name": "Racing Pulse",
+      "description": "Your heart is hammering, and your spells keep time.",
+      "duration": 6,
+      "maxStacks": 10,
+      "damageDealtPerStack": 0.03,
+      "stats": { "Crit": 1 }
+    },
+    {
+      "id": "OpenVein",
+      "name": "Opened Vein",
+      "description": "The price of the heavy work: your own blood, running.",
+      "duration": 3,
+      "debuff": true,
+      "dot": { "type": "Piercing", "min": 1, "max": 2 },
+      "vfx": "EFFECT_Bleed"
+    },
+    {
+      "id": "Clot",
+      "name": "Clotting Ward",
+      "description": "Your blood thickens until nothing gets out, and every blow you land draws a little back in.",
+      "duration": 5,
+      "damageTakenMult": 0.8,
+      "hot": 2,
+      "procs": [ { "on": "hit", "chance": 50, "actions": [ { "do": "heal", "to": "self", "amount": 2 } ] } ]
+    },
+    {
+      "id": "Clotbound",
+      "name": "Clotbound",
+      "description": "A crawling clot of the Vasculist's own blood. When it bursts, the blood goes home.",
+      "duration": -1,
+      "stats": { "Armor": 2 },
+      "onDeathActions": [ { "do": "stamina", "to": "self", "amount": 3 } ]
+    },
+    {
+      "id": "StrungUp",
+      "name": "Strung Up",
+      "description": "Their heart beats to someone else's rhythm, and the pressure inside them climbs every turn. Every wound they take fighting for you is held in; when the strings are cut, they burst with half of it.",
+      "duration": 5,
+      "debuff": true,
+      "dot": { "type": "Piercing", "min": 2, "max": 3 },
+      "vfx": "EFFECT_Bleed",
+      "onExpireRadius": 2,
+      "onExpireActions": [
+        { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.5, "bonusPerStack": 3, "stacksOf": "@Backflow", "stacksFrom": "self", "stored": 0.5 },
+        { "do": "stun", "turns": 1 }
+      ],
+      "onDeathActions": [
+        { "do": "summon", "creature": "XENO_SLIME", "summonName": "Clotling", "model": { "mesh": "models/clotling.glb", "height": 0.7, "keepParticles": false }, "summonGroup": "Clotling", "amount": 2, "maxSummons": 4, "turns": 12, "effect": "@Clotbound" }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Quickened Heart",
+        "icon": "vasculist_t0.png",
+        "description": "Every wound you take is held back as Backflow, and your blows leave cuts that keep running.",
+        "procs": [
+          { "on": "hurt", "actions": [ { "do": "effect", "to": "self", "effect": "@Backflow" } ] },
+          { "on": "hit", "chance": 35, "actions": [ { "do": "effect", "effect": "@WeepingCut" } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Smarts": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Vein Spike",
+        "icon": "vasculist_t1.png",
+        "staminaCost": 10,
+        "description": "Push their blood pressure up a notch, painfully. Armor doesn't help, and every notch already there makes the next one hurt more.",
+        "impactVfx": "EFFECT_Bleed",
+        "sound": "audio_licensed/vasculist_spike.wav",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 1, "max": 3, "trueDamage": true, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Pressure" },
+          { "do": "effect", "effect": "@Pressure" },
+          { "do": "effect", "effect": "@WeepingCut" },
+          { "do": "effect", "to": "self", "effect": "@Pulse" }
+        ],
+        "perk": { "name": "Double Spike", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Bloodletting Release",
+        "icon": "vasculist_t2.png",
+        "cooldown": 8,
+        "staminaCost": 16,
+        "description": "Vent everyone's pressure at once through whatever opening is closest, and drink some of it. A strung-up puppet caught in it bursts early, carrying your Backflow with it.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "sound": "event:/Abilities/Biomods/Biomods_AdrenalOrgan_Heal",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 6, "max": 12, "scale": "Smarts", "scaleMult": 0.5, "bonusPerStack": 4, "stacksOf": "@Backflow", "stacksFrom": "self", "consumeStacks": true, "ifTargetHas": "@StrungUp", "consume": true },
+          { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "bonusPerStack": 2, "stacksOf": "@Pressure", "consumeStacks": true, "lifesteal": 0.3 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "effect", "to": "self", "effect": "@Pulse" }
+        ],
+        "perk": { "name": "Arterial Spray", "radiusDelta": 1 }
+      }
+    },
+    {
+      "attributes": { "Toughness": 1 },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Clot Brood",
+        "icon": "vasculist_t3.png",
+        "cooldown": 14,
+        "staminaCost": 14,
+        "description": "Open a vein and thicken what comes out. Some of it seals you in a ward; the rest crawls off as Clotlings that fight for you.",
+        "castVfx": "PA_AdrenalOrgan.PS_cast",
+        "sound": "event:/Abilities/Biomods/Biomods_AdrenalOrgan_Heal",
+        "actions": [
+          { "do": "effect", "effect": "@Clot" },
+          { "do": "cleanse", "amount": 1 },
+          { "do": "summon", "creature": "XENO_SLIME", "summonName": "Clotling", "model": { "mesh": "models/clotling.glb", "height": 0.7, "keepParticles": false }, "summonGroup": "Clotling", "amount": 2, "maxSummons": 4, "turns": 15, "effect": "@Clotbound" },
+          { "do": "effect", "to": "self", "effect": "@OpenVein" }
+        ],
+        "perk": { "name": "Iron Blood", "cooldownDelta": -5 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Tourniquet Hex",
+        "icon": "vasculist_t4.png",
+        "cooldown": 8,
+        "staminaCost": 15,
+        "description": "Clamp their circulation shut. Tissue tears, pressure spikes and they lock up.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "bonusPerStack": 1, "stacksOf": "@Pressure" },
+          { "do": "effect", "effect": "@Pressure", "stacks": 3 },
+          { "do": "stun", "turns": 1 },
+          { "do": "effect", "to": "self", "effect": "@Pulse" }
+        ],
+        "perk": { "name": "Full Clamp", "cooldownDelta": -3 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Marionette Heart",
+        "icon": "vasculist_t5.png",
+        "cooldown": 18,
+        "staminaCost": 24,
+        "description": "Pay in your own blood to take over their heartbeat. They fight for you while the pressure inside them climbs, and every blow they soak is held in: when the strings are cut they burst, hurling back everything you've bled and half of all they took. If they die first, their blood crawls out as Clotlings.",
+        "impactVfx": "PA_Psykonics_Dominate.castParticle",
+        "sound": "sfx/vasculist_puppetry.wav",
+        "actions": [
+          { "do": "effect", "effect": "CHARM", "turns": 5 },
+          { "do": "effect", "effect": "@StrungUp" },
+          { "do": "effect", "effect": "@Pressure", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@OpenVein" },
+          { "do": "effect", "to": "self", "effect": "@Pulse" }
+        ],
+        "perk": { "name": "Long Strings", "cooldownDelta": -6 }
+      }
+    },
+    {
+      "attributes": { "Smarts": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Arterial Relay",
+        "icon": "vasculist_t6.png",
+        "cooldown": 7,
+        "staminaCost": 18,
+        "description": "Thread one heartbeat through a whole crowd. A pulse of borrowed blood leaps from body to body, pushing up the pressure and opening a cut in each one it passes through, so whole groups climb toward rupture together. It takes a little of your own blood to start it.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "sound": "audio_licensed/vasculist_spike.wav",
+        "actions": [
+          { "do": "chain", "jumps": 3, "radius": 3, "falloff": 0.85, "actions": [
+            { "do": "tether", "look": "#9A1626" },
+            { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Pressure" },
+            { "do": "effect", "effect": "@Pressure", "stacks": 2 },
+            { "do": "effect", "effect": "@WeepingCut" } ] },
+          { "do": "effect", "to": "self", "effect": "@OpenVein" },
+          { "do": "effect", "to": "self", "effect": "@Pulse" }
+        ],
+        "perk": { "name": "Branching Artery", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
+      }
+    },
+    {
+      "attributes": { "Smarts": 2, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Hammering Crescendo",
+        "icon": "vasculist_t7.png",
+        "cooldown": 14,
+        "staminaCost": 22,
+        "description": "Let your racing heart set the beat for theirs. Every beat you've built up is driven into one target at once: it hits them through any armor, and their pressure jumps a notch for each, often straight into rupture. Your own pulse falls quiet afterwards, and your veins pay for it.",
+        "impactVfx": "PA_SerratedSpines.PS_impact_perk",
+        "sound": "event:/Abilities/Biomods/Biomods_ApexPredator",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "trueDamage": true, "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Pulse", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@Pressure", "stacks": 1, "bonusPerStack": 1, "stacksOf": "@Pulse", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "effect": "@WeepingCut", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@OpenVein" }
+        ],
+        "perk": { "name": "Fortissimo", "damageMult": 1.25 }
+      }
+    }
+  ]
+}

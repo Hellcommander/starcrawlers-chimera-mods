@@ -1,0 +1,180 @@
+{
+  "prompt": "heavy charging stampede impact with steam hiss, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, impact sound, heavy charging stampede impact with steam hiss, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0070871878415346146,
+  "archetype": "impact",
+  "references": [
+    {
+      "id": "bb0deb7254eaf10f",
+      "score": 0.34148845076560974,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 47.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "44197668a2d5a29f",
+      "score": 0.3159194588661194,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 39.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "5783f8d3c1e56000",
+      "score": 0.31568586826324463,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 35.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "dc266087611e467c",
+      "score": 0.3147035241127014,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 26.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "cae47f35266c68fd",
+      "score": 0.30719950795173645,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Swords.zip",
+      "inner": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 47.wav",
+      "tags": [
+        "swords",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4516155c0bf00789",
+      "score": 0.30719950795173645,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 47.wav",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "0f5c40ef8b8beb93",
+      "score": 0.30719950795173645,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 47.wav",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "af149ec9175c057b",
+      "score": 0.30209457874298096,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 23.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "b0d824f58f04bae9",
+      "score": 0.3019774854183197,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 15.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "e1885b6d0bc6d255",
+      "score": 0.29128971695899963,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 20.wav",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "bb0deb7254eaf10f",
+    "44197668a2d5a29f",
+    "5783f8d3c1e56000",
+    "dc266087611e467c",
+    "cae47f35266c68fd",
+    "4516155c0bf00789",
+    "0f5c40ef8b8beb93",
+    "af149ec9175c057b",
+    "b0d824f58f04bae9",
+    "e1885b6d0bc6d255"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\ember_charge.wav",
+  "sample_rate": 44100
+}

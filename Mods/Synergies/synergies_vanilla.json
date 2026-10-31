@@ -1,0 +1,428 @@
+{
+  "synergies": [
+    {
+      "id": "Accelerant",
+      "name": "Accelerant",
+      "trees": [
+        "SKILLTREE_Pyromaniac",
+        "SKILLTREE_Chemistry"
+      ],
+      "description": "You know what burns hotter: hits on burning enemies may spread the fire to the next foe in reach. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "maxPerTurn": 1,
+            "when": {
+              "has": "EFFECT_Fire"
+            },
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "EFFECT_Fire",
+                    "stacks": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PinAndPound",
+      "name": "Pin and Pound",
+      "trees": [
+        "SKILLTREE_Soldier",
+        "SKILLTREE_BigGuns"
+      ],
+      "description": "Suppressed enemies can't dodge the follow-up: your hits on them may leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "ifTargetHas": "EFFECT_BigGuns_Suppression"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OpenArtery",
+      "name": "Open Artery",
+      "trees": [
+        "SKILLTREE_Blademaster",
+        "SKILLTREE_Cyberninja"
+      ],
+      "description": "A bleeding target is an easy kill: your hits on bleeding enemies may leave them Gashed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Gashed",
+                "ifTargetHas": "EFFECT_Bleed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Ripostecraft",
+      "name": "Ripostecraft",
+      "trees": [
+        "SKILLTREE_DualWield",
+        "SKILLTREE_Acrobatics"
+      ],
+      "description": "Every dodge sets up an answer: a dodged attacker may come away Gashed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "#Gashed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "FirmwarePatch",
+      "name": "Firmware Patch",
+      "trees": [
+        "SKILLTREE_Engineer",
+        "SKILLTREE_Hacker"
+      ],
+      "description": "You write your own robots' code: their hits may Hack the target. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "name": "Patched Firmware",
+        "description": "Running code its owner wrote by hand, and it spreads.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Hacker_Hack_Weakness"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "CultureMedium",
+      "name": "Culture Medium",
+      "trees": [
+        "SKILLTREE_Xenobiologist",
+        "SKILLTREE_Nanomancy"
+      ],
+      "description": "Nanites tend your oozes and pets: their hits may leave a Nanite Hex. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5
+      },
+      "allies": {
+        "name": "Nanite-Tended",
+        "description": "Nanites ride this creature's every touch.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Nanomancy_Hex"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "KineticBulwark",
+      "name": "Kinetic Bulwark",
+      "trees": [
+        "SKILLTREE_Shieldbearer",
+        "SKILLTREE_ForcePsyker"
+      ],
+      "description": "Force fields back your shield: under Brace for Impact, blows you take may throw the attacker back a tile. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "knockback",
+                "amount": 1,
+                "ifSelfHas": "EFFECT_Shieldbearer_Brace",
+                "to": "attacker"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DeepStatic",
+      "name": "Deep Static",
+      "trees": [
+        "SKILLTREE_Psykonics",
+        "SKILLTREE_VoidPsyker"
+      ],
+      "description": "Two schools of the mind braced against each other: each turn spent Meditating may drain a foe nearby. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 35,
+            "radius": 3,
+            "pick": 1,
+            "when": {
+              "has": "EFFECT_Psykonics_Meditate",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Void_Psyker_Drain"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BloodUp",
+      "name": "Blood Up",
+      "trees": [
+        "SKILLTREE_Barbarian",
+        "SKILLTREE_Bodybuilding"
+      ],
+      "description": "All that muscle has to be fed: kills while Pumped Up may leave the foes around you Weakened. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 35,
+            "radius": 2,
+            "when": {
+              "has": "EFFECT_Bodybuilding_Pump",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Weakened"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SecondPockets",
+      "name": "Second Pockets",
+      "trees": [
+        "SKILLTREE_Smuggler",
+        "SKILLTREE_LootHunter"
+      ],
+      "description": "A smuggler's eye for value: kills sometimes turn up loose credits. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "credits",
+                "amount": 5,
+                "perRank": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HammerAndHolster",
+      "name": "Hammer and Holster",
+      "trees": [
+        "SKILLTREE_Pistolier",
+        "SKILLTREE_Gunslinger"
+      ],
+      "description": "Pistols are pistols: Spray 'n Pray hits may leave foes Reeling, and crits on Reeling foes may leave them Exposed. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "EFFECT_SprayPray",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              }
+            ]
+          },
+          {
+            "on": "crit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed",
+                "ifTargetHas": "#Reeling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChromeNerves",
+      "name": "Chrome Nerves",
+      "trees": [
+        "SKILLTREE_Cybertechnician",
+        "SKILLTREE_Prototype"
+      ],
+      "description": "Your augments talk to each other: blows taken on your Unobtanium Chrome Job may leave the attacker Shocked. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "#Shocked",
+                "ifSelfHas": "EFFECT_Cybertechnician_Chrome"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "UnstableBaseline",
+      "name": "Unstable Baseline",
+      "trees": [
+        "SKILLTREE_Biomods",
+        "SKILLTREE_ChaoticMutant"
+      ],
+      "description": "Your body already rewrites itself: while you're Hangry, whoever strikes you may come away Poisoned. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "to": "attacker",
+                "effect": "#Poisoned",
+                "ifSelfHas": "EFFECT_Hangry"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Converts",
+      "name": "True Believers",
+      "trees": [
+        "SKILLTREE_ThoughtLeader",
+        "SKILLTREE_SpacePirate"
+      ],
+      "description": "Every convert is crew now: your followers' and pets' hits may put the Black Spot on a foe. Each level adds 5% to these odds.",
+      "allies": {
+        "name": "Crew Loyalty",
+        "description": "Fights for the captain, and marks what the captain wants.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Pirate_BlackSpot"
+              }
+            ]
+          }
+        ],
+        "procChancePerStack": 5
+      },
+      "bonus": {
+        "procChancePerStack": 5
+      }
+    },
+    {
+      "id": "BenchTested",
+      "name": "Bench Tested",
+      "trees": [
+        "SKILLTREE_Modder",
+        "SKILLTREE_Gadgeteer"
+      ],
+      "description": "Two workbenches, one obsession: crits may take a turn off your other cooldowns. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 30,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

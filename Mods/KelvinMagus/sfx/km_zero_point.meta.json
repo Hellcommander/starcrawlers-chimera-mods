@@ -1,0 +1,205 @@
+{
+  "prompt": "freezing wind howl collapsing inward into silence, cold magic implosion",
+  "conditioned_prompt": "high quality game sound effect, freezing wind howl collapsing inward into silence, cold magic implosion, timbre of ambience, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.6,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.013806674629449844,
+  "source_corr": 0.011601747013628483,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "a4286dee3207ebca",
+      "score": 0.516363799571991,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 8.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "dff13e933057cc54",
+      "score": 0.47824037075042725,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 14.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "213b599db1d8870b",
+      "score": 0.47612035274505615,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 12.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "354e14280819b42b",
+      "score": 0.4755629897117615,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DREKAVAC.zip",
+      "inner": "NOISE ALCHEMY- DREKAVAC/NOISE ALCHEMY- DREKAVAC 5.wav",
+      "license": "reference",
+      "tags": [
+        "drekavac",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4efb7382eb62a6fb",
+      "score": 0.4744410812854767,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 21.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "03b5401de665a2ce",
+      "score": 0.4706076383590698,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 68.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "0cfc7cd2b6eaa689",
+      "score": 0.4688042402267456,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 28.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "acbeda1027854567",
+      "score": 0.46368616819381714,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind.zip",
+      "inner": "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 10.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "7e42475fd76e581d",
+      "score": 0.4564114212989807,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 6.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "e6d38078f1315f36",
+      "score": 0.45172542333602905,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Creepy wind.zip",
+      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 65.wav",
+      "license": "reference",
+      "tags": [
+        "creepy",
+        "wind",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    }
+  ],
+  "used_ids": [
+    "a4286dee3207ebca",
+    "dff13e933057cc54",
+    "213b599db1d8870b",
+    "354e14280819b42b",
+    "4efb7382eb62a6fb",
+    "03b5401de665a2ce",
+    "0cfc7cd2b6eaa689",
+    "acbeda1027854567",
+    "7e42475fd76e581d",
+    "e6d38078f1315f36"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_zero_point.wav",
+  "sample_rate": 44100
+}

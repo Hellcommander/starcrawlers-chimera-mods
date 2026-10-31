@@ -1,0 +1,216 @@
+{
+  "prompt": "heavy steel deck plates tearing up and slamming upright into a wall, metal groan, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, heavy steel deck plates tearing up and slamming upright into a wall, metal groan, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of mech, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.006121389102190733,
+  "source_corr": 0.01328248344361782,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "5b145490dc09dbd8",
+      "score": 0.5653303265571594,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 18.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "2000a8467f4f892a",
+      "score": 0.5598763227462769,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 5.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "370305a5c6b5e9b4",
+      "score": 0.5489963889122009,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 1.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "215d09806de0f63d",
+      "score": 0.5487924814224243,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 16.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "d00c4da02a75e035",
+      "score": 0.5383174419403076,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 2.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "b401534e9ae50a45",
+      "score": 0.5314327478408813,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 15.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "5c801a7145618af4",
+      "score": 0.5307677388191223,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 13.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "a638d2017269928a",
+      "score": 0.5244396924972534,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 4.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "dedffec30f87f07f",
+      "score": 0.514002799987793,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 9.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "284bf8c696e5aef3",
+      "score": 0.510270893573761,
+      "via": "clap+tag",
+      "pack": "ancientmechanisms.zip",
+      "inner": "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMES BONUS 3.wav",
+      "license": "reference",
+      "tags": [
+        "ancientmechanisms",
+        "noise",
+        "alchemy",
+        "ancient",
+        "mechanisms",
+        "mechanismes",
+        "bonus"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "used_ids": [
+    "5b145490dc09dbd8",
+    "2000a8467f4f892a",
+    "370305a5c6b5e9b4",
+    "215d09806de0f63d",
+    "d00c4da02a75e035",
+    "b401534e9ae50a45",
+    "5c801a7145618af4",
+    "a638d2017269928a",
+    "dedffec30f87f07f",
+    "284bf8c696e5aef3"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_raise.wav",
+  "sample_rate": 44100
+}

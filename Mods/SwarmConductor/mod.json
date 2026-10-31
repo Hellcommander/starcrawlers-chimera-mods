@@ -1,0 +1,9 @@
+{
+  "id": "SwarmConductor",
+  "name": "Swarm Conductor",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "A mind class that hijacks the building's own CorpSec drones and runs them over a neural link, and builds a couple of its own.",
+  "requires": ["Library"]
+}

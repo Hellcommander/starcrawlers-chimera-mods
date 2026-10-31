@@ -1,0 +1,33 @@
+Breachwork Loader (compiled plugin)
+Required Notice: Copyright (c) 2026 Arendeth (https://github.com/Hellcommander)
+
+This is an unofficial modification for StarCrawlers Chimera. It is not made or endorsed by Juggernaut Games.
+
+LICENSE
+  You may use, change, share and build on the plugin and its source for any purpose, commercially too. Credit Arendeth
+  and Breachwork, add substantial original work of your own, and don't reupload it unchanged.
+  The source code is public: https://github.com/Hellcommander
+
+  The game's developer, Juggernaut Games, may use anything here in its games.
+
+  The plugin only works with a lawfully obtained copy of StarCrawlers Chimera and gives no rights in the game.
+
+Code plugins and Lua scripts that other people write for this loader are their authors' own work, not part of this
+project. The example code (Mods/ExamplePlugin/src, Mods/RealtimeWithPause/src, Mods/CharacterPortraits/src,
+Mods/ExampleScript/scripts) is free to use and copy for any purpose.
+
+No sound in the Mods folders (audio_licensed, sfx) may be sold as a sound or in an audio pack, even when altered. The
+audio_licensed sounds may not be used commercially at all.
+
+The mods this plugin loads (the Mods folder) are under the same terms, in Mods/LICENSE.md.
+
+MoonSharp.Interpreter.dll in this folder is the MoonSharp Lua interpreter (http://www.moonsharp.org/), a third-party
+library that runs script mods, redistributed unmodified under its BSD 3-Clause license: Copyright (c) 2014-2016, Marco
+Mastropaolo; parts of the string library are based on the KopiLua project, Copyright (c) 2012 LoDC. See
+THIRD_PARTY_NOTICES.txt. Third-party libraries in BepInEx (BepInEx, HarmonyX, MonoMod, Mono.Cecil, Newtonsoft.Json)
+keep their own licenses.
+
+Do not share the "smoke_*.png", "looks", "vfx", "runes", "resources" or "kinetics" folders and files in this folder.
+They are test screenshots, not part of the plugin.
+
+NO WARRANTY: provided "as is", without warranty of any kind. Back up your saves.

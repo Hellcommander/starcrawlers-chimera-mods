@@ -1,0 +1,383 @@
+{
+  "id": "MOD_GravemoteAstronomer",
+  "name": "Gravemote Astronomer",
+  "description": "Astronomers who stared at dead stars long enough to borrow their weight. Every impact winds a mote into your Orbit, and each mote makes your next blow land harder; enemies caught in your gravity Sag until they're pinned to the deck.\n\nGravity and meteor caster with a stored-power finisher. Favors [SMT] and [PSI].",
+  "archetype": "Intellect",
+  "icon": "gravemote_astronomer.png",
+  "attributePriorities": {
+    "Smarts": 3,
+    "PsiPower": 3,
+    "Toughness": 1
+  },
+  "effects": [
+    {
+      "id": "Orbit",
+      "name": "Mote in Orbit",
+      "description": "A pebble of collapsed star circles you. Every one adds weight to what you throw.",
+      "duration": 9,
+      "maxStacks": 8,
+      "damageDealtPerStack": 0.03
+    },
+    {
+      "id": "Sag",
+      "name": "Sagging",
+      "description": "Their own weight is turning against them: slower, easier to hit, and every layer makes the next blow hurt more. At five, they are pinned to the deck.",
+      "duration": 4,
+      "debuff": true,
+      "maxStacks": 5,
+      "damageTakenPerStack": 0.03,
+      "stats": {
+        "Dodge": -4,
+        "Agility": -1
+      },
+      "burstAt": 5,
+      "burstVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+      "burstActions": [
+        { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "PsiPower", "scaleMult": 0.4 },
+        { "do": "stun", "turns": 2 }
+      ],
+      "burstSound": "sfx/gravemote_pin.wav"
+    },
+    {
+      "id": "Inbound",
+      "name": "Shard Inbound",
+      "description": "Something is falling toward this spot. It lands when this runs out, on the bearer and everyone near it, and leaves a burning pit where the bearer stood.",
+      "duration": 1,
+      "debuff": true,
+      "vfx": "EFFECT_Smuggler_Bounty",
+      "onExpireRadius": 2,
+      "onExpireActions": [
+        { "do": "field", "ifTargetHas": "@Inbound", "fieldName": "Shard Pit", "turns": 4, "radius": 1.5, "affects": "enemies",
+          "look": "HAZARD_Fire_Mini", "onEnter": true, "actions": [
+            { "do": "damage", "type": "Fire", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 },
+            { "do": "effect", "effect": "@Cratered" },
+            { "do": "effect", "effect": "@Sag", "chance": 35 } ] },
+        { "do": "damage", "type": "Fire", "min": 4, "max": 7, "scale": "PsiPower", "scaleMult": 0.4, "bonusPerStack": 2, "stacksOf": "@Sag" },
+        { "do": "damage", "type": "Crushing", "min": 2, "max": 4 },
+        { "do": "knockback", "amount": 1 },
+        { "do": "effect", "effect": "@Cratered" },
+        { "do": "effect", "to": "self", "effect": "@Orbit" }
+      ]
+    },
+    {
+      "id": "Cratered",
+      "name": "Cratered",
+      "description": "Broken deck plating underfoot and a cloud of grit in the eyes.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Dodge": -8,
+        "Agility": -1,
+        "RangedAccuracy": -10
+      }
+    },
+    {
+      "id": "Ward",
+      "name": "Orrery Ward",
+      "description": "Your motes swing between you and harm, and drag at whoever strikes you.",
+      "duration": 2,
+      "damageTakenMult": 0.75,
+      "procs": [
+        {
+          "on": "hurt",
+          "chance": 50,
+          "actions": [
+            { "do": "effect", "to": "attacker", "effect": "@Sag" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MassDebt",
+      "name": "Borrowed Mass",
+      "description": "Weight you hauled out of dead stars and haven't given back. It drains away if you give it time; let it reach four and it all comes due at once.",
+      "duration": 8,
+      "debuff": true,
+      "maxStacks": 4,
+      "resource": true,
+      "stats": {
+        "StaminaRegen": -1
+      },
+      "burstAt": 4,
+      "burstActions": [
+        { "do": "effect", "to": "self", "effect": "@DebtDue" }
+      ]
+    },
+    {
+      "id": "DebtDue",
+      "name": "Gravity's Due",
+      "description": "The mass you borrowed has come back for you. You stagger under it: your blows land soft, every hit lands heavy on you, and your breath is knocked out.",
+      "duration": 4,
+      "debuff": true,
+      "damageDealtMult": 0.8,
+      "damageTakenMult": 1.2,
+      "stats": {
+        "Dodge": -15,
+        "Agility": -2
+      },
+      "onApplyActions": [
+        { "do": "stamina", "to": "self", "amount": -12 }
+      ]
+    },
+    {
+      "id": "Leashed",
+      "name": "Gravity Leash",
+      "description": "A cord of bent space ties them to the Astronomer. It drags at every step, and when it snaps they are yanked back hard, harder the more they sag.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Dodge": -10,
+        "Agility": -1
+      },
+      "dot": { "type": "Crushing", "min": 1, "max": 2 },
+      "onExpireActions": [
+        { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3, "bonusPerStack": 3, "stacksOf": "@Sag" },
+        { "do": "pull", "amount": 2 },
+        { "do": "effect", "effect": "@Sag" }
+      ]
+    },
+    {
+      "id": "Moonbound",
+      "name": "Moon-Bound",
+      "description": "A knot of collapsed star held on a short orbit. It is dense, hard to dent, and everything it strikes starts to sag. When it falls, it falls hard.",
+      "duration": -1,
+      "damageDealtMult": 1.3,
+      "stats": {
+        "Armor": 3,
+        "Dodge": 10
+      },
+      "procs": [
+        { "on": "hit", "actions": [ { "do": "effect", "effect": "@Sag" } ] }
+      ],
+      "onDeathActions": [
+        { "do": "chain", "jumps": 3, "radius": 2.5, "falloff": 0.85, "actions": [
+          { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "PsiPower", "scaleMult": 0.5, "bonusPerStack": 2, "stacksOf": "@Orbit", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@Sag", "stacks": 2 },
+          { "do": "effect", "effect": "@Cratered" } ] }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Heavy Thoughts",
+        "icon": "gravemote_astronomer_t0.png",
+        "description": "Every blow you land drags a little sky down after it: sometimes a pebble of star falls on the target and joins your orbit, sometimes their own weight starts to pull.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "vfx": "PA_Psykonics_Warp.castParticle@0.5",
+            "actions": [
+              { "do": "damage", "type": "Crushing", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.2 },
+              { "do": "effect", "to": "self", "effect": "@Orbit" }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "effect": "@Sag" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Perihelion Dart",
+        "icon": "gravemote_astronomer_t1.png",
+        "description": "Fling a mote on a tight orbit through one chest and into the next. It comes back to you.",
+        "impactVfx": "PA_Psykonics_Warp.castParticle@0.5",
+        "actions": [
+          { "do": "chain", "jumps": 1, "radius": 2.5, "falloff": 0.7, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1 },
+            { "do": "effect", "effect": "@Sag" } ] },
+          { "do": "effect", "to": "self", "effect": "@Orbit" }
+        ],
+        "perk": {
+          "name": "Tight Orbit",
+          "damageMult": 1.25
+        },
+        "sound": "sfx/gravemote_dart.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Tidal Lock",
+        "icon": "gravemote_astronomer_t2.png",
+        "radius": 1.6,
+        "cooldown": 6,
+        "staminaCost": 14,
+        "description": "Weigh down a whole patch of floor. Whoever stands in it starts to sink, and slides downhill toward the heaviest point in the middle.",
+        "impactVfx": "PA_Psykonics_Temporal.castParticle@0.5",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.2 },
+          { "do": "pull", "amount": 2, "pullToward": "center" },
+          { "do": "effect", "effect": "@Sag", "stacks": 2 },
+          { "do": "effect", "to": "self", "effect": "@Orbit" }
+        ],
+        "perk": {
+          "name": "Wide Lock",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Lagrange Slip",
+        "icon": "gravemote_astronomer_t3.png",
+        "range": 4,
+        "cooldown": 8,
+        "staminaCost": 8,
+        "description": "Fall sideways along a fold in the local gravity and come out somewhere else in the room, your motes spun up into a guard around you. The fuller your orbit, the thicker the guard.",
+        "castVfx": "PA_PASSIVE_Psykonics_Telekinesis.castParticle@0.5",
+        "actions": [
+          { "do": "teleport" },
+          { "do": "effect", "to": "self", "effect": "@Orbit" },
+          { "do": "effect", "to": "self", "effect": "@Ward" },
+          { "do": "shield", "to": "self", "amount": 2, "bonusPerStack": 2, "stacksOf": "@Orbit", "stacksFrom": "self" }
+        ],
+        "perk": {
+          "name": "Clockwork Heavens",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Skyfall Shard",
+        "icon": "gravemote_astronomer_t4.png",
+        "range": 8,
+        "cooldown": 7,
+        "staminaCost": 18,
+        "description": "Mark a target and call a burning sliver of star down on it. It lands a moment later on the target and everyone near it and knocks them aside, and where it struck it leaves a smouldering pit: whoever stands in it or wades back in gets scorched, stumbles on the broken plating and may start to sag. Sagging targets can't get out of the way.",
+        "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle",
+        "actions": [
+          { "do": "effect", "effect": "@Inbound" },
+          { "do": "effect", "effect": "@Sag" }
+        ],
+        "perk": {
+          "name": "Shard Swarm",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Starheart Collapse",
+        "icon": "gravemote_astronomer_t5.png",
+        "range": 7,
+        "radius": 2.5,
+        "staminaCost": 30,
+        "cooldown": 18,
+        "description": "Crush your whole orbit into one point and drop it on them. Everyone nearby is dragged in toward the point of impact, every mote you spend hits harder, the deck caves in under each of them, and the momentum comes back to you as stamina.",
+        "castVfx": "VoidPsyker_Ascendance.impactParticle",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 5, "max": 9, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Orbit", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "pull", "amount": 2, "pullToward": "center" },
+          { "do": "effect", "effect": "@Sag", "stacks": 2 },
+          { "do": "effect", "effect": "@Cratered" },
+          { "do": "field", "fieldName": "Infall Hollow", "turns": 4, "radius": 0, "affects": "enemies",
+            "look": "HAZARD_VoidRift", "onEnter": true, "actions": [
+              { "do": "damage", "type": "Crushing", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 },
+              { "do": "effect", "effect": "@Cratered" },
+              { "do": "effect", "effect": "@Sag", "chance": 50 } ] },
+          { "do": "stamina", "to": "self", "amount": 2, "bonusPerStack": 2, "stacksOf": "@Orbit", "stacksFrom": "self" }
+        ],
+        "perk": {
+          "name": "Supernova Seed",
+          "radiusDelta": 1
+        },
+        "sound": "sfx/gravemote_collapse.wav"
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Lodestar Leash",
+        "icon": "gravemote_astronomer_t6.png",
+        "range": 7,
+        "cooldown": 6,
+        "staminaCost": 16,
+        "description": "Hook a cord of bent space into their chest and reel them in. The cord forks to whoever nearby is already sagging, and every leash drags at its catch until it snaps and yanks them back hard. Borrowing that much pull leaves a debt of mass on you; borrow too fast and it comes due.",
+        "impactVfx": "PA_Psykonics_Warp.castParticle@0.5",
+        "actions": [
+          { "do": "chain", "jumps": 2, "radius": 3, "effect": "@Sag", "falloff": 0.8, "actions": [
+            { "do": "tether", "look": "#B89CFF" },
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Orbit", "stacksFrom": "self" },
+            { "do": "pull", "amount": 2 },
+            { "do": "effect", "effect": "@Sag" },
+            { "do": "effect", "effect": "@Leashed" } ] },
+          { "do": "effect", "to": "self", "effect": "@Orbit" },
+          { "do": "effect", "to": "self", "effect": "@MassDebt" }
+        ],
+        "perk": {
+          "name": "Binary Leash",
+          "addActions": [
+            { "do": "effect", "effect": "@Sag" }
+          ]
+        },
+        "sound": "sfx/gravemote_dart.wav"
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Captive Moonlet",
+        "icon": "gravemote_astronomer_t7.png",
+        "instant": false,
+        "cooldown": 5,
+        "staminaCost": 18,
+        "description": "Pull a dead moon's last fragment out of the dark and hold it on a short orbit beside you, where it batters whatever comes near and drags it down. Call on it again and you let it go: it falls through the nearest enemies, heavier for every mote in your orbit. A moon is a lot of mass to borrow, and the debt lands on you.",
+        "castVfx": "PA_PASSIVE_Psykonics_Telekinesis.castParticle@0.5",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          { "do": "if", "when": { "value": "summons:Moonlet", "atLeast": 1 },
+            "then": [ { "do": "detonate", "to": "summons", "ifSummonAlive": "group:Moonlet" } ],
+            "else": [ { "do": "summon", "creature": "nanite_cloud", "summonName": "Moonlet", "summonGroup": "Moonlet", "amount": 1, "maxSummons": 1, "turns": 20, "effect": "@Moonbound" } ] },
+          { "do": "effect", "to": "self", "effect": "@MassDebt", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Quick Capture",
+          "cooldownDelta": -2
+        }
+      }
+    }
+  ]
+}

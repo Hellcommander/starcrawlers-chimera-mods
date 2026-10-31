@@ -1,0 +1,81 @@
+# Breachwork, a mod project for StarCrawlers Chimera. Only our own work is tracked; see _modding/LICENSE.md.
+# This repo lives in the game's install folder, so everything is ignored by default and our folders are let back in.
+
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/_modding/
+!/Mods/
+!/BepInEx/
+
+# BepInEx: only our plugin's license and runtime art (the framework, configs, caches and logs are not ours)
+/BepInEx/*
+!/BepInEx/plugins/
+/BepInEx/plugins/*
+!/BepInEx/plugins/StarCrawlersClassLoader/
+/BepInEx/plugins/StarCrawlersClassLoader/*
+!/BepInEx/plugins/StarCrawlersClassLoader/LICENSE.txt
+!/BepInEx/plugins/StarCrawlersClassLoader/assets/
+
+# Game Material - never commit (license Part C)
+/_modding/decompiled/
+/_modding/sc1_decompiled/
+/Mods/vanilla_reference.txt
+
+# Third-party and old archives (license Part D)
+/_modding/archive_dredmor_derived/
+/_modding/archive_v2_classes/
+
+# Save backups, test output and logs
+/_modding/devtest/run_backup/
+/_modding/devtest/smoke/
+*.log
+*.scc
+
+# Build output, caches and editor files
+bin/
+obj/
+*.user
+*.suo
+.vs/
+__pycache__/
+*.pyc
+
+# Built from each plugin's src folder, like the loader's own dll (pack.ps1 builds them into the packages)
+/Mods/ExamplePlugin/plugins/
+/Mods/CharacterPortraits/plugins/
+
+# Mod audio stays out of the repository (its packs' licenses); pack.ps1 ships it from disk, and without it the loader
+# plays the game's own sounds (Mods/Library/sound_fallbacks.json)
+/Mods/**/*.wav
+/Mods/**/*.ogg
+/Mods/**/*.mp3
+/Mods/**/*.pak
+
+# Packaged releases (built by _modding/pack.ps1)
+/_dist/
+
+# AAMT concept renders (regenerate with _modding/make_item_assets.py; the icons and meshes made from them are in Mods)
+/_modding/item_art/
+/Mods/CrewWear/models/sf3d/raw/
+
+# In-game self-test screenshots
+/_modding/devtest/shots/
+
+# Private components (_modding/LICENSE.md section 6): they stay on this computer, out of the repository
+/_modding/ClassLoader/DevTest*.cs
+/_modding/ModManager/SelfTest.cs
+/_modding/devtest/
+/_modding/pack.ps1
+/_modding/Pack Breachwork.bat
+/_modding/player/
+/_modding/*.md
+!/_modding/LICENSE.md
+/_modding/todos.txt
+
+# Editor backups
+*.bak
+
+# The sound archives' key: baked into the loader at build, never shared (sounds.pak files are sealed with it)
+/_modding/audio/archive.key

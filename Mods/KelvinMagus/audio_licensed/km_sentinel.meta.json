@@ -1,0 +1,240 @@
+{
+  "prompt": "massive ice golem forming, grinding glacier ice, deep crystalline rumble",
+  "duration": 2.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "288d2c663779e75c",
+      "score": 0.5168565511703491,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement G.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "e31382dd6e553a08",
+      "score": 0.4961124360561371,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "16c92a1e0c2b866d",
+      "score": 0.49241095781326294,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement H.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "ec5ad03b2b080423",
+      "score": 0.4812566339969635,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 11.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "4a61518cac55bbac",
+      "score": 0.48063820600509644,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "aac12afc3093600d",
+      "score": 0.47931960225105286,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "and",
+        "debris",
+        "slide"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "8ed4b1d9b2c53f15",
+      "score": 0.4680696725845337,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "b270b2eed0525988",
+      "score": 0.4635470509529114,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "4d034c51f02443ff",
+      "score": 0.4610556960105896,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement A.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "giant",
+        "movement"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "a5271a46d505e990",
+      "score": 0.45960015058517456,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide D.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "and",
+        "debris",
+        "slide"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "288d2c663779e75c",
+    "e31382dd6e553a08",
+    "16c92a1e0c2b866d",
+    "ec5ad03b2b080423",
+    "4a61518cac55bbac",
+    "aac12afc3093600d",
+    "8ed4b1d9b2c53f15",
+    "b270b2eed0525988",
+    "4d034c51f02443ff",
+    "a5271a46d505e990"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_sentinel.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.14,
+  "semitones": 6,
+  "width": 0.767,
+  "listen": {
+    "match": 0.421,
+    "clean": 0.498,
+    "faults": []
+  }
+}

@@ -1,0 +1,710 @@
+{
+  "id": "MOD_Tidewright",
+  "name": "Tidewright",
+  "description": "Hydromancers from the reactor decks who drive seawater at crushing pressure. Everything they touch gets Waterlogged, deeper with every hit: slow, clumsy, and easy to shove around.\n\nCut, pin and burst: a jet that slices, a shackle of water that holds them fast, a fog that hides your side, a current to ride, a gyre that drags them together for the rupture, a bound water-body, and a flood to end it. Favors [SMT] and [AGL].",
+  "archetype": "Intellect",
+  "icon": "tidewright.png",
+  "attributePriorities": {
+    "Smarts": 4,
+    "Agility": 2
+  },
+  "effects": [
+    {
+      "id": "Soaked",
+      "name": "Waterlogged",
+      "description": "Soaked through, and deeper with every layer: slower, clumsier, and wide open to shock and cold. At eight layers they can barely move.",
+      "duration": 6,
+      "debuff": true,
+      "maxStacks": 12,
+      "stats": {
+        "Dodge": -1,
+        "RangedAccuracy": -1
+      },
+      "resists": {
+        "Shock": -3,
+        "Cryo": -2
+      },
+      "thresholds": [
+        {
+          "at": 8,
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "SLOW",
+              "turns": 3
+            }
+          ]
+        }
+      ],
+      "onDeathActions": [
+        {
+          "do": "stamina",
+          "to": "self",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "Brinecut",
+      "name": "Brinecut",
+      "description": "Salt-water cuts that won't close. A rupture turns every one of them inside out.",
+      "duration": 5,
+      "debuff": true,
+      "maxStacks": 8,
+      "dot": {
+        "type": "Piercing",
+        "min": 1,
+        "max": 1
+      },
+      "vfx": "EFFECT_Bleed"
+    },
+    {
+      "id": "Fret",
+      "name": "Sea Fret",
+      "description": "Thick salt fog and a crust of hard brine. Attackers lose you in it, and whoever does land a blow gets a faceful of salt water.",
+      "duration": 4,
+      "damageTakenMult": 0.85,
+      "stats": {
+        "Dodge": 20
+      },
+      "procs": [
+        {
+          "on": "hurt",
+          "actions": [
+            {
+              "do": "damage",
+              "to": "attacker",
+              "type": "Crushing",
+              "min": 2,
+              "max": 4
+            },
+            {
+              "do": "effect",
+              "to": "attacker",
+              "effect": "@Soaked"
+            }
+          ]
+        },
+        {
+          "on": "dodge",
+          "actions": [
+            {
+              "do": "effect",
+              "to": "attacker",
+              "effect": "@Soaked",
+              "stacks": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FogCover",
+      "name": "Fret-Hidden",
+      "description": "Somewhere in the salt fog: hard to pick out, and harder to hit.",
+      "duration": 2,
+      "stats": {
+        "Dodge": 20,
+        "Stealth": 10
+      }
+    },
+    {
+      "id": "Swollen",
+      "name": "Swollen Tide",
+      "description": "Fed a second core, the Tidebound has grown into a heaving wall of water.",
+      "duration": -1,
+      "damageDealtMult": 1.35,
+      "stats": {
+        "Armor": 3,
+        "Toughness": 3
+      }
+    },
+    {
+      "id": "Floodwater",
+      "name": "Floodwater",
+      "debuff": true,
+      "duration": 2,
+      "stats": {
+        "Dodge": -5
+      },
+      "description": "Wading through the flood: it drags at every step."
+    },
+    {
+      "id": "Shackled",
+      "name": "Brine-Shackled",
+      "debuff": true,
+      "duration": 2,
+      "root": true,
+      "stats": {
+        "RangedAccuracy": -10,
+        "Dodge": -5
+      },
+      "description": "Held fast by a coil of heavy water. It can't move, and the spray in its eyes throws off its aim."
+    },
+    {
+      "id": "Fogbound",
+      "name": "Fogbound",
+      "debuff": true,
+      "duration": 2,
+      "stats": {
+        "RangedAccuracy": -20,
+        "Recognition": -3
+      },
+      "description": "Lost in the salt fog. It can barely see where to swing or shoot, and anyone hidden in the fog is hard to find."
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Brine Lash",
+        "synergyPenalty": { "damage": 2 },
+        "icon": "tidewright_t1.png",
+        "description": "A thin whip of high-pressure saltwater. It cuts deep, the cuts keep weeping, and anyone soaked five layers deep is knocked back by the jet. While you know it, everything you hit gets a little wetter, and the damp keeps you fresh.",
+        "impactVfx": "PA_Elementalist_Tempest.impactParticle",
+        "sound": "sfx/tide_lash.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 2,
+            "max": 5,
+            "scale": "Smarts",
+            "scaleMult": 0.4,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Brinecut",
+            "stacks": 2
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked"
+          },
+          {
+            "do": "knockback",
+            "amount": 1,
+            "when": {
+              "value": "stacks:@Soaked",
+              "of": "target",
+              "atLeast": 5
+            }
+          }
+        ],
+        "perk": {
+          "name": "Hard Jet",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Brinecut"
+            }
+          ]
+        },
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Soaked"
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "heal",
+                "to": "self",
+                "amount": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Brine Shackle",
+        "icon": "tidewright_shackle.png",
+        "range": 6,
+        "cooldown": 7,
+        "staminaCost": 10,
+        "description": "Wrap a coil of heavy water around the target's legs and haul. It's dragged a step toward you and held fast where it lands for two turns, spray in its eyes, and soaked twice over.",
+        "travelSpeed": 14,
+        "sound": "sfx/tide_lash.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 2,
+            "max": 4,
+            "scale": "Smarts",
+            "scaleMult": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "pull",
+            "amount": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked",
+            "stacks": 2
+          },
+          {
+            "do": "effect",
+            "effect": "@Shackled"
+          }
+        ],
+        "perk": {
+          "name": "Heavy Water",
+          "description": "The coil is twice as heavy: it soaks two layers deeper.",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Soaked",
+              "stacks": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Sea Fret",
+        "icon": "tidewright_t2.png",
+        "range": 6,
+        "cooldown": 10,
+        "staminaCost": 15,
+        "description": "Roll a salt fog in over your target, blinding and drenching it. The fog hangs there for a few turns: enemies inside are soaked, can barely see to aim and keep losing sight of you; your own side in it is hidden and hard to hit, and your skin crusts with brine that bites back.",
+        "impactVfx": "PA_Smuggler_Flashbang.explosionPrefab@0.4",
+        "sound": "event:/Abilities/Smuggler/Smugger_Holosmoke",
+        "actions": [
+          {
+            "do": "blind"
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked",
+            "stacks": 2
+          },
+          {
+            "do": "field",
+            "fieldName": "Sea Fret",
+            "turns": 4,
+            "radius": 2.1,
+            "affects": "enemies",
+            "look": "HAZARD_Holosmoke@0.7",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Soaked"
+              },
+              {
+                "do": "effect",
+                "effect": "@Fogbound"
+              },
+              {
+                "do": "blind",
+                "chance": 25
+              }
+            ]
+          },
+          {
+            "do": "field",
+            "fieldName": "Sea Fret",
+            "turns": 4,
+            "radius": 2.1,
+            "affects": "allies",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@FogCover"
+              }
+            ]
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Fret"
+          }
+        ],
+        "perk": {
+          "name": "Pea-Souper",
+          "description": "The fog is never far off: you can roll it back in sooner.",
+          "cooldownDelta": -3
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blink",
+        "name": "Jetwash",
+        "icon": "tidewright_jetwash.png",
+        "range": 5,
+        "radius": 1.6,
+        "cooldown": 5,
+        "staminaCost": 8,
+        "description": "Ride a jet of water to a spot you can see, arriving in an instant. The wash breaks over every enemy near where you land, pounding and soaking them.",
+        "sound": "sfx/tide_rupture.wav",
+        "actions": [
+          {
+            "do": "teleport"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 2,
+            "max": 5,
+            "scale": "Smarts",
+            "scaleMult": 0.3,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked",
+            "stacks": 2
+          }
+        ],
+        "perk": {
+          "name": "Long Current",
+          "description": "The current carries you two tiles farther.",
+          "rangeDelta": 2
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Pour the Core",
+        "icon": "tidewright_t4.png",
+        "cooldown": 6,
+        "staminaCost": 30,
+        "description": "Wring a knot of seawater out of yourself and shape what pours out. The first becomes a Tidebound, a body of living water that fights beside you. Pour another into it and it swells into something far worse.",
+        "castVfx": "PA_Elementalist_FrigidBlast.castParticle",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "summons",
+            "ifSummonAlive": "group:Tidebound",
+            "effect": "@Swollen"
+          },
+          {
+            "do": "heal",
+            "to": "summons",
+            "ifSummonAlive": "group:Tidebound",
+            "amount": 15,
+            "scale": "Smarts",
+            "scaleMult": 1.0
+          },
+          {
+            "do": "summon",
+            "creature": "Globule",
+            "summonName": "Tidebound",
+            "model": {
+              "mesh": "models/tidebound.glb",
+              "height": 1.5,
+              "keepParticles": false
+            },
+            "summonGroup": "Tidebound",
+            "maxSummons": 1,
+            "turns": 30,
+            "unlessSummonAlive": "group:Tidebound"
+          }
+        ],
+        "perk": {
+          "name": "Dense Core",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "summons",
+              "ifSummonAlive": "group:Tidebound",
+              "effect": "#Fortified",
+              "turns": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "name": "Gyre",
+        "icon": "tidewright_gyre.png",
+        "target": "floor",
+        "range": 7,
+        "radius": 2.5,
+        "cooldown": 10,
+        "staminaCost": 14,
+        "description": "Spin the water at a spot into a churning gyre. Everyone in it is dragged two steps toward the middle, knocked about in the crush, and soaked; the gyre keeps turning for two more turns, hauling stragglers in. It packs them together for Rupture the Deep.",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          {
+            "do": "pull",
+            "amount": 2,
+            "pullToward": "center"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 1,
+            "max": 3,
+            "scale": "Smarts",
+            "scaleMult": 0.2,
+            "perRank": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked"
+          },
+          {
+            "do": "field",
+            "fieldName": "Gyre",
+            "turns": 2,
+            "radius": 2.5,
+            "affects": "enemies",
+            "pulseVfx": "fx_tidewright_brine_lash_impact",
+            "actions": [
+              {
+                "do": "pull",
+                "amount": 1,
+                "pullToward": "center"
+              },
+              {
+                "do": "effect",
+                "effect": "@Soaked"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Wide Gyre",
+          "description": "The gyre reaches a tile wider.",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Rupture the Deep",
+        "icon": "tidewright_t5.png",
+        "radius": 2,
+        "cooldown": 12,
+        "staminaCost": 26,
+        "description": "Every drop inside everyone near the target pushes out at once. The soaked are knocked flat, the cut are turned inside out, and armor doesn't help. The water wrung out of your target flows back into you as stamina.",
+        "impactVfx": "PA_Elementalist_FrigidBlast.frozenRing@0.35",
+        "sound": "sfx/tide_rupture.wav",
+        "actions": [
+          {
+            "do": "stun",
+            "turns": 1,
+            "ifTargetHas": "@Soaked"
+          },
+          {
+            "do": "stamina",
+            "to": "self",
+            "amount": 0,
+            "bonusPerStack": 1,
+            "stacksOf": "@Soaked",
+            "stacksFrom": "target"
+          },
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "trueDamage": true,
+            "min": 3,
+            "max": 6,
+            "scale": "Smarts",
+            "scaleMult": 0.4,
+            "perRank": 2,
+            "bonusPerStack": 2,
+            "stacksOf": "@Soaked",
+            "consumeStacks": true
+          },
+          {
+            "do": "damage",
+            "type": "Piercing",
+            "trueDamage": true,
+            "min": 1,
+            "max": 1,
+            "bonusPerStack": 4,
+            "stacksOf": "@Brinecut",
+            "consumeStacks": true
+          },
+          {
+            "do": "knockback",
+            "amount": 2
+          }
+        ],
+        "perk": {
+          "name": "Floodback",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Soaked",
+              "stacks": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "resistances": {
+        "Cryo": 10
+      },
+      "newAbility": {
+        "name": "Floodgate",
+        "icon": "tidewright_t7.png",
+        "target": "floor",
+        "range": 7,
+        "radius": 2.5,
+        "cooldown": 18,
+        "staminaCost": 30,
+        "description": "Open every valve at once. A wall of water crashes down on the spot, pounding everyone in it, hurling them back out of it, and leaving them six layers deep; the floodwater stays a few turns, drenching and dragging at whoever wades in. While you know it, water never stays where it falls: something soaked that dies spills its brine into everyone beside it, the deeply soaked split open under your blows, and your Tidebound drinks from the damp air and knits itself back together.",
+        "sound": "sfx/tide_rupture.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Crushing",
+            "min": 6,
+            "max": 10,
+            "scale": "Smarts",
+            "scaleMult": 0.5,
+            "perRank": 2
+          },
+          {
+            "do": "effect",
+            "effect": "@Soaked",
+            "stacks": 6
+          },
+          {
+            "do": "throw",
+            "amount": 2,
+            "actions": [
+              {
+                "do": "damage",
+                "type": "Crushing",
+                "min": 2,
+                "max": 4,
+                "perRank": 1
+              }
+            ]
+          },
+          {
+            "do": "field",
+            "fieldName": "Floodgate",
+            "turns": 3,
+            "radius": 2.5,
+            "affects": "enemies",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Soaked"
+              },
+              {
+                "do": "effect",
+                "effect": "@Floodwater"
+              }
+            ],
+            "pulseVfx": "fx_tidewright_brine_lash_impact"
+          }
+        ],
+        "procs": [
+          {
+            "on": "kill",
+            "radius": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Soaked",
+                "stacks": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "@Soaked",
+                "stacksFrom": "victim"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 35,
+            "when": {
+              "value": "stacks:@Soaked",
+              "of": "target",
+              "atLeast": 8
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Brinecut"
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "when": {
+              "all": [
+                {
+                  "value": "summons:Tidebound",
+                  "atLeast": 1
+                },
+                {
+                  "inCombat": true
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "heal",
+                "to": "summons",
+                "ifSummonAlive": "group:Tidebound",
+                "amount": 3,
+                "scale": "Smarts",
+                "scaleMult": 0.2
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "High Water",
+          "description": "The flood spreads a tile wider.",
+          "radiusDelta": 1
+        }
+      }
+    }
+  ]
+}

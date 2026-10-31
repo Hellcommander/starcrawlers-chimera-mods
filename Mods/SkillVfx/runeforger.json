@@ -1,0 +1,58 @@
+[ { "particles": [
+  { "id": "fx_runeforger_glyphdraw_cast", "light": {"color": "#6FE3FF", "range": 2.396, "intensity": 1.29, "time": 0.52},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.575], "speed": [0], "size": [1.33], "sizeCurve": "pulse", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 6, "life": [0.296, 0.456], "speed": [0.0, 0.303], "size": [0.223, 0.393], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 13, "life": [0.31, 0.67], "speed": [0.44, 1.213], "size": [0.045, 0.1], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "ring", "radius": 0.5}
+    ] },
+  { "id": "fx_runeforger_pocket_anvil_cast", "light": {"color": "#6FE3FF", "range": 2.353, "intensity": 1.706, "time": 0.392},
+    "layers": [
+      {"texture": "spark", "count": 37, "life": [0.281, 0.599], "speed": [2.207, 3.99], "size": [0.052, 0.096], "stretch": 3, "gravity": 1.2, "drag": 1.0, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "cone", "radius": 0.1, "angle": 35},
+      {"texture": "soft", "count": 1, "life": [0.437], "speed": [0], "size": [0.774], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.918, 1.608], "speed": [0.298, 0.932], "size": [0.438, 0.628], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A2028", "color2": "#1A2028", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_runeforger_unkeyed_sling_travel",
+    "layers": [
+      {"texture": "shard", "count": 1, "life": [0.7], "speed": [0], "size": [0.429], "sizeCurve": "flat", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "point", "duration": 0.7, "spin": [600, 900]},
+      {"texture": "spark", "count": 0, "rate": 90, "duration": 0.7, "life": [0.157, 0.234], "speed": [0.091, 0.368], "size": [0.086, 0.162], "gravity": 0.0, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.06, "stretch": 3}
+    ] },
+  { "id": "fx_runeforger_unkeyed_sling_impact", "light": {"color": "#6FE3FF", "range": 3.756, "intensity": 1.634, "time": 0.471},
+    "layers": [
+      {"texture": "fx/runeforger_burst.png", "count": 1, "life": [0.443], "speed": [0], "size": [1.082], "sizeCurve": "flat", "color": "#FFE6A0", "color2": "#20B8E0", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 29, "life": [0.321, 0.536], "speed": [3.12, 6.423], "size": [0.072, 0.144], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 13, "life": [0.514, 1.05], "speed": [0.923, 2.718], "size": [0.088, 0.201], "gravity": 0.0, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.3},
+      {"texture": "fx/runeforger_bits.png", "count": 11, "life": [0.527, 0.912], "speed": [2.78, 5.14], "size": [0.089, 0.198], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE6A0", "color2": "#20B8E0", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"}
+    ] },
+  { "id": "fx_runeforger_socket_sentry_cast", "light": {"color": "#6FE3FF", "range": 3.646, "intensity": 2.322, "time": 0.766},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.598], "speed": [0], "size": [3.011], "sizeCurve": "grow", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 45, "life": [0.434, 0.629], "speed": [2.077, 4.043], "size": [0.077, 0.199], "gravity": -0.2, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.465], "speed": [0], "size": [1.523], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.809, 1.607], "speed": [0.335, 0.856], "size": [0.739, 1.124], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A2028", "color2": "#1A2028", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "star", "count": 5, "life": [0.273, 0.558], "speed": [0.0, 0.267], "size": [0.335, 0.663], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_runeforger_sigil_teardown_area", "light": {"color": "#6FE3FF", "range": 6.632, "intensity": 2.527, "time": 0.562},
+    "layers": [
+      {"texture": "fx/runeforger_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [3.961], "sizeCurve": "flat", "color": "#FFE6A0", "color2": "#20B8E0", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.492], "speed": [0], "size": [8.067], "sizeCurve": "grow", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 33, "life": [0.288, 0.661], "speed": [3.575, 8.012], "size": [0.098, 0.202], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.805, 1.488], "speed": [0.706, 1.708], "size": [0.979, 1.599], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1A2028", "color2": "#1A2028", "alpha": 0.5, "shape": "ring", "radius": 1.2000000000000002, "ground": true, "grid": [6, 6]},
+      {"texture": "star", "count": 5, "life": [0.316, 0.534], "speed": [0.0, 0.319], "size": [0.282, 0.577], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_runeforger_wardplate_etching_cast", "light": {"color": "#6FE3FF", "range": 3.09, "intensity": 1.521, "time": 0.606},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.418], "speed": [0], "size": [2.046], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "alpha": 0.5, "shape": "point"},
+      {"texture": "star", "count": 12, "life": [0.281, 0.627], "speed": [0.0, 0.311], "size": [0.289, 0.625], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "ring", "radius": 0.9},
+      {"texture": "mote", "count": 21, "life": [0.765, 1.309], "speed": [0.096, 0.379], "size": [0.107, 0.21], "orbit": 1.044, "color": "#FFE6A0", "color2": "#20B8E0", "shape": "ring", "radius": 0.9},
+      {"texture": "star", "count": 6, "life": [0.318, 0.489], "speed": [0.0, 0.325], "size": [0.269, 0.594], "sizeCurve": "pop", "color": "#FFE6A0", "color2": "#20B8E0", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_Runeforger", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "fx_runeforger_glyphdraw_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_runeforger_pocket_anvil_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_runeforger_unkeyed_sling_impact", "travelVfx": "fx_runeforger_unkeyed_sling_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_runeforger_socket_sentry_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_runeforger_sigil_teardown_area"}},
+  {"newAbility": {"castVfx": "fx_runeforger_wardplate_etching_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}}
+] } ]

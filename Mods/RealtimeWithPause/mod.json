@@ -1,0 +1,10 @@
+{
+  "id": "RealtimeWithPause",
+  "name": "Realtime with Pause (source only)",
+  "author": "Arendeth",
+  "version": "1.0.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "Source only: an unfinished example of a code plugin for people to build on, with no dll, so it does nothing in the game. It turns fights into realtime with a pause key, with every enemy on its own timer. See src/, free for any use.",
+  "enabled": false,
+  "apiLevel": 3
+}

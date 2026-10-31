@@ -1,0 +1,200 @@
+{
+  "prompt": "monstrous retching roar spewing a gush of bubbling toxic liquid, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, monstrous retching roar spewing a gush of bubbling toxic liquid, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of alien, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.3,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0017307123634964228,
+  "source_corr": 0.01634337194263935,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "d2b589291109b445",
+      "score": 0.6022912263870239,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_21.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "f53dc79d40ffacea",
+      "score": 0.5776923298835754,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_23.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "8829ba2dd45b3b75",
+      "score": 0.5731673240661621,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_36.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "1c505298e88a8ab4",
+      "score": 0.5705781579017639,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_25.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "78fbb0d5702872e2",
+      "score": 0.5687812566757202,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_22.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "e00bc325e8574d64",
+      "score": 0.5673032999038696,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_24.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "60152a706a77c0c2",
+      "score": 0.5618331432342529,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_35.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d071307aeee14f5e",
+      "score": 0.5537539720535278,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_49.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "7da7d5b93c7727d0",
+      "score": 0.5521965026855469,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_39.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "1908b4d192d16cd3",
+      "score": 0.547886848449707,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_50.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "used_ids": [
+    "d2b589291109b445",
+    "f53dc79d40ffacea",
+    "8829ba2dd45b3b75",
+    "1c505298e88a8ab4",
+    "78fbb0d5702872e2",
+    "e00bc325e8574d64",
+    "60152a706a77c0c2",
+    "d071307aeee14f5e",
+    "7da7d5b93c7727d0",
+    "1908b4d192d16cd3"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Synergies\\sfx\\toxic_breath.wav",
+  "sample_rate": 44100
+}

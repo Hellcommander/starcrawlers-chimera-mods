@@ -1,0 +1,58 @@
+[ { "particles": [
+  { "id": "fx_snareseer_dread_glyph_area", "light": {"color": "#B080FF", "range": 2.733, "intensity": 1.381, "time": 0.487},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.626], "speed": [0], "size": [1.31], "sizeCurve": "pulse", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 5, "life": [0.268, 0.495], "speed": [0.0, 0.329], "size": [0.202, 0.447], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 11, "life": [0.285, 0.648], "speed": [0.467, 1.258], "size": [0.045, 0.111], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5}
+    ] },
+  { "id": "fx_snareseer_lure_phantom_area", "light": {"color": "#B080FF", "range": 6.185, "intensity": 2.095, "time": 0.643},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.508], "speed": [0], "size": [7.811], "sizeCurve": "shrink", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 41, "life": [0.345, 0.466], "speed": [-10.5, -7.5], "size": [0.088, 0.184], "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 3.0, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.385], "speed": [0], "size": [1.509], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "alpha": 0.85, "shape": "point"},
+      {"texture": "mote", "count": 16, "life": [0.658, 1.204], "speed": [0.106, 0.368], "size": [0.094, 0.201], "orbit": 0.865, "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.8}
+    ] },
+  { "id": "fx_snareseer_mindlatch_area", "light": {"color": "#B080FF", "range": 2.739, "intensity": 1.386, "time": 0.462},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.633], "speed": [0], "size": [1.465], "sizeCurve": "pulse", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 5, "life": [0.276, 0.482], "speed": [0.0, 0.294], "size": [0.191, 0.437], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 10, "life": [0.298, 0.577], "speed": [0.488, 1.281], "size": [0.052, 0.103], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5},
+      {"texture": "mote", "count": 16, "life": [0.64, 1.147], "speed": [0.753, 1.734], "size": [0.081, 0.187], "gravity": -0.2, "color": "#EED8FF", "color2": "#7A30E0", "shape": "cone", "angle": 8, "radius": 0.6, "ground": true}
+    ] },
+  { "id": "fx_snareseer_foreknown_step_cast", "light": {"color": "#B080FF", "range": 3.191, "intensity": 1.531, "time": 0.307},
+    "layers": [
+      {"texture": "mote", "count": 28, "life": [0.34, 0.482], "speed": [-3.5, -2.5], "size": [0.073, 0.169], "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 1.0},
+      {"texture": "soft", "count": 1, "life": [0.383], "speed": [0], "size": [1.541], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.92, 1.453], "speed": [0.324, 0.992], "size": [0.562, 1.055], "sizeCurve": "grow", "spin": [-50, 50], "color": "#160E22", "color2": "#160E22", "alpha": 0.4, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_snareseer_foreknown_step_area", "light": {"color": "#B080FF", "range": 3.297, "intensity": 1.195, "time": 0.467},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.442], "speed": [0], "size": [0.933], "sizeCurve": "grow", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.592], "speed": [0], "size": [1.561], "sizeCurve": "grow", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "delay": 0.12},
+      {"texture": "star", "count": 5, "life": [0.314, 0.491], "speed": [0.0, 0.306], "size": [0.223, 0.515], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 0.4}
+    ] },
+  { "id": "fx_snareseer_recursion_mine_area", "light": {"color": "#B080FF", "range": 2.662, "intensity": 1.438, "time": 0.478},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.558], "speed": [0], "size": [1.314], "sizeCurve": "pulse", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 5, "life": [0.308, 0.451], "speed": [0.0, 0.274], "size": [0.199, 0.407], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 10, "life": [0.32, 0.61], "speed": [0.483, 1.317], "size": [0.046, 0.094], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#EED8FF", "color2": "#7A30E0", "shape": "ring", "radius": 0.5},
+      {"texture": "star", "count": 5, "life": [0.272, 0.535], "speed": [0.0, 0.266], "size": [0.334, 0.586], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_snareseer_cascade_of_futures_cast", "light": {"color": "#B080FF", "range": 4.077, "intensity": 2.602, "time": 0.878},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.455], "speed": [0], "size": [1.589], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "alpha": 0.8, "shape": "point"},
+      {"texture": "mote", "count": 51, "life": [0.326, 0.479], "speed": [-3.2, -2.2], "size": [0.126, 0.227], "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 1.4},
+      {"texture": "star", "count": 4, "life": [0.28, 0.476], "speed": [0.0, 0.29], "size": [0.401, 0.713], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.531], "speed": [0], "size": [2.621], "sizeCurve": "grow", "color": "#EED8FF", "color2": "#7A30E0", "shape": "point", "ground": true, "flat": true, "delay": 0.3},
+      {"texture": "star", "count": 4, "life": [0.31, 0.489], "speed": [0.0, 0.327], "size": [0.32, 0.591], "sizeCurve": "pop", "color": "#EED8FF", "color2": "#7A30E0", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_Snareseer", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_snareseer_dread_glyph_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_snareseer_lure_phantom_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_snareseer_mindlatch_area"}},
+  {"newAbility": {"castVfx": "fx_snareseer_foreknown_step_cast", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_snareseer_foreknown_step_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_snareseer_recursion_mine_area"}},
+  {"newAbility": {"castVfx": "fx_snareseer_cascade_of_futures_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}}
+] } ]

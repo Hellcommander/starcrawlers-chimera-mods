@@ -1,0 +1,277 @@
+{
+  "id": "MOD_Demolitionist",
+  "name": "Demolitionist",
+  "description": "Licensed (allegedly) in controlled detonations. Stick charges on enemies; three charges on one target go off on their own, and leftover charges pop when they time out. Det Cord carries charges from target to target, and Remote Detonator sets off every charged enemy in the room.\n\nDelayed explosions and chain reactions. Favors [STR] and [SAV].",
+  "archetype": "Muscle",
+  "icon": "demolitionist.png",
+  "attributePriorities": {
+    "Strength": 3,
+    "Savvy": 3,
+    "Recognition": 2
+  },
+  "effects": [
+    {
+      "id": "Charge",
+      "name": "Sticky Charge",
+      "description": "Beeping. Faster and faster.",
+      "duration": 4,
+      "debuff": true,
+      "maxStacks": 3,
+      "vfx": "EFFECT_Smuggler_Bounty",
+      "burstAt": 3,
+      "burstRadius": 1.6,
+      "burstVfx": "SOLDIER_FRAGOUT.explosionPrefab",
+      "burstSound": "sfx/demolitionist_charge_pop.wav",
+      "burstActions": [
+        { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Strength", "scaleMult": 0.4 },
+        { "do": "knockback", "amount": 2 }
+      ],
+      "onExpireRadius": 1.6,
+      "onExpireActions": [
+        { "do": "damage", "type": "Fire", "min": 3, "max": 6 }
+      ]
+    },
+    {
+      "id": "Switch",
+      "name": "Dead Man's Switch",
+      "description": "Wired to blow. If you're brought under 30% health while it's armed, the charges go off around you.",
+      "duration": 15,
+      "procs": [
+        { "on": "lowHealth", "threshold": 30, "actions": [
+          { "do": "shield", "to": "self", "amount": 10 },
+          { "do": "effect", "to": "self", "effect": "@Countdown" },
+          { "do": "purge", "to": "self", "effect": "@Switch" } ] }
+      ]
+    },
+    {
+      "id": "Countdown",
+      "name": "Countdown",
+      "description": "Three... two...",
+      "duration": 1,
+      "onExpireRadius": 3,
+      "onExpireActions": [
+        { "do": "damage", "type": "Fire", "min": 10, "max": 18 },
+        { "do": "knockback", "amount": 2 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "resistances": {
+        "Fire": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Bomb Habit",
+        "icon": "demolitionist_t0.png",
+        "description": "Things you kill tend to catch fire. And their friends.",
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "radius": 2,
+            "actions": [
+              { "do": "effect", "effect": "#Burning" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Sticky Charge",
+        "icon": "demolitionist_t1.png",
+        "range": 6,
+        "description": "Slap a charge on them. Then another. Then step back.",
+        "sound": "sfx/demolitionist_sticky.wav",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 1, "max": 3 },
+          { "do": "effect", "effect": "@Charge" }
+        ],
+        "perk": {
+          "name": "Double Stick",
+          "addActions": [
+            { "do": "effect", "effect": "@Charge" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Frag Toss",
+        "icon": "demolitionist_t2.png",
+        "description": "Shrapnel, generously distributed.",
+        "impactVfx": "SOLDIER_FRAGOUT.explosionPrefab",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3, "perRank": 1 },
+          { "do": "effect", "effect": "#Gashed", "chance": 50 },
+          { "do": "effect", "effect": "@Charge", "chance": 40 }
+        ],
+        "perk": {
+          "name": "Cluster Frag",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Det Cord",
+        "icon": "demolitionist_t3.png",
+        "range": 6,
+        "staminaCost": 15,
+        "cooldown": 6,
+        "description": "Run a burning fuse from one charged enemy to the next, adding a charge to each.",
+        "impactVfx": "PA_Pyromaniac_MovotolCocktail.scatterParticle",
+        "sound": "event:/Abilities/Soldier/Grenade_Bounce",
+        "actions": [
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3.5,
+            "effect": "@Charge",
+            "actions": [
+              { "do": "damage", "type": "Fire", "min": 2, "max": 4 },
+              { "do": "effect", "effect": "@Charge" }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Long Fuse",
+          "addActions": [
+            { "do": "effect", "effect": "#Burning" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Dead Man's Switch",
+        "icon": "demolitionist_t4.png",
+        "cooldown": 40,
+        "description": "Wire yourself up. If something takes you under 30% health while you're wired, you're shielded and the room isn't.",
+        "castVfx": "SOLDIER_MAGNETRONC.scatterParticle",
+        "sound": "event:/Abilities/Engineer/Engineer_Spidermine_Ready",
+        "actions": [
+          { "do": "effect", "effect": "@Switch" }
+        ],
+        "perk": {
+          "name": "Redundant Wiring",
+          "cooldownDelta": -15
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Savvy": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Remote Detonator",
+        "icon": "demolitionist_t5.png",
+        "radius": 8,
+        "staminaCost": 20,
+        "cooldown": 12,
+        "description": "Click. Every charge in the room goes off at once.",
+        "castVfx": "SOLDIER_MAGNETRONC.scatterParticle",
+        "impactVfx": "SOLDIER_ROCKET.explosionPrefab",
+        "sound": "sfx/demolitionist_detonator.wav",
+        "actions": [
+          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Charge", "consumeStacks": true, "ifTargetHas": "@Charge" },
+          { "do": "knockback", "amount": 1, "ifTargetHas": "@Charge" }
+        ],
+        "perk": {
+          "name": "Bigger Button",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Savvy": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Welcome Mat",
+        "icon": "demolitionist_t6.png",
+        "range": 6,
+        "radius": 1.6,
+        "staminaCost": 20,
+        "cooldown": 12,
+        "description": "Roll out a carpet of tripwire charges. Anything standing on it picks up another Sticky Charge every turn, and three of those never end well.",
+        "sound": "sfx/demolitionist_sticky.wav",
+        "actions": [
+          {
+            "do": "field",
+            "fieldName": "Welcome Mat",
+            "turns": 4,
+            "radius": 1.6,
+            "affects": "enemies",
+            "look": "HAZARD_Fire_Mini",
+            "actions": [
+              { "do": "effect", "effect": "@Charge" }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Wall-to-Wall",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "resistances": {
+        "Fire": 10
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Sympathetic Charges",
+        "icon": "demolitionist_t7.png",
+        "description": "Explosives like company. Hitting a charged enemy can wire up another charge, and every kill showers the neighbours with fresh ones.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "when": { "has": "@Charge", "of": "victim" },
+            "actions": [
+              { "do": "effect", "effect": "@Charge" }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "radius": 2.5,
+            "actions": [
+              { "do": "effect", "effect": "@Charge" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

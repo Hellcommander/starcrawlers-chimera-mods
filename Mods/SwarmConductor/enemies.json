@@ -1,0 +1,15 @@
+{
+  "enemies": [
+    { "id": "LatticeDrone", "base": "CORPSEC_DRONE",
+      "name": "Lattice Drone", "subtitle": "Conductor Pattern",
+      "description": "Built from the ground up to run on a neural link. Nothing in CorpSec's network can talk to it.",
+      "type": "Mechanical", "ai": "Skirmisher",
+      "health": 2.0, "damage": 1.4, "xp": 0,
+      "stats": { "Dodge": 10, "RangedAccuracy": 15 },
+      "resists": { "Shock": 50, "Energy": 25 },
+      "abilities": [ { "from": "CORPSEC_DRONE_SHOOT", "damage": [ { "type": "Energy", "min": 3, "max": 5 } ] } ],
+      "removeAbilities": ["CORPSEC_DRONE_MELEE"],
+      "loot": { "replace": true },
+      "model": { "mesh": "models/lattice_drone.glb", "scale": 1.1, "offset": [0, 1.0, 0], "glow": "#5FD7FF", "glowStrength": 0.6, "bob": 0.08 } }
+  ]
+}

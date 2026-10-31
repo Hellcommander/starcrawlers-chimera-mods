@@ -1,0 +1,233 @@
+{
+  "id": "MOD_Longshot",
+  "name": "Longshot",
+  "description": "Patience is a virtue; so is a very large gun. Every quiet turn adds Steady Aim, and getting hit throws it off. Marked targets take punishing follow-ups, and One Shot spends every bit of patience on a single round.\n\nRewards positioning and not getting hit. Favors [REC] and [STR].",
+  "archetype": "Muscle",
+  "icon": "longshot.png",
+  "attributePriorities": {
+    "Recognition": 4,
+    "RangedAccuracy": 3,
+    "Crit": 2
+  },
+  "effects": [
+    {
+      "id": "Steady",
+      "name": "Steady Aim",
+      "description": "Breathe out. Squeeze.",
+      "duration": 6,
+      "maxStacks": 5,
+      "stats": {
+        "Crit": 4,
+        "RangedAccuracy": 3
+      }
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Patience",
+        "icon": "longshot_t0.png",
+        "description": "Every turn you aren't flinching, your aim settles.",
+        "procs": [
+          {
+            "on": "turn",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Steady" }
+            ]
+          },
+          {
+            "on": "hurt",
+            "actions": [
+              { "do": "purge", "to": "self", "effect": "@Steady" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Measured Shot",
+        "icon": "longshot_t1.png",
+        "range": 9,
+        "description": "A careful shot that paints the target if you were steady.",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 3, "max": 6, "scale": "Recognition", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "#Marked", "ifSelfHas": "@Steady" }
+        ],
+        "perk": {
+          "name": "Match-Grade Rounds",
+          "damageMult": 1.25
+        },
+        "sound": "audio_licensed/longshot_measured.wav"
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "Pin Down",
+        "icon": "longshot_t2.png",
+        "cooldown": 5,
+        "staminaCost": 12,
+        "description": "Keep their head down.",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 2, "max": 4 },
+          { "do": "effect", "effect": "#Reeling" },
+          { "do": "stun", "turns": 1, "chance": 30 }
+        ],
+        "perk": {
+          "name": "Suppressing Fire",
+          "chanceBonus": 30
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Spotter's Eye",
+        "icon": "longshot_t3.png",
+        "cooldown": 12,
+        "staminaCost": 10,
+        "description": "Take a breath and read the wind.",
+        "castVfx": "CYBERNINJA_DEADLY_FOCUS.particle",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_DeadlyFocus",
+        "actions": [
+          { "do": "effect", "effect": "#Focused" },
+          { "do": "effect", "effect": "@Steady", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Eagle Eye",
+          "cooldownDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": {
+        "RangedAccuracy": 5
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Hand-Cast Rounds",
+        "icon": "longshot_t4.png",
+        "description": "Each bullet is filed into a nasty little shape.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              { "do": "effect", "effect": "#Gashed" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Shot",
+        "name": "One Shot",
+        "icon": "longshot_t5.png",
+        "range": 10,
+        "staminaCost": 25,
+        "cooldown": 12,
+        "description": "All of that patience, in one trigger pull.",
+        "impactVfx": "PA_Prototype_ArmCannon.impactParticle",
+        "sound": "sfx/longshot_oneshot.wav",
+        "actions": [
+          { "do": "damage", "type": "Piercing", "min": 6, "max": 12, "scale": "Recognition", "scaleMult": 0.6, "perRank": 2, "bonusPerStack": 5, "stacksOf": "@Steady", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "damage", "type": "Piercing", "min": 4, "max": 8, "trueDamage": true, "ifTargetHas": "#Marked", "consume": true }
+        ],
+        "perk": {
+          "name": "One Kill",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Killing Window",
+        "icon": "longshot_t6.png",
+        "staminaCost": 12,
+        "cooldown": 10,
+        "description": "Settle the crosshairs on the room and wait for someone to wind up. The first two enemies in range that reach for a big move take a round first, often enough to put them off it.",
+        "castVfx": "CYBERNINJA_DEADLY_FOCUS.particle",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_DeadlyFocus",
+        "actions": [
+          {
+            "do": "arm",
+            "reaction": {
+              "name": "Killing Window",
+              "on": "special",
+              "range": 9,
+              "charges": 2,
+              "turns": 8,
+              "priority": 60,
+              "vfx": "PA_Prototype_ArmCannon.impactParticle@0.5",
+              "sound": "audio_licensed/longshot_measured.wav",
+              "actions": [
+                { "do": "damage", "type": "Piercing", "min": 5, "max": 9, "scale": "Recognition", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Steady", "stacksFrom": "self" },
+                { "do": "stun", "turns": 1, "chance": 40 },
+                { "do": "effect", "effect": "#Marked" }
+              ]
+            }
+          },
+          { "do": "effect", "to": "self", "effect": "@Steady" }
+        ],
+        "perk": {
+          "name": "Wide Window",
+          "chanceBonus": 20
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Dead Calm",
+        "icon": "longshot_t7.png",
+        "description": "Nothing rattles you once the first one drops. Kills settle your aim, and a steady hand on a Marked target finds the gap in the armor.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Steady", "stacks": 2 },
+              { "do": "stamina", "to": "self", "amount": 5 }
+            ]
+          },
+          {
+            "on": "hit",
+            "when": { "all": [ { "has": "#Marked", "of": "victim" }, { "value": "stacks:@Steady", "of": "self", "atLeast": 3 } ] },
+            "actions": [
+              { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Recognition", "scaleMult": 0.3, "trueDamage": true }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

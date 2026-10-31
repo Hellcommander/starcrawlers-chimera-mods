@@ -1,0 +1,191 @@
+{
+  "prompt": "dark fungal dart whoosh with soft wet impact, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, organic sound, dark fungal dart whoosh with soft wet impact, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of organic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0038420194759964943,
+  "archetype": "organic",
+  "references": [
+    {
+      "id": "3ebb431185cdfaa5",
+      "score": 0.37947309017181396,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 47.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "096ad02bb9b8a164",
+      "score": 0.35170048475265503,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 47.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "3ae1e40dcff4548b",
+      "score": 0.350877970457077,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 39.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "e695f4a59d9921c2",
+      "score": 0.3506302237510681,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 35.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "d60acee13e4dfa31",
+      "score": 0.3444870412349701,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Dragon.zip",
+      "inner": "Dark Fantasy Studio- Dragon/Dark Fantasy Studio-Dragon 47.wav",
+      "tags": [
+        "dragon",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "53b7e40a65abb529",
+      "score": 0.3297351598739624,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 39.wav",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "242b3b3f6158d9bc",
+      "score": 0.32889699935913086,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 15.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "3100b967079f313e",
+      "score": 0.3235050439834595,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 18.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "091079c76fbe626c",
+      "score": 0.3234834671020508,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 21.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "95bce595bddf0f75",
+      "score": 0.3234834671020508,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Crow.zip",
+      "inner": "Dark Fantasy Studio- Crow/Dark Fantasy Studio- Crow 52.wav",
+      "tags": [
+        "crow",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "3ebb431185cdfaa5",
+    "096ad02bb9b8a164",
+    "3ae1e40dcff4548b",
+    "e695f4a59d9921c2",
+    "d60acee13e4dfa31",
+    "53b7e40a65abb529",
+    "242b3b3f6158d9bc",
+    "3100b967079f313e",
+    "091079c76fbe626c",
+    "95bce595bddf0f75"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\gloom_dart.wav",
+  "sample_rate": 44100
+}

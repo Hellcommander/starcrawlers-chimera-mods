@@ -1,0 +1,263 @@
+{
+  "id": "MOD_SpliceHost",
+  "name": "Splice Host",
+  "description": "Gene splices you volunteered for, then regretted, then learned to love. Your body switches between three forms: Carapace, Claws and Spines. Every wound teaches it to Adapt, and Metamorphic Burst spends that adaptation in a spray of mutagen.\n\nShapeshifting bruiser with form stances. Favors [STR] and [TGH].",
+  "archetype": "Muscle",
+  "icon": "splice_host.png",
+  "attributePriorities": {
+    "Strength": 3,
+    "Toughness": 3,
+    "Agility": 1
+  },
+  "effects": [
+    {
+      "id": "Adaptation",
+      "name": "Adaptation",
+      "description": "Your body has learned from every wound.",
+      "duration": 10,
+      "maxStacks": 5,
+      "stats": {
+        "HealthRegen": 1
+      },
+      "resists": {
+        "Fire": 4,
+        "Bio": 4,
+        "Energy": 4
+      }
+    },
+    {
+      "id": "Carapace",
+      "name": "Form: Carapace",
+      "description": "Plated, slow and very hard to hurt.",
+      "duration": 30,
+      "group": "form",
+      "stats": {
+        "Armor": 3,
+        "Dodge": -5
+      },
+      "damageTakenMult": 0.8,
+      "hot": 1
+    },
+    {
+      "id": "Claws",
+      "name": "Form: Claws",
+      "description": "Long fingers, longer nails.",
+      "duration": 30,
+      "group": "form",
+      "damageDealtMult": 1.25
+    },
+    {
+      "id": "Spines",
+      "name": "Form: Spines",
+      "description": "Anyone who hits you regrets it.",
+      "duration": 30,
+      "group": "form",
+      "procs": [
+        {
+          "on": "hurt",
+          "vfx": "PA_SerratedSpines.PS_impact",
+          "actions": [
+            { "do": "damage", "type": "Piercing", "min": 2, "max": 5, "scale": "Toughness", "scaleMult": 0.3 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Adaptive Tissue",
+        "icon": "splice_host_t0.png",
+        "description": "What doesn't kill you rewrites your DNA.",
+        "procs": [
+          {
+            "on": "hurt",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Adaptation" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Grow Carapace",
+        "icon": "splice_host_t1.png",
+        "cooldown": 4,
+        "staminaCost": 5,
+        "description": "Harden your skin into overlapping plates.",
+        "castVfx": "PA_Mutant_HoldItIn.castParticle",
+        "sound": "event:/Abilities/ChaoticMutant/Mutation_HornCharge",
+        "actions": [
+          { "do": "effect", "effect": "@Carapace" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Rend",
+        "icon": "splice_host_t2.png",
+        "description": "A tearing blow that changes with your form.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "sound": "sfx/splice_rend.wav",
+        "actions": [
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.5, "perRank": 1 },
+          { "do": "effect", "effect": "#Gashed", "stacks": 2, "ifSelfHas": "@Claws" },
+          { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "ifSelfHas": "@Spines" },
+          { "do": "heal", "to": "self", "amount": 3, "ifSelfHas": "@Carapace" }
+        ],
+        "perk": {
+          "name": "Savage Rend",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Sprout Claws",
+        "icon": "splice_host_t3.png",
+        "cooldown": 4,
+        "staminaCost": 5,
+        "description": "Your fingers split and lengthen.",
+        "castVfx": "PA_Mutant_Unleash.castParticle",
+        "sound": "event:/Abilities/ChaoticMutant/Mutation_HornCharge",
+        "actions": [
+          { "do": "effect", "effect": "@Claws" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Bristle Spines",
+        "icon": "splice_host_t4.png",
+        "cooldown": 4,
+        "staminaCost": 5,
+        "description": "Quills burst from your back.",
+        "castVfx": "PA_SerratedSpines.PS_impact_perk",
+        "sound": "event:/Abilities/Biomods/Biomods_Spine_Throw",
+        "actions": [
+          { "do": "effect", "effect": "@Spines" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Metamorphic Burst",
+        "icon": "splice_host_t5.png",
+        "radius": 2,
+        "staminaCost": 25,
+        "cooldown": 14,
+        "description": "Vent everything your body has learned in a spray of mutagen.",
+        "castVfx": "PA_ApexPredator.PS_cast",
+        "impactVfx": "EFFECT_Xeno_Debuff_Green",
+        "sound": "sfx/splice_burst.wav",
+        "actions": [
+          { "do": "damage", "type": "Bio", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Adaptation", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "effect", "effect": "#Poisoned" },
+          { "do": "heal", "to": "self", "amount": 5 }
+        ],
+        "perk": {
+          "name": "Rampant Mutation",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Feral Lunge",
+        "icon": "splice_host_t6.png",
+        "range": 4,
+        "staminaCost": 20,
+        "cooldown": 9,
+        "description": "Your legs fold the wrong way and fling you across the gap. What you land as depends on what you are right now.",
+        "impactVfx": "PA_SerratedSpines.PS_impact",
+        "sound": "sfx/splice_rend.wav",
+        "actions": [
+          { "do": "leap" },
+          { "do": "damage", "type": "Slashing", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2 },
+          { "do": "effect", "effect": "#Gashed", "stacks": 2, "ifSelfHas": "@Claws" },
+          { "do": "knockback", "amount": 2, "ifSelfHas": "@Spines" },
+          { "do": "effect", "effect": "#Reeling", "ifSelfHas": "@Spines" },
+          { "do": "taunt", "turns": 2, "ifSelfHas": "@Carapace" },
+          { "do": "effect", "to": "self", "effect": "#Fortified", "ifSelfHas": "@Carapace" },
+          { "do": "effect", "to": "self", "effect": "@Adaptation" }
+        ],
+        "perk": {
+          "name": "Apex Pounce",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2,
+        "Strength": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Seamless Shift",
+        "icon": "splice_host_t7.png",
+        "description": "Your cells stop arguing about what shape to be. Every change of form now comes with a gift, and teaches the body something new.",
+        "procs": [
+          {
+            "on": "effectGained",
+            "match": "@Carapace",
+            "actions": [
+              { "do": "shield", "to": "self", "amount": 6, "scale": "Toughness", "scaleMult": 0.4 },
+              { "do": "effect", "to": "self", "effect": "@Adaptation" }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@Claws",
+            "actions": [
+              { "do": "stamina", "to": "self", "amount": 6 },
+              { "do": "effect", "to": "self", "effect": "@Adaptation" }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "match": "@Spines",
+            "radius": 2,
+            "vfx": "PA_SerratedSpines.PS_impact_perk",
+            "actions": [
+              { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Toughness", "scaleMult": 0.3 },
+              { "do": "effect", "to": "self", "effect": "@Adaptation" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

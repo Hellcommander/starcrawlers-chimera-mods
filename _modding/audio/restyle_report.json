@@ -1,0 +1,572 @@
+{
+ "Kinetics/grappler_collar_grab": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 211514786,
+  "wave_corr": 0.125,
+  "spec_sim": 0.703,
+  "onset_shift": 0.035,
+  "width_src": 0.035,
+  "width": 0.0
+ },
+ "Kinetics/grappler_body_slam": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2301571127,
+  "wave_corr": 0.154,
+  "spec_sim": 0.764,
+  "onset_shift": -0.001,
+  "width_src": 0.023,
+  "width": 0.0
+ },
+ "Kinetics/grappler_iron_clinch": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2122578787,
+  "wave_corr": 0.021,
+  "spec_sim": 0.5,
+  "onset_shift": 0.003,
+  "width_src": 0.43,
+  "width": 1.077
+ },
+ "Kinetics/grappler_suplex": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 795167430,
+  "wave_corr": 0.045,
+  "spec_sim": 0.531,
+  "onset_shift": 0.072,
+  "width_src": 0.736,
+  "width": 0.73
+ },
+ "Kinetics/grappler_piledriver": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1914164657,
+  "wave_corr": 0.124,
+  "spec_sim": 0.783,
+  "onset_shift": 0.044,
+  "width_src": 0.735,
+  "width": 0.629
+ },
+ "Kinetics/rig_piston_jab": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3817056625,
+  "wave_corr": 0.11,
+  "spec_sim": 0.78,
+  "onset_shift": 0.026,
+  "width_src": 0.18,
+  "width": 0.301
+ },
+ "Kinetics/rig_hydraulic_charge": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1642276612,
+  "wave_corr": 0.043,
+  "spec_sim": 0.704,
+  "onset_shift": -0.169,
+  "width_src": 0.241,
+  "width": 0.163
+ },
+ "Kinetics/rig_plate_up": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4149982352,
+  "wave_corr": 0.035,
+  "spec_sim": 0.653,
+  "onset_shift": -0.031,
+  "width_src": 0.268,
+  "width": 0.929
+ },
+ "Kinetics/rig_vent_blast": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2758757015,
+  "wave_corr": 0.071,
+  "spec_sim": 0.781,
+  "onset_shift": -0.005,
+  "width_src": 0.77,
+  "width": 0.65
+ },
+ "Kinetics/rig_hammerfall": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4215573918,
+  "wave_corr": 0.195,
+  "spec_sim": 0.758,
+  "onset_shift": -0.0,
+  "width_src": 0.597,
+  "width": 0.508
+ },
+ "Kinetics/rig_overheat": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1405047616,
+  "wave_corr": 0.409,
+  "spec_sim": 0.913,
+  "onset_shift": 0.006,
+  "width_src": 0.381,
+  "width": 0.847
+ },
+ "Kinetics/guard_shoulder_check": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 965853829,
+  "wave_corr": 0.061,
+  "spec_sim": 0.694,
+  "onset_shift": -0.02,
+  "width_src": 0.041,
+  "width": 0.0
+ },
+ "Kinetics/guard_close_protection": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2689379311,
+  "wave_corr": 0.232,
+  "spec_sim": 0.685,
+  "onset_shift": -0.02,
+  "width_src": 1.417,
+  "width": 0.376
+ },
+ "Kinetics/guard_over_here": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3410770671,
+  "wave_corr": 0.255,
+  "spec_sim": 0.726,
+  "onset_shift": -0.004,
+  "width_src": 0.367,
+  "width": 0.286
+ },
+ "Kinetics/guard_retort_stance": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3717890602,
+  "wave_corr": 0.027,
+  "spec_sim": 0.585,
+  "onset_shift": -0.038,
+  "width_src": 0.61,
+  "width": 0.952
+ },
+ "Kinetics/guard_payback": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3675370177,
+  "wave_corr": 0.102,
+  "spec_sim": 0.81,
+  "onset_shift": -0.001,
+  "width_src": 0.532,
+  "width": 0.385
+ },
+ "Kinetics/run_flying_knee": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3524349437,
+  "wave_corr": 0.221,
+  "spec_sim": 0.723,
+  "onset_shift": -0.018,
+  "width_src": 0.082,
+  "width": 0.0
+ },
+ "Kinetics/run_wall_run": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 336523804,
+  "wave_corr": 0.114,
+  "spec_sim": 0.766,
+  "onset_shift": 0.056,
+  "width_src": 0.393,
+  "width": 0.823
+ },
+ "Kinetics/run_slide_tackle": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3772400881,
+  "wave_corr": 0.08,
+  "spec_sim": 0.621,
+  "onset_shift": 0.023,
+  "width_src": 1.263,
+  "width": 0.874
+ },
+ "Kinetics/run_second_wind": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 9774700,
+  "wave_corr": 0.266,
+  "spec_sim": 0.682,
+  "onset_shift": -0.015,
+  "width_src": 0.614,
+  "width": 0.537
+ },
+ "Kinetics/run_vault_stomp": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4287095396,
+  "wave_corr": 0.139,
+  "spec_sim": 0.834,
+  "onset_shift": 0.0,
+  "width_src": 0.871,
+  "width": 0.574
+ },
+ "Kinetics/trick_bank_shot": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4288042538,
+  "wave_corr": 0.308,
+  "spec_sim": 0.862,
+  "onset_shift": 0.001,
+  "width_src": 0.138,
+  "width": 0.21
+ },
+ "Kinetics/trick_coin_flick": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2205843753,
+  "wave_corr": 0.027,
+  "spec_sim": 0.489,
+  "onset_shift": -0.005,
+  "width_src": 0.379,
+  "width": 0.266
+ },
+ "Kinetics/trick_pocket_change": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 550901404,
+  "wave_corr": 0.023,
+  "spec_sim": 0.466,
+  "onset_shift": -0.023,
+  "width_src": 0.364,
+  "width": 0.651
+ },
+ "Kinetics/trick_deadeye": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1141566116,
+  "wave_corr": 0.073,
+  "spec_sim": 0.807,
+  "onset_shift": 0.035,
+  "width_src": 0.698,
+  "width": 0.323
+ },
+ "Kinetics/trick_jackpot": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4175299566,
+  "wave_corr": 0.052,
+  "spec_sim": 0.819,
+  "onset_shift": -0.004,
+  "width_src": 0.137,
+  "width": 0.876
+ },
+ "Kinetics/blade_knife_toss": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2432066504,
+  "wave_corr": 0.062,
+  "spec_sim": 0.848,
+  "onset_shift": 0.017,
+  "width_src": 0.089,
+  "width": 0.0
+ },
+ "Kinetics/blade_recall": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1052888331,
+  "wave_corr": 0.044,
+  "spec_sim": 0.442,
+  "onset_shift": -0.01,
+  "width_src": 0.263,
+  "width": 0.268
+ },
+ "Kinetics/blade_fan_of_knives": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2894066794,
+  "wave_corr": 0.038,
+  "spec_sim": 0.819,
+  "onset_shift": 0.013,
+  "width_src": 0.233,
+  "width": 0.093
+ },
+ "Kinetics/blade_pinning_throw": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1364328385,
+  "wave_corr": 0.119,
+  "spec_sim": 0.792,
+  "onset_shift": -0.011,
+  "width_src": 0.495,
+  "width": 1.097
+ },
+ "Kinetics/blade_thousand_returns": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2863330600,
+  "wave_corr": 0.031,
+  "spec_sim": 0.762,
+  "onset_shift": 0.119,
+  "width_src": 1.963,
+  "width": 1.106
+ },
+ "Kinetics/grapnel_yank": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1267584881,
+  "wave_corr": 0.033,
+  "spec_sim": 0.471,
+  "onset_shift": -0.09,
+  "width_src": 0.189,
+  "width": 0.129
+ },
+ "Kinetics/grapnel_zip_line": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3687753940,
+  "wave_corr": 0.125,
+  "spec_sim": 0.694,
+  "onset_shift": -0.017,
+  "width_src": 0.519,
+  "width": 0.82
+ },
+ "Kinetics/grapnel_swing_kick": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1002273650,
+  "wave_corr": 0.059,
+  "spec_sim": 0.619,
+  "onset_shift": 0.012,
+  "width_src": 0.105,
+  "width": 0.223
+ },
+ "Kinetics/grapnel_wall_pin": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2108389064,
+  "wave_corr": 0.375,
+  "spec_sim": 0.727,
+  "onset_shift": 0.0,
+  "width_src": 0.239,
+  "width": 0.214
+ },
+ "Kinetics/grapnel_pendulum": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1369668245,
+  "wave_corr": 0.077,
+  "spec_sim": 0.561,
+  "onset_shift": -0.043,
+  "width_src": 1.379,
+  "width": 1.045
+ },
+ "FluxSavant/arc_lance": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 184698470,
+  "wave_corr": 0.044,
+  "spec_sim": 0.617,
+  "onset_shift": 0.025,
+  "width_src": 0.32,
+  "width": 0.328
+ },
+ "FluxSavant/rune_press": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2943007065,
+  "wave_corr": 0.047,
+  "spec_sim": 0.751,
+  "onset_shift": -0.005,
+  "width_src": 0.421,
+  "width": 0.126
+ },
+ "FluxSavant/catalyst_flask": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 901515558,
+  "wave_corr": 0.079,
+  "spec_sim": 0.611,
+  "onset_shift": 0.043,
+  "width_src": 0.405,
+  "width": 0.352
+ },
+ "FluxSavant/lattice_field": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 441257140,
+  "wave_corr": 0.044,
+  "spec_sim": 0.767,
+  "onset_shift": -0.072,
+  "width_src": 0.32,
+  "width": 0.304
+ },
+ "FluxSavant/critical_mass": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2730408158,
+  "wave_corr": 0.124,
+  "spec_sim": 0.821,
+  "onset_shift": -0.002,
+  "width_src": 0.414,
+  "width": 0.253
+ },
+ "FluxSavant/instability": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4194099005,
+  "wave_corr": 0.02,
+  "spec_sim": 0.755,
+  "onset_shift": 0.025,
+  "width_src": 1.676,
+  "width": 0.932
+ },
+ "FluxSavant/react_plasma_flash": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2293605344,
+  "wave_corr": 0.335,
+  "spec_sim": 0.825,
+  "onset_shift": 0.006,
+  "width_src": 0.143,
+  "width": 0.161
+ },
+ "FluxSavant/react_thermal_shock": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 378241641,
+  "wave_corr": 0.151,
+  "spec_sim": 0.523,
+  "onset_shift": 0.04,
+  "width_src": 0.329,
+  "width": 0.668
+ },
+ "FluxSavant/react_caustic_vapour": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3099728346,
+  "wave_corr": 0.02,
+  "spec_sim": 0.597,
+  "onset_shift": 0.015,
+  "width_src": 0.544,
+  "width": 0.665
+ },
+ "FluxSavant/react_superconduct": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1524418054,
+  "wave_corr": 0.272,
+  "spec_sim": 0.677,
+  "onset_shift": 0.024,
+  "width_src": 0.38,
+  "width": 0.54
+ },
+ "FluxSavant/react_galvanic_bloom": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2801805006,
+  "wave_corr": 0.032,
+  "spec_sim": 0.66,
+  "onset_shift": -0.028,
+  "width_src": 0.45,
+  "width": 0.647
+ },
+ "FluxSavant/react_brittle_lattice": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1285807043,
+  "wave_corr": 0.019,
+  "spec_sim": 0.439,
+  "onset_shift": 0.006,
+  "width_src": 0.23,
+  "width": 0.388
+ },
+ "FluxSavant/react_aether_arc": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3651162413,
+  "wave_corr": 0.021,
+  "spec_sim": 0.698,
+  "onset_shift": 0.096,
+  "width_src": 0.948,
+  "width": 0.925
+ },
+ "FluxSavant/react_flashpoint": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3989203233,
+  "wave_corr": 0.094,
+  "spec_sim": 0.685,
+  "onset_shift": -0.012,
+  "width_src": 0.32,
+  "width": 0.286
+ },
+ "FluxSavant/react_stasis_bloom": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 4221289996,
+  "wave_corr": 0.128,
+  "spec_sim": 0.743,
+  "onset_shift": -0.024,
+  "width_src": 0.259,
+  "width": 0.339
+ },
+ "FluxSavant/react_dissolution": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2247648268,
+  "wave_corr": 0.116,
+  "spec_sim": 0.326,
+  "onset_shift": -0.12,
+  "width_src": 0.258,
+  "width": 0.61
+ },
+ "Library/moves_throw_impact": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1726767422,
+  "wave_corr": 0.249,
+  "spec_sim": 0.84,
+  "onset_shift": 0.0,
+  "width_src": 0.017,
+  "width": 0.215
+ },
+ "Library/moves_leap": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1431083619,
+  "wave_corr": 0.041,
+  "spec_sim": 0.79,
+  "onset_shift": -0.032,
+  "width_src": 0.528,
+  "width": 0.583
+ },
+ "Library/moves_recall": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 2331468730,
+  "wave_corr": 0.053,
+  "spec_sim": 0.75,
+  "onset_shift": -0.017,
+  "width_src": 0.118,
+  "width": 0.139
+ },
+ "Library/moves_ricochet": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 3472378138,
+  "wave_corr": 0.123,
+  "spec_sim": 0.867,
+  "onset_shift": -0.001,
+  "width_src": 1.531,
+  "width": 0.69
+ },
+ "Library/moves_tether": {
+  "noise": 0.3,
+  "steps": 36,
+  "seed": 1726684999,
+  "wave_corr": 0.05,
+  "spec_sim": 0.77,
+  "onset_shift": -0.187,
+  "width_src": 0.255,
+  "width": 0.408
+ }
+}

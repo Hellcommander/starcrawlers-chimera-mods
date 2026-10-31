@@ -1,0 +1,210 @@
+{
+  "prompt": "wooden croquet mallet whack and a ball thudding away",
+  "conditioned_prompt": "high quality game sound effect, wooden croquet mallet whack and a ball thudding away, timbre of organic, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.0018994401907548308,
+  "source_corr": 0.003807058557868004,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "1fafb261178ace28",
+      "score": 0.43860143423080444,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_18.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "b5a35edd1100f659",
+      "score": 0.43786901235580444,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_7.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "5707ea1db116d05a",
+      "score": 0.43530845642089844,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_8.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "6a5b808da3854bf4",
+      "score": 0.4324226379394531,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_20.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "122ee431c55b4b4f",
+      "score": 0.430169939994812,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_4.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "06a79af0809330ab",
+      "score": 0.4298475682735443,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 1/NOISE ALCHEMY - HORSE STEPS 1_5.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "5bae4b60c970da86",
+      "score": 0.42932596802711487,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 1/NOISE ALCHEMY - HORSE STEPS 1_20.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "1040afc722f19d7f",
+      "score": 0.42826709151268005,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 1/NOISE ALCHEMY - HORSE STEPS 1_9.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "50945bbdbe30cf41",
+      "score": 0.426216185092926,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_10.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "5cebdba207ec1eda",
+      "score": 0.4260273277759552,
+      "via": "clap+tag",
+      "pack": "horsesteps.zip",
+      "inner": "NOISE ALCHEMY - HORSE STEPS/NOISE ALCHEMY - HORSE STEPS 3/NOISE ALCHEMY - HORSE STEPS 3_3.wav",
+      "license": "reference",
+      "tags": [
+        "horsesteps",
+        "noise",
+        "alchemy",
+        "horse",
+        "steps"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "1fafb261178ace28",
+    "b5a35edd1100f659",
+    "5707ea1db116d05a",
+    "6a5b808da3854bf4",
+    "122ee431c55b4b4f",
+    "06a79af0809330ab",
+    "5bae4b60c970da86",
+    "1040afc722f19d7f",
+    "50945bbdbe30cf41",
+    "5cebdba207ec1eda"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_croquet.wav",
+  "sample_rate": 44100
+}

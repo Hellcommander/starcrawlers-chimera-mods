@@ -1,0 +1,8 @@
+{
+  "id": "ExampleItems",
+  "name": "Example Items",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "A small set of items showing every item kind the loader supports. Safe to delete."
+}

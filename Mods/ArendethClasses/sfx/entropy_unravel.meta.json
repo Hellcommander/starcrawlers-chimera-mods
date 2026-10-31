@@ -1,0 +1,180 @@
+{
+  "prompt": "reality tearing apart, unraveling distorted rip and boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, reality tearing apart, unraveling distorted rip and boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.09357734769582748,
+  "source_corr": 0.023859145119786263,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "291f5dc1aad44ede",
+      "score": 0.5875920653343201,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 15.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4c94075e35ad56dd",
+      "score": 0.5779187083244324,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 47.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "01d2db8cc59b536c",
+      "score": 0.5628336071968079,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "4ca26c5cea036262",
+      "score": 0.5475557446479797,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 43.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "edac45a6c49abe7e",
+      "score": 0.5443058609962463,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 88.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "79ea5c5d78cb13dd",
+      "score": 0.5425907969474792,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 50.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "690fb78be158c0f5",
+      "score": 0.5408338904380798,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 18.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "365d91796c7105f6",
+      "score": 0.5407618880271912,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 45.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "2dac3db537757806",
+      "score": 0.537925124168396,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 23.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "1494d0fe0e59d104",
+      "score": 0.5368910431861877,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 17.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "291f5dc1aad44ede",
+    "4c94075e35ad56dd",
+    "01d2db8cc59b536c",
+    "4ca26c5cea036262",
+    "edac45a6c49abe7e",
+    "79ea5c5d78cb13dd",
+    "690fb78be158c0f5",
+    "365d91796c7105f6",
+    "2dac3db537757806",
+    "1494d0fe0e59d104"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\entropy_unravel.wav",
+  "sample_rate": 44100
+}

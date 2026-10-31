@@ -1,0 +1,57 @@
+[ { "particles": [
+  { "id": "fx_paradox_witch_borrowed_second_cast", "light": {"color": "#60D8C0", "range": 3.935, "intensity": 2.303, "time": 0.862},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.505], "speed": [0], "size": [1.985], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "alpha": 0.8, "shape": "point"},
+      {"texture": "mote", "count": 49, "life": [0.317, 0.514], "speed": [-3.2, -2.2], "size": [0.127, 0.217], "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 1.4},
+      {"texture": "star", "count": 6, "life": [0.326, 0.452], "speed": [0.0, 0.315], "size": [0.444, 0.756], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.52], "speed": [0], "size": [2.728], "sizeCurve": "grow", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "ground": true, "flat": true, "delay": 0.3}
+    ] },
+  { "id": "fx_paradox_witch_retroactive_wound_impact", "light": {"color": "#60D8C0", "range": 3.284, "intensity": 1.777, "time": 0.476},
+    "layers": [
+      {"texture": "fx/paradox_witch_burst.png", "count": 1, "life": [0.481], "speed": [0], "size": [1.213], "sizeCurve": "flat", "color": "#C8FFF0", "color2": "#C89820", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 31, "life": [0.272, 0.646], "speed": [3.208, 5.89], "size": [0.088, 0.167], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 18, "life": [0.548, 0.991], "speed": [1.1, 2.563], "size": [0.074, 0.16], "gravity": 0.0, "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.3},
+      {"texture": "star", "count": 6, "life": [0.297, 0.51], "speed": [0.0, 0.311], "size": [0.321, 0.579], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_paradox_witch_revision_point_cast", "light": {"color": "#60D8C0", "range": 2.32, "intensity": 1.48, "time": 0.533},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.621], "speed": [0], "size": [1.422], "sizeCurve": "pulse", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 6, "life": [0.313, 0.484], "speed": [0.0, 0.27], "size": [0.212, 0.408], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 12, "life": [0.273, 0.618], "speed": [0.448, 1.122], "size": [0.055, 0.094], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFF0", "color2": "#C89820", "shape": "ring", "radius": 0.5}
+    ] },
+  { "id": "fx_paradox_witch_dead_timeline_travel",
+    "layers": [
+      {"texture": "fx/plasma_orb.png", "count": 1, "life": [0.7], "speed": [0], "size": [0.786], "sizeCurve": "flat", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "duration": 0.7, "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.7], "speed": [0], "size": [0.498], "sizeCurve": "flat", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "duration": 0.7, "spin": [180, 360]},
+      {"texture": "mote", "count": 0, "rate": 81, "duration": 0.7, "life": [0.248, 0.478], "speed": [0.089, 0.438], "size": [0.095, 0.23], "gravity": 0.0, "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_paradox_witch_dead_timeline_impact", "light": {"color": "#60D8C0", "range": 2.749, "intensity": 1.308, "time": 0.539},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.478], "speed": [0], "size": [1.012], "sizeCurve": "grow", "color": "#C8FFF0", "color2": "#C89820", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.595], "speed": [0], "size": [1.497], "sizeCurve": "grow", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "delay": 0.12},
+      {"texture": "star", "count": 5, "life": [0.306, 0.493], "speed": [0.0, 0.269], "size": [0.239, 0.527], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.4}
+    ] },
+  { "id": "fx_paradox_witch_entropy_bloom_area", "light": {"color": "#60D8C0", "range": 5.186, "intensity": 1.233, "time": 0.775},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.788], "speed": [0], "size": [5.419], "sizeCurve": "flat", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 25, "life": [0.675, 1.177], "speed": [0.299, 0.868], "size": [0.071, 0.174], "gravity": -0.2, "color": "#C8FFF0", "color2": "#C89820", "shape": "cone", "angle": 8, "radius": 1.6, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 9, "delay": 0.05, "life": [0.849, 1.631], "speed": [0.044, 0.207], "size": [0.744, 1.4], "sizeCurve": "grow", "spin": [-50, 50], "color": "#18201E", "color2": "#18201E", "alpha": 0.4, "shape": "disc", "radius": 1.4, "ground": true, "grid": [6, 6]},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 6, "delay": 0.05, "life": [0.876, 1.633], "speed": [0.283, 0.918], "size": [0.558, 1.069], "sizeCurve": "grow", "spin": [-50, 50], "color": "#18201E", "color2": "#18201E", "alpha": 0.55, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_paradox_witch_collections_day_area", "light": {"color": "#60D8C0", "range": 7.896, "intensity": 1.824, "time": 0.542},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.539], "speed": [0], "size": [14.261], "sizeCurve": "shrink", "color": "#C8FFF0", "color2": "#C89820", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 43, "life": [0.364, 0.528], "speed": [-17.5, -12.5], "size": [0.082, 0.177], "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 5.0, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.42], "speed": [0], "size": [1.324], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "alpha": 0.85, "shape": "point"},
+      {"texture": "star", "count": 5, "life": [0.329, 0.441], "speed": [0.0, 0.32], "size": [0.286, 0.549], "sizeCurve": "pop", "color": "#C8FFF0", "color2": "#C89820", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_ParadoxWitch", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "fx_paradox_witch_borrowed_second_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_paradox_witch_retroactive_wound_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_paradox_witch_revision_point_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_paradox_witch_dead_timeline_impact", "travelVfx": "fx_paradox_witch_dead_timeline_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_paradox_witch_entropy_bloom_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_paradox_witch_collections_day_area"}}
+] } ]

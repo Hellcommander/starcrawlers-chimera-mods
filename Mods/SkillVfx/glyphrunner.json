@@ -1,0 +1,56 @@
+[ { "particles": [
+  { "id": "fx_glyphrunner_mark_sigil_impact", "light": {"color": "#5AE0F0", "range": 2.298, "intensity": 1.286, "time": 0.461},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.668], "speed": [0], "size": [1.333], "sizeCurve": "pulse", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 6, "life": [0.329, 0.502], "speed": [0.0, 0.319], "size": [0.199, 0.381], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 11, "life": [0.307, 0.555], "speed": [0.456, 1.145], "size": [0.045, 0.1], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5}
+    ] },
+  { "id": "fx_glyphrunner_loop_sigil_impact", "light": {"color": "#5AE0F0", "range": 2.412, "intensity": 1.276, "time": 0.53},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.637], "speed": [0], "size": [1.398], "sizeCurve": "pulse", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 4, "life": [0.333, 0.523], "speed": [0.0, 0.284], "size": [0.223, 0.446], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 9, "life": [0.333, 0.67], "speed": [0.548, 1.332], "size": [0.052, 0.096], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5},
+      {"texture": "mote", "count": 19, "life": [0.65, 1.06], "speed": [0.107, 0.409], "size": [0.099, 0.218], "orbit": 0.817, "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.8}
+    ] },
+  { "id": "fx_glyphrunner_sever_sigil_impact",
+    "layers": [
+      {"texture": "spark", "count": 2, "life": [0.315, 0.459], "speed": [0], "size": [1.097, 1.711], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point"},
+      {"texture": "spark", "count": 18, "life": [0.29, 0.471], "speed": [2.074, 4.274], "size": [0.056, 0.116], "stretch": 4, "gravity": 0.0, "drag": 1.0, "color": "#C8FFFF", "color2": "#1878C8", "shape": "sphere", "radius": 0.2},
+      {"texture": "star", "count": 5, "life": [0.27, 0.546], "speed": [0.0, 0.306], "size": [0.292, 0.559], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_glyphrunner_run_program_impact", "light": {"color": "#5AE0F0", "range": 4.559, "intensity": 2.766, "time": 0.641},
+    "layers": [
+      {"texture": "fx/glyphrunner_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.126], "sizeCurve": "flat", "color": "#C8FFFF", "color2": "#1878C8", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 46, "life": [0.287, 0.652], "speed": [5.405, 9.537], "size": [0.111, 0.221], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#C8FFFF", "color2": "#1878C8", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/glyphrunner_bits.png", "count": 9, "life": [0.444, 0.817], "speed": [2.333, 4.962], "size": [0.104, 0.246], "gravity": 1.2, "spin": [-360, 360], "color": "#C8FFFF", "color2": "#1878C8", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 10, "delay": 0.05, "life": [0.884, 1.397], "speed": [0.537, 1.219], "size": [0.898, 1.547], "sizeCurve": "grow", "spin": [-50, 50], "color": "#14202A", "color2": "#14202A", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]}
+    ] },
+  { "id": "fx_glyphrunner_stack_overflow_area", "light": {"color": "#5AE0F0", "range": 9.414, "intensity": 2.953, "time": 0.611},
+    "layers": [
+      {"texture": "fx/glyphrunner_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [11.348], "sizeCurve": "flat", "color": "#C8FFFF", "color2": "#1878C8", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.417], "speed": [0], "size": [16.246], "sizeCurve": "grow", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 58, "life": [0.333, 0.59], "speed": [3.579, 8.921], "size": [0.111, 0.211], "stretch": 3, "gravity": 0.9, "drag": 1.5, "color": "#C8FFFF", "color2": "#1878C8", "shape": "hemisphere", "radius": 3.0, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 11, "delay": 0.05, "life": [0.817, 1.624], "speed": [0.603, 1.495], "size": [1.079, 1.928], "sizeCurve": "grow", "spin": [-50, 50], "color": "#14202A", "color2": "#14202A", "alpha": 0.65, "shape": "disc", "radius": 3.5999999999999996, "ground": true, "grid": [6, 6]},
+      {"texture": "star", "count": 5, "life": [0.321, 0.444], "speed": [0.0, 0.284], "size": [0.276, 0.534], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "sphere", "radius": 0.5}
+    ] },
+  { "id": "fx_glyphrunner_daisy_chain_cipher_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.388], "sizeCurve": "flat", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 306, "duration": 0.7, "life": [0.401, 0.586], "speed": [0.0, 0.033], "size": [0.058, 0.118], "gravity": 0.0, "color": "#C8FFFF", "color2": "#1878C8", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_glyphrunner_daisy_chain_cipher_impact", "light": {"color": "#5AE0F0", "range": 2.705, "intensity": 1.438, "time": 0.461},
+    "layers": [
+      {"texture": "fx/sigil.png", "count": 1, "life": [0.625], "speed": [0], "size": [1.405], "sizeCurve": "pulse", "color": "#C8FFFF", "color2": "#1878C8", "shape": "point", "grid": [2, 2], "randomFrame": true},
+      {"texture": "star", "count": 5, "life": [0.295, 0.547], "speed": [0.0, 0.288], "size": [0.182, 0.359], "sizeCurve": "pop", "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5},
+      {"texture": "spark", "count": 11, "life": [0.264, 0.578], "speed": [0.441, 1.28], "size": [0.054, 0.095], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#C8FFFF", "color2": "#1878C8", "shape": "ring", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_Glyphrunner", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_glyphrunner_mark_sigil_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_glyphrunner_loop_sigil_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_glyphrunner_sever_sigil_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_glyphrunner_run_program_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_glyphrunner_stack_overflow_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_glyphrunner_daisy_chain_cipher_impact", "travelVfx": "fx_glyphrunner_daisy_chain_cipher_travel", "areaVfx": ""}}
+] } ]

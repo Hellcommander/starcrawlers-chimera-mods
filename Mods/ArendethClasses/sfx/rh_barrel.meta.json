@@ -1,0 +1,220 @@
+{
+  "prompt": "barrel of chemicals exploding with fire, hiss and crackle all at once, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, barrel of chemicals exploding with fire, hiss and crackle all at once, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of magic, fire, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.3,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.021851245313882828,
+  "source_corr": 0.02470332942903042,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "52be5481f4db2dbd",
+      "score": 0.5874078273773193,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 16.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "4e1f9bb1156341fe",
+      "score": 0.5715470910072327,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 8.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "78280e158c47132e",
+      "score": 0.5578553676605225,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 15.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "a2be77207f97e29a",
+      "score": 0.5562195181846619,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 20.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "07b6d32b1edfa9ad",
+      "score": 0.5542945265769958,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 18.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "1c89b9d41ef9d26a",
+      "score": 0.5504382252693176,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 5.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "90d71fa7341a1d94",
+      "score": 0.5435906648635864,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "5a3e1a283aed9810",
+      "score": 0.5423286557197571,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "00371e5bd52f5b93",
+      "score": 0.540912926197052,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 19.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "b5b85f1f1db7bb3f",
+      "score": 0.5357174873352051,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 10.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    }
+  ],
+  "used_ids": [
+    "52be5481f4db2dbd",
+    "4e1f9bb1156341fe",
+    "78280e158c47132e",
+    "a2be77207f97e29a",
+    "07b6d32b1edfa9ad",
+    "1c89b9d41ef9d26a",
+    "90d71fa7341a1d94",
+    "5a3e1a283aed9810",
+    "00371e5bd52f5b93",
+    "b5b85f1f1db7bb3f"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_barrel.wav",
+  "sample_rate": 44100
+}

@@ -1,0 +1,222 @@
+{
+  "prompt": "huge rail sniper shot with long echo, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, laser sound, huge rail sniper shot with long echo, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of voice, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 2.2,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.048735782504081726,
+  "archetype": "laser",
+  "references": [
+    {
+      "id": "b0306f966754052e",
+      "score": 0.3783080577850342,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/5/Dark Fantasy Studio- Sci fi voices 5- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "fdd035969396320c",
+      "score": 0.3783080577850342,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/4/Dark Fantasy Studio- Sci fi voices 4- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "92af283c085d6724",
+      "score": 0.3783080577850342,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/2/Dark Fantasy Studio- Sci fi voices 2- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "8f8801162b233c2c",
+      "score": 0.3783080577850342,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/3/Dark Fantasy Studio- Sci fi voices 3- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "6724d9b491aeded7",
+      "score": 0.3783080577850342,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Sci Fi voices.zip",
+      "inner": "Dark Fantasy Studio- Sci Fi voices/1/Dark Fantasy Studio- Sci fi voices 1- Laser.wav",
+      "tags": [
+        "sci",
+        "fi",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio",
+        "laser"
+      ],
+      "archetypes": [
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "42e644103e006724",
+      "score": 0.316931813955307,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 15.wav",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "e34dc92bfcd6d502",
+      "score": 0.30551677942276,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 21.wav",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "6b23acb0d57be11f",
+      "score": 0.30533212423324585,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 20.wav",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "b38a2336b899536c",
+      "score": 0.2992781102657318,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 5.wav",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "9982e99a1b5f2948",
+      "score": 0.2992781102657318,
+      "via": "tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 3.wav",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    }
+  ],
+  "used_ids": [
+    "b0306f966754052e",
+    "fdd035969396320c",
+    "92af283c085d6724",
+    "8f8801162b233c2c",
+    "6724d9b491aeded7",
+    "42e644103e006724",
+    "e34dc92bfcd6d502",
+    "6b23acb0d57be11f",
+    "b38a2336b899536c",
+    "9982e99a1b5f2948"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\longshot_oneshot.wav",
+  "sample_rate": 44100
+}

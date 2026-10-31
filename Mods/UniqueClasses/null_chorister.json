@@ -1,0 +1,309 @@
+{
+  "id": "MOD_NullChorister",
+  "name": "Null Chorister",
+  "description": "The Hollow Choir sings the notes between notes, the ones reality was built to skip. Every verse makes the world a little more wrong around you: stronger, stranger and closer to tearing.\n\nVoid spells build Dissonance (more Psi Power and Crit per stack). At 5 it shields you, at 8 the feedback starts hurting you, and at 10 it tears loose in a void blast. Black Choir spends it all on every Off-Key enemy at once. Favors [STR] and [PSI].",
+  "archetype": "Muscle",
+  "icon": "null_chorister.png",
+  "attributePriorities": {
+    "PsiPower": 4,
+    "Strength": 2,
+    "Toughness": 2
+  },
+  "effects": [
+    {
+      "id": "Dissonance",
+      "name": "Dissonance",
+      "description": "Reality around you is out of tune.",
+      "duration": 8,
+      "maxStacks": 10,
+      "stats": {
+        "PsiPower": 1,
+        "Crit": 1
+      },
+      "thresholds": [
+        {
+          "at": 5,
+          "message": "The air around you hums into a barrier.",
+          "actions": [
+            { "do": "shield", "to": "self", "amount": 6, "scale": "PsiPower", "scaleMult": 0.3 }
+          ]
+        },
+        {
+          "at": 8,
+          "message": "Feedback! The song starts singing you.",
+          "actions": [
+            { "do": "effect", "to": "self", "effect": "@Feedback" }
+          ]
+        }
+      ],
+      "burstAt": 10,
+      "burstRadius": 3,
+      "burstVfx": "VoidPsyker_Ascendance.impactParticle",
+      "burstSound": "event:/Abilities/VoidPsyker/VoidPsyker_Ascendance_Cast",
+      "burstActions": [
+        { "do": "damage", "type": "Void", "min": 10, "max": 16, "scale": "PsiPower", "scaleMult": 0.6 },
+        { "do": "knockback", "amount": 2 }
+      ]
+    },
+    {
+      "id": "Feedback",
+      "name": "Feedback",
+      "description": "The song is louder than you are now.",
+      "duration": 3,
+      "debuff": true,
+      "damageTakenMult": 1.2,
+      "dot": {
+        "type": "Void",
+        "min": 1,
+        "max": 2
+      }
+    },
+    {
+      "id": "OffKey",
+      "name": "Off-Key",
+      "description": "This creature no longer quite matches the world.",
+      "duration": 5,
+      "debuff": true,
+      "resists": {
+        "Void": -10,
+        "Psi": -10
+      },
+      "vfx": "EFFECT_Void_Psyker_Drain"
+    },
+    {
+      "id": "Heavy",
+      "name": "Crushing Hymn",
+      "description": "Gravity sings bass on this one.",
+      "duration": 3,
+      "debuff": true,
+      "stats": {
+        "Dodge": -15,
+        "Agility": -3
+      }
+    },
+    {
+      "id": "Horizon",
+      "name": "Event Horizon",
+      "description": "Harm reaches you slower in here. If you are brought under a quarter of your health, the song swells and shields you.",
+      "duration": 10,
+      "damageTakenMult": 0.85,
+      "procs": [
+        { "on": "lowHealth", "threshold": 25, "actions": [
+          { "do": "shield", "to": "self", "amount": 15 },
+          { "do": "effect", "to": "self", "effect": "@Dissonance", "stacks": 5 },
+          { "do": "purge", "to": "self", "effect": "@Horizon" } ] }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "resistances": {
+        "Void": 5
+      },
+      "newAbility": {
+        "name": "Resonant Throat",
+        "icon": "null_chorister_t0.png",
+        "type": "passive",
+        "description": "Even your war cries come out in the wrong key.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Dissonance" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Hollow Note",
+        "synergyPenalty": { "stamina": 1 },
+        "icon": "null_chorister_t1.png",
+        "target": "enemy",
+        "range": 7,
+        "staminaCost": 10,
+        "description": "A single note that leaves a hole in the air, and in the target.",
+        "impactVfx": "VOID_PSYKER_SHADOWCOIL.impactParticle",
+        "sound": "sfx/chorister_note.wav",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 2, "max": 5, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 1 },
+          { "do": "effect", "effect": "@OffKey" },
+          { "do": "effect", "to": "self", "effect": "@Dissonance" }
+        ],
+        "perk": {
+          "name": "Sustained Note",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "name": "Null Verse",
+        "icon": "null_chorister_t2.png",
+        "target": "enemy",
+        "range": 6,
+        "staminaCost": 15,
+        "cooldown": 6,
+        "description": "Sing a verse of nothing over their blessings. Every buff you erase becomes part of your song.",
+        "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
+        "sound": "event:/Abilities/Hacker/Hacker_Scramble",
+        "actions": [
+          { "do": "dispel", "amount": 2, "effect": "@Dissonance" },
+          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.3 },
+          { "do": "stun", "turns": 1, "chance": 40 }
+        ],
+        "perk": {
+          "name": "Erasure Canticle",
+          "chanceBonus": 30
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "Graviton Hymn",
+        "icon": "null_chorister_t3.png",
+        "target": "floor",
+        "range": 6,
+        "radius": 2,
+        "staminaCost": 25,
+        "cooldown": 10,
+        "description": "Sing the floor heavier. The more out of tune the world already is, the harder it lands.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.4, "bonusPerStack": 1, "stacksOf": "@Dissonance", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@Heavy" },
+          { "do": "stun", "turns": 1, "chance": 50 }
+        ],
+        "perk": {
+          "name": "Choir of Lead",
+          "radiusDelta": 1
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 2
+      },
+      "newAbility": {
+        "name": "Event Horizon",
+        "icon": "null_chorister_t4.png",
+        "target": "self",
+        "instant": true,
+        "staminaCost": 15,
+        "cooldown": 30,
+        "description": "Hum yourself a little pocket where harm lands softer. If it brings you low anyway, the song gets louder.",
+        "castVfx": "VoidPsyker_Ascendance.impactParticle",
+        "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Cast",
+        "actions": [
+          { "do": "effect", "effect": "@Horizon" }
+        ],
+        "perk": {
+          "name": "Deeper Horizon",
+          "cooldownDelta": -10
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 3,
+        "Strength": 1
+      },
+      "newAbility": {
+        "name": "Black Choir",
+        "icon": "null_chorister_t5.png",
+        "target": "self",
+        "radius": 8,
+        "staminaCost": 30,
+        "cooldown": 20,
+        "description": "Every Off-Key creature in earshot suddenly hears the whole choir. All of your Dissonance goes into it.",
+        "castVfx": "VoidPsyker_Ascendance.impactParticle",
+        "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
+        "sound": "sfx/chorister_choir.wav",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Dissonance", "stacksFrom": "self", "consumeStacks": true, "ifTargetHas": "@OffKey" }
+        ],
+        "perk": {
+          "name": "Grand Requiem",
+          "damageMult": 1.25
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Strength": 2,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "name": "Undertone Slam",
+        "icon": "null_chorister_t6.png",
+        "target": "enemy",
+        "range": 1.5,
+        "melee": true,
+        "dodgeable": true,
+        "staminaCost": 18,
+        "cooldown": 5,
+        "description": "Put your whole body behind the lowest note in the hymnal. The more out of tune the world already is, the harder it lands, and the target keeps ringing afterwards.",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "actions": [
+          { "do": "damage", "type": "Void", "min": 5, "max": 9, "scale": "Strength+PsiPower", "scaleMult": 0.3, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Dissonance", "stacksFrom": "self" },
+          { "do": "effect", "effect": "@OffKey" },
+          { "do": "knockback", "amount": 1 },
+          { "do": "effect", "to": "self", "effect": "@Dissonance", "stacks": 2 }
+        ],
+        "perk": {
+          "name": "Subsonic Verse",
+          "addActions": [
+            { "do": "stun", "turns": 1, "chance": 40, "ifTargetHas": "@Heavy" }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "name": "The Song Sings Back",
+        "icon": "null_chorister_t7.png",
+        "type": "passive",
+        "description": "Feedback stops being only your problem. While the song is louder than you, whoever hits you hears it too, and every death in earshot adds a voice to the choir.",
+        "procs": [
+          {
+            "on": "hurt",
+            "when": { "has": "@Feedback", "of": "self" },
+            "vfx": "VOID_PSYKER_SHADOWCOIL.impactParticle",
+            "actions": [
+              { "do": "damage", "type": "Void", "min": 4, "max": 7, "scale": "PsiPower", "scaleMult": 0.4 },
+              { "do": "effect", "effect": "@OffKey" }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Dissonance" },
+              { "do": "shield", "to": "self", "amount": 3, "scale": "Toughness", "scaleMult": 0.3 }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

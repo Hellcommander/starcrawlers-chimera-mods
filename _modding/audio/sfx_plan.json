@@ -1,0 +1,326 @@
+{
+ "Kinetics/grappler_collar_grab": {
+  "q": "fabric grab, cloth yank",
+  "f": "Clothing, Fabric|Leather|Clothes",
+  "max": 0.9
+ },
+ "Kinetics/grappler_body_slam": {
+  "q": "heavy blunt club hit, body thud",
+  "f": "Medieval Fighting",
+  "name": "War_Club",
+  "max": 1.0,
+  "att": 0.15
+ },
+ "Kinetics/grappler_iron_clinch": {
+  "q": "armor clank equip",
+  "f": "^Armor$|Metal Weapon",
+  "max": 1.2,
+  "att": 0.25
+ },
+ "Kinetics/grappler_suplex": {
+  "q": "big heavy whoosh",
+  "f": "Orchestral Whooshes",
+  "max": 1.6,
+  "att": 0.8
+ },
+ "Kinetics/grappler_piledriver": {
+  "q": "huge cinematic impact boom",
+  "f": "Orchestral Impacts",
+  "max": 2.6,
+  "att": 0.12
+ },
+ "Kinetics/rig_piston_jab": {
+  "q": "mechanical latch clunk",
+  "f": "Doors|Household Foley",
+  "name": "Lock|Latch|Smack",
+  "max": 0.9,
+  "att": 0.2
+ },
+ "Kinetics/rig_hydraulic_charge": {
+  "q": "heavy sliding door mechanical hiss",
+  "f": "Doors",
+  "name": "Garage|Sliding",
+  "max": 1.4,
+  "att": 0.6
+ },
+ "Kinetics/rig_plate_up": {
+  "q": "metal armor plates locking",
+  "f": "^Armor$|Metal Weapon",
+  "max": 1.2,
+  "att": 0.25
+ },
+ "Kinetics/rig_vent_blast": {
+  "q": "steam burst hiss blast",
+  "f": "Granular|Glitches|Misc",
+  "max": 1.4,
+  "att": 0.2
+ },
+ "Kinetics/rig_hammerfall": {
+  "q": "huge metallic cinematic impact",
+  "f": "Orchestral Impacts",
+  "max": 2.4,
+  "att": 0.12
+ },
+ "Kinetics/rig_overheat": {
+  "q": "short warning alarm",
+  "f": "Alarms",
+  "max": 1.4
+ },
+ "Kinetics/guard_shoulder_check": {
+  "q": "blunt body hit thud",
+  "f": "Medieval Fighting",
+  "name": "War_Club",
+  "max": 0.8,
+  "att": 0.15
+ },
+ "Kinetics/guard_close_protection": {
+  "q": "shield raise protection",
+  "f": "^Shield$",
+  "max": 1.6
+ },
+ "Kinetics/guard_over_here": {
+  "q": "rallying courage shout buff",
+  "f": "^Bravery$",
+  "max": 1.8
+ },
+ "Kinetics/guard_retort_stance": {
+  "q": "leather creak equip",
+  "f": "^Leather$|^Armor$",
+  "max": 1.0
+ },
+ "Kinetics/guard_payback": {
+  "q": "huge punch cinematic impact",
+  "f": "Orchestral Impacts",
+  "max": 2.2,
+  "att": 0.12
+ },
+ "Kinetics/run_flying_knee": {
+  "q": "quick swing whoosh",
+  "f": "Swing & Dash",
+  "max": 0.7
+ },
+ "Kinetics/run_wall_run": {
+  "q": "fast dash whoosh",
+  "f": "Swing & Dash",
+  "max": 1.0
+ },
+ "Kinetics/run_slide_tackle": {
+  "q": "long sliding swoosh",
+  "f": "Swing & Dash|Dreamy Whooshes",
+  "max": 1.2,
+  "att": 0.6
+ },
+ "Kinetics/run_second_wind": {
+  "q": "energetic rising buff",
+  "f": "^Bravery$|^Heal$",
+  "max": 1.6
+ },
+ "Kinetics/run_vault_stomp": {
+  "q": "heavy landing impact",
+  "f": "Orchestral Impacts",
+  "max": 2.0,
+  "att": 0.15
+ },
+ "Kinetics/trick_bank_shot": {
+  "q": "pistol gunshot",
+  "f": "^Guns$",
+  "name": "Gun_Shot_[0-9]",
+  "max": 1.2
+ },
+ "Kinetics/trick_coin_flick": {
+  "q": "coin flip",
+  "f": "^Coins$",
+  "name": "CoinFlip",
+  "max": 0.8
+ },
+ "Kinetics/trick_pocket_change": {
+  "q": "coins pouring jingle",
+  "f": "^Coins$",
+  "name": "CoinPouring|Coins|CoinBag",
+  "max": 1.6
+ },
+ "Kinetics/trick_deadeye": {
+  "q": "gun reload cock click",
+  "f": "^Guns$",
+  "name": "Reloaded|Safety",
+  "max": 1.0
+ },
+ "Kinetics/trick_jackpot": {
+  "q": "rapid gunfire spray",
+  "f": "^Guns$",
+  "name": "Spray",
+  "max": 2.0
+ },
+ "Kinetics/blade_knife_toss": {
+  "q": "thrown blade whoosh",
+  "f": "Medieval Fighting|Swing & Dash",
+  "name": "Arrow|Swing_Dash",
+  "max": 0.7
+ },
+ "Kinetics/blade_recall": {
+  "q": "many blades whooshing back",
+  "f": "Swing & Dash",
+  "max": 1.0
+ },
+ "Kinetics/blade_fan_of_knives": {
+  "q": "sword swish slash",
+  "f": "Medieval Fighting",
+  "name": "Sword",
+  "max": 0.7
+ },
+ "Kinetics/blade_pinning_throw": {
+  "q": "arrow hit thunk",
+  "f": "Medieval Fighting",
+  "name": "Arrow",
+  "max": 0.8,
+  "att": 0.08
+ },
+ "Kinetics/blade_thousand_returns": {
+  "q": "big cinematic whoosh",
+  "f": "Orchestral Whooshes",
+  "max": 1.8,
+  "att": 0.8
+ },
+ "Kinetics/grapnel_yank": {
+  "q": "fishing line reel",
+  "f": "Cozy Mechanics|Household Foley",
+  "name": "Fishing_Line|Reel|Fish_0",
+  "max": 1.4
+ },
+ "Kinetics/grapnel_zip_line": {
+  "q": "fast swoosh",
+  "f": "Swing & Dash",
+  "max": 1.0
+ },
+ "Kinetics/grapnel_swing_kick": {
+  "q": "swing whoosh",
+  "f": "Swing & Dash",
+  "max": 0.9
+ },
+ "Kinetics/grapnel_wall_pin": {
+  "q": "arrow impact into wood",
+  "f": "Medieval Fighting",
+  "name": "Arrow",
+  "max": 0.8,
+  "att": 0.08
+ },
+ "Kinetics/grapnel_pendulum": {
+  "q": "long spinning whoosh",
+  "f": "Orchestral Whooshes",
+  "max": 1.8,
+  "att": 0.8
+ },
+ "FluxSavant/arc_lance": {
+  "q": "electric zap",
+  "f": "^Electric$",
+  "max": 1.4,
+  "att": 0.25
+ },
+ "FluxSavant/rune_press": {
+  "q": "jewel rune pick up",
+  "f": "Jewels & Runes",
+  "max": 1.2
+ },
+ "FluxSavant/catalyst_flask": {
+  "q": "potion bottle drink",
+  "f": "^Potions$",
+  "max": 1.4
+ },
+ "FluxSavant/lattice_field": {
+  "q": "ice crystal shield",
+  "f": "^Ice$|^Shield$",
+  "max": 1.8
+ },
+ "FluxSavant/critical_mass": {
+  "q": "big magic explosion attack",
+  "f": "Magic Spells & Attack",
+  "max": 2.4,
+  "att": 0.25
+ },
+ "FluxSavant/instability": {
+  "q": "digital glitch malfunction",
+  "f": "Glitches",
+  "max": 1.4
+ },
+ "FluxSavant/react_plasma_flash": {
+  "q": "electric explosion burst",
+  "f": "^Electric$",
+  "max": 1.4,
+  "att": 0.2
+ },
+ "FluxSavant/react_thermal_shock": {
+  "q": "ice shatter crack",
+  "f": "^Ice$",
+  "max": 1.4,
+  "att": 0.25
+ },
+ "FluxSavant/react_caustic_vapour": {
+  "q": "poison acid hiss",
+  "f": "^Venom$",
+  "max": 1.4
+ },
+ "FluxSavant/react_superconduct": {
+  "q": "electric surge crackle",
+  "f": "^Electric$",
+  "max": 1.4
+ },
+ "FluxSavant/react_galvanic_bloom": {
+  "q": "bubbling poison",
+  "f": "^Venom$",
+  "max": 1.4,
+  "att": 0.5
+ },
+ "FluxSavant/react_brittle_lattice": {
+  "q": "freezing ice crystals",
+  "f": "^Ice$",
+  "max": 1.4
+ },
+ "FluxSavant/react_aether_arc": {
+  "q": "magic arcane zap",
+  "f": "Magic Spells & Attack",
+  "max": 1.4
+ },
+ "FluxSavant/react_flashpoint": {
+  "q": "fire burst whoosh",
+  "f": "^Fire$",
+  "max": 1.4
+ },
+ "FluxSavant/react_stasis_bloom": {
+  "q": "frost freeze spell",
+  "f": "^Ice$",
+  "max": 1.4
+ },
+ "FluxSavant/react_dissolution": {
+  "q": "acid melting sizzle",
+  "f": "^Venom$",
+  "max": 1.4
+ },
+ "Library/moves_throw_impact": {
+  "q": "heavy blunt hit",
+  "f": "Medieval Fighting",
+  "name": "War_Club",
+  "max": 0.8,
+  "att": 0.12
+ },
+ "Library/moves_leap": {
+  "q": "dash whoosh",
+  "f": "Swing & Dash",
+  "max": 0.7
+ },
+ "Library/moves_recall": {
+  "q": "blade swish",
+  "f": "Swing & Dash",
+  "max": 0.7
+ },
+ "Library/moves_ricochet": {
+  "q": "laser ricochet ping",
+  "f": "Bluster Shots",
+  "max": 0.8
+ },
+ "Library/moves_tether": {
+  "q": "line reel whir",
+  "f": "Cozy Mechanics|Household Foley",
+  "name": "Fishing_Line|Reel|Float",
+  "max": 0.9
+ }
+}

@@ -1,0 +1,214 @@
+{
+  "prompt": "twisting distorted magic curse with a warped wobble, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, twisting distorted magic curse with a warped wobble, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of magic, alien, voice, water, ship, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 0.9,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.013427105732262135,
+  "source_corr": 0.0332941971719265,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "cd41068be7b6c438",
+      "score": 0.5644499659538269,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 5.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "3b28c02412e3c58a",
+      "score": 0.5283375382423401,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Alien voices.zip",
+      "inner": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio- Alien voices-34.wav",
+      "license": "reference",
+      "tags": [
+        "alien",
+        "voices",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "ce5f3f56f4b95641",
+      "score": 0.5205256938934326,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 30 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "1d7f5d4954be91d3",
+      "score": 0.5128418207168579,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 20 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "00607f6952c31988",
+      "score": 0.509778618812561,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 30 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "6c59b5ed0ca73dea",
+      "score": 0.5035980939865112,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 1 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "d39b74a33ef3c293",
+      "score": 0.503001868724823,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 11.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "d2614af34383a400",
+      "score": 0.5026358962059021,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 42.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "b5d359f72b5aaa8e",
+      "score": 0.5024296641349792,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 1 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "e60be4ca50b35dfa",
+      "score": 0.5016627311706543,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 20 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "cd41068be7b6c438",
+    "3b28c02412e3c58a",
+    "ce5f3f56f4b95641",
+    "1d7f5d4954be91d3",
+    "00607f6952c31988",
+    "6c59b5ed0ca73dea",
+    "d39b74a33ef3c293",
+    "d2614af34383a400",
+    "b5d359f72b5aaa8e",
+    "e60be4ca50b35dfa"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_hex.wav",
+  "sample_rate": 44100
+}

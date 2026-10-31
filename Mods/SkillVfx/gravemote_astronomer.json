@@ -1,0 +1,73 @@
+[ { "particles": [
+  { "id": "fx_gravemote_astronomer_perihelion_dart_travel",
+    "layers": [
+      {"texture": "fx/plasma_orb.png", "count": 1, "life": [0.7], "speed": [0], "size": [0.874], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "duration": 0.7, "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.7], "speed": [0], "size": [0.527], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "duration": 0.7, "spin": [180, 360]},
+      {"texture": "mote", "count": 0, "rate": 70, "duration": 0.7, "life": [0.244, 0.496], "speed": [0.109, 0.411], "size": [0.108, 0.223], "gravity": 0.0, "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_gravemote_astronomer_perihelion_dart_impact", "light": {"color": "#8C6CFF", "range": 2.301, "intensity": 1.514, "time": 0.282},
+    "layers": [
+      {"texture": "fx/gravemote_astronomer_burst.png", "count": 1, "life": [0.452], "speed": [0], "size": [0.985], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 6, "life": [0.32, 0.496], "speed": [0.0, 0.293], "size": [0.398, 0.753], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 0.25}
+    ] },
+  { "id": "fx_gravemote_astronomer_tidal_lock_area", "light": {"color": "#8C6CFF", "range": 4.925, "intensity": 2.01, "time": 0.582},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.583], "speed": [0], "size": [4.781], "sizeCurve": "shrink", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 47, "life": [0.337, 0.537], "speed": [-5.6000000000000005, -4.0], "size": [0.072, 0.192], "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 1.6, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.362], "speed": [0], "size": [1.205], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_gravemote_astronomer_lagrange_slip_cast", "light": {"color": "#8C6CFF", "range": 2.732, "intensity": 1.453, "time": 0.289},
+    "layers": [
+      {"texture": "mote", "count": 26, "life": [0.363, 0.52], "speed": [-3.5, -2.5], "size": [0.086, 0.199], "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 1.0},
+      {"texture": "soft", "count": 1, "life": [0.362], "speed": [0], "size": [1.397], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.869, 1.47], "speed": [0.295, 0.887], "size": [0.562, 0.95], "sizeCurve": "grow", "spin": [-50, 50], "color": "#16122A", "color2": "#16122A", "alpha": 0.4, "shape": "sphere", "radius": 0.4, "grid": [6, 6]},
+      {"texture": "mote", "count": 21, "life": [0.653, 1.225], "speed": [0.107, 0.443], "size": [0.108, 0.198], "orbit": 0.73, "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "ring", "radius": 0.8}
+    ] },
+  { "id": "fx_gravemote_astronomer_skyfall_shard_impact", "light": {"color": "#8C6CFF", "range": 1.966, "intensity": 0.985, "time": 0.404},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.466], "speed": [0], "size": [1.206], "sizeCurve": "shrink", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point"},
+      {"texture": "star", "count": 1, "life": [0.333, 0.445], "speed": [0.0, 0.32], "size": [1.002, 1.175], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "radius": 0}
+    ] },
+  { "id": "fx_gravemote_astronomer_starheart_collapse_travel",
+    "layers": [
+      {"texture": "fx/plasma_orb.png", "count": 1, "life": [0.7], "speed": [0], "size": [1.017], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "duration": 0.7, "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.7], "speed": [0], "size": [0.566], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "duration": 0.7, "spin": [180, 360]},
+      {"texture": "mote", "count": 0, "rate": 78, "duration": 0.7, "life": [0.245, 0.451], "speed": [0.088, 0.439], "size": [0.092, 0.246], "gravity": 0.0, "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_gravemote_astronomer_starheart_collapse_area", "light": {"color": "#8C6CFF", "range": 5.454, "intensity": 2.105, "time": 0.541},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.531], "speed": [0], "size": [7.259], "sizeCurve": "shrink", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 46, "life": [0.353, 0.549], "speed": [-8.75, -6.25], "size": [0.073, 0.168], "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 2.5, "ground": true, "offset": [0, 0.5, 0]},
+      {"texture": "soft", "count": 1, "life": [0.366], "speed": [0], "size": [1.375], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point"},
+      {"texture": "soft", "count": 1, "life": [0.374], "speed": [0], "size": [1.514], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_gravemote_astronomer_lodestar_leash_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.484], "sizeCurve": "flat", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 270, "duration": 0.7, "life": [0.399, 0.577], "speed": [0.0, 0.033], "size": [0.054, 0.112], "gravity": 0.0, "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_gravemote_astronomer_lodestar_leash_impact", "light": {"color": "#8C6CFF", "range": 2.578, "intensity": 1.301, "time": 0.457},
+    "layers": [
+      {"texture": "mote", "count": 40, "life": [0.341, 0.54], "speed": [-3.0, -2.2], "size": [0.11, 0.213], "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "sphere", "radius": 1.2},
+      {"texture": "ring", "count": 1, "life": [0.505], "speed": [0], "size": [1.347], "sizeCurve": "shrink", "color": "#D9CCFF", "color2": "#5B3BFF", "shape": "point"},
+      {"texture": "soft", "count": 1, "life": [0.45], "speed": [0], "size": [1.113], "sizeCurve": "pop", "color": "#D9CCFF", "color2": "#5B3BFF", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_gravemote_astronomer_captive_moonlet_cast", "light": {"color": "#C8D4FF", "range": 3.834, "intensity": 2.247, "time": 0.656},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.565], "speed": [0], "size": [2.941], "sizeCurve": "grow", "color": "#F0F4FF", "color2": "#8090C0", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 36, "life": [0.422, 0.715], "speed": [1.831, 3.751], "size": [0.076, 0.189], "gravity": -0.2, "color": "#F0F4FF", "color2": "#8090C0", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.444], "speed": [0], "size": [1.839], "sizeCurve": "pop", "color": "#F0F4FF", "color2": "#8090C0", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 6, "delay": 0.05, "life": [0.81, 1.426], "speed": [0.277, 0.851], "size": [0.764, 1.081], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2230", "color2": "#1E2230", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 21, "life": [0.626, 1.322], "speed": [0.097, 0.36], "size": [0.108, 0.218], "orbit": 0.874, "color": "#F0F4FF", "color2": "#8090C0", "shape": "ring", "radius": 0.8}
+    ] }
+] },
+{ "id": "MOD_GravemoteAstronomer", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gravemote_astronomer_perihelion_dart_impact", "travelVfx": "fx_gravemote_astronomer_perihelion_dart_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_gravemote_astronomer_tidal_lock_area"}},
+  {"newAbility": {"castVfx": "fx_gravemote_astronomer_lagrange_slip_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gravemote_astronomer_skyfall_shard_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "fx_gravemote_astronomer_starheart_collapse_travel", "areaVfx": "fx_gravemote_astronomer_starheart_collapse_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gravemote_astronomer_lodestar_leash_impact", "travelVfx": "fx_gravemote_astronomer_lodestar_leash_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_gravemote_astronomer_captive_moonlet_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}}
+] } ]

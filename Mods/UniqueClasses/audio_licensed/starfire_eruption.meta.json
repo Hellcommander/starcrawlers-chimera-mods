@@ -1,0 +1,218 @@
+{
+  "prompt": "solar flare eruption roar, massive plasma blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 2.5,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "a47e99dafb23e21c",
+      "score": 0.5749027729034424,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 67.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "81881b3f1733f4ad",
+      "score": 0.5645592212677002,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 34.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "8b95c05f195ced37",
+      "score": 0.55600506067276,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 33.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "5fe7d8972d56b4be",
+      "score": 0.5513495206832886,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Snow Impact Big F.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "ca508c480b01e5e1",
+      "score": 0.5503909587860107,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
+      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 44.wav",
+      "license": "reference",
+      "tags": [
+        "complexe",
+        "cinematic",
+        "horror",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "7caf014a1ef45bee",
+      "score": 0.5501412153244019,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 29.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "abf842914c959a46",
+      "score": 0.5495884418487549,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Riser impact.zip",
+      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 31.wav",
+      "license": "reference",
+      "tags": [
+        "riser",
+        "impact",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "ba1fbcda22537c2a",
+      "score": 0.5399690270423889,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 27.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "d08a5f41b917ed82",
+      "score": 0.5394162535667419,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 7.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "81dd693eb9b5847b",
+      "score": 0.5393834114074707,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Snow/Snow Impact Big E.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "snow",
+        "impact",
+        "big"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "a47e99dafb23e21c",
+    "81881b3f1733f4ad",
+    "8b95c05f195ced37",
+    "5fe7d8972d56b4be",
+    "ca508c480b01e5e1",
+    "7caf014a1ef45bee",
+    "abf842914c959a46",
+    "ba1fbcda22537c2a",
+    "d08a5f41b917ed82",
+    "81dd693eb9b5847b"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\starfire_eruption.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.184,
+  "semitones": -3,
+  "width": 0.187,
+  "listen": {
+    "match": 0.648,
+    "clean": 0.038,
+    "faults": []
+  }
+}

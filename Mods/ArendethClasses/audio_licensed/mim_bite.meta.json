@@ -1,0 +1,249 @@
+{
+  "prompt": "crunching beast bite with a wet snap, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 0.7,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "481946b69d59b973",
+      "score": 0.6368476748466492,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "spider",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "22fd8da768bb07ac",
+      "score": 0.6327040195465088,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "tick",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d9698b65eec033b2",
+      "score": 0.6220644116401672,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "spider",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "085a0d4edaf70364",
+      "score": 0.6101173162460327,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Needle Bite B.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "needle",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "e92973a263843ea7",
+      "score": 0.6039026975631714,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Flesh and blood.zip",
+      "inner": "Dark Fantasy Studio- Flesh and blood/Dark Fantasy Studio- Flesh and blood 41.wav",
+      "license": "reference",
+      "tags": [
+        "flesh",
+        "and",
+        "blood",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "organic"
+      ]
+    },
+    {
+      "id": "ab4cc095057dc416",
+      "score": 0.6007262468338013,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "suck"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "64914a20bc91a299",
+      "score": 0.597881019115448,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "tick",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "582c647af3e431d2",
+      "score": 0.5877941250801086,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite C.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "spider",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "96de24e67f7637ed",
+      "score": 0.5835750102996826,
+      "via": "clap+tag",
+      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Needle Bite A.wav",
+      "license": "reference",
+      "tags": [
+        "microscale",
+        "bugs",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "eating",
+        "mosquito",
+        "needle",
+        "bite"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "fedb59a21a7f7a0f",
+      "score": 0.5710989832878113,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 90.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    }
+  ],
+  "used_ids": [
+    "481946b69d59b973",
+    "22fd8da768bb07ac",
+    "d9698b65eec033b2",
+    "085a0d4edaf70364",
+    "e92973a263843ea7",
+    "ab4cc095057dc416",
+    "64914a20bc91a299",
+    "582c647af3e431d2",
+    "96de24e67f7637ed",
+    "fedb59a21a7f7a0f"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_bite.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.131,
+  "semitones": -3,
+  "width": 0.213,
+  "listen": {
+    "match": 0.725,
+    "clean": -1.088,
+    "faults": []
+  }
+}

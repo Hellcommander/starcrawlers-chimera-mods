@@ -1,0 +1,247 @@
+{
+  "prompt": "digital rune chime with crisp glitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 0.8,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "ui",
+  "references": [
+    {
+      "id": "745385b30b949632",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 1.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "b8cae7aa62ca84e7",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 2.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "d9d3230a67994fe7",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 5.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "d99bbc4617ec38d4",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 6.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "25152f33a3b42962",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 3.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "a67ddf3b08ac5dbe",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/MP3/FX/Voices/Affirmative Voice 4.mp3",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "ff0103f7ed92b4f3",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Voices/Affirmative Voice 3.wav",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "945c0d6938554f60",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Voices/Affirmative Voice 6.wav",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "fc24a07cea676732",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Voices/Affirmative Voice 5.wav",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    },
+    {
+      "id": "bc624a59e06b1c3f",
+      "score": 0.2922702133655548,
+      "via": "tag",
+      "pack": "puzzleaudiokit.zip",
+      "inner": "Puzzle Audio Bundle/WAV/FX/Voices/Affirmative Voice 2.wav",
+      "tags": [
+        "puzzleaudiokit",
+        "puzzle",
+        "audio",
+        "bundle",
+        "fx",
+        "voices",
+        "affirmative",
+        "voice"
+      ],
+      "archetypes": [
+        "ui",
+        "voice",
+        "water"
+      ]
+    }
+  ],
+  "used_ids": [
+    "ff0103f7ed92b4f3",
+    "945c0d6938554f60",
+    "fc24a07cea676732",
+    "bc624a59e06b1c3f"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\glyph_mark.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.151,
+  "semitones": -5,
+  "width": 0.236,
+  "listen": {
+    "match": 0.274,
+    "clean": -2.681,
+    "faults": []
+  }
+}

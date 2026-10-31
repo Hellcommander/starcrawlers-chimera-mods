@@ -1,0 +1,842 @@
+{
+ "Kinetics/grappler_collar_grab": {
+  "seconds": 0.48,
+  "attack_ms": 166,
+  "brightness_hz": 1669,
+  "peak_to_rms": 9.7,
+  "purpose": "fabric grab, cloth yank"
+ },
+ "Kinetics/grappler_body_slam": {
+  "seconds": 0.49,
+  "attack_ms": 183,
+  "brightness_hz": 2834,
+  "peak_to_rms": 6.3,
+  "purpose": "heavy blunt club hit, body thud"
+ },
+ "Kinetics/grappler_iron_clinch": {
+  "seconds": 0.46,
+  "attack_ms": 221,
+  "brightness_hz": 8508,
+  "peak_to_rms": 11.9,
+  "purpose": "armor clank equip"
+ },
+ "Kinetics/grappler_suplex": {
+  "seconds": 1.6,
+  "attack_ms": 502,
+  "brightness_hz": 3247,
+  "peak_to_rms": 8.4,
+  "purpose": "big heavy whoosh"
+ },
+ "Kinetics/grappler_piledriver": {
+  "seconds": 2.6,
+  "attack_ms": 46,
+  "brightness_hz": 802,
+  "peak_to_rms": 5.1,
+  "purpose": "huge cinematic impact boom"
+ },
+ "Kinetics/rig_piston_jab": {
+  "seconds": 0.7,
+  "attack_ms": 131,
+  "brightness_hz": 1672,
+  "peak_to_rms": 13.3,
+  "purpose": "mechanical latch clunk"
+ },
+ "Kinetics/rig_hydraulic_charge": {
+  "seconds": 1.4,
+  "attack_ms": 274,
+  "brightness_hz": 2182,
+  "peak_to_rms": 9.4,
+  "purpose": "heavy sliding door mechanical hiss"
+ },
+ "Kinetics/rig_plate_up": {
+  "seconds": 0.55,
+  "attack_ms": 164,
+  "brightness_hz": 9094,
+  "peak_to_rms": 11.9,
+  "purpose": "metal armor plates locking"
+ },
+ "Kinetics/rig_vent_blast": {
+  "seconds": 0.77,
+  "attack_ms": 15,
+  "brightness_hz": 2656,
+  "peak_to_rms": 6.1,
+  "purpose": "steam burst hiss blast"
+ },
+ "Kinetics/rig_hammerfall": {
+  "seconds": 2.4,
+  "attack_ms": 44,
+  "brightness_hz": 2222,
+  "peak_to_rms": 4.3,
+  "purpose": "huge metallic cinematic impact"
+ },
+ "Kinetics/rig_overheat": {
+  "seconds": 1.4,
+  "attack_ms": 970,
+  "brightness_hz": 6691,
+  "peak_to_rms": 6.5,
+  "purpose": "short warning alarm"
+ },
+ "Kinetics/guard_shoulder_check": {
+  "seconds": 0.31,
+  "attack_ms": 112,
+  "brightness_hz": 3409,
+  "peak_to_rms": 8.8,
+  "purpose": "blunt body hit thud"
+ },
+ "Kinetics/guard_close_protection": {
+  "seconds": 1.1,
+  "attack_ms": 84,
+  "brightness_hz": 8121,
+  "peak_to_rms": 11.7,
+  "purpose": "shield raise protection"
+ },
+ "Kinetics/guard_over_here": {
+  "seconds": 1.8,
+  "attack_ms": 411,
+  "brightness_hz": 4672,
+  "peak_to_rms": 5.1,
+  "purpose": "rallying courage shout buff"
+ },
+ "Kinetics/guard_retort_stance": {
+  "seconds": 1.0,
+  "attack_ms": 410,
+  "brightness_hz": 4237,
+  "peak_to_rms": 18.7,
+  "purpose": "leather creak equip"
+ },
+ "Kinetics/guard_payback": {
+  "seconds": 2.2,
+  "attack_ms": 199,
+  "brightness_hz": 1975,
+  "peak_to_rms": 3.2,
+  "purpose": "huge punch cinematic impact"
+ },
+ "Kinetics/run_flying_knee": {
+  "seconds": 0.25,
+  "attack_ms": 82,
+  "brightness_hz": 1726,
+  "peak_to_rms": 6.8,
+  "purpose": "quick swing whoosh"
+ },
+ "Kinetics/run_wall_run": {
+  "seconds": 0.77,
+  "attack_ms": 205,
+  "brightness_hz": 4008,
+  "peak_to_rms": 10.2,
+  "purpose": "fast dash whoosh"
+ },
+ "Kinetics/run_slide_tackle": {
+  "seconds": 1.2,
+  "attack_ms": 582,
+  "brightness_hz": 2871,
+  "peak_to_rms": 5.5,
+  "purpose": "long sliding swoosh"
+ },
+ "Kinetics/run_second_wind": {
+  "seconds": 1.6,
+  "attack_ms": 391,
+  "brightness_hz": 3730,
+  "peak_to_rms": 6.2,
+  "purpose": "energetic rising buff"
+ },
+ "Kinetics/run_vault_stomp": {
+  "seconds": 2.0,
+  "attack_ms": 15,
+  "brightness_hz": 1941,
+  "peak_to_rms": 3.6,
+  "purpose": "heavy landing impact"
+ },
+ "Kinetics/trick_bank_shot": {
+  "seconds": 0.73,
+  "attack_ms": 31,
+  "brightness_hz": 2428,
+  "peak_to_rms": 4.9,
+  "purpose": "pistol gunshot"
+ },
+ "Kinetics/trick_coin_flick": {
+  "seconds": 0.2,
+  "attack_ms": 10,
+  "brightness_hz": 11561,
+  "peak_to_rms": 29.2,
+  "purpose": "coin flip"
+ },
+ "Kinetics/trick_pocket_change": {
+  "seconds": 1.6,
+  "attack_ms": 426,
+  "brightness_hz": 10825,
+  "peak_to_rms": 18.7,
+  "purpose": "coins pouring jingle"
+ },
+ "Kinetics/trick_deadeye": {
+  "seconds": 0.5,
+  "attack_ms": 52,
+  "brightness_hz": 7705,
+  "peak_to_rms": 14.9,
+  "purpose": "gun reload cock click"
+ },
+ "Kinetics/trick_jackpot": {
+  "seconds": 1.2,
+  "attack_ms": 22,
+  "brightness_hz": 2451,
+  "peak_to_rms": 3.3,
+  "purpose": "rapid gunfire spray"
+ },
+ "Kinetics/blade_knife_toss": {
+  "seconds": 0.23,
+  "attack_ms": 55,
+  "brightness_hz": 1761,
+  "peak_to_rms": 5.4,
+  "purpose": "thrown blade whoosh"
+ },
+ "Kinetics/blade_recall": {
+  "seconds": 1.0,
+  "attack_ms": 176,
+  "brightness_hz": 3315,
+  "peak_to_rms": 14.9,
+  "purpose": "many blades whooshing back"
+ },
+ "Kinetics/blade_fan_of_knives": {
+  "seconds": 0.25,
+  "attack_ms": 47,
+  "brightness_hz": 6946,
+  "peak_to_rms": 5.9,
+  "purpose": "sword swish slash"
+ },
+ "Kinetics/blade_pinning_throw": {
+  "seconds": 0.17,
+  "attack_ms": 65,
+  "brightness_hz": 3559,
+  "peak_to_rms": 16.3,
+  "purpose": "arrow hit thunk"
+ },
+ "Kinetics/blade_thousand_returns": {
+  "seconds": 1.8,
+  "attack_ms": 413,
+  "brightness_hz": 2043,
+  "peak_to_rms": 14.1,
+  "purpose": "big cinematic whoosh"
+ },
+ "Kinetics/grapnel_yank": {
+  "seconds": 1.4,
+  "attack_ms": 252,
+  "brightness_hz": 5673,
+  "peak_to_rms": 12.2,
+  "purpose": "fishing line reel"
+ },
+ "Kinetics/grapnel_zip_line": {
+  "seconds": 0.81,
+  "attack_ms": 192,
+  "brightness_hz": 1301,
+  "peak_to_rms": 8.3,
+  "purpose": "fast swoosh"
+ },
+ "Kinetics/grapnel_swing_kick": {
+  "seconds": 0.39,
+  "attack_ms": 142,
+  "brightness_hz": 1960,
+  "peak_to_rms": 5.8,
+  "purpose": "swing whoosh"
+ },
+ "Kinetics/grapnel_wall_pin": {
+  "seconds": 0.22,
+  "attack_ms": 14,
+  "brightness_hz": 2171,
+  "peak_to_rms": 8.8,
+  "purpose": "arrow impact into wood"
+ },
+ "Kinetics/grapnel_pendulum": {
+  "seconds": 1.8,
+  "attack_ms": 752,
+  "brightness_hz": 2068,
+  "peak_to_rms": 10.5,
+  "purpose": "long spinning whoosh"
+ },
+ "FluxSavant/arc_lance": {
+  "seconds": 1.4,
+  "attack_ms": 216,
+  "brightness_hz": 5310,
+  "peak_to_rms": 8.0,
+  "purpose": "electric zap"
+ },
+ "FluxSavant/rune_press": {
+  "seconds": 0.8,
+  "attack_ms": 66,
+  "brightness_hz": 3867,
+  "peak_to_rms": 13.0,
+  "purpose": "jewel rune pick up"
+ },
+ "FluxSavant/catalyst_flask": {
+  "seconds": 1.29,
+  "attack_ms": 187,
+  "brightness_hz": 4244,
+  "peak_to_rms": 11.9,
+  "purpose": "potion bottle drink"
+ },
+ "FluxSavant/lattice_field": {
+  "seconds": 0.82,
+  "attack_ms": 222,
+  "brightness_hz": 8227,
+  "peak_to_rms": 11.9,
+  "purpose": "ice crystal shield"
+ },
+ "FluxSavant/critical_mass": {
+  "seconds": 2.4,
+  "attack_ms": 116,
+  "brightness_hz": 2909,
+  "peak_to_rms": 7.8,
+  "purpose": "big magic explosion attack"
+ },
+ "FluxSavant/instability": {
+  "seconds": 1.4,
+  "attack_ms": 1208,
+  "brightness_hz": 9169,
+  "peak_to_rms": 11.1,
+  "purpose": "digital glitch malfunction"
+ },
+ "FluxSavant/react_plasma_flash": {
+  "seconds": 1.02,
+  "attack_ms": 148,
+  "brightness_hz": 5502,
+  "peak_to_rms": 5.5,
+  "purpose": "electric explosion burst"
+ },
+ "FluxSavant/react_thermal_shock": {
+  "seconds": 1.4,
+  "attack_ms": 151,
+  "brightness_hz": 5247,
+  "peak_to_rms": 5.7,
+  "purpose": "ice shatter crack"
+ },
+ "FluxSavant/react_caustic_vapour": {
+  "seconds": 1.4,
+  "attack_ms": 283,
+  "brightness_hz": 5129,
+  "peak_to_rms": 7.3,
+  "purpose": "poison acid hiss"
+ },
+ "FluxSavant/react_superconduct": {
+  "seconds": 1.4,
+  "attack_ms": 1027,
+  "brightness_hz": 6275,
+  "peak_to_rms": 9.7,
+  "purpose": "electric surge crackle"
+ },
+ "FluxSavant/react_galvanic_bloom": {
+  "seconds": 1.4,
+  "attack_ms": 314,
+  "brightness_hz": 6406,
+  "peak_to_rms": 10.1,
+  "purpose": "bubbling poison"
+ },
+ "FluxSavant/react_brittle_lattice": {
+  "seconds": 1.4,
+  "attack_ms": 416,
+  "brightness_hz": 6215,
+  "peak_to_rms": 16.7,
+  "purpose": "freezing ice crystals"
+ },
+ "FluxSavant/react_aether_arc": {
+  "seconds": 1.4,
+  "attack_ms": 931,
+  "brightness_hz": 4522,
+  "peak_to_rms": 4.0,
+  "purpose": "magic arcane zap"
+ },
+ "FluxSavant/react_flashpoint": {
+  "seconds": 1.4,
+  "attack_ms": 247,
+  "brightness_hz": 2053,
+  "peak_to_rms": 7.2,
+  "purpose": "fire burst whoosh"
+ },
+ "FluxSavant/react_stasis_bloom": {
+  "seconds": 1.4,
+  "attack_ms": 632,
+  "brightness_hz": 3500,
+  "peak_to_rms": 6.5,
+  "purpose": "frost freeze spell"
+ },
+ "FluxSavant/react_dissolution": {
+  "seconds": 1.4,
+  "attack_ms": 786,
+  "brightness_hz": 2048,
+  "peak_to_rms": 7.9,
+  "purpose": "acid melting sizzle"
+ },
+ "Library/moves_throw_impact": {
+  "seconds": 0.47,
+  "attack_ms": 103,
+  "brightness_hz": 2296,
+  "peak_to_rms": 5.8,
+  "purpose": "heavy blunt hit"
+ },
+ "Library/moves_leap": {
+  "seconds": 0.66,
+  "attack_ms": 327,
+  "brightness_hz": 3346,
+  "peak_to_rms": 10.1,
+  "purpose": "dash whoosh"
+ },
+ "Library/moves_recall": {
+  "seconds": 0.32,
+  "attack_ms": 149,
+  "brightness_hz": 2081,
+  "peak_to_rms": 7.1,
+  "purpose": "blade swish"
+ },
+ "Library/moves_ricochet": {
+  "seconds": 0.8,
+  "attack_ms": 104,
+  "brightness_hz": 3675,
+  "peak_to_rms": 6.6,
+  "purpose": "laser ricochet ping"
+ },
+ "Library/moves_tether": {
+  "seconds": 0.64,
+  "attack_ms": 266,
+  "brightness_hz": 4590,
+  "peak_to_rms": 10.9,
+  "purpose": "line reel whir"
+ },
+ "ArendethClasses/sfx/bp_crush": {
+  "seconds": 3.0,
+  "attack_ms": 2695,
+  "brightness_hz": 6263,
+  "peak_to_rms": 8.8,
+  "purpose": "metal walls grinding inward with crushing pressure, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/bp_hammer": {
+  "seconds": 2.96,
+  "attack_ms": 158,
+  "brightness_hz": 1464,
+  "peak_to_rms": 9.7,
+  "purpose": "massive psychic punch impact with a clang of steel, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/bp_spike": {
+  "seconds": 3.0,
+  "attack_ms": 2695,
+  "brightness_hz": 6263,
+  "peak_to_rms": 8.8,
+  "purpose": "sharp steel spike bursting out of a metal wall with a screech, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/coil_overload": {
+  "seconds": 1.02,
+  "attack_ms": 618,
+  "brightness_hz": 8222,
+  "peak_to_rms": 6.9,
+  "purpose": "electrical overload discharge pop with crackle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/coil_slug": {
+  "seconds": 1.08,
+  "attack_ms": 144,
+  "brightness_hz": 7259,
+  "peak_to_rms": 5.5,
+  "purpose": "heavy charged slug shot, capacitor whine then thunder crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/entropy_coin": {
+  "seconds": 1.12,
+  "attack_ms": 80,
+  "brightness_hz": 6711,
+  "peak_to_rms": 5.2,
+  "purpose": "chaotic warbling energy bolt with random glitch pitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/entropy_surge": {
+  "seconds": 1.39,
+  "attack_ms": 172,
+  "brightness_hz": 9882,
+  "peak_to_rms": 30.8,
+  "purpose": "uncontrolled energy surge spill, crackling outburst, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/fulg_feint": {
+  "seconds": 0.5,
+  "attack_ms": 84,
+  "brightness_hz": 5339,
+  "peak_to_rms": 9.7,
+  "purpose": "quick crackle of sparks then a swift blade strike from behind, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/fulg_fork": {
+  "seconds": 1.4,
+  "attack_ms": 125,
+  "brightness_hz": 4620,
+  "peak_to_rms": 11.5,
+  "purpose": "rapid string of lightning zaps jumping between targets, each with a blade impact, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/fulg_step": {
+  "seconds": 0.5,
+  "attack_ms": 84,
+  "brightness_hz": 5339,
+  "peak_to_rms": 9.7,
+  "purpose": "instant electric zip and thunder snap of a fighter blinking forward, sharp blade hit, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mia_bloom": {
+  "seconds": 2.89,
+  "attack_ms": 1451,
+  "brightness_hz": 4149,
+  "peak_to_rms": 6.1,
+  "purpose": "wet bursting bloom of liquid with a gurgle, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mia_draw": {
+  "seconds": 1.68,
+  "attack_ms": 641,
+  "brightness_hz": 2786,
+  "peak_to_rms": 8.4,
+  "purpose": "deep inhale of foul air then a hissing spit, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mia_extract": {
+  "seconds": 1.37,
+  "attack_ms": 784,
+  "brightness_hz": 4094,
+  "peak_to_rms": 3.3,
+  "purpose": "wet psychic pull, fluid being drawn out with a squelch, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mia_salt": {
+  "seconds": 1.84,
+  "attack_ms": 124,
+  "brightness_hz": 6842,
+  "peak_to_rms": 11.8,
+  "purpose": "gritty corrosive dust blast fizzing on metal, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_bite": {
+  "seconds": 0.44,
+  "attack_ms": 17,
+  "brightness_hz": 8389,
+  "peak_to_rms": 9.3,
+  "purpose": "crunching beast bite with a wet snap, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_breath": {
+  "seconds": 3.0,
+  "attack_ms": 1020,
+  "brightness_hz": 4949,
+  "peak_to_rms": 4.4,
+  "purpose": "roaring breath of molten slag with a crackling hiss, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_claw": {
+  "seconds": 1.43,
+  "attack_ms": 81,
+  "brightness_hz": 1963,
+  "peak_to_rms": 13.7,
+  "purpose": "vicious claw slash with a feral snarl, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_dart": {
+  "seconds": 0.51,
+  "attack_ms": 33,
+  "brightness_hz": 4357,
+  "peak_to_rms": 8.3,
+  "purpose": "quick pneumatic dart shot with a small sting, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_stomp": {
+  "seconds": 1.04,
+  "attack_ms": 110,
+  "brightness_hz": 2151,
+  "peak_to_rms": 7.5,
+  "purpose": "heavy armoured beast charging, thudding footfalls and a metal impact, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_tongue": {
+  "seconds": 1.53,
+  "attack_ms": 349,
+  "brightness_hz": 6759,
+  "peak_to_rms": 13.4,
+  "purpose": "wet sticky tongue lash and slurping pull, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/mim_web": {
+  "seconds": 2.73,
+  "attack_ms": 35,
+  "brightness_hz": 8241,
+  "peak_to_rms": 5.3,
+  "purpose": "sticky web spray hissing out, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_arc": {
+  "seconds": 3.0,
+  "attack_ms": 426,
+  "brightness_hz": 6673,
+  "peak_to_rms": 12.9,
+  "purpose": "electric arc crackling through salt water, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_flare": {
+  "seconds": 2.42,
+  "attack_ms": 543,
+  "brightness_hz": 4511,
+  "peak_to_rms": 4.4,
+  "purpose": "oil igniting in a roaring whoosh of flame, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_freeze": {
+  "seconds": 2.7,
+  "attack_ms": 925,
+  "brightness_hz": 6431,
+  "peak_to_rms": 12.8,
+  "purpose": "brine freezing solid with a sharp crackle of ice, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_scrounge": {
+  "seconds": 1.49,
+  "attack_ms": 1109,
+  "brightness_hz": 4717,
+  "peak_to_rms": 14.6,
+  "purpose": "rummaging through metal junk, panel ripped open, clinking canisters, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_sludge": {
+  "seconds": 3.0,
+  "attack_ms": 2272,
+  "brightness_hz": 2959,
+  "peak_to_rms": 4.3,
+  "purpose": "thick wet sludge sucking and setting, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_steam": {
+  "seconds": 3.0,
+  "attack_ms": 362,
+  "brightness_hz": 7544,
+  "peak_to_rms": 11.8,
+  "purpose": "violent hiss of water flashing into scalding steam, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rh_throw": {
+  "seconds": 3.0,
+  "attack_ms": 1442,
+  "brightness_hz": 7571,
+  "peak_to_rms": 9.1,
+  "purpose": "heavy metal canister thrown and smashing open with a slosh, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/rune_cascade": {
+  "seconds": 3.0,
+  "attack_ms": 426,
+  "brightness_hz": 6673,
+  "peak_to_rms": 12.9,
+  "purpose": "cascade of rune chimes building into a forge blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/snare_burst": {
+  "seconds": 1.04,
+  "attack_ms": 28,
+  "brightness_hz": 5099,
+  "peak_to_rms": 9.9,
+  "purpose": "psychic blast detonation with a warbling echo repeating itself, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/snare_cascade": {
+  "seconds": 3.0,
+  "attack_ms": 1176,
+  "brightness_hz": 526,
+  "peak_to_rms": 2.5,
+  "purpose": "rapid chain of psychic traps detonating one after another in a rising cascade, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/snare_lure": {
+  "seconds": 3.0,
+  "attack_ms": 2627,
+  "brightness_hz": 814,
+  "peak_to_rms": 7.5,
+  "purpose": "hypnotic shimmering psychic hum pulling inward, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/snare_spring": {
+  "seconds": 1.33,
+  "attack_ms": 377,
+  "brightness_hz": 7552,
+  "peak_to_rms": 5.5,
+  "purpose": "psychic trap snapping shut, sharp mental shriek and glassy crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/snare_step": {
+  "seconds": 1.6,
+  "attack_ms": 859,
+  "brightness_hz": 125,
+  "peak_to_rms": 8.6,
+  "purpose": "soft time-warp blink with a reversed whoosh, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/vasculist_spike": {
+  "seconds": 1.77,
+  "attack_ms": 290,
+  "brightness_hz": 139,
+  "peak_to_rms": 2.5,
+  "purpose": "wet crystalline spike piercing, pulsing heartbeat thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/wild_bolt": {
+  "seconds": 3.0,
+  "attack_ms": 2841,
+  "brightness_hz": 5012,
+  "peak_to_rms": 23.3,
+  "purpose": "unstable magic bolt with a warbling pitch that changes as it flies, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/wild_borrow": {
+  "seconds": 3.0,
+  "attack_ms": 810,
+  "brightness_hz": 2939,
+  "peak_to_rms": 7.8,
+  "purpose": "magic portal ripping open and a stolen spell whooshing out, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/wild_cascade": {
+  "seconds": 3.0,
+  "attack_ms": 1176,
+  "brightness_hz": 526,
+  "peak_to_rms": 2.5,
+  "purpose": "rapid chaotic cascade of many different spell impacts one after another, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "ArendethClasses/sfx/wild_ward": {
+  "seconds": 2.07,
+  "attack_ms": 653,
+  "brightness_hz": 2541,
+  "peak_to_rms": 4.5,
+  "purpose": "shimmering prismatic shield chime rising through tones, sci-fi fantasy game sound effect, clean, no music, no voice"
+ },
+ "CustomClasses/sfx/longshot_measured": {
+  "seconds": 0.72,
+  "attack_ms": 44,
+  "brightness_hz": 4136,
+  "peak_to_rms": 4.1,
+  "purpose": "heavy sniper rifle shot with mechanical bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "CustomClasses/sfx/psiknight_psiblade": {
+  "seconds": 2.02,
+  "attack_ms": 421,
+  "brightness_hz": 3064,
+  "peak_to_rms": 8.8,
+  "purpose": "humming energy blade swing with psychic resonance, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "CustomClasses/sfx/puppet_cut": {
+  "seconds": 1.95,
+  "attack_ms": 857,
+  "brightness_hz": 232,
+  "peak_to_rms": 3.5,
+  "purpose": "many glowing strings snapping at once, psychic chord, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "ExampleClasses/sfx/arcgunner_round": {
+  "seconds": 0.39,
+  "attack_ms": 43,
+  "brightness_hz": 7773,
+  "peak_to_rms": 9.9,
+  "purpose": "electric bullet zap, gunshot with spark, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "KelvinMagus/sfx/km_overheat": {
+  "seconds": 3.0,
+  "attack_ms": 2843,
+  "brightness_hz": 2153,
+  "peak_to_rms": 6.6,
+  "purpose": "overheating machine warning, boiling hiss and hot metal ticking"
+ },
+ "KelvinMagus/sfx/km_palisade": {
+  "seconds": 1.34,
+  "attack_ms": 586,
+  "brightness_hz": 3964,
+  "peak_to_rms": 10.6,
+  "purpose": "ice spikes bursting up out of the ground, sharp crystalline crunch"
+ },
+ "KelvinMagus/sfx/km_permafrost": {
+  "seconds": 3.0,
+  "attack_ms": 1626,
+  "brightness_hz": 9451,
+  "peak_to_rms": 41.7,
+  "purpose": "ground freezing over, ice spreading and crackling across a metal floor"
+ },
+ "KelvinMagus/sfx/km_sentinel": {
+  "seconds": 3.0,
+  "attack_ms": 474,
+  "brightness_hz": 1690,
+  "peak_to_rms": 7.2,
+  "purpose": "massive ice golem forming, grinding glacier ice, deep crystalline rumble"
+ },
+ "KelvinMagus/sfx/km_siphon": {
+  "seconds": 3.0,
+  "attack_ms": 1729,
+  "brightness_hz": 4748,
+  "peak_to_rms": 7.9,
+  "purpose": "icy magic drain, warmth sucked out of the air, crackling frost forming, inward whoosh"
+ },
+ "KelvinMagus/sfx/km_thermal_shock": {
+  "seconds": 2.23,
+  "attack_ms": 582,
+  "brightness_hz": 4841,
+  "peak_to_rms": 15.5,
+  "purpose": "ice cracking explosively from sudden heat, sharp glassy crack and a burst of hissing steam"
+ },
+ "LookingGlass/sfx/lg_bite": {
+  "seconds": 0.45,
+  "attack_ms": 216,
+  "brightness_hz": 5746,
+  "peak_to_rms": 10.6,
+  "purpose": "huge monstrous jaws snapping shut, heavy crunching bite with a hiss"
+ },
+ "LookingGlass/sfx/lg_cat": {
+  "seconds": 2.4,
+  "attack_ms": 1763,
+  "brightness_hz": 828,
+  "peak_to_rms": 6.4,
+  "purpose": "magical transformation shimmer ending in a deep rumbling purr"
+ },
+ "LookingGlass/sfx/lg_claw": {
+  "seconds": 0.12,
+  "attack_ms": 32,
+  "brightness_hz": 12293,
+  "peak_to_rms": 7.7,
+  "purpose": "fast feline claw swipe, three sharp scratching slashes"
+ },
+ "LookingGlass/sfx/lg_flurry": {
+  "seconds": 1.08,
+  "attack_ms": 264,
+  "brightness_hz": 6473,
+  "peak_to_rms": 7.6,
+  "purpose": "quick whimsical sword swishes, two fast blade cuts with a sparkle"
+ },
+ "LookingGlass/sfx/lg_grin": {
+  "seconds": 1.97,
+  "attack_ms": 314,
+  "brightness_hz": 8738,
+  "peak_to_rms": 9.6,
+  "purpose": "magical vanishing shimmer fading away, soft mischievous purr"
+ },
+ "LookingGlass/sfx/lg_guard": {
+  "seconds": 1.52,
+  "attack_ms": 672,
+  "brightness_hz": 5694,
+  "peak_to_rms": 42.5,
+  "purpose": "shuffling a deck of playing cards, cards snapping crisply into place"
+ },
+ "LookingGlass/sfx/lg_mad_here": {
+  "seconds": 3.0,
+  "attack_ms": 2818,
+  "brightness_hz": 3151,
+  "peak_to_rms": 15.0,
+  "purpose": "eerie swirling psychic whispers rising into a mad echoing laugh of chimes"
+ },
+ "LookingGlass/sfx/lg_shrink": {
+  "seconds": 2.44,
+  "attack_ms": 897,
+  "brightness_hz": 4277,
+  "peak_to_rms": 5.4,
+  "purpose": "magical shrinking sound, rising slide whistle with glittering sparkle"
+ },
+ "LookingGlass/sfx/lg_teaparty": {
+  "seconds": 1.25,
+  "attack_ms": 266,
+  "brightness_hz": 6329,
+  "peak_to_rms": 27.1,
+  "purpose": "porcelain teacups clinking and rattling, tea pouring, whimsical"
+ },
+ "LookingGlass/sfx/lg_warp": {
+  "seconds": 1.6,
+  "attack_ms": 575,
+  "brightness_hz": 597,
+  "peak_to_rms": 9.4,
+  "purpose": "space warp whoosh, reality folding with a deep phasing pop"
+ },
+ "LookingGlass/sfx/lg_watch": {
+  "seconds": 1.4,
+  "attack_ms": 479,
+  "brightness_hz": 5676,
+  "peak_to_rms": 17.0,
+  "purpose": "pocket watch ticking very fast, clock spring winding back"
+ },
+ "UniqueClasses/sfx/glyph_mark": {
+  "seconds": 0.35,
+  "attack_ms": 184,
+  "brightness_hz": 3132,
+  "peak_to_rms": 7.1,
+  "purpose": "digital rune chime with crisp glitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "UniqueClasses/sfx/relic_sun": {
+  "seconds": 3.0,
+  "attack_ms": 590,
+  "brightness_hz": 6932,
+  "peak_to_rms": 14.1,
+  "purpose": "sun relic awakening, fire roar and holy hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ },
+ "UniqueClasses/sfx/starfire_eruption": {
+  "seconds": 2.21,
+  "attack_ms": 149,
+  "brightness_hz": 502,
+  "peak_to_rms": 2.2,
+  "purpose": "solar flare eruption roar, massive plasma blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice"
+ }
+}

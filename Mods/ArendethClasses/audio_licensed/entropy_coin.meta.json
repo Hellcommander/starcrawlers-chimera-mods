@@ -1,0 +1,209 @@
+{
+  "prompt": "chaotic warbling energy bolt with random glitch pitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "365d91796c7105f6",
+      "score": 0.5140465497970581,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 45.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "61ca62866c2367fd",
+      "score": 0.4986317753791809,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 22 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "4ca26c5cea036262",
+      "score": 0.4978417158126831,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 43.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "eb907f9329682c72",
+      "score": 0.4914247989654541,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 22 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "4c94075e35ad56dd",
+      "score": 0.4832727909088135,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 47.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "186235208303c288",
+      "score": 0.4788804054260254,
+      "via": "clap+tag",
+      "pack": "Bluster Shots",
+      "inner": "bt25_ultimatesfxforgames_softwarebundle/Bluster Shots/FL_GFX_Bluster_Shot_02.wav",
+      "license": "direct",
+      "tags": [
+        "bluster",
+        "shots",
+        "bt25",
+        "ultimatesfxforgames",
+        "softwarebundle",
+        "fl",
+        "gfx",
+        "shot"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "3fddc3a44bc475c8",
+      "score": 0.4713207483291626,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 44 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "362621f56117e469",
+      "score": 0.47058677673339844,
+      "via": "clap+tag",
+      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "inner": "Robotic Beings Sound FX Pack Vol. 1/Robot Parts/Manipulator 003.wav",
+      "license": "reference",
+      "tags": [
+        "robotic",
+        "beings",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "robot",
+        "parts",
+        "manipulator"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "5b6a4c09eab2e860",
+      "score": 0.4703572690486908,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-41.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "e3fb7b4b206d7f73",
+      "score": 0.4670124650001526,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 3.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    }
+  ],
+  "used_ids": [
+    "365d91796c7105f6",
+    "61ca62866c2367fd",
+    "4ca26c5cea036262",
+    "eb907f9329682c72",
+    "4c94075e35ad56dd",
+    "186235208303c288",
+    "3fddc3a44bc475c8",
+    "362621f56117e469",
+    "5b6a4c09eab2e860",
+    "e3fb7b4b206d7f73"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\entropy_coin.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.153,
+  "semitones": -3,
+  "width": 0.611,
+  "listen": {
+    "match": 0.428,
+    "clean": -6.0,
+    "faults": []
+  }
+}

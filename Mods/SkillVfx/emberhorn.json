@@ -1,0 +1,63 @@
+[ { "particles": [
+  { "id": "fx_emberhorn_furnace_charge_cast",
+    "layers": [
+      {"texture": "spark", "count": 0, "rate": 178, "duration": 0.7, "life": [0.22, 0.386], "speed": [0.099, 0.277], "size": [0.096, 0.248], "gravity": 0.0, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.06, "stretch": 3},
+      {"texture": "fx/smoke_puff.png", "count": 0, "rate": 41, "duration": 0.7, "life": [0.419, 0.613], "speed": [0.099, 0.389], "size": [0.325, 0.63], "gravity": 0.0, "color": "#2A1E18", "color2": "#2A1E18", "shape": "sphere", "radius": 0.06, "grid": [6, 6]}
+    ] },
+  { "id": "fx_emberhorn_furnace_charge_area", "light": {"color": "#FF8A3D", "range": 5.442, "intensity": 3.134, "time": 0.585},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.293], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.429], "speed": [0], "size": [3.946], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 42, "life": [0.32, 0.612], "speed": [4.049, 8.229], "size": [0.101, 0.211], "stretch": 3, "gravity": 0.9, "drag": 1.5, "color": "#FFE08A", "color2": "#FF4A10", "shape": "hemisphere", "radius": 0.75, "ground": true},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 12, "delay": 0.05, "life": [0.948, 1.585], "speed": [0.63, 1.334], "size": [0.959, 1.784], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.65, "shape": "disc", "radius": 0.8999999999999999, "ground": true, "grid": [6, 6]}
+    ] },
+  { "id": "fx_emberhorn_horn_hook_impact",
+    "layers": [
+      {"texture": "spark", "count": 3, "life": [0.401, 0.497], "speed": [0], "size": [1.138, 1.594], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point"},
+      {"texture": "mote", "count": 12, "life": [0.591, 1.08], "speed": [0.42, 1.197], "size": [0.056, 0.152], "gravity": 2.0, "color": "#FF4A10", "color2": "#2A1E18", "shape": "sphere", "radius": 0.3},
+      {"texture": "spark", "count": 8, "life": [0.311, 0.551], "speed": [1.379, 2.778], "size": [0.079, 0.143], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 15, "life": [0.486, 1.025], "speed": [1.11, 2.49], "size": [0.072, 0.191], "gravity": -0.4, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_emberhorn_scrap_stampede_cast", "light": {"color": "#FF8A3D", "range": 3.639, "intensity": 2.354, "time": 0.668},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.604], "speed": [0], "size": [3.203], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "mote", "count": 39, "life": [0.4, 0.721], "speed": [1.887, 4.018], "size": [0.077, 0.202], "gravity": -0.2, "color": "#FFE08A", "color2": "#FF4A10", "shape": "cone", "angle": 8, "radius": 0.3, "ground": true},
+      {"texture": "soft", "count": 1, "life": [0.476], "speed": [0], "size": [1.477], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.928, 1.587], "speed": [0.288, 0.861], "size": [0.776, 1.253], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.55, "shape": "ring", "radius": 0.8, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 15, "life": [0.5, 1.056], "speed": [0.951, 2.612], "size": [0.082, 0.177], "gravity": -0.4, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_emberhorn_ember_quake_area", "light": {"color": "#FF8A3D", "range": 5.379, "intensity": 1.95, "time": 0.518},
+    "layers": [
+      {"texture": "ring", "count": 1, "life": [0.481], "speed": [0], "size": [7.377], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "ring", "count": 1, "life": [0.564], "speed": [0], "size": [5.326], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true, "delay": 0.1},
+      {"texture": "fx/emberhorn_bits.png", "count": 22, "life": [0.511, 1.004], "speed": [3.09, 6.058], "size": [0.129, 0.261], "gravity": 1.8, "spin": [-360, 360], "color": "#2A1E18", "color2": "#FF4A10", "shape": "disc", "radius": 1.5, "ground": true, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 10, "delay": 0.05, "life": [0.808, 1.542], "speed": [0.353, 0.974], "size": [0.915, 1.636], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.6, "shape": "disc", "radius": 1.5, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 15, "life": [0.441, 0.888], "speed": [0.907, 2.444], "size": [0.077, 0.19], "gravity": -0.6, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_emberhorn_herd_meltdown_cast", "light": {"color": "#FF8A3D", "range": 4.16, "intensity": 2.461, "time": 0.744},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.432], "speed": [0], "size": [1.827], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "alpha": 0.8, "shape": "point"},
+      {"texture": "mote", "count": 42, "life": [0.323, 0.518], "speed": [-3.2, -2.2], "size": [0.114, 0.228], "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 1.4},
+      {"texture": "star", "count": 4, "life": [0.309, 0.537], "speed": [0.0, 0.315], "size": [0.387, 0.776], "sizeCurve": "pop", "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.6},
+      {"texture": "ring", "count": 1, "life": [0.482], "speed": [0], "size": [2.635], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true, "delay": 0.3},
+      {"texture": "mote", "count": 15, "life": [0.453, 1.02], "speed": [0.933, 2.671], "size": [0.082, 0.19], "gravity": -0.6, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_emberhorn_horn_toss_impact", "light": {"color": "#FF8A3D", "range": 4.077, "intensity": 2.347, "time": 0.54},
+    "layers": [
+      {"texture": "fx/emberhorn_burst.png", "count": 1, "life": [0.437], "speed": [0], "size": [1.724], "sizeCurve": "flat", "color": "#FFE08A", "color2": "#FF4A10", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "ring", "count": 1, "life": [0.441], "speed": [0], "size": [1.528], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point"},
+      {"texture": "ring", "count": 1, "life": [0.53], "speed": [0], "size": [2.512], "sizeCurve": "grow", "color": "#FFE08A", "color2": "#FF4A10", "shape": "point", "ground": true, "flat": true},
+      {"texture": "fx/emberhorn_bits.png", "count": 15, "life": [0.528, 1.005], "speed": [3.158, 5.323], "size": [0.103, 0.209], "gravity": 1.2, "spin": [-360, 360], "color": "#FFE08A", "color2": "#FF4A10", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 7, "delay": 0.05, "life": [0.858, 1.663], "speed": [0.304, 0.845], "size": [0.739, 1.295], "sizeCurve": "grow", "spin": [-50, 50], "color": "#2A1E18", "color2": "#2A1E18", "alpha": 0.55, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "mote", "count": 12, "life": [0.484, 0.981], "speed": [1.022, 2.428], "size": [0.086, 0.179], "gravity": -0.4, "color": "#FFE08A", "color2": "#FF4A10", "shape": "sphere", "radius": 0.3}
+    ] }
+] },
+{ "id": "MOD_Emberhorn", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "fx_emberhorn_furnace_charge_cast", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_emberhorn_furnace_charge_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_emberhorn_horn_hook_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_emberhorn_scrap_stampede_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_emberhorn_ember_quake_area"}},
+  {"newAbility": {"castVfx": "fx_emberhorn_herd_meltdown_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_emberhorn_horn_toss_impact", "travelVfx": "", "areaVfx": ""}}
+] } ]

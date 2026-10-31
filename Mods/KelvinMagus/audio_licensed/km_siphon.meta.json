@@ -1,0 +1,212 @@
+{
+  "prompt": "icy magic drain, warmth sucked out of the air, crackling frost forming, inward whoosh",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "0c032e8dd27ff3aa",
+      "score": 0.5194429159164429,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 2.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "a2671c93952b83a3",
+      "score": 0.48521688580513,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Ice/Ice 6.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b0a955d1aaedc197",
+      "score": 0.4834103584289551,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Stereo/Wind/Wind 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "wind"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "94fd25a8cafa1a9b",
+      "score": 0.48207640647888184,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Ice/Ice 6.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "ice"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "cdaa2ee2e18b5e6e",
+      "score": 0.4808446168899536,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 1.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "8ed4b1d9b2c53f15",
+      "score": 0.48063576221466064,
+      "via": "clap+tag",
+      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow B.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "sound",
+        "fx",
+        "pack",
+        "vol",
+        "cinematic",
+        "riser",
+        "slow"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "81f80b6e9558b672",
+      "score": 0.4802137017250061,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Wind/Wind 1.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "wind"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "10e5b48440b049b0",
+      "score": 0.4785544276237488,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "7758d2eefce2bb1a",
+      "score": 0.4785531759262085,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b914f77bc9014b65",
+      "score": 0.47793668508529663,
+      "via": "clap+tag",
+      "pack": "magicspellssfxbundle_audio.zip",
+      "inner": "magicspellssfxbundle/Mono/Wind/Wind 2.mp3",
+      "license": "direct",
+      "tags": [
+        "magicspellssfxbundle",
+        "wind"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "used_ids": [
+    "0c032e8dd27ff3aa",
+    "a2671c93952b83a3",
+    "b0a955d1aaedc197",
+    "94fd25a8cafa1a9b",
+    "cdaa2ee2e18b5e6e",
+    "8ed4b1d9b2c53f15",
+    "81f80b6e9558b672",
+    "10e5b48440b049b0",
+    "7758d2eefce2bb1a",
+    "b914f77bc9014b65"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_siphon.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.181,
+  "semitones": 4,
+  "width": 0.588,
+  "listen": {
+    "match": 0.431,
+    "clean": -1.328,
+    "faults": []
+  }
+}

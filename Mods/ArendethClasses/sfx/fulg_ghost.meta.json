@@ -1,0 +1,213 @@
+{
+  "prompt": "static discharge burst with a fading electric hum, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "conditioned_prompt": "high quality game sound effect, static discharge burst with a fading electric hum, sci-fi fantasy game sound effect, clean, no music, no voice, timbre of ui, impact, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
+  "duration": 1.0,
+  "strength": 0.28,
+  "init_noise_level": 0.874,
+  "engine": "stable-audio",
+  "unique": true,
+  "copy_corr": 0.15741854906082153,
+  "source_corr": 0.032218772917985916,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "2b1a66caf1452da4",
+      "score": 0.474594384431839,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Interface.zip",
+      "inner": "Dark Fantasy Studio- Interface/Dark Fantasy Studio-Interface-31.wav",
+      "license": "reference",
+      "tags": [
+        "interface",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "1f50cc2d7eb95c34",
+      "score": 0.4737356901168823,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 41.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "8f9fba4cf2ac19f8",
+      "score": 0.46863237023353577,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 12.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "312d0474c2a0268f",
+      "score": 0.4672732353210449,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 25.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "88ff1dbf343c2679",
+      "score": 0.4655555486679077,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/03_FLICKERING_LIGHT/FLICKERING_LIGHT_3/NOISE_ALCHEMY_FLICKERING_LIGHT_3_7.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "flickering"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "308ce623e36056fb",
+      "score": 0.46470093727111816,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 43.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "76abfcffbc2e8e83",
+      "score": 0.45439499616622925,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sub boom.zip",
+      "inner": "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 48.wav",
+      "license": "reference",
+      "tags": [
+        "sub",
+        "boom",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4bf3e29034861852",
+      "score": 0.45391297340393066,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "5c2669d6b8631d73",
+      "score": 0.45241814851760864,
+      "via": "clap+tag",
+      "pack": "flashlight.zip",
+      "inner": "NOISE ALCHEMY- FLASH LIGHT/03_FLICKERING_LIGHT/FLICKERING_LIGHT_1/NOISE_ALCHEMY_FLICKERING_LIGHT_1_7.wav",
+      "license": "reference",
+      "tags": [
+        "flashlight",
+        "noise",
+        "alchemy",
+        "flash",
+        "light",
+        "flickering"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "65c5df84dc96d832",
+      "score": 0.4510634243488312,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 27.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    }
+  ],
+  "used_ids": [
+    "2b1a66caf1452da4",
+    "1f50cc2d7eb95c34",
+    "8f9fba4cf2ac19f8",
+    "312d0474c2a0268f",
+    "88ff1dbf343c2679",
+    "308ce623e36056fb",
+    "76abfcffbc2e8e83",
+    "4bf3e29034861852",
+    "5c2669d6b8631d73",
+    "65c5df84dc96d832"
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_ghost.wav",
+  "sample_rate": 44100
+}

@@ -1,0 +1,41 @@
+// The mods' part of the credits that roll after beating Cerberus, after the game's own.
+// "# " starts a heading; other lines are names, and a blank line starts a new block. Full credits: CREDITS.md.
+
+# Breachwork
+Made by Arendeth
+Unofficial content for StarCrawlers Chimera by Juggernaut Games,
+not made or endorsed by them
+
+# Ideas Drawn From
+StarCrawlers (2019), Juggernaut Games
+Soulash 2 (Wizards of the Code) and Arendeth's Soulash 2 mods
+Arendeth's Caves of Qud mod Conjoined Extended,
+built on John Snail's Conjoined
+Dungeons of Dredmor (Gaslamp Games) and its modding community
+Compleat Essential Skills by Essence (Wild Magic)
+Dungeons & Dragons wild magic and Baldur's Gate II's Wild Mage
+Lewis Carroll's Alice books
+
+# Asset Toolkit Models
+Stable Diffusion 3.5 Medium, Stable Audio 3 and Stable Fast 3D (Stability AI)
+TRELLIS.2 (Microsoft)
+Wan2.2 TI2V-5B (Wan-AI, Alibaba)
+UniRig (VAST-AI-Research)
+CoTracker3 (Meta AI)
+BiRefNet (ZhengPeng7)
+Blender (Blender Foundation)
+
+# Sound
+Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM
+Function Loops
+Tao & Sound
+Ovani Sound
+
+# Built With
+BepInEx and UnityDoorstop
+HarmonyX, MonoMod and Mono.Cecil
+Newtonsoft.Json
+MoonSharp
+
+# Thanks For Playing
+The Ichor Deep is waiting

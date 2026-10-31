@@ -1,0 +1,60 @@
+[ { "particles": [
+  { "id": "fx_gun_kata_double_tap_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.465], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "duration": 0.7},
+      {"texture": "spark", "count": 0, "rate": 165, "duration": 0.7, "life": [0.086, 0.165], "speed": [0.054, 0.207], "size": [0.07, 0.122], "gravity": 0.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.06, "stretch": 2}
+    ] },
+  { "id": "fx_gun_kata_double_tap_impact", "light": {"color": "#FFC060", "range": 2.74, "intensity": 1.186, "time": 0.244},
+    "layers": [
+      {"texture": "fx/gun_kata_burst.png", "count": 1, "life": [0.457], "speed": [0], "size": [1.012], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 2, "life": [0.319, 0.494], "speed": [0.0, 0.306], "size": [0.605, 0.81], "sizeCurve": "pop", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "radius": 0},
+      {"texture": "spark", "count": 29, "life": [0.292, 0.546], "speed": [4.463, 7.224], "size": [0.08, 0.132], "stretch": 5, "gravity": 0.0, "drag": 1.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_gun_kata_backflip_cast", "light": {"color": "#A0A0B0", "range": 2.775, "intensity": 1.594, "time": 0.325},
+    "layers": [
+      {"texture": "mote", "count": 33, "life": [0.321, 0.472], "speed": [-3.5, -2.5], "size": [0.071, 0.199], "color": "#D0D0D8", "color2": "#606070", "shape": "sphere", "radius": 1.0},
+      {"texture": "soft", "count": 1, "life": [0.408], "speed": [0], "size": [1.3], "sizeCurve": "pop", "color": "#D0D0D8", "color2": "#606070", "alpha": 0.85, "shape": "point"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 4, "delay": 0.05, "life": [0.968, 1.574], "speed": [0.267, 0.875], "size": [0.56, 1.088], "sizeCurve": "grow", "spin": [-50, 50], "color": "#30303A", "color2": "#30303A", "alpha": 0.4, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] },
+  { "id": "fx_gun_kata_kneecap_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.411], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "duration": 0.7},
+      {"texture": "spark", "count": 0, "rate": 168, "duration": 0.7, "life": [0.087, 0.135], "speed": [0.046, 0.193], "size": [0.062, 0.121], "gravity": 0.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.06, "stretch": 2}
+    ] },
+  { "id": "fx_gun_kata_kneecap_impact", "light": {"color": "#FFC060", "range": 2.278, "intensity": 1.092, "time": 0.236},
+    "layers": [
+      {"texture": "fx/gun_kata_burst.png", "count": 1, "life": [0.425], "speed": [0], "size": [1.029], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 1, "life": [0.334, 0.556], "speed": [0.0, 0.329], "size": [0.585, 0.959], "sizeCurve": "pop", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "radius": 0},
+      {"texture": "spark", "count": 28, "life": [0.328, 0.492], "speed": [4.094, 7.933], "size": [0.073, 0.147], "stretch": 5, "gravity": 0.0, "drag": 1.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 18, "life": [0.612, 1.076], "speed": [0.419, 1.213], "size": [0.054, 0.147], "gravity": 2.0, "color": "#C07A20", "color2": "#262018", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_gun_kata_bullet_ballet_area", "light": {"color": "#FFC060", "range": 7.695, "intensity": 2.474, "time": 0.595},
+    "layers": [
+      {"texture": "fx/fire_blast.png", "count": 1, "life": [0.7], "speed": [0], "size": [4.083], "sizeCurve": "flat", "color": "#FFFFFF", "color2": "#FFFFFF", "alpha": 1, "shape": "point", "grid": [6, 6]},
+      {"texture": "ring", "count": 1, "life": [0.432], "speed": [0], "size": [9.051], "sizeCurve": "grow", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "ground": true, "flat": true},
+      {"texture": "spark", "count": 38, "life": [0.266, 0.559], "speed": [3.894, 7.589], "size": [0.109, 0.219], "stretch": 3, "gravity": 0.6, "drag": 1.5, "color": "#FFE8B0", "color2": "#C07A20", "shape": "hemisphere", "radius": 0.4},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 6, "delay": 0.05, "life": [0.817, 1.333], "speed": [0.861, 1.629], "size": [1.028, 1.955], "sizeCurve": "grow", "spin": [-50, 50], "color": "#262018", "color2": "#262018", "alpha": 0.5, "shape": "ring", "radius": 1.2000000000000002, "ground": true, "grid": [6, 6]},
+      {"texture": "spark", "count": 18, "life": [0.324, 0.643], "speed": [2.833, 5.762], "size": [0.078, 0.142], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.2}
+    ] },
+  { "id": "fx_gun_kata_carom_volley_travel",
+    "layers": [
+      {"texture": "star", "count": 1, "life": [0.7], "speed": [0], "size": [0.455], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "duration": 0.7},
+      {"texture": "spark", "count": 0, "rate": 180, "duration": 0.7, "life": [0.088, 0.167], "speed": [0.044, 0.215], "size": [0.065, 0.122], "gravity": 0.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.06, "stretch": 2}
+    ] },
+  { "id": "fx_gun_kata_carom_volley_impact", "light": {"color": "#FFC060", "range": 2.258, "intensity": 1.125, "time": 0.26},
+    "layers": [
+      {"texture": "fx/gun_kata_burst.png", "count": 1, "life": [0.433], "speed": [0], "size": [0.898], "sizeCurve": "flat", "color": "#FFE8B0", "color2": "#C07A20", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "star", "count": 2, "life": [0.32, 0.524], "speed": [0.0, 0.331], "size": [0.571, 0.893], "sizeCurve": "pop", "color": "#FFE8B0", "color2": "#C07A20", "shape": "point", "radius": 0},
+      {"texture": "spark", "count": 22, "life": [0.275, 0.525], "speed": [4.451, 7.355], "size": [0.077, 0.142], "stretch": 5, "gravity": 0.0, "drag": 1.0, "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.2},
+      {"texture": "star", "count": 5, "life": [0.266, 0.507], "speed": [0.0, 0.325], "size": [0.281, 0.559], "sizeCurve": "pop", "color": "#FFE8B0", "color2": "#C07A20", "shape": "sphere", "radius": 0.5}
+    ] }
+] },
+{ "id": "MOD_GunKata", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gun_kata_double_tap_impact", "travelVfx": "fx_gun_kata_double_tap_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "fx_gun_kata_backflip_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gun_kata_kneecap_impact", "travelVfx": "fx_gun_kata_kneecap_travel", "areaVfx": ""}},
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_gun_kata_bullet_ballet_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_gun_kata_carom_volley_impact", "travelVfx": "fx_gun_kata_carom_volley_travel", "areaVfx": ""}}
+] } ]

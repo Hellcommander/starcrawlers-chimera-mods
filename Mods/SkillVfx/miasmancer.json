@@ -1,0 +1,63 @@
+[ { "particles": [
+  { "id": "fx_miasmancer_breath_of_the_station_travel",
+    "layers": [
+      {"texture": "mote", "count": 1, "life": [0.7], "speed": [0], "size": [0.68], "sizeCurve": "flat", "color": "#E8FF8A", "color2": "#4AC020", "shape": "point", "duration": 0.7},
+      {"texture": "mote", "count": 0, "rate": 61, "duration": 0.7, "life": [0.271, 0.614], "speed": [0.096, 0.416], "size": [0.06, 0.134], "gravity": 1.6, "color": "#4AC020", "color2": "#1E2A14", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_miasmancer_breath_of_the_station_impact", "light": {"color": "#9BE15D", "range": 2.829, "intensity": 1.318, "time": 0.364},
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.365], "speed": [0], "size": [1.023], "sizeCurve": "pop", "color": "#E8FF8A", "color2": "#4AC020", "alpha": 0.85, "shape": "point"},
+      {"texture": "mote", "count": 23, "life": [0.444, 1.05], "speed": [1.36, 3.421], "size": [0.072, 0.188], "gravity": 1.6, "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.3},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 5, "delay": 0.05, "life": [0.827, 1.469], "speed": [0.324, 0.841], "size": [0.531, 0.909], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2A14", "color2": "#1E2A14", "alpha": 0.45, "shape": "sphere", "radius": 0.4, "grid": [6, 6]},
+      {"texture": "mote", "count": 15, "life": [0.603, 0.922], "speed": [0.376, 1.062], "size": [0.064, 0.129], "gravity": 2.0, "color": "#4AC020", "color2": "#1E2A14", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_miasmancer_caustic_mist_area",
+    "layers": [
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 16, "delay": 0.05, "life": [1.444, 2.065], "speed": [0.104, 0.374], "size": [1.482, 2.386], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2A14", "color2": "#1E2A14", "alpha": 0.6, "shape": "disc", "radius": 1.6, "ground": true, "grid": [6, 6]},
+      {"texture": "mote", "count": 13, "life": [0.538, 0.902], "speed": [0.089, 0.294], "size": [0.078, 0.172], "gravity": 0.0, "color": "#E8FF8A", "color2": "#4AC020", "shape": "sphere", "radius": 1.0},
+      {"texture": "mote", "count": 19, "life": [0.547, 0.959], "speed": [0.381, 1.306], "size": [0.059, 0.141], "gravity": 2.0, "color": "#4AC020", "color2": "#1E2A14", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_miasmancer_extract_travel",
+    "layers": [
+      {"texture": "soft", "count": 1, "life": [0.7], "speed": [0], "size": [0.513], "sizeCurve": "flat", "color": "#E8FF8A", "color2": "#4AC020", "shape": "point", "duration": 0.7},
+      {"texture": "soft", "count": 0, "rate": 248, "duration": 0.7, "life": [0.37, 0.562], "speed": [0.0, 0.03], "size": [0.065, 0.102], "gravity": 0.0, "color": "#E8FF8A", "color2": "#4AC020", "shape": "sphere", "radius": 0.06}
+    ] },
+  { "id": "fx_miasmancer_extract_impact", "light": {"color": "#9BE15D", "range": 2.587, "intensity": 1.107, "time": 0.487},
+    "layers": [
+      {"texture": "mote", "count": 44, "life": [0.318, 0.441], "speed": [-3.0, -2.2], "size": [0.126, 0.214], "color": "#E8FF8A", "color2": "#4AC020", "shape": "sphere", "radius": 1.2},
+      {"texture": "ring", "count": 1, "life": [0.558], "speed": [0], "size": [1.475], "sizeCurve": "shrink", "color": "#E8FF8A", "color2": "#4AC020", "shape": "point"},
+      {"texture": "soft", "count": 1, "life": [0.425], "speed": [0], "size": [0.94], "sizeCurve": "pop", "color": "#E8FF8A", "color2": "#4AC020", "alpha": 0.85, "shape": "point"}
+    ] },
+  { "id": "fx_miasmancer_ichor_bloom_area", "light": {"color": "#9BE15D", "range": 4.992, "intensity": 2.746, "time": 0.629},
+    "layers": [
+      {"texture": "fx/miasmancer_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.522], "sizeCurve": "flat", "color": "#E8FF8A", "color2": "#4AC020", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 39, "life": [0.317, 0.64], "speed": [4.677, 9.96], "size": [0.103, 0.199], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/miasmancer_bits.png", "count": 11, "life": [0.554, 0.895], "speed": [2.498, 5.23], "size": [0.097, 0.196], "gravity": 1.2, "spin": [-360, 360], "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.808, 1.468], "speed": [0.546, 1.184], "size": [0.967, 1.426], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2A14", "color2": "#1E2A14", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "mote", "count": 19, "life": [0.628, 0.957], "speed": [0.378, 1.129], "size": [0.06, 0.155], "gravity": 2.0, "color": "#4AC020", "color2": "#1E2A14", "shape": "sphere", "radius": 0.3}
+    ] },
+  { "id": "fx_miasmancer_rust_salt_cloud_impact", "light": {"color": "#9BE15D", "range": 3.831, "intensity": 1.87, "time": 0.487},
+    "layers": [
+      {"texture": "fx/miasmancer_burst.png", "count": 1, "life": [0.429], "speed": [0], "size": [1.262], "sizeCurve": "flat", "color": "#E8FF8A", "color2": "#4AC020", "alpha": 0.85, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 29, "life": [0.291, 0.643], "speed": [2.807, 5.884], "size": [0.079, 0.176], "stretch": 3, "gravity": 0.0, "drag": 1.0, "color": "#E8FF8A", "color2": "#4AC020", "shape": "sphere", "radius": 0.2},
+      {"texture": "mote", "count": 15, "life": [0.446, 1.049], "speed": [0.906, 2.299], "size": [0.089, 0.187], "gravity": 0.0, "color": "#E8FF8A", "color2": "#4AC020", "shape": "sphere", "radius": 0.3},
+      {"texture": "fx/miasmancer_bits.png", "count": 11, "life": [0.513, 0.932], "speed": [2.583, 4.949], "size": [0.094, 0.204], "gravity": 1.2, "spin": [-360, 360], "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"}
+    ] },
+  { "id": "fx_miasmancer_grand_compound_area", "light": {"color": "#9BE15D", "range": 5.037, "intensity": 2.665, "time": 0.62},
+    "layers": [
+      {"texture": "fx/miasmancer_burst.png", "count": 1, "life": [0.7], "speed": [0], "size": [2.48], "sizeCurve": "flat", "color": "#E8FF8A", "color2": "#4AC020", "alpha": 1, "shape": "point", "grid": [5, 5]},
+      {"texture": "spark", "count": 43, "life": [0.284, 0.566], "speed": [4.45, 9.127], "size": [0.108, 0.213], "stretch": 3, "gravity": 0.8, "drag": 1.5, "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.2},
+      {"texture": "fx/miasmancer_bits.png", "count": 9, "life": [0.446, 0.978], "speed": [2.526, 4.618], "size": [0.112, 0.198], "gravity": 1.2, "spin": [-360, 360], "color": "#E8FF8A", "color2": "#4AC020", "shape": "hemisphere", "radius": 0.2, "grid": [2, 2], "randomFrame": true, "blend": "alpha"},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 9, "delay": 0.05, "life": [0.796, 1.588], "speed": [0.464, 1.165], "size": [0.885, 1.658], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2A14", "color2": "#1E2A14", "alpha": 0.65, "shape": "hemisphere", "radius": 0.5, "grid": [6, 6]},
+      {"texture": "fx/smoke_puff.png", "blend": "alpha", "count": 8, "delay": 0.05, "life": [0.868, 1.63], "speed": [0.297, 0.816], "size": [0.903, 1.628], "sizeCurve": "grow", "spin": [-50, 50], "color": "#1E2A14", "color2": "#1E2A14", "alpha": 0.5, "shape": "sphere", "radius": 0.4, "grid": [6, 6]}
+    ] }
+] },
+{ "id": "MOD_Miasmancer", "tiers": [
+  {},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_miasmancer_breath_of_the_station_impact", "travelVfx": "fx_miasmancer_breath_of_the_station_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_miasmancer_caustic_mist_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_miasmancer_extract_impact", "travelVfx": "fx_miasmancer_extract_travel", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_miasmancer_ichor_bloom_area"}},
+  {"newAbility": {"castVfx": "", "impactVfx": "fx_miasmancer_rust_salt_cloud_impact", "travelVfx": "", "areaVfx": ""}},
+  {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "", "areaVfx": "fx_miasmancer_grand_compound_area"}}
+] } ]

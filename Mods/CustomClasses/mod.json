@@ -1,0 +1,11 @@
+{
+  "id": "CustomClasses",
+  "name": "Custom Classes",
+  "author": "Arendeth",
+  "version": "1.4.0",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "15 classes with their own abilities and stack mechanics: Juggernaut, Demolitionist, Psi-Knight, Gun Kata and more.",
+  "requires": [
+    "Library"
+  ]
+}
