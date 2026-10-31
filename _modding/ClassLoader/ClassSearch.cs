@@ -30,6 +30,8 @@ namespace SCClassLoader
         {
             { "STR", "Strength" }, { "TGH", "Toughness" }, { "AGL", "Agility" }, { "REC", "Recognition" }, { "SAV", "Savvy" },
             { "SMT", "Smarts" }, { "STL", "Stealth" }, { "PSI", "Psi Power" }, { "HP", "Health" }, { "ARM", "Armor" }, { "CRIT", "Critical" },
+            { "AGILITY", "Agility" }, { "AGI", "Agility" }, { "STRENGTH", "Strength" }, { "RECOG", "Recognition" }, { "RA", "Ranged Accuracy" }, { "DODGE", "Dodge" },
+            { "DODGEREDUCTION", "Dodge Reduction" }, { "STAMINA", "Stamina" }, { "SLASH", "Slashing" }, { "CRUSH", "Crushing" }, { "PIERCE", "Piercing" },
         };
 
         private static readonly Dictionary<STAT_TYPE, string> StatWords = new Dictionary<STAT_TYPE, string>
@@ -138,7 +140,7 @@ namespace SCClassLoader
             {
                 TMP_FontAsset font = UiKit.FontFrom(mc);
                 var parent = (RectTransform)viewport.parent;
-                box = UiKit.TextBox(parent, "Search: name, skill, crit, savvy...", font, 20f, new Vector2(BoxWidth, BoxHeight));
+                box = UiKit.TextBox(parent, "Search: name, skill, crit, stat...", font, 20f, new Vector2(BoxWidth, BoxHeight));
                 var rt = (RectTransform)box.transform;
                 rt.anchorMin = rt.anchorMax = viewport.anchorMin;
                 rt.pivot = new Vector2(0f, 0f);

@@ -38,8 +38,13 @@ Covers everything since 1.1.0.
   Pick it on the creation screen or above the character sheet, or press Load picture to choose one from anywhere on
   your computer. A save keeps only the file name, and each Conjoined body has its own picture.
 - **Character Portrait Tools** (new mod, off by default). Adds Make Portrait to the picture picker, which makes a
-  picture from your classes, skills, gear, effects and form. The `Tool` setting picks what makes it: the optional
-  Portrait Maker download, which draws one from code with no GPU, or the AI asset toolkit, which needs an NVIDIA GPU.
+  picture from your classes, skills, gear, effects and form. The `Tool` setting picks what makes it:
+  - `GameRender` (the default) needs no AI and no download. The game renders your class's crawler body in one frame from
+    its 3D models, in a ready pose with your weapons, shield, stowed weapon, headgear, armour colour and tentacle arms,
+    and the room you're in blurred behind. It needs a running game, not the creation screen, and glasses, masks and
+    similar are left out for now.
+  - `PortraitMaker`, an optional download, draws a stylised picture from code with no GPU or AI.
+  - The AI asset toolkit paints one on your own NVIDIA GPU, and any other tool works through a `portrait_tool.json`.
 
 ### Resources and balance
 
@@ -61,14 +66,22 @@ Covers everything since 1.1.0.
 ### Quality of life
 
 - **Class search:** a box on the creation screen narrows the class grid by class name, skill, description, synergy or
-  stat bonus, so "crit" or "savvy" finds the classes that offer it. Hovering a result says where it matched.
+  stat bonus, so "crit" or "recognition" finds the classes that offer it. Hovering a result says where it matched.
+- **Saved builds:** right-clicking the custom preset button saves the classes you've already picked instead of wiping them.
+- **Hotbar pages:** the second page keys are now Ctrl+Page Up and Ctrl+Page Down (`PageKey2Combo`), which frees the plain
+  keys for movement.
+- **Diagonal steps:** numpad 7, 9, 1 and 3 now work with Num Lock off too, not just on.
+- The Synergies view lists only the synergies you have and what they cost you. The creation screen still shows what a
+  tree pairs with.
 
 ### Modding
 
 - **Code plugins:** mods can carry C# in `plugins/*.dll`, which only load once the player allows that mod's code.
 - **Lua scripts:** `scripts/*.lua` run sandboxed on MoonSharp and need no OK.
-- Plugin API levels 2 and 3: `AddPortraitButton`, `CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait` and
-  `SimultaneousTurns`.
+- Plugin API levels 2 to 4: `AddPortraitButton`, `CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait`,
+  `SimultaneousTurns` and `RenderPortrait`.
+- **Portrait tools:** any program can make portraits. A folder with a `portrait_tool.json` says how to run it, and it gets
+  a job file with the character's classes, gear and effects. The Portrait Maker's source is an example, free for any use.
 - **Realtime with Pause** (source only). An unfinished example plugin that makes fights run in real time with a pause
   key. It ships with no dll and does nothing until you build it, and its per-character timers have never run in game.
 - Rewrite fields `form`, `add`, `remove`, `others`, `attacks`, `roll` and numeric `pierce`.
@@ -80,6 +93,7 @@ Covers everything since 1.1.0.
 ### Fixes
 
 - A summon carrying a spell keeps it through a save and load.
+- Cancelling a new saved build with Esc no longer hides the Begin button.
 - The bar behind a nine-tier row no longer runs out through the skills panel.
 - Skill tooltips no longer show a stale range or cost after a rewrite.
 - Attacks with their damage inside random outcomes count for "others" rewrites.
