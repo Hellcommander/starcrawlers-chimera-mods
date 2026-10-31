@@ -161,7 +161,7 @@
         "description": "Snap every thread at once. It hurts in proportion to how tangled they were.",
         "castVfx": "PA_ThoughtLeader_FI.castParticle",
         "impactVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
-        "sound": "audio_licensed/puppet_cut.wav",
+        "sound": "sfx/puppet_cut.wav",
         "actions": [
           { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Strings", "consumeStacks": true, "ifTargetHas": "@Strings" }
         ],

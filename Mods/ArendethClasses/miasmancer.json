@@ -31,7 +31,7 @@
       "newAbility": {
         "base": "Bolt", "name": "Breath of the Station", "icon": "miasmancer_t1.png", "staminaCost": 2,
         "description": "Pull a lungful of foul air out of the room and spit it at someone. It stings, and what you keep back leaves you stronger than before.",
-        "sound": "audio_licensed/mia_draw.wav", "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.25",
+        "sound": "sfx/mia_draw.wav", "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.25",
         "actions": [
           { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "perRank": 1 },
           { "do": "stamina", "to": "self", "amount": 6 }
@@ -59,7 +59,7 @@
       "newAbility": {
         "base": "Bolt", "name": "Extract", "icon": "miasmancer_t3.png", "range": 4, "staminaCost": 8, "cooldown": 2,
         "description": "Reach in with your mind and pull out what it's made of, flesh or machine. It hurts them a great deal more than it hurts you, and the strength you take is yours.",
-        "sound": "audio_licensed/mia_extract.wav", "impactVfx": "PA_Psykonics_Temporal.castParticle@0.4",
+        "sound": "sfx/mia_extract.wav", "impactVfx": "PA_Psykonics_Temporal.castParticle@0.4",
         "actions": [
           { "do": "damage", "type": "Bio", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 },
           { "do": "stamina", "to": "self", "amount": 10 },
@@ -73,7 +73,7 @@
       "newAbility": {
         "base": "Blast", "name": "Ichor Bloom", "icon": "miasmancer_t4.png", "range": 6, "radius": 1.6, "staminaCost": 22, "cooldown": 4,
         "description": "Blood and foul air mixed above them: a red bloom that rots flesh and leaves them weak.",
-        "sound": "audio_licensed/mia_bloom.wav", "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.6",
+        "sound": "sfx/mia_bloom.wav", "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.6",
         "actions": [
           { "do": "damage", "type": "Bio", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2 },
           { "do": "effect", "effect": "#Weakened" }, { "do": "effect", "effect": "#Poisoned", "stacks": 2 }

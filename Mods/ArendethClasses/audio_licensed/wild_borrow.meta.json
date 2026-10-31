@@ -169,10 +169,10 @@
       ]
     },
     {
-      "id": "7d0eb2d187deab35",
+      "id": "076ca9e0f4eb4106",
       "score": 0.5570442080497742,
       "via": "clap+tag",
-      "pack": "Dreamy Whooshes",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/Dreamy Whooshes/FL_GFX_Motion_Dreamy_Whoosh_15.wav",
       "license": "direct",
       "tags": [
@@ -191,28 +191,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "43a2ef6b4573bac8",
-    "3648852cfac1cf4f",
-    "2f64bc7170cb227d",
-    "c47f81d592bb75e9",
-    "1bedd19cb266acc5",
-    "4525d64f0f1271b7",
-    "90e982038a913daf",
-    "06a091914234f454",
-    "a2c14b5de740f9f2",
-    "7d0eb2d187deab35"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_borrow.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.194,
-  "semitones": 5,
-  "width": 0.707,
+  "max_corr": 0.23,
+  "semitones": -3,
+  "width": 0.683,
   "listen": {
-    "match": 0.523,
-    "clean": -0.901,
+    "match": 0.534,
+    "clean": -1.504,
     "faults": []
   }
 }

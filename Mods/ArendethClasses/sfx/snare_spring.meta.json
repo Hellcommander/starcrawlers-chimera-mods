@@ -1,0 +1,119 @@
+{
+  "prompt": "psychic trap snapping shut, sharp mental shriek and glassy crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 0.8,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "4c94075e35ad56dd",
+      "score": 0.5442039966583252,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- REALITY GLITCH.zip",
+      "inner": "NOISE ALCHEMY- REALITY GLITCH/NOISE ALCHEMY- REALITY GLITCH 47.wav",
+      "license": "reference",
+      "tags": [
+        "reality",
+        "glitch",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "e3fb7b4b206d7f73",
+      "score": 0.5424931645393372,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 3.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "1f9b115cbee20e1c",
+      "score": 0.5408927202224731,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Earth spell.zip",
+      "inner": "Dark Fantasy Studio- Earth spell/Dark Fantasy Studio- Earth spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "earth",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "9f05f34e968c80e5",
+      "score": 0.5344731211662292,
+      "via": "clap+tag",
+      "pack": "impact",
+      "inner": "made/impact/iron_gaol.wav",
+      "license": "own",
+      "tags": [
+        "impact",
+        "made",
+        "iron",
+        "gaol",
+        "heavy",
+        "prison",
+        "cage",
+        "bars",
+        "slamming",
+        "shut",
+        "deep",
+        "metallic",
+        "boom",
+        "with",
+        "echo",
+        "and",
+        "chain",
+        "rattle"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "5a3ed87c43ffa221",
+      "score": 0.5259451270103455,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 20.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_spring.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.124,
+  "semitones": -5,
+  "width": 0.458,
+  "listen": {
+    "match": 0.556,
+    "clean": -6.0,
+    "faults": []
+  }
+}

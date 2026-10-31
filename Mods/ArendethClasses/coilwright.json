@@ -26,7 +26,7 @@
       "burstAt": 8,
       "burstRadius": 1.6,
       "burstVfx": "PA_Engineer_Spidermine.PS_explode_shock",
-      "burstSound": "audio_licensed/coil_overload.wav",
+      "burstSound": "sfx/coil_overload.wav",
       "burstActions": [
         { "do": "damage", "type": "Energy", "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.4 },
         { "do": "stun", "turns": 1 }

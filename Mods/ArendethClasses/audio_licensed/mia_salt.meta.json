@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "88cd5f5a125390fc",
+      "id": "8703245f2c0b8449",
       "score": 0.5164246559143066,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Hammer A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -29,12 +29,12 @@
       ]
     },
     {
-      "id": "283fc076e25c10f1",
+      "id": "8d04cf9e3aa935a0",
       "score": 0.48985376954078674,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -50,10 +50,10 @@
       ]
     },
     {
-      "id": "0a07064b0e7b4ca8",
+      "id": "b489fa33753bf867",
       "score": 0.4895095229148865,
       "via": "clap+tag",
-      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 01.wav",
       "license": "direct",
       "tags": [
@@ -78,12 +78,12 @@
       "archetypes": []
     },
     {
-      "id": "edc2d65970c1373a",
+      "id": "de79f3ac571abd68",
       "score": 0.48943400382995605,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -100,10 +100,10 @@
       ]
     },
     {
-      "id": "185b9054e266a2a1",
+      "id": "400a863774f9bceb",
       "score": 0.4775083661079407,
       "via": "clap+tag",
-      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 05.wav",
       "license": "direct",
       "tags": [
@@ -159,12 +159,12 @@
       ]
     },
     {
-      "id": "056d4c890a01eb04",
+      "id": "32fa2853620c32e1",
       "score": 0.4772319197654724,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Combat/Damage Deactivation 002.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -250,28 +250,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "88cd5f5a125390fc",
-    "283fc076e25c10f1",
-    "0a07064b0e7b4ca8",
-    "edc2d65970c1373a",
-    "185b9054e266a2a1",
-    "9f05f34e968c80e5",
-    "056d4c890a01eb04",
-    "3739082620f92290",
-    "bd5597c5d787cb29",
-    "e2e3171663c49990"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_salt.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.203,
-  "semitones": 8,
-  "width": 0.519,
+  "max_corr": 0.111,
+  "semitones": 5,
+  "width": 0.675,
   "listen": {
-    "match": 0.427,
-    "clean": -0.134,
+    "match": 0.577,
+    "clean": 1.032,
     "faults": []
   }
 }

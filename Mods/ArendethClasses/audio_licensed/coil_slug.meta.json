@@ -1,24 +1,19 @@
 {
   "prompt": "heavy charged slug shot, capacitor whine then thunder crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
-  "conditioned_prompt": "high quality game sound effect, heavy charged slug shot, capacitor whine then thunder crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, timbre of magic, water, heavily redesigned original synthesized game sfx, transformed timbre and envelope, not a commercial pack preview, not a lightly edited sample, clean, punchy, game-ready, no music vocals, stereo",
   "duration": 1.8,
-  "strength": 0.28,
-  "init_noise_level": 0.874,
-  "engine": "stable-audio",
-  "unique": true,
-  "copy_corr": 0.006027390714734793,
-  "source_corr": 0.023432578891515732,
+  "engine": "sfx_alter",
+  "unique": false,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "924fdedca2bfd547",
+      "id": "9b9ce9ada2112141",
       "score": 0.5923148393630981,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -35,12 +30,12 @@
       ]
     },
     {
-      "id": "f8ee8f5d9d56a5f6",
+      "id": "c190e83f49c06d2b",
       "score": 0.5852788686752319,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -57,12 +52,12 @@
       ]
     },
     {
-      "id": "14f7a59d56eb15a2",
+      "id": "f99869756c67a105",
       "score": 0.5846605896949768,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -79,12 +74,12 @@
       ]
     },
     {
-      "id": "66b8b68fc1cbcad4",
+      "id": "17bf3eebe42d7d81",
       "score": 0.5835848450660706,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -101,12 +96,12 @@
       ]
     },
     {
-      "id": "fe6fb7c1ae7c8f6a",
+      "id": "6dc512825d177921",
       "score": 0.5832527279853821,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Combat/Damage Deactivation 003.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -123,12 +118,12 @@
       ]
     },
     {
-      "id": "e15eb56be1521934",
+      "id": "273d17db7d04c73d",
       "score": 0.5794691443443298,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -145,12 +140,12 @@
       ]
     },
     {
-      "id": "7485914020e92727",
+      "id": "cfd9362be262e296",
       "score": 0.5773658156394958,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -167,12 +162,12 @@
       ]
     },
     {
-      "id": "e11572c72c739502",
+      "id": "11ba0c2ad1af2ecf",
       "score": 0.5697647333145142,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -189,12 +184,12 @@
       ]
     },
     {
-      "id": "8790a6bf24d01a0e",
+      "id": "30c0bcae063aba4c",
       "score": 0.5672832131385803,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -228,18 +223,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "924fdedca2bfd547",
-    "f8ee8f5d9d56a5f6",
-    "14f7a59d56eb15a2",
-    "66b8b68fc1cbcad4",
-    "fe6fb7c1ae7c8f6a",
-    "e15eb56be1521934",
-    "7485914020e92727",
-    "e11572c72c739502",
-    "8790a6bf24d01a0e",
-    "33178a698c8d7c25"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\coil_slug.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.247,
+  "semitones": -6,
+  "width": 0.402,
+  "listen": {
+    "match": 0.45,
+    "clean": -0.748,
+    "faults": []
+  }
 }

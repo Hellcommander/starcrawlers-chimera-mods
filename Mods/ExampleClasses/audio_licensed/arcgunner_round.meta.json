@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "124d5e445af877c1",
+      "id": "a7327bf560fdde63",
       "score": 0.610991358757019,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -30,12 +30,12 @@
       ]
     },
     {
-      "id": "66b8b68fc1cbcad4",
+      "id": "17bf3eebe42d7d81",
       "score": 0.5973230600357056,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -69,12 +69,12 @@
       ]
     },
     {
-      "id": "924fdedca2bfd547",
+      "id": "9b9ce9ada2112141",
       "score": 0.5776636004447937,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -108,12 +108,12 @@
       ]
     },
     {
-      "id": "087d5f143548515c",
+      "id": "e1d08135905f8057",
       "score": 0.5742127895355225,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -147,12 +147,12 @@
       ]
     },
     {
-      "id": "8790a6bf24d01a0e",
+      "id": "30c0bcae063aba4c",
       "score": 0.5689746737480164,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -169,12 +169,12 @@
       ]
     },
     {
-      "id": "e11572c72c739502",
+      "id": "11ba0c2ad1af2ecf",
       "score": 0.5686443448066711,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -191,12 +191,12 @@
       ]
     },
     {
-      "id": "e15eb56be1521934",
+      "id": "273d17db7d04c73d",
       "score": 0.5630002617835999,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -213,28 +213,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "124d5e445af877c1",
-    "66b8b68fc1cbcad4",
-    "ee1b3c7abbe46e6e",
-    "924fdedca2bfd547",
-    "5b6a4c09eab2e860",
-    "087d5f143548515c",
-    "3344916f57b73ab7",
-    "8790a6bf24d01a0e",
-    "e11572c72c739502",
-    "e15eb56be1521934"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ExampleClasses\\sfx\\arcgunner_round.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.204,
+  "max_corr": 0.098,
   "semitones": -4,
-  "width": 0.479,
+  "width": 0.525,
   "listen": {
-    "match": 0.692,
-    "clean": -3.066,
+    "match": 0.671,
+    "clean": -1.481,
     "faults": []
   }
 }

@@ -13,9 +13,7 @@ it.
 - **StarCrawlers** (2019), Juggernaut Games. It is the reference point for our classes, and source of the mechanics
   the first game had and Chimera dropped:
   - Factions, reputation and favour, job offers by danger level, and bonus objectives (Outside Interests);
-  - the enemy kinds behind Interlopers and the per-location enemy rosters in Breaches and Echoes;
-  - credit-paid gambles (Odds Breaker, after the Smuggler);
-  - drone control and constructs (Swarm Conductor, after the Hacker and Engineer).
+  - the enemy kinds behind Interlopers and the per-location enemy rosters in Breaches and Echoes.
 - **Arendeth's own Soulash 2 mods.** Each Arendeth Classes class takes its core mechanic from one of them:
 
   | Class | Soulash 2 mod |
@@ -64,10 +62,17 @@ Every icon, mesh, texture, animation, particle effect and `sfx/` sound was made 
 using the models below. Each license lets you own and share what the model outputs. None of them ask for credit on
 outputs, but they are credited here anyway.
 
+The `audio_licensed/` sounds are different: no model generates or touches them. They are tuned programmatically, by
+plain signal processing (pitch shift, layering, random all-pass filtering, EQ, trim and level), after a read-only
+audio-quality tuner has worked out what each sound needs. That tuner is the CLAP model below, used only to listen:
+it measures the sound and its candidates, chooses the processing settings from those numbers and keeps the try it
+hears as best. Nothing it produces ships, and no pack clip ever goes into it.
+
 | Model | Used for | License |
 |---|---|---|
 | Stable Diffusion 3.5 Medium (Stability AI) | Concept art, icons, particle key frames | Stability AI Community License |
-| Stable Audio 3 (Stability AI) | The `sfx/` sounds; re-rendering the `audio_licensed/` sounds | Stability AI Community License |
+| Stable Audio 3 (Stability AI) | The `sfx/` sounds | Stability AI Community License |
+| CLAP, `laion/clap-htsat-unfused` (LAION) | Listening only: the read-only quality tuner that scores sounds and picks the best try | Apache 2.0 |
 | Stable Fast 3D (Stability AI) | Meshes for simple props | Stability AI Community License |
 | TRELLIS.2 (Microsoft) | Meshes for creatures, items and gear | MIT |
 | Wan2.2 TI2V-5B (Wan-AI, Alibaba) | Motion video for animations and particle flipbooks | Apache 2.0 |
@@ -78,10 +83,15 @@ outputs, but they are credited here anyway.
 
 ## Sound
 
-- **Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.** Their packs, along with packs by Ovani Sound,
-  Tao & Sound and Function Loops, were reference material for the new sounds in the `sfx/` folders.
-- **Function Loops** (*Ultimate SFX for Games*) and **Tao & Sound** (*Magic Spells SFX Bundle*, *Inventory SFX
-  Bundle*, *Puzzle Audio Kit*): the licensed sounds in the `audio_licensed/` folders.
+- **Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.** Their packs are the material behind every sound in
+  the `sfx/` folders (as references for the renders, or as the clips a rebuild transforms), and clips from them are
+  layered into some of the `audio_licensed/` sounds.
+- **Function Loops** (*Ultimate SFX for Games*), **Tao & Sound** (*Magic Spells SFX Bundle*, *Inventory SFX Bundle*,
+  *Puzzle Audio Kit*; sound assets by Fernando del Pueyo Montesinos, Tao & Sound Creative Music Solutions, used under
+  their EULA) and **Ovani Sound** (*Ice*, *Microscale Bugs* and *Robotic Beings Sound FX Packs*): the licensed sounds in
+  the `audio_licensed/` folders, rebuilt from their clips by plain processing with no AI (those packs' licenses bar AI
+  tools and datasets, so no model ever embeds or learns from them). They ship sealed in each mod's `sounds.pak`, so
+  nobody can lift them out of the mods, as the licenses require. `AUDIO_CREDITS.md` lists the clips behind every file.
 
 ## Software
 

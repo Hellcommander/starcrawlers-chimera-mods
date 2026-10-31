@@ -26,6 +26,8 @@ namespace SCClassLoader
         public List<string> loadAfter = new List<string>();
         /// <summary>The plugin API level this mod's code needs; a loader with a lower <see cref="ModPacks.ApiLevel"/> skips the mod.</summary>
         public int apiLevel;
+        /// <summary>False: this mod's sound archive is read on demand, one sound at a time, instead of preloaded at start (for very large sound sets).</summary>
+        public bool soundsPreload = true;
 
         [JsonIgnore] public string folder;
         [JsonIgnore] public bool hasManifest;

@@ -199,28 +199,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "0b46974bfeea8c47",
-    "5c86c6cddf4bb8b8",
-    "2d912ff2f3cf0743",
-    "82ffa5f6072a8506",
-    "6e1caf65b0f14376",
-    "2b522453b5c74e3c",
-    "910e331a095a336b",
-    "a4de743a0e5f1343",
-    "83afe41175e9e9d8",
-    "a18e5ce1fe8b280e"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_guard.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.092,
+  "max_corr": 0.154,
   "semitones": 4,
-  "width": 0.532,
+  "width": 0.149,
   "listen": {
-    "match": 0.408,
-    "clean": 4.575,
+    "match": 0.464,
+    "clean": 3.45,
     "faults": []
   }
 }

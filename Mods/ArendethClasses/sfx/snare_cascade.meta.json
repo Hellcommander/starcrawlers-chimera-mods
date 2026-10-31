@@ -1,0 +1,177 @@
+{
+  "prompt": "rapid chain of psychic traps detonating one after another in a rising cascade, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "cd41068be7b6c438",
+      "score": 0.44303327798843384,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 5.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "0ffd10e359dddeab",
+      "score": 0.4126884639263153,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_14_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "24ae1ace74d7a86c",
+      "score": 0.39797359704971313,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_5_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "133994115ba267e4",
+      "score": 0.3917239308357239,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 56 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "73d585e602881812",
+      "score": 0.39127618074417114,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 56 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "5f001264dd047948",
+      "score": 0.3906634747982025,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_8_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "cc05318df535b489",
+      "score": 0.38860973715782166,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_19_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "00f072a1e22a7105",
+      "score": 0.38396716117858887,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- INVASION TEXTURE.zip",
+      "inner": "NOISE ALCHEMY- INVASION TEXTURE/NOISE ALCHEMY - INVASION TEXTURE 3.wav",
+      "license": "reference",
+      "tags": [
+        "invasion",
+        "texture",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "b4dd344c2b4695bd",
+      "score": 0.38108015060424805,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_1_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_cascade.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.123,
+  "semitones": 3,
+  "width": 0.292,
+  "listen": {
+    "match": 0.472,
+    "clean": -6.0,
+    "faults": []
+  }
+}

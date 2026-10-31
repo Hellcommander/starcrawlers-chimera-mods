@@ -1,0 +1,176 @@
+{
+  "prompt": "magical transformation shimmer ending in a deep rumbling purr",
+  "duration": 2.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "634dcde971879777",
+      "score": 0.4382958710193634,
+      "via": "clap+tag",
+      "pack": "texturesnoisealchemy.zip",
+      "inner": "NOISE ALCHEMY- TEXTURES/NOISE ALCHEMY- TEXTURES 1 22_REV.wav",
+      "license": "reference",
+      "tags": [
+        "texturesnoisealchemy",
+        "noise",
+        "alchemy",
+        "textures",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "15f13fb7d9145401",
+      "score": 0.39461177587509155,
+      "via": "clap+tag",
+      "pack": "uiactivation.zip",
+      "inner": "NOISE ALCHEMY- UI ACTIVATION/NOISE ALCHEMY- UI ACTIVATION 17_REV.wav",
+      "license": "reference",
+      "tags": [
+        "uiactivation",
+        "noise",
+        "alchemy",
+        "ui",
+        "activation",
+        "rev"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "f0929d39e659bf6f",
+      "score": 0.3925167918205261,
+      "via": "clap+tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18_REV.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "9936d655a80db22c",
+      "score": 0.3925167918205261,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18_REV.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "e386c2e427bc1c99",
+      "score": 0.38912367820739746,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 11.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "84586092e81edbaf",
+      "score": 0.388376921415329,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Sirens.zip",
+      "inner": "Dark Fantasy Studio- Sirens/Dark Fantasy Studio- Sirens 6.wav",
+      "license": "reference",
+      "tags": [
+        "sirens",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "3207267cd8081a8f",
+      "score": 0.38672715425491333,
+      "via": "clap+tag",
+      "pack": "hybrid.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 5_REV.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "50bb742e0bd564e0",
+      "score": 0.38672715425491333,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
+      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 5_REV.wav",
+      "license": "reference",
+      "tags": [
+        "hybrid",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "104c87a0c3df3983",
+      "score": 0.38492223620414734,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOWNSWEEPS.zip",
+      "inner": "NOISE ALCHEMY- DOWNSWEEPS/NOISE ALCHEMY- DOWNSEEPS 1 11_REV.wav",
+      "license": "reference",
+      "tags": [
+        "downsweeps",
+        "noise",
+        "alchemy",
+        "downseeps",
+        "rev"
+      ],
+      "archetypes": []
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_cat.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.206,
+  "semitones": -5,
+  "width": 0.919,
+  "listen": {
+    "match": 0.58,
+    "clean": -0.717,
+    "faults": []
+  }
+}

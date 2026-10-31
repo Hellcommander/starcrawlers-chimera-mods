@@ -1,0 +1,92 @@
+{
+  "prompt": "shimmering prismatic shield chime rising through tones, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "073b1b93b918f260",
+      "score": 0.42512744665145874,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 32.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "50c7af20a452a27e",
+      "score": 0.3990570902824402,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Waterphone.zip",
+      "inner": "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 21.wav",
+      "license": "reference",
+      "tags": [
+        "waterphone",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "water"
+      ]
+    },
+    {
+      "id": "27a44edab0cd2ae0",
+      "score": 0.39790600538253784,
+      "via": "clap+tag",
+      "pack": "uiactivation.zip",
+      "inner": "NOISE ALCHEMY- UI ACTIVATION/NOISE ALCHEMY- UI ACTIVATION 9.wav",
+      "license": "reference",
+      "tags": [
+        "uiactivation",
+        "noise",
+        "alchemy",
+        "ui",
+        "activation"
+      ],
+      "archetypes": [
+        "ui"
+      ]
+    },
+    {
+      "id": "15a99408b371db20",
+      "score": 0.395130455493927,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 50.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_ward.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.046,
+  "semitones": -3,
+  "width": 0.23,
+  "listen": {
+    "match": 0.481,
+    "clean": -1.843,
+    "faults": []
+  }
+}

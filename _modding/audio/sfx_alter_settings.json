@@ -1,5 +1,5 @@
 {
- "about": "Settings for sfx_alter.py. Chosen by an AI from sfx_features.json only: numbers and text, never audio.",
+ "about": "Settings for sfx_alter.py. Chosen by an AI from sfx_features.json only: numbers and text, never audio. reshape under 1 keeps less of the clip's loudness shape (slow low sounds).",
  "classes": {
   "impact": {
    "steps": [
@@ -343,7 +343,22 @@
    "class": "whoosh"
   },
   "vasculist_spike": {
-   "class": "impact"
+   "class": "impact",
+   "steps": [
+    -10,
+    -9,
+    9,
+    10,
+    -12,
+    12
+   ],
+   "layer": 0.9,
+   "spread": 0.8,
+   "knots": 512,
+   "eq_db": 6.0,
+   "reshape": 0.2,
+   "attack_ms": 0,
+   "tone": 0.5
   },
   "wild_bolt": {
    "class": "magic"

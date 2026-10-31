@@ -461,7 +461,7 @@
           "staminaCost": 14,
           "cooldown": 6,
           "description": "Lay flux residue and acid over a group at once: they dissolve each other right there, and the acid left behind waits for your fire, shock or frost.",
-          "sound": "../ArendethClasses/sfx/mia_bloom.wav",
+          "sound": "../ArendethClasses/audio_licensed/mia_bloom.wav",
           "areaVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5",
           "actions": [
             {

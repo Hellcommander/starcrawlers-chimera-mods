@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "5873ec600e7f9ad1",
+      "id": "b13c4643a05ca691",
       "score": 0.49490606784820557,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -30,12 +30,12 @@
       ]
     },
     {
-      "id": "edc2d65970c1373a",
+      "id": "de79f3ac571abd68",
       "score": 0.49103981256484985,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -120,12 +120,12 @@
       ]
     },
     {
-      "id": "4a4221d7e3e9795e",
+      "id": "4e7e66d5db54edf4",
       "score": 0.4678667187690735,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Hammer C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -192,28 +192,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "5873ec600e7f9ad1",
-    "edc2d65970c1373a",
-    "90c6976203ac7fc2",
-    "b993652d2c3c8552",
-    "c7edf5dccda1e6bd",
-    "174f7b1590defab1",
-    "4a4221d7e3e9795e",
-    "7d341d978d0ec959",
-    "13ef5e56f48c798f",
-    "0c032e8dd27ff3aa"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_thermal_shock.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.108,
-  "semitones": 5,
-  "width": 0.834,
+  "max_corr": 0.249,
+  "semitones": 6,
+  "width": 0.962,
   "listen": {
-    "match": 0.598,
-    "clean": 1.876,
+    "match": 0.583,
+    "clean": 0.445,
     "faults": []
   }
 }

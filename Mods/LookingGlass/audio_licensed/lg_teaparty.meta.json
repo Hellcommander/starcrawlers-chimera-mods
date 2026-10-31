@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "38d05add6a113e4f",
+      "id": "9231ebeb1b92b400",
       "score": 0.42869749665260315,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Household/Ice Cubes In Glass A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -31,12 +31,12 @@
       ]
     },
     {
-      "id": "3cdf5192a5ee368c",
+      "id": "89434f832b9bab1c",
       "score": 0.39630812406539917,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Little Mech 004.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -54,12 +54,12 @@
       ]
     },
     {
-      "id": "8e76355785fcc9c4",
+      "id": "600a1ced4a2f5e44",
       "score": 0.3851698637008667,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Mech Bug 002.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -77,12 +77,12 @@
       ]
     },
     {
-      "id": "937112aea26cffa3",
+      "id": "1d8b19bd9547f758",
       "score": 0.3701399266719818,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Household/Ice Cubes In Glass C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -132,12 +132,12 @@
       ]
     },
     {
-      "id": "c72ff688002585f0",
+      "id": "d35dd4aca36a4043",
       "score": 0.34548431634902954,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Voice/Mech Bug 003.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -210,28 +210,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "38d05add6a113e4f",
-    "3cdf5192a5ee368c",
-    "8e76355785fcc9c4",
-    "937112aea26cffa3",
-    "8d7a20b62413173e",
-    "a3565bcc21348e9a",
-    "c72ff688002585f0",
-    "e701ced284fcc443",
-    "a5d9e0cca06c8679",
-    "8b6d9e5599c60ff1"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_teaparty.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.049,
-  "semitones": 6,
-  "width": 0.317,
+  "max_corr": 0.044,
+  "semitones": 5,
+  "width": 0.289,
   "listen": {
-    "match": 0.585,
-    "clean": 2.82,
+    "match": 0.51,
+    "clean": 4.274,
     "faults": []
   }
 }

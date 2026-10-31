@@ -1,0 +1,162 @@
+{
+  "prompt": "eerie swirling psychic whispers rising into a mad echoing laugh of chimes",
+  "duration": 2.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "61477c59c2ebbcf2",
+      "score": 0.45795679092407227,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 33_REV.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "9f71d00394bddf69",
+      "score": 0.4322224259376526,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 43 Loop.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "loop"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "a153f52a3d3fbe34",
+      "score": 0.41804468631744385,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ghostly.zip",
+      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 23.wav",
+      "license": "reference",
+      "tags": [
+        "ghostly",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "horror"
+      ]
+    },
+    {
+      "id": "37c79d67b15081ed",
+      "score": 0.41734716296195984,
+      "via": "clap+tag",
+      "pack": "uneasylistening.zip",
+      "inner": "uneasylistening/NOISE ALCHEMY- UNEASY LISTENING 10.wav",
+      "license": "reference",
+      "tags": [
+        "uneasylistening",
+        "noise",
+        "alchemy",
+        "uneasy",
+        "listening"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "fc747ec18b5b4b13",
+      "score": 0.4038577079772949,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 45 Loop.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "loop"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "3967d10d3773f396",
+      "score": 0.4033539295196533,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Metallic.zip",
+      "inner": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 14.wav",
+      "license": "reference",
+      "tags": [
+        "metallic",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "mech"
+      ]
+    },
+    {
+      "id": "5d173b68b6da6792",
+      "score": 0.40316256880760193,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 44 Loop_REV.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "loop",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    },
+    {
+      "id": "6390158bf3bfc4f9",
+      "score": 0.40237122774124146,
+      "via": "clap+tag",
+      "pack": "nerve.zip",
+      "inner": "nerve/NOISE ALCHEMY - Nerve 43 Loop_REV.wav",
+      "license": "reference",
+      "tags": [
+        "nerve",
+        "noise",
+        "alchemy",
+        "loop",
+        "rev"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_mad_here.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.049,
+  "semitones": 3,
+  "width": 0.939,
+  "listen": {
+    "match": 0.437,
+    "clean": -3.059,
+    "faults": []
+  }
+}

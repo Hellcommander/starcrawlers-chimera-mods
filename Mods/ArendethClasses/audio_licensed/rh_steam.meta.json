@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "5233f114cf7e6281",
+      "id": "3cbfc0d0aaf6c949",
       "score": 0.4951236844062805,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shimmer A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -29,12 +29,12 @@
       ]
     },
     {
-      "id": "3ee471e68c0927b5",
+      "id": "77c6b9f761bfb639",
       "score": 0.48485422134399414,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shimmer C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -50,12 +50,12 @@
       ]
     },
     {
-      "id": "2062741e2bdea4e2",
+      "id": "49112fbe11fe8e27",
       "score": 0.48366957902908325,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shimmer B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -71,12 +71,12 @@
       ]
     },
     {
-      "id": "f1b39915f793b893",
+      "id": "572773d5fda793eb",
       "score": 0.48254603147506714,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -144,12 +144,12 @@
       "archetypes": []
     },
     {
-      "id": "742af9a026e9ca31",
+      "id": "e65461e3edc4d7d0",
       "score": 0.44968220591545105,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -201,28 +201,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "5233f114cf7e6281",
-    "3ee471e68c0927b5",
-    "2062741e2bdea4e2",
-    "f1b39915f793b893",
-    "15cb757fec392aa2",
-    "3b29b775482401cb",
-    "00b403f2ef77eacd",
-    "742af9a026e9ca31",
-    "936ab631a9dfe4c6",
-    "7758d2eefce2bb1a"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_steam.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
   "max_corr": 0.074,
-  "semitones": 6,
-  "width": 1.077,
+  "semitones": -4,
+  "width": 0.896,
   "listen": {
-    "match": 0.423,
-    "clean": 0.58,
+    "match": 0.643,
+    "clean": -5.272,
     "faults": []
   }
 }

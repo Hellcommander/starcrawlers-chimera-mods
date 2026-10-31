@@ -160,28 +160,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "8466ac6d90521096",
-    "542cd140f91cd9f2",
-    "6d5ec264e794cdd8",
-    "0ccfb885bec58617",
-    "43338115408414c6",
-    "0033ef298b7973c4",
-    "fea7651f6498bd64",
-    "8f9c6fd6590b08c4",
-    "072c872b5dc4ac77",
-    "3ccea1d0b64a7618"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_grin.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.047,
+  "max_corr": 0.033,
   "semitones": 5,
-  "width": 0.523,
+  "width": 0.487,
   "listen": {
-    "match": 0.597,
-    "clean": 2.384,
+    "match": 0.616,
+    "clean": 3.399,
     "faults": []
   }
 }

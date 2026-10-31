@@ -55,7 +55,7 @@
       "newAbility": {
         "base": "Bolt", "name": "Spike the Walls", "icon": "bulkhead_psion_t3.png", "range": 6, "staminaCost": 10, "cooldown": 2,
         "description": "Every wall beside the target grows a spike, all at once. In a corner, that's two.",
-        "sound": "audio_licensed/bp_spike.wav",
+        "sound": "sfx/bp_spike.wav",
         "actions": [ { "do": "wallSpikes", "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
           "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
                        { "do": "effect", "effect": "#Gashed" } ] } ],
@@ -67,7 +67,7 @@
       "newAbility": {
         "base": "Blast", "name": "Crushing Corridor", "icon": "bulkhead_psion_t4.png", "range": 5, "radius": 2, "staminaCost": 16, "cooldown": 7,
         "description": "Squeeze the space around the aim point: everyone in it is dragged together, and the walls nearby lash out at whoever ends up against them.",
-        "sound": "audio_licensed/bp_crush.wav",
+        "sound": "sfx/bp_crush.wav",
         "actions": [
           { "do": "pull", "amount": 1, "pullToward": "center" },
           { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15, "perRank": 1 },
@@ -82,7 +82,7 @@
       "newAbility": {
         "base": "Smash", "name": "Hammer to the Wall", "icon": "bulkhead_psion_t5.png", "staminaCost": 14, "cooldown": 5,
         "description": "One blow, a mind behind it: the target flies three tiles. Whatever wall it meets, a spike meets it back.",
-        "sound": "audio_licensed/bp_hammer.wav",
+        "sound": "sfx/bp_hammer.wav",
         "actions": [
           { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.3, "perRank": 2 },
           { "do": "throw", "amount": 3, "actions": [

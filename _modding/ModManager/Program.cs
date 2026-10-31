@@ -37,6 +37,8 @@ namespace ChimeraModManager
             if (game == null) return 1;
             var mods = new ModFiles(game);
 #if !PLAYER
+            string sealMod = Arg(args, "--seal-audio");
+            if (sealMod != null) return SealAudio.Run(sealMod, Array.IndexOf(args, "--remove-loose") >= 0, Console.WriteLine);
             string selfTest = Arg(args, "--selftest");
             if (selfTest != null) return SelfTest.Run(mods, selfTest);
 #endif

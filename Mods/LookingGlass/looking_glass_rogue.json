@@ -83,7 +83,7 @@
             { "do": "effect", "effect": "#Gashed" } ] },
         { "name": "Warp Pounce", "icon": "icons/warp_pounce.png", "target": "enemy", "range": 7, "staminaCost": 6, "cooldown": 2,
           "description": "Fold the room and come out of it behind them, claws first. Leaves them topsy-turvy and builds Wonder.",
-          "castVfx": "LgWarp", "impactVfx": "LgClaw", "sound": "audio_licensed/lg_warp.wav",
+          "castVfx": "LgWarp", "impactVfx": "LgClaw", "sound": "sfx/lg_warp.wav",
           "actions": [
             { "do": "warp", "warpTo": "behind", "vfx": "LgWarp" },
             { "do": "damage", "type": "Slashing", "min": 4, "max": 7, "scale": "Agility+PsiPower", "scaleMult": 0.22, "perRank": 1 },
@@ -92,11 +92,11 @@
         { "name": "Which Way?", "icon": "icons/which_way.png", "target": "enemy", "range": 8, "staminaCost": 6, "cooldown": 3,
           "targetWhen": { "not": { "tag": "boss" } },
           "description": "Ask them which way they ought to go, then answer for them: you and they warp into each other's places, and they're left topsy-turvy (not bosses). Leaves you Grinning.",
-          "castVfx": "LgWarp", "impactVfx": "LgWarp@0.7", "sound": "audio_licensed/lg_warp.wav",
+          "castVfx": "LgWarp", "impactVfx": "LgWarp@0.7", "sound": "sfx/lg_warp.wav",
           "actions": [ { "do": "swap" }, { "do": "effect", "effect": "@TopsyTurvy" }, { "do": "effect", "to": "self", "effect": "@Grinning" } ] },
         { "name": "All Mad Here", "icon": "icons/all_mad_here.png", "target": "self", "radius": 3, "cooldown": 4, "staminaCost": 10,
           "description": "Point out to everyone nearby that they must be mad, or they wouldn't have come here. A psychic jolt that grows with every riddle asked this fight; they lose their bearings and their big moves wait, and with four Wonder or more they lose their words too and the room rearranges itself around them (each may warp up to two tiles). Each one counts as a riddle.",
-          "castVfx": "LgWhimsy", "impactVfx": "LgWhimsy@0.5", "sound": "audio_licensed/lg_mad_here.wav",
+          "castVfx": "LgWhimsy", "impactVfx": "LgWhimsy@0.5", "sound": "sfx/lg_mad_here.wav",
           "actions": [
             { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3, "perRank": 1,
               "bonusPerStack": 2, "stacksOf": "counter:Riddles", "stacksFrom": "self" },
@@ -107,7 +107,7 @@
             { "do": "counter", "to": "self", "counter": "Riddles", "amount": 1, "counterMax": 6 } ] },
         { "name": "Reappear", "icon": "icons/reappear.png", "target": "self", "instant": true, "staminaCost": 0,
           "description": "Come all the way back, grin first this time, with your breath and a little Wonder.",
-          "sound": "audio_licensed/lg_shrink.wav",
+          "sound": "sfx/lg_shrink.wav",
           "actions": [ { "do": "purge", "effect": "@GrinningCat" }, { "do": "stamina", "amount": 12 }, { "do": "effect", "effect": "@Wonder", "stacks": 2 } ] } ] }
   ],
   "tiers": [
@@ -146,7 +146,7 @@
       "newAbility": {
         "base": "Strike", "name": "Snicker-Snack", "icon": "icons/snicker_snack.png", "staminaCost": 6, "cooldown": 0,
         "description": "A blade that never cuts the same number of times twice; Wonder makes the longer flurries likelier. Grown, it hits harder. Shrunk, every flurry builds Wonder. Against anything under a third of its health one more cut goes in.",
-        "impactVfx": "LgSlash", "sound": "audio_licensed/lg_flurry.wav",
+        "impactVfx": "LgSlash", "sound": "sfx/lg_flurry.wav",
         "actions": [
           { "do": "random", "stacksOf": "@Wonder", "stacksFrom": "self", "options": [
             { "name": "Snick", "weight": 3,
@@ -167,7 +167,7 @@
       "newAbility": {
         "base": "Buff", "name": "Drink Me, Eat Me", "icon": "icons/drink_me.png", "staminaCost": 4, "cooldown": 2,
         "description": "A sip to shrink, a bite to grow. Switches you between Shrunk and Grown (from normal size, you shrink first) and builds Wonder. With four Wonder or more the label lies in your favour and you get a burst of speed too.",
-        "castVfx": "LgSizePuff", "sound": "audio_licensed/lg_shrink.wav",
+        "castVfx": "LgSizePuff", "sound": "sfx/lg_shrink.wav",
         "actions": [
           { "do": "if", "when": "Small",
             "then": [ { "do": "effect", "to": "self", "effect": "@Grown" } ],
@@ -255,7 +255,7 @@
         "name": "Grin Without a Cat", "icon": "icons/grin_without_a_cat.png", "target": "floor", "range": 6, "instant": true,
         "staminaCost": 12, "cooldown": 9,
         "description": "Warp away all at once and leave your grin hanging where you stood. Every enemy near it can't look away and goes for it instead of you, anyone who strikes it is left topsy-turvy, and when it fades or breaks its teeth snap shut on the nearest of them. You land Grinning. Kept at hand as the Grinning Cat.",
-        "castVfx": "LgWarp", "sound": "audio_licensed/lg_warp.wav",
+        "castVfx": "LgWarp", "sound": "sfx/lg_warp.wav",
         "actions": [
           { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Lingering Grin", "summonGroup": "Grin", "stationary": true,
             "maxSummons": 1, "turns": 4, "effect": "@LingeringGrin",
@@ -272,7 +272,7 @@
         "base": "Buff", "name": "The Grinning Cat", "icon": "icons/grinning_cat.png", "staminaCost": 20, "cooldown": 20,
         "usableWhen": { "all": [ "Curious", { "inCombat": true } ] },
         "description": "With four Wonder or more, in a fight: stop being a duelist and become the uncanny striped cat that comes and goes as it pleases, with a grin far too wide for its face. For eight turns you bite with a grin far too big for any face, warp onto your prey or into their place, and drive the room mad (Grin of Teeth, Warp Pounce, Which Way?, All Mad Here). Every dodge rakes the one who swung, your hits paint the unpainted, and the first killing blow finds no body to land on. Your size is forgotten. Ends when it fades or you Reappear.",
-        "castVfx": "LgGrin", "sound": "audio_licensed/lg_cat.wav",
+        "castVfx": "LgGrin", "sound": "sfx/lg_cat.wav",
         "actions": [
           { "do": "purge", "to": "self", "effect": "@Shrunk" },
           { "do": "purge", "to": "self", "effect": "@Grown" },

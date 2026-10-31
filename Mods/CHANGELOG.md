@@ -50,6 +50,9 @@ Covers everything since 1.1.0.
   two classes act on each other instead: marks spread, one class's resource pays for the other's effect, attackers get
   marked, specials are set back and foes are shoved, stunned or silenced. Level raises a synergy's odds.
 - Classes without synergies got their own set. Synergy Strain and per-skill penalties weigh on what synergies add.
+  Ichorborn + Chemistry (Spiked Ichor): a chem in your blood poisons Tarred foes, and their corpses breed Ichorlings.
+  Black Culture (Ichorborn + Xenobiologist) now sets the two broods on each other: Ichorlings slime, the pet slime
+  tars, and a foe dropped carrying both marks breeds an Ichorling.
 - Free deaths are a boss's move. Only Looking-Glass keeps one. Scrapper, Demolitionist, Null Chorister and Probability
   Shaman now trigger their last stands on a low-health line.
 
@@ -78,15 +81,23 @@ Covers everything since 1.1.0.
 ### Sound
 
 - Sounds that came back as one signal in both channels were re-rendered in true stereo, and many others were replaced.
-- Sounds can ship sealed in a mod's `sounds.pak`, as FLAC under AES-256 with a key that stays out of the repository and is
-  built into the loader. No `"sound"` value changes, and a loose file still wins over the pak. Archived sounds are read,
-  decrypted and decoded while the game starts, so a play does no file work.
+- Sounds can ship sealed in a mod's `sounds.pak`, as FLAC under AES-256. Every archive has its own key, wrapped with the
+  loader's public key, so any mod can have embedded audio: `BreachworkModManager.exe --seal-audio Mods\YourMod` (or
+  `_modding/audio/sfx_archive.py`). No `"sound"` value changes, and a loose file still wins over the pak. Archived sounds
+  are read, decrypted and decoded while the game starts, so a play does no file work. Every sound and the (encrypted)
+  index carry an authentication tag, so a changed archive is refused rather than played as noise; the header names the
+  loader key it was sealed for, so the loader can carry more than one key after a rotation (`sfx_archive.py keygen
+  --rotate`); `sfx_archive.py verify` checks an archive; `"soundsPreload": false` in a mod's `mod.json` reads its archive
+  on demand instead of at start.
 - A sound that is missing or won't load now plays a vanilla sound, so nothing goes silent. Mods can add their own
   fallbacks with `soundFallbacks`.
 - Mod audio left the source repository. The packages still ship it, and a build from a plain clone uses the fallbacks.
 - Every licensed sound was rebuilt from its pack clips with plain signal processing and no AI, since those packs'
-  licenses bar AI tools. The 63 `sfx/` sounds that had such a pack among their references were rebuilt the same way
-  and moved to their mods' `audio_licensed/` folders (same file names; the class files point at the new place).
+  licenses bar AI tools. The 63 `sfx/` renders that had such a pack among their references were rebuilt the same
+  way: 35 from their Noise Alchemy clips alone, staying in `sfx/`; 28 whose main clip is an Ovani, Tao & Sound or
+  Function Loops clip moved to their mods' `audio_licensed/` folders (same file names; the class files point there).
+- The rebuilt sounds use an anti-aliased pitch move, keep each clip's colour and attack, and sit at the clip's loudness;
+  `vasculist_spike` is synthesized from material parameters, a sound with no clip behind it at all.
 - Sound quality is judged by an audio model, not by ear or in game: `audio_listener.py` in the asset toolkit picks
   the best try of every rebuilt sound and says whether it beats the one it replaces; `sfx_audit.py` ranks the set.
 

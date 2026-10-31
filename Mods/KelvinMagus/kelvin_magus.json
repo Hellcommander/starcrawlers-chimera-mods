@@ -9,7 +9,7 @@
   "effects": [
     { "id": "StolenHeat", "name": "Stolen Heat", "icon": "icons/stolen_heat.png", "resource": true, "resourceColor": "#FF9A4A",
       "description": "Heat you pulled out of your targets. The Glacier Sentinel runs on it and Thermal Plume vents it. It leaks away if you pace yourself; hold ten and you overheat.",
-      "duration": 8, "maxStacks": 10, "burstAt": 10, "burstSound": "audio_licensed/km_overheat.wav", "burstVfx": "KmSteamJet@0.6",
+      "duration": 8, "maxStacks": 10, "burstAt": 10, "burstSound": "sfx/km_overheat.wav", "burstVfx": "KmSteamJet@0.6",
       "burstActions": [ { "do": "effect", "to": "self", "effect": "@Overheated" } ] },
     { "id": "Overheated", "name": "Overheated", "icon": "icons/overheated.png", "debuff": true,
       "description": "You hoarded more heat than a body can hold. It cooks you from the inside: you take fire damage every turn, your spells hit softer and your stamina lags.",
@@ -59,7 +59,7 @@
         "base": "Bolt", "name": "Heat Siphon", "icon": "icons/heat_siphon.png", "range": 6, "staminaCost": 6, "cooldown": 0,
         "description": "Reach into a target and pull its heat out through the air. It chills; you keep the warmth.",
         "castVfx": "KmSiphonCast", "travelVfx": "KmSiphonBolt", "travelSpeed": 12, "impactVfx": "KmFrostHit",
-        "sound": "audio_licensed/km_siphon.wav",
+        "sound": "sfx/km_siphon.wav",
         "actions": [
           { "do": "damage", "type": "Cryo", "min": 2, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 },
           { "do": "effect", "effect": "@Supercooled" },

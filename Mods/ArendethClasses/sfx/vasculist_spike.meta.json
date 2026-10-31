@@ -1,0 +1,91 @@
+{
+  "prompt": "wet crystalline spike piercing, pulsing heartbeat thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "audio_bench synth",
+  "method": "synthesized from material parameters (audio_materials) and shaped by the bench; no clip and no model behind it",
+  "recipe": {
+    "seed": 2,
+    "length": 1.0,
+    "sources": {
+      "hit": {
+        "synth": "material",
+        "material": "bone",
+        "size": 0.5,
+        "force": 0.9,
+        "seed": 2
+      },
+      "body": {
+        "synth": "material",
+        "material": "bone",
+        "size": 0.7,
+        "force": 0.7,
+        "seed": 12
+      },
+      "tail": {
+        "synth": "material",
+        "material": "void",
+        "size": 0.7,
+        "force": 0.6,
+        "seed": 22
+      }
+    },
+    "layers": [
+      {
+        "source": "hit",
+        "chain": [
+          {
+            "fx": "preset",
+            "name": "impact_punch"
+          },
+          {
+            "fx": "glide",
+            "start_st": 2,
+            "end_st": -6
+          }
+        ]
+      },
+      {
+        "source": "body",
+        "gain_db": -2,
+        "offset_ms": 4,
+        "chain": [
+          {
+            "fx": "preset",
+            "name": "impact_body"
+          }
+        ]
+      },
+      {
+        "source": "tail",
+        "gain_db": -6,
+        "offset_ms": 12,
+        "chain": [
+          {
+            "fx": "preset",
+            "name": "impact_tail"
+          }
+        ]
+      }
+    ],
+    "master": [
+      {
+        "fx": "level",
+        "rms_db": -19
+      },
+      {
+        "fx": "fade",
+        "out_ms": 150
+      }
+    ]
+  },
+  "unique": true,
+  "derived": false,
+  "references": [],
+  "attribution": "",
+  "listen": {
+    "match": 0.538,
+    "clean": -1.632,
+    "faults": [],
+    "total": 0.456
+  }
+}

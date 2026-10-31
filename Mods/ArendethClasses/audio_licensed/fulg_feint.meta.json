@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "c885ae227f3c59c1",
+      "id": "33a86f98c872003f",
       "score": 0.5994102954864502,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Small C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -64,12 +64,12 @@
       ]
     },
     {
-      "id": "66b8b68fc1cbcad4",
+      "id": "17bf3eebe42d7d81",
       "score": 0.5683557987213135,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Medium E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -86,12 +86,12 @@
       ]
     },
     {
-      "id": "124d5e445af877c1",
+      "id": "a7327bf560fdde63",
       "score": 0.5654529333114624,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -179,12 +179,12 @@
       ]
     },
     {
-      "id": "087d5f143548515c",
+      "id": "e1d08135905f8057",
       "score": 0.5476741194725037,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Small E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -201,28 +201,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "c885ae227f3c59c1",
-    "72c9d98676150f94",
-    "90bbf3c6a0b76a0f",
-    "66b8b68fc1cbcad4",
-    "124d5e445af877c1",
-    "6fb0eb3033fb7dd9",
-    "ba60544a04b987c1",
-    "4afb2c16dee0804f",
-    "23f44fa185ce05e9",
-    "087d5f143548515c"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_feint.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.138,
-  "semitones": -4,
-  "width": 0.493,
+  "max_corr": 0.139,
+  "semitones": -3,
+  "width": 0.51,
   "listen": {
-    "match": 0.667,
-    "clean": -3.526,
+    "match": 0.66,
+    "clean": -2.012,
     "faults": []
   }
 }

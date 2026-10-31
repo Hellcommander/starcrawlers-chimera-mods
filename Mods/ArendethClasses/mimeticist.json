@@ -15,16 +15,16 @@
       "stats": { "Dodge": 15, "Stealth": 10, "Agility": 3 },
       "kit": [
         { "base": "Bolt", "name": "Vent Spring", "range": 4, "staminaCost": 6, "cooldown": 2, "description": "Spring onto it, claws first.",
-          "impactVfx": "PA_DualWield_SinisterStrike.impactEffect", "sound": "audio_licensed/mim_claw.wav",
+          "impactVfx": "PA_DualWield_SinisterStrike.impactEffect", "sound": "sfx/mim_claw.wav",
           "actions": [ { "do": "leap" }, { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 },
                        { "do": "effect", "effect": "#Gashed", "stacks": 2 } ] },
         { "base": "Strike", "name": "Gut Rend", "staminaCost": 8, "cooldown": 3, "description": "Open every wound it already has.",
-          "sound": "audio_licensed/mim_claw.wav",
+          "sound": "sfx/mim_claw.wav",
           "actions": [ { "do": "damage", "type": "Slashing", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1,
                          "bonusPerStack": 3, "stacksOf": "#Gashed", "consumeStacks": true } ] },
         { "base": "Buff", "name": "Into the Vents", "staminaCost": 6, "cooldown": 6, "description": "Slip into the dark for a breath. Your next blows land hard.",
           "actions": [ { "do": "effect", "to": "self", "effect": "@Unseen" } ] },
-        { "base": "Bolt", "name": "Ghost Pounce", "ifSkill": "SKILLTREE_Cyberninja|SKILLTREE_Acrobatics", "range": 5, "staminaCost": 8, "cooldown": 5, "description": "Your old training and the panther agree: land, strike, and be gone again.", "sound": "audio_licensed/mim_claw.wav", "actions": [ { "do": "leap" }, { "do": "damage", "type": "Slashing", "min": 4, "max": 7, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 }, { "do": "effect", "effect": "#Gashed", "stacks": 2 }, { "do": "effect", "to": "self", "effect": "@Unseen" } ] },
+        { "base": "Bolt", "name": "Ghost Pounce", "ifSkill": "SKILLTREE_Cyberninja|SKILLTREE_Acrobatics", "range": 5, "staminaCost": 8, "cooldown": 5, "description": "Your old training and the panther agree: land, strike, and be gone again.", "sound": "sfx/mim_claw.wav", "actions": [ { "do": "leap" }, { "do": "damage", "type": "Slashing", "min": 4, "max": 7, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 }, { "do": "effect", "effect": "#Gashed", "stacks": 2 }, { "do": "effect", "to": "self", "effect": "@Unseen" } ] },
         { "base": "Bolt", "name": "Stormclaw Spring", "ifSkill": "MOD_Fulgurant", "range": 5, "staminaCost": 8, "cooldown": 4, "description": "The lightning in you rides the leap: the claws land with a bolt in them and leave a Stepped Leader behind.", "sound": "audio_licensed/fulg_step.wav", "impactVfx": "PA_Elementalist_ChainLightning.shockImpact", "actions": [ { "do": "leap" }, { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 }, { "do": "effect", "effect": "#Gashed" }, { "do": "effect", "effect": "MOD_Fulgurant@Leader", "stacks": 2 } ] },
         { "base": "Buff", "name": "Shed the Shape", "staminaCost": 0, "cooldown": 0, "description": "Let the borrowed body go.",
           "actions": [ { "do": "purge", "to": "self", "effect": "@FormPanther" } ] }
@@ -58,7 +58,7 @@
       "damageTakenMult": 0.65, "stats": { "Armor": 6, "Toughness": 3, "Dodge": -10 },
       "kit": [
         { "base": "Bolt", "target": "floor", "name": "Plated Rush", "range": 4, "shape": "line", "staminaCost": 10, "cooldown": 4,
-          "description": "Charge straight through the line, flattening anything in it.", "sound": "audio_licensed/mim_stomp.wav",
+          "description": "Charge straight through the line, flattening anything in it.", "sound": "sfx/mim_stomp.wav",
           "impactVfx": "PA_Shieldbearer_Charge.impactParticle",
           "actions": [ { "do": "teleport" }, { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 },
                        { "do": "knockback", "amount": 1 }, { "do": "stun", "turns": 1, "chance": 30 } ] },
@@ -67,7 +67,7 @@
           "actions": [ { "do": "stun", "turns": 1 }, { "do": "effect", "effect": "#Reeling" } ] },
         { "base": "Buff", "name": "Shell Down", "radius": 3, "staminaCost": 8, "cooldown": 7, "description": "Pull everything in under the plates and dare them to try.",
           "actions": [ { "do": "effect", "to": "self", "effect": "@Shelled" }, { "do": "taunt", "turns": 2 } ] },
-        { "base": "Buff", "name": "Bulwark Plates", "ifSkill": "SKILLTREE_Shieldbearer", "radius": 3, "staminaCost": 8, "cooldown": 8, "description": "A shieldbearer knows how to wear armour: lock the plates into a wall and draw every eye to it.", "sound": "audio_licensed/mim_stomp.wav", "actions": [ { "do": "shield", "to": "self", "amount": 12, "scale": "Smarts", "scaleMult": 0.6 }, { "do": "taunt", "turns": 2 } ] },
+        { "base": "Buff", "name": "Bulwark Plates", "ifSkill": "SKILLTREE_Shieldbearer", "radius": 3, "staminaCost": 8, "cooldown": 8, "description": "A shieldbearer knows how to wear armour: lock the plates into a wall and draw every eye to it.", "sound": "sfx/mim_stomp.wav", "actions": [ { "do": "shield", "to": "self", "amount": 12, "scale": "Smarts", "scaleMult": 0.6 }, { "do": "taunt", "turns": 2 } ] },
         { "base": "Buff", "name": "Shed the Shape", "staminaCost": 0, "cooldown": 0, "description": "Let the borrowed body go.",
           "actions": [ { "do": "purge", "to": "self", "effect": "@FormHullback" } ] }
       ] },
@@ -97,7 +97,7 @@
       "stats": { "Dodge": 10, "Agility": 2 },
       "kit": [
         { "base": "Blast", "name": "Web Spit", "range": 5, "radius": 1.5, "staminaCost": 8, "cooldown": 4, "description": "Spray a sticky web over a patch of deck.",
-          "sound": "audio_licensed/mim_web.wav",
+          "sound": "sfx/mim_web.wav",
           "actions": [ { "do": "effect", "effect": "@Webbed" },
                        { "do": "field", "fieldName": "Lattice Web", "turns": 3, "radius": 1.5, "affects": "enemies", "look": "HAZARD_Holosmoke@0.4",
                          "actions": [ { "do": "effect", "effect": "@Webbed" } ] } ] },
@@ -106,10 +106,10 @@
           "actions": [ { "do": "damage", "type": "Bio", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
                        { "do": "effect", "effect": "#Poisoned", "stacks": 3 } ] },
         { "base": "Bolt", "name": "Drop from Above", "range": 5, "staminaCost": 10, "cooldown": 4, "description": "Come down behind it from the ceiling. Anything caught in your web doesn't see it coming.",
-          "sound": "audio_licensed/mim_claw.wav",
+          "sound": "sfx/mim_claw.wav",
           "actions": [ { "do": "warp", "warpTo": "behind" }, { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
                        { "do": "stun", "turns": 1, "ifTargetHas": "@Webbed" } ] },
-        { "base": "Blast", "name": "Silk Snare", "ifSkill": "MOD_Snareseer", "range": 6, "radius": 0, "staminaCost": 10, "cooldown": 5, "description": "A snareseer's silk: a web laid where you know they will step, and whatever trips it is held fast and bitten.", "sound": "audio_licensed/mim_web.wav", "actions": [ { "do": "trap", "fieldName": "Silk Snare", "affects": "enemies", "triggerRadius": 1.5, "radius": 1.5, "charges": 1, "maxTraps": 2, "look": "HAZARD_Holosmoke@0.35", "actions": [ { "do": "effect", "effect": "@Webbed" }, { "do": "effect", "effect": "#Poisoned", "stacks": 2 }, { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25 } ] } ] },
+        { "base": "Blast", "name": "Silk Snare", "ifSkill": "MOD_Snareseer", "range": 6, "radius": 0, "staminaCost": 10, "cooldown": 5, "description": "A snareseer's silk: a web laid where you know they will step, and whatever trips it is held fast and bitten.", "sound": "sfx/mim_web.wav", "actions": [ { "do": "trap", "fieldName": "Silk Snare", "affects": "enemies", "triggerRadius": 1.5, "radius": 1.5, "charges": 1, "maxTraps": 2, "look": "HAZARD_Holosmoke@0.35", "actions": [ { "do": "effect", "effect": "@Webbed" }, { "do": "effect", "effect": "#Poisoned", "stacks": 2 }, { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25 } ] } ] },
         { "base": "Buff", "name": "Shed the Shape", "staminaCost": 0, "cooldown": 0, "description": "Let the borrowed body go.",
           "actions": [ { "do": "purge", "to": "self", "effect": "@FormWeaver" } ] }
       ] },
@@ -121,18 +121,18 @@
       "damageDealtMult": 1.15, "stats": { "HealthMax": 20, "Armor": 3 }, "resists": { "Fire": 50, "Bio": 25 },
       "kit": [
         { "base": "Bolt", "name": "Slag Breath", "range": 4, "shape": "cone", "angle": 60, "staminaCost": 12, "cooldown": 3,
-          "description": "Breathe a cone of molten slag.", "sound": "audio_licensed/mim_breath.wav", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4",
+          "description": "Breathe a cone of molten slag.", "sound": "sfx/mim_breath.wav", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4",
           "actions": [ { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.45, "perRank": 2 },
                        { "do": "effect", "effect": "#Burning" } ] },
         { "base": "Blast", "name": "Fallout Spores", "range": 5, "radius": 2, "staminaCost": 12, "cooldown": 6,
-          "description": "Cough up a cloud of irradiated spores that hangs over the deck.", "sound": "audio_licensed/mim_breath.wav",
+          "description": "Cough up a cloud of irradiated spores that hangs over the deck.", "sound": "sfx/mim_breath.wav",
           "actions": [ { "do": "field", "fieldName": "Fallout Spores", "turns": 4, "radius": 2, "affects": "enemies", "look": "HAZARD_Gas@0.6",
                          "actions": [ { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2 }, { "do": "effect", "effect": "#Poisoned" } ] } ] },
         { "base": "Nova", "name": "Wingbeat", "radius": 2, "staminaCost": 10, "cooldown": 5, "description": "Spread the wings in a corridor and everything near you goes flying.",
           "sound": "sfx/mim_wing.wav",
           "actions": [ { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.25 }, { "do": "knockback", "amount": 2 } ] },
-        { "base": "Bolt", "name": "Firestorm Breath", "ifSkill": "SKILLTREE_Pyromaniac|SKILLTREE_Elementalist", "range": 5, "shape": "cone", "angle": 75, "staminaCost": 14, "cooldown": 5, "description": "Fire you already knew pours out through the wyrm's throat: a wider, hotter cone that sets the deck alight.", "sound": "audio_licensed/mim_breath.wav", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4", "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Smarts", "scaleMult": 0.45, "perRank": 2 }, { "do": "effect", "effect": "#Burning", "stacks": 2 }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
-        { "base": "Bolt", "name": "Rime Breath", "ifSkill": "MOD_RimelightSeer|MOD_KelvinMagus", "range": 4, "shape": "cone", "angle": 60, "staminaCost": 12, "cooldown": 4, "description": "Your cold craft turns the wyrm's breath to frost: a cone that bites and slows.", "sound": "audio_licensed/mim_breath.wav", "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "actions": [ { "do": "damage", "type": "Cryo", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2 }, { "do": "effect", "effect": "#Chilled", "stacks": 2 }, { "do": "effect", "effect": "SLOW", "turns": 2 } ] },
+        { "base": "Bolt", "name": "Firestorm Breath", "ifSkill": "SKILLTREE_Pyromaniac|SKILLTREE_Elementalist", "range": 5, "shape": "cone", "angle": 75, "staminaCost": 14, "cooldown": 5, "description": "Fire you already knew pours out through the wyrm's throat: a wider, hotter cone that sets the deck alight.", "sound": "sfx/mim_breath.wav", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4", "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Smarts", "scaleMult": 0.45, "perRank": 2 }, { "do": "effect", "effect": "#Burning", "stacks": 2 }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
+        { "base": "Bolt", "name": "Rime Breath", "ifSkill": "MOD_RimelightSeer|MOD_KelvinMagus", "range": 4, "shape": "cone", "angle": 60, "staminaCost": 12, "cooldown": 4, "description": "Your cold craft turns the wyrm's breath to frost: a cone that bites and slows.", "sound": "sfx/mim_breath.wav", "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "actions": [ { "do": "damage", "type": "Cryo", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2 }, { "do": "effect", "effect": "#Chilled", "stacks": 2 }, { "do": "effect", "effect": "SLOW", "turns": 2 } ] },
         { "base": "Buff", "name": "Shed the Shape", "staminaCost": 0, "cooldown": 0, "description": "Let the borrowed body go.",
           "actions": [ { "do": "purge", "to": "self", "effect": "@FormWyrm" } ] }
       ] }
@@ -151,7 +151,7 @@
       "newAbility": {
         "base": "Bolt", "name": "Sampling Dart", "icon": "mimeticist_t1.png", "staminaCost": 6,
         "description": "A barbed collection dart. It stings, and if the creature dies with it in, you recover more stamina.",
-        "sound": "audio_licensed/mim_dart.wav",
+        "sound": "sfx/mim_dart.wav",
         "actions": [ { "do": "damage", "type": "Bio", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
                      { "do": "effect", "effect": "@Tagged" } ],
         "perk": { "name": "Barbed Darts", "description": "The dart tears going in.", "addActions": [ { "do": "effect", "effect": "#Gashed" } ] }

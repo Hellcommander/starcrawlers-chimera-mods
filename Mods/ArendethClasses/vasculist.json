@@ -123,7 +123,7 @@
         "staminaCost": 10,
         "description": "Push their blood pressure up a notch, painfully. Armor doesn't help, and every notch already there makes the next one hurt more.",
         "impactVfx": "EFFECT_Bleed",
-        "sound": "audio_licensed/vasculist_spike.wav",
+        "sound": "sfx/vasculist_spike.wav",
         "actions": [
           { "do": "damage", "type": "Piercing", "min": 1, "max": 3, "trueDamage": true, "perRank": 1, "bonusPerStack": 1, "stacksOf": "@Pressure" },
           { "do": "effect", "effect": "@Pressure" },
@@ -224,7 +224,7 @@
         "staminaCost": 18,
         "description": "Thread one heartbeat through a whole crowd. A pulse of borrowed blood leaps from body to body, pushing up the pressure and opening a cut in each one it passes through, so whole groups climb toward rupture together. It takes a little of your own blood to start it.",
         "impactVfx": "PA_SerratedSpines.PS_impact",
-        "sound": "audio_licensed/vasculist_spike.wav",
+        "sound": "sfx/vasculist_spike.wav",
         "actions": [
           { "do": "chain", "jumps": 3, "radius": 3, "falloff": 0.85, "actions": [
             { "do": "tether", "look": "#9A1626" },

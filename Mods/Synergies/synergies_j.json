@@ -944,7 +944,7 @@
         "MOD_Ichorborn",
         "SKILLTREE_Xenobiologist"
       ],
-      "description": "Tar is a rich growth medium: hits on Slimed foes may Tar them, and your summons' hits may Tar their targets. Each level adds 5% to these odds.",
+      "description": "Two broods, one culture: your Ichorlings' hits may Slime their prey and your slime's hits may Tar it, your own hits on Slimed foes may Tar them, and a foe dropped carrying both slime and tar may breed an Ichorling out of the mess. Each level adds 5% to these odds.",
       "bonus": {
         "procChancePerStack": 5,
         "procs": [
@@ -958,25 +958,79 @@
                 "ifTargetHas": "EFFECT_Xeno_Debuff_Green"
               }
             ]
+          },
+          {
+            "on": "kill",
+            "chance": 30,
+            "cooldown": 3,
+            "when": {
+              "all": [
+                {
+                  "has": "EFFECT_Xeno_Debuff_Green",
+                  "of": "victim"
+                },
+                {
+                  "has": "MOD_Ichorborn@Tarred",
+                  "of": "victim"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "summon",
+                "to": "self",
+                "creature": "OOZE_VOID",
+                "summonName": "Ichorling",
+                "summonGroup": "Ichorling",
+                "summonVfx": "IchRift",
+                "effect": "MOD_Ichorborn@IchorBody",
+                "amount": 1,
+                "maxSummons": 3,
+                "turns": 8,
+                "model": {
+                  "tint": "#3A1028",
+                  "glow": "#B0204A",
+                  "glowStrength": 0.8
+                }
+              }
+            ]
           }
         ]
       },
       "allies": {
         "name": "Black Culture",
-        "description": "Everything it touches comes away tarred.",
+        "description": "Each brood marks for the other: ichor slimes, slime tars.",
+        "procChancePerStack": 5,
         "procs": [
           {
             "on": "hit",
             "chance": 30,
+            "when": {
+              "lacks": "MOD_Ichorborn@IchorBody",
+              "of": "self"
+            },
             "actions": [
               {
                 "do": "effect",
                 "effect": "MOD_Ichorborn@Tarred"
               }
             ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "has": "MOD_Ichorborn@IchorBody",
+              "of": "self"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Xeno_Debuff_Green"
+              }
+            ]
           }
-        ],
-        "procChancePerStack": 5
+        ]
       }
     },
     {
@@ -1025,6 +1079,115 @@
                 "do": "hazard",
                 "hazard": "HAZARD_Fire_Mini",
                 "turns": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SpikedIchor",
+      "name": "Spiked Ichor",
+      "trees": [
+        "MOD_Ichorborn",
+        "SKILLTREE_Chemistry"
+      ],
+      "description": "Whatever you take, the ichor takes too: while a chem runs in you, hits on Tarred foes may Poison them, and dropping a poisoned, tarred foe may breed an Ichorling out of the mess. Each level adds 5% to these odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "when": {
+              "any": [
+                {
+                  "has": "ZERK",
+                  "of": "self"
+                },
+                {
+                  "has": "CHOOCHOO",
+                  "of": "self"
+                },
+                {
+                  "has": "MENTX",
+                  "of": "self"
+                },
+                {
+                  "has": "SPICE",
+                  "of": "self"
+                },
+                {
+                  "has": "ARMRALL",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_Energon_1",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_CHEM_Promethean",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_CHEM_YEETI",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_CHEM_Weep",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_CHEM_Mindscrew",
+                  "of": "self"
+                },
+                {
+                  "has": "EFFECT_CHEM_Soulsuck",
+                  "of": "self"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned",
+                "ifTargetHas": "MOD_Ichorborn@Tarred"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 30,
+            "cooldown": 3,
+            "when": {
+              "all": [
+                {
+                  "has": "#Poisoned",
+                  "of": "victim"
+                },
+                {
+                  "has": "MOD_Ichorborn@Tarred",
+                  "of": "victim"
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "summon",
+                "to": "self",
+                "creature": "OOZE_VOID",
+                "summonName": "Ichorling",
+                "summonGroup": "Ichorling",
+                "summonVfx": "IchRift",
+                "effect": "MOD_Ichorborn@IchorBody",
+                "amount": 1,
+                "maxSummons": 3,
+                "turns": 8,
+                "model": {
+                  "tint": "#3A1028",
+                  "glow": "#B0204A",
+                  "glowStrength": 0.8
+                }
               }
             ]
           }

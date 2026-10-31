@@ -206,28 +206,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "8ccb9aaceaadc8b8",
-    "e4346de2938689e4",
-    "deb3680f51a5d422",
-    "a9a8be8de4af662d",
-    "70aa3969280d713c",
-    "1bd23b143f941155",
-    "efe95a093e237702",
-    "46b78facbc747ce7",
-    "32c9ccd0c0d3a190",
-    "648b056852801a76"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_watch.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.096,
+  "max_corr": 0.102,
   "semitones": 3,
-  "width": 0.18,
+  "width": 0.14,
   "listen": {
-    "match": 0.666,
-    "clean": -3.074,
+    "match": 0.664,
+    "clean": -5.521,
     "faults": []
   }
 }

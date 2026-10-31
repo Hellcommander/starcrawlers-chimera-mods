@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "ab4cc095057dc416",
+      "id": "4859cd48bf89ded8",
       "score": 0.5966550707817078,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -75,12 +75,12 @@
       "archetypes": []
     },
     {
-      "id": "ecd75e0151812767",
+      "id": "ba2ab130f0841900",
       "score": 0.5793993473052979,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -127,10 +127,10 @@
       "archetypes": []
     },
     {
-      "id": "e35e1cbc03e30b84",
+      "id": "53e9e3b92d8b2ea4",
       "score": 0.5635092258453369,
       "via": "clap+tag",
-      "pack": "Monsters, Boss & Zombies",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/Monsters, Boss & Zombies/FL_GFX_Voice_Monster_Zombie_Bile_01.wav",
       "license": "direct",
       "tags": [
@@ -154,12 +154,12 @@
       ]
     },
     {
-      "id": "59897aa355548482",
+      "id": "c3fce5ff0fe01a1f",
       "score": 0.5632936954498291,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -192,28 +192,16 @@
       "archetypes": []
     }
   ],
-  "used_ids": [
-    "ab4cc095057dc416",
-    "4cae8958713c1768",
-    "a6541571441f84e3",
-    "1e469cb2d33fd18b",
-    "ecd75e0151812767",
-    "168716bf77513a1d",
-    "1d22a6cc0cd8748a",
-    "e35e1cbc03e30b84",
-    "59897aa355548482",
-    "dd90d2159d72f633"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_tongue.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.115,
+  "max_corr": 0.117,
   "semitones": -3,
-  "width": 0.179,
+  "width": 0.227,
   "listen": {
-    "match": 0.737,
-    "clean": -2.057,
+    "match": 0.702,
+    "clean": -2.119,
     "faults": []
   }
 }

@@ -230,7 +230,7 @@
         "description": "Open a hole to the surface of a star for exactly one second.",
         "castVfx": "PA_Elementalist_MagmaBurst.castParticle",
         "impactVfx": "PA_Elementalist_MagmaBurst.blastParticle",
-        "sound": "audio_licensed/starfire_eruption.wav",
+        "sound": "sfx/starfire_eruption.wav",
         "actions": [
           { "do": "damage", "type": "Fire", "min": 6, "max": 12, "scale": "PsiPower", "scaleMult": 0.6, "perRank": 2, "bonusPerStack": 1, "stacksOf": "@Heat", "stacksFrom": "self" },
           { "do": "effect", "effect": "@Ionized" },

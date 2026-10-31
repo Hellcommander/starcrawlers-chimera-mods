@@ -11,32 +11,45 @@ namespace SCClassLoader
 {
     /// <summary>
     /// Sound archives: a mod's *.pak files hold its sounds as FLAC, encrypted, in one file, so they ship sealed rather than
-    /// as loose audio. Made by _modding/audio/sfx_archive.py. An entry stands in for the file at the same place in the mod
-    /// ("sfx/x.wav" in a mod's pak answers for that path), so nothing that names a sound changes.
+    /// as loose audio. Any mod can have one: _modding/audio/sfx_archive.py (or BreachworkModManager.exe --seal-audio) seals a
+    /// mod's sounds under a fresh random key and wraps that key with the loader's public key (RSA-2048, OAEP), so only this
+    /// loader, which carries the private key, can open it, and no mod author needs anyone's secret. An entry stands in for
+    /// the file at the same place in the mod ("sfx/x.wav" in a mod's pak answers for that path), so nothing that names a
+    /// sound changes.
     ///
-    /// The key is _modding/audio/archive.key, which is not in the repository: ClassLoader.csproj writes it into this class
-    /// (the KeyHex constant, generated at build) so the dll and the paks it ships with come from the same key. A loader built
-    /// without the file has an empty KeyHex, skips every archive and plays the fallback sounds. Someone who decompiles a
-    /// shipped loader can find the key, so this is sealing against casual copying, not secrecy.
+    /// Every entry and the index carry an HMAC-SHA256 tag under the archive key: an archive that was changed or damaged is
+    /// refused with a clear log line, never played as noise. The index is encrypted too, so the sound names don't sit in the
+    /// clear. The header names the loader key an archive was sealed for, and the loader may carry more than one private key
+    /// (loader_private.b64, one base64 line each, the current one first), so after a key rotation older archives still open.
     ///
-    /// A background thread reads and decrypts every sound while the game starts, and ModAudio has FMOD decode them off the
-    /// main thread into ready samples, so a sound is in memory before anything asks for it and playing it does no file
-    /// work and no decoding: faster than streaming it on demand ever could be.
+    /// The private key file is not in the repository: ClassLoader.csproj writes it into this class (PrivateKeys, generated
+    /// at build). A loader built without it skips every archive and plays the fallback sounds. Someone who decompiles a
+    /// shipped loader can find the private key, so this is sealing against casual copying, not secrecy.
     ///
-    /// Format, little-endian: "BWPK3\0", 8 bytes key id (SHA-256 of the key, first 8), int count, then per entry ushort
-    /// nameLength, UTF-8 name, long offset, int size, 16-byte IV; offsets are from the start of the file. Each entry is its
-    /// stored bytes (FLAC, or the original file if that is smaller) under AES-256-CBC with PKCS7 padding, keyed with
-    /// HMAC-SHA256(key, lower-case name).
+    /// A background thread reads, checks and decrypts every sound while the game starts, and ModAudio has FMOD decode them
+    /// off the main thread into ready samples, so a sound is in memory before anything asks for it and playing it does no
+    /// file work and no decoding. A mod with a very large sound set can set "soundsPreload": false in its mod.json: its
+    /// archive is then read on demand, one sound at a time, the first time each is played.
+    ///
+    /// Format BWPK5, little-endian: "BWPK5\0", byte flags (1 index encrypted, 2 tags present), 8 bytes loader-key id
+    /// (SHA-256 of the public modulus, first 8), ushort wrappedLength, the wrapped archive key, uint indexLength, the index
+    /// (AES-CBC under HMAC(key, "index"), IV first) and its 32-byte tag HMAC(key, "index" || ciphertext), then the entries'
+    /// data. Index, decrypted: uint count, per entry ushort nameLength, UTF-8 name, long offset, int size, 16-byte IV,
+    /// 32-byte tag HMAC(key, name || IV || ciphertext). Entry key = HMAC(key, lower-case name); AES-256-CBC, PKCS7.
     /// </summary>
     internal static partial class ModArchives
     {
-        private const string Magic = "BWPK3\0";
+        private const string Magic = "BWPK5\0";
+        private const byte FlagIndexEncrypted = 1, FlagTags = 2;
 
-        private class Entry { internal string pak, name; internal long offset; internal int size; internal byte[] iv; }
+        private class Entry { internal string pak, name; internal long offset; internal int size; internal byte[] iv, tag, key; }
 
         /// <summary>Full path the sound would have as a loose file -> where it is.</summary>
         private static Dictionary<string, Entry> index;
-        private static byte[] key, keyId;
+        /// <summary>Loader-key id (hex) -> private key. Several after a rotation.</summary>
+        private static Dictionary<string, RSACryptoServiceProvider> keys;
+        /// <summary>Paks whose mod asked not to be preloaded: read on demand.</summary>
+        private static readonly HashSet<string> lazyPaks = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>Sounds read by the background thread, waiting for ModAudio to hand them to FMOD.</summary>
         internal static readonly ConcurrentQueue<(string path, byte[] data)> Ready = new ConcurrentQueue<(string, byte[])>();
@@ -45,8 +58,10 @@ namespace SCClassLoader
 
         internal static int Count { get { Load(); return index.Count; } }
         internal static IEnumerable<string> Paths { get { Load(); return index.Keys.ToList(); } }
-        /// <summary>False for a loader built without _modding/audio/archive.key.</summary>
-        internal static bool HasKey => KeyHex.Length == 64;
+        /// <summary>False for a loader built without _modding/audio/loader_private.b64.</summary>
+        internal static bool HasKey => PrivateKeyB64.Length > 0;
+        /// <summary>How many private keys this loader carries (1, or more after a rotation).</summary>
+        internal static int KeyCount { get { Load(); return keys?.Count ?? 0; } }
 
         private static void Load()
         {
@@ -55,34 +70,120 @@ namespace SCClassLoader
             if (!HasKey)
             {
                 if (ModPacks.Ordered.Any(p => Directory.GetFiles(p.folder, "*.pak", SearchOption.TopDirectoryOnly).Length > 0))
-                    Plugin.Log.LogWarning("Sound archives skipped: this loader was built without _modding/audio/archive.key, so the fallback sounds play");
+                    Plugin.Log.LogWarning("Sound archives skipped: this loader was built without _modding/audio/loader_private.b64, so the fallback sounds play");
                 return;
             }
-            key = Enumerable.Range(0, 32).Select(i => Convert.ToByte(KeyHex.Substring(i * 2, 2), 16)).ToArray();
-            using (var sha = SHA256.Create()) keyId = sha.ComputeHash(key).Take(8).ToArray();
+            keys = new Dictionary<string, RSACryptoServiceProvider>();
+            foreach (string line in PrivateKeyB64.Split(new[] { ';', '|', '\n', '\r', ' ' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                try
+                {
+                    var rsa = new RSACryptoServiceProvider();
+                    rsa.FromXmlString(Encoding.UTF8.GetString(Convert.FromBase64String(line)));
+                    byte[] id;
+                    using (var sha = SHA256.Create()) id = sha.ComputeHash(rsa.ExportParameters(false).Modulus).Take(8).ToArray();
+                    keys[BitConverter.ToString(id).Replace("-", "").ToLowerInvariant()] = rsa;
+                }
+                catch (Exception e) { Plugin.Log.LogError("A sound-archive private key is unusable: " + e.Message); }
+            }
+            if (keys.Count == 0) { Plugin.Log.LogError("Sound archives skipped: no usable private key"); return; }
             foreach (ModPack p in ModPacks.Ordered)
+            {
+                bool lazy = !p.soundsPreload;
                 foreach (string pak in Directory.GetFiles(p.folder, "*.pak", SearchOption.TopDirectoryOnly))
                 {
-                    try { ReadIndex(pak, p.folder); }
+                    try
+                    {
+                        int added = ReadIndex(pak, p.folder, p.id, index);
+                        if (lazy) lazyPaks.Add(pak);
+                        if (added > 0 && lazy) Plugin.Log.LogInfo($"{p.id}: {Path.GetFileName(pak)} will be read on demand (soundsPreload false)");
+                    }
                     catch (Exception e) { Plugin.Log.LogError($"{p.id}: could not read {Path.GetFileName(pak)}: {e.Message}"); }
                 }
+            }
             if (index.Count > 0) Plugin.Log.LogInfo($"Sound archives: {index.Count} sounds");
         }
 
-        private static void ReadIndex(string pak, string folder)
+        private static byte[] Hmac(byte[] key, params byte[][] parts)
+        {
+            using (var h = new HMACSHA256(key))
+            {
+                var all = parts.SelectMany(b => b).ToArray();
+                return h.ComputeHash(all);
+            }
+        }
+
+        private static bool SameBytes(byte[] a, byte[] b)
+        {
+            if (a == null || b == null || a.Length != b.Length) return false;
+            int diff = 0;
+            for (int i = 0; i < a.Length; i++) diff |= a[i] ^ b[i];
+            return diff == 0;
+        }
+
+        private static byte[] AesCbc(byte[] key, byte[] iv, byte[] data, bool encrypt)
+        {
+            using (var aes = Aes.Create())
+            {
+                aes.Mode = CipherMode.CBC; aes.Padding = PaddingMode.PKCS7; aes.Key = key; aes.IV = iv;
+                using (ICryptoTransform t = encrypt ? aes.CreateEncryptor() : aes.CreateDecryptor()) return t.TransformFinalBlock(data, 0, data.Length);
+            }
+        }
+
+        private static int ReadIndex(string pak, string folder, string modId, Dictionary<string, Entry> into)
         {
             using (var r = new BinaryReader(File.OpenRead(pak)))
             {
-                if (Encoding.ASCII.GetString(r.ReadBytes(Magic.Length)) != Magic) throw new InvalidDataException("not a current sound archive; rebuild it with sfx_archive.py");
-                if (!r.ReadBytes(8).SequenceEqual(keyId)) throw new InvalidDataException("sealed with a different key than this loader was built with; rebuild both from the same archive.key");
-                int count = r.ReadInt32();
-                for (int i = 0; i < count; i++)
+                if (Encoding.ASCII.GetString(r.ReadBytes(Magic.Length)) != Magic) throw new InvalidDataException("not a current sound archive; reseal it with sfx_archive.py or the mod manager's --seal-audio");
+                byte flags = r.ReadByte();
+                string keyId = BitConverter.ToString(r.ReadBytes(8)).Replace("-", "").ToLowerInvariant();
+                byte[] wrapped = r.ReadBytes(r.ReadUInt16());
+                if (!keys.TryGetValue(keyId, out RSACryptoServiceProvider rsa)) throw new InvalidDataException($"sealed for loader key {keyId}, which this loader does not carry; reseal it with the current public key");
+                byte[] key;
+                try { key = rsa.Decrypt(wrapped, true); }
+                catch (CryptographicException) { throw new InvalidDataException("its wrapped key is damaged; reseal it"); }
+                byte[] encIndex = r.ReadBytes(r.ReadInt32());
+                byte[] indexTag = r.ReadBytes(32);
+                if ((flags & FlagTags) != 0 && !SameBytes(indexTag, Hmac(key, Encoding.ASCII.GetBytes("index"), encIndex)))
+                    throw new InvalidDataException("its index tag does not match: the archive was changed or damaged");
+                byte[] plain = (flags & FlagIndexEncrypted) != 0
+                    ? AesCbc(Hmac(key, Encoding.ASCII.GetBytes("index")), encIndex.Take(16).ToArray(), encIndex.Skip(16).ToArray(), false)
+                    : encIndex;
+                int added = 0;
+                using (var ir = new BinaryReader(new MemoryStream(plain)))
                 {
-                    string name = Encoding.UTF8.GetString(r.ReadBytes(r.ReadUInt16()));
-                    var e = new Entry { pak = pak, name = name, offset = r.ReadInt64(), size = r.ReadInt32(), iv = r.ReadBytes(16) };
-                    index[Path.GetFullPath(Path.Combine(folder, name))] = e;
+                    int count = ir.ReadInt32();
+                    for (int i = 0; i < count; i++)
+                    {
+                        string name = Encoding.UTF8.GetString(ir.ReadBytes(ir.ReadUInt16()));
+                        var e = new Entry { pak = pak, name = name, offset = ir.ReadInt64(), size = ir.ReadInt32(), iv = ir.ReadBytes(16), tag = (flags & FlagTags) != 0 ? ir.ReadBytes(32) : null, key = key };
+                        string full = Path.GetFullPath(Path.Combine(folder, name));
+                        if (into.TryGetValue(full, out Entry other) && !string.Equals(other.pak, pak, StringComparison.OrdinalIgnoreCase))
+                            Plugin.Log.LogWarning($"{modId}: {name} is in both {Path.GetFileName(other.pak)} and {Path.GetFileName(pak)}; the later one wins");
+                        into[full] = e;
+                        added++;
+                    }
                 }
+                return added;
             }
+        }
+
+        /// <summary>Opens one archive file on its own and checks every tag the way playback would (the devtest uses it on a
+        /// tampered copy). False with the first problem; nothing is added to the live index.</summary>
+        internal static bool Verify(string pak, out string problem)
+        {
+            Load();
+            problem = null;
+            if (keys == null || keys.Count == 0) { problem = "no private key"; return false; }
+            var own = new Dictionary<string, Entry>(StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                ReadIndex(pak, Path.GetDirectoryName(pak), "verify", own);
+                using (var f = File.OpenRead(pak))
+                    foreach (Entry e in own.Values.OrderBy(e => e.offset)) ReadFrom(f, e);
+                return true;
+            }
+            catch (Exception x) { problem = x.Message; return false; }
         }
 
         internal static bool Has(string fullPath)
@@ -91,11 +192,12 @@ namespace SCClassLoader
             return index.ContainsKey(fullPath);
         }
 
-        /// <summary>Reads and decrypts every archived sound on a background thread. A loose file wins over the archive, so those are left out.</summary>
+        /// <summary>Reads, checks and decrypts every archived sound on a background thread. A loose file wins over the archive,
+        /// so those are left out, and so are paks whose mod asked to be read on demand.</summary>
         internal static void StartPreload(bool includeLoose)
         {
             Load();
-            var todo = index.GroupBy(kv => kv.Value.pak).ToList();
+            var todo = index.Where(kv => !lazyPaks.Contains(kv.Value.pak)).GroupBy(kv => kv.Value.pak).ToList();
             if (todo.Count == 0) { PreloadDone = true; return; }
             new Thread(() =>
             {
@@ -106,7 +208,11 @@ namespace SCClassLoader
                     {
                         using (var f = new FileStream(pak.Key, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 18, FileOptions.SequentialScan))
                             foreach (var kv in pak.OrderBy(k => k.Value.offset))
-                                if (includeLoose || !File.Exists(kv.Key)) Ready.Enqueue((kv.Key, ReadFrom(f, kv.Value)));
+                            {
+                                if (!includeLoose && File.Exists(kv.Key)) continue;
+                                try { Ready.Enqueue((kv.Key, ReadFrom(f, kv.Value))); }
+                                catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {kv.Value.name}: {e.Message}"); }
+                            }
                     }
                     catch (Exception e) { Plugin.Log.LogError($"Sound archive {Path.GetFileName(pak.Key)}: {e.Message}"); }
                 }
@@ -115,7 +221,7 @@ namespace SCClassLoader
             }) { IsBackground = true, Name = "Breachwork sound preload" }.Start();
         }
 
-        /// <summary>A sound's bytes right now, on the calling thread: for one asked for before the preload reached it.</summary>
+        /// <summary>A sound's bytes right now, on the calling thread: for one asked for before the preload reached it, or from a pak read on demand.</summary>
         internal static byte[] Read(string fullPath)
         {
             Load();
@@ -137,21 +243,9 @@ namespace SCClassLoader
             f.Seek(e.offset, SeekOrigin.Begin);
             for (int got = 0, n; got < data.Length; got += n)
                 if ((n = f.Read(data, got, data.Length - got)) <= 0) throw new EndOfStreamException();
-            return Unseal(data, e);
-        }
-
-        private static byte[] Unseal(byte[] data, Entry e)
-        {
-            byte[] entryKey;
-            using (var h = new HMACSHA256(key)) entryKey = h.ComputeHash(Encoding.UTF8.GetBytes(e.name.Replace('\\', '/').ToLowerInvariant()));
-            using (var aes = Aes.Create())
-            {
-                aes.Mode = CipherMode.CBC;
-                aes.Padding = PaddingMode.PKCS7;
-                aes.Key = entryKey;
-                aes.IV = e.iv;
-                using (ICryptoTransform d = aes.CreateDecryptor()) return d.TransformFinalBlock(data, 0, data.Length);
-            }
+            if (e.tag != null && !SameBytes(e.tag, Hmac(e.key, Encoding.UTF8.GetBytes(e.name), e.iv, data)))
+                throw new InvalidDataException("tag does not match: changed or damaged, not played");
+            return AesCbc(Hmac(e.key, Encoding.UTF8.GetBytes(e.name.Replace('\\', '/').ToLowerInvariant())), e.iv, data, false);
         }
     }
 }

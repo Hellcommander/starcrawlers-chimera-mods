@@ -77,5 +77,5 @@ __pycache__/
 # Editor backups
 *.bak
 
-# The sound archives' key: baked into the loader at build, never shared (sounds.pak files are sealed with it)
-/_modding/audio/archive.key
+# The sound archives' key: baked into the loader at build, never shared (every sounds.pak carries its own key wrapped with the matching public key)
+/_modding/audio/loader_private.b64

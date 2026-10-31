@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "22fd8da768bb07ac",
+      "id": "d5988c3d93f3fd98",
       "score": 0.5765807628631592,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -30,12 +30,12 @@
       ]
     },
     {
-      "id": "ab4cc095057dc416",
+      "id": "4859cd48bf89ded8",
       "score": 0.5601248741149902,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -52,12 +52,12 @@
       ]
     },
     {
-      "id": "59897aa355548482",
+      "id": "c3fce5ff0fe01a1f",
       "score": 0.5475802421569824,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -74,12 +74,12 @@
       ]
     },
     {
-      "id": "481946b69d59b973",
+      "id": "4303342d56b63d52",
       "score": 0.5469558238983154,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -96,12 +96,12 @@
       ]
     },
     {
-      "id": "085a0d4edaf70364",
+      "id": "9a18cea61bbde2aa",
       "score": 0.5451720356941223,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Needle Bite B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -119,12 +119,12 @@
       ]
     },
     {
-      "id": "64914a20bc91a299",
+      "id": "9ebbc706232aeea4",
       "score": 0.5368821620941162,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -141,12 +141,12 @@
       ]
     },
     {
-      "id": "d9698b65eec033b2",
+      "id": "6287273647c808a3",
       "score": 0.5356104373931885,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Spider Bite A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -163,12 +163,12 @@
       ]
     },
     {
-      "id": "5371da91d7763d33",
+      "id": "dcce72d6cf6bd05d",
       "score": 0.5035368800163269,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Tick Bite A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -185,12 +185,12 @@
       ]
     },
     {
-      "id": "3fa80377bf8126fc",
+      "id": "3abbe3cbc2ed0a5b",
       "score": 0.5018589496612549,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Close Bug Eating Flesh A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -209,12 +209,12 @@
       ]
     },
     {
-      "id": "ecd75e0151812767",
+      "id": "ba2ab130f0841900",
       "score": 0.5004748106002808,
       "via": "clap+tag",
-      "pack": "Microscale Bugs Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Microscale Bugs Sound FX Pack Vol. 1.zip",
       "inner": "Microscale Bugs Sound FX Pack Vol. 1/Eating/Mosquito Suck B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "microscale",
         "bugs",
@@ -231,28 +231,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "22fd8da768bb07ac",
-    "ab4cc095057dc416",
-    "59897aa355548482",
-    "481946b69d59b973",
-    "085a0d4edaf70364",
-    "64914a20bc91a299",
-    "d9698b65eec033b2",
-    "5371da91d7763d33",
-    "3fa80377bf8126fc",
-    "ecd75e0151812767"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_bite.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.091,
+  "max_corr": 0.117,
   "semitones": 4,
-  "width": 0.227,
+  "width": 0.184,
   "listen": {
-    "match": 0.641,
-    "clean": 0.557,
+    "match": 0.615,
+    "clean": 1.467,
     "faults": []
   }
 }

@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "288d2c663779e75c",
+      "id": "abd82c9d9720c4d3",
       "score": 0.5168565511703491,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement G.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -28,12 +28,12 @@
       ]
     },
     {
-      "id": "e31382dd6e553a08",
+      "id": "81aae8bee2474369",
       "score": 0.4961124360561371,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -48,12 +48,12 @@
       ]
     },
     {
-      "id": "16c92a1e0c2b866d",
+      "id": "71491d237b9cc80b",
       "score": 0.49241095781326294,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement H.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -87,12 +87,12 @@
       ]
     },
     {
-      "id": "4a61518cac55bbac",
+      "id": "b8f1b31c352e0892",
       "score": 0.48063820600509644,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -107,12 +107,12 @@
       ]
     },
     {
-      "id": "aac12afc3093600d",
+      "id": "437a5beaa011a8f2",
       "score": 0.47931960225105286,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -129,12 +129,12 @@
       ]
     },
     {
-      "id": "8ed4b1d9b2c53f15",
+      "id": "b0611075f35cce91",
       "score": 0.4680696725845337,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -150,12 +150,12 @@
       ]
     },
     {
-      "id": "b270b2eed0525988",
+      "id": "33b3fe77bb5b5f9e",
       "score": 0.4635470509529114,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -171,12 +171,12 @@
       ]
     },
     {
-      "id": "4d034c51f02443ff",
+      "id": "ad90ebd5d05f7066",
       "score": 0.4610556960105896,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Giant/Giant Ice Movement A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -191,12 +191,12 @@
       ]
     },
     {
-      "id": "a5271a46d505e990",
+      "id": "c9103509846f14ca",
       "score": 0.45960015058517456,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Snow/Ice and Snow Debris Slide D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -213,28 +213,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "288d2c663779e75c",
-    "e31382dd6e553a08",
-    "16c92a1e0c2b866d",
-    "ec5ad03b2b080423",
-    "4a61518cac55bbac",
-    "aac12afc3093600d",
-    "8ed4b1d9b2c53f15",
-    "b270b2eed0525988",
-    "4d034c51f02443ff",
-    "a5271a46d505e990"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_sentinel.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.14,
+  "max_corr": 0.12,
   "semitones": 6,
-  "width": 0.767,
+  "width": 0.695,
   "listen": {
-    "match": 0.421,
-    "clean": 0.498,
+    "match": 0.44,
+    "clean": 0.155,
     "faults": []
   }
 }

@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "283fc076e25c10f1",
+      "id": "8d04cf9e3aa935a0",
       "score": 0.4988695979118347,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -29,12 +29,12 @@
       ]
     },
     {
-      "id": "edc2d65970c1373a",
+      "id": "de79f3ac571abd68",
       "score": 0.476251482963562,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -51,12 +51,12 @@
       ]
     },
     {
-      "id": "e15eb56be1521934",
+      "id": "273d17db7d04c73d",
       "score": 0.4748762249946594,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -73,12 +73,12 @@
       ]
     },
     {
-      "id": "924fdedca2bfd547",
+      "id": "9b9ce9ada2112141",
       "score": 0.4741929769515991,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Shots Big E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -95,12 +95,12 @@
       ]
     },
     {
-      "id": "88cd5f5a125390fc",
+      "id": "8703245f2c0b8449",
       "score": 0.4664961099624634,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Hammer A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -116,12 +116,12 @@
       ]
     },
     {
-      "id": "6f7e7c72f0782982",
+      "id": "a387e4d0d73afee8",
       "score": 0.4607030749320984,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -137,12 +137,12 @@
       ]
     },
     {
-      "id": "d6c9a88eddcc6321",
+      "id": "2a132cf9cb485614",
       "score": 0.45934903621673584,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG C.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -174,12 +174,12 @@
       ]
     },
     {
-      "id": "92da148902162fdc",
+      "id": "ef4de6df584b9dd6",
       "score": 0.45359936356544495,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Medium A.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -196,12 +196,12 @@
       ]
     },
     {
-      "id": "e100d204fcbb75e7",
+      "id": "9492b0c47f9aa510",
       "score": 0.45282113552093506,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic JRPG D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -217,28 +217,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "283fc076e25c10f1",
-    "edc2d65970c1373a",
-    "e15eb56be1521934",
-    "924fdedca2bfd547",
-    "88cd5f5a125390fc",
-    "6f7e7c72f0782982",
-    "d6c9a88eddcc6321",
-    "6822a4b0ef1b3fc7",
-    "92da148902162fdc",
-    "e100d204fcbb75e7"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rune_cascade.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.08,
+  "max_corr": 0.05,
   "semitones": 3,
-  "width": 0.513,
+  "width": 0.491,
   "listen": {
-    "match": 0.423,
-    "clean": 0.561,
+    "match": 0.373,
+    "clean": 2.589,
     "faults": []
   }
 }

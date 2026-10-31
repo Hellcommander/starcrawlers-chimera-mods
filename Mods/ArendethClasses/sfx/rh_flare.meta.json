@@ -1,0 +1,190 @@
+{
+  "prompt": "oil igniting in a roaring whoosh of flame, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "1c89b9d41ef9d26a",
+      "score": 0.588015615940094,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 5.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "00371e5bd52f5b93",
+      "score": 0.5853732228279114,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 19.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "07b6d32b1edfa9ad",
+      "score": 0.5822367072105408,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 18.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "8a2b006d2e5a4cf1",
+      "score": 0.5771909356117249,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 36.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "a6bc5fca8cdddfbf",
+      "score": 0.5665918588638306,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Whooshes.zip",
+      "inner": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 2.wav",
+      "license": "reference",
+      "tags": [
+        "whooshes",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "4f311b92ff8e33cd",
+      "score": 0.5654351711273193,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 14.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "5a3e1a283aed9810",
+      "score": 0.559802234172821,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "c804e1b3d2d5ada1",
+      "score": 0.5557313561439514,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 13.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "a2c14b5de740f9f2",
+      "score": 0.5507298111915588,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 29.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rh_flare.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.172,
+  "semitones": 5,
+  "width": 0.572,
+  "listen": {
+    "match": 0.604,
+    "clean": 0.608,
+    "faults": []
+  }
+}

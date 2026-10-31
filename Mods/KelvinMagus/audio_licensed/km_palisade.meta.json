@@ -120,12 +120,12 @@
       ]
     },
     {
-      "id": "e71970cd5ed48958",
+      "id": "4944ef832b0fd70f",
       "score": 0.4740925431251526,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cracks and Hits/Ice Crunch B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -161,12 +161,12 @@
       ]
     },
     {
-      "id": "b4ffa2ef836ed83e",
+      "id": "e047788bca2823c4",
       "score": 0.4709559381008148,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Magic/Ice Magic Impact Big D.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -183,28 +183,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "7d341d978d0ec959",
-    "13ef5e56f48c798f",
-    "b993652d2c3c8552",
-    "c7edf5dccda1e6bd",
-    "04fe0e94c826e350",
-    "4fc38c47e1138221",
-    "09f487901ae43052",
-    "e71970cd5ed48958",
-    "10e5b48440b049b0",
-    "b4ffa2ef836ed83e"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_palisade.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.184,
-  "semitones": -5,
-  "width": 0.524,
+  "max_corr": 0.117,
+  "semitones": 5,
+  "width": 0.422,
   "listen": {
-    "match": 0.465,
-    "clean": -0.348,
+    "match": 0.446,
+    "clean": 0.525,
     "faults": []
   }
 }

@@ -77,7 +77,7 @@
           "name": "Singing Blade",
           "damageMult": 1.25
         },
-        "sound": "audio_licensed/psiknight_psiblade.wav"
+        "sound": "sfx/psiknight_psiblade.wav"
       }
     },
     {

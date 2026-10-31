@@ -1,0 +1,190 @@
+{
+  "prompt": "wet bursting bloom of liquid with a gurgle, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "32f7b2ce8128ff62",
+      "score": 0.6193910241127014,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "74ae07fcc83444b5",
+      "score": 0.6139665842056274,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 5.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "f3f4d9f717dc8c82",
+      "score": 0.6118645668029785,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 6.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b1b6010e076e77a5",
+      "score": 0.59070885181427,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 12.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "cbd9b4723f0b75c5",
+      "score": 0.5822442770004272,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 8.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "3e5565dc5874f103",
+      "score": 0.5753198862075806,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Crawler.zip",
+      "inner": "Dark Fantasy Studio- Crawler/Dark Fantasy Studio-Crawler_14.wav",
+      "license": "reference",
+      "tags": [
+        "crawler",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "11afa0acf5929d2e",
+      "score": 0.5736372470855713,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "3a81cb6a92b9f364",
+      "score": 0.5690601468086243,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 2.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "2489f7c62a392dd8",
+      "score": 0.5680904984474182,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 11.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_bloom.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.056,
+  "semitones": 6,
+  "width": 0.531,
+  "listen": {
+    "match": 0.464,
+    "clean": -0.874,
+    "faults": []
+  }
+}

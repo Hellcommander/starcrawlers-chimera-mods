@@ -857,18 +857,27 @@ common status effects and ability templates:
 `"sound"`, proc `"sound"`, `"burstSound"` and threshold `"sound"` accept either a vanilla FMOD event
 (`"event:/Abilities/..."`) or a `.wav/.ogg/.mp3` path relative to the class file (or the library folder), e.g.
 `"sound": "sfx/juggernaut_earthshaker.wav"`. Files play through FMOD on the game's Sound bus, so the in-game volume
-sliders apply. The bundled `sfx/` files were generated new with Stable Audio 3; they are not copies of any pack. Sound
-effects created with NOISE ALCHEMY – NOISEALCHEMY.COM: the asset tool used Noise Alchemy's packs only as reference
-material, rendered so far from them that each result is a new, unique sound (see `AUDIO_CREDITS.md`).
+sliders apply. The bundled `sfx/` files were generated new with Stable Audio 3 from Noise Alchemy references, or rebuilt
+from Noise Alchemy clips by plain processing; none is a copy of any pack (see `AUDIO_CREDITS.md`).
+Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.
 
-Sounds can ship sealed: `_modding/audio/sfx_archive.py` packs a mod's sounds into `sounds.pak`, as lossless FLAC under
-AES-256, and the loader plays them from there with no change to any `"sound"` value. The key is `_modding/audio/archive.key`,
-made on first use and never committed; the build writes it into the loader, so a loader and the paks it ships with must come
-from the same key, and a loader built without the file skips archives and plays the fallbacks below. A loose file wins
-over the archive, so you can still test a new sound by dropping it in. Archives are read and decrypted in the background as
-the game starts and FMOD decodes them into ready samples off the main thread, so playing a sound does no file work and no
-decoding. Someone who decompiles the loader can find the key: this keeps sounds from being copied out casually, not from a
-determined person. `SCCL_DEVTEST=audiofast` measures what a play costs.
+**Embedded audio, for any mod.** Sounds can ship sealed in the mod's `sounds.pak` instead of as loose files, and the loader
+plays them from there with no change to any `"sound"` value. Run
+
+    BreachworkModManager.exe --seal-audio Mods\YourMod [--remove-loose]
+
+(or, with Python and lossless FLAC packing, `python _modding/audio/sfx_archive.py Mods/YourMod`). Every archive gets its own
+random key, wrapped with the loader's public key (`_modding/audio/breachwork_public.xml`, in the repository), so only the
+Breachwork Loader can open it and you never need anyone's secret; the loader carries the private key, which is not in the
+repository, and a loader built without it skips archives and plays the fallbacks below. Every sound and the index (which is
+itself encrypted, so the file names are not in the clear) carry an authentication tag: a changed or damaged archive is
+refused and logged, never played as noise, and `python _modding/audio/sfx_archive.py verify Mods/YourMod/sounds.pak` checks
+one the way the loader does. A loose file wins over the archive, so you can still test a new sound by dropping it in; remove
+the loose files from the copy you share. Archives are read and decrypted in the background as the game starts and FMOD
+decodes them into ready samples off the main thread, so playing a sound does no file work and no decoding; a mod with a very
+large sound set can put `"soundsPreload": false` in its `mod.json` to have its archive read one sound at a time on demand
+instead. Someone who decompiles the loader can find the private key: this keeps sounds from being copied out casually, not
+from a determined person. `SCCL_DEVTEST=audiofast` measures what a play costs; `audiofallback` also checks the tamper refusals.
 
 `[Audio] MixBlock` in Mod Settings sets how quickly every sound in the game reaches your speakers: `512` (the default here)
 halves FMOD's delay, `256` is lower still but can crackle on a weaker PC, and `1024` or `game` is the game's own setting.

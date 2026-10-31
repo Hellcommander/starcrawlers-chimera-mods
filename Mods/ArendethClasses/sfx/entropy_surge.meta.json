@@ -1,0 +1,110 @@
+{
+  "prompt": "uncontrolled energy surge spill, crackling outburst, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "e093c55fde978c6b",
+      "score": 0.5297122597694397,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Smashed.zip",
+      "inner": "Dark Fantasy Studio- Smashed/Dark Fantasy Studio- Smashed 17.wav",
+      "license": "reference",
+      "tags": [
+        "smashed",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "9b609d3458f91a6a",
+      "score": 0.5137554407119751,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 64.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "feddfc761cf8558f",
+      "score": 0.49960190057754517,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
+      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 61.wav",
+      "license": "reference",
+      "tags": [
+        "rocks",
+        "and",
+        "boulders",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "impact"
+      ]
+    },
+    {
+      "id": "98b61e74566e2868",
+      "score": 0.49869978427886963,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Glitch.zip",
+      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 92.wav",
+      "license": "reference",
+      "tags": [
+        "glitch",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": []
+    },
+    {
+      "id": "383fee2920046629",
+      "score": 0.4943119287490845,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- DOOM.zip",
+      "inner": "NOISE ALCHEMY- DOOM/GLITCH/NOISE_ALCHEMY_DOOM_9_GLITCH.wav",
+      "license": "reference",
+      "tags": [
+        "doom",
+        "noise",
+        "alchemy",
+        "glitch"
+      ],
+      "archetypes": [
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\entropy_surge.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.041,
+  "semitones": -3,
+  "width": 0.472,
+  "listen": {
+    "match": 0.631,
+    "clean": -2.978,
+    "faults": []
+  }
+}

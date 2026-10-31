@@ -20,7 +20,7 @@
   ],
   "reactions": [
     { "name": "Oil Flare", "needs": [ "@Slicked", "EFFECT_Fire" ], "radius": 1.6, "description": "the oil goes up in a gout of flame",
-      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "audio_licensed/rh_flare.wav",
+      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "sfx/rh_flare.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 },
                    { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
     { "name": "Steam Burst", "needs": [ "@Frosted", "EFFECT_Fire" ], "radius": 2, "description": "the coolant flashes to scalding steam",
@@ -31,7 +31,7 @@
       "actions": [ { "do": "chain", "jumps": 3, "radius": 3.5, "actions": [
         { "do": "damage", "type": "Shock", "min": 4, "max": 8, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 } ] } ] },
     { "name": "Sludge Set", "needs": [ "@Gritted", "@Slicked" ], "description": "oil and grit set into sucking sludge",
-      "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35", "sound": "audio_licensed/rh_sludge.wav",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35", "sound": "sfx/rh_sludge.wav",
       "actions": [ { "do": "effect", "effect": "@Mired" }, { "do": "damage", "type": "Crushing", "min": 2, "max": 4 } ] },
     { "name": "Brine Freeze", "needs": [ "@Brined", "@Frosted" ], "description": "the brine freezes solid around it",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "sound": "audio_licensed/rh_freeze.wav",

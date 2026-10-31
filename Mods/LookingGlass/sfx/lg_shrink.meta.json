@@ -1,0 +1,109 @@
+{
+  "prompt": "magical shrinking sound, rising slide whistle with glittering sparkle",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "8b012e807d29cc8c",
+      "score": 0.4748563766479492,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 21.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "545d037b526380b4",
+      "score": 0.4437411427497864,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/48K/NOISE ALCHEMY- CYNETIC 114 48k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    },
+    {
+      "id": "a4da0e9774bc1ed7",
+      "score": 0.4387566149234772,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 42.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "f4eec47b2bce692d",
+      "score": 0.4378002882003784,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/44.1K/NOISE ALCHEMY- CYNETIC 114 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "1k",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    },
+    {
+      "id": "556f5ea9c452dc2b",
+      "score": 0.422258198261261,
+      "via": "clap+tag",
+      "pack": "cynetic.zip",
+      "inner": "cynetic/48K/NOISE ALCHEMY- CYNETIC 111 48k.wav",
+      "license": "reference",
+      "tags": [
+        "cynetic",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_shrink.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.037,
+  "semitones": -4,
+  "width": 0.635,
+  "listen": {
+    "match": 0.458,
+    "clean": -2.777,
+    "faults": []
+  }
+}

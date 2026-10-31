@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "fe6fb7c1ae7c8f6a",
+      "id": "6dc512825d177921",
       "score": 0.5554195642471313,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Combat/Damage Deactivation 003.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -104,12 +104,12 @@
       ]
     },
     {
-      "id": "5bf03dfa197c5ff2",
+      "id": "829ea82f0ab32efc",
       "score": 0.5009866952896118,
       "via": "clap+tag",
-      "pack": "Robotic Beings Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Robotic Beings Sound FX Pack Vol. 1.zip",
       "inner": "Robotic Beings Sound FX Pack Vol. 1/Combat/Damage Deactivation 001.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "robotic",
         "beings",
@@ -196,28 +196,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "fe6fb7c1ae7c8f6a",
-    "a5a9bfd90749f061",
-    "b4dd344c2b4695bd",
-    "6fb0eb3033fb7dd9",
-    "6f4d27a26ed0fb88",
-    "5bf03dfa197c5ff2",
-    "97f1d9bb67287353",
-    "f5aaf338b9ad3876",
-    "ef7e2eff1628d20f",
-    "1919849aa8c01e74"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_burst.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.163,
-  "semitones": -3,
-  "width": 0.403,
+  "max_corr": 0.196,
+  "semitones": -4,
+  "width": 0.252,
   "listen": {
-    "match": 0.57,
-    "clean": -6.0,
+    "match": 0.619,
+    "clean": -5.11,
     "faults": []
   }
 }

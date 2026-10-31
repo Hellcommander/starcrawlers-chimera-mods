@@ -1,1692 +1,2088 @@
 [
  {
-  "sound": "ArendethClasses/sfx/wild_zone.wav",
   "clean": -1.227,
   "match": 0.073,
   "faults": [],
   "total": 0.011,
-  "own_rank": 169
+  "sound": "ArendethClasses/sfx/wild_zone.wav",
+  "purpose": "reality tearing open with chaotic crackles of many elements, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 169,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "ArendethClasses/sfx/rime_thrall.wav",
   "clean": -1.198,
   "match": 0.179,
   "faults": [],
   "total": 0.119,
-  "own_rank": 165
+  "sound": "ArendethClasses/sfx/rime_thrall.wav",
+  "purpose": "deep freezing crackle with eerie mind control shimmer, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 165,
+  "confused_with": "ArendethClasses/sfx/wild_bolt.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/squall_gale.wav",
   "clean": 3.342,
   "match": 0.152,
   "faults": [],
   "total": 0.319,
-  "own_rank": 164
+  "sound": "ArendethClasses/sfx/squall_gale.wav",
+  "purpose": "violent howling gale burst with slicing wind gusts, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 164,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/bp_crush.wav",
-  "clean": -0.815,
-  "match": 0.143,
+  "clean": 0.254,
+  "match": 0.198,
   "faults": [],
-  "total": 0.102,
-  "own_rank": 163
+  "total": 0.211,
+  "sound": "Library/moves_leap",
+  "purpose": "dash whoosh",
+  "own_rank": 163,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/shaman_collapse.wav",
   "clean": -0.228,
   "match": 0.205,
   "faults": [],
   "total": 0.193,
-  "own_rank": 161
+  "sound": "UniqueClasses/sfx/shaman_collapse.wav",
+  "purpose": "quantum collapse, deep implosion whoom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 161,
+  "confused_with": "ExampleClasses/audio_licensed/arcgunner_round.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/wild_cascade.wav",
-  "clean": -1.329,
-  "match": 0.228,
-  "faults": [],
-  "total": 0.162,
-  "own_rank": 154
- },
- {
-  "sound": "FluxSavant/lattice_field",
-  "clean": -0.36,
-  "match": 0.137,
-  "faults": [],
-  "total": 0.119,
-  "own_rank": 153
- },
- {
-  "sound": "ArendethClasses/sfx/vasculist_puppetry.wav",
   "clean": -3.994,
   "match": 0.219,
   "faults": [],
   "total": 0.019,
-  "own_rank": 151
+  "sound": "ArendethClasses/sfx/vasculist_puppetry.wav",
+  "purpose": "deep heartbeat taking over, eerie pulsing throb swell, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 151,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
  },
  {
-  "sound": "Library/moves_tether",
-  "clean": -0.68,
-  "match": 0.072,
-  "faults": [],
-  "total": 0.038,
-  "own_rank": 151
- },
- {
-  "sound": "ArendethClasses/sfx/mia_mist.wav",
   "clean": -1.429,
   "match": 0.18,
   "faults": [],
   "total": 0.109,
-  "own_rank": 145
+  "sound": "ArendethClasses/sfx/mia_mist.wav",
+  "purpose": "low rolling hiss of toxic gas spreading, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 145,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/gravemote_pin.wav",
+  "clean": -1.325,
+  "match": 0.293,
+  "faults": [],
+  "total": 0.227,
+  "sound": "FluxSavant/react_galvanic_bloom",
+  "purpose": "bubbling poison",
+  "own_rank": 138,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
+  "clean": -1.603,
+  "match": 0.236,
+  "faults": [],
+  "total": 0.156,
+  "sound": "Kinetics/blade_recall",
+  "purpose": "many blades whooshing back",
+  "own_rank": 137,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
   "clean": -1.523,
   "match": 0.278,
   "faults": [],
   "total": 0.202,
-  "own_rank": 137
+  "sound": "ArendethClasses/sfx/gravemote_pin.wav",
+  "purpose": "crushing gravity slam pinning to floor, deep thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 137,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "Kinetics/grappler_suplex",
-  "clean": -1.17,
-  "match": 0.14,
+  "clean": 0.072,
+  "match": 0.245,
   "faults": [],
-  "total": 0.082,
-  "own_rank": 134
+  "total": 0.248,
+  "sound": "Kinetics/run_wall_run",
+  "purpose": "fast dash whoosh",
+  "own_rank": 130,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "KelvinMagus/sfx/km_sentinel.wav",
-  "clean": -0.051,
-  "match": 0.256,
-  "faults": [],
-  "total": 0.254,
-  "own_rank": 132
- },
- {
-  "sound": "Kinetics/blade_recall",
-  "clean": -0.636,
-  "match": 0.222,
-  "faults": [],
-  "total": 0.191,
-  "own_rank": 129
- },
- {
-  "sound": "ArendethClasses/sfx/coil_overload.wav",
-  "clean": -0.687,
-  "match": 0.234,
-  "faults": [],
-  "total": 0.2,
-  "own_rank": 112
- },
- {
-  "sound": "ArendethClasses/sfx/ember_quake.wav",
   "clean": -3.96,
   "match": 0.203,
   "faults": [],
   "total": 0.005,
-  "own_rank": 108
+  "sound": "ArendethClasses/sfx/ember_quake.wav",
+  "purpose": "ground stomp quake with roaring fire eruption, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 108,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/relic_unbound.wav",
   "clean": 0.372,
   "match": 0.201,
   "faults": [],
   "total": 0.219,
-  "own_rank": 107
+  "sound": "UniqueClasses/sfx/relic_unbound.wav",
+  "purpose": "massive relic shockwave, heavy holy boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 107,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "Kinetics/trick_jackpot",
-  "clean": -1.907,
-  "match": 0.296,
-  "faults": [],
-  "total": 0.201,
-  "own_rank": 106
- },
- {
-  "sound": "FluxSavant/critical_mass",
-  "clean": -2.59,
-  "match": 0.262,
-  "faults": [],
-  "total": 0.133,
-  "own_rank": 105
- },
- {
-  "sound": "ArendethClasses/sfx/castborn_siege.wav",
   "clean": -6.0,
   "match": 0.277,
   "faults": [],
   "total": -0.023,
-  "own_rank": 104
+  "sound": "ArendethClasses/sfx/castborn_siege.wav",
+  "purpose": "massive iron joints locking, deep metallic clunk and hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 104,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_stomp.wav",
-  "clean": -3.472,
-  "match": 0.275,
-  "faults": [],
-  "total": 0.102,
-  "own_rank": 104
- },
- {
-  "sound": "KelvinMagus/sfx/km_siphon.wav",
-  "clean": -1.609,
-  "match": 0.247,
-  "faults": [],
-  "total": 0.166,
-  "own_rank": 104
- },
- {
-  "sound": "ArendethClasses/sfx/wild_surge.wav",
   "clean": 2.958,
   "match": 0.304,
   "faults": [],
   "total": 0.452,
-  "own_rank": 103
+  "sound": "ArendethClasses/sfx/wild_surge.wav",
+  "purpose": "huge distant magic detonation rolling in like thunder with a monstrous roar inside it, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 103,
+  "confused_with": "ArendethClasses/sfx/rune_kindle.wav"
  },
  {
-  "sound": "CustomClasses/sfx/tinkerer_doomsday.wav",
   "clean": 0.396,
   "match": 0.212,
   "faults": [],
   "total": 0.231,
-  "own_rank": 102
+  "sound": "CustomClasses/sfx/tinkerer_doomsday.wav",
+  "purpose": "overloading machine whine then big sparking explosion, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 102,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_barrel.wav",
   "clean": -0.035,
   "match": 0.333,
   "faults": [],
   "total": 0.331,
-  "own_rank": 102
+  "sound": "ArendethClasses/sfx/rh_barrel.wav",
+  "purpose": "barrel of chemicals exploding with fire, hiss and crackle all at once, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 102,
+  "confused_with": "ArendethClasses/sfx/tide_lash.wav"
  },
  {
-  "sound": "Kinetics/guard_payback",
-  "clean": 1.597,
-  "match": 0.267,
+  "clean": -1.263,
+  "match": 0.223,
   "faults": [],
-  "total": 0.347,
-  "own_rank": 102
+  "total": 0.159,
+  "sound": "UniqueClasses/audio_licensed/glyph_mark.wav",
+  "purpose": "digital rune chime with crisp glitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 100,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "Kinetics/grapnel_pendulum",
-  "clean": -0.607,
-  "match": 0.114,
-  "faults": [],
-  "total": 0.084,
-  "own_rank": 100
- },
- {
-  "sound": "CustomClasses/sfx/nanite_cloud.wav",
   "clean": -0.105,
   "match": 0.205,
   "faults": [],
   "total": 0.2,
-  "own_rank": 98
+  "sound": "CustomClasses/sfx/nanite_cloud.wav",
+  "purpose": "huge nanite swarm cloud rushing hiss and buzz, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 98,
+  "confused_with": "ExampleClasses/audio_licensed/arcgunner_round.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_flare.wav",
-  "clean": -1.356,
-  "match": 0.35,
-  "faults": [],
-  "total": 0.282,
-  "own_rank": 97
- },
- {
-  "sound": "ArendethClasses/sfx/gravemote_dart.wav",
   "clean": 0.246,
   "match": 0.345,
   "faults": [],
   "total": 0.358,
-  "own_rank": 97
+  "sound": "ArendethClasses/sfx/gravemote_dart.wav",
+  "purpose": "heavy dense orb whoosh with deep gravity thud, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 97,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/bp_raise.wav",
   "clean": 0.39,
   "match": 0.211,
   "faults": [],
   "total": 0.23,
-  "own_rank": 94
+  "sound": "ArendethClasses/sfx/bp_raise.wav",
+  "purpose": "heavy steel deck plates tearing up and slamming upright into a wall, metal groan, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 94,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "CustomClasses/sfx/psiknight_mindbreaker.wav",
   "clean": -0.467,
   "match": 0.31,
   "faults": [],
   "total": 0.287,
-  "own_rank": 94
+  "sound": "CustomClasses/sfx/psiknight_mindbreaker.wav",
+  "purpose": "psychic shockwave crack, mind shattering pulse, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 94,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/fulg_feint.wav",
-  "clean": -5.309,
-  "match": 0.269,
-  "faults": [],
-  "total": 0.004,
-  "own_rank": 92
- },
- {
-  "sound": "ArendethClasses/sfx/gloom_unmaking.wav",
   "clean": -3.821,
   "match": 0.319,
   "faults": [],
   "total": 0.128,
-  "own_rank": 91
+  "sound": "ArendethClasses/sfx/gloom_unmaking.wav",
+  "purpose": "huge shadow tentacle crushing, dark wet rumble, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 91,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "CustomClasses/sfx/gunkata_doubletap.wav",
   "clean": -3.446,
   "match": 0.328,
   "faults": [],
   "total": 0.155,
-  "own_rank": 90
+  "sound": "CustomClasses/sfx/gunkata_doubletap.wav",
+  "purpose": "two rapid futuristic pistol shots, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 90,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "ArendethClasses/sfx/mia_grand.wav",
   "clean": -0.919,
   "match": 0.363,
   "faults": [],
   "total": 0.317,
-  "own_rank": 89
+  "sound": "ArendethClasses/sfx/mia_grand.wav",
+  "purpose": "big alchemical explosion with bubbling, hissing and a deep boom, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 89,
+  "confused_with": "CustomClasses/sfx/longshot_measured.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/starfire_eruption.wav",
-  "clean": 1.949,
-  "match": 0.288,
-  "faults": [],
-  "total": 0.386,
-  "own_rank": 88
- },
- {
-  "sound": "Library/moves_leap",
-  "clean": 0.207,
-  "match": 0.215,
-  "faults": [],
-  "total": 0.226,
-  "own_rank": 87
- },
- {
-  "sound": "UniqueClasses/sfx/relic_sun.wav",
-  "clean": -5.347,
-  "match": 0.278,
-  "faults": [],
-  "total": 0.01,
-  "own_rank": 85
- },
- {
-  "sound": "FluxSavant/react_flashpoint",
-  "clean": -4.914,
-  "match": 0.419,
-  "faults": [],
-  "total": 0.173,
-  "own_rank": 85
- },
- {
-  "sound": "ArendethClasses/sfx/gravemote_collapse.wav",
   "clean": 0.11,
   "match": 0.255,
   "faults": [],
   "total": 0.261,
-  "own_rank": 85
+  "sound": "ArendethClasses/sfx/gravemote_collapse.wav",
+  "purpose": "star collapsing implosion then deep cosmic boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 85,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "ArendethClasses/sfx/tide_rupture.wav",
   "clean": -5.062,
   "match": 0.318,
   "faults": [],
   "total": 0.065,
-  "own_rank": 84
+  "sound": "ArendethClasses/sfx/tide_rupture.wav",
+  "purpose": "violent water pressure rupture burst, deep sloshing boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 84,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "Kinetics/rig_vent_blast",
-  "clean": -4.113,
-  "match": 0.298,
-  "faults": [],
-  "total": 0.092,
-  "own_rank": 82
- },
- {
-  "sound": "Kinetics/rig_hammerfall",
-  "clean": -3.593,
-  "match": 0.3,
-  "faults": [],
-  "total": 0.12,
-  "own_rank": 82
- },
- {
-  "sound": "ExampleClasses/sfx/arcgunner_slug.wav",
   "clean": 3.594,
   "match": 0.37,
   "faults": [],
   "total": 0.55,
-  "own_rank": 81
+  "sound": "ExampleClasses/sfx/arcgunner_slug.wav",
+  "purpose": "thunder slug gunshot with lightning crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 81,
+  "confused_with": "ArendethClasses/sfx/rune_kindle.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/bp_hammer.wav",
-  "clean": -5.08,
-  "match": 0.237,
-  "faults": [],
-  "total": -0.017,
-  "own_rank": 80
- },
- {
-  "sound": "FluxSavant/react_stasis_bloom",
-  "clean": -1.561,
-  "match": 0.258,
-  "faults": [],
-  "total": 0.18,
-  "own_rank": 80
- },
- {
-  "sound": "CustomClasses/sfx/demolitionist_detonator.wav",
   "clean": -0.848,
   "match": 0.415,
   "faults": [],
   "total": 0.372,
-  "own_rank": 80
+  "sound": "CustomClasses/sfx/demolitionist_detonator.wav",
+  "purpose": "remote detonator click followed by rolling chain of explosions, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 80,
+  "confused_with": "FluxSavant/react_plasma_flash"
  },
  {
-  "sound": "KelvinMagus/sfx/km_shatter.wav",
   "clean": -4.799,
   "match": 0.336,
   "faults": [],
   "total": 0.096,
-  "own_rank": 79
+  "sound": "KelvinMagus/sfx/km_shatter.wav",
+  "purpose": "frozen block shattering into ice shards, bright glassy smash",
+  "own_rank": 79,
+  "confused_with": "CustomClasses/sfx/nanite_release.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_breath.wav",
-  "clean": -2.77,
-  "match": 0.291,
-  "faults": [],
-  "total": 0.153,
-  "own_rank": 79
- },
- {
-  "sound": "CustomClasses/sfx/corsair_volley.wav",
   "clean": -2.605,
   "match": 0.352,
   "faults": [],
   "total": 0.222,
-  "own_rank": 79
+  "sound": "CustomClasses/sfx/corsair_volley.wav",
+  "purpose": "point blank hand cannon blast with smoky boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 79,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "CustomClasses/sfx/shadowbroker_contract.wav",
   "clean": 1.562,
   "match": 0.189,
   "faults": [],
   "total": 0.267,
-  "own_rank": 79
+  "sound": "CustomClasses/sfx/shadowbroker_contract.wav",
+  "purpose": "assassination slice, shadowy swell then sharp cut, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 79,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_steam.wav",
-  "clean": 1.762,
-  "match": 0.263,
-  "faults": [],
-  "total": 0.351,
-  "own_rank": 79
- },
- {
-  "sound": "CustomClasses/sfx/longshot_oneshot.wav",
   "clean": 2.416,
   "match": 0.347,
   "faults": [],
   "total": 0.468,
-  "own_rank": 79
+  "sound": "CustomClasses/sfx/longshot_oneshot.wav",
+  "purpose": "huge rail sniper shot with long echo, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 79,
+  "confused_with": "Library/moves_ricochet"
  },
  {
-  "sound": "LookingGlass/sfx/lg_bite.wav",
-  "clean": -6.0,
-  "match": 0.231,
-  "faults": [],
-  "total": -0.069,
-  "own_rank": 78
- },
- {
-  "sound": "ArendethClasses/sfx/snare_glyph.wav",
   "clean": -2.392,
   "match": 0.217,
   "faults": [],
   "total": 0.097,
-  "own_rank": 78
+  "sound": "ArendethClasses/sfx/snare_glyph.wav",
+  "purpose": "eerie psychic rune being etched with a low whispering hum, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 78,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
  },
  {
-  "sound": "FluxSavant/react_thermal_shock",
-  "clean": -3.265,
-  "match": 0.35,
-  "faults": [],
-  "total": 0.187,
-  "own_rank": 76
- },
- {
-  "sound": "ArendethClasses/sfx/fulg_stroke.wav",
   "clean": -2.987,
   "match": 0.43,
   "faults": [],
   "total": 0.281,
-  "own_rank": 75
+  "sound": "ArendethClasses/sfx/fulg_stroke.wav",
+  "purpose": "huge thunderclap return stroke of lightning with a heavy blade impact, sci-fi fantasy game sound effect, powerful, clean, no music, no voice",
+  "own_rank": 75,
+  "confused_with": "ArendethClasses/sfx/tide_lash.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/chorister_choir.wav",
   "clean": 3.21,
   "match": 0.078,
   "faults": [],
   "total": 0.238,
-  "own_rank": 74
+  "sound": "UniqueClasses/sfx/chorister_choir.wav",
+  "purpose": "dark choir shockwave, swelling dissonant boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 74,
+  "confused_with": "Kinetics/run_second_wind"
  },
  {
-  "sound": "Library/moves_throw_impact",
-  "clean": -0.66,
-  "match": 0.364,
-  "faults": [],
-  "total": 0.331,
-  "own_rank": 72
- },
- {
-  "sound": "ArendethClasses/sfx/entropy_unravel.wav",
   "clean": -0.594,
   "match": 0.339,
   "faults": [],
   "total": 0.309,
-  "own_rank": 69
+  "sound": "ArendethClasses/sfx/entropy_unravel.wav",
+  "purpose": "reality tearing apart, unraveling distorted rip and boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 69,
+  "confused_with": "UniqueClasses/sfx/paradox_retro.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/bp_shove.wav",
   "clean": 1.584,
   "match": 0.409,
   "faults": [],
   "total": 0.488,
-  "own_rank": 67
+  "sound": "ArendethClasses/sfx/bp_shove.wav",
+  "purpose": "deep psychic force shove whoosh ending in a body slamming into steel, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 67,
+  "confused_with": "ArendethClasses/sfx/rune_kindle.wav"
  },
  {
-  "sound": "Kinetics/run_wall_run",
-  "clean": 2.79,
-  "match": 0.34,
-  "faults": [],
-  "total": 0.48,
-  "own_rank": 66
- },
- {
-  "sound": "CustomClasses/sfx/tinkerer_zap.wav",
   "clean": -5.161,
   "match": 0.306,
   "faults": [],
   "total": 0.048,
-  "own_rank": 65
+  "sound": "CustomClasses/sfx/tinkerer_zap.wav",
+  "purpose": "zappy prototype ray gun with springy wobble, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 65,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/ember_charge.wav",
   "clean": -4.727,
   "match": 0.361,
   "faults": [],
   "total": 0.125,
-  "own_rank": 63
+  "sound": "ArendethClasses/sfx/ember_charge.wav",
+  "purpose": "heavy charging stampede impact with steam hiss, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 63,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
  },
  {
-  "sound": "CustomClasses/sfx/psiknight_psiblade.wav",
-  "clean": 1.694,
-  "match": 0.295,
-  "faults": [],
-  "total": 0.379,
-  "own_rank": 63
- },
- {
-  "sound": "ArendethClasses/sfx/snare_burst.wav",
-  "clean": -1.63,
-  "match": 0.325,
-  "faults": [],
-  "total": 0.244,
-  "own_rank": 60
- },
- {
-  "sound": "CustomClasses/sfx/ringmaster_finale.wav",
   "clean": -2.929,
   "match": 0.431,
   "faults": [],
   "total": 0.284,
-  "own_rank": 60
+  "sound": "CustomClasses/sfx/ringmaster_finale.wav",
+  "purpose": "fireworks finale bursts and crackles, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 60,
+  "confused_with": "ArendethClasses/sfx/snare_spring.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/entropy_coin.wav",
-  "clean": -5.469,
-  "match": 0.355,
+  "clean": 2.316,
+  "match": 0.223,
   "faults": [],
-  "total": 0.082,
-  "own_rank": 59
+  "total": 0.339,
+  "sound": "FluxSavant/react_dissolution",
+  "purpose": "acid melting sizzle",
+  "own_rank": 60,
+  "confused_with": "ArendethClasses/sfx/mia_bloom.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_freeze.wav",
-  "clean": -0.307,
-  "match": 0.275,
+  "clean": 1.17,
+  "match": 0.181,
   "faults": [],
-  "total": 0.26,
-  "own_rank": 58
+  "total": 0.24,
+  "sound": "Library/moves_tether",
+  "purpose": "line reel whir",
+  "own_rank": 59,
+  "confused_with": "Kinetics/rig_piston_jab"
  },
  {
-  "sound": "ArendethClasses/sfx/fulg_rail.wav",
   "clean": -2.88,
   "match": 0.338,
   "faults": [],
   "total": 0.194,
-  "own_rank": 57
+  "sound": "ArendethClasses/sfx/fulg_rail.wav",
+  "purpose": "searing straight lightning streak whooshing past at high speed, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 57,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
  },
  {
-  "sound": "Kinetics/trick_bank_shot",
-  "clean": 0.97,
-  "match": 0.346,
-  "faults": [],
-  "total": 0.394,
-  "own_rank": 57
- },
- {
-  "sound": "ArendethClasses/sfx/ember_gore.wav",
   "clean": -0.337,
   "match": 0.335,
   "faults": [],
   "total": 0.318,
-  "own_rank": 56
+  "sound": "ArendethClasses/sfx/ember_gore.wav",
+  "purpose": "brutal horn gore impact, wet crunch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 56,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "Synergies/sfx/toxic_breath.wav",
   "clean": -3.924,
   "match": 0.362,
   "faults": [],
   "total": 0.166,
-  "own_rank": 55
+  "sound": "Synergies/sfx/toxic_breath.wav",
+  "purpose": "monstrous retching roar spewing a gush of bubbling toxic liquid, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 55,
+  "confused_with": "ArendethClasses/sfx/etcher_dissolve.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/wild_bolt.wav",
-  "clean": -4.525,
-  "match": 0.331,
+  "clean": -1.137,
+  "match": 0.318,
   "faults": [],
-  "total": 0.105,
-  "own_rank": 53
+  "total": 0.261,
+  "sound": "CustomClasses/sfx/puppet_cut.wav",
+  "purpose": "many glowing strings snapping at once, psychic chord, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 54,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
  },
  {
-  "sound": "FluxSavant/react_galvanic_bloom",
-  "clean": -3.003,
-  "match": 0.381,
+  "clean": 1.63,
+  "match": 0.382,
   "faults": [],
-  "total": 0.231,
-  "own_rank": 53
+  "total": 0.464,
+  "sound": "ArendethClasses/audio_licensed/rune_cascade.wav",
+  "purpose": "cascade of rune chimes building into a forge blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 53,
+  "confused_with": "FluxSavant/react_plasma_flash"
  },
  {
-  "sound": "KelvinMagus/sfx/km_permafrost.wav",
-  "clean": -0.32,
-  "match": 0.263,
-  "faults": [],
-  "total": 0.247,
-  "own_rank": 53
- },
- {
-  "sound": "KelvinMagus/sfx/km_palisade.wav",
-  "clean": -2.015,
-  "match": 0.275,
-  "faults": [],
-  "total": 0.174,
-  "own_rank": 52
- },
- {
-  "sound": "ArendethClasses/sfx/fulg_fork.wav",
-  "clean": 3.768,
-  "match": 0.299,
-  "faults": [],
-  "total": 0.488,
-  "own_rank": 52
- },
- {
-  "sound": "CustomClasses/sfx/gunkata_ballet.wav",
   "clean": 0.305,
   "match": 0.128,
   "faults": [],
   "total": 0.143,
-  "own_rank": 50
+  "sound": "CustomClasses/sfx/gunkata_ballet.wav",
+  "purpose": "spinning barrage of rapid pistol fire in every direction, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 50,
+  "confused_with": "Kinetics/guard_over_here"
  },
  {
-  "sound": "CustomClasses/sfx/longshot_measured.wav",
-  "clean": -1.069,
-  "match": 0.389,
-  "faults": [],
-  "total": 0.335,
-  "own_rank": 50
- },
- {
-  "sound": "UniqueClasses/sfx/chorister_note.wav",
   "clean": 1.69,
   "match": 0.095,
   "faults": [],
   "total": 0.18,
-  "own_rank": 49
+  "sound": "UniqueClasses/sfx/chorister_note.wav",
+  "purpose": "eerie dissonant void choir note, hollow and distorted, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 49,
+  "confused_with": "Kinetics/guard_over_here"
  },
  {
-  "sound": "FluxSavant/react_plasma_flash",
-  "clean": -2.312,
-  "match": 0.418,
-  "faults": [],
-  "total": 0.302,
-  "own_rank": 49
- },
- {
-  "sound": "Kinetics/guard_close_protection",
-  "clean": -2.429,
-  "match": 0.315,
-  "faults": [],
-  "total": 0.194,
-  "own_rank": 48
- },
- {
-  "sound": "Kinetics/rig_hydraulic_charge",
-  "clean": 0.951,
-  "match": 0.181,
-  "faults": [],
-  "total": 0.229,
-  "own_rank": 48
- },
- {
-  "sound": "Kinetics/run_vault_stomp",
-  "clean": -2.36,
-  "match": 0.352,
-  "faults": [],
-  "total": 0.234,
-  "own_rank": 48
- },
- {
-  "sound": "LookingGlass/sfx/lg_croquet.wav",
   "clean": 0.459,
   "match": 0.232,
   "faults": [],
   "total": 0.255,
-  "own_rank": 48
+  "sound": "LookingGlass/sfx/lg_croquet.wav",
+  "purpose": "wooden croquet mallet whack and a ball thudding away",
+  "own_rank": 48,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/castborn_fist.wav",
+  "clean": 2.665,
+  "match": 0.341,
+  "faults": [],
+  "total": 0.474,
+  "sound": "Kinetics/blade_thousand_returns",
+  "purpose": "big cinematic whoosh",
+  "own_rank": 48,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
+  "clean": 0.962,
+  "match": 0.272,
+  "faults": [],
+  "total": 0.32,
+  "sound": "Kinetics/guard_over_here",
+  "purpose": "rallying courage shout buff",
+  "own_rank": 47,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
+ },
+ {
   "clean": 2.363,
   "match": 0.257,
   "faults": [],
   "total": 0.375,
-  "own_rank": 47
+  "sound": "ArendethClasses/sfx/castborn_fist.wav",
+  "purpose": "heavy iron fist punch with metal clang, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 47,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/vasculist_spike.wav",
-  "clean": -6.0,
-  "match": 0.465,
+  "clean": -1.457,
+  "match": 0.454,
   "faults": [],
-  "total": 0.165,
-  "own_rank": 46
+  "total": 0.381,
+  "sound": "Kinetics/run_vault_stomp",
+  "purpose": "heavy landing impact",
+  "own_rank": 47,
+  "confused_with": "CustomClasses/sfx/phase_storm.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/wild_ward.wav",
-  "clean": 1.289,
-  "match": 0.32,
+  "clean": 1.61,
+  "match": 0.387,
   "faults": [],
-  "total": 0.385,
-  "own_rank": 46
+  "total": 0.468,
+  "sound": "FluxSavant/react_stasis_bloom",
+  "purpose": "frost freeze spell",
+  "own_rank": 46,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
  },
  {
-  "sound": "Kinetics/grappler_iron_clinch",
-  "clean": -1.34,
-  "match": 0.126,
+  "clean": -1.414,
+  "match": 0.27,
   "faults": [],
-  "total": 0.059,
-  "own_rank": 45
+  "total": 0.2,
+  "sound": "Kinetics/guard_shoulder_check",
+  "purpose": "blunt body hit thud",
+  "own_rank": 45,
+  "confused_with": "Kinetics/grappler_iron_clinch"
  },
  {
-  "sound": "LookingGlass/sfx/lg_guard.wav",
-  "clean": -3.453,
-  "match": 0.293,
-  "faults": [],
-  "total": 0.121,
-  "own_rank": 45
- },
- {
-  "sound": "ArendethClasses/sfx/rh_scrounge.wav",
-  "clean": 0.449,
-  "match": 0.304,
-  "faults": [],
-  "total": 0.327,
-  "own_rank": 44
- },
- {
-  "sound": "CustomClasses/sfx/voidhacker_inject.wav",
   "clean": -6.0,
   "match": 0.274,
   "faults": [],
   "total": -0.026,
-  "own_rank": 43
+  "sound": "CustomClasses/sfx/voidhacker_inject.wav",
+  "purpose": "digital glitch injection zap, data stutter, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 43,
+  "confused_with": "FluxSavant/arc_lance"
  },
  {
-  "sound": "KelvinMagus/sfx/km_overheat.wav",
-  "clean": -6.0,
-  "match": 0.322,
-  "faults": [],
-  "total": 0.022,
-  "own_rank": 43
- },
- {
-  "sound": "LookingGlass/sfx/lg_watch.wav",
-  "clean": -0.873,
-  "match": 0.283,
-  "faults": [],
-  "total": 0.239,
-  "own_rank": 43
- },
- {
-  "sound": "CustomClasses/sfx/phase_storm.wav",
   "clean": -4.658,
   "match": 0.402,
   "faults": [],
   "total": 0.169,
-  "own_rank": 42
+  "sound": "CustomClasses/sfx/phase_storm.wav",
+  "purpose": "spatial tear rift burst with crackling warp, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 42,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "FluxSavant/react_dissolution",
-  "clean": -2.551,
-  "match": 0.366,
-  "faults": [],
-  "total": 0.239,
-  "own_rank": 41
- },
- {
-  "sound": "UniqueClasses/sfx/paradox_timeline.wav",
   "clean": -3.751,
   "match": 0.346,
   "faults": [],
   "total": 0.158,
-  "own_rank": 40
+  "sound": "UniqueClasses/sfx/paradox_timeline.wav",
+  "purpose": "rewinding clockwork tape warble and ghostly echo, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 40,
+  "confused_with": "FluxSavant/instability"
  },
  {
-  "sound": "ArendethClasses/sfx/etcher_dissolve.wav",
+  "clean": -2.128,
+  "match": 0.32,
+  "faults": [],
+  "total": 0.213,
+  "sound": "FluxSavant/react_flashpoint",
+  "purpose": "fire burst whoosh",
+  "own_rank": 40,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
+ },
+ {
+  "clean": -0.156,
+  "match": 0.311,
+  "faults": [],
+  "total": 0.303,
+  "sound": "ArendethClasses/sfx/mia_extract.wav",
+  "purpose": "wet psychic pull, fluid being drawn out with a squelch, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 40,
+  "confused_with": "ArendethClasses/sfx/mim_shift.wav"
+ },
+ {
   "clean": 1.575,
   "match": 0.314,
   "faults": [],
   "total": 0.392,
-  "own_rank": 40
+  "sound": "ArendethClasses/sfx/etcher_dissolve.wav",
+  "purpose": "armor dissolving in a violent acid fizz and bubbling hiss, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 40,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/starfire_bolt.wav",
+  "clean": -3.181,
+  "match": 0.351,
+  "faults": [],
+  "total": 0.192,
+  "sound": "ArendethClasses/sfx/mia_bloom.wav",
+  "purpose": "wet bursting bloom of liquid with a gurgle, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 39,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
+ },
+ {
   "clean": -3.882,
   "match": 0.403,
   "faults": [],
   "total": 0.209,
-  "own_rank": 39
+  "sound": "UniqueClasses/sfx/starfire_bolt.wav",
+  "purpose": "plasma bolt, searing fiery whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 39,
+  "confused_with": "ArendethClasses/sfx/snare_spring.wav"
  },
  {
-  "sound": "KelvinMagus/sfx/km_zero_point.wav",
+  "clean": -2.398,
+  "match": 0.395,
+  "faults": [],
+  "total": 0.276,
+  "sound": "KelvinMagus/sfx/km_siphon.wav",
+  "purpose": "icy magic drain, warmth sucked out of the air, crackling frost forming, inward whoosh",
+  "own_rank": 39,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
+ },
+ {
+  "clean": -2.648,
+  "match": 0.477,
+  "faults": [],
+  "total": 0.345,
+  "sound": "Kinetics/guard_payback",
+  "purpose": "huge punch cinematic impact",
+  "own_rank": 39,
+  "confused_with": "ArendethClasses/sfx/gravemote_pin.wav"
+ },
+ {
   "clean": -0.212,
   "match": 0.408,
   "faults": [],
   "total": 0.397,
-  "own_rank": 38
+  "sound": "KelvinMagus/sfx/km_zero_point.wav",
+  "purpose": "freezing wind howl collapsing inward into silence, cold magic implosion",
+  "own_rank": 38,
+  "confused_with": "Library/moves_recall"
  },
  {
-  "sound": "CustomClasses/sfx/juggernaut_piledriver.wav",
   "clean": -0.756,
   "match": 0.372,
   "faults": [],
   "total": 0.334,
-  "own_rank": 37
+  "sound": "CustomClasses/sfx/juggernaut_piledriver.wav",
+  "purpose": "heavy hammer slam crunching metal plate, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 37,
+  "confused_with": "KelvinMagus/sfx/km_shatter.wav"
  },
  {
-  "sound": "CustomClasses/sfx/relic_due.wav",
+  "clean": 0.865,
+  "match": 0.323,
+  "faults": [],
+  "total": 0.366,
+  "sound": "Kinetics/guard_close_protection",
+  "purpose": "shield raise protection",
+  "own_rank": 37,
+  "confused_with": "FluxSavant/arc_lance"
+ },
+ {
+  "clean": 1.334,
+  "match": 0.35,
+  "faults": [],
+  "total": 0.416,
+  "sound": "FluxSavant/lattice_field",
+  "purpose": "ice crystal shield",
+  "own_rank": 37,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
   "clean": 0.596,
   "match": 0.435,
   "faults": [],
   "total": 0.465,
-  "own_rank": 37
+  "sound": "CustomClasses/sfx/relic_due.wav",
+  "purpose": "cursed idol wail with dark energy shockwave, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 37,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/entropy_fray.wav",
   "clean": -2.416,
   "match": 0.375,
   "faults": [],
   "total": 0.254,
-  "own_rank": 35
+  "sound": "ArendethClasses/sfx/entropy_fray.wav",
+  "purpose": "snapping threads with a chaotic energy pop, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 35,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "CustomClasses/sfx/demolitionist_charge_pop.wav",
+  "clean": 0.209,
+  "match": 0.252,
+  "faults": [],
+  "total": 0.263,
+  "sound": "FluxSavant/react_superconduct",
+  "purpose": "electric surge crackle",
+  "own_rank": 35,
+  "confused_with": "ArendethClasses/sfx/bp_crush.wav"
+ },
+ {
   "clean": -3.074,
   "match": 0.455,
   "faults": [],
   "total": 0.301,
-  "own_rank": 35
+  "sound": "CustomClasses/sfx/demolitionist_charge_pop.wav",
+  "purpose": "small sharp explosion pop with shrapnel, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 35,
+  "confused_with": "ExampleClasses/audio_licensed/arcgunner_round.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/entropy_surge.wav",
-  "clean": -2.666,
-  "match": 0.395,
-  "faults": [],
-  "total": 0.262,
-  "own_rank": 34
- },
- {
-  "sound": "ArendethClasses/sfx/snare_cascade.wav",
-  "clean": 2.403,
-  "match": 0.244,
-  "faults": [],
-  "total": 0.364,
-  "own_rank": 34
- },
- {
-  "sound": "ArendethClasses/sfx/mim_wing.wav",
   "clean": -0.351,
   "match": 0.462,
   "faults": [],
   "total": 0.445,
-  "own_rank": 34
+  "sound": "ArendethClasses/sfx/mim_wing.wav",
+  "purpose": "huge leathery wingbeat whoosh, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 34,
+  "confused_with": "LookingGlass/audio_licensed/lg_claw.wav"
  },
  {
-  "sound": "CustomClasses/sfx/corsair_flourish.wav",
+  "clean": 0.339,
+  "match": 0.404,
+  "faults": [],
+  "total": 0.421,
+  "sound": "ArendethClasses/audio_licensed/coil_slug.wav",
+  "purpose": "heavy charged slug shot, capacitor whine then thunder crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 32,
+  "confused_with": "CustomClasses/sfx/juggernaut_earthshaker.wav"
+ },
+ {
   "clean": -4.824,
   "match": 0.477,
   "faults": [],
   "total": 0.236,
-  "own_rank": 31
+  "sound": "CustomClasses/sfx/corsair_flourish.wav",
+  "purpose": "cutlass slash swish and blade ring, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 31,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "FluxSavant/react_aether_arc",
-  "clean": 2.547,
-  "match": 0.336,
-  "faults": [],
-  "total": 0.464,
-  "own_rank": 31
- },
- {
-  "sound": "KelvinMagus/sfx/km_thermal_shock.wav",
-  "clean": -1.8,
-  "match": 0.36,
-  "faults": [],
-  "total": 0.27,
-  "own_rank": 30
- },
- {
-  "sound": "LookingGlass/sfx/lg_grow.wav",
   "clean": 1.814,
   "match": 0.303,
   "faults": [],
   "total": 0.393,
-  "own_rank": 30
+  "sound": "LookingGlass/sfx/lg_grow.wav",
+  "purpose": "magical growing sound, deep descending stretching groan with sparkle",
+  "own_rank": 30,
+  "confused_with": "Library/moves_ricochet"
  },
  {
-  "sound": "Kinetics/blade_pinning_throw",
-  "clean": -0.396,
-  "match": 0.457,
+  "clean": -0.662,
+  "match": 0.34,
   "faults": [],
-  "total": 0.437,
-  "own_rank": 30
+  "total": 0.307,
+  "sound": "FluxSavant/react_thermal_shock",
+  "purpose": "ice shatter crack",
+  "own_rank": 29,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/snare_lure.wav",
-  "clean": -3.187,
-  "match": 0.301,
+  "clean": -6.0,
+  "match": 0.564,
   "faults": [],
-  "total": 0.142,
-  "own_rank": 29
+  "total": 0.264,
+  "sound": "ArendethClasses/audio_licensed/snare_burst.wav",
+  "purpose": "psychic blast detonation with a warbling echo repeating itself, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 26,
+  "confused_with": "ArendethClasses/audio_licensed/coil_slug.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_sludge.wav",
-  "clean": -3.195,
-  "match": 0.346,
-  "faults": [],
-  "total": 0.186,
-  "own_rank": 28
- },
- {
-  "sound": "LookingGlass/sfx/lg_teaparty.wav",
-  "clean": -3.55,
-  "match": 0.321,
-  "faults": [],
-  "total": 0.143,
-  "own_rank": 26
- },
- {
-  "sound": "ArendethClasses/sfx/gloom_dart.wav",
   "clean": -1.5,
   "match": 0.462,
   "faults": [],
   "total": 0.387,
-  "own_rank": 26
+  "sound": "ArendethClasses/sfx/gloom_dart.wav",
+  "purpose": "dark fungal dart whoosh with soft wet impact, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 26,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mia_extract.wav",
-  "clean": -1.826,
-  "match": 0.292,
+  "clean": -6.0,
+  "match": 0.447,
   "faults": [],
-  "total": 0.2,
-  "own_rank": 25
+  "total": 0.147,
+  "sound": "Kinetics/trick_jackpot",
+  "purpose": "rapid gunfire spray",
+  "own_rank": 25,
+  "confused_with": "CustomClasses/sfx/longshot_measured.wav"
  },
  {
-  "sound": "CustomClasses/sfx/puppet_thread.wav",
   "clean": -2.813,
   "match": 0.35,
   "faults": [],
   "total": 0.209,
-  "own_rank": 25
+  "sound": "CustomClasses/sfx/puppet_thread.wav",
+  "purpose": "psychic string twang, eerie shimmer, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 25,
+  "confused_with": "FluxSavant/instability"
  },
  {
-  "sound": "CustomClasses/sfx/puppet_cut.wav",
-  "clean": 3.4,
-  "match": 0.345,
-  "faults": [],
-  "total": 0.515,
-  "own_rank": 25
- },
- {
-  "sound": "ArendethClasses/sfx/coil_bolt.wav",
   "clean": -4.239,
   "match": 0.319,
   "faults": [],
   "total": 0.107,
-  "own_rank": 24
+  "sound": "ArendethClasses/sfx/coil_bolt.wav",
+  "purpose": "crossbow twang with electric capacitor zap, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 24,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "CustomClasses/sfx/nanite_release.wav",
   "clean": 0.745,
   "match": 0.305,
   "faults": [],
   "total": 0.342,
-  "own_rank": 24
+  "sound": "CustomClasses/sfx/nanite_release.wav",
+  "purpose": "swarm of tiny buzzing nanites released from a jar, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 24,
+  "confused_with": "Kinetics/run_second_wind"
  },
  {
-  "sound": "FluxSavant/arc_lance",
-  "clean": -3.606,
-  "match": 0.541,
-  "faults": [],
-  "total": 0.361,
-  "own_rank": 24
- },
- {
-  "sound": "CustomClasses/sfx/relic_siphon.wav",
   "clean": -0.514,
   "match": 0.392,
   "faults": [],
   "total": 0.366,
-  "own_rank": 24
+  "sound": "CustomClasses/sfx/relic_siphon.wav",
+  "purpose": "dark siphon draining life, whispering suction, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 24,
+  "confused_with": "ArendethClasses/audio_licensed/rh_steam.wav"
  },
  {
-  "sound": "Kinetics/grapnel_zip_line",
-  "clean": -1.592,
-  "match": 0.482,
+  "clean": -6.0,
+  "match": 0.464,
   "faults": [],
-  "total": 0.402,
-  "own_rank": 24
+  "total": 0.164,
+  "sound": "Kinetics/rig_vent_blast",
+  "purpose": "steam burst hiss blast",
+  "own_rank": 23,
+  "confused_with": "ArendethClasses/sfx/rime_overdraw.wav"
  },
  {
-  "sound": "LookingGlass/sfx/lg_mad_here.wav",
-  "clean": 2.003,
-  "match": 0.363,
+  "clean": -0.578,
+  "match": 0.389,
   "faults": [],
-  "total": 0.463,
-  "own_rank": 24
+  "total": 0.36,
+  "sound": "ArendethClasses/audio_licensed/rh_arc.wav",
+  "purpose": "electric arc crackling through salt water, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 23,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mia_bloom.wav",
-  "clean": -2.325,
-  "match": 0.44,
+  "clean": 0.847,
+  "match": 0.365,
   "faults": [],
-  "total": 0.324,
-  "own_rank": 23
+  "total": 0.407,
+  "sound": "ArendethClasses/audio_licensed/rh_freeze.wav",
+  "purpose": "brine freezing solid with a sharp crackle of ice, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 23,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
  },
  {
-  "sound": "Kinetics/grappler_piledriver",
-  "clean": 0.017,
-  "match": 0.368,
+  "clean": -6.0,
+  "match": 0.431,
   "faults": [],
-  "total": 0.369,
-  "own_rank": 23
+  "total": 0.131,
+  "sound": "ArendethClasses/sfx/snare_cascade.wav",
+  "purpose": "rapid chain of psychic traps detonating one after another in a rising cascade, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 22,
+  "confused_with": "ArendethClasses/sfx/ember_quake.wav"
  },
  {
-  "sound": "LookingGlass/sfx/lg_warp.wav",
-  "clean": 3.868,
-  "match": 0.432,
+  "clean": -3.85,
+  "match": 0.327,
   "faults": [],
-  "total": 0.625,
-  "own_rank": 23
+  "total": 0.134,
+  "sound": "KelvinMagus/sfx/km_overheat.wav",
+  "purpose": "overheating machine warning, boiling hiss and hot metal ticking",
+  "own_rank": 22,
+  "confused_with": "Kinetics/rig_hydraulic_charge"
  },
  {
-  "sound": "ArendethClasses/sfx/rh_throw.wav",
-  "clean": -3.677,
-  "match": 0.45,
-  "faults": [],
-  "total": 0.266,
-  "own_rank": 22
- },
- {
-  "sound": "ArendethClasses/sfx/rime_overdraw.wav",
-  "clean": -1.482,
-  "match": 0.445,
-  "faults": [],
-  "total": 0.371,
-  "own_rank": 22
- },
- {
-  "sound": "LookingGlass/sfx/lg_grin.wav",
-  "clean": 0.941,
-  "match": 0.357,
-  "faults": [],
-  "total": 0.404,
-  "own_rank": 22
- },
- {
-  "sound": "ArendethClasses/sfx/rh_arc.wav",
-  "clean": -2.804,
-  "match": 0.411,
-  "faults": [],
-  "total": 0.271,
-  "own_rank": 21
- },
- {
-  "sound": "CustomClasses/sfx/demolitionist_sticky.wav",
-  "clean": -0.994,
-  "match": 0.347,
-  "faults": [],
-  "total": 0.297,
-  "own_rank": 21
- },
- {
-  "sound": "ArendethClasses/sfx/scrapper_haymaker.wav",
-  "clean": -5.034,
-  "match": 0.574,
-  "faults": [],
-  "total": 0.323,
-  "own_rank": 21
- },
- {
-  "sound": "ArendethClasses/sfx/etcher_needle.wav",
-  "clean": -5.08,
-  "match": 0.46,
-  "faults": [],
-  "total": 0.206,
-  "own_rank": 20
- },
- {
-  "sound": "ArendethClasses/sfx/wild_borrow.wav",
-  "clean": -2.106,
-  "match": 0.459,
-  "faults": [],
-  "total": 0.354,
-  "own_rank": 20
- },
- {
-  "sound": "ArendethClasses/sfx/rune_cascade.wav",
-  "clean": -0.707,
-  "match": 0.419,
-  "faults": [],
-  "total": 0.383,
-  "own_rank": 19
- },
- {
-  "sound": "CustomClasses/sfx/shadowbroker_knife.wav",
-  "clean": -0.969,
-  "match": 0.449,
-  "faults": [],
-  "total": 0.401,
-  "own_rank": 19
- },
- {
-  "sound": "LookingGlass/sfx/lg_cat.wav",
-  "clean": 2.58,
-  "match": 0.396,
-  "faults": [],
-  "total": 0.525,
-  "own_rank": 18
- },
- {
-  "sound": "Kinetics/run_flying_knee",
-  "clean": -3.172,
-  "match": 0.391,
-  "faults": [],
-  "total": 0.232,
-  "own_rank": 17
- },
- {
-  "sound": "ArendethClasses/sfx/coil_slug.wav",
-  "clean": -0.891,
-  "match": 0.504,
-  "faults": [],
-  "total": 0.46,
-  "own_rank": 16
- },
- {
-  "sound": "CustomClasses/sfx/ringmaster_whip.wav",
-  "clean": -5.871,
-  "match": 0.442,
-  "faults": [],
-  "total": 0.148,
-  "own_rank": 15
- },
- {
-  "sound": "ArendethClasses/sfx/mim_tongue.wav",
-  "clean": -1.761,
-  "match": 0.463,
-  "faults": [],
-  "total": 0.375,
-  "own_rank": 15
- },
- {
-  "sound": "ArendethClasses/sfx/fulg_ghost.wav",
   "clean": -6.0,
   "match": 0.481,
   "faults": [],
   "total": 0.181,
-  "own_rank": 14
+  "sound": "ArendethClasses/sfx/wild_cascade.wav",
+  "purpose": "rapid chaotic cascade of many different spell impacts one after another, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 22,
+  "confused_with": "ArendethClasses/sfx/entropy_unravel.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mia_draw.wav",
-  "clean": -1.14,
-  "match": 0.462,
+  "clean": -3.397,
+  "match": 0.406,
   "faults": [],
-  "total": 0.405,
-  "own_rank": 14
+  "total": 0.236,
+  "sound": "ArendethClasses/audio_licensed/rh_throw.wav",
+  "purpose": "heavy metal canister thrown and smashing open with a slosh, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 22,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/snare_step.wav",
-  "clean": 0.769,
+  "clean": -0.006,
+  "match": 0.3,
+  "faults": [],
+  "total": 0.3,
+  "sound": "FluxSavant/react_brittle_lattice",
+  "purpose": "freezing ice crystals",
+  "own_rank": 22,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
+ },
+ {
+  "clean": -1.482,
+  "match": 0.445,
+  "faults": [],
+  "total": 0.371,
+  "sound": "ArendethClasses/sfx/rime_overdraw.wav",
+  "purpose": "ice shattering nova burst with cold wind blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 22,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
+ },
+ {
+  "clean": -1.934,
+  "match": 0.512,
+  "faults": [],
+  "total": 0.415,
+  "sound": "Kinetics/rig_hammerfall",
+  "purpose": "huge metallic cinematic impact",
+  "own_rank": 22,
+  "confused_with": "ArendethClasses/sfx/fulg_stroke.wav"
+ },
+ {
+  "clean": -0.994,
+  "match": 0.347,
+  "faults": [],
+  "total": 0.297,
+  "sound": "CustomClasses/sfx/demolitionist_sticky.wav",
+  "purpose": "sticky bomb slapped onto armor, quick electronic beeping, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 21,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
+ },
+ {
+  "clean": -5.034,
+  "match": 0.574,
+  "faults": [],
+  "total": 0.323,
+  "sound": "ArendethClasses/sfx/scrapper_haymaker.wav",
+  "purpose": "massive punch impact with heavy bone crunch and whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 21,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
+ },
+ {
+  "clean": -0.16,
+  "match": 0.422,
+  "faults": [],
+  "total": 0.414,
+  "sound": "UniqueClasses/audio_licensed/relic_sun.wav",
+  "purpose": "sun relic awakening, fire roar and holy hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 21,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
+  "clean": -0.995,
+  "match": 0.549,
+  "faults": [],
+  "total": 0.499,
+  "sound": "LookingGlass/sfx/lg_warp.wav",
+  "purpose": "space warp whoosh, reality folding with a deep phasing pop",
+  "own_rank": 21,
+  "confused_with": "ArendethClasses/sfx/mim_wing.wav"
+ },
+ {
+  "clean": -5.08,
+  "match": 0.46,
+  "faults": [],
+  "total": 0.206,
+  "sound": "ArendethClasses/sfx/etcher_needle.wav",
+  "purpose": "thin hissing acid stream sizzling on metal, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 20,
+  "confused_with": "FluxSavant/arc_lance"
+ },
+ {
+  "clean": 1.384,
   "match": 0.378,
   "faults": [],
-  "total": 0.416,
-  "own_rank": 14
+  "total": 0.447,
+  "sound": "FluxSavant/react_plasma_flash",
+  "purpose": "electric explosion burst",
+  "own_rank": 20,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
  },
  {
-  "sound": "LookingGlass/sfx/lg_shrink.wav",
-  "clean": 3.05,
-  "match": 0.421,
+  "clean": -0.969,
+  "match": 0.449,
   "faults": [],
-  "total": 0.574,
-  "own_rank": 14
+  "total": 0.401,
+  "sound": "CustomClasses/sfx/shadowbroker_knife.wav",
+  "purpose": "quick silent knife stab with a dark whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 19,
+  "confused_with": "ArendethClasses/audio_licensed/fulg_step.wav"
  },
  {
-  "sound": "FluxSavant/react_brittle_lattice",
-  "clean": -1.645,
-  "match": 0.367,
+  "clean": -3.072,
+  "match": 0.566,
   "faults": [],
-  "total": 0.284,
-  "own_rank": 13
+  "total": 0.413,
+  "sound": "FluxSavant/arc_lance",
+  "purpose": "electric zap",
+  "own_rank": 19,
+  "confused_with": "ArendethClasses/sfx/etcher_dissolve.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/scrapper_pipe.wav",
+  "clean": -3.341,
+  "match": 0.344,
+  "faults": [],
+  "total": 0.177,
+  "sound": "Kinetics/grappler_collar_grab",
+  "purpose": "fabric grab, cloth yank",
+  "own_rank": 17,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
+  "clean": 0.719,
+  "match": 0.362,
+  "faults": [],
+  "total": 0.398,
+  "sound": "ArendethClasses/sfx/snare_lure.wav",
+  "purpose": "hypnotic shimmering psychic hum pulling inward, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 17,
+  "confused_with": "CustomClasses/sfx/relic_due.wav"
+ },
+ {
+  "clean": -6.0,
+  "match": 0.46,
+  "faults": [],
+  "total": 0.16,
+  "sound": "FluxSavant/critical_mass",
+  "purpose": "big magic explosion attack",
+  "own_rank": 16,
+  "confused_with": "CustomClasses/sfx/juggernaut_earthshaker.wav"
+ },
+ {
+  "clean": 0.74,
+  "match": 0.333,
+  "faults": [],
+  "total": 0.37,
+  "sound": "Kinetics/grapnel_yank",
+  "purpose": "fishing line reel",
+  "own_rank": 16,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
+ },
+ {
+  "clean": -5.871,
+  "match": 0.442,
+  "faults": [],
+  "total": 0.148,
+  "sound": "CustomClasses/sfx/ringmaster_whip.wav",
+  "purpose": "sharp whip crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 15,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
+ },
+ {
+  "clean": -6.0,
+  "match": 0.535,
+  "faults": [],
+  "total": 0.235,
+  "sound": "ArendethClasses/sfx/entropy_coin.wav",
+  "purpose": "chaotic warbling energy bolt with random glitch pitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 15,
+  "confused_with": "ArendethClasses/sfx/entropy_unravel.wav"
+ },
+ {
+  "clean": 1.679,
+  "match": 0.409,
+  "faults": [],
+  "total": 0.493,
+  "sound": "Kinetics/run_second_wind",
+  "purpose": "energetic rising buff",
+  "own_rank": 15,
+  "confused_with": "FluxSavant/react_aether_arc"
+ },
+ {
+  "clean": -6.0,
+  "match": 0.481,
+  "faults": [],
+  "total": 0.181,
+  "sound": "ArendethClasses/sfx/fulg_ghost.wav",
+  "purpose": "static discharge burst with a fading electric hum, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 14,
+  "confused_with": "CustomClasses/sfx/voidhacker_crash.wav"
+ },
+ {
+  "clean": 0.519,
+  "match": 0.539,
+  "faults": [],
+  "total": 0.565,
+  "sound": "Kinetics/grapnel_zip_line",
+  "purpose": "fast swoosh",
+  "own_rank": 14,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
+  "clean": -5.177,
+  "match": 0.564,
+  "faults": [],
+  "total": 0.305,
+  "sound": "ArendethClasses/sfx/vasculist_spike.wav",
+  "purpose": "wet crystalline spike piercing, pulsing heartbeat thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 13,
+  "confused_with": "UniqueClasses/sfx/shaman_collapse.wav"
+ },
+ {
   "clean": 1.521,
   "match": 0.365,
   "faults": [],
   "total": 0.441,
-  "own_rank": 13
+  "sound": "ArendethClasses/sfx/scrapper_pipe.wav",
+  "purpose": "metal pipe whack on a knee, clang and thud, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 13,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "CustomClasses/sfx/juggernaut_earthshaker.wav",
+  "clean": 0.574,
+  "match": 0.422,
+  "faults": [],
+  "total": 0.451,
+  "sound": "KelvinMagus/audio_licensed/km_sentinel.wav",
+  "purpose": "massive ice golem forming, grinding glacier ice, deep crystalline rumble",
+  "own_rank": 13,
+  "confused_with": "ArendethClasses/sfx/ember_quake.wav"
+ },
+ {
   "clean": -3.421,
   "match": 0.337,
   "faults": [],
   "total": 0.166,
-  "own_rank": 12
+  "sound": "CustomClasses/sfx/juggernaut_earthshaker.wav",
+  "purpose": "massive armored slam into a metal floor, deep seismic boom, debris rattle, sci-fi game sound effect",
+  "own_rank": 12,
+  "confused_with": "FluxSavant/react_plasma_flash"
  },
  {
-  "sound": "ArendethClasses/sfx/graftwild_heartgrain.wav",
+  "clean": -3.038,
+  "match": 0.379,
+  "faults": [],
+  "total": 0.227,
+  "sound": "ArendethClasses/sfx/mim_stomp.wav",
+  "purpose": "heavy armoured beast charging, thudding footfalls and a metal impact, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 12,
+  "confused_with": "ArendethClasses/sfx/bp_raise.wav"
+ },
+ {
   "clean": -3.27,
   "match": 0.51,
   "faults": [],
   "total": 0.347,
-  "own_rank": 12
+  "sound": "ArendethClasses/sfx/graftwild_heartgrain.wav",
+  "purpose": "deep wooden creak then heavy organic shockwave thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 12,
+  "confused_with": "ExampleClasses/audio_licensed/arcgunner_round.wav"
  },
  {
-  "sound": "Kinetics/grapnel_swing_kick",
-  "clean": 1.027,
-  "match": 0.48,
+  "clean": -0.101,
+  "match": 0.374,
   "faults": [],
-  "total": 0.531,
-  "own_rank": 12
+  "total": 0.369,
+  "sound": "CustomClasses/sfx/psiknight_psiblade.wav",
+  "purpose": "humming energy blade swing with psychic resonance, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 12,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mia_salt.wav",
-  "clean": -2.757,
-  "match": 0.509,
+  "clean": 0.003,
+  "match": 0.441,
   "faults": [],
-  "total": 0.371,
-  "own_rank": 11
+  "total": 0.441,
+  "sound": "ArendethClasses/sfx/mia_draw.wav",
+  "purpose": "deep inhale of foul air then a hissing spit, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 12,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
  },
  {
-  "sound": "Kinetics/blade_thousand_returns",
-  "clean": 2.863,
-  "match": 0.378,
+  "clean": 0.55,
+  "match": 0.286,
   "faults": [],
-  "total": 0.521,
-  "own_rank": 11
+  "total": 0.313,
+  "sound": "Kinetics/rig_hydraulic_charge",
+  "purpose": "heavy sliding door mechanical hiss",
+  "own_rank": 11,
+  "confused_with": "Kinetics/guard_close_protection"
  },
  {
-  "sound": "Kinetics/blade_fan_of_knives",
-  "clean": -1.004,
-  "match": 0.588,
+  "clean": -3.445,
+  "match": 0.403,
   "faults": [],
-  "total": 0.538,
-  "own_rank": 11
+  "total": 0.231,
+  "sound": "ArendethClasses/sfx/mim_breath.wav",
+  "purpose": "roaring breath of molten slag with a crackling hiss, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 10,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "Kinetics/run_slide_tackle",
-  "clean": 3.917,
-  "match": 0.418,
+  "clean": -5.334,
+  "match": 0.535,
   "faults": [],
-  "total": 0.614,
-  "own_rank": 11
+  "total": 0.268,
+  "sound": "ArendethClasses/sfx/rh_sludge.wav",
+  "purpose": "thick wet sludge sucking and setting, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 10,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "CustomClasses/sfx/splice_rend.wav",
   "clean": -3.938,
   "match": 0.486,
   "faults": [],
   "total": 0.289,
-  "own_rank": 10
+  "sound": "CustomClasses/sfx/splice_rend.wav",
+  "purpose": "wet claw tearing through flesh, organic crunch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 10,
+  "confused_with": "FluxSavant/react_aether_arc"
  },
  {
-  "sound": "Kinetics/run_second_wind",
-  "clean": 6.0,
-  "match": 0.301,
+  "clean": -1.129,
+  "match": 0.365,
   "faults": [],
-  "total": 0.601,
-  "own_rank": 10
+  "total": 0.308,
+  "sound": "LookingGlass/sfx/lg_mad_here.wav",
+  "purpose": "eerie swirling psychic whispers rising into a mad echoing laugh of chimes",
+  "own_rank": 10,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "FluxSavant/react_caustic_vapour",
-  "clean": -5.782,
-  "match": 0.414,
+  "clean": -0.099,
+  "match": 0.648,
   "faults": [],
-  "total": 0.125,
-  "own_rank": 9
+  "total": 0.643,
+  "sound": "ArendethClasses/audio_licensed/fulg_fork.wav",
+  "purpose": "rapid string of lightning zaps jumping between targets, each with a blade impact, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 10,
+  "confused_with": "ArendethClasses/audio_licensed/coil_slug.wav"
  },
  {
+  "clean": -3.346,
+  "match": 0.533,
+  "faults": [],
+  "total": 0.366,
   "sound": "Library/moves_ricochet",
-  "clean": -3.632,
-  "match": 0.499,
-  "faults": [],
-  "total": 0.317,
-  "own_rank": 9
+  "purpose": "laser ricochet ping",
+  "own_rank": 9,
+  "confused_with": "CustomClasses/sfx/tinkerer_zap.wav"
  },
  {
-  "sound": "CustomClasses/sfx/splice_burst.wav",
   "clean": -1.781,
   "match": 0.543,
   "faults": [],
   "total": 0.454,
-  "own_rank": 9
+  "sound": "CustomClasses/sfx/splice_burst.wav",
+  "purpose": "biological mutagen burst, wet squelch and hiss, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 9,
+  "confused_with": "FluxSavant/arc_lance"
  },
  {
-  "sound": "ArendethClasses/sfx/snare_spring.wav",
-  "clean": -1.018,
-  "match": 0.506,
-  "faults": [],
-  "total": 0.455,
-  "own_rank": 9
- },
- {
-  "sound": "ArendethClasses/sfx/mim_web.wav",
-  "clean": -5.735,
-  "match": 0.461,
-  "faults": [],
-  "total": 0.175,
-  "own_rank": 8
- },
- {
-  "sound": "CustomClasses/sfx/voidhacker_panic.wav",
   "clean": -4.253,
   "match": 0.419,
   "faults": [],
   "total": 0.207,
-  "own_rank": 8
+  "sound": "CustomClasses/sfx/voidhacker_panic.wav",
+  "purpose": "computer system crash, distorted glitch burst, power down, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 8,
+  "confused_with": "FluxSavant/react_plasma_flash"
  },
  {
-  "sound": "ArendethClasses/sfx/wild_hex.wav",
   "clean": -1.249,
   "match": 0.385,
   "faults": [],
   "total": 0.323,
-  "own_rank": 8
+  "sound": "ArendethClasses/sfx/wild_hex.wav",
+  "purpose": "twisting distorted magic curse with a warped wobble, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 8,
+  "confused_with": "CustomClasses/sfx/phase_hop.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/paradox_retro.wav",
+  "clean": 0.695,
+  "match": 0.422,
+  "faults": [],
+  "total": 0.457,
+  "sound": "ArendethClasses/audio_licensed/rh_steam.wav",
+  "purpose": "violent hiss of water flashing into scalding steam, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 8,
+  "confused_with": "KelvinMagus/sfx/km_plume.wav"
+ },
+ {
   "clean": 2.035,
   "match": 0.443,
   "faults": [],
   "total": 0.545,
-  "own_rank": 8
+  "sound": "UniqueClasses/sfx/paradox_retro.wav",
+  "purpose": "reversed time whoosh then sharp temporal hit, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 8,
+  "confused_with": "Kinetics/run_second_wind"
  },
  {
-  "sound": "Kinetics/trick_coin_flick",
-  "clean": -4.417,
-  "match": 0.417,
-  "faults": [],
-  "total": 0.196,
-  "own_rank": 7
- },
- {
-  "sound": "Kinetics/grapnel_wall_pin",
-  "clean": -1.958,
-  "match": 0.394,
-  "faults": [],
-  "total": 0.296,
-  "own_rank": 7
- },
- {
-  "sound": "ArendethClasses/sfx/rune_kindle.wav",
   "clean": -3.636,
   "match": 0.604,
   "faults": [],
   "total": 0.422,
-  "own_rank": 7
+  "sound": "ArendethClasses/sfx/rune_kindle.wav",
+  "purpose": "anvil strike igniting a fire rune with flame whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 7,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/rime_lance.wav",
+  "clean": -0.252,
+  "match": 0.451,
+  "faults": [],
+  "total": 0.438,
+  "sound": "ArendethClasses/sfx/wild_ward.wav",
+  "purpose": "shimmering prismatic shield chime rising through tones, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 7,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
+ },
+ {
+  "clean": -0.341,
+  "match": 0.483,
+  "faults": [],
+  "total": 0.466,
+  "sound": "ArendethClasses/sfx/entropy_surge.wav",
+  "purpose": "uncontrolled energy surge spill, crackling outburst, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 7,
+  "confused_with": "ArendethClasses/audio_licensed/rh_freeze.wav"
+ },
+ {
   "clean": 0.102,
   "match": 0.465,
   "faults": [],
   "total": 0.47,
-  "own_rank": 7
+  "sound": "ArendethClasses/sfx/rime_lance.wav",
+  "purpose": "icy shard whoosh with crystalline chime impact, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 7,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/graftwild_whip.wav",
+  "clean": 0.684,
+  "match": 0.471,
+  "faults": [],
+  "total": 0.505,
+  "sound": "Library/moves_recall",
+  "purpose": "blade swish",
+  "own_rank": 7,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
+ },
+ {
   "clean": 0.321,
   "match": 0.573,
   "faults": [],
   "total": 0.589,
-  "own_rank": 7
+  "sound": "ArendethClasses/sfx/graftwild_whip.wav",
+  "purpose": "thorny vine whip crack with leafy rustle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 7,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "FluxSavant/react_superconduct",
-  "clean": -6.0,
-  "match": 0.458,
+  "clean": -4.95,
+  "match": 0.515,
   "faults": [],
-  "total": 0.158,
-  "own_rank": 6
+  "total": 0.268,
+  "sound": "ArendethClasses/audio_licensed/mia_salt.wav",
+  "purpose": "gritty corrosive dust blast fizzing on metal, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 6,
+  "confused_with": "UniqueClasses/sfx/shaman_coin.wav"
  },
  {
-  "sound": "Kinetics/guard_over_here",
-  "clean": -1.35,
-  "match": 0.383,
-  "faults": [],
-  "total": 0.316,
-  "own_rank": 6
- },
- {
-  "sound": "CustomClasses/sfx/voidhacker_crash.wav",
   "clean": -1.377,
   "match": 0.39,
   "faults": [],
   "total": 0.321,
-  "own_rank": 6
+  "sound": "CustomClasses/sfx/voidhacker_crash.wav",
+  "purpose": "electronic stutter and short-circuit fizzle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 6,
+  "confused_with": "ArendethClasses/sfx/mim_web.wav"
  },
  {
-  "sound": "FluxSavant/rune_press",
-  "clean": 4.623,
-  "match": 0.305,
+  "clean": -1.124,
+  "match": 0.429,
   "faults": [],
-  "total": 0.536,
-  "own_rank": 5
+  "total": 0.373,
+  "sound": "Kinetics/grapnel_pendulum",
+  "purpose": "long spinning whoosh",
+  "own_rank": 6,
+  "confused_with": "ArendethClasses/audio_licensed/wild_borrow.wav"
  },
  {
-  "sound": "KelvinMagus/sfx/km_plume.wav",
+  "clean": 1.091,
+  "match": 0.442,
+  "faults": [],
+  "total": 0.496,
+  "sound": "KelvinMagus/audio_licensed/km_palisade.wav",
+  "purpose": "ice spikes bursting up out of the ground, sharp crystalline crunch",
+  "own_rank": 6,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
+ },
+ {
+  "clean": -3.131,
+  "match": 0.668,
+  "faults": [],
+  "total": 0.512,
+  "sound": "ArendethClasses/audio_licensed/fulg_feint.wav",
+  "purpose": "quick crackle of sparks then a swift blade strike from behind, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 6,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
+ },
+ {
+  "clean": 1.162,
+  "match": 0.588,
+  "faults": [],
+  "total": 0.646,
+  "sound": "Kinetics/blade_knife_toss",
+  "purpose": "thrown blade whoosh",
+  "own_rank": 6,
+  "confused_with": "Kinetics/grapnel_zip_line"
+ },
+ {
+  "clean": -3.824,
+  "match": 0.409,
+  "faults": [],
+  "total": 0.218,
+  "sound": "Kinetics/trick_coin_flick",
+  "purpose": "coin flip",
+  "own_rank": 5,
+  "confused_with": "UniqueClasses/sfx/shaman_coin.wav"
+ },
+ {
+  "clean": -3.608,
+  "match": 0.413,
+  "faults": [],
+  "total": 0.232,
+  "sound": "ArendethClasses/sfx/wild_bolt.wav",
+  "purpose": "unstable magic bolt with a warbling pitch that changes as it flies, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 5,
+  "confused_with": "Kinetics/rig_plate_up"
+ },
+ {
+  "clean": -5.149,
+  "match": 0.52,
+  "faults": [],
+  "total": 0.263,
+  "sound": "ArendethClasses/sfx/snare_step.wav",
+  "purpose": "soft time-warp blink with a reversed whoosh, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/sfx/bp_shove.wav"
+ },
+ {
+  "clean": -6.0,
+  "match": 0.587,
+  "faults": [],
+  "total": 0.287,
+  "sound": "ArendethClasses/sfx/snare_spring.wav",
+  "purpose": "psychic trap snapping shut, sharp mental shriek and glassy crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
+ },
+ {
+  "clean": -1.053,
+  "match": 0.479,
+  "faults": [],
+  "total": 0.426,
+  "sound": "FluxSavant/react_caustic_vapour",
+  "purpose": "poison acid hiss",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/audio_licensed/rh_steam.wav"
+ },
+ {
+  "clean": 0.824,
+  "match": 0.393,
+  "faults": [],
+  "total": 0.434,
+  "sound": "Kinetics/grapnel_swing_kick",
+  "purpose": "swing whoosh",
+  "own_rank": 5,
+  "confused_with": "LookingGlass/audio_licensed/lg_claw.wav"
+ },
+ {
+  "clean": -0.98,
+  "match": 0.49,
+  "faults": [],
+  "total": 0.441,
+  "sound": "Kinetics/run_slide_tackle",
+  "purpose": "long sliding swoosh",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/sfx/squall_rend.wav"
+ },
+ {
+  "clean": -0.392,
+  "match": 0.512,
+  "faults": [],
+  "total": 0.492,
+  "sound": "FluxSavant/catalyst_flask",
+  "purpose": "potion bottle drink",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/sfx/mia_bloom.wav"
+ },
+ {
   "clean": 0.54,
   "match": 0.57,
   "faults": [],
   "total": 0.597,
-  "own_rank": 5
+  "sound": "KelvinMagus/sfx/km_plume.wav",
+  "purpose": "scalding steam vent burst, pressurised hiss blast",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/sfx/mim_web.wav"
  },
  {
-  "sound": "UniqueClasses/sfx/glyph_runprogram.wav",
+  "clean": 1.903,
+  "match": 0.617,
+  "faults": [],
+  "total": 0.712,
+  "sound": "LookingGlass/audio_licensed/lg_bite.wav",
+  "purpose": "huge monstrous jaws snapping shut, heavy crunching bite with a hiss",
+  "own_rank": 5,
+  "confused_with": "ArendethClasses/audio_licensed/mim_bite.wav"
+ },
+ {
   "clean": -5.807,
   "match": 0.422,
   "faults": [
    "cut off"
   ],
   "total": -0.368,
-  "own_rank": 4
+  "sound": "UniqueClasses/sfx/glyph_runprogram.wav",
+  "purpose": "rapid runic code burst, cascading digital hits, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "CustomClasses/sfx/voidhacker_panic.wav"
  },
  {
-  "sound": "Kinetics/trick_pocket_change",
-  "clean": -5.318,
-  "match": 0.507,
+  "clean": -6.0,
+  "match": 0.593,
   "faults": [],
-  "total": 0.241,
-  "own_rank": 4
+  "total": 0.293,
+  "sound": "ArendethClasses/sfx/coil_overload.wav",
+  "purpose": "electrical overload discharge pop with crackle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "ArendethClasses/sfx/entropy_surge.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_claw.wav",
-  "clean": -3.4,
-  "match": 0.521,
+  "clean": -6.0,
+  "match": 0.596,
   "faults": [],
-  "total": 0.351,
-  "own_rank": 4
+  "total": 0.296,
+  "sound": "ArendethClasses/sfx/bp_hammer.wav",
+  "purpose": "massive psychic punch impact with a clang of steel, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "CustomClasses/sfx/phase_storm.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/snare_latch.wav",
   "clean": -1.423,
   "match": 0.448,
   "faults": [],
   "total": 0.376,
-  "own_rank": 4
+  "sound": "ArendethClasses/sfx/snare_latch.wav",
+  "purpose": "ghostly chain hook latching with a metallic psychic clank, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "Library/moves_recall",
-  "clean": -1.981,
-  "match": 0.514,
+  "clean": -3.955,
+  "match": 0.615,
   "faults": [],
-  "total": 0.415,
-  "own_rank": 4
+  "total": 0.418,
+  "sound": "Kinetics/grappler_body_slam",
+  "purpose": "heavy blunt club hit, body thud",
+  "own_rank": 4,
+  "confused_with": "Library/moves_throw_impact"
  },
  {
-  "sound": "Kinetics/rig_plate_up",
-  "clean": -0.707,
-  "match": 0.458,
+  "clean": -0.559,
+  "match": 0.472,
   "faults": [],
-  "total": 0.423,
-  "own_rank": 4
+  "total": 0.444,
+  "sound": "Kinetics/guard_retort_stance",
+  "purpose": "leather creak equip",
+  "own_rank": 4,
+  "confused_with": "ArendethClasses/sfx/mim_claw.wav"
  },
  {
-  "sound": "Kinetics/guard_shoulder_check",
-  "clean": -2.36,
-  "match": 0.579,
-  "faults": [],
-  "total": 0.461,
-  "own_rank": 4
- },
- {
-  "sound": "UniqueClasses/sfx/shaman_coin.wav",
   "clean": 4.176,
   "match": 0.253,
   "faults": [],
   "total": 0.462,
-  "own_rank": 4
+  "sound": "UniqueClasses/sfx/shaman_coin.wav",
+  "purpose": "coin flip ping with energy bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "ExampleClasses/audio_licensed/arcgunner_round.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_dart.wav",
-  "clean": -6.0,
-  "match": 0.424,
+  "clean": -1.863,
+  "match": 0.57,
   "faults": [],
-  "total": 0.124,
-  "own_rank": 3
+  "total": 0.477,
+  "sound": "FluxSavant/react_aether_arc",
+  "purpose": "magic arcane zap",
+  "own_rank": 4,
+  "confused_with": "ArendethClasses/audio_licensed/wild_borrow.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_bellow.wav",
+  "clean": -0.798,
+  "match": 0.579,
+  "faults": [],
+  "total": 0.539,
+  "sound": "LookingGlass/sfx/lg_shrink.wav",
+  "purpose": "magical shrinking sound, rising slide whistle with glittering sparkle",
+  "own_rank": 4,
+  "confused_with": "FluxSavant/react_aether_arc"
+ },
+ {
+  "clean": -2.329,
+  "match": 0.68,
+  "faults": [],
+  "total": 0.563,
+  "sound": "ExampleClasses/audio_licensed/arcgunner_round.wav",
+  "purpose": "electric bullet zap, gunshot with spark, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 4,
+  "confused_with": "CustomClasses/sfx/splice_rend.wav"
+ },
+ {
+  "clean": 5.515,
+  "match": 0.438,
+  "faults": [],
+  "total": 0.714,
+  "sound": "LookingGlass/audio_licensed/lg_guard.wav",
+  "purpose": "shuffling a deck of playing cards, cards snapping crisply into place",
+  "own_rank": 4,
+  "confused_with": "ArendethClasses/sfx/mim_shift.wav"
+ },
+ {
   "clean": -3.278,
   "match": 0.376,
   "faults": [],
   "total": 0.212,
-  "own_rank": 3
+  "sound": "ArendethClasses/sfx/mim_bellow.wav",
+  "purpose": "deep rumbling bellow of a huge shelled beast, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 3,
+  "confused_with": "Synergies/sfx/toxic_breath.wav"
  },
  {
-  "sound": "Kinetics/grapnel_yank",
-  "clean": -3.526,
-  "match": 0.438,
+  "clean": -1.012,
+  "match": 0.332,
   "faults": [],
-  "total": 0.262,
-  "own_rank": 3
+  "total": 0.282,
+  "sound": "Kinetics/blade_fan_of_knives",
+  "purpose": "sword swish slash",
+  "own_rank": 3,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_howl.wav",
   "clean": 1.439,
   "match": 0.293,
   "faults": [],
   "total": 0.365,
-  "own_rank": 3
+  "sound": "ArendethClasses/sfx/mim_howl.wav",
+  "purpose": "eerie mechanical-sounding wolf howl echoing down a metal corridor, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 3,
+  "confused_with": "Kinetics/guard_over_here"
  },
  {
-  "sound": "Kinetics/blade_knife_toss",
-  "clean": 0.568,
-  "match": 0.695,
+  "clean": -1.768,
+  "match": 0.484,
   "faults": [],
-  "total": 0.723,
-  "own_rank": 3
+  "total": 0.396,
+  "sound": "Kinetics/trick_bank_shot",
+  "purpose": "pistol gunshot",
+  "own_rank": 3,
+  "confused_with": "CustomClasses/sfx/longshot_measured.wav"
  },
  {
-  "sound": "FluxSavant/instability",
+  "clean": -0.644,
+  "match": 0.456,
+  "faults": [],
+  "total": 0.424,
+  "sound": "Kinetics/blade_pinning_throw",
+  "purpose": "arrow hit thunk",
+  "own_rank": 3,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
+ },
+ {
+  "clean": 0.066,
+  "match": 0.437,
+  "faults": [],
+  "total": 0.44,
+  "sound": "ArendethClasses/sfx/bp_crush.wav",
+  "purpose": "metal walls grinding inward with crushing pressure, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 3,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
+ },
+ {
+  "clean": -1.785,
+  "match": 0.557,
+  "faults": [],
+  "total": 0.468,
+  "sound": "KelvinMagus/audio_licensed/km_permafrost.wav",
+  "purpose": "ground freezing over, ice spreading and crackling across a metal floor",
+  "own_rank": 3,
+  "confused_with": "ArendethClasses/sfx/mim_shift.wav"
+ },
+ {
+  "clean": 0.656,
+  "match": 0.463,
+  "faults": [],
+  "total": 0.496,
+  "sound": "Kinetics/grappler_suplex",
+  "purpose": "big heavy whoosh",
+  "own_rank": 3,
+  "confused_with": "FluxSavant/react_stasis_bloom"
+ },
+ {
+  "clean": 0.88,
+  "match": 0.621,
+  "faults": [],
+  "total": 0.665,
+  "sound": "LookingGlass/sfx/lg_flurry.wav",
+  "purpose": "quick whimsical sword swishes, two fast blade cuts with a sparkle",
+  "own_rank": 3,
+  "confused_with": "ArendethClasses/sfx/squall_cut.wav"
+ },
+ {
   "clean": -6.0,
-  "match": 0.638,
+  "match": 0.536,
   "faults": [],
-  "total": 0.338,
-  "own_rank": 2
+  "total": 0.236,
+  "sound": "FluxSavant/instability",
+  "purpose": "digital glitch malfunction",
+  "own_rank": 2,
+  "confused_with": "ArendethClasses/sfx/bp_spike.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_bite.wav",
-  "clean": -4.193,
-  "match": 0.646,
+  "clean": -3.357,
+  "match": 0.43,
   "faults": [],
-  "total": 0.436,
-  "own_rank": 2
+  "total": 0.262,
+  "sound": "Kinetics/grapnel_wall_pin",
+  "purpose": "arrow impact into wood",
+  "own_rank": 2,
+  "confused_with": "ArendethClasses/sfx/mim_dart.wav"
  },
  {
-  "sound": "Kinetics/guard_retort_stance",
-  "clean": 1.47,
-  "match": 0.527,
+  "clean": -1.325,
+  "match": 0.432,
   "faults": [],
-  "total": 0.601,
-  "own_rank": 2
+  "total": 0.366,
+  "sound": "FluxSavant/rune_press",
+  "purpose": "jewel rune pick up",
+  "own_rank": 2,
+  "confused_with": "Kinetics/rig_plate_up"
  },
  {
-  "sound": "ArendethClasses/sfx/squall_cut.wav",
+  "clean": -1.79,
+  "match": 0.5,
+  "faults": [],
+  "total": 0.41,
+  "sound": "Kinetics/rig_overheat",
+  "purpose": "short warning alarm",
+  "own_rank": 2,
+  "confused_with": "CustomClasses/sfx/psiknight_mindbreaker.wav"
+ },
+ {
+  "clean": -1.601,
+  "match": 0.642,
+  "faults": [],
+  "total": 0.562,
+  "sound": "Kinetics/grappler_piledriver",
+  "purpose": "huge cinematic impact boom",
+  "own_rank": 2,
+  "confused_with": "CustomClasses/sfx/juggernaut_earthshaker.wav"
+ },
+ {
+  "clean": 1.177,
+  "match": 0.535,
+  "faults": [],
+  "total": 0.594,
+  "sound": "Kinetics/rig_plate_up",
+  "purpose": "metal armor plates locking",
+  "own_rank": 2,
+  "confused_with": "Kinetics/grappler_iron_clinch"
+ },
+ {
   "clean": -0.501,
   "match": 0.667,
   "faults": [],
   "total": 0.642,
-  "own_rank": 2
+  "sound": "ArendethClasses/sfx/squall_cut.wav",
+  "purpose": "sharp compressed air blade slice whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 2,
+  "confused_with": "LookingGlass/sfx/lg_flurry.wav"
  },
  {
-  "sound": "LookingGlass/sfx/lg_claw.wav",
-  "clean": 1.005,
-  "match": 0.598,
+  "clean": 0.428,
+  "match": 0.665,
   "faults": [],
-  "total": 0.648,
-  "own_rank": 2
+  "total": 0.687,
+  "sound": "UniqueClasses/sfx/starfire_eruption.wav",
+  "purpose": "solar flare eruption roar, massive plasma blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 2,
+  "confused_with": "ArendethClasses/sfx/rime_overdraw.wav"
  },
  {
-  "sound": "ArendethClasses/sfx/mim_shift.wav",
+  "clean": 1.604,
+  "match": 0.727,
+  "faults": [],
+  "total": 0.807,
+  "sound": "Kinetics/run_flying_knee",
+  "purpose": "quick swing whoosh",
+  "own_rank": 2,
+  "confused_with": "Kinetics/grapnel_zip_line"
+ },
+ {
   "clean": -6.0,
   "match": 0.516,
   "faults": [],
   "total": 0.216,
+  "sound": "ArendethClasses/sfx/mim_shift.wav",
+  "purpose": "grotesque wet body transformation, bones cracking and flesh reshaping, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "ArendethClasses/sfx/squall_rend.wav",
+  "clean": -6.0,
+  "match": 0.573,
+  "faults": [],
+  "total": 0.273,
+  "sound": "Library/moves_throw_impact",
+  "purpose": "heavy blunt hit",
+  "own_rank": 1
+ },
+ {
   "clean": -6.0,
   "match": 0.6,
   "faults": [],
   "total": 0.3,
+  "sound": "ArendethClasses/sfx/squall_rend.wav",
+  "purpose": "air pressure ripping burst, sharp tearing whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "Kinetics/rig_overheat",
-  "clean": -3.434,
-  "match": 0.494,
+  "clean": -3.906,
+  "match": 0.586,
   "faults": [],
-  "total": 0.322,
+  "total": 0.391,
+  "sound": "ArendethClasses/sfx/mim_dart.wav",
+  "purpose": "quick pneumatic dart shot with a small sting, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "Kinetics/rig_piston_jab",
-  "clean": -1.322,
-  "match": 0.429,
+  "clean": 0.725,
+  "match": 0.407,
   "faults": [],
-  "total": 0.363,
+  "total": 0.443,
+  "sound": "ArendethClasses/audio_licensed/rh_scrounge.wav",
+  "purpose": "rummaging through metal junk, panel ripped open, clinking canisters, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "ExampleClasses/sfx/arcgunner_round.wav",
-  "clean": -4.369,
-  "match": 0.646,
+  "clean": -1.007,
+  "match": 0.54,
   "faults": [],
-  "total": 0.427,
+  "total": 0.49,
+  "sound": "Kinetics/trick_deadeye",
+  "purpose": "gun reload cock click",
   "own_rank": 1
  },
  {
-  "sound": "ArendethClasses/sfx/fulg_step.wav",
-  "clean": -1.642,
-  "match": 0.531,
+  "clean": 0.972,
+  "match": 0.468,
   "faults": [],
-  "total": 0.449,
+  "total": 0.516,
+  "sound": "LookingGlass/audio_licensed/lg_claw.wav",
+  "purpose": "fast feline claw swipe, three sharp scratching slashes",
   "own_rank": 1
  },
  {
-  "sound": "FluxSavant/catalyst_flask",
-  "clean": -0.831,
-  "match": 0.508,
+  "clean": -2.092,
+  "match": 0.624,
   "faults": [],
-  "total": 0.466,
+  "total": 0.52,
+  "sound": "ArendethClasses/sfx/mim_web.wav",
+  "purpose": "sticky web spray hissing out, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "Kinetics/grappler_collar_grab",
-  "clean": -1.435,
-  "match": 0.564,
+  "clean": -0.006,
+  "match": 0.527,
   "faults": [],
-  "total": 0.492,
+  "total": 0.527,
+  "sound": "LookingGlass/sfx/lg_cat.wav",
+  "purpose": "magical transformation shimmer ending in a deep rumbling purr",
   "own_rank": 1
  },
  {
-  "sound": "ArendethClasses/sfx/bp_spike.wav",
-  "clean": -3.291,
-  "match": 0.662,
+  "clean": -2.279,
+  "match": 0.655,
   "faults": [],
-  "total": 0.497,
+  "total": 0.541,
+  "sound": "ArendethClasses/sfx/mim_claw.wav",
+  "purpose": "vicious claw slash with a feral snarl, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "Kinetics/grappler_body_slam",
-  "clean": -3.1,
-  "match": 0.654,
+  "clean": -1.786,
+  "match": 0.65,
   "faults": [],
-  "total": 0.499,
+  "total": 0.561,
+  "sound": "LookingGlass/audio_licensed/lg_watch.wav",
+  "purpose": "pocket watch ticking very fast, clock spring winding back",
   "own_rank": 1
  },
  {
-  "sound": "LookingGlass/sfx/lg_flurry.wav",
-  "clean": -1.519,
-  "match": 0.626,
+  "clean": -0.812,
+  "match": 0.606,
   "faults": [],
-  "total": 0.55,
+  "total": 0.566,
+  "sound": "Kinetics/grappler_iron_clinch",
+  "purpose": "armor clank equip",
   "own_rank": 1
  },
  {
-  "sound": "UniqueClasses/sfx/glyph_mark.wav",
-  "clean": 1.531,
-  "match": 0.491,
+  "clean": -1.021,
+  "match": 0.624,
   "faults": [],
-  "total": 0.568,
+  "total": 0.573,
+  "sound": "ArendethClasses/audio_licensed/wild_borrow.wav",
+  "purpose": "magic portal ripping open and a stolen spell whooshing out, sci-fi fantasy game sound effect, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "ArendethClasses/sfx/tide_lash.wav",
+  "clean": -0.127,
+  "match": 0.581,
+  "faults": [],
+  "total": 0.574,
+  "sound": "ArendethClasses/sfx/rh_flare.wav",
+  "purpose": "oil igniting in a roaring whoosh of flame, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
   "clean": -1.778,
   "match": 0.669,
   "faults": [],
   "total": 0.581,
+  "sound": "ArendethClasses/sfx/tide_lash.wav",
+  "purpose": "high pressure water whip crack and splash, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "CustomClasses/sfx/phase_hop.wav",
+  "clean": 1.553,
+  "match": 0.507,
+  "faults": [],
+  "total": 0.585,
+  "sound": "Kinetics/rig_piston_jab",
+  "purpose": "mechanical latch clunk",
+  "own_rank": 1
+ },
+ {
+  "clean": 1.418,
+  "match": 0.521,
+  "faults": [],
+  "total": 0.592,
+  "sound": "Kinetics/trick_pocket_change",
+  "purpose": "coins pouring jingle",
+  "own_rank": 1
+ },
+ {
+  "clean": -3.584,
+  "match": 0.785,
+  "faults": [],
+  "total": 0.605,
+  "sound": "ArendethClasses/audio_licensed/fulg_step.wav",
+  "purpose": "instant electric zip and thunder snap of a fighter blinking forward, sharp blade hit, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
   "clean": 1.482,
   "match": 0.561,
   "faults": [],
   "total": 0.636,
+  "sound": "CustomClasses/sfx/phase_hop.wav",
+  "purpose": "dimensional blink zip, short phase whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "own_rank": 1
  },
  {
-  "sound": "Kinetics/trick_deadeye",
-  "clean": 1.005,
-  "match": 0.671,
+  "clean": -0.442,
+  "match": 0.69,
   "faults": [],
-  "total": 0.721,
+  "total": 0.668,
+  "sound": "ArendethClasses/sfx/bp_spike.wav",
+  "purpose": "sharp steel spike bursting out of a metal wall with a screech, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
+  "clean": -0.931,
+  "match": 0.721,
+  "faults": [],
+  "total": 0.675,
+  "sound": "ArendethClasses/audio_licensed/mim_tongue.wav",
+  "purpose": "wet sticky tongue lash and slurping pull, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
+  "clean": 1.714,
+  "match": 0.594,
+  "faults": [],
+  "total": 0.68,
+  "sound": "KelvinMagus/audio_licensed/km_thermal_shock.wav",
+  "purpose": "ice cracking explosively from sudden heat, sharp glassy crack and a burst of hissing steam",
+  "own_rank": 1
+ },
+ {
+  "clean": -0.525,
+  "match": 0.709,
+  "faults": [],
+  "total": 0.683,
+  "sound": "ArendethClasses/audio_licensed/mim_bite.wav",
+  "purpose": "crunching beast bite with a wet snap, sci-fi fantasy game sound effect, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
+  "clean": 0.665,
+  "match": 0.739,
+  "faults": [],
+  "total": 0.772,
+  "sound": "CustomClasses/sfx/longshot_measured.wav",
+  "purpose": "heavy sniper rifle shot with mechanical bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
+  "own_rank": 1
+ },
+ {
+  "clean": 3.2,
+  "match": 0.621,
+  "faults": [],
+  "total": 0.781,
+  "sound": "LookingGlass/audio_licensed/lg_grin.wav",
+  "purpose": "magical vanishing shimmer fading away, soft mischievous purr",
+  "own_rank": 1
+ },
+ {
+  "clean": 5.166,
+  "match": 0.532,
+  "faults": [],
+  "total": 0.79,
+  "sound": "LookingGlass/audio_licensed/lg_teaparty.wav",
+  "purpose": "porcelain teacups clinking and rattling, tea pouring, whimsical",
   "own_rank": 1
  }
 ]

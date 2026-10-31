@@ -667,7 +667,7 @@
         "icon": "wildcaster_t1.png",
         "staminaCost": 7,
         "description": "A bolt of whatever comes to hand: fire, frost, current, rot or raw thought. You find out when it lands.",
-        "sound": "audio_licensed/wild_bolt.wav",
+        "sound": "sfx/wild_bolt.wav",
         "actions": [
           {
             "do": "random",
@@ -987,7 +987,7 @@
         "staminaCost": 24,
         "cooldown": 10,
         "description": "Let the wild magic all out at one target: two borrowed spells, and one more for every two Brimming you pour in (up to four in all). It drains the Brimming it uses.",
-        "sound": "audio_licensed/wild_cascade.wav",
+        "sound": "sfx/wild_cascade.wav",
         "castVfx": "PA_Prototype_Thunderclap.impactParticle@0.35",
         "actions": [
           {
@@ -1496,7 +1496,7 @@
           "amount": 12
         }
       ],
-      "sound": "audio_licensed/wild_ward.wav"
+      "sound": "sfx/wild_ward.wav"
     },
     {
       "name": "Coin Toss",
@@ -1716,7 +1716,7 @@
           "chance": 25
         }
       ],
-      "sound": "audio_licensed/wild_cascade.wav"
+      "sound": "sfx/wild_cascade.wav"
     },
     {
       "name": "Shrinking Feeling",
@@ -1761,7 +1761,7 @@
       ],
       "radius": 2,
       "friendlyFire": true,
-      "sound": "audio_licensed/wild_ward.wav"
+      "sound": "sfx/wild_ward.wav"
     },
     {
       "name": "Glass Moment",
@@ -1823,7 +1823,7 @@
       ],
       "radius": 2,
       "friendlyFire": true,
-      "sound": "audio_licensed/wild_ward.wav"
+      "sound": "sfx/wild_ward.wav"
     },
     {
       "name": "Held Tongue",

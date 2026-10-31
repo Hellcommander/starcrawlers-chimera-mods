@@ -21,7 +21,7 @@
       "burstAt": 8,
       "burstRadius": 2.5,
       "burstVfx": "VoidPsyker_Ascendance.impactParticle",
-      "burstSound": "audio_licensed/entropy_surge.wav",
+      "burstSound": "sfx/entropy_surge.wav",
       "burstActions": [
         { "do": "damage", "type": "Energy", "min": 2, "max": 18, "scale": "PsiPower", "scaleMult": 0.4 },
         { "do": "effect", "effect": "@Frayed", "stacks": 2 },
@@ -149,7 +149,7 @@
         "staminaCost": 6,
         "description": "Unshaped power thrown at a target. Might tickle, might not. Every Spillnode running adds to it.",
         "impactVfx": "VOID_PSYKER_BLAST.impactParticle",
-        "sound": "audio_licensed/entropy_coin.wav",
+        "sound": "sfx/entropy_coin.wav",
         "actions": [
           { "do": "damage", "type": "Energy", "min": 1, "max": 12, "scale": "PsiPower", "scaleMult": 0.4, "perRank": 2,
             "bonusPerStack": 1, "stacksOf": "group:Spillnode" },

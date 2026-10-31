@@ -31,10 +31,11 @@ never be used commercially, even when altered, and may be shared only as part of
 share them on their own, or put them in a sound pack. If you adapt a
 mod, replace them with your own.
 
-Sounds in sfx folders are new, unique sounds. You may share and adapt
+Sounds in sfx folders are new sounds made from Noise Alchemy material,
+rendered or transformed far from any clip. You may share and adapt
 them and use them in your own work, a commercial mod or game included,
 but not sell them as sounds or audio packs. The sound packs they were made from are not included,
-and a light edit of a pack's clip never counts as unique. They need
+and a light edit of a pack's clip never counts as new. They need
 this credit wherever you use them:
 
     Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM

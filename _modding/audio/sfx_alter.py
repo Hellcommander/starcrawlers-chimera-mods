@@ -37,7 +37,7 @@ TRIES = 12
 # What sfx_alter_settings.json can change, per class of sound: pitch moves in semitones (never small, so no clip survives
 # nearly as it was), the layer's level, how far the two channels differ (0 = one signal, 1 = fully independent), and how
 # hard the phase scrambles (more knots = more different, softer attack).
-DEFAULTS = {"steps": [-5, -4, -3, 3, 4, 5, -6, 6], "layer": 0.45, "spread": 0.35, "knots": 96, "eq_db": 4.5}
+DEFAULTS = {"steps": [-5, -4, -3, 3, 4, 5, -6, 6], "layer": 0.45, "spread": 0.35, "knots": 96, "eq_db": 4.5, "reshape": 1.0}
 # Sidecar fields from the Stable Audio renders that no longer describe the file once it is rebuilt here.
 AI_FIELDS = ("conditioned_prompt", "strength", "init_noise_level", "copy_corr", "source_corr")
 
@@ -96,9 +96,10 @@ def envelope(x, ms=4):
     return np.convolve(np.abs(x).max(axis=1), np.ones(size) / size, mode="same") + 1e-5
 
 
-def reshape(y, x):
-    """Puts the loudness shape of x back over y: the attack returns, the waveform doesn't."""
-    gain = np.clip(envelope(x) / envelope(y), 0.1, 6.0)
+def reshape(y, x, amount=1.0):
+    """Puts the loudness shape of x back over y: the attack returns, the waveform doesn't. amount under 1 puts back only
+    part of it: for a slow, low sound the loudness shape is most of the waveform, so a full reshape copies too much."""
+    gain = np.clip(envelope(x) / envelope(y), 0.1, 6.0) ** amount
     return y * gain[:, None].astype(np.float32)
 
 
@@ -159,15 +160,10 @@ def harder(cfg, times=1):
 
 
 def candidate(name, clips, n, cfg, t, tag=""):
-    rng = np.random.default_rng(zlib.crc32(f"{name}/{tag}{t}".encode()))
-    steps = cfg["steps"]
-    step = steps[(zlib.crc32(name.encode()) + t) % len(steps)]
-    x = fit(repitch(clips[0], step), n)
-    for k, c in enumerate(clips[1:3]):
-        layer = fit(repitch(c, step + rng.choice([-7, 5, 7, 12])), n)
-        x = x + layer * (cfg["layer"] / (k + 1)) * (np.sqrt(np.mean(x ** 2)) / max(float(np.sqrt(np.mean(layer ** 2))), 1e-6))
-    y = finish(reshape(allpass_and_curve(x, rng, cfg, 1 + t // 4), x), n)   # scrambles harder on later tries
-    return y, step
+    """One try, made by the toolkit's shared rebuild step (audio_rebuild.candidate): anti-aliased pitch move, layers,
+    low-band-safe all-pass scramble, the lead clip's colour and attack put back, light glue, the lead clip's loudness."""
+    from audio_rebuild import candidate as shared_candidate
+    return shared_candidate(name, clips, n, dict(cfg, level_db=-19.0), t, tag)
 
 
 def alter(name, clips, n, cfg, listen=None, purpose="", tries=TRIES):
@@ -198,27 +194,65 @@ def alter(name, clips, n, cfg, listen=None, purpose="", tries=TRIES):
     return None
 
 
+class Finder:
+    """Finds a clip by id, or by its path when the index was rebuilt since (a pack moved into a folder or an archive
+    changes every id and the pack name; the path inside the pack stays)."""
+
+    def __init__(self, lib):
+        self.lib = lib
+        self.by_inner = {}
+        self.by_tail = {}
+        for r in lib.records:
+            self.by_inner.setdefault(r.inner, r)
+            self.by_tail.setdefault(r.inner.split("/")[-1].lower(), []).append(r)
+
+    def find(self, pack, inner, aid=None):
+        r = self.lib.get(aid) if aid else None
+        if r is not None:
+            return r
+        inner = (inner or "").replace("\\", "/")
+        if inner in self.by_inner:
+            return self.by_inner[inner]
+        for cand in self.by_inner:   # the same path inside a pack that now lives in an archive
+            if cand.endswith("/" + inner) or inner.endswith("/" + cand):
+                return self.by_inner[cand]
+        tail = inner.split("/")[-1].lower()
+        same = [r for r in self.by_tail.get(tail, []) if os.path.splitext(os.path.basename(pack or ""))[0].lower() in r.pack.lower()]
+        return same[0] if same else None
+
+
 def jobs(mods, lib):
-    """(name, destination, sources, length, meta path or None) for every sound to alter."""
+    """(name, destination, sources, length, meta path or None) for every sound to alter. A sound in an sfx/ folder is
+    rebuilt from Noise Alchemy / Dark Fantasy clips only (its licensed-pack references are dropped); one in audio_licensed/
+    uses all of its clips."""
     manifest = json.load(open(os.path.join(HERE, "sfx_manifest.json"), encoding="utf-8"))
     plan = json.load(open(os.path.join(HERE, "sfx_plan.json"), encoding="utf-8"))
-    records = {(r.pack, r.inner): r for r in lib.records}
+    finder = Finder(lib)
     items = list(manifest.items())
     for slot, m in items:
-        main, _ = process(records[(m["pack"], m["source"])], plan[slot].get("max", 1.5))
+        rec = finder.find(m["pack"], m["source"])
+        if rec is None:
+            print(f"SKIP {slot}: {m['source']} is not in the audio index")
+            continue
+        main, _ = process(rec, plan[slot].get("max", 1.5))
         kin = [o for k, o in items if k != slot and o["pack"] == m["pack"]][:64]
         other = kin[zlib.crc32(slot.encode()) % len(kin)] if kin else None
-        extra = process(records[(other["pack"], other["source"])], 3.0)[0] if other else None
+        other_rec = finder.find(other["pack"], other["source"]) if other else None
+        extra = process(other_rec, 3.0)[0] if other_rec is not None else None
         yield slot, m["file"].replace("Mods/", "", 1), [c for c in (main, extra) if c is not None], len(main), None
     metas = glob.glob(os.path.join(mods, "**", "sfx", "*.meta.json"), recursive=True) + glob.glob(os.path.join(mods, "**", "audio_licensed", "*.meta.json"), recursive=True)
     for meta in sorted(metas):
         j = json.load(open(meta, encoding="utf-8"))
         used = set(j.get("used_ids") or [])
         refs = [r for r in j["references"] if isinstance(r, dict) and (not used or r.get("id") in used)]
-        if all(ai_allowed(r.get("pack", ""), r.get("inner", "")) for r in refs):
-            continue
+        if all(ai_allowed(r.get("pack", ""), r.get("inner", "")) for r in refs) and j.get("engine") != "sfx_alter":
+            continue   # a render from allowed references needs nothing; one we rebuilt before is rebuilt again
+        in_sfx = os.path.basename(os.path.dirname(meta)).lower() == "sfx"
+        if in_sfx:
+            refs = [r for r in refs if ai_allowed(r.get("pack", ""), r.get("inner", ""))]
         wav = meta[:-len(".meta.json")] + ".wav"
-        clips = [c for c in (process(lib.get(r["id"]), 3.0)[0] for r in refs if lib.get(r["id"]) is not None) if c is not None]
+        found = [(r, finder.find(r.get("pack"), r.get("inner"), r.get("id"))) for r in refs]
+        clips = [c for c in (process(rec, 3.0)[0] for r, rec in found if rec is not None) if c is not None]
         if clips:
             yield os.path.relpath(wav, mods).replace(os.sep, "/")[:-4], os.path.relpath(wav, mods), clips, len(read_wav(wav)[0]), meta
 
@@ -251,9 +285,24 @@ def purpose_of(name, meta, plan):
     return ""
 
 
-def update_sidecar(meta, c, step, w, j):
-    """The .meta.json now says the file is a plain-processing derivative of its references, not a render."""
+def update_sidecar(meta, c, step, w, j, finder=None):
+    """The .meta.json now says the file is a plain-processing derivative of its references, not a render. References
+    that the index knows under a new id or pack name are refreshed; ones the rebuild no longer uses (licensed packs, for
+    a sound in sfx/) are dropped."""
     j_meta = json.load(open(meta, encoding="utf-8"))
+    in_sfx = os.path.basename(os.path.dirname(meta)).lower() == "sfx"
+    refs = []
+    for r in j_meta.get("references", []):
+        if not isinstance(r, dict):
+            continue
+        if in_sfx and not ai_allowed(r.get("pack", ""), r.get("inner", "")):
+            continue
+        rec = finder.find(r.get("pack"), r.get("inner"), r.get("id")) if finder else None
+        if rec is not None:
+            r = dict(r, id=rec.id, pack=rec.pack, inner=rec.inner, license=rec.license_tier())
+        refs.append(r)
+    j_meta["references"] = refs
+    j_meta.pop("used_ids", None)
     for k in AI_FIELDS:
         j_meta.pop(k, None)
     j_meta.update({"engine": "sfx_alter", "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
@@ -302,7 +351,7 @@ def main():
         if args.write:
             write_wav(current, y)
             if meta:
-                update_sidecar(meta, c, step, w, j)
+                update_sidecar(meta, c, step, w, j, Finder(lib))
         row = {"corr": round(c, 3), "spectrum": round(s, 3), "semitones": int(step), "width": round(w, 3), "clips": len(clips), "seconds": round(n / SR, 2), "purpose": purpose}
         line = f"{name}: corr {c:.3f} spectrum {s:.3f} {step:+d} st width {w:.2f}"
         if j is not None:

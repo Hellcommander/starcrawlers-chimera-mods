@@ -8,12 +8,12 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "1ab8ea3964e3ccdf",
+      "id": "071581d0e2bb8a41",
       "score": 0.5138025283813477,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -74,12 +74,12 @@
       "archetypes": []
     },
     {
-      "id": "c01f39d271d8b43f",
+      "id": "c0a872df8a614c9c",
       "score": 0.4904453754425049,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Fast B.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -95,10 +95,10 @@
       ]
     },
     {
-      "id": "e84bb0fa73f19715",
+      "id": "febf589f0d7b73cd",
       "score": 0.48769867420196533,
       "via": "clap+tag",
-      "pack": "Magic Spells & Attack SFX",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/Magic Spells & Attack SFX/FL_GFX_Magic_Spell_Attack_Sfx_01.wav",
       "license": "direct",
       "tags": [
@@ -135,10 +135,10 @@
       ]
     },
     {
-      "id": "661a6ee53e9434df",
+      "id": "d374a7df818ccbf5",
       "score": 0.4866691529750824,
       "via": "clap+tag",
-      "pack": "Kit 02",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/Modern Music Kits/Function Loops - Indie Vibes/Kit 02/FL_DRMB_104_electro_guitar_revers_said_\u0421#Maj.wav",
       "license": "direct",
       "tags": [
@@ -164,10 +164,10 @@
       "archetypes": []
     },
     {
-      "id": "0a07064b0e7b4ca8",
+      "id": "b489fa33753bf867",
       "score": 0.4818275570869446,
       "via": "clap+tag",
-      "pack": "FL_NHW_ONE SHOT DRUMS",
+      "pack": "bt25_ultimatesfxforgames_softwarebundle.7z",
       "inner": "bt25_ultimatesfxforgames_softwarebundle/1984 Retro Music Production Bundle/Function Loops - Neon Highway/FL_NHW_ONE SHOT DRUMS/FL_NHW_CRASH 01.wav",
       "license": "direct",
       "tags": [
@@ -192,12 +192,12 @@
       "archetypes": []
     },
     {
-      "id": "f1b39915f793b893",
+      "id": "572773d5fda793eb",
       "score": 0.480688214302063,
       "via": "clap+tag",
-      "pack": "Ice Sound FX Pack Vol. 1.zip",
+      "pack": "Omni/Ice Sound FX Pack Vol. 1.zip",
       "inner": "Ice Sound FX Pack Vol. 1/Cinematic/Ice Riser Slow E.wav",
-      "license": "reference",
+      "license": "restricted",
       "tags": [
         "ice",
         "sound",
@@ -213,28 +213,16 @@
       ]
     }
   ],
-  "used_ids": [
-    "1ab8ea3964e3ccdf",
-    "2e8172de9db472f8",
-    "a5cab30448cc34a8",
-    "b2202583268f3220",
-    "c01f39d271d8b43f",
-    "e84bb0fa73f19715",
-    "1a5c0b28df39d51d",
-    "661a6ee53e9434df",
-    "0a07064b0e7b4ca8",
-    "f1b39915f793b893"
-  ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\relic_sun.wav",
   "sample_rate": 44100,
   "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
   "derived": true,
-  "max_corr": 0.246,
+  "max_corr": 0.218,
   "semitones": -6,
-  "width": 0.961,
+  "width": 1.042,
   "listen": {
-    "match": 0.386,
-    "clean": -1.021,
+    "match": 0.484,
+    "clean": -2.183,
     "faults": []
   }
 }
