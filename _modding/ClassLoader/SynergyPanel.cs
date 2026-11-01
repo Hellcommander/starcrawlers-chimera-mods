@@ -176,7 +176,7 @@ namespace SCClassLoader
             var lines = active.Select(x =>
                 $"<color=#7FE0C8>{x.s.name ?? x.s.id}</color>  <color=#FFD966>level {x.lvl}/{x.s.maxLevel}</color>\n" +
                 Controls(x.s, x.lvl) + "\n" + PricedLine(x.s) +
-                $"<size=85%><color=#9FB7C9>{string.Join(" + ", x.s.trees.Select(Synergies.TreeNames))}</color></size>\n{x.s.description}").ToList();
+                $"<size=85%><color=#9FB7C9>{Synergies.PairText(x.s)}</color></size>\n{x.s.description}").ToList();
             string strain = Synergies.StrainText();
             if (strain != "") lines.Add(strain);
             if (lines.Count == 0) lines.Add("<color=#9FB7C9>No synergies yet. Two trees that work well together give a bonus that grows with the lower of their ranks.</color>");

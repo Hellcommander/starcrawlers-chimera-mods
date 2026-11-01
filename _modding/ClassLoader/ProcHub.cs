@@ -34,6 +34,7 @@ namespace SCClassLoader
         {
             if (Actions.ProcDepth > 0 || Player.instance == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
             PluginHost.Fire(on, Player.instance, other, detail, ally); // first, so procs see what a plugin keeps up to date
+            if (EventBus.On && !EventBus.Listens(Player.instance, on)) return;
             try
             {
                 foreach (Ability a in Player_AbilityControl.instance.GetAbilities())
@@ -57,6 +58,7 @@ namespace SCClassLoader
         {
             if (Actions.ProcDepth > 0 || bearer == null || bearer == Player.instance || bearer.effects == null || Game.Game_isLoading) return;
             PluginHost.Fire(on, bearer, other, detail, null);
+            if (EventBus.On && !EventBus.Listens(bearer, on)) return;
             try
             {
                 foreach (Effect e in bearer.effects.GetEffects().ToList())
@@ -178,6 +180,7 @@ namespace SCClassLoader
         private static void Postfix(Character __instance, Character attacker, int __state)
         {
             if (__instance == null || __instance.health >= __state) return;
+            EventBus.Hurt(__instance);
             if (attacker != null && attacker != Player.instance && attacker.ai != null && attacker.ai.GetTeam() == AI.AI_TEAM.Player)
             {
                 ProcHub.FireOn(attacker, "hit", __instance);

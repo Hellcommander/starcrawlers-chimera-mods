@@ -91,13 +91,14 @@ namespace SCClassLoader
             PortalButton.BindSpecials(Config);
             Retrain.Bind(Config);
             AudioBuffer.Bind(Config);
+            EventBus.Bind(Config);
             ClassRegistry.LoadDefinitions();
             new Harmony(GUID).PatchAll(typeof(Plugin).Assembly);
             PluginHost.LoadAll();
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -240,6 +241,8 @@ namespace SCClassLoader
             else if (dev == "synergycost2") Instance.StartCoroutine(DevTestSynergyCost.RunBundled());
             else if (dev == "classsyn") Instance.StartCoroutine(DevTestClassSynergies.Run());
             else if (dev == "allsyn") Instance.StartCoroutine(DevTestClassSynergies.RunAll());
+            else if (dev == "smsyn") Instance.StartCoroutine(DevTestClassSynergies.RunShadow());
+            else if (dev == "statussyn") Instance.StartCoroutine(DevTestStatusSynergies.Run());
             else if (dev == "conditions") Instance.StartCoroutine(DevTestConditions.Run());
             else if (dev == "triggers") Instance.StartCoroutine(DevTestTriggers.Run());
             else if (dev == "traps") Instance.StartCoroutine(DevTestTraps.Run());
@@ -291,6 +294,7 @@ namespace SCClassLoader
             else if (dev == "aiportrait") Instance.StartCoroutine(DevTestAiPortrait.Run());
             else if (dev == "aiportrait2") Instance.StartCoroutine(DevTestAiPortrait.RunAllowed());
             else if (dev == "grid") Instance.StartCoroutine(DevTestGrid.Run());
+            else if (dev == "busstress") Instance.StartCoroutine(DevTestBus.Run());
             else if (dev == "realtime") Instance.StartCoroutine(DevTestRealtime.Run());
             else if (dev == "realtime2") Instance.StartCoroutine(DevTestRealtime.RunOn());
             else if (dev == "plugins") Instance.StartCoroutine(DevTestPlugins.Run());

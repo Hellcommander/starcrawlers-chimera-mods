@@ -44,6 +44,7 @@ namespace SCClassLoader
                 }
                 armedBreakdown = breakdown;
                 armedUntil = Time.unscaledTime + ArmSeconds;
+                if (strip != null) strip.liveUntil = armedUntil + 0.5f;
                 AudioManager.PlayEvent("event:/UI/UI_Click");
                 Refresh();
             }
@@ -83,6 +84,9 @@ namespace SCClassLoader
             private static List<Character> Pets() =>
                 AI_Manager.instance.GetPlayerMinions().Where(c => PetHandling.IsPet(c) && !Conjoined.IsBody(c)).ToList();
             private float nextRefresh;
+            private EventBus.Watch watch;
+            /// <summary>While a button is armed it counts down by itself, with no event to say so.</summary>
+            internal float liveUntil;
 
             internal void Rebuild()
             {
@@ -140,6 +144,7 @@ namespace SCClassLoader
             {
                 if (Time.unscaledTime < nextRefresh) return;
                 nextRefresh = Time.unscaledTime + 0.25f;
+                if (Time.unscaledTime >= liveUntil && EventBus.Unchanged(ref watch, EventBus.Allies | EventBus.Health | EventBus.Turn)) return;
                 var pets = PetHandling.CommandBar.Value && AI_Manager.instance != null && Player.instance != null ? Pets() : new List<Character>();
                 if (pets.Count != buttons.Count || buttons.Any(b => b == null || b.pet == null || !pets.Contains(b.pet))) Rebuild();
                 else foreach (PetButton b in buttons) b.Refresh();

@@ -188,6 +188,7 @@ namespace SCClassLoader
             public RectTransform rows;
             public bool hovered;
             private float lastChange = -10f, next;
+            private EventBus.Watch watch;
             private string layout = "";
             private readonly List<Row> made = new List<Row>();
 
@@ -208,6 +209,7 @@ namespace SCClassLoader
 
                 if (Time.unscaledTime < next) return;
                 next = Time.unscaledTime + 0.15f;
+                if (EventBus.Unchanged(ref watch, EventBus.Effects | EventBus.Abilities | EventBus.Turn)) return;
                 try
                 {
                     StartPools();

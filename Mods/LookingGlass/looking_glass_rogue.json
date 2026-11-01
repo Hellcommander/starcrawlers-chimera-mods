@@ -133,8 +133,8 @@
                 "actions": [ { "do": "effect", "to": "self", "effect": "@Wonder", "stacks": 2 } ] },
               { "name": "A size slip", "weight": 2,
                 "actions": [ { "do": "if", "when": "Small",
-                  "then": [ { "do": "effect", "to": "self", "effect": "@Grown" } ],
-                  "else": [ { "do": "effect", "to": "self", "effect": "@Shrunk" } ] } ] },
+                  "then": [ { "do": "effect", "to": "self", "effect": "@Grown" }, { "do": "effect", "to": "self", "effect": "@TeaClock" } ],
+                  "else": [ { "do": "effect", "to": "self", "effect": "@Shrunk" }, { "do": "effect", "to": "self", "effect": "@Wonder" } ] } ] },
               { "name": "Only the grin", "weight": 1, "weightPerStack": 1,
                 "actions": [ { "do": "effect", "to": "self", "effect": "@Grinning" } ] } ] } ] },
           { "on": "effectGained", "match": "@Shrunk", "maxPerTurn": 1, "vfx": "LgSizePuff",
@@ -246,7 +246,7 @@
           { "do": "effect", "to": "self", "effect": "@Wonder", "stacks": 2 } ],
         "procs": [
           { "on": "lowHealth", "threshold": 33, "cooldown": 12, "when": { "value": "enemiesNear:1.5", "of": "self", "atLeast": 2 }, "vfx": "LgGrin",
-            "actions": [ { "do": "effect", "to": "self", "effect": "@Shrunk" }, { "do": "effect", "to": "self", "effect": "@Grinning" } ] },
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Shrunk" }, { "do": "effect", "to": "self", "effect": "@Wonder" }, { "do": "effect", "to": "self", "effect": "@Grinning" } ] },
           { "on": "move", "every": 2, "when": "Small", "actions": [ { "do": "effect", "to": "self", "effect": "@Wonder" } ] } ],
         "perk": { "name": "Only the Grin", "cooldownDelta": -2 } } },
 

@@ -99,7 +99,7 @@ namespace SCClassLoader
         {
             switch ((what ?? "").ToLowerInvariant())
             {
-                case "livingbody": return !Swapping && Npcs().Count > 0;
+                case "livingbody": return !Swapping && (Npcs().Count > 0 || NearestCorpse() != null);
                 case "downedbody": return !Swapping && Bodies.Any(b => b.Id != ActiveId && b.Downed);
                 default: return true;
             }
@@ -306,10 +306,59 @@ namespace SCClassLoader
             return true;
         }
 
-        internal static void SwapToNearest(string source)
+        /// <summary>Effects waiting to land on the body you step into: a cast proc runs on the body you're leaving.</summary>
+        internal static readonly List<(ActionSpec action, string classId)> Carried = new List<(ActionSpec, string)>();
+
+        internal static void Carry(ActionSpec a, string classId) => Carried.Add((a, classId));
+
+        private static void LandCarried()
+        {
+            Player p = Player.instance;
+            foreach (var (action, classId) in Carried) Actions.ApplyEffect(action, new ActionContext { caster = p, classId = classId, sourceName = "Trade Bodies" }, p);
+            Carried.Clear();
+        }
+
+        private static int CorpseTag(Corpse c, string tag) => c.tags.FirstOrDefault(t => t != null && t.tagName == tag)?.tagAmount ?? -1;
+
+        private static bool CorpseOf(Corpse c, Body b) => CorpseTag(c, BodyTag) == b.Id && CorpseTag(c, StampTag) == b.Stamp;
+
+        private static List<Corpse> Corpses() => Traverse.Create(AI_Manager.instance).Field("corpses").GetValue<List<Corpse>>() ?? new List<Corpse>();
+
+        /// <summary>The free tile a trade with this corpse lands on: its own, or the nearest beside it if something stands there.</summary>
+        private static NavNode CorpseTile(Corpse c) =>
+            Map.instance.GetNavNodesAt(c.transform.position, 1.5f, validNodesOnly: true)
+                .Where(n => n != null && !n.IsOccupied() && !n.HasDoor() && !n.BlockCheck() && !n.Block_Move)
+                .OrderBy(n => Vector3.Distance(n.transform.position, c.transform.position)).FirstOrDefault();
+
+        /// <summary>The nearest fallen body still lying on this map that you can trade places with.</summary>
+        internal static Corpse NearestCorpse()
+        {
+            if (AI_Manager.instance == null || Map.instance == null || Player.instance == null) return null;
+            return Corpses().Where(c => c != null && !c.isDissolving && Bodies.Any(b => b.Id != ActiveId && b.Downed && CorpseOf(c, b)) && CorpseTile(c) != null)
+                .OrderBy(c => Vector3.Distance(c.transform.position, Player.instance.transform.position)).FirstOrDefault();
+        }
+
+        /// <summary>You can't step into a fallen body, but you can take its place: it comes to where you stood.</summary>
+        private static void TradeWithCorpse(Corpse c, ModAbility skill)
+        {
+            NavNode at = CorpseTile(c);
+            c.transform.position = Player.instance.GetMover().GetCurrentNavNode().transform.position;
+            LandCarried();
+            Game.LOG($"You trade places with what is left of {c.corpseName}.");
+            skill.StartCoroutine(skill.Teleport(at));
+        }
+
+        internal static void SwapToNearest(string source, ModAbility skill)
         {
             Character npc = Npcs().OrderBy(c => Vector3.Distance(c.transform.position, Player.instance.transform.position)).FirstOrDefault();
-            if (npc == null) { Game.LOG($"{source}: no other body is standing with you."); return; }
+            if (npc == null)
+            {
+                Corpse corpse = NearestCorpse();
+                if (corpse != null && skill != null) { TradeWithCorpse(corpse, skill); return; }
+                Carried.Clear();
+                Game.LOG($"{source}: no other body is here with you.");
+                return;
+            }
             Plugin.Instance.StartCoroutine(SwapTo(npc.GetTag(BodyTag), handoff: false, trade: true));
         }
 
@@ -377,6 +426,7 @@ namespace SCClassLoader
                 if (!loaded)
                 {
                     Swapping = false;
+                    Carried.Clear();
                     if (Player.instance != null) Player.instance.RemoveTag("IMMORTAL");
                 }
             }
@@ -427,6 +477,7 @@ namespace SCClassLoader
             Body me = Active;
             Player p = Player.instance;
             if (me == null || p == null) return;
+            LandCarried();
             int xp = me.PendingXp;
             me.PendingXp = 0;
             if (xp > 0) GiveXp(p, xp);
@@ -538,6 +589,11 @@ namespace SCClassLoader
             b.Downed = false;
             b.Hp = Mathf.Max(1, b.HpMax * Mathf.Clamp(pct, 1, 100) / 100);
             b.Pos = null;
+            foreach (Corpse c in Corpses().Where(c => c != null && CorpseOf(c, b)).ToList())
+            {
+                AI_Manager.instance.RemoveCorpse(c);
+                UnityEngine.Object.Destroy(c.gameObject);
+            }
             Game.LOG($"<color=#9FD99F>{source}: {b.Name} is knitted back together.</color>");
             Sync();
         }
@@ -599,7 +655,7 @@ namespace SCClassLoader
                 b.Downed = true;
                 b.Hp = 0;
                 Game.LOG($"<color=#FF7272>{b.Name} goes down.</color>");
-                __instance.AddTag("NOCORPSE");
+                __instance.FLAG_corpseDissolveSpeed = 0f; // it stays lying there, and Trade Bodies can use that
                 Plugin.Instance.StartCoroutine(StrainSoon());
             }
         }

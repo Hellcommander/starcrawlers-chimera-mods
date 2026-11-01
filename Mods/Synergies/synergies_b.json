@@ -211,6 +211,12 @@
                 "to": "self",
                 "effect": "MOD_GunKata@Zone",
                 "ifSelfHas": "MOD_GunKata@Rhythm"
+              },
+              {
+                "do": "effect",
+                "to": "self",
+                "effect": "#Hasted",
+                "ifSelfHas": "MOD_GunKata@Rhythm"
               }
             ]
           }

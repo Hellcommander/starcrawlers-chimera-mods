@@ -863,13 +863,15 @@ skill and perk points, gear, hotbar (all pages) and effects. Inventory, credits,
   it needs **Trade Bodies** (tier 2) ready and uses it. The **Party** tab or `[Conjoined] PartyPanelKey` (F7) hides
   and shows the cards. Switching is a short load: you stand where that body stood, and the one you left takes your
   place. Casting **Trade Bodies** itself also swaps the two bodies' positions: you take over the nearest body, it
-  arrives on your tile, and the body you let go of appears where it stood.
+  arrives on your tile, and the body you let go of appears where it stood. With no body standing, it trades places
+  with the corpse of a companion body instead, while that corpse lasts; you stay in your own body.
 - **Spread Thin:** each other body that's up costs every body 12% damage and 4 max health (tier 5 forgives one).
 - **Falling:** if the body you play would die while another stands, you wake up in that one; the fallen body stays
   down until **Knit Together** (tier 4, 40-turn cooldown) brings it back at half health. With no body left
   standing, death is death.
-- For class makers: actions `swapBody` and `reviveBody` (`amount` = % health), `"stacksOf": "bodies"` (other bodies
-  that are up), and the ability field `"requires": "livingBody"` / `"downedBody"`.
+- For class makers: actions `swapBody` and `reviveBody` (`amount` = % health), `carryToBody` (`effect`, `turns`: for a
+  `cast` proc on the swap skill, lands on the body you step into), `"stacksOf": "bodies"` (other bodies that are up), and
+  the ability field `"requires": "livingBody"` / `"downedBody"`.
 
 ## Retraining
 
@@ -1859,6 +1861,15 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
   include the class (percent less damage, never below 10% of the damage; extra stamina; extra cooldown turns), and any
   can be left out. Once you have that skill, those synergies cost no Synergy Strain, and the skill's tooltip and the
   Synergies tab say so. Turning a synergy down lowers the skill's price too.
+- **Status synergies:** a synergy can hang on a status instead of a partner class. It names the one class that exploits
+  the status, and any other class that causes it makes the synergy, at the lower of the two ranks:
+  `"trees": ["MOD_Vasculist"], "status": ["#Gashed", "EFFECT_Bleed"], "sources": ["SKILLTREE_Blademaster"]`. Classes that
+  cause a status are found in the class files, so a new class that inflicts it joins by itself; `sources` adds trees
+  that can't be read that way, such as vanilla ones. The bundled ones are the **Status Synergies** mod
+  (`Mods/StatusSynergies`): turn it off in the mod manager, or any one of them under Mod Content. They cap at level 3,
+  fire on a 2-turn cooldown, and each spends the status it reads (a `purge` action), trading it for the class's own
+  effect instead of adding to it. A status synergy's skill price, `synergyPenalty`, goes to the exploiting class only.
+  `SCCL_DEVTEST=statussyn` checks them with real casts.
 - **Missing classes:** a synergy naming a class that isn't installed is skipped.
 - **Overriding:** a later mod with the same `id` replaces a synergy, and `"enabled": false` removes it.
 - **For a single ability:** use `ifSkill` on its actions instead (see Brand-new abilities).

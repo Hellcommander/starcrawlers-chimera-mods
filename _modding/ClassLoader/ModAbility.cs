@@ -492,7 +492,7 @@ namespace SCClassLoader
                        .OrderBy(l => (l.transform.position - from).sqrMagnitude).FirstOrDefault();
         }
 
-        private IEnumerator Teleport(NavNode node)
+        internal IEnumerator Teleport(NavNode node)
         {
             caster.isTeleporting = true;
             caster.GetMover().GetCurrentNavNode().ClearOccupant();

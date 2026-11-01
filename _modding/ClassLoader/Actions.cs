@@ -163,7 +163,8 @@ namespace SCClassLoader
                 case "horror": Horrors.Launch(a, ctx, t); break;
                 case "vfx": if (t != null && !string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, t.GetHitFx().position); break;
                 case "raisewall": Walls.Raise(a, ctx, t); break;
-                case "swapbody": Conjoined.SwapToNearest(ctx.sourceName); break;
+                case "swapbody": Conjoined.SwapToNearest(ctx.sourceName, ctx.source as ModAbility); break;
+                case "carrytobody": Conjoined.Carry(a, ctx.classId); break;
                 case "revivebody": Conjoined.ReviveOne(ctx.sourceName, a.amount > 0 ? a.amount : 50); break;
                 case "damage": Damage(a, ctx, t); break;
                 case "heal":
@@ -895,7 +896,8 @@ namespace SCClassLoader
                         return "• " + (a.chance < 100 ? $"{a.chance}%: " : "") + s;
                     }
                 case "detonate": s =$"{who} blows apart on the spot (setting off whatever it carries)"; break;
-                case "swapbody": s ="You take over your nearest other body; the one you leave fights on beside you"; break;
+                case "swapbody": s ="You take over your nearest other body; the one you leave fights on beside you. With none standing, you trade places with a fallen one's corpse"; break;
+                case "carrytobody": s = $"{EffectName(a.effect, classId)} goes with you into the body you step into"; break;
                 case "revivebody": s = $"A fallen body of yours gets back up next to you with {(a.amount > 0 ? a.amount : 50)}% health"; break;
                 case "execute":
                     s = $"<color=#FF7272>{a.amount}%</color> chance to finish {who} outright; bosses, elites and kill squads take {a.elitePercent}% of their max health instead";

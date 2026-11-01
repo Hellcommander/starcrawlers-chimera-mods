@@ -100,6 +100,7 @@ namespace SCClassLoader
             public TextMeshProUGUI tabText;
             public TMP_FontAsset font;
             private float next;
+            private EventBus.Watch watch;
 
             public void OnPointerClick(PointerEventData e) => Toggle();
 
@@ -120,6 +121,7 @@ namespace SCClassLoader
                 tabText.text = Hidden ? "Party +" : "Party -";
                 if (Time.unscaledTime < next) return;
                 next = Time.unscaledTime + 0.25f;
+                if (EventBus.Unchanged(ref watch, EventBus.Health | EventBus.Allies | EventBus.Effects | EventBus.Turn)) return;
                 var bodies = Conjoined.Bodies;
                 var have = cards.GetComponentsInChildren<Card>(true).ToList();
                 if (have.Count != bodies.Count || have.Select(c => c.bodyId).Except(bodies.Select(b => b.Id)).Any())

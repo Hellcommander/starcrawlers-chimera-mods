@@ -101,7 +101,7 @@ namespace SCClassLoader
         internal const string NeedsOk = "waiting for your OK to run its code";
 
         /// <summary>The level of the plugin API (the Breachwork namespace); goes up when plugins can do more ("apiLevel" in mod.json).</summary>
-        public const int ApiLevel = 4;
+        public const int ApiLevel = 5;
 
         private static readonly Dictionary<string, ModPack> byFolder = new Dictionary<string, ModPack>(StringComparer.OrdinalIgnoreCase);
 

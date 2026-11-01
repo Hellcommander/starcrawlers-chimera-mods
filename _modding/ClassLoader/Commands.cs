@@ -280,6 +280,7 @@ namespace SCClassLoader
         {
             string key = KeyOf(c);
             if (key == null || Saved == null) return;
+            EventBus.Mark(EventBus.Orders);
             if ((o == Order.Focus || o == Order.Unleash) && !Hostile(target)) { if (!quiet) Game.LOG($"{Name(o)} on what? Aim at an enemy, or hit one first."); return; }
             if (o == Order.MoveTo && spot == null) { if (!quiet) Game.LOG("Move where? Aim at the floor."); return; }
             if (o == Order.Unleash)
@@ -600,10 +601,12 @@ namespace SCClassLoader
             /// <summary>Each button's label with its key, kept current when keys are rebound.</summary>
             private readonly List<(TextMeshProUGUI label, string name, int key)> keyLabels = new List<(TextMeshProUGUI, string, int)>();
             private float nextRefresh;
+            private EventBus.Watch watch;
+            private bool wasShown;
             private RectTransform row;
             private TextMeshProUGUI groupLabel;
 
-            internal static void Refresh() { if (bar != null) bar.nextRefresh = 0f; }
+            internal static void Refresh() { EventBus.Mark(EventBus.Orders); if (bar != null) bar.nextRefresh = 0f; }
 
             private void Build()
             {
@@ -675,6 +678,9 @@ namespace SCClassLoader
             {
                 if (Time.unscaledTime < nextRefresh) return;
                 nextRefresh = Time.unscaledTime + 0.3f;
+                bool same = BarShown == wasShown;
+                wasShown = BarShown;
+                if (EventBus.Unchanged(ref watch, EventBus.Allies | EventBus.Orders | EventBus.Turn) && same) return;
                 var list = ShowBar.Value && BarShown && Player.instance != null && !Game.Game_isLoading ? Companions() : new List<Character>();
                 bool show = list.Count > 0;
                 if (show && buttons.Count == 0) Build();

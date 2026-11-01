@@ -443,9 +443,13 @@
       ]
      },
      {
-      "on": "effectGained",
-      "match": "MOD_Ichorborn@Frenzy",
+      "on": "lowHealth",
+      "threshold": 25,
       "chance": 60,
+      "when": {
+       "has": "MOD_Ichorborn@Frenzy",
+       "of": "self"
+      },
       "actions": [
        {
         "do": "effect",
@@ -568,7 +572,7 @@
       },
       "actions": [
        {
-        "do": "effect",
+        "do": "carryToBody",
         "to": "self",
         "effect": "MOD_ShadowMagus@Unlit",
         "turns": 2

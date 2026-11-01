@@ -101,6 +101,13 @@ namespace Breachwork
         /// </summary>
         public void OnData(string name, Action<PluginData> read) => PluginHost.AddDataReader(Owner, name, read);
 
+        /// <summary>
+        /// Hears a topic on the event bus, on the main thread, once the player has turned the bus on (needs apiLevel 5). Topics are your
+        /// own, or "bus:effects", "bus:abilities", "bus:allies", "bus:health", "bus:orders", "bus:reactions", "bus:turn" and
+        /// "bus:settings", which come at most once a frame. Returns what to call to stop hearing it.
+        /// </summary>
+        public Action Subscribe(string topic, Action<object> handler) => EventBus.Subscribe(Owner, topic, handler);
+
         /// <summary>A button on the character picture picker (needs apiLevel 2). Gets true on the creation screen, false on the character sheet.</summary>
         public void AddPortraitButton(string label, Action<bool> click) => PluginHost.AddPortraitButton(Owner, label, click);
 
@@ -241,6 +248,16 @@ namespace Breachwork
         public static int Level => ModPacks.ApiLevel;
         /// <summary>The running loader's version.</summary>
         public static string LoaderVersion => Plugin.Version;
+
+        /// <summary>Whether the player has turned the event bus on ([Performance] EventBus, needs apiLevel 5).</summary>
+        public static bool EventBusOn => EventBus.On;
+
+        /// <summary>
+        /// Queues a message for <see cref="PluginContext.Subscribe"/> handlers, from any thread (needs apiLevel 5). Handlers run on
+        /// the main thread in a later frame. A worker thread must send plain data, never a Character, Item or other game object.
+        /// False when the bus is off or the queue is full, and the message is gone.
+        /// </summary>
+        public static bool Publish(string topic, object data = null) => EventBus.Publish(topic, data);
 
         /// <summary>Whether a mod is loaded this session.</summary>
         public static bool ModLoaded(string id)

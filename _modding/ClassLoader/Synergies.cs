@@ -23,6 +23,11 @@ namespace SCClassLoader
         public string icon;
         /// <summary>The trees needed: vanilla ids, mod class ids or display names; "A|B" = either one.</summary>
         public List<string> trees = new List<string>();
+        /// <summary>A status synergy names one tree, the one that exploits these effects: any other class that causes
+        /// one of them is its second tree. Those classes are found in the class files, so new ones join by themselves.</summary>
+        public List<string> status;
+        /// <summary>Status synergy: trees that cause the status but can't be found that way (vanilla trees).</summary>
+        public List<string> sources;
         public int maxLevel = 5;
         public bool enabled = true;
         /// <summary>The effect on you. Stats, resists and the per-stack multipliers count once per level; in its
@@ -35,6 +40,7 @@ namespace SCClassLoader
         public List<AbilitySpec> grants;
 
         [JsonIgnore] public ModPack pack;
+        [JsonIgnore] public bool IsStatus => status != null && status.Count > 0;
     }
 
     internal static class Synergies
@@ -80,6 +86,11 @@ namespace SCClassLoader
                         All.RemoveAll(x => string.Equals(x.id, s.id, StringComparison.OrdinalIgnoreCase)); // a later mod replaces it
                         if (!s.enabled) continue;
                         s.trees = (s.trees ?? new List<string>()).Where(t => !string.IsNullOrEmpty(t)).ToList();
+                        if (s.IsStatus)
+                        {
+                            if (s.trees.Count != 1) { Plugin.Log.LogError($"{file}: status synergy '{s.id}' needs exactly one tree"); continue; }
+                            s.trees.Add(Feeders(s));
+                        }
                         if (s.trees.Count < 2) { Plugin.Log.LogError($"{file}: synergy '{s.id}' needs at least two trees"); continue; }
                         // a synergy naming a class that isn't installed simply never comes up
                         if (s.trees.Any(t => Resolve(t).Count == 0)) { Plugin.Log.LogInfo($"Synergy '{s.id}' skipped: {string.Join(" + ", s.trees)} not all installed"); continue; }
@@ -92,6 +103,38 @@ namespace SCClassLoader
             if (All.Count > 0) Plugin.Log.LogInfo($"Synergies: {All.Count} ({string.Join(", ", All.Select(s => s.id))})");
         }
 
+        /// <summary>The "A|B" tree spec of every other class that causes the synergy's status.</summary>
+        private static string Feeders(SynergySpec s)
+        {
+            var ids = new HashSet<string>(s.status.Select(x => Actions.EffectId(x, null)));
+            var names = (s.sources ?? new List<string>()).ToList();
+            foreach (ModPack p in ModPacks.Ordered)
+                foreach (var (_, obj) in p.classObjs)
+                    if ((string)obj["id"] is string id && Causes(obj, ids, id)) names.Add(id);
+            var mine = Resolve(s.trees[0]);
+            return string.Join("|", names.Distinct().Where(n => Resolve(n).Any(t => !mine.Contains(t))));
+        }
+
+        /// <summary>Does the class put one of these on someone? A debuff it only takes itself, as a price, doesn't count.</summary>
+        private static bool Causes(JObject cls, HashSet<string> ids, string classId)
+        {
+            foreach (JObject o in cls.DescendantsAndSelf().OfType<JObject>())
+            {
+                if (!(o["effect"] is JValue v) || v.Type != JTokenType.String || !ids.Contains(Actions.EffectId((string)v, classId))) continue;
+                if (string.Equals((string)o["do"], "purge", StringComparison.OrdinalIgnoreCase)) continue;
+                bool debuff = !ModEffect.Specs.TryGetValue(Actions.EffectId((string)v, classId), out var rt) || rt.spec.debuff;
+                if (!debuff || !string.Equals((string)o["to"], "self", StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>"any class that causes Burning"</summary>
+        private static string FeederText(SynergySpec s) => "any class that causes " + Actions.EffectNameOf(s.status[0], EffectClass);
+
+        /// <summary>What makes the synergy, for its effect, the log and the Synergies tab.</summary>
+        internal static string PairText(SynergySpec s) =>
+            s.IsStatus ? $"{TreeNames(s.trees[0])} + {FeederText(s)}" : string.Join(" + ", s.trees.Select(TreeNames));
+
         private static void RegisterEffects()
         {
             foreach (var group in All.GroupBy(s => s.pack))
@@ -99,7 +142,7 @@ namespace SCClassLoader
                 var effects = new List<EffectSpec>();
                 foreach (SynergySpec s in group)
                 {
-                    string pair = string.Join(" + ", s.trees.Select(TreeNames));
+                    string pair = PairText(s);
                     EffectSpec b = s.bonus ?? new EffectSpec();
                     b.id = s.id;
                     b.name = "Synergy: " + (s.name ?? s.id);
@@ -236,7 +279,8 @@ namespace SCClassLoader
         private static IEnumerable<ModAbility> Priced =>
             (Player_AbilityControl.instance?.GetAbilities() ?? new List<Ability>()).OfType<ModAbility>().Where(a => a.Spec?.synergyPenalty != null);
 
-        private static bool Has(SynergySpec s, string classId) => s.trees.Any(t => Resolve(t).Any(x => x.internalName == classId));
+        /// <summary>Only the exploiting class of a status synergy: any number of classes could be feeding it.</summary>
+        private static bool Has(SynergySpec s, string classId) => s.trees.Take(s.IsStatus ? 1 : s.trees.Count).Any(t => Resolve(t).Any(x => x.internalName == classId));
 
         /// <summary>The skills of yours that pay for this synergy with their own price instead of Synergy Strain.</summary>
         internal static List<ModAbility> PricedBy(SynergySpec s) => Priced.Where(a => Has(s, a.ClassId)).ToList();
@@ -358,7 +402,7 @@ namespace SCClassLoader
                     foreach (Character c in minions) Keep(c, AlliesId(s), lvl);
                 if (!announce || Game.Game_isLoading || lvl <= before) continue;
                 string name = $"<color=#7FE0C8>{s.name ?? s.id}</color>";
-                Game.LOG(before == 0 ? $"Synergy: {name} ({string.Join(" + ", s.trees.Select(TreeNames))}). {s.description}" : $"Synergy {name} grows to level {lvl}.");
+                Game.LOG(before == 0 ? $"Synergy: {name} ({PairText(s)}). {s.description}" : $"Synergy {name} grows to level {lvl}.");
             }
             int strain = StrainStacks(levels), strainBefore = Keep(p, StrainId, strain);
             changed |= strainBefore != strain;
@@ -506,9 +550,13 @@ namespace SCClassLoader
             var mine = Involving(tree).ToList();
             if (mine.Count == 0) return "";
             if (!picked.Contains(tree)) picked = picked.Concat(new[] { tree }).ToList();
-            string Partner(SynergySpec s) => string.Join(" + ", s.trees.Where(spec => !Matches(tree, spec)).Select(TreeNames));
+            bool Feeds(SynergySpec s) => s.IsStatus && !Matches(tree, s.trees[0]);
+            string Partner(SynergySpec s) => !s.IsStatus ? string.Join(" + ", s.trees.Where(spec => !Matches(tree, spec)).Select(TreeNames))
+                : Feeds(s) ? TreeNames(s.trees[0]) : FeederText(s);
             var lit = mine.Where(s => MadeBy(s, picked)).ToList();
-            var rest = mine.Except(lit).ToList();
+            // a class can feed many status synergies: those it isn't part of yet share one line
+            var feeds = mine.Except(lit).Where(Feeds).ToList();
+            var rest = mine.Except(lit).Except(feeds).ToList();
             var lines = new List<string>();
             const int full = 6;
             // the game font has no check-mark glyph: active ones say so in words
@@ -516,6 +564,8 @@ namespace SCClassLoader
             foreach (SynergySpec s in rest.Take(Math.Max(0, full - lit.Count))) lines.Add($"<color=#FFD15C>{s.name}</color> <color=#9FB7C9>(with {Partner(s)})</color>{(brief ? "" : "\n" + s.description)}");
             var more = rest.Skip(Math.Max(0, full - lit.Count)).ToList();
             if (more.Count > 0) lines.Add($"<color=#9FB7C9>Also combines with {string.Join(", ", more.Select(Partner).Distinct())}.</color>");
+            if (feeds.Count > 0) lines.Add($"<color=#9FB7C9>What it inflicts also feeds {string.Join(", ", feeds.Select(Partner).Distinct())}.</color>");
+            if (lines.Count == 0) return "";
             return "<b>Synergies</b>\n" + string.Join("\n<size=40%>\n</size>", lines);
         }
     }

@@ -37,6 +37,8 @@ namespace SCClassLoader
         internal static void SetKeepOthers(string effectId, bool on) { if (defs.TryGetValue(effectId, out Def d)) d.keepOthers = on; }
         internal static bool KeepsOthers(string effectId) => defs.TryGetValue(effectId, out Def d) && d.keepOthers;
 
+        internal static bool IsForm(string effectId) => defs.ContainsKey(effectId);
+
         internal static bool IsKitAbility(string internalName) => defs.Values.Any(d => d.kit.Contains(internalName));
 
         // ---- runtime ------------------------------------------------------------------------------------------
@@ -46,6 +48,7 @@ namespace SCClassLoader
         private static readonly List<Ability> allowed = new List<Ability>();
         /// <summary>Kit abilities already made, so their cooldowns carry over between transformations.</summary>
         private static readonly Dictionary<string, ModAbility> built = new Dictionary<string, ModAbility>();
+        private static EventBus.Watch watch;
         private static float nextCheck;
 
         /// <summary>The layout the transformation replaced (what the save gets), or null when not transformed.</summary>
@@ -64,6 +67,7 @@ namespace SCClassLoader
             if (p == null || hud == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
             if (active != null && hud != activeHud) Drop(); // a rebuilt HUD already shows the saved, normal layout
             if (Game.RESOLVING || Game.TARGETING || hud.GetDraggingItem() != null) return;
+            if (EventBus.Unchanged(ref watch, EventBus.Effects)) return;
 
             Def want = null;
             if (!p.GetIsDead() && p.effects != null)

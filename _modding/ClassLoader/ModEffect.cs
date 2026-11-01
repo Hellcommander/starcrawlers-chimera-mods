@@ -95,6 +95,7 @@ namespace SCClassLoader
             int before = Stacks;
             chargeCount = Mathf.Clamp(Stacks + n, 1, Mathf.Max(MaxStacks, Stacks));
             ScaleToStacks();
+            if (target == Player.instance) EventBus.Mark(EventBus.Effects);
             foreach (ThresholdSpec th in rt.spec.thresholds ?? new List<ThresholdSpec>())
                 if (before < th.at && chargeCount >= th.at) RunGroup(th.actions, th.radius, th.vfx, th.sound, th.message, ctx);
             if (rt.spec.burstAt > 0 && chargeCount >= rt.spec.burstAt) Burst(ctx);
@@ -114,6 +115,7 @@ namespace SCClassLoader
             }
             chargeCount = Stacks - n;
             ScaleToStacks();
+            if (target == Player.instance) EventBus.Mark(EventBus.Effects);
         }
 
         /// <summary>Sets the stack count outright (code-driven effects such as Strain); no thresholds or bursts.</summary>
@@ -124,6 +126,7 @@ namespace SCClassLoader
             if (rt == null || n == Stacks) return;
             chargeCount = n;
             ScaleToStacks();
+            if (target == Player.instance) EventBus.Mark(EventBus.Effects);
         }
 
         private float DealtMult => rt.spec.damageDealtMult + rt.spec.damageDealtPerStack * (MaxStacks > 1 ? Stacks : 1);

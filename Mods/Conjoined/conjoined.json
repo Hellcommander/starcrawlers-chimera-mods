@@ -21,7 +21,7 @@
 
     { "attributes": { "Agility": 1 },
       "newAbility": {
-        "name": "Trade Bodies", "icon": "icons/trade_bodies.png", "description": "Trade places with the nearest of your other bodies and take it over: it arrives where you stand, and the body you let go of takes its spot and keeps fighting. Switching from the party panel leaves everyone where they are.",
+        "name": "Trade Bodies", "icon": "icons/trade_bodies.png", "description": "Trade places with the nearest of your other bodies and take it over: it arrives where you stand, and the body you let go of takes its spot and keeps fighting. With none left standing, you trade places with the corpse of a fallen one, for as long as it lies there. Switching from the party panel leaves everyone where they are.",
         "target": "self", "instant": true, "cooldown": 6, "requires": "livingBody",
         "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
         "actions": [ { "do": "swapBody" } ],

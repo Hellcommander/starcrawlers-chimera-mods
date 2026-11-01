@@ -105,11 +105,12 @@ namespace SCClassLoader
                 armed.RemoveAt(0);
             }
             armed.Add(new Armed { abilityId = src.internalName, armIndex = idx, charges = Math.Max(1, s.charges), turns = Math.Max(1, s.turns), spec = s, classId = ctx.classId });
+            EventBus.Mark(EventBus.Reactions);
             Save();
             Game.LOG($"<color=#7FE0FF>{s.name} armed</color> ({Math.Max(1, s.charges)}x, {Math.Max(1, s.turns)} turns): {TriggerText(s)}.");
         }
 
-        internal static void Clear() { Ensure(); armed.Clear(); queue.Clear(); Save(); }
+        internal static void Clear() { Ensure(); armed.Clear(); queue.Clear(); EventBus.Mark(EventBus.Reactions); Save(); }
 
         // ---- triggers -------------------------------------------------------------------------------------------
 
@@ -204,6 +205,7 @@ namespace SCClassLoader
             catch (Exception e) { Plugin.Log.LogError($"Reaction {r.spec.name}: {e}"); }
             finally { resolving = false; }
             if (r.charges <= 0) armed.Remove(r);
+            EventBus.Mark(EventBus.Reactions);
             Save();
             return true;
         }

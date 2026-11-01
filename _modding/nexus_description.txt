@@ -3,59 +3,27 @@
 
 [line]
 
-[size=5][b]Description[/b][/size]
+[size=5][b]What Breachwork adds[/b][/size]
 
-This is a large expansion for [b]StarCrawlers Chimera[/b], built to give every run more to play with. It adds [b]59 new classes[/b] to mix into your 7-tree build. Each is a full skill tree with its own abilities, stack mechanic and art. None of them borrow vanilla abilities, so you can combine them freely with each other and with the vanilla trees.
-
-Around the classes, it brings back what the first StarCrawlers had and Chimera left out:
+Breachwork is a large content expansion for [b]StarCrawlers Chimera[/b]. Extract it into the game folder, start a new character, and you have far more to build, more places to go and more that wants you dead.
 [list]
+[*][b]59 new classes[/b] to mix into your 7-tree build, next to vanilla trees or each other. Become a lightning duelist, rebuild yourself in the shape of what you eat, wire a room with traps, or play one mind in four bodies.
+[*][b]253 synergies:[/b] pairs of trees work together when you take both.
 [*][b]Side areas:[/b] breaches on Chimera's floors lead to freshly generated places with anomalies, objectives and sealed vaults.
-[*][b]Factions:[/b] five factions from outside the building hire you for jobs, track your reputation and come after you when you cross them.
-[*][b]New enemies:[/b] ten of them, each with its own skills, model and animations.
-[*][b]Crew:[/b] hireable party members who wear the gear you give them and take orders.
+[*][b]Five factions[/b] hire you for jobs, track your reputation and come after you when you cross them.
+[*][b]Ten new enemies[/b], each with its own skills, model and animations.
+[*][b]Crew:[/b] hire party members who wear the gear you give them and take orders.
+[*][b]The Ichor Deep:[/b] beat Cerberus and stay, descending into an endless side area that gets harder and richer with every depth.
+[*][b]Skill reshaping:[/b] passives, stances and runes rewrite your other skills, so an attack from one class can become a grenade or a buried charge.
+[*][b]Quality of life:[/b] a crafting window, class search, retraining, character portraits, hotbar and stash pages, a death recap, a Graveyard, diagonal movement, a third-person dash camera and an in-game Mod Settings page.
+[*][b]More than twenty fixes[/b] for bugs in the base game, plus an optional rebalance of the Rogue Modder.
 [/list]
 
-Beating Cerberus no longer has to end the run: the credits roll in game, and then you can stay and descend into [b]the Ichor Deep[/b], an endless side area that gets harder and richer with every depth.
+[b]Getting started:[/b] nothing else to download, your existing characters keep working, and you can switch off any part of the pack, down to a single class, item or synergy. New classes need a new character. Full steps are under [b]Installation instructions[/b] below.
 
-On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, class search, retraining, character pictures and portraits, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
-
-Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML with no code, and mods can go further with sandboxed Lua scripts or C# plugins.
+[b]Modders:[/b] everything runs on the Breachwork Loader, a BepInEx plugin and full modding framework. See [b]For modders[/b] further down.
 
 [quote][b]Unofficial.[/b] This pack is not made or endorsed by Juggernaut Games. Back up your saves before installing (they are in [i]%USERPROFILE%\AppData\LocalLow\Juggernaut Games\StarCrawlers Chimera[/i]).[/quote]
-
-[line]
-
-[size=5][b]Installation instructions[/b][/size]
-
-This is a manual install: the archive is laid out like the game folder.
-
-[b]Fresh install[/b]
-[list=1]
-[*]Find the game folder: in Steam, right-click [b]StarCrawlers Chimera > Manage > Browse local files[/b]. It is the folder that holds [i]StarCrawlers Chimera.exe[/i].
-[*]Extract everything in the [b]Breachwork[/b] .7z archive into that folder (with 7-Zip, or Windows 11's built-in Extract All) and let it merge the folders. You should end up with [i]BepInEx\[/i], [i]Mods\[/i], [i]winhttp.dll[/i], [i]doorstop_config.ini[/i] and [i]BreachworkModManager.exe[/i] next to the game's .exe.
-[*]Start the game. The first start takes a little longer while BepInEx sets itself up.
-[*]Start a new character. The new classes are in their archetype columns (Muscle, Guile, Intellect) on the [b]Select Your Skills[/b] screen. When there are more than four rows, the grid scrolls with the mouse wheel, the scrollbar or a controller.
-[/list]
-
-[b]Updating[/b]
-Extract the new archive over the old one and let it overwrite. Your mod choices, load order and settings are kept. Pages 2 and up of your stash are kept too, because they're stored with your saves, not in the game folder. An old [i]ChimeraModManager.exe[/i] from an earlier release is removed for you on the next start.
-
-[b]Turning mods on and off[/b]
-[list]
-[*][b]In game:[/b] [b]Mods[/b] on the title screen lists every mod with an On/Off switch. Selecting one shows its description, what it needs and which of your saves use its classes. Changes apply after a restart; [b]Restart Now[/b] does it for you.
-[*][b]Outside the game:[/b] run [i]BreachworkModManager.exe[/i] while the game is closed. Tick mods on or off, drag them to change the load order, and install other people's mods from a .zip or a folder. [b]Play[/b] starts the game.
-[*][b]Single entries:[/b] [b]Options > Mod Settings > Mod Content[/b] lets you turn off one class, item, synergy, faction or side area kind without turning off the whole mod.
-[/list]
-
-[b]Settings[/b]
-Every setting is in [b]Options > Mod Settings[/b], on the title screen and in game, with toggles, number steppers, hotkey binding and a reset button. They are also saved in [i]BepInEx\config\arendeth.starcrawlers.classloader.cfg[/i].
-
-[b]Uninstalling[/b]
-[list]
-[*]To start the game without mods, delete [i]winhttp.dll[/i] and [i]doorstop_config.ini[/i] from the game folder.
-[*]To remove everything, also delete the [i]BepInEx[/i] and [i]Mods[/i] folders and [i]BreachworkModManager.exe[/i].
-[*]Leave any side area before you uninstall, because a save made inside one needs the mod to load.
-[/list]
 
 [line]
 
@@ -149,7 +117,13 @@ Body-first classes built on movement, grabs and thrown things.
 
 [b]Boss Looks[/b] is a small extra mod: classes made from a boss's attacks, such as Ichorborn, wear that boss's own effects, read from your installed game. Turn it off and they use their own.
 
-[size=4][b]2. Skill reshaping[/b][/size]
+[size=4][b]2. Skill Synergies[/b][/size]
+
+[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without.
+
+Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
+
+[size=4][b]3. Skill reshaping[/b][/size]
 
 Passives, stances, one-shot charges and socketed runes can rewrite other skills. A skill can change its delivery (trap, grenade, walking bomb, drifter, nova, line, cone, area, chain or scatter), its element, its damage type, its effects and its behavior, and the tooltip and aiming follow. It keeps its own scaling.
 [list]
@@ -157,7 +131,7 @@ Passives, stances, one-shot charges and socketed runes can rewrite other skills.
 [*][b]Rune matrix augments:[/b] rune casters such as Flux Savant spend a shared pool on delivery and behavior changes, and take flaws that give points back.
 [/list]
 
-[size=4][b]3. Breaches and Echoes: side areas[/b][/size]
+[size=4][b]4. Breaches and Echoes: side areas[/b][/size]
 
 Each new floor has a 60% chance of a purple [b]breach pad[/b] somewhere off the main rooms. Stepping on it takes you out of Chimera into a place generated for that breach, with its own layout, lighting and fog. Enemies and loot match your current floor, and the room you arrive in is always clear.
 
@@ -185,20 +159,6 @@ Each new floor has a 60% chance of a purple [b]breach pad[/b] somewhere off the 
 [b]Searching:[/b] crates, lockers and cabinets are real containers. A handful in each place hold something, some locked and, deeper down, maybe a mimic; the rest are already picked clean.
 
 [b]Saving:[/b] you can save and quit inside, and the same layout comes back. The Apartment portal works there too. Chimera's own floors are unchanged apart from the pad itself. A brightness setting turns generated places up or down if you find them too dark.
-[/spoiler]
-
-[size=4][b]4. After the ending: credits and the Ichor Deep[/b][/size]
-
-Beat Cerberus and the credits roll right there, the game's own and then the mods'. Then you choose: [b]return to the title[/b] as in vanilla, or [b]stay and descend[/b]. The arena's locks come off, the Apartment Portal works again, and a green breach opens beside you into [b]the Ichor Deep[/b].
-
-[spoiler]
-[list]
-[*][b]Endless:[/b] each layer is a new generated place or an echo of any floor, with its own roster and anomalies, and a rift one depth down. Start at depth 1 or resume at the deepest depth you've reached.
-[*][b]Harder:[/b] depth 1 is as dangerous as the final floor. Every depth adds 15% to enemy stats and 20% to their health, raises their level and XP, and makes elites more common. One more hard anomaly joins every third depth.
-[*][b]Richer:[/b] caches hold more items the deeper you go, Epic from depth 3 and Legendary from depth 6, and vaults gain a grade every two depths.
-[*][b]Scored:[/b] your deepest depth counts toward your Graveyard score.
-[*][b]Optional:[/b] the per-depth percentages can be changed, and both the in-game credits and the Ichor Deep can be turned off.
-[/list]
 [/spoiler]
 
 [size=4][b]5. Outside Interests: factions[/b][/size]
@@ -262,24 +222,24 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 [*][b]Traps:[/b] your allies don't walk onto live traps you can see, and crew and Conjoined bodies next to one try to disarm it when their odds are good.
 [/list]
 
-[size=4][b]8. Skill Synergies[/b][/size]
+[size=4][b]8. After the ending: credits and the Ichor Deep[/b][/size]
 
-[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without.
+Beat Cerberus and the credits roll right there, the game's own and then the mods'. Then you choose: [b]return to the title[/b] as in vanilla, or [b]stay and descend[/b]. The arena's locks come off, the Apartment Portal works again, and a green breach opens beside you into [b]the Ichor Deep[/b].
 
-Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
-
-[size=4][b]9. Rogue Modder rebalance[/b][/size]
-
-The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mod that could never fail, and Item (Re)Designer as a free reroll. With the rebalance on (the default):
+[spoiler]
 [list]
-[*]Mods per item come with Modder rank: 1 at ranks 1-2, 2 at ranks 3-4, 3 at rank 5.
-[*]Each mod adds 1 + rank/2 to a random stat.
-[*]The 1st, 2nd and 3rd mod on an item fail 10%, 30% and 50% of the time, and a failure takes the same amount off.
-[*]Item (Re)Designer keeps the mod counts, so redesign first, then mod.
-[*]Gear modded before keeps its stats. Turn the option off for the vanilla rules.
+[*][b]Endless:[/b] each layer is a new generated place or an echo of any floor, with its own roster and anomalies, and a rift one depth down. Start at depth 1 or resume at the deepest depth you've reached.
+[*][b]Harder:[/b] depth 1 is as dangerous as the final floor. Every depth adds 15% to enemy stats and 20% to their health, raises their level and XP, and makes elites more common. One more hard anomaly joins every third depth.
+[*][b]Richer:[/b] caches hold more items the deeper you go, Epic from depth 3 and Legendary from depth 6, and vaults gain a grade every two depths.
+[*][b]Scored:[/b] your deepest depth counts toward your Graveyard score.
+[*][b]Optional:[/b] the per-depth percentages can be changed, and both the in-game credits and the Ichor Deep can be turned off.
 [/list]
+[/spoiler]
 
-[size=4][b]10. Quality of life[/b][/size]
+[size=4][b]9. Quality of life[/b][/size]
+Crafting, class search, retraining, your own character portraits, hotbar and stash pages, diagonal steps, a death recap and much more.
+
+[spoiler]
 [list]
 [*][b]Crafting window:[/b] a real recipe list with what you carry and [b]Craft x5[/b], on [b]F10[/b] or the [b]Craft[/b] tab in the Apartment. Crafting skills open it in the field.
 [*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, and it knows stat names and abbreviations, so "crit" or "recognition" finds the classes that offer it. Hovering a result says where it matched.
@@ -307,10 +267,12 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [*][b]Character names:[/b] up to 32 characters (or 64), with the case you type.
 [*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking. Skill tooltips now say where a stack stops.
 [/list]
+[/spoiler]
 
-[size=4][b]11. Vanilla bug fixes[/b][/size]
+[size=4][b]10. Vanilla bug fixes[/b][/size]
+More than twenty fixes, from the "UH OH!" turn freeze to the Apartment locker losing items. Each fix can be turned off in Mod Settings.
 
-Each fix can be turned off in Mod Settings.
+[spoiler]
 [list]
 [*][b]"UH OH! Something went wrong during the turn":[/b] a skill that hits an error now stops cleanly and the turn carries on, with no more 20-second freezes or pressing K.
 [*][b]Apartment locker:[/b] no longer duplicates or loses items, Sort only rearranges, and sort by value works.
@@ -335,6 +297,18 @@ Each fix can be turned off in Mod Settings.
 [*]Bosses count as elites for perks that reward elites.
 [/list]
 [/list]
+[/spoiler]
+
+[size=4][b]11. Rogue Modder rebalance[/b][/size]
+
+The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mod that could never fail, and Item (Re)Designer as a free reroll. With the rebalance on (the default):
+[list]
+[*]Mods per item come with Modder rank: 1 at ranks 1-2, 2 at ranks 3-4, 3 at rank 5.
+[*]Each mod adds 1 + rank/2 to a random stat.
+[*]The 1st, 2nd and 3rd mod on an item fail 10%, 30% and 50% of the time, and a failure takes the same amount off.
+[*]Item (Re)Designer keeps the mod counts, so redesign first, then mod.
+[*]Gear modded before keeps its stats. Turn the option off for the vanilla rules.
+[/list]
 
 [size=4][b]12. Hotkeys[/b][/size]
 All of these can be rebound in Mod Settings.
@@ -352,18 +326,38 @@ All of these can be rebound in Mod Settings.
 [*][b]Left Alt (hold):[/b] character tips
 [/list]
 
-[size=4][b]13. For modders[/b][/size]
+[line]
 
-The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
+[size=5][b]Installation instructions[/b][/size]
+
+This is a manual install: the archive is laid out like the game folder.
+
+[b]Fresh install[/b]
+[list=1]
+[*]Find the game folder: in Steam, right-click [b]StarCrawlers Chimera > Manage > Browse local files[/b]. It is the folder that holds [i]StarCrawlers Chimera.exe[/i].
+[*]Extract everything in the [b]Breachwork[/b] .7z archive into that folder (with 7-Zip, or Windows 11's built-in Extract All) and let it merge the folders. You should end up with [i]BepInEx\[/i], [i]Mods\[/i], [i]winhttp.dll[/i], [i]doorstop_config.ini[/i] and [i]BreachworkModManager.exe[/i] next to the game's .exe.
+[*]Start the game. The first start takes a little longer while BepInEx sets itself up.
+[*]Start a new character. The new classes are in their archetype columns (Muscle, Guile, Intellect) on the [b]Select Your Skills[/b] screen. When there are more than four rows, the grid scrolls with the mouse wheel, the scrollbar or a controller.
+[/list]
+
+[b]Updating[/b]
+Extract the new archive over the old one and let it overwrite. Your mod choices, load order and settings are kept. Pages 2 and up of your stash are kept too, because they're stored with your saves, not in the game folder. An old [i]ChimeraModManager.exe[/i] from an earlier release is removed for you on the next start.
+
+[b]Turning mods on and off[/b]
 [list]
-[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. Passives can turn one stat into another, and mod classes that change gear for good can be kept out of class swaps. There's a shared library of status effects and ability templates to build on.
-[*][b]Content:[/b] items, crafting recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
-[*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures. [i]BreachworkModManager.exe --seal-audio[/i] seals a mod's sounds into an encrypted [i]sounds.pak[/i], for sound packs whose terms require embedded audio.
-[*][b]Lua scripts:[/b] [i]scripts/*.lua[/i] add actions, conditions, numbers and events. They run sandboxed, with no access to files, the internet or the game's code, so they need no OK from the player.
-[*][b]C# plugins:[/b] [i]plugins/*.dll[/i] can reach anything, so a mod with a plugin stays out until the player allows it. Your plugin is your own work, on your own terms.
-[*][b]Portrait tools:[/b] any program can make portraits. Give it a folder with a [i]portrait_tool.json[/i] and it gets a job file with the character's classes, gear and effects. The Portrait Maker's source is included as an example.
-[*][b]Patching:[/b] later mods can patch or replace earlier mods' entries by id.
-[*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
+[*][b]In game:[/b] [b]Mods[/b] on the title screen lists every mod with an On/Off switch. Selecting one shows its description, what it needs and which of your saves use its classes. Changes apply after a restart; [b]Restart Now[/b] does it for you.
+[*][b]Outside the game:[/b] run [i]BreachworkModManager.exe[/i] while the game is closed. Tick mods on or off, drag them to change the load order, and install other people's mods from a .zip or a folder. [b]Play[/b] starts the game.
+[*][b]Single entries:[/b] [b]Options > Mod Settings > Mod Content[/b] lets you turn off one class, item, synergy, faction or side area kind without turning off the whole mod.
+[/list]
+
+[b]Settings[/b]
+Every setting is in [b]Options > Mod Settings[/b], on the title screen and in game, with toggles, number steppers, hotkey binding and a reset button. They are also saved in [i]BepInEx\config\arendeth.starcrawlers.classloader.cfg[/i].
+
+[b]Uninstalling[/b]
+[list]
+[*]To start the game without mods, delete [i]winhttp.dll[/i] and [i]doorstop_config.ini[/i] from the game folder.
+[*]To remove everything, also delete the [i]BepInEx[/i] and [i]Mods[/i] folders and [i]BreachworkModManager.exe[/i].
+[*]Leave any side area before you uninstall, because a save made inside one needs the mod to load.
 [/list]
 
 [line]
@@ -390,13 +384,20 @@ The loader is a modding framework in its own right, and the bundled mods are wri
 [b]Bugs and feedback[/b]
 Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mods/issues]the GitHub issues page[/url] (the in-game Feedback button can fill one in for you), or in the Bugs tab here. Please don't send mod bugs to Juggernaut Games: they can't fix them.
 
-[b]Permissions[/b]
+[line]
+
+[size=5][b]For modders[/b][/size]
+
+The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
 [list]
-[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original work of your own. It may be used with AI tools and training, except the [i]audio_licensed[/i] sounds. The full terms are in [i]Mods\LICENSE.md[/i].
-[*]Please don't reupload the pack unchanged.
-[*]No sound here may be sold as a sound or in an audio pack, even altered. The sounds in [i]audio_licensed[/i] folders may not be used commercially at all and may be shared only as part of these mods. Sounds in [i]sfx[/i] folders need the Noise Alchemy credit below. Game files must never be shared.
-[*]Plugins and Lua scripts that other people write are their authors' own work, on their own terms, and the example plugin and script code is free for any use.
-[*]Juggernaut Games may use anything in this pack in the game, except the [i]audio_licensed[/i] sounds.
+[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. Passives can turn one stat into another, and mod classes that change gear for good can be kept out of class swaps. There's a shared library of status effects and ability templates to build on.
+[*][b]Content:[/b] items, crafting recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
+[*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures. [i]BreachworkModManager.exe --seal-audio[/i] seals a mod's sounds into an encrypted [i]sounds.pak[/i], for sound packs whose terms require embedded audio.
+[*][b]Lua scripts:[/b] [i]scripts/*.lua[/i] add actions, conditions, numbers and events. They run sandboxed, with no access to files, the internet or the game's code, so they need no OK from the player.
+[*][b]C# plugins:[/b] [i]plugins/*.dll[/i] can reach anything, so a mod with a plugin stays out until the player allows it. Your plugin is your own work, on your own terms.
+[*][b]Portrait tools:[/b] any program can make portraits. Give it a folder with a [i]portrait_tool.json[/i] and it gets a job file with the character's classes, gear and effects. The Portrait Maker's source is included as an example.
+[*][b]Patching:[/b] later mods can patch or replace earlier mods' entries by id.
+[*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
 [/list]
 
 [line]
@@ -416,3 +417,15 @@ Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mo
 [b]AI-generated assets:[/b] the icons, 3D models, textures, animations, particle effects and the rendered [i]sfx[/i] sounds were made with my own asset toolkit. It uses Stable Diffusion 3.5 Medium, Stable Audio 3, Stable Fast 3D, TRELLIS.2, Wan2.2, UniRig, CoTracker3 and BiRefNet, with repairs in Blender. Stable Audio only ever worked from Noise Alchemy references, whose terms allow it.
 
 [b]Licensed sounds and AI:[/b] no AI generates or changes the [i]audio_licensed[/i] sounds. They are rebuilt from their pack clips by plain signal processing. A read-only listening model (CLAP) measures the tries and picks the best one; nothing it produces ships, and no pack clip goes into it. The full list with licenses is in [i]Mods\CREDITS.md[/i], and every sound's source is in [i]Mods\AUDIO_CREDITS.md[/i].
+
+[line]
+
+[size=5][b]Permissions[/b][/size]
+
+[list]
+[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original work of your own. It may be used with AI tools and training, except the [i]audio_licensed[/i] sounds. The full terms are in [i]Mods\LICENSE.md[/i].
+[*]Please don't reupload the pack unchanged.
+[*]No sound here may be sold as a sound or in an audio pack, even altered. The sounds in [i]audio_licensed[/i] folders may not be used commercially at all and may be shared only as part of these mods. Sounds in [i]sfx[/i] folders need the Noise Alchemy credit under Shout outs. Game files must never be shared.
+[*]Plugins and Lua scripts that other people write are their authors' own work, on their own terms, and the example plugin and script code is free for any use.
+[*]Juggernaut Games may use anything in this pack in the game, except the [i]audio_licensed[/i] sounds.
+[/list]

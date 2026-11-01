@@ -41,6 +41,7 @@ namespace SCClassLoader
             private Image back;
             private readonly List<Row> rows = new List<Row>();
             private float nextRefresh;
+            private EventBus.Watch watch;
             private string shown;
 
             internal void Build()
@@ -90,6 +91,7 @@ namespace SCClassLoader
             {
                 if (Time.unscaledTime < nextRefresh) return;
                 nextRefresh = Time.unscaledTime + 0.25f;
+                if (EventBus.Unchanged(ref watch, EventBus.Reactions | EventBus.Abilities | EventBus.Effects | EventBus.Turn)) return;
                 bool can = Player.instance != null && !Game.Game_isLoading && Player_AbilityControl.instance != null && CanArm();
                 var list = can ? Reactions.Current : (IReadOnlyList<Reactions.Armed>)new List<Reactions.Armed>();
                 string key = can ? $"{Reactions.Slots}:" + string.Join(";", list.Select(r => $"{r.spec.name}{r.charges}{r.turns}")) : "";

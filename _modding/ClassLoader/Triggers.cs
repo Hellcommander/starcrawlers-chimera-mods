@@ -28,6 +28,7 @@ namespace SCClassLoader
         internal static void Turn()
         {
             ProcHub.TurnCount++;
+            EventBus.NewTurn();
             Counters.Turn();
             Walls.Tick();
             Drifters.Tick();

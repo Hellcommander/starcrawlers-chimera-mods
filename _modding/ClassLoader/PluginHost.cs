@@ -167,7 +167,7 @@ namespace SCClassLoader
 
         // ---- calls into plugins
 
-        private static void Failed(Loaded l, string what, Exception e)
+        internal static void Failed(Loaded l, string what, Exception e)
         {
             if (++l.errors < MaxLoggedErrors) Plugin.Log.LogError($"{l.pack.id}: {what} failed: {e}");
             else if (l.errors == MaxLoggedErrors) Plugin.Log.LogError($"{l.pack.id}: {what} failed: {e}\n{l.pack.id}: that makes {MaxLoggedErrors} errors from this plugin; the rest aren't logged.");
