@@ -260,6 +260,7 @@ namespace SCClassLoader
             else if (dev == "wildcaster") Instance.StartCoroutine(DevTestWildcaster.Run());
             else if (dev == "spellfever") Instance.StartCoroutine(DevTestSpellFever.Run());
             else if (dev == "models") Instance.StartCoroutine(DevTestModels.Run());
+            else if (dev == "spillnode") Instance.StartCoroutine(DevTestSpillnode.Run());
             else if (dev == "itemmodels") Instance.StartCoroutine(DevTestItemModels.Run());
             else if (dev == "loadscreen") Instance.StartCoroutine(DevTestLoadScreen.Run());
             else if (dev == "bodypicker") Instance.StartCoroutine(DevTestBodyPicker.Run());

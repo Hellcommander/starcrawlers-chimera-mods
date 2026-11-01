@@ -303,6 +303,8 @@ namespace SCClassLoader
         public string affects;
         public string fieldName;
         public string look;
+        /// <summary>chain: it only jumps to what the one it leaves can see, never through a wall.</summary>
+        public bool sight;
         public string pulseVfx;
         public bool onEnter = true;
         /// <summary>field: tiles between copies of its look or model (default 1.9; 1 = one on every tile, a palisade of spikes).</summary>

@@ -256,6 +256,43 @@ def spillnode(out):
 
     m.save(os.path.join(out, 'spillnode.obj'), 'Spillnode')
     spillnode_texture(os.path.join(out, 'spillnode.png'))
+    spillnode_bits(os.path.join(os.path.dirname(out.rstrip('/\\')), 'fx', 'spillnode_bits.png'))
+
+
+def spillnode_bits(path, cell=64):
+    """The swarm's sprites, a 4x4 sheet: its nanites are scraps of running code (pixels, brackets, bars, chips)."""
+    s = cell - 1
+    a, b, c, e = cell * .3, cell * .7, cell * .5, 4
+    shapes = [
+        lambda d: d.rectangle([a, a, b, b], fill=255),
+        lambda d: d.rectangle([a, a, b, b], outline=255, width=e),
+        lambda d: (d.rectangle([c - 3, a - 6, c + 3, b + 6], fill=255), d.rectangle([a - 6, c - 3, b + 6, c + 3], fill=255)),
+        lambda d: d.line([(b, a), (a, a), (a, b)], fill=255, width=e),
+        lambda d: d.line([(a, a), (b, a), (b, b), (a, b)], fill=255, width=e),
+        lambda d: (d.rectangle([a, a, b, a + 7], fill=255), d.rectangle([a, b - 7, b, b], fill=255)),
+        lambda d: [d.rectangle([x, c - 4, x + 7, c + 3], fill=255) for x in (a - 8, c - 4, b)],
+        lambda d: d.polygon([(c, a - 6), (b + 6, c), (c, b + 6), (a - 6, c)], outline=255, width=e),
+        lambda d: d.polygon([(c + 15 * math.cos(TAU * i / 6), c + 15 * math.sin(TAU * i / 6)) for i in range(6)], fill=255),
+        lambda d: d.line([(a, a), (b, c), (a, b)], fill=255, width=e),
+        lambda d: [d.rectangle([x, y, x + 8, y + 8], fill=255) for x, y in ((a, a), (b - 8, a), (c - 4, b - 8))],
+        lambda d: (d.rectangle([a, a, b, b], outline=255, width=3), d.rectangle([c - 4, c - 4, c + 4, c + 4], fill=255)),
+        lambda d: d.rectangle([c - 3, a - 8, c + 3, b + 8], fill=255),
+        lambda d: [d.rectangle([x, c - 8, x + 3, c + 8], fill=255) for x in (a - 2, a + 8, c + 4, b)],
+        lambda d: d.line([(a, c), (c, c), (c, a), (b, a)], fill=255, width=e),
+        lambda d: d.ellipse([a, a, b, b], outline=255, width=e),
+    ]
+    alpha = Image.new('L', (cell * 4, cell * 4), 0)
+    for i, draw in enumerate(shapes):
+        tile = Image.new('L', (cell, cell), 0)
+        draw(ImageDraw.Draw(tile))
+        # a hard pixel edge inside a soft bloom
+        tile = Image.composite(tile, tile.filter(ImageFilter.GaussianBlur(5)), tile)
+        alpha.paste(tile, ((i % 4) * cell, (i // 4) * cell))
+    img = Image.new('RGBA', alpha.size, (255, 255, 255, 0))
+    img.putalpha(alpha)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    img.save(path)
+    print('wrote', path)
 
 
 def spillnode_texture(path, size=256):

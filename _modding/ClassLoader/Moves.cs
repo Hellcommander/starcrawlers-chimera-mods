@@ -319,7 +319,7 @@ namespace SCClassLoader
             }
         }
 
-        private static Color Hex(string hex, Color fallback) => !string.IsNullOrEmpty(hex) && ColorUtility.TryParseHtmlString(hex, out Color c) ? c : fallback;
+        internal static Color Hex(string hex, Color fallback) => !string.IsNullOrEmpty(hex) && ColorUtility.TryParseHtmlString(hex, out Color c) ? c : fallback;
 
         /// <summary>"tether": a line from you to the target for a moment (a hook line, a grab). "look" = colour (#RRGGBB).</summary>
         internal static void Tether(ActionSpec a, ActionContext ctx, Character t)

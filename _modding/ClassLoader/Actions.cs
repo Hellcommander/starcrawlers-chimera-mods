@@ -355,11 +355,15 @@ namespace SCClassLoader
             Character cur = first;
             float mult = ctx.damageMult;
             string need = string.IsNullOrEmpty(a.effect) ? null : EffectId(a.effect, ctx.classId);
+            Vector3 last = Vector3.zero;
             for (int hop = 0; cur != null && hop <= Math.Max(0, a.jumps); hop++)
             {
                 visited.Add(cur);
                 var c = Clone(ctx); c.damageMult = mult; c.target = cur;
                 if (hop > 0) SpawnVfx(a.vfx ?? ctx.hitVfx ?? "PA_Elementalist_ChainLightning.shockImpact", cur.GetHitFx().position);
+                // "look": a line of that colour along each jump
+                if (hop > 0 && !string.IsNullOrEmpty(a.look)) Moves.Streak(last, cur.GetHitFx().position, Moves.Hex(a.look, Color.white), 0.025f, 0.5f);
+                last = cur.GetHitFx().position;
                 if (a.leap && cur.GetHealth() > 0) Triggers.Styled("charge", cur, () => Moves.Leap(a, ctx, cur));
                 // a chain set off by a death starts at the one dying: it only passes things on from there
                 if (cur.GetHealth() > 0) Run(a.actions, c, cur);
@@ -367,8 +371,9 @@ namespace SCClassLoader
                 mult *= a.falloff;
                 if (AI_Manager.instance == null || cur.GetMover() == null || cur.GetMover().GetCurrentNavNode() == null) break;
                 Vector3 p = cur.GetMover().GetCurrentNavNode().transform.position;
+                AI eyes = a.sight ? cur.ai : null;
                 cur = AI_Manager.instance.GetEnemiesAt(p, a.radius > 0 ? a.radius : 3f)
-                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || e.effects.GetEffect(need) != null))
+                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || e.effects.GetEffect(need) != null) && (eyes == null || eyes.CanSee(e)))
                     .OrderBy(e => Vector3.Distance(e.transform.position, p)).FirstOrDefault();
             }
         }

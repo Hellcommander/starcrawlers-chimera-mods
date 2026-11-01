@@ -26,7 +26,7 @@
         { "do": "damage", "type": "Energy", "min": 2, "max": 18, "scale": "PsiPower", "scaleMult": 0.4 },
         { "do": "effect", "effect": "@Frayed", "stacks": 2 },
         { "do": "knockback", "amount": 1 },
-        { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+        { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": {"mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "height": 0.01, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 0.5, "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": false, "particles": [{"id": "SpillnodeKnot"}, {"id": "SpillnodeStatic"}], "deathVfx": "SpillnodeSnap"}, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
         { "do": "stamina", "to": "self", "amount": 10 }
       ]
     },
@@ -93,10 +93,10 @@
       "duration": -1,
       "stats": { "Dodge": 10 },
       "onDeathActions": [
-        { "do": "chain", "jumps": 2, "radius": 2.5, "effect": "@Frayed", "actions": [
+        { "do": "chain", "jumps": 2, "radius": 4, "effect": "@Frayed", "look": "#B98CFF", "sight": true, "actions": [
           { "do": "damage", "type": "Shock", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.3, "ifTargetHas": "@Frayed" },
           { "do": "effect", "effect": "@Frayed", "ifTargetHas": "@Frayed" } ] },
-        { "do": "summon", "chance": 30, "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 8, "effect": "@Spillwork" }
+        { "do": "summon", "chance": 30, "creature": "nanite_cloud", "summonName": "Spillnode", "model": {"mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "height": 0.01, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 0.5, "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": false, "particles": [{"id": "SpillnodeKnot"}, {"id": "SpillnodeStatic"}], "deathVfx": "SpillnodeSnap"}, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 8, "effect": "@Spillwork" }
       ]
     }
   ],
@@ -167,28 +167,29 @@
         "icon": "entropy_weaver_t2.png",
         "cooldown": 8,
         "staminaCost": 12,
-        "description": "Spin up two Spillnodes beside you. While any are running, each one rolls its program every turn: lash a frayed foe, copy itself, patch you up, or sit there humming. When one winks out it snaps through the frayed things near it.",
+        "description": "Spin up two Spillnodes beside you. While any are running in a fight, each one rolls its program every turn: lash the nearest foe (fraying it, and hurting it if it was already frayed), copy itself, patch you up, or sit there humming. When one winks out it snaps through the frayed things near it.",
         "castVfx": "PA_Psykonics_Temporal.castParticle",
         "sound": "event:/Abilities/Hacker/Hacker_Hack",
         "actions": [
-          { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "amount": 2, "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": {"mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "height": 0.01, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 0.5, "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": false, "particles": [{"id": "SpillnodeKnot"}, {"id": "SpillnodeStatic"}], "deathVfx": "SpillnodeSnap"}, "summonGroup": "Spillnode", "amount": 2, "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
           { "do": "effect", "to": "self", "effect": "@Spillover" }
         ],
         "procs": [
           {
             "on": "turn",
+            "when": { "inCombat": true },
             "actions": [
               { "do": "random", "to": "summons", "ifSummonAlive": "group:Spillnode", "options": [
                 { "name": "Spillnode: crackle", "weight": 4, "actions": [
-                  { "do": "chain", "jumps": 1, "radius": 3, "effect": "@Frayed", "actions": [
+                  { "do": "chain", "jumps": 1, "radius": 5, "look": "#B98CFF", "sight": true, "actions": [
                     { "do": "damage", "type": "Shock", "min": 2, "max": 6, "scale": "PsiPower", "scaleMult": 0.2, "perRank": 1,
                       "bonusPerStack": 1, "stacksOf": "group:Spillnode", "ifTargetHas": "@Frayed" },
-                    { "do": "effect", "effect": "@Frayed", "ifTargetHas": "@Frayed" } ] } ] },
+                    { "do": "effect", "effect": "@Frayed", "unlessTargetHas": "@Spillwork" } ] } ] },
                 { "name": "Spillnode: copyloop", "weight": 2, "actions": [
-                  { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 6, "effect": "@Spillwork" } ] },
+                  { "do": "summon", "creature": "nanite_cloud", "summonName": "Spillnode", "model": {"mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "height": 0.01, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 0.5, "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": false, "particles": [{"id": "SpillnodeKnot"}, {"id": "SpillnodeStatic"}], "deathVfx": "SpillnodeSnap"}, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 6, "effect": "@Spillwork" } ] },
                 { "name": "Spillnode: selfmend", "weight": 1, "actions": [
                   { "do": "heal", "to": "self", "amount": 3 } ] },
-                { "weight": 3, "actions": [] }
+                { "weight": 2, "actions": [] }
               ] }
             ]
           }
@@ -318,7 +319,7 @@
             "when": { "has": "@StillPoint", "of": "self" },
             "actions": [
               { "do": "cooldowns", "to": "self", "amount": 3 },
-              { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": { "mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "scale": 1.0, "offset": [0, 1.0, 0], "glow": "#b48cff", "glowStrength": 1.0, "spin": 50, "bob": 0.1, "pulse": 0.04, "keepParticles": false }, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
+              { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Spillnode", "model": {"mesh": "models/spillnode.obj", "texture": "models/spillnode.png", "height": 0.01, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 0.5, "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": false, "particles": [{"id": "SpillnodeKnot"}, {"id": "SpillnodeStatic"}], "deathVfx": "SpillnodeSnap"}, "summonGroup": "Spillnode", "maxSummons": 5, "turns": 12, "effect": "@Spillwork" },
               { "do": "shield", "to": "self", "amount": 5, "scale": "PsiPower", "scaleMult": 0.4 }
             ]
           }
