@@ -15,7 +15,7 @@ namespace SCClassLoader
     public class Plugin : BaseUnityPlugin
     {
         public const string GUID = "arendeth.starcrawlers.classloader";
-        public const string Version = "1.45.1";
+        public const string Version = "1.45.2";
 
         internal static ManualLogSource Log;
         internal static Plugin Instance;

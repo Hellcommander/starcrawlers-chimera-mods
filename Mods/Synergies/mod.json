@@ -2,7 +2,7 @@
   "id": "Synergies",
   "name": "Skill Synergies",
   "author": "Arendeth",
-  "version": "1.45.1",
+  "version": "1.45.2",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Pairs of skill trees that work together: take both and the two classes interact, with better odds as the lower of the two ranks grows."
 }

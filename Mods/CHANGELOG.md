@@ -3,6 +3,19 @@
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are the dates of the work.
 
+## 1.45.2 (2026-11-01)
+
+### Class changes
+
+- **Spellsmith's Ember Lance** now works on your other classes' attacks: it stokes your next one, which hits a quarter
+  harder and sets its target Burning. Its perk, White Ember, no longer adds damage to the lance: the stoked attack
+  ignores armor, shields and resistances instead.
+- **Spellsmith's Loose Spell** has a 2% chance, each time it goes off on someone, to also call down one of the
+  Wildcaster's boss echoes. Loose magic isn't picky, so an echo can land on you too.
+- **Axiomancer's First Principles** no longer punishes repeating a skill. Circular Reasoning is now a trade instead of a
+  debuff: +10% damage and -1 Psi Power per stack, up to 3, and it no longer loses your Insight or Weakens you at 3
+  stacks. Cognitive Shell and the Meditation synergy no longer clear it.
+
 ## 1.45.1 (2026-11-01)
 
 ### License
@@ -17,14 +30,6 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
 - Out-of-date descriptions on the Mods page are fixed: Arendeth Classes no longer gives an old class count, Shadow
   Magus describes its caster Shade and hunting Thing, Skill Synergies describes class interactions instead of a bonus,
   and Flux Savant mentions its runes running flat.
-- **Spellsmith's Ember Lance** now works on your other classes' attacks: it stokes your next one, which hits a quarter
-  harder and sets its target Burning. Its perk, White Ember, no longer adds damage to the lance: the stoked attack
-  ignores armor, shields and resistances instead.
-- **Spellsmith's Loose Spell** has a 2% chance, each time it goes off on someone, to also call down one of the
-  Wildcaster's boss echoes. Loose magic isn't picky, so an echo can land on you too.
-- **Axiomancer's First Principles** no longer punishes repeating a skill. Circular Reasoning is now a trade instead of a
-  debuff: +10% damage and -1 Psi Power per stack, up to 3, and it no longer loses your Insight or Weakens you at 3
-  stacks. Cognitive Shell and the Meditation synergy no longer clear it.
 
 ## 1.45.0 (2026-11-01)
 
