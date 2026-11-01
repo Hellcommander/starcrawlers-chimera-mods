@@ -22,6 +22,7 @@ namespace SCClassLoader
             public ActionContext ctx;
             public GameObject body;
             public bool huntsYou;
+            public bool turned;
             public int life;
             public Map map;
         }
@@ -45,7 +46,7 @@ namespace SCClassLoader
             body.enabled = false; // the game's own version only ever walks at you
             live = new Horror
             {
-                spec = a, body = body.gameObject, huntsYou = huntsYou, life = System.Math.Max(1, a.turns), map = Map.instance,
+                spec = a, body = body.gameObject, huntsYou = huntsYou, life = System.Math.Max(1, a.turns + Actions.ExtraTurns(a, ctx, t)), map = Map.instance,
                 ctx = new ActionContext
                 {
                     caster = ctx.caster, source = ctx.source, classId = ctx.classId, sourceName = ctx.sourceName, rank = ctx.rank,
@@ -66,7 +67,13 @@ namespace SCClassLoader
 
         private static Character Quarry(Horror h)
         {
-            if (h.huntsYou) return h.ctx.caster;
+            if (h.huntsYou)
+            {
+                if (!Concealment.HorrorsLoseYou(h.ctx.caster)) return h.ctx.caster;
+                Character other = Concealment.OtherPrey(h.body.transform.position, h.ctx.caster);
+                if (other != null && !h.turned) { h.turned = true; Game.LOG($"<color=#7CFFD0>The Horror</color> cannot find you in the dark and turns on {other.GetName()}."); }
+                return other;
+            }
             Vector3 at = h.body.transform.position;
             return AI_Manager.instance?.GetEnemiesAt(at, 30f).Where(c => c != null && !c.GetIsDead() && c != h.ctx.caster && !TileStacks.IsAlly(c))
                 .OrderBy(c => Vector3.Distance(c.transform.position, at)).FirstOrDefault();

@@ -198,8 +198,10 @@ namespace SCClassLoader
         /// <summary>Classes whose hostile actions never land on your own side (ClassDef.ignoresAllies).</summary>
         internal static readonly HashSet<string> IgnoresAllies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
+        /// <summary>The folder a class id lives in; a mod id (mod.json "id") answers with that mod's folder, so a creature's
+        /// skill sounds resolve against the mod that wrote the creature.</summary>
         internal static string FolderOf(string classId) =>
-            classId != null && folders.TryGetValue(classId, out string f) ? f : (classId == LibId ? LibraryDef?.folder : null);
+            classId != null && folders.TryGetValue(classId, out string f) ? f : (classId == LibId ? LibraryDef?.folder : ModPacks.Find(classId)?.folder);
 
         /// <summary>Named conditions ("conditions": {"Bloodied": {...}}) from a library or class, usable everywhere by name.</summary>
         private static void ReadConditions(Newtonsoft.Json.Linq.JObject o, string file)

@@ -1,0 +1,125 @@
+{
+  "prompt": "a monstrous thing howling out darkness, a deep rising roar that breaks into a chorus of whispers",
+  "duration": 2.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "monster",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "0b41242b8608290c",
+      "score": 0.4796386659145355,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_30.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "cb406f6549ff6480",
+      "score": 0.4780891537666321,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_6.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "94929a1fa7458937",
+      "score": 0.4751887917518616,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_43.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "97bd047cf10f55eb",
+      "score": 0.47441810369491577,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_42.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "82164a6de25dbd95",
+      "score": 0.47374555468559265,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_45.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "db02e0f5511ece29",
+      "score": 0.4734341502189636,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_44.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_thing_howl.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.099,
+  "semitones": -3,
+  "width": 0.234,
+  "listen": {
+    "match": 0.399,
+    "clean": -1.313,
+    "faults": []
+  }
+}

@@ -23,6 +23,10 @@ namespace SCClassLoader
         public string mesh;
         /// <summary>PNG. With a mesh: overrides its own texture. Without: repaints the creature's own body.</summary>
         public string texture;
+        /// <summary>A vanilla hazard id (HAZARD_Horror: the Horror's own body) whose look is cloned onto the creature instead of a
+        /// mesh: its renderers, particles and animators, with every script switched off, so nothing of the hazard's behaviour
+        /// comes along. scale/height, tint, glow, bob and particles apply as for a mesh.</summary>
+        public string prefab;
         public float scale = 1f;
         /// <summary>Metres from the model's feet to its top, whatever the body under it is scaled to (overrides scale).</summary>
         public float height;
@@ -132,6 +136,7 @@ namespace SCClassLoader
             {
                 if (go.transform.Find("SCCL_Model") != null) return true;
                 Texture2D tex = string.IsNullOrEmpty(spec.texture) ? null : LoadTexture(Path.Combine(folder ?? "", spec.texture));
+                if (string.IsNullOrEmpty(spec.mesh) && !string.IsNullOrEmpty(spec.prefab)) return ApplyPrefab(go, spec, folder, tex);
                 if (string.IsNullOrEmpty(spec.mesh))
                 {
                     if (tex == null)
@@ -206,10 +211,89 @@ namespace SCClassLoader
                 }
                 if (spec.height > 0f) FitHeight(root, go.transform, spec.height);
                 if (spec.faceViewer) root.AddComponent<FaceViewer>();
+                Follow(go, root, spec);
                 ModelParticles.Attach(go, spec, folder);
                 return true;
             }
             catch (Exception e) { Plugin.Log.LogError($"Model '{spec.mesh ?? spec.texture}' on {go.name}: {e}"); return false; }
+        }
+
+        /// <summary>The game's own prefab for a hazard id: the Horror's body, a mine, a fire. Null when there is none.</summary>
+        private static GameObject PrefabLook(string id)
+        {
+            HazardManager hm = HazardManager.instance;
+            if (hm == null || string.IsNullOrEmpty(id)) return null;
+            if (id == "HAZARD_Horror" && hm.horrorPrefab != null) return hm.horrorPrefab.gameObject;
+            if (hm.allHazards != null)
+                foreach (Hazard h in hm.allHazards)
+                    if (h != null && h.internalName == id) return h.gameObject;
+            return null;
+        }
+
+        /// <summary>A vanilla prefab's look on the creature: a clone of it under SCCL_Model with every script off (the Horror's
+        /// body without the Horror's hunt), the creature's own renderers hidden, then the usual tint, glow, float, size and
+        /// particles. Its own animators and particle systems keep playing, so the look stays alive.</summary>
+        private static bool ApplyPrefab(GameObject go, ModelSpec spec, string folder, Texture2D tex)
+        {
+            GameObject src = PrefabLook(spec.prefab);
+            if (src == null)
+            {
+                Plugin.Log.LogWarning($"Model prefab not found: {spec.prefab} (on {go.name})");
+                ModelParticles.Attach(go, spec, folder);
+                return false;
+            }
+            foreach (Renderer r in go.GetComponentsInChildren<Renderer>(true))
+            {
+                if (r is ParticleSystemRenderer && spec.keepParticles) continue;
+                if (r is SpriteRenderer || r.GetComponentInParent<Canvas>() != null) continue;
+                r.enabled = false;
+            }
+            var root = new GameObject("SCCL_Model");
+            root.transform.SetParent(go.transform, false);
+            Vector3 off = V(spec.offset, Vector3.zero);
+            root.transform.localPosition = off;
+            root.transform.localRotation = Quaternion.Euler(V(spec.rotation, Vector3.zero));
+            root.transform.localScale = Vector3.one * (spec.scale <= 0 ? 1f : spec.scale);
+            GameObject clone = UnityEngine.Object.Instantiate(src, root.transform, false);
+            clone.name = "Prefab";
+            clone.transform.localPosition = Vector3.zero;
+            clone.transform.localRotation = Quaternion.identity;
+            clone.transform.localScale = src.transform.localScale;
+            // The look only: the hazard, its abilities and anything else scripted stay off, and it never blocks or collides.
+            foreach (MonoBehaviour b in clone.GetComponentsInChildren<MonoBehaviour>(true)) b.enabled = false;
+            foreach (Collider col in clone.GetComponentsInChildren<Collider>(true)) UnityEngine.Object.Destroy(col);
+            foreach (Rigidbody rb in clone.GetComponentsInChildren<Rigidbody>(true)) UnityEngine.Object.Destroy(rb);
+            clone.SetActive(true);
+            foreach (Renderer r in clone.GetComponentsInChildren<Renderer>(true))
+            {
+                if (r is ParticleSystemRenderer) continue;
+                foreach (Material m in r.materials) { if (tex != null && m.HasProperty("_MainTex")) m.mainTexture = tex; Tint(m, spec); }
+                Material glowPass = Glow(r.sharedMaterial != null && r.sharedMaterial.HasProperty("_MainTex") ? r.sharedMaterial.mainTexture : null, spec);
+                if (glowPass != null) r.materials = r.materials.Concat(new[] { glowPass }).ToArray();
+            }
+            if (!string.IsNullOrEmpty(spec.glow) && ColorUtility.TryParseHtmlString(spec.glow, out Color gc))
+            {
+                var lg = new GameObject("Glow");
+                lg.transform.SetParent(root.transform, false);
+                var light = lg.AddComponent<Light>();
+                light.type = LightType.Point;
+                light.color = gc;
+                light.range = 2.5f * Mathf.Max(0.5f, spec.scale);
+                light.intensity = 1.5f * Mathf.Max(0f, spec.glowStrength);
+                light.shadows = LightShadows.None;
+            }
+            if (spec.randomYaw) root.transform.localRotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f) * root.transform.localRotation;
+            if (spec.bob != 0f || spec.spin != 0f || spec.wobble != 0f || spec.pulse != 0f)
+            {
+                var f = root.AddComponent<Floater>();
+                f.bob = spec.bob; f.spin = spec.spin; f.wobble = spec.wobble; f.pulse = spec.pulse;
+                f.basePos = off; f.baseRot = root.transform.localRotation; f.baseScale = root.transform.localScale;
+            }
+            if (spec.height > 0f) FitHeight(root, go.transform, spec.height);
+            if (spec.faceViewer) root.AddComponent<FaceViewer>();
+            Follow(go, root, spec);
+            ModelParticles.Attach(go, spec, folder);
+            return true;
         }
 
         /// <summary>The node tree as transforms under the model root, a SkinnedMeshRenderer per part, and the clips.</summary>
@@ -333,12 +417,40 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>The game turns a creature's own model (AI.model), never the character object the look hangs from, so a mod
+        /// look stood still while its body walked and swung. This keeps the look's facing on the body's: body facing, then the
+        /// look's own turn (the spec's rotation, a random yaw, the floater's spin and rock).</summary>
+        internal class FollowBody : MonoBehaviour
+        {
+            public Transform body;
+            public Quaternion local = Quaternion.identity;
+            private void LateUpdate()
+            {
+                if (body == null) return;
+                var f = GetComponent<Floater>();
+                transform.rotation = body.rotation * (f != null ? f.lastLocal : local);
+            }
+        }
+
+        /// <summary>Hooks the look's facing to the creature's body, unless it faces the viewer instead.</summary>
+        private static void Follow(GameObject go, GameObject root, ModelSpec spec)
+        {
+            if (spec.faceViewer) return;
+            AI ai = go.GetComponent<AI>();
+            if (ai == null || ai.model == null || ai.model == go.transform || root.transform.IsChildOf(ai.model)) return;
+            var fb = root.AddComponent<FollowBody>();
+            fb.body = ai.model;
+            fb.local = root.transform.localRotation;
+        }
+
         /// <summary>Procedural animation: bobbing, turning, rocking and breathing.</summary>
         internal class Floater : MonoBehaviour
         {
             public float bob, spin, wobble, pulse;
             public Vector3 basePos, baseScale = Vector3.one;
             public Quaternion baseRot = Quaternion.identity;
+            /// <summary>The local turn this frame (spin and rock over the base), for a FollowBody to stack on the body's facing.</summary>
+            public Quaternion lastLocal = Quaternion.identity;
             private float phase, turned;
             private void Awake() => phase = UnityEngine.Random.value * 6.28f;
             private void Update()
@@ -348,7 +460,7 @@ namespace SCClassLoader
                 turned += spin * Time.deltaTime;
                 // A rock that settles: strong just after the copy appears, then a faint idle sway.
                 float rock = wobble == 0f ? 0f : wobble * Mathf.Sin(t * 9f) * (0.25f + 0.75f * Mathf.Exp(-Mathf.Max(0f, Time.time - born) * 2.5f));
-                transform.localRotation = Quaternion.Euler(0f, turned, 0f) * baseRot * Quaternion.Euler(rock, 0f, rock * 0.5f);
+                transform.localRotation = lastLocal = Quaternion.Euler(0f, turned, 0f) * baseRot * Quaternion.Euler(rock, 0f, rock * 0.5f);
                 if (pulse != 0f) transform.localScale = baseScale * (1f + Mathf.Sin(t * 2.4f) * pulse);
             }
             private float born;

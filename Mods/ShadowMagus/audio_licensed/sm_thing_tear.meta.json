@@ -1,0 +1,126 @@
+{
+  "prompt": "a monstrous thing tearing into flesh, wet heavy rip with a low snarl",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "monster",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "d2b589291109b445",
+      "score": 0.47528770565986633,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_21.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "f53dc79d40ffacea",
+      "score": 0.44957229495048523,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_23.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "78fbb0d5702872e2",
+      "score": 0.44215676188468933,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_22.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "1c505298e88a8ab4",
+      "score": 0.4361135959625244,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_25.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "09893d2831c5f543",
+      "score": 0.43350550532341003,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-1.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "d071307aeee14f5e",
+      "score": 0.42412373423576355,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- MONSTER SCREAMS.zip",
+      "inner": "NOISE ALCHEMY- MONSTER SCREAMS/NOISE ALCHEMY- MONSTER SCREAMS_49.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "screams",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_thing_tear.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.064,
+  "semitones": 3,
+  "width": 0.405,
+  "listen": {
+    "match": 0.45,
+    "clean": -4.532,
+    "faults": []
+  }
+}

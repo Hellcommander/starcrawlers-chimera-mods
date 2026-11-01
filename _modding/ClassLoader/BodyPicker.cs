@@ -206,7 +206,7 @@ namespace SCClassLoader
             descName.text = t.displayName;
             descText.text = Tags(t.description);
             var with = picked.Select(Tree).Concat(new[] { Tree(Conjoined.ClassId) }).Where(x => x != null).ToList();
-            SynergyTip.Show(panel, cell, descFrame, Synergies.CreationText(t, with), 22f, font);
+            SynergyTip.Show(panel, cell, descFrame, Synergies.CreationText(t, with), Synergies.CreationText(t, with, true), 22f, font);
         }
 
         internal static void Hover(string id) { if (cells.TryGetValue(id, out var c)) Hover(Tree(id), c.rt); }

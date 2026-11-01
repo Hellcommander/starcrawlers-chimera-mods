@@ -52,7 +52,7 @@ namespace SCClassLoader
         /// </summary>
         internal static void Taunt(ActionSpec a, ActionContext ctx, Character t)
         {
-            int turns = TauntTurns(a);
+            int turns = TauntTurns(a) + Actions.ExtraTurns(a, ctx, t);
             if (IsEnemy(t))
             {
                 if (Alive(ctx.caster)) TauntOne(t, ctx.caster, turns, ctx);
@@ -113,7 +113,7 @@ namespace SCClassLoader
                 Game.LOG($"{ctx.sourceName}: {t.GetName()} shrugs off the silence.");
                 return;
             }
-            Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = SilencedId, turns = SilenceTurns(a) }, ctx, t);
+            Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = SilencedId, turns = SilenceTurns(a) + Actions.ExtraTurns(a, ctx, t) }, ctx, t);
         }
 
         internal static int SilenceTurns(ActionSpec a) => Math.Max(1, a.turns > 0 ? a.turns : a.amount);

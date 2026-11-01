@@ -391,7 +391,7 @@ namespace SCClassLoader
             if (target == null) yield break;
             if (target != caster && ai != null && target.GetMover()?.GetCurrentNavNode() != null) ai.SetFacing(target.GetMover().GetCurrentNavNode().transform.position);
             PlayAnim(caster, s.anim ?? (s.melee ? "Melee" : "Ranged"));
-            if (!string.IsNullOrEmpty(s.sound)) AudioManager.PlayEvent(s.sound, caster.transform.position);
+            if (!string.IsNullOrEmpty(s.sound)) ModAudio.Play(s.sound, caster.transform.position, s.packId ?? s.classId); // a mod file (from the creature's own mod) or a vanilla event
             if (s.castVfx != null) Vfx(s.castVfx, caster.GetHitFx().position);
             MobAnimDriver.Trigger(caster, string.IsNullOrEmpty(s.clip) ? "attack" : s.clip);
             if (Ability.IsPlayerPresent(caster.transform.position, 6f)) yield return new WaitForSeconds(ab.attackImpactDelay);

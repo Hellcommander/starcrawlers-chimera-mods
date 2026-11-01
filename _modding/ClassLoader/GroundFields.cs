@@ -130,6 +130,7 @@ namespace SCClassLoader
                     Actions.Rescale(v, scale);
                     v.SetActive(true);
                     Actions.Wake(particle, v);
+                    KeepPlaying(v);
                     made.Add(v);
                 }
                 return made;
@@ -157,6 +158,24 @@ namespace SCClassLoader
             }
             Object.Destroy(staging);
             return made;
+        }
+
+        /// <summary>A mod particle used as a look is built as a one-shot (its layers run for their duration); on a field it has
+        /// to burn for as long as the field does, so every system loops: a burst repeats every duration, a stream runs on, the
+        /// way creature-attached particles do (Shadow Magus's Shadowflame and the Shade's pool of dark).</summary>
+        private static void KeepPlaying(GameObject v)
+        {
+            foreach (ParticleSystem ps in v.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                var main = ps.main;
+                if (main.loop) continue;
+                main.loop = true;
+                float life = main.startLifetime.constantMax, rate = ps.emission.rateOverTime.constantMax, burst = 0f;
+                for (int i = 0; i < ps.emission.burstCount; i++) burst += ps.emission.GetBurst(i).maxCount;
+                int need = Mathf.CeilToInt(rate * life + burst * (life / Mathf.Max(0.05f, main.duration) + 1f)) + 8;
+                if (main.maxParticles < need) main.maxParticles = need;
+                if (!ps.isPlaying) ps.Play();
+            }
         }
 
         /// <summary>

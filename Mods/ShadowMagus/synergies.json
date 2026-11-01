@@ -1,0 +1,789 @@
+{
+ "synergies": [
+  {
+   "id": "NothingWatching",
+   "name": "Nothing Watching",
+   "trees": [
+    "MOD_ShadowMagus",
+    "SKILLTREE_Cursed"
+   ],
+   "description": "The relic's Mark and your dark learn each other. A crit on a Marked enemy may call the Horror onto your enemies; hits on Marked enemies bite deeper into the dark, exhaust them once they are Benighted, and may silence one you have Swallowed; Lose Them while hidden may bring the Horror through; crits spread the Mark; kills on the Marked move your cooldowns, and your Shade and Thing lay the Mark. Each level adds 4% to these odds, and the Horror stays a turn longer.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "crit",
+      "chance": 20,
+      "maxPerTurn": 1,
+      "when": {
+       "has": "EFFECT_CURSED_Mark"
+      },
+      "actions": [
+       {
+        "do": "horror",
+        "turns": 1,
+        "turnsPerStack": 1,
+        "stacksOf": "@NothingWatching",
+        "stacksUsed": 3,
+        "actions": [
+         {
+          "do": "blind"
+         },
+         {
+          "do": "effect",
+          "effect": "MOD_ShadowMagus@Benighted",
+          "stacks": 2
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 30,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "EFFECT_CURSED_Mark"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     },
+     {
+      "on": "cast",
+      "match": "Lose Them",
+      "chance": 25,
+      "when": {
+       "any": [
+        {
+         "has": "MOD_ShadowMagus@Unlit",
+         "of": "self"
+        },
+        {
+         "has": "MOD_ShadowMagus@Nightwalker",
+         "of": "self"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "horror",
+        "turns": 1,
+        "turnsPerStack": 1,
+        "stacksOf": "@NothingWatching",
+        "stacksUsed": 3,
+        "actions": [
+         {
+          "do": "blind"
+         },
+         {
+          "do": "effect",
+          "effect": "MOD_ShadowMagus@Benighted",
+          "stacks": 2
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 40,
+      "maxPerTurn": 1,
+      "when": {
+       "all": [
+        {
+         "has": "EFFECT_CURSED_Mark"
+        },
+        {
+         "has": "MOD_ShadowMagus@Benighted"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "exhaust",
+        "amount": 1
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 50,
+      "maxPerTurn": 1,
+      "when": {
+       "all": [
+        {
+         "has": "EFFECT_CURSED_Mark"
+        },
+        {
+         "has": "MOD_ShadowMagus@Swallowed"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "silence",
+        "turns": 1
+       }
+      ]
+     },
+     {
+      "on": "crit",
+      "chance": 30,
+      "maxPerTurn": 1,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "actions": [
+       {
+        "do": "chain",
+        "jumps": 1,
+        "radius": 3,
+        "actions": [
+         {
+          "do": "effect",
+          "effect": "EFFECT_CURSED_Mark"
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "chance": 35,
+      "when": {
+       "has": "EFFECT_CURSED_Mark",
+       "of": "victim"
+      },
+      "actions": [
+       {
+        "do": "cooldowns",
+        "to": "self",
+        "amount": 1
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 20,
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "EFFECT_CURSED_Mark"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "SomethingLooseInTheDark",
+   "name": "Something Loose in the Dark",
+   "trees": [
+    "MOD_ShadowMagus",
+    "MOD_Wildcaster"
+   ],
+   "description": "Wild magic likes a place nobody can see. Crits while hidden may shake a borrowed spell loose; hits on Shrunk, Swollen or Glassy enemies bite two layers of dark; Lose Them with five Brimming gives you a Wild Edge; Spell Fever hits on Benighted enemies may Shrink them, and Swallowing a Shrunk enemy may leave it Glassy; crits on Benighted enemies may throw a stray spell on to the next foe; kills on the Benighted, yours or your creatures', may bank Unbound. Each level adds 3% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 3,
+    "procs": [
+     {
+      "on": "crit",
+      "chance": 25,
+      "maxPerTurn": 1,
+      "when": {
+       "any": [
+        {
+         "has": "MOD_ShadowMagus@Unlit",
+         "of": "self"
+        },
+        {
+         "has": "MOD_ShadowMagus@Nightwalker",
+         "of": "self"
+        }
+       ]
+      },
+      "vfx": "fx_wildcaster_stray@0.8",
+      "actions": [
+       {
+        "do": "wildCast",
+        "amount": 1,
+        "falloff": 0.6,
+        "notClass": "MOD_Wildcaster"
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 30,
+      "maxPerTurn": 2,
+      "when": {
+       "any": [
+        {
+         "has": "MOD_Wildcaster@Shrunk"
+        },
+        {
+         "has": "MOD_Wildcaster@Swollen"
+        },
+        {
+         "has": "MOD_Wildcaster@Glassy"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted",
+        "stacks": 2
+       }
+      ]
+     },
+     {
+      "on": "cast",
+      "match": "Lose Them",
+      "chance": 30,
+      "when": {
+       "value": "stacks:MOD_Wildcaster@Brimming",
+       "of": "self",
+       "atLeast": 5
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_Wildcaster@WildEdge"
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 25,
+      "maxPerTurn": 1,
+      "when": {
+       "all": [
+        {
+         "has": "MOD_ShadowMagus@Benighted"
+        },
+        {
+         "has": "MOD_Wildcaster@SpellFever",
+         "of": "self"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Wildcaster@Shrunk"
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 40,
+      "maxPerTurn": 1,
+      "when": {
+       "all": [
+        {
+         "has": "MOD_ShadowMagus@Swallowed"
+        },
+        {
+         "has": "MOD_Wildcaster@Shrunk"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Wildcaster@Glassy"
+       }
+      ]
+     },
+     {
+      "on": "crit",
+      "chance": 25,
+      "maxPerTurn": 1,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "vfx": "fx_wildcaster_stray@0.8",
+      "actions": [
+       {
+        "do": "chain",
+        "jumps": 1,
+        "radius": 3,
+        "actions": [
+         {
+          "do": "wildCast",
+          "amount": 1,
+          "falloff": 0.6,
+          "notClass": "MOD_Wildcaster"
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "chance": 30,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted",
+       "of": "victim"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_Wildcaster@Unbound"
+       }
+      ]
+     },
+     {
+      "on": "allyKill",
+      "chance": 30,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted",
+       "of": "victim"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_Wildcaster@Unbound"
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 3,
+    "procs": [
+     {
+      "on": "crit",
+      "chance": 30,
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_Wildcaster@WildEdge"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "WhereTheIchorPools",
+   "name": "Where the Ichor Pools",
+   "trees": [
+    "MOD_ShadowMagus",
+    "MOD_Ichorborn"
+   ],
+   "description": "Tar and shadow cling to the same things. Hits on Tarred enemies bite Benighted and hits on Benighted enemies may Tar them; a crit on an enemy Stuck fast in the dark may open the Unmaking Gaze's Doomsight on it; Shadow Molt's wings are cut from your dark, so Frenzy leaves you Unlit; kills in the dark on Tarred enemies may fold a torn Pinion back; your Shade and Thing tar what they touch. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 30,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_Ichorborn@Tarred"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 25,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Ichorborn@Tarred"
+       }
+      ]
+     },
+     {
+      "on": "crit",
+      "chance": 30,
+      "maxPerTurn": 1,
+      "when": {
+       "all": [
+        {
+         "has": "MOD_Ichorborn@Stuck"
+        },
+        {
+         "has": "MOD_ShadowMagus@Benighted"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Ichorborn@Doomsight"
+       }
+      ]
+     },
+     {
+      "on": "effectGained",
+      "match": "MOD_Ichorborn@Frenzy",
+      "chance": 60,
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_ShadowMagus@Unlit",
+        "turns": 3
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "chance": 25,
+      "when": {
+       "all": [
+        {
+         "has": "MOD_Ichorborn@Tarred",
+         "of": "victim"
+        },
+        {
+         "any": [
+          {
+           "has": "MOD_ShadowMagus@Unlit",
+           "of": "self"
+          },
+          {
+           "has": "MOD_ShadowMagus@Nightwalker",
+           "of": "self"
+          }
+         ]
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_Ichorborn@Pinion"
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 20,
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Ichorborn@Tarred"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ManyShadows",
+   "name": "Many Shadows",
+   "trees": [
+    "MOD_ShadowMagus",
+    "MOD_Conjoined"
+   ],
+   "description": "Every body you run casts a shadow. Your hits on Benighted enemies bite another layer, and one more for each other body up; Lose Them gives you Darkvision for every body that watched them scatter; Trade Bodies while hidden carries the dark into the body you step into; your other bodies' hits Benight. Each level adds 5% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 5,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 25,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted",
+        "stacks": 1,
+        "bonusPerStack": 1,
+        "stacksOf": "bodies",
+        "stacksFrom": "self"
+       }
+      ]
+     },
+     {
+      "on": "cast",
+      "match": "Lose Them",
+      "chance": 40,
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_ShadowMagus@Darkvision",
+        "stacks": 0,
+        "bonusPerStack": 1,
+        "stacksOf": "bodies",
+        "stacksFrom": "self"
+       }
+      ]
+     },
+     {
+      "on": "cast",
+      "match": "Trade Bodies",
+      "chance": 40,
+      "when": {
+       "any": [
+        {
+         "has": "MOD_ShadowMagus@Unlit",
+         "of": "self"
+        },
+        {
+         "has": "MOD_ShadowMagus@Nightwalker",
+         "of": "self"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_ShadowMagus@Unlit",
+        "turns": 2
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 5,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 20,
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ShapesInTheDark",
+   "name": "Shapes in the Dark",
+   "trees": [
+    "MOD_ShadowMagus",
+    "MOD_Mimeticist"
+   ],
+   "description": "You hunt what you cannot see by what you tagged. Hits on Sample-Tagged enemies bite Benighted and crits on Benighted enemies may Tag them; a kill on a Tagged enemy in the dark sharpens your Darkvision; the Panther's Unseen takes you into the dark proper, Unlit; your borrowed shapes' hits Benight. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 30,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_Mimeticist@Tagged"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     },
+     {
+      "on": "crit",
+      "chance": 25,
+      "maxPerTurn": 1,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_Mimeticist@Tagged"
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "chance": 35,
+      "when": {
+       "all": [
+        {
+         "has": "MOD_Mimeticist@Tagged",
+         "of": "victim"
+        },
+        {
+         "has": "MOD_ShadowMagus@Benighted",
+         "of": "victim"
+        }
+       ]
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_ShadowMagus@Darkvision",
+        "stacks": 2
+       }
+      ]
+     },
+     {
+      "on": "effectGained",
+      "match": "MOD_Mimeticist@Unseen",
+      "chance": 60,
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_ShadowMagus@Unlit",
+        "turns": 2
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 20,
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "DarkBetweenThePlates",
+   "name": "Dark Between the Plates",
+   "trees": [
+    "MOD_ShadowMagus",
+    "MOD_GloomsporeWarden"
+   ],
+   "description": "The colony grows where the light does not. Hits on rotting enemies bite Benighted and hits on Benighted enemies may root Gloomrot; kills in the dark settle as Sporeload; Shadowflame may sprout a Gloomcap in its own dark; your caps' and shades' hits Benight. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 30,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_GloomsporeWarden@Gloomrot"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     },
+     {
+      "on": "hit",
+      "chance": 25,
+      "maxPerTurn": 2,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_GloomsporeWarden@Gloomrot"
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "chance": 30,
+      "when": {
+       "has": "MOD_ShadowMagus@Benighted",
+       "of": "victim"
+      },
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "MOD_GloomsporeWarden@Sporeload"
+       }
+      ]
+     },
+     {
+      "on": "cast",
+      "match": "Shadowflame",
+      "chance": 30,
+      "actions": [
+       {
+        "do": "summon",
+        "to": "self",
+        "creature": "PA_PASSIVE_VoidPsyker_Tentacles.tentaclePrefab",
+        "summonName": "Gloomcap",
+        "summonGroup": "Gloomcap",
+        "scaleStat": "PsiPower",
+        "effect": "MOD_GloomsporeWarden@Capflesh",
+        "amount": 1,
+        "maxSummons": 3,
+        "turns": 6,
+        "model": {
+         "tint": "#1A1030",
+         "glow": "#7A4BFF",
+         "glowStrength": 0.8
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "allies": {
+    "procChancePerStack": 4,
+    "procs": [
+     {
+      "on": "hit",
+      "chance": 20,
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "MOD_ShadowMagus@Benighted"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

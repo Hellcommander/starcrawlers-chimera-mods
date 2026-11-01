@@ -1,0 +1,127 @@
+{
+  "prompt": "a shadow rising off the floor and taking shape, low dark drone, whispering smoke, ghostly summon",
+  "duration": 2.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "296731c55412600b",
+      "score": 0.4368075430393219,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 13.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "b84a40aa868110bf",
+      "score": 0.4285892844200134,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 29.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "63f07155c472eec7",
+      "score": 0.4203716516494751,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 27.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "f54eda0849b5cb2c",
+      "score": 0.4072633981704712,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 8.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "256fcf2883691928",
+      "score": 0.40423154830932617,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-9.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "078b7ac31f65357c",
+      "score": 0.40300488471984863,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 3.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_shade.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.037,
+  "semitones": 4,
+  "width": 1.475,
+  "listen": {
+    "match": 0.583,
+    "clean": -2.258,
+    "faults": []
+  }
+}

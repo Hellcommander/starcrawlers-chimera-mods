@@ -47,7 +47,8 @@ namespace SCClassLoader
             for (int i = 0; i < count && existing < cap; i++)
             {
                 step = "node" + i;
-                NavNode node = FreeNode(center, 2.6f) ?? FreeNode(Pos(caster), 3.5f);
+                NavNode node = (at == null && near == null ? FreeNode(center, 2.6f, caster.transform.forward, a.summonAt) : null)
+                               ?? FreeNode(center, 2.6f) ?? FreeNode(Pos(caster), 3.5f);
                 if (node == null) break;
                 Character c;
                 step = "spawn" + i;
@@ -55,7 +56,8 @@ namespace SCClassLoader
                 if (c == null) return;
                 step = "place" + i;
                 if (c.ai != null) c.ai.ForceMove = true;
-                if (c.ai != null) c.ai.SetForceFacing(caster.transform.position);
+                // Placed along your facing (behind, beside) it looks where you look; otherwise, as ever, at you.
+                if (c.ai != null) c.ai.SetForceFacing(string.IsNullOrEmpty(a.summonAt) ? caster.transform.position : node.transform.position + caster.transform.forward * 2f);
                 // Spawn_Character already places it; SetPosition would re-look the node up and can hit null.
                 if (c.GetMover() != null && c.GetMover().GetCurrentNavNode() != node) c.GetMover().SetCurrentNavNode(node);
                 c.level = caster.level;
@@ -67,12 +69,21 @@ namespace SCClassLoader
                 if (a.turns > 0) c.SetTag(LifeTag, a.turns);
                 if (a.stationary) { c.SetTag(StayTag, 1); c.FLAG_canMove = false; }
                 EnemyDef cd = EnemyRegistry.DefOf(prefab);
+                // A mod creature spends its turns on its prey: the body's maneuver chance (sidestepping instead of closing in
+                // or striking) reads as idling on a summon that only lives a few turns.
+                if (c.ai != null && cd != null && cd.creature) Traverse.Create(c.ai).Field("maneuverChance").SetValue(0);
                 if (Enum.TryParse(a.scaleStat ?? (cd != null && cd.creature ? cd.scaleStat : null) ?? "", true, out STAT_TYPE growStat) && growStat != STAT_TYPE.Smarts)
                     c.SetTag(StatTag, (int)growStat);
                 AI_Manager.instance.RegisterMinion(c);
                 // Mid-fight it joins in at once: an idle pet only wakes when it spots someone itself or a cast
                 // alerts the spot, and self-cast summons (a veil, a stance) alert nothing.
                 if (c.ai != null && When.InCombat()) c.ai.ChangeState(AI.AI_STATE.Active);
+                // Whistled up beside an enemy, it goes for that enemy instead of walking back to you (the pet AI's leash).
+                if (c.ai != null && near != null && near != caster && !near.GetIsDead() && !TileStacks.IsAlly(near))
+                {
+                    c.ai.SetTarget(near);
+                    c.ai.ChangeState(AI.AI_STATE.Active);
+                }
                 try
                 {
                     Effect scalar = EffectManager.instance.ApplyEffect("Effect_PASSIVE_Pet_Scalar", c);
@@ -256,6 +267,26 @@ namespace SCClassLoader
 
         private static Vector3 Pos(Character c) =>
             c.GetMover() != null && c.GetMover().GetCurrentNavNode() != null ? c.GetMover().GetCurrentNavNode().transform.position : c.transform.position;
+
+        /// <summary>A free tile around a spot with a preference along the caster's facing: "behind" (the Shade steps out behind
+        /// the Magus instead of into the camera), "beside", or "front"; nearest wins among equals.</summary>
+        private static NavNode FreeNode(Vector3 pos, float r, Vector3 forward, string prefer)
+        {
+            if (string.IsNullOrEmpty(prefer)) return null;
+            forward.y = 0f;
+            if (forward.sqrMagnitude < 0.001f) return null;
+            forward.Normalize();
+            string want = prefer.ToLowerInvariant();
+            return Map.instance.GetNavNodesAt(pos, r, validNodesOnly: true)
+                .Where(n => n != null && !n.IsOccupied() && !n.BlockCheck() && !n.Block_Move && Vector3.Distance(n.transform.position, pos) > 0.1f)
+                .OrderByDescending(n =>
+                {
+                    Vector3 d = n.transform.position - pos; d.y = 0f; d.Normalize();
+                    float dot = Vector3.Dot(d, forward);
+                    return want == "behind" ? -dot : want == "beside" ? -Mathf.Abs(dot) : dot;
+                })
+                .ThenBy(n => Vector3.Distance(n.transform.position, pos)).FirstOrDefault();
+        }
 
         private static NavNode FreeNode(Vector3 pos, float r) =>
             Map.instance.GetNavNodesAt(pos, r, validNodesOnly: true)

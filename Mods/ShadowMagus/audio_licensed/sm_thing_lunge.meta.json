@@ -1,0 +1,131 @@
+{
+  "prompt": "something huge lunging out of darkness, a rushing whoosh and a deep guttural roar at the end",
+  "duration": 1.6,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "monster",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "321d98c9fb7a652c",
+      "score": 0.446178674697876,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-51.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "09893d2831c5f543",
+      "score": 0.44019997119903564,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-1.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "68cf9bfed1035846",
+      "score": 0.4296014904975891,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-56.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "5fb88a0918b4b95f",
+      "score": 0.42752861976623535,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-67.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "f17216a72e2371fd",
+      "score": 0.4222908616065979,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-54.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    },
+    {
+      "id": "714a70e93a3b2be1",
+      "score": 0.4154565930366516,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Monster roar.zip",
+      "inner": "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-50.wav",
+      "license": "reference",
+      "tags": [
+        "monster",
+        "roar",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "alien"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_thing_lunge.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.241,
+  "semitones": 3,
+  "width": 0.184,
+  "listen": {
+    "match": 0.387,
+    "clean": -3.802,
+    "faults": []
+  }
+}

@@ -3,7 +3,53 @@
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
 release after 1.1.0 is 1.4.0. The dates are the dates of the work.
 
-## 1.4.0 (not released yet)
+## Unreleased
+
+Everything here is newer than the 1.4.0 upload.
+
+### New class
+
+- **Shadow Magus:** a Guile caster of the dark, scaling with Recognition and Psi Power. Benighted dims enemies' aim,
+  crits build Darkvision and chain or finish Benighted targets, Lose Them scatters a room blind, a Shade of yourself
+  fights beside you and pools dark that enemies lose you in, Swallowed shrinks an enemy into the dark, and The Thing in
+  the Dark whistles up a Horror of your own, with its own model and animations.
+- While a Shadow Magus is Unlit or a Nightwalker, the Cursed Horror and a Wildcaster's wild Horror can't hunt it and turn
+  on whoever else is nearest.
+- Six synergies come with the class:
+  - **Nothing Watching** (Cursed): the Mark and the dark feed each other, and the Horror is called onto Marked enemies
+    and stays a turn longer per level.
+  - **Something Loose in the Dark** (Wildcaster): wild spells shake loose from the dark, Shrunk and Swallowed enemies go
+    Glassy, and kills in the dark leave you Unbound.
+  - **Where the Ichor Pools** (Ichorborn): tar and shadow cling together, and Frenzy leaves you Unlit.
+  - **Many Shadows** (Conjoined): every body deepens the dark.
+  - **Shapes in the Dark** (Mimeticist): prey in the dark is Tagged, and the Panther's Unseen goes Unlit.
+  - **Dark Between the Plates** (Gloomspore Warden): rot and dark feed each other, and Gloomcaps sprout in Shadowflame.
+- Snuff pays for the class's synergies itself, at 2% less damage per level, in place of Synergy Strain.
+
+### Quality of life
+
+- Class search understands more stat names and abbreviations.
+- Summons step out behind you instead of standing up in front of the camera, where a skill asks for it.
+- A summon's look turns with its body, so it no longer walks sideways staring at you.
+
+### Fixes
+
+- The synergy panel no longer covers a class's description. It widens, shrinks its text or shortens inactive synergies
+  to fit, on the creation screen and the body picker.
+
+### Modding
+
+- An effect's `concealment`: enemies more than a tile away lose sight of the bearer that often, rolled once per enemy
+  per turn.
+- A model's `prefab` puts a vanilla hazard's body on a creature with its scripts switched off. A look without a rig
+  still shows strikes, wind-ups and flinches.
+- `turnsPerStack`: a synergy level can grow turns, beside odds and stacks.
+- `"kind": "hunt"` keeps a summon closing on the nearest enemy, and a summon aimed at an enemy arrives targeting it.
+- `summonAt` (`behind` or `beside`) places a summon along your facing.
+- Creature skills' `sound` and a `chain` action's `sound` play mod sound files as well as vanilla events.
+- A mod particle id works as a ground field's `look` and keeps playing for as long as the field lasts.
+
+## 1.4.0 (2026-10-31)
 
 Covers everything since 1.1.0.
 

@@ -85,7 +85,19 @@ namespace SCClassLoader
                             }
                             break;
                         }
-                    default: Plugin.Log.LogWarning($"{c.GetName()}: unknown behavior '{b.kind}' (kite, retreat, guard, hitAndRun)"); break;
+                    case "hunt":
+                        {
+                            // The pet AI walks a minion back to you when it has no target; a hunter picks the nearest enemy instead.
+                            Character foe = Nearest(c, out float dh);
+                            if (foe != null && dh > 1.6f)
+                            {
+                                if (c.ai != null) { c.ai.SetTarget(foe); if (c.ai.GetState() != AI.AI_STATE.Active) c.ai.ChangeState(AI.AI_STATE.Active); }
+                                step = foe.GetMover()?.GetCurrentNavNode();
+                            }
+                            acted = step != null;
+                            break;
+                        }
+                    default: Plugin.Log.LogWarning($"{c.GetName()}: unknown behavior '{b.kind}' (kite, retreat, guard, hitAndRun, hunt)"); break;
                 }
                 if (step != null)
                 {

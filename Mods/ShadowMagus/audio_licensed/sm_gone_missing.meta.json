@@ -1,0 +1,130 @@
+{
+  "prompt": "a creature swallowed whole into the dark, a heavy inward gulp collapsing to sudden silence",
+  "duration": 1.4,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "f54eda0849b5cb2c",
+      "score": 0.4325370192527771,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Stingers.zip",
+      "inner": "Dark Fantasy Studio- Stingers/Dark Fantasy Studio- Stingers 8.wav",
+      "license": "reference",
+      "tags": [
+        "stingers",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "fbeb432b2cfa2783",
+      "score": 0.41655540466308594,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 25.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "7335f624a2783b9b",
+      "score": 0.4100183844566345,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Thunder.zip",
+      "inner": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 4.wav",
+      "license": "reference",
+      "tags": [
+        "thunder",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.4064320921897888,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "845f9e0244ddeb1c",
+      "score": 0.39748191833496094,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Chaos.zip",
+      "inner": "Dark Fantasy Studio- Chaos/Dark Fantasy Studio- Chaos 2.wav",
+      "license": "reference",
+      "tags": [
+        "chaos",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "d4a9cc93e409571e",
+      "score": 0.3916442394256592,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-5.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_gone_missing.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.157,
+  "semitones": -3,
+  "width": 1.432,
+  "listen": {
+    "match": 0.543,
+    "clean": -0.633,
+    "faults": []
+  }
+}

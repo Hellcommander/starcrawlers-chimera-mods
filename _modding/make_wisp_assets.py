@@ -122,6 +122,57 @@ WISPS = [
           "life": [0.4, 0.7], "speed": [2, 3.5], "size": [0.05, 0.1], "gravity": 1, "spin": [-360, 360],
           "shape": "sphere", "radius": 0.08, "color": "#FFFFFF"}],
          "light": {"color": "#bff0ff", "range": 2.5, "intensity": 2, "time": 0.3}}},
+
+    {"name": "spillnode", "mod": "ArendethClasses",
+     "core": {"procedural": "spillnode",
+              "ai": {"desc": "a small bright faceted bead of white hot light, floating", "mesher": "fast"}},
+     "model": {"height": 0.17, "offset": [0, 1.0, 0], "tint": "#FFF4FF", "glow": "#d9b8ff", "glowStrength": 1.6,
+               "bob": 0.08, "spin": 35, "wobble": 14, "pulse": 0.14, "keepParticles": True},  # the body's own nanite swarm stays
+     "gen": {"spillnode_knot": {"preset": "energy_orb", "seed": 41,
+                                "desc": "a loose tangled knot of thin glowing threads of raw energy looping around one "
+                                        "small blinding point of white light, several fine filaments of light with "
+                                        "frayed ends curling away from the knot, floating alone in empty black space",
+                                "motion": "The glowing threads writhe, slide over each other and pull tight around the "
+                                          "bright point while their frayed ends whip and curl. Restless, continuous "
+                                          "motion; it stays whole and centred."},
+             "spillnode_arcs": {"preset": "electric", "seed": 42,
+                                "desc": "thin jagged white arcs of static snapping outward from one bright point, "
+                                        "frayed branching threads of electricity",
+                                "motion": "The arcs flicker, snap and re-form every moment around the bright point. "
+                                          "Fast, erratic motion."}},
+     "attach": [
+         {"id": "SpillnodeKnot", "layers": [
+             # two overlapping turns of the knot in different colours, so the threads never read as one flat picture
+             {"texture": "gen:spillnode_knot", "count": 0, "rate": 2.2, "duration": 1, "life": [1.1, 1.5], "speed": [0],
+              "size": [0.72, 0.9], "sizeCurve": "pulse", "shape": "point", "spin": [-70, 70], "color": "#B98CFF",
+              "color2": "#5C8CFF", "alpha": 0.8, "standin": {"texture": "soft", "size": [0.55, 0.7], "alpha": 0.4}},
+             {"texture": "gen:spillnode_knot", "count": 0, "rate": 1.6, "duration": 1, "life": [0.9, 1.3], "speed": [0],
+              "size": [0.55, 0.72], "sizeCurve": "pulse", "shape": "point", "spin": [-120, 120], "color": "#FFB070",
+              "color2": "#FF6FC8", "alpha": 0.55, "standin": {"texture": "soft", "size": [0.3, 0.4], "alpha": 0.3}},
+             {"texture": "soft", "count": 0, "rate": 3, "duration": 1, "life": [0.7, 1.0], "speed": [0],
+              "size": [0.3, 0.4], "sizeCurve": "pulse", "shape": "point", "color": "#FFF0FF", "alpha": 0.8}]},
+         {"id": "SpillnodeStatic", "layers": [
+             {"texture": "gen:spillnode_arcs", "count": 0, "rate": 3.5, "duration": 1, "life": [0.12, 0.26],
+              "speed": [0], "size": [0.6, 0.95], "randomFrame": True, "sizeCurve": "flat", "shape": "sphere",
+              "radius": 0.05, "spin": [-180, 180], "color": "#DCC8FF", "alpha": 0.9,
+              "standin": {"texture": "spark", "rate": 12, "life": [0.12, 0.25], "speed": [1, 2], "size": [0.04, 0.08],
+                          "randomFrame": False, "sizeCurve": "shrink", "stretch": 2, "drag": 2, "radius": 0.08}},
+             # the swarm itself: a shell of nanite specks churning around the knot, no surface anywhere
+             {"texture": "mote", "count": 0, "rate": 45, "duration": 1, "life": [0.7, 1.3], "speed": [0.03, 0.12],
+              "size": [0.012, 0.03], "sizeCurve": "pop", "shape": "sphere", "radius": 0.34, "orbit": 0.9,
+              "radial": -0.05, "color": "#E8DCFF", "color2": "#6C8CFF"},
+             # frayed scraps shed off the knot, spiralling out
+             {"texture": "spark", "count": 0, "rate": 10, "duration": 1, "life": [0.4, 0.9], "speed": [0.15, 0.5],
+              "size": [0.02, 0.05], "sizeCurve": "shrink", "stretch": 2.5, "shape": "sphere", "radius": 0.22,
+              "orbit": 1.1, "radial": 0.25, "color": "#FFD9B0", "color2": "#8C6CFF"}]}],
+     "death": {"id": "SpillnodeSnap", "layers": [
+         {"texture": "gen:spillnode_arcs", "count": 3, "life": [0.25, 0.4], "speed": [0], "size": [1.5, 2.1],
+          "randomFrame": True, "sizeCurve": "flat", "shape": "point", "spin": [-180, 180], "color": "#E6D8FF",
+          "standin": {"texture": "star", "count": 1, "size": [1.2], "randomFrame": False}},
+         {"texture": "spark", "count": 24, "life": [0.3, 0.7], "speed": [2.5, 5], "size": [0.03, 0.07],
+          "sizeCurve": "shrink", "stretch": 2.5, "drag": 2, "shape": "sphere", "radius": 0.1, "color": "#FFFFFF",
+          "color2": "#8C6CFF"}],
+         "light": {"color": "#d9b8ff", "range": 3.5, "intensity": 3, "time": 0.35}}},
 ]
 
 

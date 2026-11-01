@@ -1,6 +1,6 @@
 """Procedural summon models for the Arendeth classes (original geometry and textures, written as OBJ + PNG).
   gloomcap  - Gloomspore Warden's Gloomcap: a squat fungus with a domed, glowing-pored cap, gills and root tendrils
-  spillnode - Entropy Weaver's Spillnode: a floating knot of runaway power thread around a bright core
+  spillnode - Entropy Weaver's Spillnode: the bright core; its knot of runaway power thread is particles, see make_wisp_assets.py
   omega_wisp - Rimelight Seer's Omega Hoarlight: a faceted core of mind light in a tilted halo, ringed by frost shards
   hoarlight  - Rimelight Seer's Hoarlight: a small teardrop crystal of mind light with three splinters (its halo and
                motes are particles, see make_wisp_assets.py)
@@ -249,34 +249,10 @@ THREAD, CORE = (0, 0, .75, 1), (.75, 0, 1, 1)
 
 
 def spillnode(out):
-    random.seed(3)
     m = Mesh()
-    # a (2,3) torus knot: the thread loops back through itself
-    R, r0, n = 0.24, 0.10, 150
-    pts = []
-    for i in range(n + 1):
-        t = TAU * i / n
-        q = 2 * t
-        rr = R + r0 * math.cos(3 * t)
-        p = (rr * math.cos(q), r0 * math.sin(3 * t) * 1.2, rr * math.sin(q))
-        pts.append((p, 0.032 + 0.012 * math.sin(6 * t + 1.0)))
-    tube(m, pts, 8, THREAD, v_scale=1.0)
-
-    # loose ends: three frayed threads trailing off the knot
-    for k in range(3):
-        a = TAU * k / 3 + 0.4
-        start = (0.30 * math.cos(a), 0.05 * (k - 1), 0.30 * math.sin(a))
-        trail = []
-        for i in range(7):
-            t = i / 6
-            d = 0.30 + 0.22 * t
-            ang = a + 0.6 * t
-            trail.append(((d * math.cos(ang), start[1] + 0.12 * math.sin(t * 3 + k), d * math.sin(ang)), 0.022 * (1 - t) + 0.004))
-        tube(m, trail, 5, THREAD, v_scale=0.3, u_off=0.0)
-
-    # the core: a small faceted bead where the power is still held
+    # only the bright core is solid: the knot of thread around it is a living flipbook (make_wisp_assets.py)
     core_profile = [(0.0, -0.085), (0.06, -0.06), (0.085, 0.0), (0.06, 0.06), (0.0, 0.085)]
-    lathe(m, core_profile, 12, CORE, outward=lambda c: c)
+    lathe(m, core_profile, 7, CORE, outward=lambda c: c)
 
     m.save(os.path.join(out, 'spillnode.obj'), 'Spillnode')
     spillnode_texture(os.path.join(out, 'spillnode.png'))

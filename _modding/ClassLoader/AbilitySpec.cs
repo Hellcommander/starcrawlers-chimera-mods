@@ -209,6 +209,9 @@ namespace SCClassLoader
         /// <summary>Vanilla effect id ("EFFECT_Fire") or one of this class's effects ("@Hexed").</summary>
         public string effect;
         public int turns;
+        /// <summary>Turns added per stack of stacksOf (with stacksUsed as a cap): a stun, silence, taunt, Horror or effect that
+        /// lasts longer with a synergy's level ("stacksOf": "@SynergyId" inside a synergy) or with a resource.</summary>
+        public int turnsPerStack;
 
         /// <summary>Only when the target has this effect (vanilla id or "@name").</summary>
         public string ifTargetHas;
@@ -283,6 +286,9 @@ namespace SCClassLoader
         /// <summary>summon: a pool shared by every ability that names it, for maxSummons and for "group:Name" in
         /// ifSummonAlive / unlessSummonAlive / stacksOf.</summary>
         public string summonGroup;
+        /// <summary>Where a summon centred on you appears: "behind" (your shadow steps out behind you, not into the camera),
+        /// "beside", or nothing for the nearest free tile (usually the one in front).</summary>
+        public string summonAt;
         /// <summary>summon: the owner stat it grows with ("PsiPower"), overriding the creature's own scaleStat; default Smarts.</summary>
         public string scaleStat;
         /// <summary>summon: a new look for each summon (mesh/texture next to the class file; see ModelSpec).
@@ -508,6 +514,9 @@ namespace SCClassLoader
         public bool root;
         /// <summary>% chance a projectile or energy attack on the bearer is turned back at its attacker (see Reflect).</summary>
         public int reflect;
+        /// <summary>% of enemy sight checks on the bearer that fail while it holds, so enemies more than a tile away lose track of
+        /// it (rolled once per enemy per turn; see Concealment). The dark hides: Shadow Magus's Unlit and Nightwalker.</summary>
+        public int concealment;
         /// <summary>Effects the bearer can't get ("@Gloomrot", "#Poisoned", "EFFECT_Poison", "CONFUSE"), see Immunity.</summary>
         public List<string> immune;
         /// <summary>No damage from your own side reaches the bearer (your summons, bursts and damage over time).</summary>

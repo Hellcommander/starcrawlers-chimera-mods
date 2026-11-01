@@ -1,0 +1,137 @@
+{
+  "prompt": "a clawed hand of shadow raking across armour, quick dark swipe with a smoky whoosh",
+  "duration": 1.0,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "06a091914234f454",
+      "score": 0.4030000567436218,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 1.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "d4a9cc93e409571e",
+      "score": 0.39678797125816345,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-5.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "f4e30993816282f2",
+      "score": 0.3842906057834625,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 5.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "256fcf2883691928",
+      "score": 0.3788873553276062,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-9.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "1d343508a2365457",
+      "score": 0.3775624632835388,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 16.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "2d90f1174846ca53",
+      "score": 0.37522053718566895,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-14.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_shade_rake.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.059,
+  "semitones": -4,
+  "width": 0.348,
+  "listen": {
+    "match": 0.568,
+    "clean": 1.434,
+    "faults": []
+  }
+}

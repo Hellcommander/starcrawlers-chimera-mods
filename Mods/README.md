@@ -21,6 +21,11 @@ with a Glacier Sentinel golem) and `Mods/LookingGlass/` (a chaotic agile duelist
 Grown, deals Painted Guards, throws a Mad Tea Party and ends as the Grinning Cat; also the worked example of
 conditions, counters and triggers, see its README) are single-class mods whose icons, particle sheets, meshes,
 animated summons and sounds all come from the AAMT asset pipelines (`_modding/make_kelvin_glass_assets.py`).
+`Mods/ShadowMagus/` is a third: a Guile caster whose spells scale with Recognition and Psi Power and whose control
+rolls (blind, scatter, silence, shrink) scale with Recognition alone through `chanceScale`. It Benights enemies, feeds a
+crit line (Darkvision, a crit chain, an execute), stands its own Shade up as an `ownerShare` summon, scatters a room
+with `warp random`, shrinks one enemy with `modelScale`, hides in its own Shadowflame with `concealment`, and whistles up a Horror of its own (a creature wearing the game's Horror `prefab`)
+(`_modding/make_shadow_magus_assets.py`; sounds through `_modding/audio/sfx_plan_new.py` + `sfx_alter.py`).
 
 `Mods/vanilla_reference.txt` is rewritten every launch. It lists every vanilla tree id, its tiers and
 abilities, stats, damage types and item ids. Use it to choose what to borrow.
@@ -192,6 +197,11 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - `creature`: a vanilla prefab from the "SUMMONABLE PREFABS" list in `vanilla_reference.txt` (Junker, Spidermine,
   Turret, Boltron, Void tentacle, `nanite_cloud`, `nanite_plague`), an enemy's internal name (`CORPSEC_DRONE`, or a
   mod enemy's `SCCLMOB_...` id), or part of any creature prefab name.
+- A summon aimed at an enemy (the ability targets one) arrives with that enemy as its target, so it fights instead of
+  walking back to you the way the pet AI does when a minion has nothing to do; `hunt` keeps it that way afterwards.
+- `"summonAt": "behind"` (or `"beside"`) on a summon centred on you picks its tile along your facing and turns it to face the way you face, so a summon does not
+  stand up in front of the camera; the Shadow Magus's Shade steps out behind the Magus. Creature skills' `sound` and a `chain`
+  action's `sound` play mod sound files as well as vanilla events.
 - Summons fight on your side and scale with your level and Smarts like Engineer pets. `turns` > 0 dismisses them
   after that many of your turns; `maxSummons` caps how many one ability keeps alive at once.
   `"stationary": true` keeps a summon on the tile it appeared on (a decoy, a totem); it still attacks what comes in reach.
@@ -431,6 +441,12 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   (5-95%): control rolls such as Coldbound Choir's charm.
 - An effect's `"root": true` holds its bearer in place while it lasts, like a vanilla root (flying and root-immune
   creatures shrug it off). Tidewright's Brine Shackle uses it.
+- An effect's `"concealment": 65` makes enemy sight checks on its bearer fail 65% of the time while it holds, rolled once
+  per enemy per turn, never for an enemy within a tile: enemies more than a tile away lose track of the bearer mid-fight and go
+  searching or turn on someone they can see (a summon). Shadow Magus's Unlit (Shadowflame, the Shade's dark) and Nightwalker use it.
+  A Horror is a thing of the dark: while you wear any concealment, the Cursed class's own Horror and a wild `horror` that
+  came hunting you cannot find you at all and take whoever else is nearest instead, enemies and bystanders alike (a
+  Shadow Magus beside a Cursed or a Wildcaster).
 - An effect's `"reflect": 35` gives a 35% chance that a projectile (a ranged attack or skill) or an Energy attack on its
   bearer is turned back at whoever made it, at `"reflectShare"` of its strength (default all of it); the shot never lands.
   Melee, damage over time and hazards aren't reflected. Rimelight Seer's Galeward uses it.
@@ -463,6 +479,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   The look is placed on every other tile from the middle out (not every tile), the same look from an overlapping field
   isn't doubled up, only one copy keeps the hazard's sound, and refractive "glass" layers are left out. Gas and fog
   looks (HAZARD_Gas, HAZARD_Miasma, HAZARD_Cryo) are big: `"look": "HAZARD_Miasma@0.7"` shrinks them.
+  A mod particle id as the `look` (`"look": "SmBlackFlame"`) stands your own effect on the tiles and keeps it playing for as
+  long as the field lasts: its layers loop (a burst repeats every `duration`, a stream runs on), as on a creature.
 - A mod **trap**: a device on one tile that waits for someone to set it off, then runs your actions once.
   ```jsonc
   { "do": "trap", "fieldName": "Snare Mine", "affects": "enemies",   // or "allies", "all"
@@ -994,6 +1012,9 @@ Summons (`"do": "summon"`) and mod enemies take a `"model"`: a new mesh, or just
   name; `"clips": { "attack": "Bite" }` maps others, `"animSpeed"` scales them. Export uncompressed (no Draco/meshopt).
   `.obj` takes its colour from `texture`. Blender exports from the AAMT toolkit work as they are (1 unit ≈ 1 m, Y up).
 - `texture` (PNG): with a mesh, replaces its texture; without a mesh, repaints the creature's own body.
+- `prefab`: a vanilla hazard id instead of a mesh (`"prefab": "HAZARD_Horror"` puts the Horror's own body on the creature): its
+  renderers, particles and animators are cloned with every script switched off, so none of the hazard's behaviour comes
+  along; `scale`/`height`, `tint`, `glow`, `bob` and `particles` apply as for a mesh. The Shadow Magus's Thing in the Dark wears it at 0.7.
 - `scale`, `offset` (metres from the feet), `rotation` (degrees), `tint`; `glow` (#RRGGBB, with `glowStrength`) makes
   the model shine in that colour (an additive pass over it that the game's bloom picks up, plus a small light; with
   only a `texture`, the creature's own body glows);
@@ -1013,6 +1034,10 @@ Summons (`"do": "summon"`) and mod enemies take a `"model"`: a new mesh, or just
   dies, or a summon is spent or recalled, the emitters stop, what's in the air fades where it is, and `deathVfx`
   plays once where the model was. `particles` work without a mesh too (a glow on a vanilla body). Saves and loads
   keep them like the rest of the look. `SCCL_DEVTEST=wisps` photographs Rimelight Seer's wisps live, dying and loaded.
+- The look turns with the body: the game turns a creature's own model when it walks or faces a target, and the mod look
+  follows it (plus its own `rotation`, `randomYaw`, spin and rock), so a summon no longer walks sideways staring at you.
+  A look without a rig (a `prefab` body, a static mesh) still shows its strikes: a short lunge for an attack, a flare for a
+  wind-up, a flinch when hit.
 - The creature keeps its movement, AI, attacks and collision; only its look changes. Summons keep their look
   through saves; mod enemies have it built in.
 
@@ -1198,7 +1223,8 @@ Painted Guard) and `Mods/KelvinMagus/creatures.json` (the Glacier Sentinel) are 
   "behaviors": [ { "kind": "kite", "keep": 3 },        // a foe within 3 tiles: step to the free tile with the most room
                  { "kind": "retreat", "below": 35 },   // under 35% health: keep backing off
                  { "kind": "guard", "leash": 6 },      // a summon farther than 6 from you walks back toward you
-                 { "kind": "hitAndRun" } ]             // after using a skill away from where it started, dart straight back
+                 { "kind": "hitAndRun" },              // after using a skill away from where it started, dart straight back
+                 { "kind": "hunt" } ]                  // a summon with no enemy in reach closes on the nearest one instead of walking back to you
   ```
   Each takes `"cooldown"` (its turns before it can kick in again). The Spitcap kites and retreats, the Zenith Hoarlight
   kites and guards, and Rimelight Seer's Hoarlights hit and run: their Wisp Dart skill leaps in (`{ "do": "leap" }`),
@@ -1768,6 +1794,11 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
   effects (`ifTargetHas`, `ifSelfHas`, `"MOD_Class@Effect"`). `ifTargetHas` checks whoever the action lands on, so
   on a `"to": "self"` action it checks you; to gate a self action on the enemy you hit, use
   `"when": { "has": "MOD_Class@Effect", "of": "victim" }` (or `"of": "attacker"` in hurt and dodge procs).
+- **Growing with the level:** the bonus is an effect on you whose stacks are the level, so an action inside it can read
+  them: `"bonusPerStack": 1, "stacksOf": "@YourSynergyId"` on an `effect` action adds a stack per level, on a `damage` or
+  `exhaust` action an amount per level; `"turnsPerStack": 1` with the same `stacksOf` adds a turn per level to a stun,
+  silence, taunt, `horror` or timed effect (`stacksUsed` caps how many levels count). Shadow Magus + Cursed (Nothing
+  Watching) keeps its Horror a turn longer per level this way.
 - **Granted skills:** `"grants": [ { "base": "Bolt", "name": "Toxic Breath", ... } ]` gives you active skills while the
   synergy holds (written like a tier's `newAbility`). They join your abilities and hotbar, rank with the first tree in
   `trees` (so `perRank` and `"rank:TREE"` conditions follow it), and are taken away if the synergy lapses. Miasmancer +

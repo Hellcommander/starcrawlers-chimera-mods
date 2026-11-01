@@ -1,0 +1,137 @@
+{
+  "prompt": "darkness spell bursting outward over a room, deep whoosh, bodies flung and scattered, eerie dark magic",
+  "duration": 1.9,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "256fcf2883691928",
+      "score": 0.5955420732498169,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-9.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "f00abdf0599c3574",
+      "score": 0.5842688083648682,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-4.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "7cb24c0d24c0d5ac",
+      "score": 0.5809473991394043,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-11.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "dfa20e014883a8b6",
+      "score": 0.5774698257446289,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-1.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.5750039219856262,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "d4a9cc93e409571e",
+      "score": 0.573727011680603,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-5.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_lose_them.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.206,
+  "semitones": -5,
+  "width": 0.224,
+  "listen": {
+    "match": 0.542,
+    "clean": -0.646,
+    "faults": []
+  }
+}

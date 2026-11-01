@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -125,7 +126,37 @@ namespace SCClassLoader
         {
             if (who == null) return;
             MobAnimDriver d = who.GetComponent<MobAnimDriver>();
-            if (d != null) d.Play(state);
+            if (d != null) { d.Play(state); return; }
+            // No rig (a prefab look, a static mesh): a procedural strike, so a hit is seen and not only read off the log.
+            Transform root = who.transform.Find("SCCL_Model");
+            if (root != null && !string.IsNullOrEmpty(state) && (state.StartsWith("attack") || state == "special" || state == "hit") && Plugin.Instance != null)
+                Plugin.Instance.StartCoroutine(Motion(who, root, state));
+        }
+
+        /// <summary>Out and back along the body's facing: a lunge for an attack, a flare for a wind-up, a flinch for a hit.
+        /// Works with the Floater (it moves the floater's base, which the floater bobs around) or on the root alone.</summary>
+        private static IEnumerator Motion(Character who, Transform root, string state)
+        {
+            var f = root.GetComponent<ModelAssets.Floater>();
+            Vector3 basePos = f != null ? f.basePos : root.localPosition;
+            Vector3 baseScale = root.localScale;
+            float reach = state == "hit" ? -0.25f : state == "special" ? 0f : 0.55f;
+            float grow = state == "special" ? 0.25f : 0.12f, time = state == "hit" ? 0.3f : 0.45f;
+            Vector3 facing = who.ai != null && who.ai.model != null ? who.ai.model.forward : who.transform.forward;
+            Vector3 dir = root.parent != null ? root.parent.InverseTransformDirection(facing) : facing;
+            dir.y = 0f;
+            if (dir.sqrMagnitude > 0.001f) dir.Normalize();
+            for (float t = 0f; t < time && root != null; t += Time.deltaTime)
+            {
+                float k = Mathf.Sin(Mathf.Clamp01(t / time) * Mathf.PI);
+                Vector3 off = dir * (reach * k);
+                if (f != null) f.basePos = basePos + off; else root.localPosition = basePos + off;
+                root.localScale = baseScale * (1f + grow * k);
+                yield return null;
+            }
+            if (root == null) yield break;
+            if (f != null) { f.basePos = basePos; f.baseScale = baseScale; } else root.localPosition = basePos;
+            root.localScale = baseScale;
         }
 
         /// <summary>Vanilla abilities on a creature with its own clips play its attack.</summary>

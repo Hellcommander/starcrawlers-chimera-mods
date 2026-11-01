@@ -1,0 +1,137 @@
+{
+  "prompt": "darkness leaping from one body to the next, two quick dark magic cracks with a whispering tail",
+  "duration": 1.2,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7758d2eefce2bb1a",
+      "score": 0.5458303689956665,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "f4e30993816282f2",
+      "score": 0.5256204605102539,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 5.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "47efa64c22c8bdba",
+      "score": 0.5177593231201172,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.5140469670295715,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "4523ded5ff9adc15",
+      "score": 0.5107865333557129,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 10 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "32f7b2ce8128ff62",
+      "score": 0.5075802206993103,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_dark_chain.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.154,
+  "semitones": -3,
+  "width": 0.542,
+  "listen": {
+    "match": 0.539,
+    "clean": -0.995,
+    "faults": []
+  }
+}

@@ -1,0 +1,661 @@
+{
+ "id": "MOD_ShadowMagus",
+ "name": "Shadow Magus",
+ "description": "Mages of what the light leaves out. A Shadow Magus never hides: it takes the enemy's eyes instead, and keeps its own.\n\nSpells put Benighted on enemies, which dims their aim and their footing. Every critical hit sharpens your Darkvision, and crits on Benighted enemies spread the dark or finish them outright. Shadowflame and your own Shade pool dark that enemies lose you in, Lose Them scatters a room blind, Swallowed shrinks one into the dark, and The Thing in the Dark is exactly what it sounds like. Damage scales with [REC] and [PSI]; how surely the dark takes hold scales with [REC] alone.",
+ "archetype": "Guile",
+ "icon": "icons/shadow_magus.png",
+ "iconFrom": "SKILLTREE_VoidPsyker",
+ "attributePriorities": {
+  "PsiPower": 4,
+  "Recognition": 4,
+  "Agility": 1
+ },
+ "effects": [
+  {
+   "id": "Benighted",
+   "name": "Benighted",
+   "icon": "icons/benighted.png",
+   "debuff": true,
+   "description": "Shadow in its eyes. Each layer dims its aim and its footing: it sees you worse, crits less and dodges less. Your crits on it spread the dark or finish it.",
+   "duration": 4,
+   "maxStacks": 3,
+   "stats": {
+    "Recognition": -3,
+    "Dodge": -4
+   },
+   "vfx": "EFFECT_Void_Psyker_Drain"
+  },
+  {
+   "id": "Darkvision",
+   "name": "Darkvision",
+   "icon": "icons/darkvision.png",
+   "description": "Your eyes have adjusted. Each layer sharpens your critical hits and makes them bite deeper; it fades if you stop landing them.",
+   "duration": 3,
+   "maxStacks": 5,
+   "stats": {
+    "Crit": 3
+   },
+   "critDamagePerStack": 0.06
+  },
+  {
+   "id": "Nightwalker",
+   "name": "Nightwalker",
+   "icon": "icons/nightwalker.png",
+   "description": "You stand where the light does not. Harder to spot, your aim finds the openings, and enemies more than a tile away lose sight of you two times in five.",
+   "duration": 3,
+   "stats": {
+    "Stealth": 12,
+    "Crit": 8
+   },
+   "vfx": "CYBERNINJA_STEALTH.particle",
+   "concealment": 40
+  },
+  {
+   "id": "Unlit",
+   "name": "Unlit",
+   "icon": "icons/nightwalker.png",
+   "description": "Standing in the dark. Enemies more than a tile away lose sight of you two times in three and go for whatever they can see; up close they still find you.",
+   "duration": 2,
+   "stats": {
+    "Stealth": 15
+   },
+   "concealment": 65
+  },
+  {
+   "id": "Swallowed",
+   "name": "Swallowed",
+   "icon": "icons/swallowed.png",
+   "debuff": true,
+   "description": "The dark has closed over it. It is smaller than it was, hits softer, and can barely see out.",
+   "duration": 3,
+   "modelScale": 0.6,
+   "damageDealtMult": 0.75,
+   "stats": {
+    "Recognition": -4
+   },
+   "vfx": "EFFECT_Void_Psyker_Drain"
+  },
+  {
+   "id": "Shadeborn",
+   "name": "Shadeborn",
+   "icon": "icons/cast_a_shade.png",
+   "description": "Your own shadow, stood up and set loose. It fights with more than half your strength and wits, its touch Benights, the dark pools around it every turn (you and yours are Unlit in it, enemies Benighted), and when it is put out the dark bursts over everything near it.",
+   "duration": -1,
+   "ownerShare": 0.6,
+   "procs": [
+    {
+     "on": "hit",
+     "actions": [
+      {
+       "do": "effect",
+       "effect": "@Benighted",
+       "stacks": 2
+      }
+     ]
+    },
+    {
+     "on": "hurt",
+     "actions": [
+      {
+       "do": "effect",
+       "to": "attacker",
+       "effect": "@Benighted"
+      }
+     ]
+    },
+    {
+     "on": "turn",
+     "actions": [
+      {
+       "do": "field",
+       "to": "self",
+       "fieldName": "Shade's Dark",
+       "turns": 2,
+       "radius": 1.1,
+       "affects": "allies",
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@Unlit"
+        }
+       ],
+       "look": "SmGloomPool"
+      },
+      {
+       "do": "field",
+       "to": "self",
+       "fieldName": "Shade's Gloom",
+       "turns": 2,
+       "radius": 1.1,
+       "affects": "enemies",
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@Benighted"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "onDeathActions": [
+    {
+     "do": "chain",
+     "jumps": 4,
+     "radius": 2,
+     "vfx": "SmDarkBurst@0.7",
+     "actions": [
+      {
+       "do": "blind"
+      },
+      {
+       "do": "effect",
+       "effect": "@Benighted"
+      }
+     ],
+     "sound": "audio_licensed/sm_shade_burst.wav"
+    }
+   ],
+   "damageDealtMult": 1.25
+  },
+  {
+   "id": "Loosed",
+   "name": "Loosed",
+   "icon": "icons/the_thing_in_the_dark.png",
+   "description": "The Thing in the Dark, let off its leash for a few turns. It fights with most of your strength and wits, takes hits softly, and whatever it tears is Benighted to the full and blinded.",
+   "duration": -1,
+   "ownerShare": 0.75,
+   "damageDealtMult": 1.4,
+   "procs": [
+    {
+     "on": "hit",
+     "actions": [
+      {
+       "do": "effect",
+       "effect": "@Benighted",
+       "stacks": 3
+      },
+      {
+       "do": "blind"
+      }
+     ]
+    }
+   ],
+   "damageTakenMult": 0.8
+  }
+ ],
+ "tiers": [
+  {
+   "attributes": {
+    "Recognition": 1
+   },
+   "addResistances": {
+    "Void": 5
+   },
+   "newAbility": {
+    "base": "Passive",
+    "name": "Dark-Adapted",
+    "icon": "icons/dark_adapted.png",
+    "description": "Every critical hit you land teaches your eyes the dark a little better: a layer of Darkvision. Whatever dies Benighted gives you your breath back.",
+    "procs": [
+     {
+      "on": "crit",
+      "actions": [
+       {
+        "do": "effect",
+        "to": "self",
+        "effect": "@Darkvision"
+       }
+      ]
+     },
+     {
+      "on": "kill",
+      "when": {
+       "has": "@Benighted",
+       "of": "victim"
+      },
+      "actions": [
+       {
+        "do": "stamina",
+        "to": "self",
+        "amount": 4
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "attributes": {
+    "PsiPower": 1
+   },
+   "newAbility": {
+    "base": "Bolt",
+    "name": "Snuff",
+    "icon": "icons/snuff.png",
+    "range": 6,
+    "staminaCost": 6,
+    "cooldown": 0,
+    "description": "Pinch the light out around one enemy. It takes the dark into its eyes, and sometimes cannot see at all for a moment. The dark asks its price here: every synergy level you run takes a little off this spell, and nothing else of yours pays Synergy Strain.",
+    "castVfx": "SmSnuffCast",
+    "travelVfx": "SmShadeBolt",
+    "travelSpeed": 14,
+    "impactVfx": "VOID_PSYKER_SHADOWCOIL.impactParticle@0.8",
+    "sound": "audio_licensed/sm_snuff.wav",
+    "actions": [
+     {
+      "do": "damage",
+      "type": "Void",
+      "min": 2,
+      "max": 5,
+      "scale": "Recognition+PsiPower",
+      "scaleMult": 0.25,
+      "perRank": 1
+     },
+     {
+      "do": "effect",
+      "effect": "@Benighted"
+     },
+     {
+      "do": "blind",
+      "when": {
+       "chance": 30,
+       "chanceScale": "Recognition",
+       "chancePer": 1
+      }
+     }
+    ],
+    "perk": {
+     "name": "Pinched Twice",
+     "addActions": [
+      {
+       "do": "effect",
+       "effect": "@Benighted"
+      }
+     ]
+    },
+    "synergyPenalty": {
+     "damage": 2
+    }
+   }
+  },
+  {
+   "attributes": {
+    "Recognition": 1
+   },
+   "newAbility": {
+    "base": "Nova",
+    "name": "Lose Them",
+    "icon": "icons/lose_them.png",
+    "radius": 2.5,
+    "staminaCost": 10,
+    "cooldown": 6,
+    "description": "Drop the room into the dark. Every enemy near you is blinded and most are thrown to some other tile, lost; all of them come out Benighted. You come out a Nightwalker.",
+    "castVfx": "SmNightfall",
+    "impactVfx": "SmDarkBurst@0.6",
+    "sound": "audio_licensed/sm_lose_them.wav",
+    "thirdPerson": 1.5,
+    "actions": [
+     {
+      "do": "blind"
+     },
+     {
+      "do": "warp",
+      "warpTo": "random",
+      "amount": 3,
+      "when": {
+       "chance": 55,
+       "chanceScale": "Recognition",
+       "chancePer": 1
+      }
+     },
+     {
+      "do": "effect",
+      "effect": "@Benighted"
+     },
+     {
+      "do": "effect",
+      "to": "self",
+      "effect": "@Nightwalker"
+     }
+    ],
+    "perk": {
+     "name": "Further Gone",
+     "radiusDelta": 0.5
+    }
+   }
+  },
+  {
+   "attributes": {
+    "PsiPower": 1
+   },
+   "addResistances": {
+    "Void": 5
+   },
+   "newAbility": {
+    "name": "Cast a Shade",
+    "icon": "icons/cast_a_shade.png",
+    "target": "self",
+    "staminaCost": 12,
+    "cooldown": 10,
+    "description": "Stand your own shadow up and let it go. It fights with more than half your strength and wits, Benights what it touches, and pools dark around itself each turn; stepping out of it leaves you Unlit, so enemies lose you and go for the shade. Cast again while it stands: the enemies near it go for the shade instead of you, and you are Unlit again.",
+    "castVfx": "SmShadeCall",
+    "sound": "audio_licensed/sm_shade.wav",
+    "actions": [
+     {
+      "do": "summon",
+      "creature": "Shade",
+      "summonName": "Shade",
+      "summonGroup": "Shade",
+      "scaleStat": "PsiPower",
+      "unlessSummonAlive": "self",
+      "maxSummons": 1,
+      "turns": 15,
+      "effect": "@Shadeborn",
+      "summonVfx": "SmShadeCall",
+      "summonAt": "behind"
+     },
+     {
+      "do": "taunt",
+      "to": "summons",
+      "ifSummonAlive": "self",
+      "radius": 4,
+      "turns": 2
+     },
+     {
+      "do": "effect",
+      "to": "self",
+      "effect": "@Unlit"
+     }
+    ],
+    "perk": {
+     "name": "Long Shadow",
+     "cooldownDelta": -3
+    }
+   }
+  },
+  {
+   "attributes": {
+    "Recognition": 1
+   },
+   "newAbility": {
+    "name": "Shadowflame",
+    "icon": "icons/shadowflame.png",
+    "target": "floor",
+    "range": 6,
+    "radius": 1.1,
+    "staminaCost": 9,
+    "cooldown": 5,
+    "description": "Fire that gives no light. It burns on the deck for a few turns: enemies in it burn with Void, are Benighted and find their big moves slow to come back, while you and yours standing in it are Unlit, lost to any enemy more than a tile away.",
+    "areaVfx": "SmDarkBurst@0.8",
+    "sound": "audio_licensed/sm_shadowflame.wav",
+    "actions": [
+     {
+      "do": "field",
+      "fieldName": "Shadowflame",
+      "turns": 4,
+      "radius": 1.1,
+      "affects": "enemies",
+      "look": "SmBlackFlame",
+      "actions": [
+       {
+        "do": "damage",
+        "type": "Void",
+        "min": 1,
+        "max": 3,
+        "scale": "Recognition+PsiPower",
+        "scaleMult": 0.1,
+        "perRank": 1
+       },
+       {
+        "do": "effect",
+        "effect": "@Benighted"
+       },
+       {
+        "do": "exhaust",
+        "amount": 1,
+        "when": {
+         "chance": 50,
+         "chanceScale": "Recognition",
+         "chancePer": 1
+        }
+       }
+      ]
+     },
+     {
+      "do": "field",
+      "fieldName": "Shadowflame Cover",
+      "turns": 4,
+      "radius": 1.1,
+      "affects": "allies",
+      "actions": [
+       {
+        "do": "effect",
+        "effect": "@Unlit"
+       }
+      ],
+      "look": "SmGloomPool"
+     }
+    ],
+    "perk": {
+     "name": "Smoulder",
+     "cooldownDelta": -2
+    }
+   }
+  },
+  {
+   "attributes": {
+    "PsiPower": 1
+   },
+   "newAbility": {
+    "name": "Swallowed",
+    "icon": "icons/swallowed.png",
+    "target": "enemy",
+    "range": 5,
+    "staminaCost": 10,
+    "cooldown": 5,
+    "description": "Close the dark over one enemy. It shrinks, hits softer and can barely see out; the deeper the dark already is in it, the harder this bites, and it may be struck dumb and slow.",
+    "castVfx": "SmSnuffCast",
+    "impactVfx": "SmDarkBurst@0.8",
+    "sound": "audio_licensed/sm_swallowed.wav",
+    "actions": [
+     {
+      "do": "damage",
+      "type": "Psi",
+      "min": 3,
+      "max": 6,
+      "scale": "Recognition+PsiPower",
+      "scaleMult": 0.3,
+      "perRank": 1
+     },
+     {
+      "do": "damage",
+      "type": "Psi",
+      "min": 4,
+      "max": 8,
+      "scale": "Recognition+PsiPower",
+      "scaleMult": 0.3,
+      "when": {
+       "value": "stacks:@Benighted",
+       "of": "target",
+       "atLeast": 2
+      }
+     },
+     {
+      "do": "effect",
+      "effect": "@Swallowed"
+     },
+     {
+      "do": "silence",
+      "turns": 2,
+      "when": {
+       "chance": 45,
+       "chanceScale": "Recognition",
+       "chancePer": 1
+      }
+     },
+     {
+      "do": "exhaust",
+      "amount": 2
+     }
+    ],
+    "perk": {
+     "name": "Deeper Dark",
+     "chanceBonus": 15
+    }
+   }
+  },
+  {
+   "attributes": {
+    "Recognition": 1
+   },
+   "addResistances": {
+    "Void": 5
+   },
+   "newAbility": {
+    "base": "Passive",
+    "name": "Where You're Looking",
+    "icon": "icons/where_youre_looking.png",
+    "description": "A critical hit on a Benighted enemy is a crack the dark pours through: it leaps to up to two enemies nearby, hurting them and Benighting them. Once a turn.",
+    "procs": [
+     {
+      "on": "crit",
+      "maxPerTurn": 1,
+      "when": {
+       "has": "@Benighted",
+       "of": "target"
+      },
+      "actions": [
+       {
+        "do": "chain",
+        "jumps": 2,
+        "radius": 3,
+        "vfx": "SmEyeFlash@0.8",
+        "actions": [
+         {
+          "do": "damage",
+          "type": "Void",
+          "min": 3,
+          "max": 6,
+          "scale": "Recognition+PsiPower",
+          "scaleMult": 0.3,
+          "perRank": 1
+         },
+         {
+          "do": "effect",
+          "effect": "@Benighted"
+         }
+        ],
+        "sound": "audio_licensed/sm_dark_chain.wav"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "attributes": {
+    "Recognition": 1,
+    "PsiPower": 1
+   },
+   "newAbility": {
+    "base": "Passive",
+    "name": "Eyes of the Dark",
+    "icon": "icons/eyes_of_the_dark.png",
+    "description": "Things in the dark go missing. A critical hit on a Benighted enemy may finish it outright, likelier the deeper the dark is in it, and every crit you land is an opening: your other cooldowns move along.",
+    "procs": [
+     {
+      "on": "crit",
+      "when": {
+       "has": "@Benighted",
+       "of": "target"
+      },
+      "actions": [
+       {
+        "do": "execute",
+        "amount": 2,
+        "bonusPerStack": 4,
+        "stacksOf": "@Benighted",
+        "elitePercent": 6
+       }
+      ],
+      "vfx": "SmEyeFlash",
+      "sound": "audio_licensed/sm_gone_missing.wav"
+     },
+     {
+      "on": "crit",
+      "maxPerTurn": 1,
+      "actions": [
+       {
+        "do": "cooldowns",
+        "to": "self",
+        "amount": 1
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "attributes": {
+    "PsiPower": 1
+   },
+   "addResistances": {
+    "Void": 10
+   },
+   "newAbility": {
+    "name": "The Thing in the Dark",
+    "icon": "icons/the_thing_in_the_dark.png",
+    "target": "enemy",
+    "range": 8,
+    "staminaCost": 18,
+    "cooldown": 25,
+    "description": "You have learned to whistle for it. The Thing comes up out of the dark beside your target and tears into it on the spot, then hunts for eight turns: it rakes, it lunges across the room, and it howls the dark out over everything around it; whatever it tears is blinded and Benighted to the full. Where it came through, the floor stays wrong for a while.",
+    "castVfx": "SmShadeCall",
+    "impactVfx": "SmDarkBurst",
+    "sound": "audio_licensed/sm_the_thing.wav",
+    "thirdPerson": 2,
+    "actions": [
+     {
+      "do": "summon",
+      "creature": "Thing",
+      "summonName": "The Thing in the Dark",
+      "summonGroup": "Thing",
+      "scaleStat": "PsiPower",
+      "maxSummons": 1,
+      "turns": 8,
+      "effect": "@Loosed",
+      "summonVfx": "SmDarkBurst"
+     },
+     {
+      "do": "damage",
+      "type": "Void",
+      "min": 10,
+      "max": 16,
+      "scale": "Recognition+PsiPower",
+      "scaleMult": 0.4,
+      "levelCap": 9
+     },
+     {
+      "do": "effect",
+      "effect": "@Benighted",
+      "stacks": 3
+     },
+     {
+      "do": "blind"
+     },
+     {
+      "do": "hazard",
+      "hazard": "HAZARD_VoidRift",
+      "radius": 1.1,
+      "turns": 3
+     }
+    ],
+    "perk": {
+     "name": "It Knows the Way",
+     "cooldownDelta": -6
+    }
+   }
+  }
+ ]
+}

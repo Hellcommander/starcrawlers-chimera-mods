@@ -463,8 +463,8 @@ namespace SCClassLoader
                 box.enableAutoSizing = true;
                 box.fontSizeMax = baseSize;
                 box.fontSizeMin = baseSize * 0.6f;
-                string text = CreationText(s.skillTree, __instance.selectedSkills.Where(x => x != null && x.skillTree != null).Select(x => x.skillTree).ToList());
-                SynergyTip.Show(__instance, s, text, baseSize);
+                var picked = __instance.selectedSkills.Where(x => x != null && x.skillTree != null).Select(x => x.skillTree).ToList();
+                SynergyTip.Show(__instance, s, CreationText(s.skillTree, picked), CreationText(s.skillTree, picked, true), baseSize);
             }
 
             private static void FillFrame(RectTransform r)
@@ -500,7 +500,8 @@ namespace SCClassLoader
             private static void Postfix() => SynergyTip.Hide();
         }
 
-        internal static string CreationText(Skill_Tree tree, List<Skill_Tree> picked)
+        /// <summary>The synergy panel's text; `brief` keeps only the active ones' descriptions.</summary>
+        internal static string CreationText(Skill_Tree tree, List<Skill_Tree> picked, bool brief = false)
         {
             var mine = Involving(tree).ToList();
             if (mine.Count == 0) return "";
@@ -512,7 +513,7 @@ namespace SCClassLoader
             const int full = 6;
             // the game font has no check-mark glyph: active ones say so in words
             foreach (SynergySpec s in lit) lines.Add($"<color=#7FE0C8>{s.name} - active</color> <color=#9FB7C9>(with {Partner(s)})</color>\n{s.description}");
-            foreach (SynergySpec s in rest.Take(Math.Max(0, full - lit.Count))) lines.Add($"<color=#FFD15C>{s.name}</color> <color=#9FB7C9>(with {Partner(s)})</color>\n{s.description}");
+            foreach (SynergySpec s in rest.Take(Math.Max(0, full - lit.Count))) lines.Add($"<color=#FFD15C>{s.name}</color> <color=#9FB7C9>(with {Partner(s)})</color>{(brief ? "" : "\n" + s.description)}");
             var more = rest.Skip(Math.Max(0, full - lit.Count)).ToList();
             if (more.Count > 0) lines.Add($"<color=#9FB7C9>Also combines with {string.Join(", ", more.Select(Partner).Distinct())}.</color>");
             return "<b>Synergies</b>\n" + string.Join("\n<size=40%>\n</size>", lines);
@@ -522,29 +523,27 @@ namespace SCClassLoader
     /// <summary>The floating synergy panel beside a hovered tree icon (creation screen, Conjoined body picker).</summary>
     internal static class SynergyTip
     {
-        private const float Width = 460f, Pad = 12f, Gap = 10f;
+        private const float Width = 460f, MaxWidth = 880f, Pad = 12f, Gap = 10f;
         private static RectTransform panel;
         private static TMPro.TextMeshProUGUI label;
+        private static float fontBase;
 
-        internal static void Show(Menu_Creation mc, SkillSelect s, string text, float fontSize)
+        internal static void Show(Menu_Creation mc, SkillSelect s, string text, string brief, float fontSize)
         {
             // inside the menu's content, so it goes when the menu does (Back to the main menu, starting a run);
             // never over the description box below the grid: that's what the player is reading
             Transform home = mc.content != null ? mc.content.transform : mc.transform;
-            Show(home, s.transform as RectTransform, mc.skillDescription.transform.parent as RectTransform, text, fontSize, UiKit.FontFrom(mc));
+            Show(home, s.transform as RectTransform, mc.skillDescription.transform.parent as RectTransform, text, brief, fontSize, UiKit.FontFrom(mc));
         }
 
-        /// <summary>Beside `icon` (on whichever side has room), parented to `home`, kept above `floorFrame` if given.</summary>
-        internal static void Show(Transform home, RectTransform icon, RectTransform floorFrame, string text, float fontSize, TMPro.TMP_FontAsset font)
+        /// <summary>Beside `icon` (on whichever side has room), parented to `home`, kept above `floorFrame` if given.
+        /// `brief` is the shorter text to fall back on when `text` can't fit.</summary>
+        internal static void Show(Transform home, RectTransform icon, RectTransform floorFrame, string text, string brief, float fontSize, TMPro.TMP_FontAsset font)
         {
             if (string.IsNullOrEmpty(text) || icon == null || home == null) { Hide(); return; }
             Canvas root = icon.GetComponentInParent<Canvas>()?.rootCanvas;
             if (root == null) return;
             if (panel == null || panel.transform.parent != home) Build(home, font, fontSize);
-
-            label.text = text;
-            Vector2 pref = label.GetPreferredValues(text, Width - 2 * Pad, 0f);
-            panel.sizeDelta = new Vector2(Width, pref.y + 2 * Pad);
 
             var rootRt = (RectTransform)root.transform;
             var corners = new Vector3[4];
@@ -552,23 +551,48 @@ namespace SCClassLoader
             Vector2 tl = rootRt.InverseTransformPoint(corners[1]), tr = rootRt.InverseTransformPoint(corners[2]);
             Rect area = rootRt.rect;
             float scale = panel.lossyScale.x / Mathf.Max(0.0001f, rootRt.lossyScale.x);
-            float w = Width * scale, h = panel.sizeDelta.y * scale;
-            float x = tr.x + Gap * scale;
-            if (x + w > area.xMax) x = tl.x - Gap * scale - w;
             float floor = area.yMin;
             if (floorFrame != null)
             {
                 floorFrame.GetWorldCorners(corners);
                 floor = rootRt.InverseTransformPoint(corners[1]).y + Gap * scale;
             }
+
+            float roomRight = (area.xMax - tr.x) / scale - Gap, roomLeft = (tl.x - area.xMin) / scale - Gap;
+            float panelW = Fit(text, brief, (area.yMax - floor) / scale, Mathf.Max(roomRight, roomLeft));
+            float w = panelW * scale, h = panel.sizeDelta.y * scale;
+            float x = tr.x + Gap * scale;
+            if (x + w > area.xMax) x = tl.x - Gap * scale - w;
             float y = Mathf.Clamp(Mathf.Max(tl.y, floor + h), area.yMin + h, area.yMax);
             panel.position = rootRt.TransformPoint(new Vector3(x, y, 0f));
             panel.SetAsLastSibling();
             panel.gameObject.SetActive(true);
         }
 
+        /// <summary>Sizes the panel to fit `roomHigh`: wider first (up to `roomWide`), then a smaller font, then the
+        /// brief text. It never grows past the room, or it would land on the description. Returns its width.</summary>
+        private static float Fit(string text, string brief, float roomHigh, float roomWide)
+        {
+            float bestW = Width, bestH = 0f;
+            foreach (string t in string.IsNullOrEmpty(brief) ? new[] { text } : new[] { text, brief })
+                foreach (float size in new[] { fontBase, Mathf.Max(14f, fontBase * 0.85f) })
+                    for (float w = Width; w <= Mathf.Max(Width, Mathf.Min(MaxWidth, roomWide)); w += 140f)
+                    {
+                        label.text = t;
+                        label.fontSize = size;
+                        bestW = w;
+                        bestH = label.GetPreferredValues(t, w - 2 * Pad, 0f).y + 2 * Pad;
+                        if (bestH <= roomHigh) goto done;
+                    }
+            done:
+            panel.sizeDelta = new Vector2(bestW, Mathf.Min(bestH, roomHigh));
+            return bestW;
+        }
+
         /// <summary>What the panel shows right now ("" when hidden).</summary>
         internal static string Text => panel != null && panel.gameObject.activeSelf ? label.text : "";
+        internal static RectTransform Panel => panel;
+        internal static float FontSize => label != null ? label.fontSize : 0f;
 
         internal static void Hide()
         {
@@ -588,7 +612,8 @@ namespace SCClassLoader
             var outline = panel.gameObject.AddComponent<UnityEngine.UI.Outline>();
             outline.effectColor = new Color(0.45f, 0.85f, 1f, 0.6f);
             outline.effectDistance = new Vector2(2f, -2f);
-            label = UiKit.Label(panel, "", font, Mathf.Max(14f, fontSize * 0.8f), TMPro.TextAlignmentOptions.TopLeft);
+            fontBase = Mathf.Max(14f, fontSize * 0.8f);
+            label = UiKit.Label(panel, "", font, fontBase, TMPro.TextAlignmentOptions.TopLeft);
             label.enableWordWrapping = true;
             label.overflowMode = TMPro.TextOverflowModes.Overflow;
             var lr = label.rectTransform;

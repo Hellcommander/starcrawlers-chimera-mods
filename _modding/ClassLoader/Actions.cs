@@ -184,9 +184,15 @@ namespace SCClassLoader
                         break;
                     }
                 case "effect": ApplyEffect(a, ctx, t); break;
-                case "stun": Ability.ApplyStun(t, Turns(a)); break;
+                case "stun": Ability.ApplyStun(t, Turns(a) + ExtraTurns(a, ctx, t)); break;
                 case "knockback": Ability.Knockback(t, ctx.caster, Math.Max(1, a.amount)); break;
-                case "blind": if (ctx.source != null && t != Player.instance) ctx.source.ApplyBlind(t); break;
+                case "blind":
+                    {
+                        // A summon's skill or effect has no player ability behind it; the game's blind only needs one for its stats.
+                        Ability src = ctx.source ?? (Player_AbilityControl.instance != null ? Player_AbilityControl.instance.GetAbilities().FirstOrDefault(x => x != null) : null);
+                        if (src != null && t != Player.instance && !TileStacks.IsAlly(t)) src.ApplyBlind(t);
+                        break;
+                    }
                 case "cooldowns":
                     if (Player_AbilityControl.instance != null)
                         foreach (Ability ab in Player_AbilityControl.instance.GetAbilities())
@@ -197,7 +203,7 @@ namespace SCClassLoader
                 case "teleport": break; // handled by ModAbility for floor targets
                 case "dispel": Dispel(a, ctx, t, debuffs: false); break;
                 case "cleanse": Dispel(a, ctx, t, debuffs: true); break;
-                case "chain": Chain(a, ctx, t); break;
+                case "chain": if (!string.IsNullOrEmpty(a.sound) && t != null) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId); Chain(a, ctx, t); break;
                 case "echo": Echo(a, ctx, t); break;
                 case "summon": Summons.Summon(a, ctx, t, ScaledCount(a, a.amount, ctx, t)); break;
                 case "tame": Taming.Tame(a, ctx, t, Amount(a, ctx)); break;
@@ -309,6 +315,13 @@ namespace SCClassLoader
         private static int UsedStacks(ActionSpec a, int have) => a.stacksUsed > 0 ? Math.Min(have, a.stacksUsed) : have;
 
         internal static int StackBonusOf(ActionSpec a, ActionContext ctx, Character t) => StackBonus(a, ctx, t);
+
+        /// <summary>Turns an action's turnsPerStack adds, from the stacks its stacksOf counts (capped by stacksUsed).</summary>
+        internal static int ExtraTurns(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (a.turnsPerStack == 0 || string.IsNullOrEmpty(a.stacksOf)) return 0;
+            return a.turnsPerStack * UsedStacks(a, StacksOn(StackHolder(a, ctx, t), EffectId(a.stacksOf, ctx.classId)));
+        }
 
         private static bool Scaled(ActionSpec a) => a.bonusPerStack != 0 && !string.IsNullOrEmpty(a.stacksOf);
 
@@ -524,7 +537,7 @@ namespace SCClassLoader
             Effect existing = t.effects.GetEffect(id);
             if (existing is ModEffect me && (me.MaxStacks > 1 || !me.Stackable))
             {
-                if (a.turns > 0) existing.OverrideDuration(a.turns); else existing.RefreshDuration();
+                if (a.turns > 0) existing.OverrideDuration(a.turns + ExtraTurns(a, ctx, t)); else existing.RefreshDuration();
                 if (me.MaxStacks > 1) me.AddStacks(stacks, ctx);
                 Triggers.Inflicted(ctx.caster, t, id);
                 return;
@@ -535,7 +548,7 @@ namespace SCClassLoader
             finally { Triggers.ModApplying = false; }
             if (e == null) return;
             e.caster = ctx.caster;
-            if (a.turns > 0) e.OverrideDuration(a.turns);
+            if (a.turns > 0) e.OverrideDuration(a.turns + ExtraTurns(a, ctx, t));
             e.Activate();
             if (e is ModEffect fresh)
             {

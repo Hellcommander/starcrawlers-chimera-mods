@@ -1,0 +1,9 @@
+[
+  { "name": "sm_shade_rake", "purpose": "a clawed hand of shadow raking across armour, quick dark swipe with a smoky whoosh", "seconds": 1.0, "archetype": "magic" },
+  { "name": "sm_shade_reach", "purpose": "a long arm of darkness stretching out and grabbing, slow heavy whoosh ending in a muffled grip", "seconds": 1.4, "archetype": "magic" },
+  { "name": "sm_thing_tear", "purpose": "a monstrous thing tearing into flesh, wet heavy rip with a low snarl", "seconds": 1.2, "archetype": "monster" },
+  { "name": "sm_thing_lunge", "purpose": "something huge lunging out of darkness, a rushing whoosh and a deep guttural roar at the end", "seconds": 1.6, "archetype": "monster" },
+  { "name": "sm_dark_chain", "purpose": "darkness leaping from one body to the next, two quick dark magic cracks with a whispering tail", "seconds": 1.2, "archetype": "magic" },
+  { "name": "sm_gone_missing", "purpose": "a creature swallowed whole into the dark, a heavy inward gulp collapsing to sudden silence", "seconds": 1.4, "archetype": "magic" },
+  { "name": "sm_shade_burst", "purpose": "a shadow bursting apart into smoke, soft dark detonation with hissing wisps", "seconds": 1.5, "archetype": "magic" }
+]

@@ -1,0 +1,8 @@
+[
+  { "name": "sm_snuff", "purpose": "dark magic bolt, a small flame pinched out with a soft inward whoosh and a cold hiss of shadow", "seconds": 1.3, "archetype": "magic" },
+  { "name": "sm_lose_them", "purpose": "darkness spell bursting outward over a room, deep whoosh, bodies flung and scattered, eerie dark magic", "seconds": 1.9, "archetype": "magic" },
+  { "name": "sm_shade", "purpose": "a shadow rising off the floor and taking shape, low dark drone, whispering smoke, ghostly summon", "seconds": 2.2, "archetype": "magic" },
+  { "name": "sm_shadowflame", "purpose": "black fire igniting on a metal floor, muffled flame burst with a dark magical crackle", "seconds": 1.8, "archetype": "magic" },
+  { "name": "sm_swallowed", "purpose": "darkness closing over a creature, a heavy muffled thump and a shrinking downward sweep, dark magic curse", "seconds": 1.6, "archetype": "magic" },
+  { "name": "sm_the_thing", "purpose": "a monstrous thing from the dark arriving, deep horror roar rising out of a void rumble, dread", "seconds": 2.6, "archetype": "monster" }
+]

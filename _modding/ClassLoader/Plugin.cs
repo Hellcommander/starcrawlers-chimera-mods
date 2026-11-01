@@ -194,6 +194,7 @@ namespace SCClassLoader
             else if (dev == "perks2") Instance.StartCoroutine(DevTestPerks2.Run());
             else if (dev == "menufps") Instance.StartCoroutine(DevTestMenuFps.Run());
             else if (dev == "classsearch") Instance.StartCoroutine(DevTestClassSearch.Run());
+            else if (dev == "synergytip") Instance.StartCoroutine(DevTestSynergyTip.Run());
             else if (dev == "names") Instance.StartCoroutine(DevTestNames.Run());
             else if (dev == "names2") Instance.StartCoroutine(DevTestNames.RunLoadList());
             else if (dev == "drones") Instance.StartCoroutine(DevTestDrones.Run());
@@ -205,6 +206,8 @@ namespace SCClassLoader
             else if (dev == "wisps") Instance.StartCoroutine(DevTestWisps.Run());
             else if (dev == "dashcam") Instance.StartCoroutine(DevTestDashCam.Run());
             else if (dev == "kelvin" || dev == "glass" || dev == "glassfight") Instance.StartCoroutine(DevTestFrostWonder.Run(dev));
+            else if (dev == "shadowmagus") Instance.StartCoroutine(DevTestShadowMagus.Run());
+            else if (dev == "shadowsyn") Instance.StartCoroutine(DevTestShadowMagus.RunSyn());
             else if (dev == "smoke") Instance.StartCoroutine(DevTestSmoke.Run());
             else if (dev == "ground") Instance.StartCoroutine(DevTestGround.Run());
             else if (dev == "looks") Instance.StartCoroutine(DevTestLooks.Run());

@@ -1,0 +1,137 @@
+{
+  "prompt": "a shadow bursting apart into smoke, soft dark detonation with hissing wisps",
+  "duration": 1.5,
+  "engine": "sfx_alter",
+  "unique": false,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "07b6d32b1edfa9ad",
+      "score": 0.514054000377655,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 18.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "4e1f9bb1156341fe",
+      "score": 0.5126978158950806,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 8.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "00371e5bd52f5b93",
+      "score": 0.5018624663352966,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 19.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "d08a5f41b917ed82",
+      "score": 0.486253023147583,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 7.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "f5aaf338b9ad3876",
+      "score": 0.48134076595306396,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 11.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    },
+    {
+      "id": "5a3e1a283aed9810",
+      "score": 0.4804111421108246,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Fire spell.zip",
+      "inner": "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "fire",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "fire"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_shade_burst.wav",
+  "sample_rate": 44100,
+  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "derived": true,
+  "max_corr": 0.19,
+  "semitones": -6,
+  "width": 0.073,
+  "listen": {
+    "match": 0.512,
+    "clean": -5.714,
+    "faults": []
+  }
+}
