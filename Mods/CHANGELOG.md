@@ -5,6 +5,13 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
 
 ## 1.45.2 (2026-11-01)
 
+### Retraining
+
+- From level 20 you can spend ChimeraLinq **User Score** and credits to undo a build choice on the skills screen.
+  Ctrl+right-click the highest skill you hold in a class to give it up and get its skill point back.
+- Ctrl+right-click a class icon to swap the whole class for another. Its skill points and perk points come back, and
+  the new class starts at its first tier with no starter gear. Rogue Modder, Gadgeteer and Conjoined can't be swapped out.
+
 ### Class changes
 
 - **Spellsmith's Ember Lance** now works on your other classes' attacks: it stokes your next one, which hits a quarter
@@ -13,7 +20,7 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
 - **Spellsmith's Loose Spell** has a 2% chance, each time it goes off on someone, to also call down one of the
   Wildcaster's boss echoes. Loose magic isn't picky, so an echo can land on you too.
 - **Axiomancer** is rebuilt around a shield pool. First Principles is a new skill: your Smarts and a little Psi Power
-  make a small shield pool that needs no shield in hand and recharges every turn, so a hybrid build can survive a swarm.
+  make a small shield pool that needs no shield in hand and recharges every turn and gains Shield Regen with Smarts, Psi Power and class rank, so a hybrid build can survive a swarm.
   It recharges faster with two or more enemies beside you, when you Wait with Quiet Mind, and with each note Refutation
   spends.
   Insight and Lucidity now add to the pool instead of Psi Power. Circular Reasoning and the penalty for repeating a

@@ -9,10 +9,17 @@ namespace SCClassLoader
     {
         /// <summary>The stat raised ("PsiPower").</summary>
         public string stat;
-        /// <summary>The stat it is worked out from ("Smarts"), with all your gear and effects counted.</summary>
+        /// <summary>The stat it is worked out from ("Smarts", or "Smarts+PsiPower"), with all your gear and effects counted.</summary>
         public string from;
         /// <summary>One point of "stat" for every this many of "from", rounded down.</summary>
         public int per = 1;
+        /// <summary>One more point for every this many ranks in the ability's class. 0 = rank doesn't count.</summary>
+        public int rankPer;
+        /// <summary>
+        /// For a stat where lower is better (ShieldRegen is turns per point): the stat is this minus the share, at least 1,
+        /// and it replaces your gear's value only when it beats it. 0 = the share is simply added.
+        /// </summary>
+        public int start;
     }
 
     /// <summary>
@@ -34,14 +41,20 @@ namespace SCClassLoader
                 foreach (ModAbility a in pac.GetAbilities().OfType<ModAbility>())
                     foreach (StatFromSpec s in a.Spec?.statsFrom ?? Enumerable.Empty<StatFromSpec>())
                     {
-                        if (s == null || !Enum.TryParse(s.stat, true, out STAT_TYPE to) || !Enum.TryParse(s.from, true, out STAT_TYPE from)) continue;
-                        int amount = __instance.GetStat(from) / Math.Max(1, s.per);
+                        if (s == null || s.from == null || !Enum.TryParse(s.stat, true, out STAT_TYPE to)) continue;
+                        int total = 0;
+                        foreach (string name in s.from.Split('+'))
+                            if (Enum.TryParse(name.Trim(), true, out STAT_TYPE from)) total += __instance.GetStat(from);
+                        int amount = total / Math.Max(1, s.per) + (s.rankPer > 0 ? a.ClassRank / s.rankPer : 0);
                         StatObj[] group = __instance.secondaryAttributes.Any(x => x != null && x.statType == to) ? __instance.secondaryAttributes : __instance.primaryAttributes;
                         StatObj slot = group.FirstOrDefault(x => x != null && x.statType == to);
-                        if (slot != null) slot.amount += amount;
-                        raised |= slot != null && to == STAT_TYPE.ShieldMax;
+                        if (slot == null) continue;
+                        if (s.start <= 0) slot.amount += amount;
+                        else slot.amount = slot.amount > 0 ? Math.Min(slot.amount, Math.Max(1, s.start - amount)) : Math.Max(1, s.start - amount);
+                        raised |= to == STAT_TYPE.ShieldMax;
                     }
                 __instance.shieldingMax = __instance.secondaryAttributes[14].amount; // the base method read it, and drew the bar, before this ran
+                __instance.shieldRegen = __instance.secondaryAttributes[15].amount;
                 if (raised && Menu_Player.instance.playerShieldItem == null && __instance.shielding > __instance.shieldingMax) __instance.shielding = __instance.shieldingMax; // its buffs ended
                 if (Menu_HUD.instance != null) Menu_HUD.instance.Refresh_Shield();
             }

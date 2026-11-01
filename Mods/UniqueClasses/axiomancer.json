@@ -78,16 +78,17 @@
         "base": "Passive",
         "name": "First Principles",
         "icon": "axiomancer_t0.png",
-        "description": "A sufficiently rigorous thought has mass. You keep a small shield pool made of nothing but reasoning, no shield in hand needed: 1 point for every 3 Smarts and every 6 Psi Power. It recharges every turn, more with high Smarts, and faster still when two or more enemies are beside you.",
+        "description": "A sufficiently rigorous thought has mass. You keep a small shield pool made of nothing but reasoning, no shield in hand needed: 1 point for every 3 Smarts and every 6 Psi Power. It recharges every turn, more with high Smarts and Psi Power, and faster still when two or more enemies are beside you. You also start with Shield Regen of 8, 1 point every 8 turns with no gear needed. It drops by 1 for every 6 Smarts and Psi Power combined and every 2 class ranks, down to every turn, or your gear's rate if that is better.",
         "statsFrom": [
           { "stat": "ShieldMax", "from": "Smarts", "per": 3 },
-          { "stat": "ShieldMax", "from": "PsiPower", "per": 6 }
+          { "stat": "ShieldMax", "from": "PsiPower", "per": 6 },
+          { "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 6, "rankPer": 2, "start": 8 }
         ],
         "procs": [
           {
             "on": "turn",
             "actions": [
-              { "do": "recharge", "to": "self", "amount": 1, "scale": "Smarts", "scaleMult": 0.1 }
+              { "do": "recharge", "to": "self", "amount": 1, "scale": "Smarts+PsiPower", "scaleMult": 0.05 }
             ]
           },
           {

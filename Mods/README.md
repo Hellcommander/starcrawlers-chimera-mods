@@ -507,6 +507,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   effects stay that class's, area spells hit around the target, and wild spells never land on you or your allies.
   `bonusPerStack` adds spells. `"pool": "monsters"` throws the mod monsters' attacks instead (plain-effect ones), and
   `"pool": "all"` mixes both. The Wildcaster is built on it; `SCCL_DEVTEST=wildcaster` tests it.
+  - `"from"` can add stats (`"Smarts+PsiPower"`). For a stat where lower is better, such as `ShieldRegen` (turns per
+    point), add `"start"`: `{ "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 6, "rankPer": 2, "start": 8 }` gives 8
+    minus total / 6 minus class rank / 2, at least 1, and only when that beats your gear.
   - `"statsFrom": [{ "stat": "PsiPower", "from": "Smarts", "per": 2 }]` on a passive: while you know it, one point of a
     stat for every `per` points of another, with gear and effects counted and kept current.
   - `"do": "recharge"`: fills your regular shield pool (`ShieldMax`) by `amount` plus scaling, up to its maximum. No shield
@@ -867,6 +870,36 @@ skill and perk points, gear, hotbar (all pages) and effects. Inventory, credits,
   standing, death is death.
 - For class makers: actions `swapBody` and `reviveBody` (`amount` = % health), `"stacksOf": "bodies"` (other bodies
   that are up), and the ability field `"requires": "livingBody"` / `"downedBody"`.
+
+## Retraining
+
+From level 20, ChimeraLinq's User Score pays for changing your mind. Both of these work on the skills screen, outside
+combat, once you've found ChimeraLinq:
+
+- **Retrain a skill:** Ctrl+right-click the highest skill you hold in a class. You get its skill point back, and any
+  perk point on it. Only the highest one can go, because a class's skills are bought in order, and its free first
+  skill stays.
+- **Swap a class:** Ctrl+right-click a class icon and pick another. All its skill points and perk points come back, and
+  the new class starts at its first tier with no starter gear. The usual "can't be combined" rules apply.
+
+Summons and lasting effects from what you gave up leave with it. A summon stays if a skill you keep also commands it.
+
+Prices stay the same however often you do it:
+
+| | User Score | Credits |
+| --- | --- | --- |
+| Retrain a skill | 50 | 100 per character level |
+| Swap a class | 200 | 300 per character level |
+
+A full run of ChimeraLinq pays about 1500 User Score at the very best, and wrong answers take it away. Nothing else
+in the game reads your score, so spending it costs you no posts.
+
+Rogue Modder, Gadgeteer and Conjoined can't be swapped out, because what they do outlives them: reworked gear in the
+first two cases, your other bodies in the third.
+
+`[Retraining]` in the config has `Enabled`, `MinLevel`, `BaseCost`, `SwapCost`, `CreditsPerLevel`,
+`SwapCreditsPerLevel` and `KeptClasses` (the class ids that can't be swapped out). A mod class that changes gear for
+good belongs on that list too. There is no controller button for retraining yet.
 
 ## Saved builds
 

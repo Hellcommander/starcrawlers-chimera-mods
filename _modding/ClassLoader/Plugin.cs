@@ -89,6 +89,7 @@ namespace SCClassLoader
             TextFit.Bind(Config);
             PortalButton.Bind(Config);
             PortalButton.BindSpecials(Config);
+            Retrain.Bind(Config);
             AudioBuffer.Bind(Config);
             ClassRegistry.LoadDefinitions();
             new Harmony(GUID).PatchAll(typeof(Plugin).Assembly);
@@ -306,6 +307,9 @@ namespace SCClassLoader
             else if (dev == "bugreport") Instance.StartCoroutine(DevTestBugReport.Run());
             else if (dev == "keys") Instance.StartCoroutine(DevTestKeys.Run());
             else if (dev == "portal") Instance.StartCoroutine(DevTestPortal.Run());
+            else if (dev == "linqscore") Instance.StartCoroutine(DevTestRetrain.Scan());
+            else if (dev == "retrain") Instance.StartCoroutine(DevTestRetrain.Hardolo());
+            else if (dev == "retrain2") Instance.StartCoroutine(DevTestRetrain.Fresh());
             else if (dev == "places" || (dev != null && dev.StartsWith("places:"))) Instance.StartCoroutine(DevTestPlaces.Run(dev));
             else if (dev == "dump") Application.Quit(); // just refresh vanilla_reference.txt
             else if (!string.IsNullOrEmpty(dev)) Instance.StartCoroutine(DevTest.Run(dev));

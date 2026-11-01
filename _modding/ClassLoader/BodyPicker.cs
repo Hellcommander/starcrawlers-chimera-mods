@@ -13,6 +13,7 @@ namespace SCClassLoader
     /// in a panel beside it, and the chosen classes in a bar along the bottom (Conjoined is always the first). On the
     /// left: copy the classes of the body you're playing, roll random ones, or load one of your saved builds.
     /// The creation screen's "can't be combined" rules apply. "Later" puts it off until the next floor or rank-up.
+    /// Swapping a class (Retrain) uses the same panel for a single pick, checked against the classes you keep.
     /// </summary>
     internal static class BodyPicker
     {
@@ -29,18 +30,30 @@ namespace SCClassLoader
         private static Button join;
         private static TextMeshProUGUI countText, descName, descText, message;
         private static TMP_FontAsset font;
+        private static Skill_Tree swapping;
+        private static System.Action<string> swapped;
 
         internal static bool Open => panel != null;
         internal static IReadOnlyList<string> Picked => picked;
 
         private static IEnumerable<Skill_Tree> Trees =>
-            Game.instance.skills.Where(s => s != null && s.isLive && s.internalName != "NYI" && s.internalName != Conjoined.ClassId && !Unlocks.IsLocked(s.internalName));
+            Game.instance.skills.Where(s => s != null && s.isLive && s.internalName != "NYI" && s.internalName != Conjoined.ClassId && !Unlocks.IsLocked(s.internalName)
+                && (swapping == null || (s.internalName != swapping.internalName && !Kept.Any(k => k.internalName == s.internalName))));
+
+        /// <summary>The classes a swap leaves you with.</summary>
+        private static IEnumerable<Skill_Tree> Kept => Player_SkillControl.instance.skillTrees.Where(t => t != null && t != swapping);
 
         private static Skill_Tree Tree(string id) => Game.instance.skills.FirstOrDefault(s => s != null && s.internalName == id);
 
-        internal static void Show(int count)
+        internal static void ShowSwap(Skill_Tree tree, System.Action<string> done) => Show(1, tree, done);
+
+        internal static void Show(int count) => Show(count, null, null);
+
+        private static void Show(int count, Skill_Tree swap, System.Action<string> done)
         {
             Close();
+            swapping = swap;
+            swapped = done;
             if (Menu_HUD.instance == null) return;
             Canvas canvas = Menu_HUD.instance.GetComponentInParent<Canvas>()?.rootCanvas ?? Object.FindObjectsOfType<Canvas>().FirstOrDefault(c => c.isRootCanvas);
             if (canvas == null) return;
@@ -60,27 +73,13 @@ namespace SCClassLoader
             outline.effectColor = new Color(0.3f, 0.7f, 0.85f, 0.8f);
             outline.effectDistance = new Vector2(2f, -2f);
 
-            Text(panel, "<color=#FFD15C>Another body pulls free</color>", 32, new Vector2(w, 46f), 0f, 10f, TextAlignmentOptions.Center);
-            Text(panel, $"It has Conjoined and starts at your level with every point unspent and nothing equipped. Choose its other {need} classes.",
+            Text(panel, swap != null ? $"<color=#87D4E0>Swap out {swap.displayName}</color>" : "<color=#FFD15C>Another body pulls free</color>", 32, new Vector2(w, 46f), 0f, 10f, TextAlignmentOptions.Center);
+            Text(panel, swap != null ? "Choose the class that takes its place." : $"It has Conjoined and starts at your level with every point unspent and nothing equipped. Choose its other {need} classes.",
                 18, new Vector2(w, 30f), 0f, 58f, TextAlignmentOptions.Center);
 
             // ---- left: quick fills and saved builds, like the creation screen's presets
             float sy = 110f;
-            Btn("Copy my classes", () => Fill(Player_SkillControl.instance.skillTrees.Where(t => t != null && t.internalName != Conjoined.ClassId).Select(t => t.internalName)),
-                "Pick the same classes as the body you're playing.", ref sy);
-            Btn("Random", () => Fill(Trees.Select(t => t.internalName).OrderBy(_ => Random.value)), "Roll a random set (no clashing classes).", ref sy);
-            Btn("Clear", () => { picked.Clear(); Refresh(); }, "Start over.", ref sy);
-            sy += 12f;
-            Text(panel, "<color=#9FB7C9>Saved builds</color>", 20, new Vector2(Side, 30f), M, sy, TextAlignmentOptions.Left);
-            sy += 34f;
-            var builds = BuildList.All.ToList();
-            if (builds.Count == 0) Text(panel, "<color=#6F8794>None yet: define one with the creation screen's custom preset.</color>", 15, new Vector2(Side, 60f), M, sy, TextAlignmentOptions.TopLeft).enableWordWrapping = true;
-            foreach (BuildList.Build build in builds.Take(12))
-            {
-                BuildList.Build bb = build;
-                string names = string.Join(", ", bb.trees.Where(x => x != Conjoined.ClassId).Select(id => Tree(id)?.displayName.ToString() ?? $"<color=#FF7272>{id} (not installed)</color>"));
-                Btn(build.name, () => Fill(bb.trees.Where(x => x != Conjoined.ClassId)), names, ref sy);
-            }
+            if (swap == null) BuildButtons(ref sy);
 
             // ---- the grid: three archetype columns of icons, scrolling
             for (int g = 0; g < 3; g++)
@@ -137,21 +136,40 @@ namespace SCClassLoader
                     b.targetGraphic = s.GetComponent<Image>();
                     b.onClick.AddListener(() => { if (slot - 1 < picked.Count) { picked.RemoveAt(slot - 1); Refresh(); } });
                 }
-                Skill_Tree conj = Tree(Conjoined.ClassId);
+                Skill_Tree conj = swap ?? Tree(Conjoined.ClassId);
                 if (i == 0 && conj != null) img.sprite = conj.icon;
             }
             message = Text(panel, "", 17, new Vector2(gridW, 26f), gx, by - 30f, TextAlignmentOptions.Left);
             // count and buttons in the left column, so the bar of chosen classes has the full width
             countText = Text(panel, "", 20, new Vector2(Side, 30f), M, by - 8f, TextAlignmentOptions.Left);
             float bw = (Side - 10f) / 2f;
-            var later = UiKit.Button(panel, "Later", font, 22, new Vector2(bw, 50f), () => { Conjoined.DeferPicker(); Close(); });
+            var later = UiKit.Button(panel, swap != null ? "Cancel" : "Later", font, 22, new Vector2(bw, 50f), () => { if (swapping == null) Conjoined.DeferPicker(); Close(); });
             UiKit.At((RectTransform)later.transform, M, by + 28f);
-            join = UiKit.Button(panel, "Join", font, 24, new Vector2(bw, 50f), Confirm, UiKit.OnColor);
+            join = UiKit.Button(panel, swap != null ? "Swap" : "Join", font, 24, new Vector2(bw, 50f), Confirm, UiKit.OnColor);
             UiKit.At((RectTransform)join.transform, M + bw + 10f, by + 28f);
 
             Refresh();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+        }
+
+        private static void BuildButtons(ref float sy)
+        {
+            Btn("Copy my classes", () => Fill(Player_SkillControl.instance.skillTrees.Where(t => t != null && t.internalName != Conjoined.ClassId).Select(t => t.internalName)),
+                "Pick the same classes as the body you're playing.", ref sy);
+            Btn("Random", () => Fill(Trees.Select(t => t.internalName).OrderBy(_ => Random.value)), "Roll a random set (no clashing classes).", ref sy);
+            Btn("Clear", () => { picked.Clear(); Refresh(); }, "Start over.", ref sy);
+            sy += 12f;
+            Text(panel, "<color=#9FB7C9>Saved builds</color>", 20, new Vector2(Side, 30f), M, sy, TextAlignmentOptions.Left);
+            sy += 34f;
+            var builds = BuildList.All.ToList();
+            if (builds.Count == 0) Text(panel, "<color=#6F8794>None yet: define one with the creation screen's custom preset.</color>", 15, new Vector2(Side, 60f), M, sy, TextAlignmentOptions.TopLeft).enableWordWrapping = true;
+            foreach (BuildList.Build build in builds.Take(12))
+            {
+                BuildList.Build bb = build;
+                string names = string.Join(", ", bb.trees.Where(x => x != Conjoined.ClassId).Select(id => Tree(id)?.displayName.ToString() ?? $"<color=#FF7272>{id} (not installed)</color>"));
+                Btn(build.name, () => Fill(bb.trees.Where(x => x != Conjoined.ClassId)), names, ref sy);
+            }
         }
 
         private static TextMeshProUGUI Text(Transform parent, string text, float size, Vector2 box, float x, float y, TextAlignmentOptions align)
@@ -205,7 +223,7 @@ namespace SCClassLoader
             if (panel == null || t == null) return;
             descName.text = t.displayName;
             descText.text = Tags(t.description);
-            var with = picked.Select(Tree).Concat(new[] { Tree(Conjoined.ClassId) }).Where(x => x != null).ToList();
+            var with = (swapping != null ? Kept : picked.Select(Tree).Concat(new[] { Tree(Conjoined.ClassId) })).Where(x => x != null).ToList();
             SynergyTip.Show(panel, cell, descFrame, Synergies.CreationText(t, with), Synergies.CreationText(t, with, true), 22f, font);
         }
 
@@ -224,7 +242,7 @@ namespace SCClassLoader
         private static string Clash(string id)
         {
             Skill_Tree t = Tree(id);
-            foreach (Skill_Tree other in picked.Select(Tree).Concat(new[] { Tree(Conjoined.ClassId) }).Where(x => x != null && x != t))
+            foreach (Skill_Tree other in (swapping != null ? Kept : picked.Select(Tree).Concat(new[] { Tree(Conjoined.ClassId) })).Where(x => x != null && x != t))
             {
                 string why = ClassRegistry.Conflict(t, other);
                 if (why != null) return $"{t.displayName} can't be combined with {other.displayName}: one {why}.";
@@ -235,6 +253,7 @@ namespace SCClassLoader
         internal static void Toggle(string id)
         {
             message.text = "";
+            if (!cells.ContainsKey(id)) return;
             if (picked.Remove(id)) { Refresh(); return; }
             if (picked.Count >= need) { message.text = $"<color=#FFC35C>That's all {need}: click a chosen class (below, or in the grid) to swap it out.</color>"; Refresh(); return; }
             string clash = Clash(id);
@@ -282,8 +301,11 @@ namespace SCClassLoader
         {
             if (picked.Count != need) return;
             var trees = picked.ToList();
+            System.Action<string> done = swapped;
+            bool swap = swapping != null;
             Close();
-            Conjoined.CreateBody(trees);
+            if (swap) done(trees[0]);
+            else Conjoined.CreateBody(trees);
         }
 
         internal static void Close()
@@ -291,6 +313,8 @@ namespace SCClassLoader
             SynergyTip.Hide();
             if (panel != null) Object.Destroy(panel.gameObject);
             panel = null;
+            swapping = null;
+            swapped = null;
             join = null;
             countText = null;
         }
