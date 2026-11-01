@@ -21,7 +21,7 @@ namespace SCClassLoader
         /// <summary>A stationary summon: it never walks off the tile it appeared on (kept through loads).</summary>
         internal const string StayTag = "SCCL_STAY";
         /// <summary>The owner stat (a STAT_TYPE number) a summon grows with when it isn't Smarts (kept through loads).</summary>
-        internal const string StatTag = "SCCL_PETSTAT";
+        internal const string StatTag = "SCCL_PETSTAT", StatTag2 = "SCCL_PETSTAT2";
         private const string OwnerTagPrefix = "SCCLS_";
         private static readonly Dictionary<string, Character> prefabCache = new Dictionary<string, Character>(StringComparer.OrdinalIgnoreCase);
 
@@ -72,8 +72,12 @@ namespace SCClassLoader
                 // A mod creature spends its turns on its prey: the body's maneuver chance (sidestepping instead of closing in
                 // or striking) reads as idling on a summon that only lives a few turns.
                 if (c.ai != null && cd != null && cd.creature) Traverse.Create(c.ai).Field("maneuverChance").SetValue(0);
-                if (Enum.TryParse(a.scaleStat ?? (cd != null && cd.creature ? cd.scaleStat : null) ?? "", true, out STAT_TYPE growStat) && growStat != STAT_TYPE.Smarts)
+                string[] grow = (a.scaleStat ?? (cd != null && cd.creature ? cd.scaleStat : null) ?? "").Split('+');
+                if (Enum.TryParse(grow[0], true, out STAT_TYPE growStat) && growStat != STAT_TYPE.Smarts)
+                {
                     c.SetTag(StatTag, (int)growStat);
+                    if (grow.Length > 1 && Enum.TryParse(grow[1], true, out STAT_TYPE growStat2)) c.SetTag(StatTag2, (int)growStat2);
+                }
                 AI_Manager.instance.RegisterMinion(c);
                 // Mid-fight it joins in at once: an idle pet only wakes when it spots someone itself or a cast
                 // alerts the spot, and self-cast summons (a veil, a stance) alert nothing.
@@ -380,6 +384,7 @@ namespace SCClassLoader
     /// <summary>
     /// A summon with a scaleStat (Psi Power for astral and void summons) takes its pet bonus from that owner stat instead
     /// of Smarts, and is lent the stat itself, so skills with that "power" grow with the owner. Runs on every update.
+    /// "PsiPower+Recognition": the bonus comes from their average, both are lent, and the first also takes half the second; their average gives it 3 Health a point.
     /// </summary>
     [HarmonyPatch(typeof(Effect_Pet_Scalar), nameof(Effect_Pet_Scalar.UpdateStats))]
     internal static class Patch_PetScalarStat
@@ -392,10 +397,26 @@ namespace SCClassLoader
             if (mods == null || mods.Count < 2) return;
             STAT_TYPE stat = (STAT_TYPE)t.GetTag(Summons.StatTag);
             int have = owner.GetStat(stat);
-            mods[0].amount = mods[1].amount = Math.Max(1, have / Math.Max(1, __instance.amountA));
+            int other = 0;
+            if (t.HasTag(Summons.StatTag2))
+            {
+                STAT_TYPE stat2 = (STAT_TYPE)t.GetTag(Summons.StatTag2);
+                other = owner.GetStat(stat2);
+                StatObj lent2 = mods.Skip(2).FirstOrDefault(m => m.statType == stat2);
+                if (lent2 == null) mods.Add(lent2 = new StatObj(stat2, 0));
+                lent2.amount = other;
+            }
+            int bonus = other > 0 ? (have + other) / 2 : have;
+            mods[0].amount = mods[1].amount = Math.Max(1, bonus / Math.Max(1, __instance.amountA));
             StatObj lent = mods.Skip(2).FirstOrDefault(m => m.statType == stat);
             if (lent == null) mods.Add(lent = new StatObj(stat, 0));
-            lent.amount = have;
+            lent.amount = have + other / 2;
+            if (t.HasTag(Summons.StatTag2))
+            {
+                StatObj hp = mods.Skip(2).FirstOrDefault(m => m.statType == STAT_TYPE.HealthMax);
+                if (hp == null) mods.Add(hp = new StatObj(STAT_TYPE.HealthMax, 0));
+                hp.amount = bonus * 3;
+            }
             t.CalculateStats();
         }
     }

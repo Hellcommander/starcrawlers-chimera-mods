@@ -13,6 +13,8 @@ namespace SCClassLoader
         public string kind;
         /// <summary>kite: step away when a foe is this close (tiles).</summary>
         public float keep = 3f;
+        /// <summary>hunt: closes to this far from its prey and stops, for hunters that strike from range.</summary>
+        public float reach;
         /// <summary>retreat: back off while health is below this percent.</summary>
         public int below = 40;
         /// <summary>guard: walk back toward its owner when farther than this.</summary>
@@ -89,7 +91,7 @@ namespace SCClassLoader
                         {
                             // The pet AI walks a minion back to you when it has no target; a hunter picks the nearest enemy instead.
                             Character foe = Nearest(c, out float dh);
-                            if (foe != null && dh > 1.6f)
+                            if (foe != null && dh > Mathf.Max(1.6f, b.reach))
                             {
                                 if (c.ai != null) { c.ai.SetTarget(foe); if (c.ai.GetState() != AI.AI_STATE.Active) c.ai.ChangeState(AI.AI_STATE.Active); }
                                 step = foe.GetMover()?.GetCurrentNavNode();

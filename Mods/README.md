@@ -1212,6 +1212,8 @@ Painted Guard) and `Mods/KelvinMagus/creatures.json` (the Glacier Sentinel) are 
 
 - The loader builds each creature on a body of its own for the role, then strips it: no borrowed abilities,
   drops, particles or looks. A creature fights only with its `skills`, so give it at least one with `cooldown: 0`.
+- `"scaleStat": "PsiPower+Recognition"` grows a summon with two stats: the bonus comes from their average, both are lent, and
+  the first also takes half the second, so casters hit harder with either. The average also gives it 3 Health a point.
 - `"scaleStat": "PsiPower"` makes a summon grow with your Psi Power instead of Smarts: its pet bonus comes from that
   stat (`smartsPerBonus` points per bonus point), and it is lent your full Psi Power, so its skills with
   `"power": "PsiPower"` hit harder as yours rises. A `summon` action can set `"scaleStat"` too, for summons on a
