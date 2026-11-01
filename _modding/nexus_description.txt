@@ -1,11 +1,11 @@
 [center][size=6][b]Breachwork: a mod pack for StarCrawlers Chimera[/b][/size]
-[size=3][i]58 new classes, skill reshaping, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
+[size=3][i]59 new classes, skill reshaping, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
 
 [line]
 
 [size=5][b]Description[/b][/size]
 
-This is a large expansion for [b]StarCrawlers Chimera[/b], built to give every run more to play with. It adds [b]58 new classes[/b] to mix into your 7-tree build. Each is a full skill tree with its own abilities, stack mechanic and art. None of them borrow vanilla abilities, so you can combine them freely with each other and with the vanilla trees.
+This is a large expansion for [b]StarCrawlers Chimera[/b], built to give every run more to play with. It adds [b]59 new classes[/b] to mix into your 7-tree build. Each is a full skill tree with its own abilities, stack mechanic and art. None of them borrow vanilla abilities, so you can combine them freely with each other and with the vanilla trees.
 
 Around the classes, it brings back what the first StarCrawlers had and Chimera left out:
 [list]
@@ -17,7 +17,7 @@ Around the classes, it brings back what the first StarCrawlers had and Chimera l
 
 Beating Cerberus no longer has to end the run: the credits roll in game, and then you can stay and descend into [b]the Ichor Deep[/b], an endless side area that gets harder and richer with every depth.
 
-On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]247 class-interaction synergies[/b], a crafting window, a class search box, custom character pictures and portraits of your character, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
+On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, a class search box, custom character pictures and portraits of your character, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
 
 Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML with no code, and mods can go further with sandboxed Lua scripts or C# plugins.
 
@@ -61,7 +61,7 @@ Every setting is in [b]Options > Mod Settings[/b], on the title screen and in ga
 
 [size=5][b]Main features[/b][/size]
 
-[size=4][b]1. 58 new classes[/b][/size]
+[size=4][b]1. 59 new classes[/b][/size]
 
 Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the extra slots). Each has its own icon and a particle effect for each skill, and its abilities, stacks and resources are explained in the tooltips. Skills cost stamina unless a class's mechanic says otherwise, and a class's stacks and meters show as bars beside your health and stamina, toggled with [b]F3[/b]. Pick 7 trees as usual: a new class can sit next to any vanilla tree or any other new class.
 
@@ -72,7 +72,7 @@ Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the 
 [*][b]Castborn[/b] (Muscle): a walking foundry casting with plating that reseals itself. A modular construct tank with self-repair and poured allies.
 [*][b]Coilwright[/b] (Guile): a crossbow tinkerer whose shots stack Static until enemies overload in a stunning discharge. Coil towers feed your rig, and the charge outlasts them.
 [*][b]Emberhorn[/b] (Muscle): a furnace-hearted charger. Charges and gores build Head of Steam until it blows in a rampage, and gored enemies bleed harder until they burst.
-[*][b]Entropy Weaver[/b] (Intellect): a volatile chain-reaction caster. Spells build Spillover until it erupts, fraying everything nearby; frayed things set their neighbours smouldering.
+[*][b]Entropy Weaver[/b] (Intellect): a volatile chain-reaction caster. Spells build Spillover until it erupts, fraying everything nearby; frayed things set their neighbours smouldering. Spillnodes, see-through swarms of thread, static and code scraps, lash the nearest foe in a fight.
 [*][b]Etcher[/b] (Intellect): eats armor one layer at a time with conjured acid. Lingering acid pools and a true-damage payoff, paced by a refilling Reagent pool.
 [*][b]Fulgurant[/b] (Guile): a lightning duelist. Leaps, blinks and rail-dashes build Potential, which bleeds away when you stand still, and Return Stroke cashes it in with every Stepped Leader you've laid. Needs a melee weapon and scales with your weapon, Agility and Psi Power.
 [*][b]Gloomspore Warden[/b] (Intellect): a summoner built around spawning fungal creatures, bursting them and growing the colony. Its Gloomcaps grow stronger with your Psi Power.
@@ -134,7 +134,7 @@ Body-first classes built on movement, grabs and thrown things.
 [*][b]Grapnel Acrobat[/b] (Guile): hookshot melee with yanks, zips, swing kicks, wall pins and a spinning finisher.
 [/list]
 
-[size=3][b]Standalone classes (7)[/b][/size]
+[size=3][b]Standalone classes (8)[/b][/size]
 [list]
 [*][b]Kelvin Magus[/b] (Intellect): four layers of Supercooled freeze an enemy solid. The heat you steal is banked as Stolen Heat, which feeds a Glacier Sentinel golem or vents as a Thermal Plume, and fire cracks frozen enemies apart. Hoard ten and you overheat.
 [*][b]Looking-Glass Rogue[/b] (Guile): Drink Me, Eat Me switches you between Shrunk (very hard to hit) and Grown (heavy blows that send enemies flying), and most of the kit changes with it. Dodges and kills build Wonder, which tilts every random roll your way, and a Tea Clock ticks through each fight and pours at six. Painted Guards daub enemies red for the claws and teeth of the last ranks, where you learn to vanish, leave your grin behind and become the Grinning Cat.
@@ -143,6 +143,7 @@ Body-first classes built on movement, grabs and thrown things.
 [*][b]Swarm Conductor[/b] (Intellect): hijacks Chimera's CorpSec drones over a neural link, gives them orders and builds a couple of its own. Hijacks and orders cost stamina, and machines you recall or lose give some back.
 [*][b]Reaction Architect[/b] (Intellect): spends its turns wiring the room with tripwires, cut-offs and retorts that fire on the enemy's moves (closing in, backing off, shooting from afar, hitting, debuffing, missing or winding up a big move), then releases them all at once. Nine tiers, up to Exit Clause.
 [*][b]Conjoined[/b] (Muscle): one mind in up to four bodies, gained at tiers 1, 3 and 5. Each body is a full character with its own level, classes, gear and hotbar, while inventory, credits and quests are shared. The others fight beside you; click a party card to switch bodies, free out of combat or with Trade Bodies in it. If the body you play falls, you wake up in another.
+[*][b]Shadow Magus[/b] (Guile): a caster of the dark, driven by Recognition and Psi Power. Benighted dims enemies' aim, and crits build Darkvision and chain or finish Benighted targets. Lose Them scatters a room blind, a Shade of yourself fights beside you and pools dark that enemies lose you in, and Swallowed shrinks an enemy into the dark. The Thing in the Dark whistles up a Horror of your own. While you're Unlit or a Nightwalker, the Cursed Horror and a Wildcaster's wild Horror can't hunt you and turn on whoever else is nearest. Snuff pays for the class's synergies itself, in place of Synergy Strain.
 [/list]
 [/spoiler]
 
@@ -263,7 +264,7 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 
 [size=4][b]8. Skill Synergies[/b][/size]
 
-[b]247 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without. Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
+[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without. Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
 
 [size=4][b]9. Rogue Modder rebalance[/b][/size]
 
@@ -279,7 +280,7 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [size=4][b]10. Quality of life[/b][/size]
 [list]
 [*][b]Crafting window:[/b] a real recipe list with what you carry and [b]Craft x5[/b], on [b]F10[/b] or the [b]Craft[/b] tab in the Apartment. Crafting skills open it in the field.
-[*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, so "crit" or "savvy" finds the classes that offer it. Hovering a result says where it matched.
+[*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, and it knows stat names and abbreviations, so "crit" or "recognition" finds the classes that offer it. Hovering a result says where it matched.
 [*][b]Character pictures:[/b] click the picture frame on the creation screen or above the character sheet and press [b]Load picture[/b] to pick a png or jpg from anywhere on your computer, or drop files in the game's [i]Portraits[/i] folder. Any size works, and each Conjoined body has its own picture.
 [*][b]Make Portrait:[/b] the optional [b]Character Portrait Tools[/b] mod makes a picture of your character for you, with no AI and nothing to download. Its built-in tool has the game render your character's 3D models in one frame: your class's crawler body in a ready pose, holding your real weapons and shield, with your stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. Glasses, masks and similar are left out for now, and this needs a running game, not the creation screen. Other tools are optional; see Requirements.
 [*][b]Hotbar pages:[/b] 4 pages by default. Flip them with the square bracket keys, Ctrl+Page Up/Down or the mouse wheel over the hotbar. Your saves still load without the mod and show page 1.
@@ -294,6 +295,7 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [*][b]Sound delay:[/b] every sound in the game reaches your speakers about twice as fast by default. Set [b]MixBlock[/b] to 1024 if you hear crackling, or to [b]game[/b] for the game's own setting. It applies after a restart.
 [*][b]Sounds that never go silent:[/b] a mod sound that is missing or won't load plays a vanilla sound instead.
 [*][b]Diagonal steps:[/b] W+Q, W+E, S+Q and S+E, the numpad (Num Lock on or off), or a controller. No corner cutting, and a diagonal costs about 1.41 turns, as it should.
+[*][b]Summons:[/b] they step out behind you instead of standing up in front of the camera, where a skill asks for it, and a summon's look turns with its body.
 [*][b]Shared tiles:[/b] you, your pets and your allies can stand on the same tile (up to three).
 [*][b]Saved builds:[/b] the creation screen's custom preset keeps a list of builds, not just one. Right-clicking it saves the classes you've already picked as a build, without wiping them.
 [*][b]Autosave:[/b] the game's hidden autosaves now respect the autosave option, and you can choose to autosave on every floor change.
