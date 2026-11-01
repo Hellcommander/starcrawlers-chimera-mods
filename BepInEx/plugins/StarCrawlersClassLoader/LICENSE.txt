@@ -1,9 +1,11 @@
 Breachwork Loader (compiled plugin)
-Required Notice: Copyright (c) 2026 Arendeth (https://github.com/Hellcommander)
+Copyright (c) 2026 Arendeth (https://github.com/Hellcommander)
 
 This is an unofficial modification for StarCrawlers Chimera. It is not made or endorsed by Juggernaut Games.
 
 LICENSE
+  This is a summary of the Breachwork license. The full text is Mods/LICENSE.md, and it wins where this differs.
+
   You may use, change, share and build on the plugin and its source for any purpose, commercially too. Credit Arendeth
   and Breachwork, add substantial original work of your own, and don't reupload it unchanged.
   The source code is public: https://github.com/Hellcommander
@@ -14,12 +16,12 @@ LICENSE
 
 Code plugins and Lua scripts that other people write for this loader are their authors' own work, not part of this
 project. The example code (Mods/ExamplePlugin/src, Mods/RealtimeWithPause/src, Mods/CharacterPortraits/src,
-Mods/ExampleScript/scripts) is free to use and copy for any purpose.
+Mods/CharacterPortraits/toolsrc, Mods/ExampleScript/scripts) is free to use and copy for any purpose.
 
 No sound in the Mods folders (audio_licensed, sfx) may be sold as a sound or in an audio pack, even when altered. The
 audio_licensed sounds may not be used commercially at all.
 
-The mods this plugin loads (the Mods folder) are under the same terms, in Mods/LICENSE.md.
+The mods this plugin loads (the Mods folder) are under the same license.
 
 MoonSharp.Interpreter.dll in this folder is the MoonSharp Lua interpreter (http://www.moonsharp.org/), a third-party
 library that runs script mods, redistributed unmodified under its BSD 3-Clause license: Copyright (c) 2014-2016, Marco
