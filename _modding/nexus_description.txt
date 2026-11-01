@@ -17,7 +17,7 @@ Around the classes, it brings back what the first StarCrawlers had and Chimera l
 
 Beating Cerberus no longer has to end the run: the credits roll in game, and then you can stay and descend into [b]the Ichor Deep[/b], an endless side area that gets harder and richer with every depth.
 
-On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, class search, character pictures and portraits, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
+On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, class search, retraining, character pictures and portraits, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
 
 Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML with no code, and mods can go further with sandboxed Lua scripts or C# plugins.
 
@@ -113,7 +113,7 @@ Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the 
 
 [size=3][b]Unique Classes (7)[/b][/size]
 [list]
-[*][b]Axiomancer[/b] (Intellect): turns Smarts into a small shield pool that needs no shield in hand. Study enemies, then prove what happens to them.
+[*][b]Axiomancer[/b] (Intellect): turns Smarts and a little Psi Power into a small shield pool that needs no shield in hand and recharges every turn. Cold Read takes notes on an enemy and builds Insight, Refutation spends those notes to turn its blows back when your shield is hit, and Grand Synthesis turns notes into damage and Insight into shield.
 [*][b]Glyphrunner[/b] (Guile): place Mark, Loop and Sever glyphs on enemies. They react with each other, and Run Program cashes them in.
 [*][b]Null Chorister[/b] (Muscle): void spells build Dissonance. At 5 it shields you, at 8 it hurts you, and at 10 it tears loose in a void blast.
 [*][b]Paradox Witch[/b] (Intellect): hits log a Wound Ledger that Retroactive Wound cashes in as true damage. Timeline Strain resets your cooldowns at 6 and snaps at 8.
@@ -153,7 +153,7 @@ Body-first classes built on movement, grabs and thrown things.
 
 Passives, stances, one-shot charges and socketed runes can rewrite other skills. A skill can change its delivery (trap, grenade, walking bomb, drifter, nova, line, cone, area, chain or scatter), its element, its damage type, its effects and its behavior, and the tooltip and aiming follow. It keeps its own scaling.
 [list]
-[*][b]Spellsmith[/b] is the class built around this: an example class, included, that beats the attacks you learned from your other classes into grenades, buried charges and walking bombs. Hammer Form fires an attack through your weapon, keeping the attack's damage and taking the weapon's reach, accuracy and on-hit effects. Cold Forge makes every third attack Cryo, with chills in place of burns and a turn off your other cooldowns. Take it beside another class with mod attacks; its forms don't touch vanilla skills.
+[*][b]Spellsmith[/b] is the class built around this: an example class, included, that beats the attacks you learned from your other classes into grenades, buried charges and walking bombs. Hammer Form fires an attack through your weapon, keeping the attack's damage and taking the weapon's reach, accuracy and on-hit effects. Cold Forge makes every third attack Cryo, with chills in place of burns and a turn off your other cooldowns. Ember Lance stokes your next attack from another class, so it hits harder and sets its target Burning, and Loose Spell can call down one of the Wildcaster's boss echoes, on you too. Take it beside another class with mod attacks; its forms don't touch vanilla skills.
 [*][b]Rune matrix augments:[/b] rune casters such as Flux Savant spend a shared pool on delivery and behavior changes, and take flaws that give points back.
 [/list]
 
@@ -283,6 +283,7 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [list]
 [*][b]Crafting window:[/b] a real recipe list with what you carry and [b]Craft x5[/b], on [b]F10[/b] or the [b]Craft[/b] tab in the Apartment. Crafting skills open it in the field.
 [*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, and it knows stat names and abbreviations, so "crit" or "recognition" finds the classes that offer it. Hovering a result says where it matched.
+[*][b]Retraining:[/b] from level 20, once you've found ChimeraLinq, you can spend its User Score and credits to undo a build choice on the skills screen, outside combat. Ctrl+right-click the highest skill you hold in a class to give it up and get its point back, for 50 User Score and 100 credits per character level. Ctrl+right-click a class icon to swap the whole class for another, for 200 User Score and 300 credits per level. The points come back, and the new class starts at its first tier with no starter gear. Rogue Modder, Gadgeteer and Conjoined can't be swapped out. The prices can be changed, and there's no controller button yet.
 [*][b]Character pictures:[/b] click the picture frame on the creation screen or above the character sheet and press [b]Load picture[/b] to pick a png or jpg from anywhere on your computer, or drop files in the game's [i]Portraits[/i] folder. Any size works, and each Conjoined body has its own picture.
 [*][b]Make Portrait:[/b] the [b]Character Portrait Tools[/b] mod, off by default, makes a picture of your character with no AI and nothing to download. The game renders your class's crawler body in one frame, in a ready pose with your real weapons, shield, stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. It needs a running game, not the creation screen, and glasses, masks and similar are left out for now.
 [*][b]Other portrait tools:[/b] the [b]Tool[/b] setting in Mod Settings swaps the render for another tool. [b]PortraitMaker[/b] is the optional Portrait Maker download on the Files tab, which draws a stylised picture from code. Your [url=https://github.com/Hellcommander/aamt]AAMT toolkit[/url]'s Tools\StarCrawlersChimera folder paints one with your own local AI and needs an NVIDIA GPU. They all run on your own computer, so nothing goes to an online service.
@@ -355,7 +356,7 @@ All of these can be rebound in Mod Settings.
 
 The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
 [list]
-[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. There's a shared library of status effects and ability templates to build on.
+[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. Passives can turn one stat into another, and mod classes that change gear for good can be kept out of class swaps. There's a shared library of status effects and ability templates to build on.
 [*][b]Content:[/b] items, crafting recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
 [*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures. [i]BreachworkModManager.exe --seal-audio[/i] seals a mod's sounds into an encrypted [i]sounds.pak[/i], for sound packs whose terms require embedded audio.
 [*][b]Lua scripts:[/b] [i]scripts/*.lua[/i] add actions, conditions, numbers and events. They run sandboxed, with no access to files, the internet or the game's code, so they need no OK from the player.
