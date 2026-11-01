@@ -10,6 +10,44 @@
   },
   "effects": [
     {
+      "id": "Stoked",
+      "name": "Stoked",
+      "description": "Your next attack from another class hits a quarter harder and sets its target Burning, keeping whatever your stance or load gives it. A quenched attack chills instead of burning.",
+      "duration": 4,
+      "modifies": [
+        {
+          "skills": "others",
+          "name": "Stoked",
+          "power": 1.25,
+          "consume": true
+        },
+        {
+          "skills": "others",
+          "name": "Stoked",
+          "when": { "lacks": "@Quenched", "of": "self" },
+          "add": {
+            "effect": "#Burning"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WhiteHeat",
+      "name": "White Heat",
+      "description": "Your next attack from another class is worked white-hot: it ignores armor, shields and resistances.",
+      "duration": 4,
+      "modifies": [
+        {
+          "skills": "others",
+          "name": "White Heat",
+          "add": {
+            "trueDamage": true
+          },
+          "consume": true
+        }
+      ]
+    },
+    {
       "id": "Buried",
       "name": "Buried Charge",
       "description": "Your next attack from another class goes into the deck instead of the air, keeping whatever your stance gives it.",
@@ -164,7 +202,7 @@
     {
       "id": "Loosed",
       "name": "Loosed Spell",
-      "description": "Your next attack from another class is let loose to wander the deck, going off on whoever it meets. That includes you.",
+      "description": "Your next attack from another class is let loose to wander the deck, going off on whoever it meets. That includes you, and once in a long while it comes out as an echo of a boss's attack.",
       "duration": 4,
       "group": "load",
       "modifies": [
@@ -176,6 +214,14 @@
           "radius": 1.1,
           "target": "floor",
           "consume": true,
+          "actions": [
+            {
+              "do": "wildCast",
+              "amount": 1,
+              "pool": "bosses",
+              "chance": 2
+            }
+          ],
           "travelVfx": "fx_spellsmith_loose",
           "sound": "sfx/ss_loose.wav"
         }
@@ -193,7 +239,7 @@
       "newAbility": {
         "name": "Ember Lance",
         "icon": "spellsmith_t0.png",
-        "description": "A plain lance of flame, for when you have nothing better to work on. No form of yours touches it: the Spellsmith's trade is your other classes' attacks.",
+        "description": "A lance of flame that doubles as a poker: it burns what it hits and stokes your next attack from another class, which hits a quarter harder and sets its target Burning. No form of yours touches the lance itself.",
         "target": "enemy",
         "range": 6,
         "staminaCost": 8,
@@ -212,12 +258,23 @@
           {
             "do": "effect",
             "effect": "#Burning"
+          },
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Stoked"
           }
         ],
         "perk": {
           "name": "White Ember",
-          "damageMult": 1.25,
-          "chanceBonus": 0
+          "description": "The attack you stoke is also worked white-hot: it ignores armor, shields and resistances.",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@WhiteHeat"
+            }
+          ]
         }
       }
     },
@@ -392,7 +449,7 @@
       "newAbility": {
         "name": "Loose Spell",
         "icon": "spellsmith_t7.png",
-        "description": "Cut your next attack from another class free of you. It wanders the deck on its own and goes off on the first thing it meets.",
+        "description": "Cut your next attack from another class free of you. It wanders the deck on its own and goes off on the first thing it meets. Each time it goes off there is a tiny chance a Wildcaster's boss echo comes out with it.",
         "target": "self",
         "sound": "sfx/ss_loose.wav",
         "instant": true,

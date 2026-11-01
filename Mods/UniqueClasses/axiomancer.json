@@ -1,7 +1,7 @@
 {
   "id": "MOD_Axiomancer",
   "name": "Axiomancer",
-  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They study a target until they understand it completely, then argue it out of existence. Every new line of reasoning sharpens the mind; saying the same thing twice only goes in circles.\n\nSmarts become Psi Power in several ways: casting a different skill than the last builds Insight (+Psi Power per stack, faster with high Smarts) while repeating one builds Circular Reasoning; Cold Read files a Case Study on an enemy that Refutation and Chain of Inference cash in; waiting or resting on full stamina turns into Insight; and Lucid Apotheosis converts your Smarts into Psi Power outright. Both stats are then put to work: most attacks scale with Smarts and Psi Power together, Refutation and Cognitive Shell change what they do depending on which of the two leads, and the Shell spends your Insight on shields, stamina and cooldowns. Favors [SMT] and [PSI].",
+  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They study a target until they understand it completely, then argue it out of existence. Every new line of reasoning sharpens the mind; saying the same thing twice just hits harder.\n\nSmarts become Psi Power in several ways: casting a different skill than the last builds Insight (+Psi Power per stack, faster with high Smarts) while repeating one trades that for Circular Reasoning (more damage, less Psi Power); Cold Read files a Case Study on an enemy that Refutation and Chain of Inference cash in; waiting or resting on full stamina turns into Insight; and Lucid Apotheosis converts your Smarts into Psi Power outright. Both stats are then put to work: most attacks scale with Smarts and Psi Power together, Refutation and Cognitive Shell change what they do depending on which of the two leads, and the Shell spends your Insight on shields, stamina and cooldowns. Favors [SMT] and [PSI].",
   "archetype": "Intellect",
   "icon": "axiomancer.png",
   "attributePriorities": {
@@ -43,17 +43,14 @@
     {
       "id": "Circular",
       "name": "Circular Reasoning",
-      "description": "You have made this argument already, and it was no better the first time. At three stacks the whole train of thought derails: your Insight is lost and your blows go soft for a while.",
+      "description": "It's true because you keep saying it. You think less and hit harder: each stack is +10% damage and -1 Psi Power.",
       "duration": 3,
-      "debuff": true,
       "resource": true,
       "maxStacks": 3,
-      "damageDealtPerStack": -0.08,
-      "burstAt": 3,
-      "burstActions": [
-        { "do": "purge", "to": "self", "effect": "@Insight" },
-        { "do": "effect", "to": "self", "effect": "#Weakened", "turns": 2 }
-      ]
+      "damageDealtPerStack": 0.1,
+      "stats": {
+        "PsiPower": -1
+      }
     },
     {
       "id": "CaseStudy",
@@ -109,8 +106,8 @@
         "base": "Passive",
         "name": "First Principles",
         "icon": "axiomancer_t0.png",
-        "description": "Never make the same argument twice in a row.",
-        "rules": "• Using a skill other than the one you used last gives <color=#B48CFF>Insight</color> (+1 Psi Power each), two with 14 Smarts.\n• Using the same skill again gives <color=#FF7272>Circular Reasoning</color> instead (-8% damage per stack; at 3 you lose your Insight and are Weakened).\n• Cold Read is only observation: repeating it gives nothing either way.",
+        "description": "A new argument sharpens the mind. The same argument again just gets louder.",
+        "rules": "• Using a skill other than the one you used last gives <color=#B48CFF>Insight</color> (+1 Psi Power each), two with 14 Smarts.\n• Using the same skill again gives <color=#FFD27A>Circular Reasoning</color> instead (+10% damage and -1 Psi Power per stack, up to 3).\n• Cold Read is only observation: repeating it gives nothing either way.",
         "procs": [
           {
             "on": "cast",
@@ -283,7 +280,7 @@
         "icon": "axiomancer_t4.png",
         "cooldown": 12,
         "description": "Close the argument and spend what it taught you.",
-        "rules": "• Spends all your Insight: overshield of 4 (+0.3 per Smarts and Psi Power, +2 per Insight). Clears Circular Reasoning.\n• Smarts lead: other cooldowns -2 and stamina 2 (+0.2 per Smarts, +2 per Insight).\n• Psi Power leads: 4 more overshield (+1 per Insight) and Fortified.\n• Even: other cooldowns -1 and 3 more overshield.\n• A stat leads when it has reached a step (8, 12, 16, 20, 24, 30) the other hasn't.",
+        "rules": "• Spends all your Insight: overshield of 4 (+0.3 per Smarts and Psi Power, +2 per Insight).\n• Smarts lead: other cooldowns -2 and stamina 2 (+0.2 per Smarts, +2 per Insight).\n• Psi Power leads: 4 more overshield (+1 per Insight) and Fortified.\n• Even: other cooldowns -1 and 3 more overshield.\n• A stat leads when it has reached a step (8, 12, 16, 20, 24, 30) the other hasn't.",
         "castVfx": "PA_ThoughtLeader_FI.castParticle",
         "sound": "event:/Abilities/ForcePsyker/Smite_PowerUp",
         "actions": [
@@ -295,8 +292,7 @@
                         { "do": "effect", "to": "self", "effect": "#Fortified" } ],
               "else": [ { "do": "cooldowns", "amount": 1 },
                         { "do": "shield", "to": "self", "amount": 3 } ] } ] },
-          { "do": "shield", "to": "self", "amount": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self", "consumeStacks": true },
-          { "do": "purge", "to": "self", "effect": "@Circular" }
+          { "do": "shield", "to": "self", "amount": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self", "consumeStacks": true }
         ],
         "perk": {
           "name": "Airtight",

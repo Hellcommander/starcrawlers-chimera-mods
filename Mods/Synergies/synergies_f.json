@@ -117,7 +117,7 @@
         "MOD_Axiomancer",
         "SKILLTREE_Psykonics"
       ],
-      "description": "Meditation is only thinking without interruptions: each turn spent Meditating may grant Insight and break a circular argument, and hits on studied foes may leave you Lucid. Each level adds 5% to these odds.",
+      "description": "Meditation is only thinking without interruptions: each turn spent Meditating may grant Insight, and hits on studied foes may leave you Lucid. Each level adds 5% to these odds.",
       "bonus": {
         "procChancePerStack": 5,
         "procs": [
@@ -129,12 +129,6 @@
                 "do": "effect",
                 "to": "self",
                 "effect": "MOD_Axiomancer@Insight",
-                "ifSelfHas": "EFFECT_Psykonics_Meditate"
-              },
-              {
-                "do": "purge",
-                "to": "self",
-                "effect": "MOD_Axiomancer@Circular",
                 "ifSelfHas": "EFFECT_Psykonics_Meditate"
               }
             ]
