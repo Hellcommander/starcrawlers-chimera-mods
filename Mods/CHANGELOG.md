@@ -26,6 +26,14 @@ Covers everything since the 1.4.0 upload.
   - **Dark Between the Plates** (Gloomspore Warden): rot and dark feed each other, and Gloomcaps sprout in Shadowflame.
 - Snuff pays for the class's synergies itself, at 2% less damage per level, in place of Synergy Strain.
 
+### Class changes
+
+- **Entropy Weaver's Spillnodes** were remade to match their description. They were solid spinning objects, and now
+  they're see-through swarms of thread, static and code scraps that keep the nanite cloud's own particles.
+- Spillnodes now run their programs only in a fight. Their lash reaches further and takes the nearest foe, fraying it
+  and hurting it if it was already Frayed, and they sit idle less often. It shows as a violet line, as does the snap when
+  one winks out, and neither goes through walls.
+
 ### Quality of life
 
 - Class search understands more stat names and abbreviations.
@@ -46,6 +54,7 @@ Covers everything since the 1.4.0 upload.
 - `turnsPerStack`: a synergy level can grow turns, beside odds and stacks.
 - `"kind": "hunt"` keeps a summon closing on the nearest enemy, and a summon aimed at an enemy arrives targeting it.
 - `summonAt` (`behind` or `beside`) places a summon along your facing.
+- A `chain` action's `look` draws a line of that colour along each jump, and `sight` stops it jumping through walls.
 - Creature skills' `sound` and a `chain` action's `sound` play mod sound files as well as vanilla events.
 - A mod particle id works as a ground field's `look` and keeps playing for as long as the field lasts.
 
