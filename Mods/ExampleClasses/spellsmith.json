@@ -1,7 +1,7 @@
 {
   "id": "MOD_Spellsmith",
   "name": "Spellsmith",
-  "description": "A smith of other people's spells. The Spellsmith barely casts anything of their own: their craft is reworking the attacks you learned from your other classes, lobbing them as grenades, beating them into hammers, burying them in the deck or strapping them to walking bombs. When pressed, the whole workshop runs cold.\n\nTake it beside another class with mod attacks: its forms do nothing to vanilla skills or its own lance. Example class: shows how passives, stances and loaded charges reshape other classes' skills (\"modifies\") and stack. Favors [SMT] and [REC].",
+  "description": "A smith of other people's spells. The Spellsmith barely casts anything of their own: their craft is reworking the attacks you learned from your other classes, lobbing them as grenades, beating them into hammers, burying them in the deck or strapping them to walking bombs. Every third piece goes into the quench and comes out cold.\n\nTake it beside another class with mod attacks: its forms do nothing to vanilla skills or its own lance. Example class: shows how passives, stances and loaded charges reshape other classes' skills (\"modifies\") and stack. Favors [SMT] and [REC].",
   "archetype": "Intellect",
   "icon": "spellsmith.png",
   "attributePriorities": {
@@ -129,6 +129,35 @@
           "consume": true,
           "travelVfx": "fx_spellsmith_masterwork",
           "sound": "sfx/ss_masterwork.wav"
+        }
+      ]
+    },
+    {
+      "id": "Heat",
+      "name": "Working Heat",
+      "description": "The work is hot. Your next attack from another class readies the quench.",
+      "duration": -1
+    },
+    {
+      "id": "Quenched",
+      "name": "Quench",
+      "description": "Your next attack from another class is cold-forged, keeping whatever your stance or load gives it: it deals frost, chills instead of burning, and takes a turn off your other cooldowns.",
+      "duration": -1,
+      "modifies": [
+        {
+          "skills": "others",
+          "name": "Cold-forged",
+          "element": "Cryo",
+          "effects": {
+            "#Burning": "#Chilled",
+            "EFFECT_Fire": "EFFECT_Chill"
+          },
+          "add": {
+            "effect": "#Chilled",
+            "cooldowns": 1
+          },
+          "impactVfx": "fx_spellsmith_cold",
+          "consume": true
         }
       ]
     },
@@ -304,21 +333,26 @@
         "name": "Cold Forge",
         "icon": "spellsmith_t5.png",
         "type": "passive",
-        "description": "When your health is below half, the forge runs cold: every attack from your other classes, whatever its shape, deals frost and chills instead of burning.",
+        "description": "The forge keeps a rhythm. Two attacks from your other classes heat the work, and the third goes into the quench: whatever its shape, it deals frost, chills instead of burning, and the hiss takes a turn off your other cooldowns.",
         "modifies": [
           {
             "skills": "others",
-            "name": "Cold-forged",
-            "element": "Cryo",
-            "effects": {
-              "#Burning": "#Chilled",
-              "EFFECT_Fire": "EFFECT_Chill"
-            },
-            "impactVfx": "fx_spellsmith_cold",
-            "when": {
-              "value": "health%",
-              "below": 50
-            }
+            "name": "Working Heat",
+            "summary": "every third attack is quenched",
+            "when": { "lacks": "@Quenched", "of": "self" },
+            "selfActions": [
+              {
+                "do": "if",
+                "when": { "has": "MOD_Spellsmith@Heat", "of": "self" },
+                "then": [
+                  { "do": "purge", "to": "self", "effect": "@Heat" },
+                  { "do": "effect", "to": "self", "effect": "@Quenched" }
+                ],
+                "else": [
+                  { "do": "effect", "to": "self", "effect": "@Heat" }
+                ]
+              }
+            ]
           }
         ]
       }
