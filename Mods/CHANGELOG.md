@@ -1,11 +1,11 @@
 # Breachwork changelog
 
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
-release after 1.1.0 is 1.4.0. The dates are the dates of the work.
+release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are the dates of the work.
 
-## Unreleased
+## 1.45.0 (not released yet)
 
-Everything here is newer than the 1.4.0 upload.
+Covers everything since the 1.4.0 upload.
 
 ### New class
 
