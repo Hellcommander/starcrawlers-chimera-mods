@@ -9,7 +9,7 @@ namespace SCClassLoader
     /// <summary>
     /// The extra proc triggers ("on") beyond hit / kill / hurt / dodge / turn / reaction: crit, miss, cast, move, wait,
     /// heal, lowHealth, allyDeath, effectGained, effectLost, combatStart, combatEnd, enterRoom, loot, levelUp,
-    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, newFloor, shieldBreak.
+    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, newFloor, shieldBreak, absorb (in ProcHub).
     /// Each one is a small patch that hands the event to ProcHub.
     /// </summary>
     internal static class Triggers

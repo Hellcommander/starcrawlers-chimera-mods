@@ -88,6 +88,8 @@ namespace SCClassLoader
         /// <summary>A passive: % chance that each of your offensive mod spells changes form as you cast it (area, line,
         /// scatter, a random other target, laid as a trap, or turned on you). See WildMagic.</summary>
         public int wildForm;
+        /// <summary>A passive: stats raised by a share of another stat while you know it. See StatsFrom.</summary>
+        public List<StatFromSpec> statsFrom;
         /// <summary>With wildForm: the effect each form shows ("area", "line", "scatter", "retarget", "trap", "backfire").
         /// "line" and "retarget" fly it as a travel effect from you; the rest play where the spell lands.</summary>
         public Dictionary<string, string> formVfx;
@@ -234,6 +236,8 @@ namespace SCClassLoader
         public int counterMin;
         /// <summary>0 = no cap.</summary>
         public int counterMax;
+        /// <summary>silence: a boss is silenced this many turns, then can't be silenced for 3 more. 0 = bosses shrug it off.</summary>
+        public int bossTurns;
         /// <summary>if: runs "then" when "when" holds, else "else" (both on the same target).</summary>
         public List<ActionSpec> then;
         public List<ActionSpec> @else;
@@ -382,7 +386,7 @@ namespace SCClassLoader
     {
         /// <summary>hit | kill | hurt | dodge | turn | reaction | crit | miss | cast | move | wait | heal | lowHealth |
         /// allyDeath | effectGained | effectLost | combatStart | combatEnd | enterRoom | loot | levelUp | enemyDeath | allyKill |
-        /// allyHurt | summon | inflict | useItem | equip | unequip | search | newFloor | shieldBreak | trap | charge | leap |
+        /// allyHurt | summon | inflict | useItem | equip | unequip | search | newFloor | shieldBreak | absorb | trap | charge | leap |
         /// teleport | knockback | swap | chain</summary>
         public string on;
         public int chance = 100;

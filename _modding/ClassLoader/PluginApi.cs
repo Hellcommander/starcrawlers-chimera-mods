@@ -166,7 +166,7 @@ namespace Breachwork
         public Character Target { get; }
         /// <summary>Whoever is acting: you, or the enemy or summon using the skill.</summary>
         public Character Caster => ctx.caster;
-        /// <summary>Who hit the caster, in hurt, dodge and shieldBreak procs.</summary>
+        /// <summary>Who hit the caster, in hurt, dodge, shieldBreak and absorb procs.</summary>
         public Character Attacker => ctx.attacker;
         /// <summary>Who the caster hit or killed, in hit, kill and crit procs.</summary>
         public Character Victim => ctx.victim;

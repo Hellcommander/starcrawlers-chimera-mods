@@ -12,9 +12,26 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
   ignores armor, shields and resistances instead.
 - **Spellsmith's Loose Spell** has a 2% chance, each time it goes off on someone, to also call down one of the
   Wildcaster's boss echoes. Loose magic isn't picky, so an echo can land on you too.
-- **Axiomancer's First Principles** no longer punishes repeating a skill. Circular Reasoning is now a trade instead of a
-  debuff: +10% damage and -1 Psi Power per stack, up to 3, and it no longer loses your Insight or Weakens you at 3
-  stacks. Cognitive Shell and the Meditation synergy no longer clear it.
+- **Axiomancer** is rebuilt around a shield pool. First Principles is a new skill: your Smarts and a little Psi Power
+  make a small shield pool that needs no shield in hand and recharges every turn, so a hybrid build can survive a swarm.
+  It recharges faster with two or more enemies beside you, when you Wait with Quiet Mind, and with each note Refutation
+  spends.
+  Insight and Lucidity now add to the pool instead of Psi Power. Circular Reasoning and the penalty for repeating a
+  skill are gone.
+- **Axiomancer's skills** no longer treat enemies as someone to debate:
+  - **Cold Read** no longer deals damage. It takes notes, gives Insight, and may Silence, Expose or Weaken, with better
+    odds from Smarts.
+  - **Refutation** is now a passive: when your shield takes a hit from a studied enemy, a note is spent to turn the blow
+    back as Psi damage, recharge 2 shield and give Insight, up to 3 times a turn.
+  - **Cognitive Shell** now spends Insight on overshield and shield recharge, and gives 3 turns of Piercing and Psi
+    resistance.
+  - **Excluded Middle** replaces Chain of Inference: enemies around you with a Case Study take Psi damage, and those
+    without one get a Case Study.
+  - **Axiom of Separation** replaces Living Hypothesis: everything within 2 tiles is thrown back, studied enemies are
+    held in place, and your shield recharges.
+  - **Grand Synthesis** now turns notes into damage and Insight into shield recharge.
+  - The Silence from **Cold Read** and **Grand Synthesis** now works on bosses for 1 turn, then not again for 3 turns.
+  - **Insight** now holds one more stack for every 5 Smarts above 16, up to 12.
 
 ## 1.45.1 (2026-11-01)
 

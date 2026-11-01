@@ -507,6 +507,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   effects stay that class's, area spells hit around the target, and wild spells never land on you or your allies.
   `bonusPerStack` adds spells. `"pool": "monsters"` throws the mod monsters' attacks instead (plain-effect ones), and
   `"pool": "all"` mixes both. The Wildcaster is built on it; `SCCL_DEVTEST=wildcaster` tests it.
+  - `"statsFrom": [{ "stat": "PsiPower", "from": "Smarts", "per": 2 }]` on a passive: while you know it, one point of a
+    stat for every `per` points of another, with gear and effects counted and kept current.
+  - `"do": "recharge"`: fills your regular shield pool (`ShieldMax`) by `amount` plus scaling, up to its maximum. No shield
+    in hand is needed. `"do": "shield"` is the other kind: overshield, which goes above the pool.
   - `"wildForm": 25` on a passive: a 25% chance each of your aimed spells changes form as it leaves you: a burst over
     everyone within 2 of the target, a beam through the line, a split onto two more foes, a swerve onto another foe, a
     one-shot trap laid where you aimed (it arms next turn), or (rarely) the whole spell turned on you.
@@ -565,7 +569,9 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   that can see that ally attack it instead. The enemy wears **Taunted** and goes back to normal when it can't see its
   taunter, when the taunter dies, or when the turns run out. A later taunt by someone else takes over.
 - `{ "do": "silence", "turns": 2 }`: the enemy wears **Silenced** and can only use its abilities without a cooldown
-  (basic attacks); with none it closes in instead. A channel already under way finishes. Bosses shrug it off.
+  (basic attacks); with none it closes in instead. A channel already under way finishes. Bosses shrug it off, unless
+  the action adds `"bossTurns": 1`: a boss is then silenced for that many turns and wears **Composed**, which stops any
+  other silence until 3 turns after this one ends, so a boss can't be held silent.
 - `{ "do": "exhaust", "amount": 2 }`: every ability of the enemy that has a cooldown needs 2 more turns to come back
   (the enemy-side stamina burn: their big moves wait). Basic attacks are untouched. Works with `bonusPerStack`.
 - `{ "do": "swap" }`: you and the target trade tiles (stepping onto a tile triggers what's there, like walking). Not
@@ -749,6 +755,7 @@ Static Grip need a ranged weapon.
 - `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
 - `search` (you open a container nobody searched yet), `newFloor` (stairs take you to another floor; side areas and the Apartment don't count);
 - `shieldBreak` (a hit takes your shield to nothing; aims at the attacker);
+- `absorb` (your shield takes a hit, even one that never reaches your health; aims at the attacker);
 - `trap` (one of your mod traps goes off; `"match"` is its `fieldName`; aims at whoever set it off, or the first one it caught);
 - `charge` (a skill rushes you across the floor: a dash, lunge, rush or charge, or a chain with `"leap": true`; aims at the skill's target);
 - `leap` (you jump: a mod `leap`, Backflip, Flying Smash, Vault; aims at the target);

@@ -71,12 +71,12 @@ namespace SCClassLoader
             if (!Matches(p, on, ctx)) return;
             bool pluginEvent = on.Contains(":"); // a plugin's own event: "other" is whoever it fired it about
             bool aimsAtOther = pluginEvent || on == "hit" || on == "kill" || on == "hurt" || on == "dodge" || on == "reaction" || on == "crit" || on == "miss" || on == "cast" || on == "allydeath"
-                || on == "enemydeath" || on == "allykill" || on == "allyhurt" || on == "summon" || on == "inflict" || on == "shieldbreak" || on == "trap"
+                || on == "enemydeath" || on == "allykill" || on == "allyhurt" || on == "summon" || on == "inflict" || on == "shieldbreak" || on == "absorb" || on == "trap"
                 || on == "charge" || on == "leap" || on == "knockback" || on == "swap" || on == "chain";
             Character focus = aimsAtOther && other != null ? other : ctx.caster;
             if (pluginEvent || on == "hit" || on == "kill" || on == "crit" || on == "miss" || on == "cast" || on == "enemydeath" || on == "allykill" || on == "inflict" || on == "trap"
                 || on == "charge" || on == "leap" || on == "knockback" || on == "chain") ctx.victim = other;
-            else if (on == "hurt" || on == "dodge" || on == "allyhurt" || on == "shieldbreak") ctx.attacker = other;
+            else if (on == "hurt" || on == "dodge" || on == "allyhurt" || on == "shieldbreak" || on == "absorb") ctx.attacker = other;
             else if (on == "allydeath") ctx.victim = other;
             ctx.ally = on == "allydeath" || on == "summon" ? other : ally;
             ctx.target = focus;
@@ -213,7 +213,13 @@ namespace SCClassLoader
     [HarmonyPatch(typeof(Player), nameof(Player.TakeDamage), new[] { typeof(Character), typeof(List<DmgObj>), typeof(string), typeof(Ability), typeof(float) })]
     internal static class Patch_ProcHurt
     {
-        private static void Prefix(Player __instance, out int __state) => __state = __instance.health;
+        internal static bool Absorbed; // the shield took some of this hit, which "hurt" can't see when none of it gets through
+
+        private static void Prefix(Player __instance, out int __state)
+        {
+            __state = __instance.health;
+            Absorbed = false;
+        }
 
         private static void Postfix(Player __instance, Character caster, int __state)
         {
@@ -222,7 +228,14 @@ namespace SCClassLoader
                 ProcHub.Fire("hurt", caster);
                 Reactions.Hurt(caster, __instance, __state);
             }
+            if (Absorbed && caster != null && caster != __instance && !caster.GetIsDead() && !__instance.GetIsDead()) ProcHub.Fire("absorb", caster);
         }
+    }
+
+    [HarmonyPatch(typeof(Player), nameof(Player.DamageShield), new[] { typeof(Character), typeof(DmgObj) })]
+    internal static class Patch_ProcAbsorb
+    {
+        private static void Postfix() => Patch_ProcHurt.Absorbed = true;
     }
 
     [HarmonyPatch(typeof(Player), nameof(Player.OnDodge))]

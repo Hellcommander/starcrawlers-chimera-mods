@@ -1,7 +1,7 @@
 {
   "id": "MOD_Axiomancer",
   "name": "Axiomancer",
-  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They study a target until they understand it completely, then argue it out of existence. Every new line of reasoning sharpens the mind; saying the same thing twice just hits harder.\n\nSmarts become Psi Power in several ways: casting a different skill than the last builds Insight (+Psi Power per stack, faster with high Smarts) while repeating one trades that for Circular Reasoning (more damage, less Psi Power); Cold Read files a Case Study on an enemy that Refutation and Chain of Inference cash in; waiting or resting on full stamina turns into Insight; and Lucid Apotheosis converts your Smarts into Psi Power outright. Both stats are then put to work: most attacks scale with Smarts and Psi Power together, Refutation and Cognitive Shell change what they do depending on which of the two leads, and the Shell spends your Insight on shields, stamina and cooldowns. Favors [SMT] and [PSI].",
+  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They observe a target until nothing about it is unknown, work out what must happen next, and reality has no choice but to follow the proof.\n\nFirst Principles turns your Smarts, and a little of your Psi Power, into a small shield pool that needs no shield in hand and recharges every turn, faster when you are surrounded, so a hybrid build can wade into a swarm. Cold Read files a Case Study on an enemy and may Silence, Expose or Weaken it. Notes are your offense: Refutation turns a studied enemy's attacks back on it, Excluded Middle and Grand Synthesis cash them in. Insight is your defense: it swells the pool, and Cognitive Shell and Grand Synthesis spend it. Favors [SMT] and [PSI].",
   "archetype": "Intellect",
   "icon": "axiomancer.png",
   "attributePriorities": {
@@ -9,53 +9,24 @@
     "PsiPower": 4,
     "Toughness": 1
   },
-  "conditions": {
-    "AxiomSmartsLed": { "any": [
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 8 }, { "value": "PsiPower", "of": "self", "below": 8 } ] },
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 12 }, { "value": "PsiPower", "of": "self", "below": 12 } ] },
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 16 }, { "value": "PsiPower", "of": "self", "below": 16 } ] },
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 20 }, { "value": "PsiPower", "of": "self", "below": 20 } ] },
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 24 }, { "value": "PsiPower", "of": "self", "below": 24 } ] },
-      { "all": [ { "value": "Smarts", "of": "self", "atLeast": 30 }, { "value": "PsiPower", "of": "self", "below": 30 } ] }
-    ] },
-    "AxiomPsiLed": { "any": [
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 8 }, { "value": "Smarts", "of": "self", "below": 8 } ] },
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 12 }, { "value": "Smarts", "of": "self", "below": 12 } ] },
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 16 }, { "value": "Smarts", "of": "self", "below": 16 } ] },
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 20 }, { "value": "Smarts", "of": "self", "below": 20 } ] },
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 24 }, { "value": "Smarts", "of": "self", "below": 24 } ] },
-      { "all": [ { "value": "PsiPower", "of": "self", "atLeast": 30 }, { "value": "Smarts", "of": "self", "below": 30 } ] }
-    ] }
-  },
   "effects": [
     {
       "id": "Insight",
       "name": "Insight",
-      "description": "Each fresh line of reasoning adds weight to the next one. It fades if you stop thinking new thoughts.",
+      "description": "What you have worked out so far. Each stack adds 1 to your shield pool. You can hold 8, and one more for every 5 Smarts above 16, up to 12. It fades if you stop working.",
       "duration": 5,
       "maxStacks": 8,
+      "capScale": { "scale": "Smarts", "perPoint": 0.2, "from": 16, "ceiling": 12 },
       "resource": true,
       "resourceColor": "#B48CFF",
       "stats": {
-        "PsiPower": 1
-      }
-    },
-    {
-      "id": "Circular",
-      "name": "Circular Reasoning",
-      "description": "It's true because you keep saying it. You think less and hit harder: each stack is +10% damage and -1 Psi Power.",
-      "duration": 3,
-      "resource": true,
-      "maxStacks": 3,
-      "damageDealtPerStack": 0.1,
-      "stats": {
-        "PsiPower": -1
+        "ShieldMax": 1
       }
     },
     {
       "id": "CaseStudy",
       "name": "Case Study",
-      "description": "You have been taking notes on it. Every note is another way its mind can be argued into a corner.",
+      "description": "It has been observed closely. Every note is one more weakness on record, and each one leaves it more open to Psi.",
       "duration": 6,
       "debuff": true,
       "maxStacks": 5,
@@ -64,33 +35,34 @@
       }
     },
     {
-      "id": "Hypothesis",
-      "name": "Working Hypothesis",
-      "description": "An idea that was never disproven and so decided to stand up. It studies whatever it strikes, and if it is ever refuted, the lesson stays with its author.",
-      "duration": -1,
-      "damageDealtMult": 1.25,
-      "damageTakenMult": 0.8,
+      "id": "Sealed",
+      "name": "Sealed Reasoning",
+      "description": "Nothing gets through a closed proof: you shrug off much of the Piercing and Psi damage that goes around or through a shield.",
+      "duration": 3,
       "resists": {
-        "Psi": 25
-      },
-      "procs": [
-        { "on": "hit", "actions": [ { "do": "effect", "effect": "@CaseStudy" } ] }
-      ],
-      "onDeathActions": [
-        { "do": "effect", "to": "self", "effect": "@Insight", "stacks": 3 }
-      ]
+        "Piercing": 25,
+        "Psi": 15
+      }
+    },
+    {
+      "id": "Separated",
+      "name": "Separated",
+      "description": "Set apart by definition. It cannot move.",
+      "duration": 2,
+      "debuff": true,
+      "root": true
     },
     {
       "id": "Lucidity",
       "name": "Lucidity",
-      "description": "For a few moments, knowing a thing and doing it are the same act. Every stack is Psi Power drawn straight out of your Smarts, and every skill you use adds to your Insight.",
+      "description": "For a few moments, knowing a thing and doing it are the same act. Every stack adds 3 to your shield pool, and every skill you use adds to your Insight.",
       "duration": 4,
       "maxStacks": 6,
       "stats": {
-        "PsiPower": 3
+        "ShieldMax": 3
       },
       "onApplyActions": [
-        { "do": "purge", "to": "self", "effect": "@Circular" }
+        { "do": "recharge", "to": "self", "amount": 3 }
       ],
       "procs": [
         { "on": "cast", "actions": [ { "do": "effect", "to": "self", "effect": "@Insight" } ] }
@@ -106,83 +78,23 @@
         "base": "Passive",
         "name": "First Principles",
         "icon": "axiomancer_t0.png",
-        "description": "A new argument sharpens the mind. The same argument again just gets louder.",
-        "rules": "• Using a skill other than the one you used last gives <color=#B48CFF>Insight</color> (+1 Psi Power each), two with 14 Smarts.\n• Using the same skill again gives <color=#FFD27A>Circular Reasoning</color> instead (+10% damage and -1 Psi Power per stack, up to 3).\n• Cold Read is only observation: repeating it gives nothing either way.",
+        "description": "A sufficiently rigorous thought has mass. You keep a small shield pool made of nothing but reasoning, no shield in hand needed: 1 point for every 3 Smarts and every 6 Psi Power. It recharges every turn, more with high Smarts, and faster still when two or more enemies are beside you.",
+        "statsFrom": [
+          { "stat": "ShieldMax", "from": "Smarts", "per": 3 },
+          { "stat": "ShieldMax", "from": "PsiPower", "per": 6 }
+        ],
         "procs": [
           {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T1",
+            "on": "turn",
             "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 1 },
-                "then": [],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 1, "counterSet": true }
+              { "do": "recharge", "to": "self", "amount": 1, "scale": "Smarts", "scaleMult": 0.1 }
             ]
           },
           {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T2",
+            "on": "turn",
+            "when": { "value": "enemiesNear:1.5", "of": "self", "atLeast": 2 },
             "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 2 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 2, "counterSet": true }
-            ]
-          },
-          {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T4",
-            "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 4 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 4, "counterSet": true }
-            ]
-          },
-          {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T5",
-            "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 5 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 5, "counterSet": true }
-            ]
-          },
-          {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T6",
-            "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 6 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 6, "counterSet": true }
-            ]
-          },
-          {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T7",
-            "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 7 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 7, "counterSet": true }
-            ]
-          },
-          {
-            "on": "cast",
-            "match": "MOD_Axiomancer_T8",
-            "actions": [
-              { "do": "if", "to": "self", "when": { "value": "counter:ProofStep", "of": "self", "is": 8 },
-                "then": [ { "do": "effect", "to": "self", "effect": "@Circular" } ],
-                "else": [ { "do": "effect", "to": "self", "effect": "@Insight" },
-                          { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 14 } } ] },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 8, "counterSet": true }
+              { "do": "recharge", "to": "self", "amount": 2 }
             ]
           }
         ]
@@ -197,13 +109,16 @@
         "name": "Cold Read",
         "icon": "axiomancer_t1.png",
         "staminaCost": 8,
-        "description": "Look at it properly for once. The flinch, the habits, the tell: all of it goes into the Case Study, and the glare alone hurts. With 12 Smarts you take twice the notes.",
+        "description": "Study it closely. Its habits, its weak points and its timing all go into the Case Study, and with 12 Smarts you take twice the notes. What you learn can be used at once: it may be Silenced, Exposed or Weakened, with better odds the higher your Smarts. Every look gives you Insight.",
         "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
         "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Cast",
         "actions": [
-          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.35, "perRank": 1 },
           { "do": "effect", "effect": "@CaseStudy" },
-          { "do": "effect", "effect": "@CaseStudy", "when": { "value": "Smarts", "of": "self", "atLeast": 12 } }
+          { "do": "effect", "effect": "@CaseStudy", "when": { "value": "Smarts", "of": "self", "atLeast": 12 } },
+          { "do": "silence", "turns": 1, "bossTurns": 1, "when": { "chance": 20, "chanceScale": "Smarts", "chancePer": 1 } },
+          { "do": "effect", "effect": "#Exposed", "when": { "chance": 30, "chanceScale": "Smarts", "chancePer": 1 } },
+          { "do": "effect", "effect": "#Weakened", "when": { "chance": 30, "chanceScale": "Smarts", "chancePer": 1 } },
+          { "do": "effect", "to": "self", "effect": "@Insight" }
         ],
         "perk": {
           "name": "Second Glance",
@@ -218,24 +133,24 @@
         "Smarts": 1
       },
       "newAbility": {
-        "base": "Bolt",
+        "base": "Passive",
         "name": "Refutation",
         "icon": "axiomancer_t2.png",
-        "staminaCost": 14,
-        "cooldown": 4,
-        "description": "Read your notes back to it, all of them, in order. Every entry in its Case Study is spent as Psi damage, and a thoroughly studied mind (4 or more notes) is left with nothing to say. How you argue depends on which is ahead: when your Smarts lead your Psi Power by a step (8, 12, 16, 20, 24, 30), the rebuttal also stalls its big moves by 2 turns; when your Psi Power leads, it lands with a second, harder Psi blow.",
-        "impactVfx": "PA_Psykonics_Dominate.castParticle",
-        "sound": "event:/Abilities/Misc/Psykonics_Dominate",
-        "actions": [
-          { "do": "silence", "turns": 1, "when": { "value": "stacks:@CaseStudy", "of": "target", "atLeast": 4 } },
-          { "do": "exhaust", "amount": 2, "when": "AxiomSmartsLed" },
-          { "do": "damage", "type": "Psi", "min": 3, "max": 5, "scale": "PsiPower", "scaleMult": 0.25, "when": "AxiomPsiLed" },
-          { "do": "damage", "type": "Psi", "min": 4, "max": 7, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1, "bonusPerStack": 3, "stacksOf": "@CaseStudy", "stacksFrom": "target", "consumeStacks": true }
-        ],
-        "perk": {
-          "name": "Counterexample",
-          "cooldownDelta": -2
-        }
+        "description": "An attack you predicted is only evidence. When your shield takes a hit from an enemy with a Case Study, one note is spent to disprove it: the blow turns back on the attacker as Psi damage, your shield recharges 2 and you gain Insight. Up to 3 times a turn.",
+        "procs": [
+          {
+            "on": "absorb",
+            "maxPerTurn": 3,
+            "when": { "has": "@CaseStudy", "of": "attacker" },
+            "vfx": "fx_axiomancer_refutation_impact",
+            "sound": "event:/Abilities/Misc/Psykonics_Dominate",
+            "actions": [
+              { "do": "damage", "type": "Psi", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "bonusPerStack": 2, "stacksOf": "@CaseStudy", "stacksFrom": "target", "stacksUsed": 1, "consumeStacks": true },
+              { "do": "recharge", "to": "self", "amount": 2 },
+              { "do": "effect", "to": "self", "effect": "@Insight" }
+            ]
+          }
+        ]
       }
     },
     {
@@ -247,7 +162,7 @@
         "base": "Passive",
         "name": "Quiet Mind",
         "icon": "axiomancer_t3.png",
-        "description": "A mind left idle cools into clarity. Waiting a turn gives Insight (more with 16 Smarts), recovers stamina in proportion to your Smarts and clears the last argument, so you may repeat yourself. Ending a turn in a fight with your stamina nearly full turns the unspent effort into Insight.",
+        "description": "A mind left idle cools into clarity. Waiting a turn gives Insight (more with 16 Smarts) and recovers stamina and shield pool in proportion to your Smarts. Ending a turn in a fight with your stamina nearly full turns the unspent effort into Insight.",
         "procs": [
           {
             "on": "wait",
@@ -255,7 +170,7 @@
               { "do": "effect", "to": "self", "effect": "@Insight", "stacks": 2 },
               { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 16 } },
               { "do": "stamina", "to": "self", "amount": 3, "scale": "Smarts", "scaleMult": 0.3 },
-              { "do": "counter", "to": "self", "counter": "ProofStep", "amount": 0, "counterSet": true }
+              { "do": "recharge", "to": "self", "amount": 2, "scale": "Smarts", "scaleMult": 0.2 }
             ]
           },
           {
@@ -279,19 +194,14 @@
         "name": "Cognitive Shell",
         "icon": "axiomancer_t4.png",
         "cooldown": 12,
-        "description": "Close the argument and spend what it taught you.",
-        "rules": "• Spends all your Insight: overshield of 4 (+0.3 per Smarts and Psi Power, +2 per Insight).\n• Smarts lead: other cooldowns -2 and stamina 2 (+0.2 per Smarts, +2 per Insight).\n• Psi Power leads: 4 more overshield (+1 per Insight) and Fortified.\n• Even: other cooldowns -1 and 3 more overshield.\n• A stat leads when it has reached a step (8, 12, 16, 20, 24, 30) the other hasn't.",
+        "description": "Close the proof around yourself and spend what it taught you.",
+        "rules": "• Spends all your Insight: overshield of 4 (+0.3 per Smarts and Psi Power, +2 per Insight), and your shield pool recharges 2 (+1 per Insight).\n• Sealed Reasoning for 3 turns: +25% Piercing and +15% Psi resistance, the damage a shield lets through.\n• Your other cooldowns -1.",
         "castVfx": "PA_ThoughtLeader_FI.castParticle",
         "sound": "event:/Abilities/ForcePsyker/Smite_PowerUp",
         "actions": [
-          { "do": "if", "to": "self", "when": "AxiomSmartsLed",
-            "then": [ { "do": "cooldowns", "amount": 2 },
-                      { "do": "stamina", "to": "self", "amount": 2, "scale": "Smarts", "scaleMult": 0.2, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self" } ],
-            "else": [ { "do": "if", "to": "self", "when": "AxiomPsiLed",
-              "then": [ { "do": "shield", "to": "self", "amount": 4, "bonusPerStack": 1, "stacksOf": "@Insight", "stacksFrom": "self" },
-                        { "do": "effect", "to": "self", "effect": "#Fortified" } ],
-              "else": [ { "do": "cooldowns", "amount": 1 },
-                        { "do": "shield", "to": "self", "amount": 3 } ] } ] },
+          { "do": "recharge", "to": "self", "amount": 2, "bonusPerStack": 1, "stacksOf": "@Insight", "stacksFrom": "self" },
+          { "do": "cooldowns", "amount": 1 },
+          { "do": "effect", "to": "self", "effect": "@Sealed" },
           { "do": "shield", "to": "self", "amount": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self", "consumeStacks": true }
         ],
         "perk": {
@@ -306,19 +216,20 @@
         "Smarts": 1
       },
       "newAbility": {
-        "base": "Bolt",
-        "name": "Chain of Inference",
+        "base": "Nova",
+        "name": "Excluded Middle",
         "icon": "axiomancer_t5.png",
-        "range": 6,
+        "radius": 3,
         "staminaCost": 20,
         "cooldown": 7,
-        "description": "If this one thinks like that, then so does that one, and that one. The conclusion strikes the target and leaps on to up to three more enemies you have a Case Study on, adding a note to each.",
+        "description": "Everything is either known or not known, and there is no third option. Each enemy around you with a Case Study takes Psi damage, more for every note on it, and the notes stay. Each enemy without one gets a Case Study of 2 notes.",
+        "castVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
         "impactVfx": "PA_ThoughtLeader_JoinUs.PS_Impact",
         "sound": "event:/Abilities/Misc/Psykonics_Warp",
         "actions": [
-          { "do": "chain", "jumps": 3, "radius": 3, "effect": "@CaseStudy", "falloff": 0.85, "actions": [
-            { "do": "damage", "type": "Psi", "min": 5, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 1 },
-            { "do": "effect", "effect": "@CaseStudy" } ] }
+          { "do": "if", "when": { "has": "@CaseStudy", "of": "target" },
+            "then": [ { "do": "damage", "type": "Psi", "min": 5, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 1, "bonusPerStack": 2, "stacksOf": "@CaseStudy", "stacksFrom": "target" } ],
+            "else": [ { "do": "effect", "effect": "@CaseStudy", "stacks": 2 } ] }
         ],
         "perk": {
           "name": "Sound Logic",
@@ -332,24 +243,23 @@
         "PsiPower": 1
       },
       "newAbility": {
-        "base": "Bolt",
-        "name": "Living Hypothesis",
+        "base": "Nova",
+        "name": "Axiom of Separation",
         "icon": "axiomancer_t6.png",
-        "range": 6,
-        "staminaCost": 22,
+        "radius": 2,
+        "staminaCost": 18,
         "cooldown": 6,
-        "description": "Give an untested idea a body and point it at the target. One Hypothesis at a time: it grows stronger with your Smarts, adds to the Case Study of whatever it hits, and if it is ever destroyed you keep what it learned as Insight. Use this again while it stands to put it to the test: a Psi blow on the target that is heavier for every note in its Case Study (the notes stay), and the Hypothesis mends.",
+        "description": "Any collection can be divided by a rule, and you are the rule. Everything within 2 tiles is thrown 2 tiles away from you, enemies with a Case Study are held in place for 2 turns where they land, and your shield recharges 2.",
         "castVfx": "PA_ThoughtLeader_FI.castParticle",
         "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
         "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
         "actions": [
-          { "do": "damage", "type": "Psi", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@CaseStudy", "stacksFrom": "target", "ifSummonAlive": "self" },
-          { "do": "heal", "to": "summon", "amount": 10, "perRank": 2, "ifSummonAlive": "self" },
-          { "do": "effect", "effect": "@CaseStudy", "stacks": 2, "unlessSummonAlive": "self" },
-          { "do": "summon", "to": "self", "creature": "nanite_cloud", "summonName": "Hypothesis", "amount": 1, "maxSummons": 1, "turns": 15, "effect": "@Hypothesis", "unlessSummonAlive": "self" }
+          { "do": "knockback", "amount": 2 },
+          { "do": "if", "when": { "has": "@CaseStudy", "of": "target" }, "then": [ { "do": "effect", "effect": "@Separated" } ] },
+          { "do": "recharge", "to": "self", "amount": 2 }
         ],
         "perk": {
-          "name": "Peer Review",
+          "name": "Clean Partition",
           "cooldownDelta": -2
         }
       }
@@ -365,7 +275,7 @@
         "icon": "axiomancer_t7.png",
         "staminaCost": 20,
         "cooldown": 18,
-        "description": "Stop thinking about the power and simply understand it. You gain one stack of Lucidity, plus one more for each of 8, 12, 16, 20 and 24 Smarts you have: +3 Psi Power per stack for 4 turns. While it lasts, every skill you use adds Insight, and Circular Reasoning is cleared the moment it begins.",
+        "description": "Stop thinking about the power and simply understand it. You gain one stack of Lucidity, plus one more for each of 8, 12, 16, 20 and 24 Smarts you have: +3 shield pool per stack for 4 turns, recharged as it arrives. While it lasts, every skill you use adds Insight.",
         "castVfx": "VoidPsyker_Ascendance.impactParticle",
         "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Ascendance_Cast",
         "actions": [
@@ -394,17 +304,16 @@
         "radius": 3.5,
         "staminaCost": 30,
         "cooldown": 20,
-        "description": "Every note, every insight, every argument you have made in this fight, stated at once and all around you. Each enemy in reach takes Psi damage that grows with your Smarts and Psi Power, with every note in its Case Study (all of them spent) and with every Insight you hold (all of it spent once the proof is done). Minds you studied closely (3 or more notes) are left speechless, and if you are Lucid when you publish, nobody nearby can move for a moment.",
+        "description": "Combine everything you have established into one finished proof, and reality has to accept the result. Each enemy around you takes Psi damage that grows with your Smarts and Psi Power and with every note on it, and all its notes are spent. An enemy with 3 or more notes is Silenced for 2 turns. All your Insight is spent too: your shield recharges 2, plus 2 for each one. If you are Lucid, every enemy caught is stunned for a turn.",
         "castVfx": "VoidPsyker_Ascendance.impactParticle",
         "impactVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact",
         "sound": "event:/Abilities/Misc/Psykonics_Dominate",
         "actions": [
-          { "do": "silence", "turns": 2, "when": { "value": "stacks:@CaseStudy", "of": "target", "atLeast": 3 } },
+          { "do": "silence", "turns": 2, "bossTurns": 1, "when": { "value": "stacks:@CaseStudy", "of": "target", "atLeast": 3 } },
           { "do": "stun", "turns": 1, "ifSelfHas": "@Lucidity" },
-          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self" },
-          { "do": "damage", "type": "Psi", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@CaseStudy", "stacksFrom": "target", "consumeStacks": true },
-          { "do": "purge", "to": "self", "effect": "@Insight" },
-          { "do": "purge", "to": "self", "effect": "@Circular" }
+          { "do": "damage", "type": "Psi", "min": 8, "max": 12, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@CaseStudy", "stacksFrom": "target", "consumeStacks": true },
+          { "do": "recharge", "to": "self", "amount": 2, "bonusPerStack": 2, "stacksOf": "@Insight", "stacksFrom": "self" },
+          { "do": "purge", "to": "self", "effect": "@Insight" }
         ],
         "perk": {
           "name": "Elegant Proof",

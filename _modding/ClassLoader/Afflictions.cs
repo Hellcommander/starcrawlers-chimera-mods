@@ -15,6 +15,8 @@ namespace SCClassLoader
     {
         internal static string TauntedId => ModEffect.MakeId(TileStacks.CoreId, "Taunted");
         internal static string SilencedId => ModEffect.MakeId(TileStacks.CoreId, "Silenced");
+        internal static string ComposedId => ModEffect.MakeId(TileStacks.CoreId, "Composed");
+        internal const int BossSilenceRest = 3; // turns after a boss's silence ends before another can land
 
         internal static void RegisterEffects()
         {
@@ -33,6 +35,11 @@ namespace SCClassLoader
                     {
                         id = "Silenced", name = "Silenced", icon = "silenced.png", debuff = true, duration = 1,
                         description = "Can't use special attacks (anything with a cooldown); basic attacks only.",
+                    },
+                    new EffectSpec
+                    {
+                        id = "Composed", name = "Composed", icon = "silenced.png", duration = 4,
+                        description = "It has just shaken off a silence, and can't be silenced again until this wears off.",
                     },
                 },
             };
@@ -110,7 +117,14 @@ namespace SCClassLoader
             if (!IsEnemy(t)) return;
             if (t.HasTag("BOSS") || t.HasTag("BOSSHEALTHBAR"))
             {
-                Game.LOG($"{ctx.sourceName}: {t.GetName()} shrugs off the silence.");
+                if (a.bossTurns <= 0 || t.effects.GetEffect(ComposedId) != null)
+                {
+                    Game.LOG($"{ctx.sourceName}: {t.GetName()} shrugs off the silence.");
+                    return;
+                }
+                // Composed first: a turn's countdown runs before the boss acts, and an effect that ends skips the next one's
+                Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = ComposedId, turns = a.bossTurns + BossSilenceRest - 1 }, ctx, t);
+                Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = SilencedId, turns = a.bossTurns }, ctx, t);
                 return;
             }
             Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = SilencedId, turns = SilenceTurns(a) + Actions.ExtraTurns(a, ctx, t) }, ctx, t);

@@ -183,6 +183,16 @@ namespace SCClassLoader
                         if (add > 0) t.AddOshields(add);
                         break;
                     }
+                case "recharge":
+                    {
+                        // fills your regular shield pool (ShieldMax), which needs no shield in hand; the cap also holds when one is.
+                        // Always yours, so a hit can refill you by what is on its target (stacksFrom "target")
+                        Player me = Player.instance;
+                        if (ctx.caster != me || me.shielding >= me.shieldingMax) break;
+                        int charge = Math.Min(me.shieldingMax - me.shielding, Amount(a, ctx) + StackBonus(a, ctx, t));
+                        if (charge > 0) Menu_Player.instance.ModShield(charge);
+                        break;
+                    }
                 case "effect": ApplyEffect(a, ctx, t); break;
                 case "stun": Ability.ApplyStun(t, Turns(a) + ExtraTurns(a, ctx, t)); break;
                 case "knockback": Ability.Knockback(t, ctx.caster, Math.Max(1, a.amount)); break;
@@ -751,6 +761,7 @@ namespace SCClassLoader
                 case "heal": s = $"Heals {who} for <color=#5CFF6B>{a.amount}{Scaling(a)}</color>"; break;
                 case "stamina": s = $"{(a.amount >= 0 ? "Restores" : "Drains")} <color=#7CFC00>{Math.Abs(a.amount)}{Scaling(a)}</color> {StatObj.GetStatString(STAT_TYPE.Stamina)} for {who}"; break;
                 case "shield": s = $"Gives {who} <color=#6FD3FF>{a.amount}{Scaling(a)}</color> {StatObj.GetStatString(STAT_TYPE.Shield)} overshield"; break;
+                case "recharge": s = $"Recharges <color=#6FD3FF>{a.amount}{Scaling(a)}</color> of your {StatObj.GetStatString(STAT_TYPE.Shield)}"; break;
                 case "effect":
                     s = a.stacks < 0 && !Scaled(a)
                         ? $"Removes {-a.stacks} <color=#FFD15C>{EffectName(a.effect, classId)}</color> from {who}"
@@ -801,7 +812,7 @@ namespace SCClassLoader
                             : $"<color=#FF9F5C>Taunts</color> {who} into attacking you for {tt} turn{(tt > 1 ? "s" : "")}";
                         break;
                     }
-                case "silence": s = $"<color=#B58CFF>Silences</color> {who} for {Afflictions.SilenceTurns(a)} turn{(Afflictions.SilenceTurns(a) > 1 ? "s" : "")}: basic attacks only (bosses shrug it off)"; break;
+                case "silence": s = $"<color=#B58CFF>Silences</color> {who} for {Afflictions.SilenceTurns(a)} turn{(Afflictions.SilenceTurns(a) > 1 ? "s" : "")}: basic attacks only ({(a.bossTurns > 0 ? $"a boss for {a.bossTurns} turn{(a.bossTurns > 1 ? "s" : "")}, then not again for {Afflictions.BossSilenceRest} turns" : "bosses shrug it off")})"; break;
                 case "exhaust": s = $"Sets back {who}'s special attacks by {Math.Max(1, a.amount)} turn{(Math.Max(1, a.amount) > 1 ? "s" : "")}"; break;
                 case "swap": s = $"You trade places with {who}"; break;
                 case "throw":
@@ -1059,6 +1070,7 @@ namespace SCClassLoader
                 "search" => "when you search a container",
                 "newfloor" => "when you reach another floor",
                 "shieldbreak" => "when your shield breaks",
+                "absorb" => "when your shield takes a hit",
                 "charge" => "when you charge",
                 "leap" => "when you leap",
                 "teleport" => "when you teleport",
@@ -1099,6 +1111,7 @@ namespace SCClassLoader
             "allykill" => "the victim",
             "allyhurt" => "the attacker",
             "shieldbreak" => "the attacker",
+            "absorb" => "the attacker",
             "charge" => "the target",
             "leap" => "the target",
             "knockback" => "that enemy",

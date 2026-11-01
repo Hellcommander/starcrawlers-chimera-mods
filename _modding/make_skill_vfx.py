@@ -371,7 +371,7 @@ RECIPES = {
         0: "cast=craft", 1: "cast=summon+zap", 2: "travel=beam impact=mark", 3: "cast=power", 4: "cast=blink",
         5: "area=nova+zap", 6: "cast=summon+sparks", 8: "cast=summon+stars"}),
     "MOD_Axiomancer": ("thought", {
-        1: "impact=mind", 2: "travel=lance impact=explode/thought", 4: "cast=shield", 5: "impact=mind+stars", 6: "travel=orb impact=pop",
+        1: "impact=mind", 2: "travel=lance impact=explode/thought", 4: "cast=shield", 5: "impact=mind+stars", 6: "impact=pop",
         7: "cast=power+stars", 8: "area=nova+stars"}),
     "MOD_Glyphrunner": ("cipher", {
         1: "impact=glyph", 2: "impact=glyph+swirl", 3: "impact=slash+stars", 4: "impact=explode", 5: "area=blastzone+stars", 6: "travel=cord impact=glyph"}),

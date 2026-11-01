@@ -113,7 +113,7 @@ Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the 
 
 [size=3][b]Unique Classes (7)[/b][/size]
 [list]
-[*][b]Axiomancer[/b] (Intellect): turns Smarts into Psi Power. Casting a new skill builds Insight, and repeating the same one builds Circular Reasoning.
+[*][b]Axiomancer[/b] (Intellect): turns Smarts into a small shield pool that needs no shield in hand. Study enemies, then prove what happens to them.
 [*][b]Glyphrunner[/b] (Guile): place Mark, Loop and Sever glyphs on enemies. They react with each other, and Run Program cashes them in.
 [*][b]Null Chorister[/b] (Muscle): void spells build Dissonance. At 5 it shields you, at 8 it hurts you, and at 10 it tears loose in a void blast.
 [*][b]Paradox Witch[/b] (Intellect): hits log a Wound Ledger that Retroactive Wound cashes in as true damage. Timeline Strain resets your cooldowns at 6 and snaps at 8.
