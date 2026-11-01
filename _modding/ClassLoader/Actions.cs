@@ -978,7 +978,8 @@ namespace SCClassLoader
         private static string SummonGrowth(ActionSpec a)
         {
             string stat = a.scaleStat ?? EnemyRegistry.DefOf(EnemyRegistry.Creature(a.creature))?.scaleStat;
-            return Enum.TryParse(stat ?? "", true, out STAT_TYPE st) && st != STAT_TYPE.Smarts ? $", growing with your {StatObj.GetStatString(st)}" : "";
+            var names = (stat ?? "").Split('+').Select(x => Enum.TryParse(x, true, out STAT_TYPE st) && st != STAT_TYPE.Smarts ? StatObj.GetStatString(st) : null).Where(x => x != null).ToList();
+            return names.Count > 0 ? $", growing with your {string.Join(" and ", names)}" : "";
         }
 
         private static string CreatureName(string spec)

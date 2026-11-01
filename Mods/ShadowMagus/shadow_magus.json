@@ -79,7 +79,7 @@
    "id": "Shadeborn",
    "name": "Shadeborn",
    "icon": "icons/cast_a_shade.png",
-   "description": "Your own shadow, stood up and set loose. It fights with more than half your strength and wits, its touch Benights, the dark pools around it every turn (you and yours are Unlit in it, enemies Benighted), and when it is put out the dark bursts over everything near it.",
+   "description": "Your own shadow, stood up and set loose. It hangs back and casts your dark with more than half your strength and wits, its spells Benight, the dark pools around it every turn (you and yours are Unlit in it, enemies Benighted), and when it is put out the dark bursts over everything near it.",
    "duration": -1,
    "ownerShare": 0.6,
    "procs": [
@@ -162,7 +162,7 @@
    "id": "Loosed",
    "name": "Loosed",
    "icon": "icons/the_thing_in_the_dark.png",
-   "description": "The Thing in the Dark, let off its leash for a few turns. It fights with most of your strength and wits, takes hits softly, and whatever it tears is Benighted to the full and blinded.",
+   "description": "The Thing in the Dark, let off its leash for a few turns. It casts with most of your strength and wits, takes hits softly, and whatever its spells touch is Benighted to the full and blinded.",
    "duration": -1,
    "ownerShare": 0.75,
    "damageDealtMult": 1.4,
@@ -240,7 +240,7 @@
     "castVfx": "SmSnuffCast",
     "travelVfx": "SmShadeBolt",
     "travelSpeed": 14,
-    "impactVfx": "VOID_PSYKER_SHADOWCOIL.impactParticle@0.8",
+    "impactVfx": "SmDarkBurst@0.55",
     "sound": "audio_licensed/sm_snuff.wav",
     "actions": [
      {
@@ -303,6 +303,7 @@
       "do": "warp",
       "warpTo": "random",
       "amount": 3,
+      "vfx": "SmWarpFlash",
       "when": {
        "chance": 55,
        "chanceScale": "Recognition",
@@ -338,7 +339,7 @@
     "target": "self",
     "staminaCost": 12,
     "cooldown": 10,
-    "description": "Stand your own shadow up and let it go. It fights with more than half your strength and wits, Benights what it touches, and pools dark around itself each turn; stepping out of it leaves you Unlit, so enemies lose you and go for the shade. Cast again while it stands: the enemies near it go for the shade instead of you, and you are Unlit again.",
+    "description": "Stand your own shadow up and let it go. It casts bolts, eclipses, black fire and more with over half your strength and wits, Benights what it touches, and pools dark around itself each turn; stepping out of it leaves you Unlit, so enemies lose you and go for the shade. Cast again while it stands: the enemies near it go for the shade instead of you, and you are Unlit again.",
     "castVfx": "SmShadeCall",
     "sound": "audio_licensed/sm_shade.wav",
     "actions": [
@@ -347,7 +348,7 @@
       "creature": "Shade",
       "summonName": "Shade",
       "summonGroup": "Shade",
-      "scaleStat": "PsiPower",
+      "scaleStat": "PsiPower+Recognition",
       "unlessSummonAlive": "self",
       "maxSummons": 1,
       "turns": 15,
@@ -456,7 +457,7 @@
     "cooldown": 5,
     "description": "Close the dark over one enemy. It shrinks, hits softer and can barely see out; the deeper the dark already is in it, the harder this bites, and it may be struck dumb and slow.",
     "castVfx": "SmSnuffCast",
-    "impactVfx": "SmDarkBurst@0.8",
+    "impactVfx": "SmSwallow",
     "sound": "audio_licensed/sm_swallowed.wav",
     "actions": [
      {
@@ -610,9 +611,9 @@
     "range": 8,
     "staminaCost": 18,
     "cooldown": 25,
-    "description": "You have learned to whistle for it. The Thing comes up out of the dark beside your target and tears into it on the spot, then hunts for eight turns: it rakes, it lunges across the room, and it howls the dark out over everything around it; whatever it tears is blinded and Benighted to the full. Where it came through, the floor stays wrong for a while.",
-    "castVfx": "SmShadeCall",
-    "impactVfx": "SmDarkBurst",
+    "description": "You have learned to whistle for it. The Thing comes up out of the dark beside your target and tears into it on the spot, then hunts for eight turns from a distance: it lashes lines of night, silences, drags enemies under, sets the floor alight and howls the dark out over everything around it; whatever its spells touch is blinded and Benighted to the full. Where it came through, the floor stays wrong for a while.",
+    "castVfx": "SmSnuffCast",
+    "impactVfx": "SmDarkBurst@0.8",
     "sound": "audio_licensed/sm_the_thing.wav",
     "thirdPerson": 2,
     "actions": [
@@ -621,11 +622,11 @@
       "creature": "Thing",
       "summonName": "The Thing in the Dark",
       "summonGroup": "Thing",
-      "scaleStat": "PsiPower",
+      "scaleStat": "PsiPower+Recognition",
       "maxSummons": 1,
       "turns": 8,
       "effect": "@Loosed",
-      "summonVfx": "SmDarkBurst"
+      "summonVfx": "SmThingRise"
      },
      {
       "do": "damage",

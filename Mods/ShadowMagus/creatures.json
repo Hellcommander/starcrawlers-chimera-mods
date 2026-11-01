@@ -4,11 +4,11 @@
    "id": "Shade",
    "name": "Shade",
    "subtitle": "Your Shadow",
-   "description": "A Shadow Magus's own shadow, stood up and set loose. It fights with half its caster's strength and wits, and its touch Benights.",
+   "description": "A Shadow Magus's own shadow, stood up and set loose. It hangs back and casts the Magus's dark with half its caster's strength and wits, and everything it touches is Benighted.",
    "type": "Supernatural",
    "role": "skirmisher",
    "health": 2.0,
-   "healthPerLevel": 16,
+   "healthPerLevel": 22,
    "smartsPerBonus": 6,
    "stats": {
     "Dodge": 15,
@@ -23,8 +23,8 @@
     "mesh": "models/shade.glb",
     "height": 1.3,
     "tint": "#1A1428",
-    "glow": "#6A3BFF",
-    "glowStrength": 0.35,
+    "glow": "#8A3BFF",
+    "glowStrength": 0.2,
     "bob": 0.05,
     "keepParticles": false,
     "particles": [
@@ -33,6 +33,14 @@
       "offset": [
        0,
        1.0,
+       0
+      ]
+     },
+     {
+      "id": "SmShadeMotes",
+      "offset": [
+       0,
+       0.15,
        0
       ]
      }
@@ -46,23 +54,28 @@
    },
    "behaviors": [
     {
+     "kind": "kite",
+     "keep": 2.5
+    },
+    {
      "kind": "guard",
      "leash": 6
     }
    ],
    "skills": [
     {
-     "id": "UmbralRake",
-     "name": "Umbral Rake",
-     "verb": "rakes a hand of shadow across",
+     "id": "UmbralBolt",
+     "name": "Umbral Bolt",
+     "verb": "flicks a bolt of shadow at",
      "target": "enemy",
-     "range": 1.5,
+     "range": 5,
      "cooldown": 0,
      "priority": 1,
-     "melee": true,
      "dodgeable": true,
      "clip": "attack",
+     "castVfx": "SmSnuffCast",
      "impactVfx": "SmDarkBurst@0.5",
+     "sound": "audio_licensed/sm_snuff.wav",
      "actions": [
       {
        "do": "damage",
@@ -75,8 +88,7 @@
        "do": "effect",
        "effect": "MOD_ShadowMagus@Benighted"
       }
-     ],
-     "sound": "audio_licensed/sm_shade_rake.wav"
+     ]
     },
     {
      "id": "SmotheringReach",
@@ -89,6 +101,7 @@
      "dodgeable": true,
      "clip": "attack2",
      "impactVfx": "SmDarkBurst@0.6",
+     "sound": "audio_licensed/sm_shade_reach.wav",
      "actions": [
       {
        "do": "damage",
@@ -105,8 +118,149 @@
        "do": "blind",
        "chance": 50
       }
-     ],
-     "sound": "audio_licensed/sm_shade_reach.wav"
+     ]
+    },
+    {
+     "id": "PassTheDark",
+     "name": "Pass the Dark",
+     "verb": "sends the dark leaping through",
+     "target": "enemy",
+     "range": 5,
+     "cooldown": 4,
+     "priority": 4,
+     "clip": "attack2",
+     "castVfx": "SmSnuffCast",
+     "sound": "audio_licensed/sm_dark_chain.wav",
+     "actions": [
+      {
+       "do": "chain",
+       "jumps": 2,
+       "radius": 3,
+       "vfx": "SmEyeFlash@0.7",
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 3,
+         "max": 6,
+         "power": "PsiPower"
+        },
+        {
+         "do": "effect",
+         "effect": "MOD_ShadowMagus@Benighted"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "Eclipse",
+     "name": "Eclipse",
+     "verb": "drops a pall of night over",
+     "target": "area",
+     "radius": 1.6,
+     "range": 5,
+     "cooldown": 5,
+     "priority": 6,
+     "clip": "special",
+     "castVfx": "SmShadeCall@0.6",
+     "impactVfx": "SmDarkBurst@0.5",
+     "sound": "audio_licensed/sm_lose_them.wav",
+     "actions": [
+      {
+       "do": "damage",
+       "type": "Void",
+       "min": 4,
+       "max": 7,
+       "power": "PsiPower"
+      },
+      {
+       "do": "effect",
+       "effect": "MOD_ShadowMagus@Benighted"
+      },
+      {
+       "do": "blind",
+       "chance": 35
+      }
+     ]
+    },
+    {
+     "id": "Kindle",
+     "name": "Kindle the Dark",
+     "verb": "lights black fire under",
+     "target": "enemy",
+     "range": 5,
+     "cooldown": 6,
+     "priority": 6,
+     "clip": "special",
+     "impactVfx": "SmDarkBurst@0.5",
+     "sound": "audio_licensed/sm_shadowflame.wav",
+     "actions": [
+      {
+       "do": "field",
+       "fieldName": "Shade's Flame",
+       "turns": 3,
+       "radius": 1.1,
+       "affects": "enemies",
+       "look": "SmBlackFlame",
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 2,
+         "max": 4,
+         "power": "PsiPower"
+        },
+        {
+         "do": "effect",
+         "effect": "MOD_ShadowMagus@Benighted"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "CloseOver",
+     "name": "Close Over",
+     "verb": "closes the dark over",
+     "target": "enemy",
+     "range": 4,
+     "cooldown": 6,
+     "priority": 7,
+     "clip": "attack",
+     "impactVfx": "SmSwallow@0.8",
+     "sound": "audio_licensed/sm_swallowed.wav",
+     "actions": [
+      {
+       "do": "damage",
+       "type": "Psi",
+       "min": 5,
+       "max": 9,
+       "power": "PsiPower"
+      },
+      {
+       "do": "effect",
+       "effect": "MOD_ShadowMagus@Swallowed"
+      }
+     ]
+    },
+    {
+     "id": "SlipAway",
+     "name": "Slip Away",
+     "verb": "thins into the dark",
+     "target": "self",
+     "healthBelow": 0.5,
+     "cooldown": 8,
+     "priority": 9,
+     "clip": "special",
+     "castVfx": "SmWarpFlash",
+     "sound": "audio_licensed/sm_gone_missing.wav",
+     "actions": [
+      {
+       "do": "effect",
+       "effect": "MOD_ShadowMagus@Unlit"
+      }
+     ]
     }
    ]
   },
@@ -114,11 +268,11 @@
    "id": "Thing",
    "name": "The Thing in the Dark",
    "subtitle": "Something Whistled Up",
-   "description": "Something that lives where the light does not, whistled up for a few turns by a Shadow Magus who should know better. It rakes, it lunges across the room, and it howls out the dark; what it touches cannot see.",
+   "description": "Something that lives where the light does not, whistled up for a few turns by a Shadow Magus who should know better. It stands off and works the dark on its prey: it blinds, silences, drags enemies under and sets the floor alight, and what it reaches cannot see.",
    "type": "Supernatural",
    "role": "brawler",
    "health": 4.0,
-   "healthPerLevel": 32,
+   "healthPerLevel": 42,
    "smartsPerBonus": 5,
    "stats": {
     "Dodge": 10,
@@ -136,8 +290,8 @@
     "mesh": "models/thing.glb",
     "height": 1.8,
     "tint": "#14101E",
-    "glow": "#7A4BFF",
-    "glowStrength": 0.8,
+    "glow": "#9A4BFF",
+    "glowStrength": 0.55,
     "bob": 0.06,
     "keepParticles": false,
     "particles": [
@@ -160,16 +314,16 @@
    "skills": [
     {
      "id": "Tear",
-     "name": "Tear",
-     "verb": "rakes its claws through",
+     "name": "Rend the Light",
+     "verb": "tears at the light around",
      "target": "enemy",
-     "range": 1.5,
+     "range": 6,
      "cooldown": 0,
      "priority": 1,
-     "melee": true,
      "dodgeable": true,
      "clip": "attack",
-     "impactVfx": "VOID_PSYKER_BLAST.impactParticle@0.7",
+     "castVfx": "SmSnuffCast",
+     "impactVfx": "SmDarkBurst@0.7",
      "sound": "audio_licensed/sm_thing_tear.wav",
      "actions": [
       {
@@ -187,26 +341,24 @@
      ]
     },
     {
-     "id": "Lunge",
-     "name": "Lunge Out of the Dark",
-     "verb": "comes out of the dark at",
+     "id": "Lash",
+     "name": "Lash of Night",
+     "verb": "lashes a line of night through",
      "target": "enemy",
+     "shape": "line",
+     "width": 1,
      "range": 6,
      "cooldown": 3,
      "priority": 6,
-     "dodgeable": false,
      "clip": "attack2",
      "impactVfx": "SmDarkBurst@0.8",
      "sound": "audio_licensed/sm_thing_lunge.wav",
      "actions": [
       {
-       "do": "leap"
-      },
-      {
        "do": "damage",
        "type": "Void",
-       "min": 12,
-       "max": 20,
+       "min": 10,
+       "max": 16,
        "power": "PsiPower"
       },
       {
@@ -229,8 +381,8 @@
      "verb": "howls the dark out over",
      "target": "area",
      "aroundSelf": true,
-     "radius": 2.5,
-     "range": 1.5,
+     "radius": 3.5,
+     "range": 3.5,
      "cooldown": 4,
      "priority": 7,
      "clip": "special",
@@ -259,11 +411,152 @@
        "amount": 1
       }
      ]
+    },
+    {
+     "id": "ShutEyes",
+     "name": "Shut Their Eyes",
+     "verb": "presses the dark down over",
+     "target": "area",
+     "radius": 2,
+     "range": 6,
+     "cooldown": 5,
+     "priority": 6,
+     "clip": "special",
+     "castVfx": "SmNightfall@0.7",
+     "impactVfx": "SmEyeFlash@0.7",
+     "sound": "audio_licensed/sm_gone_missing.wav",
+     "actions": [
+      {
+       "do": "damage",
+       "type": "Psi",
+       "min": 5,
+       "max": 8,
+       "power": "PsiPower"
+      },
+      {
+       "do": "effect",
+       "effect": "MOD_ShadowMagus@Benighted",
+       "stacks": 3
+      },
+      {
+       "do": "silence",
+       "turns": 2,
+       "chance": 60
+      }
+     ]
+    },
+    {
+     "id": "BlackFire",
+     "name": "Black Fire",
+     "verb": "splits the floor open under",
+     "target": "enemy",
+     "range": 6,
+     "cooldown": 6,
+     "priority": 5,
+     "clip": "attack2",
+     "impactVfx": "SmDarkBurst@0.6",
+     "sound": "audio_licensed/sm_shadowflame.wav",
+     "actions": [
+      {
+       "do": "field",
+       "fieldName": "Thing's Fire",
+       "turns": 3,
+       "radius": 1.1,
+       "affects": "enemies",
+       "look": "SmBlackFlame",
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 3,
+         "max": 6,
+         "power": "PsiPower"
+        },
+        {
+         "do": "effect",
+         "effect": "MOD_ShadowMagus@Benighted",
+         "stacks": 1
+        },
+        {
+         "do": "exhaust",
+         "amount": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "EyesEverywhere",
+     "name": "Eyes Everywhere",
+     "verb": "opens eyes around",
+     "target": "enemy",
+     "range": 6,
+     "cooldown": 5,
+     "priority": 4,
+     "clip": "attack",
+     "castVfx": "SmSnuffCast",
+     "sound": "audio_licensed/sm_dark_chain.wav",
+     "actions": [
+      {
+       "do": "chain",
+       "jumps": 3,
+       "radius": 3,
+       "vfx": "SmEyeFlash@0.8",
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 6,
+         "max": 10,
+         "power": "PsiPower"
+        },
+        {
+         "do": "effect",
+         "effect": "MOD_ShadowMagus@Benighted",
+         "stacks": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "DragUnder",
+     "name": "Drag Under",
+     "verb": "drags under",
+     "target": "enemy",
+     "range": 6,
+     "cooldown": 7,
+     "priority": 8,
+     "clip": "special",
+     "impactVfx": "SmSwallow",
+     "sound": "audio_licensed/sm_swallowed.wav",
+     "actions": [
+      {
+       "do": "damage",
+       "type": "Psi",
+       "min": 7,
+       "max": 11,
+       "power": "PsiPower"
+      },
+      {
+       "do": "effect",
+       "effect": "MOD_ShadowMagus@Swallowed"
+      },
+      {
+       "do": "exhaust",
+       "amount": 2
+      }
+     ]
     }
    ],
    "behaviors": [
     {
-     "kind": "hunt"
+     "kind": "kite",
+     "keep": 2
+    },
+    {
+     "kind": "hunt",
+     "reach": 3.5
     }
    ]
   }
