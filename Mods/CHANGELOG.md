@@ -3,7 +3,22 @@
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are the dates of the work.
 
-## 1.45.0 (2026-10-31)
+## 1.45.1 (2026-11-01)
+
+### License
+
+- Stray license texts are gone, so the pack carries one license.
+- **License version 3.1:** `Mods/LICENSE.md` is now the full license, word for word, instead of a shorter text of its
+  own. The sound section now says how the sounds are made and shipped, and that `audio_licensed/` sounds may not be used
+  with AI tools or training, as their packs' terms already require.
+
+### Mods
+
+- Out-of-date descriptions on the Mods page are fixed: Arendeth Classes no longer gives an old class count, Shadow
+  Magus describes its caster Shade and hunting Thing, Skill Synergies describes class interactions instead of a bonus,
+  and Flux Savant mentions its runes running flat.
+
+## 1.45.0 (2026-11-01)
 
 Covers everything since the 1.4.0 upload.
 
@@ -11,8 +26,10 @@ Covers everything since the 1.4.0 upload.
 
 - **Shadow Magus:** a Guile caster of the dark, scaling with Recognition and Psi Power. Benighted dims enemies' aim,
   crits build Darkvision and chain or finish Benighted targets, Lose Them scatters a room blind, a Shade of yourself
-  fights beside you and pools dark that enemies lose you in, Swallowed shrinks an enemy into the dark, and The Thing in
-  the Dark whistles up a Horror of your own, with its own model and animations.
+  hangs back, casts and pools dark that enemies lose you in, Swallowed shrinks an enemy into the dark, and The Thing in
+  the Dark whistles up a Horror of your own that hunts from a distance, with its own model and animations. The Shade and
+  The Thing are ranged casters with seven spells each, and they scale with both Recognition and Psi Power, which also
+  add to their health.
 - While a Shadow Magus is Unlit or a Nightwalker, the Cursed Horror and a Wildcaster's wild Horror can't hunt it and turn
   on whoever else is nearest.
 - Six synergies come with the class:
@@ -29,10 +46,14 @@ Covers everything since the 1.4.0 upload.
 ### Class changes
 
 - **Entropy Weaver's Spillnodes** were remade to match their description. They were solid spinning objects, and now
-  they're see-through swarms of thread, static and code scraps that keep the nanite cloud's own particles.
+  they're see-through swarms of thread, static and code scraps, with their own moving sprites.
 - Spillnodes now run their programs only in a fight. Their lash reaches further and takes the nearest foe, fraying it
   and hurting it if it was already Frayed, and they sit idle less often. It shows as a violet line, as does the snap when
   one winks out, and neither goes through walls.
+- **Spellsmith's Cold Forge** no longer needs critical health. Attacks from your other classes now count in threes: the
+  first adds Working Heat, the second turns it into Quench, and the third comes out cold-forged. That attack deals Cryo
+  damage, swaps burns for chills, always applies Chilled and takes 1 turn off your other cooldowns. A ready Quench
+  carries over to the next fight.
 
 ### Quality of life
 
@@ -57,6 +78,9 @@ Covers everything since the 1.4.0 upload.
 - A `chain` action's `look` draws a line of that colour along each jump, and `sight` stops it jumping through walls.
 - Creature skills' `sound` and a `chain` action's `sound` play mod sound files as well as vanilla events.
 - A mod particle id works as a ground field's `look` and keeps playing for as long as the field lasts.
+- `scaleStat` takes two stats (`"PsiPower+Recognition"`): the bonus comes from their average, and they also add summon
+  health.
+- `hunt` takes a `reach`, so a caster stops at range.
 
 ## 1.4.0 (2026-10-31)
 

@@ -2,8 +2,8 @@
   "id": "FluxSavant",
   "name": "Flux Savant",
   "author": "Arendeth",
-  "version": "1.45.0",
+  "version": "1.45.1",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
-  "description": "A magitech runecaster and field alchemist: skills with rune sockets you retune at will, reagents that react on the enemy, and an Instability meter that keeps the science interesting.",
+  "description": "A magitech runecaster and field alchemist: skills with rune sockets you retune at will, runes that run flat until you recharge them, reagents that react on the enemy, and an Instability meter that keeps the science interesting.",
   "requires": ["Library"]
 }

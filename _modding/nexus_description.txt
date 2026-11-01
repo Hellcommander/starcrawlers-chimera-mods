@@ -17,7 +17,7 @@ Around the classes, it brings back what the first StarCrawlers had and Chimera l
 
 Beating Cerberus no longer has to end the run: the credits roll in game, and then you can stay and descend into [b]the Ichor Deep[/b], an endless side area that gets harder and richer with every depth.
 
-On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, a class search box, custom character pictures and portraits of your character, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
+On top of that come [b]skill reshaping[/b], where passives, stances and runes rewrite your other skills, [b]253 class-interaction synergies[/b], a crafting window, class search, character pictures and portraits, hotbar and stash pages, a death recap and Graveyard, diagonal movement, a third-person dash camera, an in-game Mod Settings page, an optional rebalance of the Rogue Modder and more than twenty fixes to bugs in the base game.
 
 Everything runs on the [b]Breachwork Loader[/b], a BepInEx plugin. Each part of the pack is a separate mod that you can switch on or off, down to single classes, items and synergies. The loader is also a full modding framework: new classes, items, enemies, factions and side areas are written in plain JSON or XML with no code, and mods can go further with sandboxed Lua scripts or C# plugins.
 
@@ -143,7 +143,7 @@ Body-first classes built on movement, grabs and thrown things.
 [*][b]Swarm Conductor[/b] (Intellect): hijacks Chimera's CorpSec drones over a neural link, gives them orders and builds a couple of its own. Hijacks and orders cost stamina, and machines you recall or lose give some back.
 [*][b]Reaction Architect[/b] (Intellect): spends its turns wiring the room with tripwires, cut-offs and retorts that fire on the enemy's moves (closing in, backing off, shooting from afar, hitting, debuffing, missing or winding up a big move), then releases them all at once. Nine tiers, up to Exit Clause.
 [*][b]Conjoined[/b] (Muscle): one mind in up to four bodies, gained at tiers 1, 3 and 5. Each body is a full character with its own level, classes, gear and hotbar, while inventory, credits and quests are shared. The others fight beside you; click a party card to switch bodies, free out of combat or with Trade Bodies in it. If the body you play falls, you wake up in another.
-[*][b]Shadow Magus[/b] (Guile): a caster of the dark, driven by Recognition and Psi Power. Benighted dims enemies' aim, and crits build Darkvision and chain or finish Benighted targets. Lose Them scatters a room blind, a Shade of yourself fights beside you and pools dark that enemies lose you in, and Swallowed shrinks an enemy into the dark. The Thing in the Dark whistles up a Horror of your own. While you're Unlit or a Nightwalker, the Cursed Horror and a Wildcaster's wild Horror can't hunt you and turn on whoever else is nearest. Snuff pays for the class's synergies itself, in place of Synergy Strain.
+[*][b]Shadow Magus[/b] (Guile): a caster of the dark, driven by Recognition and Psi Power. Benighted dims enemies' aim, crits build Darkvision and chain or finish Benighted targets, Lose Them scatters a room blind, and Swallowed shrinks an enemy into the dark. A Shade of yourself pools dark that enemies lose you in, and The Thing in the Dark whistles up a Horror of your own; both are ranged casters with seven spells each. While you're Unlit or a Nightwalker, Horrors that would hunt you turn on whoever else is nearest. Snuff pays for the class's synergies itself, in place of Synergy Strain.
 [/list]
 [/spoiler]
 
@@ -153,7 +153,7 @@ Body-first classes built on movement, grabs and thrown things.
 
 Passives, stances, one-shot charges and socketed runes can rewrite other skills. A skill can change its delivery (trap, grenade, walking bomb, drifter, nova, line, cone, area, chain or scatter), its element, its damage type, its effects and its behavior, and the tooltip and aiming follow. It keeps its own scaling.
 [list]
-[*][b]Spellsmith[/b] is the class built around this: an example class, included, that beats the attacks you learned from your other classes into grenades, buried charges and walking bombs. Hammer Form fires an attack through your weapon, with its animation, effects and ammo: the attack keeps its own damage and takes the weapon's reach, accuracy and on-hit effects. Take it beside another class with mod attacks; its forms don't touch vanilla skills.
+[*][b]Spellsmith[/b] is the class built around this: an example class, included, that beats the attacks you learned from your other classes into grenades, buried charges and walking bombs. Hammer Form fires an attack through your weapon, keeping the attack's damage and taking the weapon's reach, accuracy and on-hit effects. Cold Forge makes every third attack Cryo, with chills in place of burns and a turn off your other cooldowns. Take it beside another class with mod attacks; its forms don't touch vanilla skills.
 [*][b]Rune matrix augments:[/b] rune casters such as Flux Savant spend a shared pool on delivery and behavior changes, and take flaws that give points back.
 [/list]
 
@@ -264,7 +264,9 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 
 [size=4][b]8. Skill Synergies[/b][/size]
 
-[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without. Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
+[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without.
+
+Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
 
 [size=4][b]9. Rogue Modder rebalance[/b][/size]
 
@@ -282,7 +284,8 @@ The Rogue Modder out-scaled every other tree: three +5 mods per item, a first mo
 [*][b]Crafting window:[/b] a real recipe list with what you carry and [b]Craft x5[/b], on [b]F10[/b] or the [b]Craft[/b] tab in the Apartment. Crafting skills open it in the field.
 [*][b]Class search:[/b] a box on the creation screen narrows the class grid by class name, skill, description, synergy or stat bonus, and it knows stat names and abbreviations, so "crit" or "recognition" finds the classes that offer it. Hovering a result says where it matched.
 [*][b]Character pictures:[/b] click the picture frame on the creation screen or above the character sheet and press [b]Load picture[/b] to pick a png or jpg from anywhere on your computer, or drop files in the game's [i]Portraits[/i] folder. Any size works, and each Conjoined body has its own picture.
-[*][b]Make Portrait:[/b] the optional [b]Character Portrait Tools[/b] mod makes a picture of your character for you, with no AI and nothing to download. Its built-in tool has the game render your character's 3D models in one frame: your class's crawler body in a ready pose, holding your real weapons and shield, with your stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. Glasses, masks and similar are left out for now, and this needs a running game, not the creation screen. Other tools are optional; see Requirements.
+[*][b]Make Portrait:[/b] the [b]Character Portrait Tools[/b] mod, off by default, makes a picture of your character with no AI and nothing to download. The game renders your class's crawler body in one frame, in a ready pose with your real weapons, shield, stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. It needs a running game, not the creation screen, and glasses, masks and similar are left out for now.
+[*][b]Other portrait tools:[/b] the [b]Tool[/b] setting in Mod Settings swaps the render for another tool. [b]PortraitMaker[/b] is the optional Portrait Maker download on the Files tab, which draws a stylised picture from code. Your [url=https://github.com/Hellcommander/aamt]AAMT toolkit[/url]'s Tools\StarCrawlersChimera folder paints one with your own local AI and needs an NVIDIA GPU. They all run on your own computer, so nothing goes to an online service.
 [*][b]Hotbar pages:[/b] 4 pages by default. Flip them with the square bracket keys, Ctrl+Page Up/Down or the mouse wheel over the hotbar. Your saves still load without the mod and show page 1.
 [*][b]Stash pages:[/b] 6 tabs of 120 slots. Drop an item on a tab to send it there. The [b]Own[/b] tab is saved with your character and takes items the shared stash refuses.
 [*][b]Death recap:[/b] the death screen says exactly what killed you: the enemy, its skill, the damage, your health and the three hits before.
@@ -371,7 +374,7 @@ The loader is a modding framework in its own right, and the bundled mods are wri
 [*]Nothing else to download. [b]BepInEx 6[/b], the mod framework, is included in the archive.
 [*]7-Zip, or Windows 11's built-in extractor, to open the .7z.
 [*]Most mods in the pack need [b]Core Library[/b], which is included. If you switch it off, the mod manager and the Mods page offer [b]Turn On What It Needs[/b].
-[*][b]Make Portrait[/b] needs no AI and no extra download: the [b]Character Portrait Tools[/b] mod is included and renders your character's 3D models in the game itself. It's off by default, so turn it on and allow its code on the Mods page. Everything else is optional, and the [b]Tool[/b] setting in Mod Settings switches between them, always on your own computer, so nothing goes to an online service. Set it to [b]PortraitMaker[/b] for the optional Portrait Maker download on the Files tab, which draws a stylised picture from code, or, if you want a painting from your own local AI, to your [url=https://github.com/Hellcommander/aamt]AAMT toolkit[/url]'s Tools\StarCrawlersChimera folder, which needs an NVIDIA GPU. You don't need any of this to load your own pictures.
+[*][b]Make Portrait[/b] needs nothing extra. Turn on [b]Character Portrait Tools[/b] and allow its code on the Mods page. Other portrait tools are optional, and you don't need any of this to load your own pictures.
 [/list]
 
 [b]Compatibility and saves[/b]
@@ -388,7 +391,7 @@ Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mo
 
 [b]Permissions[/b]
 [list]
-[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original work of your own. It may be used with AI tools and training. The full terms are in [i]Mods\LICENSE.md[/i].
+[*]Everything here, the mods and the Breachwork Loader, is free to use, change and build on, commercially too. Credit [b]Arendeth[/b] and [b]Breachwork[/b], and add substantial original work of your own. It may be used with AI tools and training, except the [i]audio_licensed[/i] sounds. The full terms are in [i]Mods\LICENSE.md[/i].
 [*]Please don't reupload the pack unchanged.
 [*]No sound here may be sold as a sound or in an audio pack, even altered. The sounds in [i]audio_licensed[/i] folders may not be used commercially at all and may be shared only as part of these mods. Sounds in [i]sfx[/i] folders need the Noise Alchemy credit below. Game files must never be shared.
 [*]Plugins and Lua scripts that other people write are their authors' own work, on their own terms, and the example plugin and script code is free for any use.
