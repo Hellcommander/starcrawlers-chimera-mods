@@ -1,16 +1,19 @@
 # Breachwork changelog
 
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
-release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are the dates of the work.
+release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
+1.46.0. The dates are the dates of the work.
 
-## 1.45.2 (2026-11-01)
+## 1.46.0 (2026-11-01)
 
 ### Retraining
 
-- From level 20 you can spend ChimeraLinq **User Score** and credits to undo a build choice on the skills screen.
-  Ctrl+right-click the highest skill you hold in a class to give it up and get its skill point back.
-- Ctrl+right-click a class icon to swap the whole class for another. Its skill points and perk points come back, and
-  the new class starts at its first tier with no starter gear. Rogue Modder, Gadgeteer and Conjoined can't be swapped out.
+- From level 20 you can spend ChimeraLinq **User Score** and credits to undo a build choice, outside combat, on the
+  skills screen. Ctrl+right-click the highest skill you hold in a class to give it up and get its skill point back, for
+  50 User Score and 100 credits per character level.
+- Ctrl+right-click a class icon to swap the whole class for another, for 200 User Score and 300 credits per character
+  level. Its skill points and perk points come back, and the new class starts at its first tier with no starter gear.
+  Rogue Modder, Gadgeteer and Conjoined can't be swapped out.
 
 ### Class changes
 
@@ -20,11 +23,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
 - **Spellsmith's Loose Spell** has a 2% chance, each time it goes off on someone, to also call down one of the
   Wildcaster's boss echoes. Loose magic isn't picky, so an echo can land on you too.
 - **Axiomancer** is rebuilt around a shield pool. First Principles is a new skill: your Smarts and a little Psi Power
-  make a small shield pool that needs no shield in hand and recharges every turn and gains Shield Regen with Smarts, Psi Power and class rank, so a hybrid build can survive a swarm.
-  It recharges faster with two or more enemies beside you, when you Wait with Quiet Mind, and with each note Refutation
-  spends.
-  Insight and Lucidity now add to the pool instead of Psi Power. Circular Reasoning and the penalty for repeating a
-  skill are gone.
+  make a small shield pool. It needs no shield in hand, recharges every turn and gains Shield Regen with Smarts, Psi
+  Power and class rank, so a hybrid build can survive a swarm. It recharges faster with two or more enemies beside you,
+  when you Wait with Quiet Mind, and with each note Refutation spends. Insight and Lucidity now add to the pool instead
+  of Psi Power. Circular Reasoning and the penalty for repeating a skill are gone.
 - **Axiomancer's skills** no longer treat enemies as someone to debate:
   - **Cold Read** no longer deals damage. It takes notes, gives Insight, and may Silence, Expose or Weaken, with better
     odds from Smarts.
@@ -39,6 +41,16 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. The dates are th
   - **Grand Synthesis** now turns notes into damage and Insight into shield recharge.
   - The Silence from **Cold Read** and **Grand Synthesis** now works on bosses for 1 turn, then not again for 3 turns.
   - **Insight** now holds one more stack for every 5 Smarts above 16, up to 12.
+
+### Modding
+
+- `statsFrom` on a passive gives one point of a stat for every `per` points of another. `from` can add stats, `rankPer`
+  adds class rank, and `start` handles stats where lower is better, such as `ShieldRegen`.
+- `"do": "recharge"` fills the regular shield pool, with no shield in hand needed.
+- The `absorb` trigger fires when your shield takes a hit, even one that never reaches your health.
+- Silence takes `bossTurns`: a boss is silenced for that many turns, then can't be silenced again for 3 turns.
+- `[Retraining]` in the config sets the prices, the level and which classes can't be swapped out. A mod class that
+  changes gear for good belongs on that list.
 
 ## 1.45.1 (2026-11-01)
 
