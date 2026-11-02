@@ -100,6 +100,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   at one. `AimThroughMinions` under `[Orders]` turns it off.
 - Your effect icons get a fold tab beside the top of their columns. Folded, it reads `+ Effects` with your buffs counted
   in green and your debuffs in red.
+- The Mods button on the title menu now waits for the menu to be ready instead of trying once, so it no longer goes
+  missing.
 
 ### Performance
 
@@ -144,6 +146,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - A `dot` and `hotScale` can add the applier's stats to each tick, and a summon's `scaleStat` takes `|` for the highest
   stat when it's summoned.
 - `"corruptedGear"` in `sideAreas` adds corrupted skills and mods and sets how many an item takes.
+- The repository now holds the built Threading, Example Plugin and Character Portrait Tools dlls, so a fresh clone gets
+  working plugins without building them.
 
 ### Vanilla bug fixes
 
