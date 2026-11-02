@@ -108,10 +108,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   particles, status looks, damage numbers, hits, items and the combat log are spread over frames or capped. These change
   the look and the timing of the work, never the damage or what a skill does.
 - `GraphicsJobs` and `IncrementalGC` under `[Performance]` work without the bus and apply the next time the game starts.
-- `AssetStreaming` under `[Performance]`, off by default and needing `EventBus`: every floor's textures sit in video
+- `AssetStreaming` under `[Performance]`, off by default: every floor's textures sit in video
   memory from the first menu on, about 7 GB. With this on, those nothing on your floor uses leave, and they come back
   from disk when something needs them; on a floor 6 test save that went from 7,093 MB to 2,724 MB. The event bus's
-  workers decide what goes. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
+  workers decide what goes, whether or not `EventBus` is on. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
 
 ### Modding
 
