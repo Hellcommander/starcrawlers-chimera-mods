@@ -6,43 +6,6 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ## Unreleased
 
-### Perihelion's own art
-
-Perihelion now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
-flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning nucleus
-through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments shed ice
-as they fight. Mod authors get `"fallAs"` on a trap and `"aura"` on an effect (see `README.md`).
-
-### Aiming past your companions
-
-While you aim a skill, your minions, pets and crew no longer get in the way: the mouse reaches the enemy, tile or object
-behind them. Buffs still land on them, and holding the Force key lets any skill aim at one. `AimThroughMinions` under
-`[Orders]` turns it off. Mod authors mark a skill with `"forAllies"` (see `README.md`).
-
-### Perks
-
-Perk points are rare, so every mod class's skill perks now change how the skill plays. The perks that were only a
-number (damage x1.25, cooldown -3, area +1) are gone: they now add triggers, ground fields, status payoffs, throws and
-chains, or make a skill instant or ready again on a kill. Mod authors get `addProcs`, `instant`, `resetOnKill` and
-`undodgeable` on a perk (see `README.md`). The old number fields still work.
-
-Five skills that didn't do what they say are fixed. **Wild Tangent:** every skip now gets the Spillover bonus, not just the
-first. **Unmaking Gaze:** closing the eye clears its count at once, so the next look starts over. **Grin Without a Cat:**
-the grin stays where you stood and enemies near it turn on it. **Recall Protocol:** recalling your last drone refunds
-stamina. **Remote Detonator:** charged enemies are now knocked back. **Prism Charge:** a Zenith Hoarlight now works
-when no other Hoarlight is left.
-
-### Looking-Glass Rogue
-
-Reworked around surreal magic; the grins and the Grinning Cat stay, the rest is new. **Sentence First** (was Snicker-Snack):
-the blow lands now and a verdict falls three turns later, and a sentenced enemy that strikes you pays on the spot.
-**One Side, Other Side** (was Drink Me, Eat Me): size is a loan, taken from an enemy or handed over until it is jammed in
-place. **The Looking-Glass** (was Painted Guard): a copy of you at the opposite size; use it again to trade places and sizes.
-**Down the Rabbit Hole** (was Hedgehog Croquet): an enemy falls out of the fight for two turns and lands hard elsewhere, Painted Red adding to it. **Six Impossible
-Things** (was Mad Tea Party): spend Tea Clock hours on skills that take no time and leave no cooldown. As the cat, **No-Name
-Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the cat: **May Look at a King** hits bosses and elites hardest,
-**No Body to Behead** leaves only your head until your next turn, and **Slowly, Tail First** fades you out and bites when you're gone.
-
 ### New class
 
 - **Perihelion** (`Mods/Perihelion/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
@@ -54,6 +17,10 @@ Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the
   on by default): with it off, its charges don't protect you. Spellsmith's forms all work on its charges, and together
   the two classes make Comet Breakup: under Nova Form your attack goes out all eight ways, you one way and seven
   Fragments of You the rest.
+- Perihelion now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
+  flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning nucleus
+  through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments shed ice
+  as they fight.
 
 ### New boss
 
@@ -69,8 +36,7 @@ Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the
   with your best stat. Some change casting itself: Bitter Clarity lets nothing go on cooldown for a price in health,
   Steady Void makes your next two skills take no turn, and an Afterimage strikes with your next attack. Unseen turns
   your mod attacks into traps, and the new Wrong Hand mod can reshape them; vanilla skills get an effect of their own
-  instead. Modders get new conditions: `cast`, `inSide`, `healthLost`, `buffs`, `debuffs`, `skillsCooling`, `cost`,
-  `cooldown` and `floor`.
+  instead.
 
 ### New mods
 
@@ -91,6 +57,24 @@ Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the
 
 ### Class changes
 
+- **Perks:** Perk points are rare, so every mod class's skill perks now change how the skill plays. The perks that were
+  only a number (damage x1.25, cooldown -3, area +1) are gone: they now add triggers, ground fields, status payoffs,
+  throws and chains, or make a skill instant or ready again on a kill.
+- **Looking-Glass Rogue:** Reworked around surreal magic; the grins and the Grinning Cat stay, the rest is new. **Sentence
+  First** (was Snicker-Snack): the blow lands now and a verdict falls three turns later, and a sentenced enemy that
+  strikes you pays on the spot. **One Side, Other Side** (was Drink Me, Eat Me): size is a loan, taken from an enemy or
+  handed over until it is jammed in place. **The Looking-Glass** (was Painted Guard): a copy of you at the opposite
+  size; use it again to trade places and sizes. **Down the Rabbit Hole** (was Hedgehog Croquet): an enemy falls out of
+  the fight for two turns and lands hard elsewhere, Painted Red adding to it. **Six Impossible Things** (was Mad Tea
+  Party): spend Tea Clock hours on skills that take no time and leave no cooldown. As the cat, **No-Name Wood** (was
+  Warp Pounce) makes enemies forget whose side they are on. New as the cat: **May Look at a King** hits bosses and
+  elites hardest, **No Body to Behead** leaves only your head until your next turn, and **Slowly, Tail First** fades you
+  out and bites when you're gone.
+- Six skills that didn't do what they say are fixed. **Wild Tangent:** every skip now gets the Spillover bonus, not just
+  the first. **Unmaking Gaze:** closing the eye clears its count at once, so the next look starts over. **Grin Without a
+  Cat:** the grin stays where you stood and enemies near it turn on it. **Recall Protocol:** recalling your last drone
+  refunds stamina. **Remote Detonator:** charged enemies are now knocked back. **Prism Charge:** a Zenith Hoarlight now
+  works when no other Hoarlight is left.
 - **Spellsmith** works faster and holds less. Forge stances last 10 turns instead of 40 and come back after 1 instead of
   2. Loads and stoked or white-hot attacks stay ready for 2 turns instead of 4. Cooldowns: Bury the Charge 2, Kindled
   Shell 3, Loose Spell 4, Masterwork 6 (from 3, 5, 6 and 9). What the loads leave behind is shorter too: buried charges
@@ -111,6 +95,9 @@ Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the
 
 ### Interface
 
+- **Aiming past your companions:** While you aim a skill, your minions, pets and crew no longer get in the way: the mouse
+  reaches the enemy, tile or object behind them. Buffs still land on them, and holding the Force key lets any skill aim
+  at one. `AimThroughMinions` under `[Orders]` turns it off.
 - Your effect icons get a fold tab beside the top of their columns. Folded, it reads `+ Effects` with your buffs counted
   in green and your debuffs in red.
 
@@ -146,6 +133,17 @@ Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the
 - Traps take `fuseOnly` and `fall`, and `springTraps` takes `near`.
 - Rewrites take `"add": { "mirrors": 7 }` on a nova: copies take the other ways round you.
 - Novas reach as many tiles along the diagonals as straight on; a circle stopped one short of the corners.
+- Perks take `addProcs`, `instant`, `resetOnKill` and `undodgeable`, and `"when": { "perk": true }` on a skill's own
+  actions swaps what they do. The old number fields still work.
+- `"castRules"` on an effect changes what using any skill means while it's on you: `freeTurn`, `noCooldown`, `healthCost`,
+  `repeat`, `consume` and `when`.
+- New conditions: `cast` (`vanilla`, `mod`, `item`, `attack` and more), `inSide`, `healthLost`, `buffs`, `debuffs`,
+  `skillsCooling`, `cost`, `cooldown` and `floor`.
+- `"forAllies"` on a skill keeps your companions solid for a buff, `"fallAs"` on a trap brings a creature's model down
+  from overhead, and `"aura"` on an effect loops a mod particle on anyone but you.
+- A `dot` and `hotScale` can add the applier's stats to each tick, and a summon's `scaleStat` takes `|` for the highest
+  stat when it's summoned.
+- `"corruptedGear"` in `sideAreas` adds corrupted skills and mods and sets how many an item takes.
 
 ### Vanilla bug fixes
 
