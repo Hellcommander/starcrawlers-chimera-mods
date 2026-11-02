@@ -9,13 +9,14 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 ### New class
 
 - **Perihelion** (`Mods/Perihelion/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
-  takes you to an enemy or a tile, you can't lose health until your next turn, and everything around your landing
-  flies back, every boss but Cerberus included; what hits a wall takes more damage, is stunned for 2 turns and can't use its specials for a turn after
-  it recovers. Ephemeris marks a spot where a comet falls two turns later, and landing a charge beside the mark brings
-  it down at once. Split Nucleus makes two copies of you that fight with your gear and skills for reduced damage and
-  weaker status effects. Requires the immortal fix (`PlayerImmortalTag` under `[Fixes]`, on by default): with it
-  off, its charges don't protect you. Spellsmith's forms all work on its charges, and together the two classes make
-  Comet Breakup: under Nova Form your attack goes out all eight ways, you one way and seven Fragments of You the rest.
+  takes you to an enemy or a tile, you can't lose health until your next turn, and everything around your landing flies
+  back, every boss but Cerberus included; what hits a wall takes more damage, is stunned for 2 turns and can't use its
+  specials for a turn after it recovers. Ephemeris marks a spot where a comet falls two turns later, and landing a
+  charge beside the mark brings it down at once. Split Nucleus makes two copies of you that fight with your gear and
+  skills for reduced damage and weaker status effects. Requires the immortal fix (`PlayerImmortalTag` under `[Fixes]`,
+  on by default): with it off, its charges don't protect you. Spellsmith's forms all work on its charges, and together
+  the two classes make Comet Breakup: under Nova Form your attack goes out all eight ways, you one way and seven
+  Fragments of You the rest.
 
 ### New boss
 
@@ -23,12 +24,20 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   in the Deep). This one is optional: a cracked black mirror stands in a far room, marked on the minimap, and the fight
   only starts if you click it and choose to touch the glass. Out comes a corrupted copy of you with your gear and stats
   and four times your health, your skills shuffled and all dealing Void, one of them from a class you don't have. It
-  hits as hard as you do, then loses 50% of every hit after everything else is worked out. Your minions, summons and crew
-  come out with it as corrupted copies with more health and the same cut, and they fall when it does. If your party
-  would hit too hard, their damage is cut further and they get more health, armour, dodge, block and resistance
-  instead. It drops an epic
-  and corrupted copies of two of your items, stronger, with their bonuses moved around and any skill or effect they
-  grant swapped for another item's.
+  hits as hard as you do, then loses 50% of every hit after everything else is worked out. Your minions, summons and
+  crew come out with it as corrupted copies with more health and the same cut, and they fall when it does. If your party
+  would hit too hard, their damage is cut further and they get more health, armour, dodge, block and resistance instead.
+  It drops an epic and corrupted copies of two of your items, stronger, with their bonuses moved around and any skill or
+  effect they grant swapped for another item's.
+
+### New mods
+
+- **Status Synergies** (`Mods/StatusSynergies/`): synergies built on a status instead of a pair of classes. A class that
+  exploits Burning, Gashed, Toxified and the like works with any other class that causes them, and a new class that
+  inflicts the status joins by itself. They cap at level 3, fire on a 2-turn cooldown and spend the status they read, so
+  they trade one effect for another. Turn the mod off, or any one of them under Mod Content.
+- **Threading** (`Mods/Threading/`), off by default: for very large fights. It turns on the event bus, moves enemy paths
+  to worker threads and stops head-turning work on off-screen models. Turn it off and the game runs as it always did.
 
 ### Minions
 
@@ -38,13 +47,36 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### Class changes
 
-- **Spellsmith** works faster and holds less. Forge stances last 10 turns instead of 40 and come back after 1 instead
-  of 2. Loads and stoked or white-hot attacks stay ready for 2 turns instead of 4. Cooldowns: Bury the Charge 2,
-  Kindled Shell 3, Loose Spell 4, Masterwork 6 (from 3, 5, 6 and 9). What the loads leave behind is shorter too:
-  buried charges last 5 turns, Kindled Shells 3, Loose Spells 4 (from 8, 4 and 6).
+- **Spellsmith** works faster and holds less. Forge stances last 10 turns instead of 40 and come back after 1 instead of
+  2. Loads and stoked or white-hot attacks stay ready for 2 turns instead of 4. Cooldowns: Bury the Charge 2, Kindled
+  Shell 3, Loose Spell 4, Masterwork 6 (from 3, 5, 6 and 9). What the loads leave behind is shorter too: buried charges
+  last 5 turns, Kindled Shells 3, Loose Spells 4 (from 8, 4 and 6).
+- **Trade Bodies:** with no body standing, Conjoined now trades places with a fallen body's corpse while that corpse
+  lasts, and you stay in your own body.
+- Procs that could never fire on an effect being gained now work, in Shadow Magus's synergies, Gun Kata and the
+  Looking-Glass Rogue.
+- Novas (Spellsmith's Nova Form, Wildcaster's Bursting Out of You, Flux Savant's Full Discharge) now go out all eight
+  ways from where the skill went off and land on the tiles they reach, so they show with nobody in range. All eight
+  impacts play, past the limit of three copies of a particle, and tile-sized ground goes down on every other way, four
+  at most.
+- A skill that moves you keeps its aim under a nova. You go the way you aimed, once, and the other seven leave from the
+  tile you left. Before, most dashes turned into a cast on yourself and never moved you.
+- A skill that involves your weapon goes off through it under a nova, for one shot's ammo. A gun fires its own shots
+  down all eight ways, and a melee weapon spins through the eight tiles beside you, which the camera pulls out to show.
+- A throw's description no longer says "1 tiles" or ends in two periods.
+
+### Interface
+
+- Your effect icons get a fold tab beside the top of their columns. Folded, it reads `+ Effects` with your buffs counted
+  in green and your debuffs in red.
 
 ### Performance
 
+- **Event bus:** `EventBus` under `[Performance]`, off by default, on with the Threading mod and applied at once. Game
+  events skip characters and synergies with nothing listening, the HUD refreshes only when what it shows changes, and
+  particles, status looks, damage numbers, hits, items and the combat log are spread over frames or capped. These change
+  the look and the timing of the work, never the damage or what a skill does.
+- `GraphicsJobs` and `IncrementalGC` under `[Performance]` work without the bus and apply the next time the game starts.
 - `AssetStreaming` under `[Performance]`, off by default and needing `EventBus`: every floor's textures sit in video
   memory from the first menu on, about 7 GB. With this on, those nothing on your floor uses leave, and they come back
   from disk when something needs them; on a floor 6 test save that went from 7,093 MB to 2,724 MB. The event bus's
@@ -52,6 +84,12 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### Modding
 
+- Status synergies: `"status"` names the statuses, `"trees"` the class that exploits them, and `"sources"` adds trees
+  that can't be read from class files, such as vanilla ones.
+- Plugin API level 9: `Context.Subscribe` and `Api.Publish` use the event bus, and `Api.EventBusOn` says if it's on. A
+  plugin should work with the bus off.
+- `carryToBody` lands an effect on the body you step into with Trade Bodies.
+- The Realtime with Pause example has a pause button at the top of the screen.
 - Side area bosses: `"sideAreas": { "bosses": [...] }` in any mod, with an enemy or `"creature": "self"`, their own
   skills, loot and log lines, and an optional `challenge` prop that starts the fight only when the player chooses it.
   Kinds can set `bossChance`. `Mods/ExampleEnemies/enemies.json` shows one.
@@ -64,14 +102,6 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Traps take `fuseOnly` and `fall`, and `springTraps` takes `near`.
 - Rewrites take `"add": { "mirrors": 7 }` on a nova: copies take the other ways round you.
 - Novas reach as many tiles along the diagonals as straight on; a circle stopped one short of the corners.
-- Novas (Spellsmith's Nova Form, Wildcaster's Bursting Out of You, Flux Savant's Full Discharge) now go out all eight ways from
-  where the skill went off and land on the tiles they reach, so they show with nobody in range. All eight
-  impacts play, past the limit of three copies of a particle, and tile-sized ground goes down on every other way, four at most.
-- A skill that moves you keeps its aim under a nova. You go the way you aimed, once, and the other seven leave from the
-  tile you left. Before, most dashes turned into a cast on yourself and never moved you.
-- A skill that involves your weapon goes off through it under a nova, for one shot's ammo. A gun fires its own shots
-  down all eight ways, and a melee weapon spins through the eight tiles beside you, which the camera pulls out to show.
-- A throw's description no longer says "1 tiles" or ends in two periods.
 
 ### Vanilla bug fixes
 
