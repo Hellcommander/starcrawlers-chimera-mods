@@ -398,6 +398,8 @@ namespace SCClassLoader
         {
             Menu_Title title = Menu_Title.instance;
             if (title == null || title == builtFor) return;
+            // The menu can exist before it's on screen (or while a load hides it), and an inactive button finds no canvas: wait for it.
+            if (title.optionsButton != null && !title.optionsButton.activeInHierarchy) return;
             builtFor = title;
             Build(title);
         }
