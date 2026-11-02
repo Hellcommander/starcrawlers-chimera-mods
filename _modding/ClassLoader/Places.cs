@@ -96,7 +96,7 @@ namespace SCClassLoader
             Map like = LikeMap(origin) ?? LikeMap(theme);
             Door door = DoorPrefab(origin) ?? DoorPrefab(theme);
             if (door == null) throw new InvalidOperationException("no door prefab found for a generated place");
-            var kit = new PlaceKit(p);
+            PlaceKit kit = PlaceKit.For(p);
             PlaceBuilder.Built b = PlaceBuilder.Make(p, kit, mapId, seed, rooms, origin, like, door, spawns ? Pool(origin) : null);
             pending = new Pending { built = b, kit = kit };
             Plugin.Log.LogInfo($"Places: {p.id} seed {seed}: {b.lay.Describe()} ({(DateTime.Now - t0).TotalMilliseconds:0} ms)");
@@ -334,10 +334,24 @@ namespace SCClassLoader
                                (doorPrefab != null ? $"; door prefab scale {doorPrefab.transform.localScale}" : ""));
         }
 
+        private static PlaceLayout.LDoor Nearest(Vector3 at)
+        {
+            PlaceLayout.LDoor best = null;
+            float bestSqr = float.MaxValue;
+            foreach (PlaceLayout.LDoor x in layHere.doors)
+            {
+                float sqr = (layHere.World(x.cell) - at).sqrMagnitude;
+                if (sqr >= bestSqr) continue;
+                bestSqr = sqr;
+                best = x;
+            }
+            return best;
+        }
+
         private static void Door(Door d, bool fresh, ref int made, ref int arches, ref int jammed)
         {
             {
-                PlaceLayout.LDoor ld = d.node == null ? null : layHere.doors.OrderBy(x => (layHere.World(x.cell) - d.node.transform.position).sqrMagnitude).FirstOrDefault();
+                PlaceLayout.LDoor ld = d.node == null ? null : Nearest(d.node.transform.position);
                 string state = ld?.state ?? "door";
                 Hide(d.gameObject);
                 if (state != "arch")

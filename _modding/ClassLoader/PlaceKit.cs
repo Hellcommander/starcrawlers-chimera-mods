@@ -23,8 +23,18 @@ namespace SCClassLoader
         private readonly List<(Vector2Int c, PlacePropSpec prop)> scenery = new List<(Vector2Int, PlacePropSpec)>();
         private static readonly Dictionary<string, Material> plain = new Dictionary<string, Material>();
         private static Mesh quadUp, quadWall, cube;
+        private static readonly Dictionary<PlaceSpec, PlaceKit> kits = new Dictionary<PlaceSpec, PlaceKit>();
+        private readonly Dictionary<(Mesh, Matrix4x4), Mesh> baked = new Dictionary<(Mesh, Matrix4x4), Mesh>();
 
-        internal PlaceKit(PlaceSpec spec)
+        /// <summary>A kit reads its textures from disk and nothing ever unloads them, so one is made per place, not per visit.</summary>
+        internal static PlaceKit For(PlaceSpec spec)
+        {
+            if (!kits.TryGetValue(spec, out PlaceKit kit)) kits[spec] = kit = new PlaceKit(spec);
+            kit.scenery.Clear();
+            return kit;
+        }
+
+        private PlaceKit(PlaceSpec spec)
         {
             p = spec;
             PlaceKitSpec k = p.kit ?? new PlaceKitSpec();
@@ -365,26 +375,33 @@ namespace SCClassLoader
             Instance(parent, Cube, Glow("#7FFFC0"), Matrix4x4.TRS(new Vector3(0f, s + 0.08f, -0.33f), Quaternion.identity, new Vector3(1.1f, 0.06f, 0.02f)));
         }
 
-        private static void Instance(Transform parent, Piece pc, Matrix4x4 m)
+        private void Instance(Transform parent, Piece pc, Matrix4x4 m)
         {
             for (int i = 0; i < pc.meshes.Length; i++) Instance(parent, pc.meshes[i], pc.mats[Math.Min(i, pc.mats.Length - 1)], m);
         }
 
-        private static void Instance(Transform parent, Mesh mesh, Material mat, Matrix4x4 m)
+        /// <summary>A fitted matrix can scale unevenly after a turn, which a transform can't hold: bake it into a copy of the mesh, once.</summary>
+        private Mesh Baked(Mesh mesh, Matrix4x4 m)
         {
-            var g = new GameObject("Part");
-            g.transform.SetParent(parent, false);
-            // a fitted matrix can scale unevenly after a turn, which a transform can't hold: bake it into a copy of the mesh
-            var baked = Object.Instantiate(mesh);
-            var v = baked.vertices;
-            var n = baked.normals;
+            if (baked.TryGetValue((mesh, m), out Mesh done) && done != null) return done;
+            Mesh copy = Object.Instantiate(mesh);
+            Object.DontDestroyOnLoad(copy);
+            var v = copy.vertices;
+            var n = copy.normals;
             Matrix4x4 nm = m.inverse.transpose;
             for (int i = 0; i < v.Length; i++) v[i] = m.MultiplyPoint3x4(v[i]);
             for (int i = 0; i < n.Length; i++) n[i] = nm.MultiplyVector(n[i]).normalized;
-            baked.vertices = v;
-            if (n.Length == v.Length) baked.normals = n;
-            baked.RecalculateBounds();
-            g.AddComponent<MeshFilter>().sharedMesh = baked;
+            copy.vertices = v;
+            if (n.Length == v.Length) copy.normals = n;
+            copy.RecalculateBounds();
+            return baked[(mesh, m)] = copy;
+        }
+
+        private void Instance(Transform parent, Mesh mesh, Material mat, Matrix4x4 m)
+        {
+            var g = new GameObject("Part");
+            g.transform.SetParent(parent, false);
+            g.AddComponent<MeshFilter>().sharedMesh = Baked(mesh, m);
             var mr = g.AddComponent<MeshRenderer>();
             mr.sharedMaterial = mat;
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;

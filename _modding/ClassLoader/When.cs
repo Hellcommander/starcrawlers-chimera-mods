@@ -50,6 +50,8 @@ namespace SCClassLoader
         public bool? perk;
         /// <summary>Creature kind of whoever is checked: Monster, Humanoid, Mechanical, Supernatural ("A|B" = either).</summary>
         public string kind;
+        /// <summary>"kind" read once: a check per hit shouldn't split the text and name the enum each time.</summary>
+        internal CHARACTER_TYPE[] kinds;
         public int chance = 100;
         /// <summary>Stats that add to `chance` (a control roll on "PsiPower+Smarts"), `chancePer` points of chance each.</summary>
         public string chanceScale;
@@ -113,7 +115,7 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.equipped) && !Equipped.Check(w.equipped, Who(w.of, ctx, target, "self"))) return false;
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
-            if (!string.IsNullOrEmpty(w.kind) && (who == null || !w.kind.Split('|').Any(k => string.Equals(k.Trim(), who.characterType.ToString(), StringComparison.OrdinalIgnoreCase)))) return false;
+            if (!string.IsNullOrEmpty(w.kind) && (who == null || !IsKind(w, who))) return false;
             if (!string.IsNullOrEmpty(w.value))
             {
                 float? v = Value(w.value, ctx, who, target);
@@ -135,9 +137,27 @@ namespace SCClassLoader
             return true;
         }
 
+        private static bool IsKind(WhenSpec w, Character who)
+        {
+            if (w.kinds == null)
+                w.kinds = w.kind.Split('|').Select(k => Enum.TryParse(k.Trim(), true, out CHARACTER_TYPE t) ? t : CHARACTER_TYPE.Null).Where(t => t != CHARACTER_TYPE.Null).ToArray();
+            foreach (CHARACTER_TYPE t in w.kinds)
+                if (t == who.characterType) return true;
+            return false;
+        }
+
+        /// <summary>Names as written in class files, lowered once.</summary>
+        private static readonly Dictionary<string, string> lowered = new Dictionary<string, string>();
+
+        private static string Lower(string s)
+        {
+            if (!lowered.TryGetValue(s, out string low)) lowered[s] = low = s.ToLowerInvariant();
+            return low;
+        }
+
         private static Character Who(string of, ActionContext ctx, Character target, string fallback)
         {
-            switch ((of ?? fallback).ToLowerInvariant())
+            switch (Lower(of ?? fallback))
             {
                 case "self": case "you": return ctx.caster;
                 case "attacker": return ctx.attacker;
@@ -163,10 +183,9 @@ namespace SCClassLoader
         internal static float? Value(string name, ActionContext ctx, Character who, Character target)
         {
             if (PluginHost.Value(name, ctx, who, out float? fromPlugin)) return fromPlugin;
-            string key = name, arg = null;
-            int colon = name.IndexOf(':');
-            if (colon > 0) { key = name.Substring(0, colon); arg = name.Substring(colon + 1); }
-            switch (key.ToLowerInvariant())
+            if (!valueKeys.TryGetValue(name, out ValueKey parsed)) valueKeys[name] = parsed = new ValueKey(name);
+            string arg = parsed.arg;
+            switch (parsed.key)
             {
                 case "health": return who?.GetHealth();
                 case "health%": return who == null ? (float?)null : 100f * who.GetHealth() / Mathf.Max(1, who.GetHealthMax());
@@ -189,11 +208,29 @@ namespace SCClassLoader
                 case "turnsincombat": return Counters.TurnsInCombat;
                 case "wallsnear": return who == null ? (float?)null : Walls.Count(who);
                 default:
-                    if (who != null && Enum.TryParse(key, true, out STAT_TYPE st)) return who.GetStat(st);
+                    if (who != null && parsed.stat.HasValue) return who.GetStat(parsed.stat.Value);
                     Plugin.Log.LogWarning($"Unknown condition value '{name}'");
                     return null;
             }
         }
+
+        /// <summary>A value's name taken apart once: "stacks:Bleed" is checked per hit, and naming a stat by text is the slowest step of all.</summary>
+        private sealed class ValueKey
+        {
+            internal readonly string key, arg;
+            internal readonly STAT_TYPE? stat;
+
+            internal ValueKey(string name)
+            {
+                int colon = name.IndexOf(':');
+                string written = colon > 0 ? name.Substring(0, colon) : name;
+                key = written.ToLowerInvariant();
+                arg = colon > 0 ? name.Substring(colon + 1) : null;
+                if (Enum.TryParse(written, true, out STAT_TYPE st)) stat = st;
+            }
+        }
+
+        private static readonly Dictionary<string, ValueKey> valueKeys = new Dictionary<string, ValueKey>();
 
         private static float Radius(string arg) =>
             float.TryParse(arg, NumberStyles.Float, CultureInfo.InvariantCulture, out float r) && r > 0 ? r : 2.5f;
@@ -202,16 +239,18 @@ namespace SCClassLoader
         {
             if (who == null || AI_Manager.instance == null) return null;
             Vector3 at = who.transform.position;
-            if (enemies)
-            {
-                // enemies of the one being asked about: for you and your allies that's the hostiles
-                bool friendly = TileStacks.IsAlly(who);
-                return Contracts.AllCharacters().Count(c => c != who && !c.GetIsDead() && TileStacks.IsAlly(c) != friendly
-                                                            && c.ai != null && c.ai.GetTeam() != AI.AI_TEAM.Passive && Vector3.Distance(c.transform.position, at) <= radius);
-            }
             bool side = TileStacks.IsAlly(who);
-            var all = Contracts.AllCharacters().Concat(new[] { (Character)Player.instance });
-            return all.Distinct().Count(c => c != null && c != who && !c.GetIsDead() && TileStacks.IsAlly(c) == side && Vector3.Distance(c.transform.position, at) <= radius);
+            int n = 0;
+            // enemies of the one being asked about: for you and your allies that's the hostiles
+            foreach (Character c in Contracts.AllCharacters())
+            {
+                if (c == who || c == Player.instance || c.GetIsDead() || (TileStacks.IsAlly(c) == side) == enemies) continue;
+                if (enemies && (c.ai == null || c.ai.GetTeam() == AI.AI_TEAM.Passive)) continue;
+                if (Vector3.Distance(c.transform.position, at) <= radius) n++;
+            }
+            Player you = Player.instance;
+            if (!enemies && you != null && you != who && !you.GetIsDead() && TileStacks.IsAlly(you) == side && Vector3.Distance(you.transform.position, at) <= radius) n++;
+            return n;
         }
 
         // ---- rules text ---------------------------------------------------------------------------------------

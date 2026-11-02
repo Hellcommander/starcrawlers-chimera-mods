@@ -103,8 +103,9 @@ namespace Breachwork
 
         /// <summary>
         /// Hears a topic on the event bus, on the main thread, once the player has turned the bus on (needs apiLevel 5). Topics are your
-        /// own, or "bus:effects", "bus:abilities", "bus:allies", "bus:health", "bus:orders", "bus:reactions", "bus:turn" and
-        /// "bus:settings", which come at most once a frame. Returns what to call to stop hearing it.
+        /// own, or "bus:effects", "bus:abilities", "bus:allies", "bus:health", "bus:orders", "bus:reactions", "bus:turn",
+        /// "bus:settings", "bus:synergies" and "bus:items" (apiLevel 8), and "bus:hazards" (apiLevel 9), which come at most once a frame.
+        /// Returns what to call to stop hearing it.
         /// </summary>
         public Action Subscribe(string topic, Action<object> handler) => EventBus.Subscribe(Owner, topic, handler);
 
@@ -252,6 +253,21 @@ namespace Breachwork
         /// <summary>Whether the player has turned the event bus on ([Performance] EventBus, needs apiLevel 5).</summary>
         public static bool EventBusOn => EventBus.On;
 
+        /// <summary>Runs the event bus for as long as your plugin is loaded, whatever the setting says (needs apiLevel 6).</summary>
+        public static void RunEventBus() => EventBus.RunByPlugin = true;
+
+        /// <summary>
+        /// Runs work on one of the bus's worker threads (needs apiLevel 6). It must only touch what it was handed, never a game
+        /// object or a Unity call. False when the workers are full or stuck: do the work yourself.
+        /// </summary>
+        public static bool RunOnWorker(Action work) => BusWorkers.Run(work);
+
+        /// <summary>How many pieces to cut this much work into so that at least half the workers get some (needs apiLevel 7).</summary>
+        public static int WorkerPieces(int work) => BusWorkers.Pieces(work);
+
+        /// <summary>False while work handed to the workers has sat unfinished too long (needs apiLevel 6).</summary>
+        public static bool WorkersHealthy => BusWorkers.Healthy;
+
         /// <summary>
         /// Queues a message for <see cref="PluginContext.Subscribe"/> handlers, from any thread (needs apiLevel 5). Handlers run on
         /// the main thread in a later frame. A worker thread must send plain data, never a Character, Item or other game object.
@@ -271,6 +287,9 @@ namespace Breachwork
         /// reads them. Class effects are "@Name" only inside an action: use <see cref="ActionCall.Stacks"/> there.
         /// </summary>
         public static int Stacks(Character who, string effectId) => Actions.StacksOn(who, effectId);
+
+        /// <summary>The level you use of a synergy, by its id; 0 when it isn't active or isn't installed (needs apiLevel 8).</summary>
+        public static int SynergyLevel(string id) => Synergies.AppliedOf(id);
 
         /// <summary>A named counter on a character ("do": "counter"); yours is saved with the run.</summary>
         public static int Counter(Character who, string name) => Counters.Get(who, name);

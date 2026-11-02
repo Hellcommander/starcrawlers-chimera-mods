@@ -31,6 +31,7 @@ namespace SCClassLoader
 
             var go = new GameObject(mapId);
             Map map = go.AddComponent<Map>();
+            PlaceMeshes.Begin(go);
             map.internalName = mapId;
             map.floor = floor;
             map.packed = true;
@@ -376,6 +377,22 @@ namespace SCClassLoader
         }
     }
 
+    /// <summary>The merged meshes of one place. Destroying objects leaves their meshes behind and the game never unloads assets, so they go with the map.</summary>
+    internal class PlaceMeshes : MonoBehaviour
+    {
+        private static PlaceMeshes making;
+        private readonly List<Mesh> meshes = new List<Mesh>();
+
+        internal static void Begin(GameObject map) => making = map.AddComponent<PlaceMeshes>();
+
+        internal static void Keep(Mesh mesh) => making?.meshes.Add(mesh);
+
+        private void OnDestroy()
+        {
+            foreach (Mesh m in meshes) if (m != null) Destroy(m);
+        }
+    }
+
     /// <summary>Static geometry gathered per material, then merged into a few meshes.</summary>
     internal class MeshBatch
     {
@@ -397,6 +414,7 @@ namespace SCClassLoader
                 {
                     var chunk = kv.Value.Skip(start).Take(400).ToArray();
                     var mesh = new Mesh { name = name, indexFormat = IndexFormat.UInt32 };
+                    PlaceMeshes.Keep(mesh);
                     // positions are world space: the room template sits at its own spot, so undo that
                     Matrix4x4 inv = parent.worldToLocalMatrix;
                     for (int i = 0; i < chunk.Length; i++) chunk[i].transform = inv * chunk[i].transform;

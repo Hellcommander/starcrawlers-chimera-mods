@@ -60,6 +60,18 @@ namespace SCClassLoader
 
         private static bool Alive(Character c) => c != null && !c.GetIsDead();
 
+        /// <summary>Devtest: enemies may walk onto each other, never onto you or yours, so a packed crowd can still move.</summary>
+        internal static bool CrowdStacks;
+
+        private static bool Foe(Character c) => CrowdStacks && c != null && c.ai != null && c.ai.GetTeam() == AI.AI_TEAM.Hostile;
+
+        /// <summary>No free tile beside them: only then does an enemy step onto another.</summary>
+        private static bool Boxed(Character c)
+        {
+            NavNode at = c.GetMover()?.GetCurrentNavNode();
+            return at != null && at.GetLinks().All(n => n == null || n.IsOccupied() || n.Block_Move || n.Block_Mob);
+        }
+
         internal static bool IsAlly(Character c) => c != null && (c == Player.instance || (c.ai != null && c.ai.GetTeam() == AI.AI_TEAM.Player)) && !c.HasTag("BOSS");
 
         /// <summary>Everyone on the tile: the primary first, then the others.</summary>
@@ -92,9 +104,10 @@ namespace SCClassLoader
         /// <summary><paramref name="placing"/>: put there by a load or spawn, not walking (pets may then join your tile).</summary>
         internal static bool CanJoin(NavNode n, Character c, bool placing)
         {
-            if (!ShareTiles.Value || n == null || !IsAlly(c)) return false;
+            if (!ShareTiles.Value || n == null || !(IsAlly(c) || Foe(c))) return false;
             var here = On(n).Where(Alive).ToList();
             if (here.Count == 0 || here.Contains(c)) return false;
+            if (Foe(c)) return here.All(Foe) && Boxed(c);
             if (here.Count >= Mathf.Clamp(MaxPerTile.Value, 2, 4)) return false;
             if (!here.All(IsAlly)) return false;
             if (!placing && c != Player.instance && here.Contains(Player.instance) && !PetsOntoYou.Value) return false;
@@ -217,7 +230,7 @@ namespace SCClassLoader
                 if (node == null) return;
                 if (ch == null) ch = GetComponent<Character>();
                 Character_Mover m = ch != null ? ch.GetMover() : null;
-                if (m == null || m.GetCurrentNavNode() != node || (bool)Traverse.Create(m).Field("isMoving").GetValue()) return;
+                if (m == null || m.GetCurrentNavNode() != node || m.isMoving) return;
                 Vector3 off = offset;
                 if (behindPlayer && Player.instance != null)
                 {
@@ -225,7 +238,9 @@ namespace SCClassLoader
                     float side = slots <= 1 ? 0f : Mathf.Lerp(-1f, 1f, slot / (float)(slots - 1));
                     off = (back * 0.32f + right * side * 0.22f) * spacing;
                 }
-                transform.position = node.transform.position + off;
+                // a write marks the whole character moved, for every renderer under it
+                Vector3 want = node.transform.position + off;
+                if (transform.position != want) transform.position = want;
                 active = true;
             }
 
@@ -245,7 +260,7 @@ namespace SCClassLoader
         {
             if (!ShareTiles.Value || n == null || c == null) return;
             bool stacked = stacks.ContainsKey(n);
-            if (prev != null && prev != c && OnTile(prev, n) && IsAlly(prev) && IsAlly(c))
+            if (prev != null && prev != c && OnTile(prev, n) && (IsAlly(prev) && IsAlly(c) || Foe(prev) && Foe(c)))
             {
                 if (!stacked) { stacks[n] = new List<Character> { prev }; }
                 else if (!stacks[n].Contains(prev)) stacks[n].Add(prev);

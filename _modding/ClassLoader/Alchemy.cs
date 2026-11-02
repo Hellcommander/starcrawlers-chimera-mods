@@ -73,6 +73,27 @@ namespace SCClassLoader
 
         private static int depth;
 
+        private static bool PartnersOn(Entry e, string incoming, Character target)
+        {
+            foreach (string id in e.ids)
+                if (id != incoming && target.effects.GetEffect(id) == null) return false;
+            return true;
+        }
+
+        /// <summary>The first reaction, in class and file order, this reagent sets off on the target. Every hit of a fire or shock skill asks, whoever casts it, so it walks the lists instead of building them.</summary>
+        private static Entry ReactionFor(string incoming, Character target)
+        {
+            Skill_Tree[] trees = Player_SkillControl.instance?.skillTrees;
+            if (trees == null) return null;
+            foreach (Skill_Tree t in trees)
+            {
+                if (t == null || !byClass.TryGetValue(t.internalName, out List<Entry> list)) continue;
+                foreach (Entry e in list)
+                    if (Array.IndexOf(e.ids, incoming) >= 0 && PartnersOn(e, incoming, target)) return e;
+            }
+            return null;
+        }
+
         /// <summary>
         /// On contact: a reagent landing on an enemy that carries its partner reacts instead of being applied (the
         /// partner is used up). Checked before the game applies it, because some vanilla statuses cancel each other
@@ -86,8 +107,7 @@ namespace SCClassLoader
                 if (byClass.Count == 0 || depth > 3 || !reagents.Contains(internalName) || !IsEnemy(target) || Game.Game_isLoading) return true;
                 try
                 {
-                    Entry hit = Active().FirstOrDefault(e => e.ids.Contains(internalName)
-                        && e.ids.Where(id => id != internalName).All(id => target.effects.GetEffect(id) != null));
+                    Entry hit = ReactionFor(internalName, target);
                     if (hit == null) return true;
                     if (Time.time > burstReset) { burst = 0; burstReset = Time.time + 1f; }
                     if (++burst > MaxBurst) return true;
@@ -126,7 +146,8 @@ namespace SCClassLoader
                 victims.AddRange(AI_Manager.instance.GetEnemiesAt(n.transform.position, r.radius).Where(v => v != t));
             var self = r.actions.Where(a => (a.to ?? "").ToLowerInvariant() == "self").ToList();
             var rest = r.actions.Except(self).ToList();
-            foreach (Character v in victims) if (v != null && !v.GetIsDead()) { ctx.target = v; Actions.Run(rest, ctx, v); }
+            if (self.Count == 0) HitLane.Each(victims, rest, ctx); // a wide reaction in a crowd rolls over it like any other area hit
+            else foreach (Character v in victims) if (v != null && !v.GetIsDead()) { ctx.target = v; Actions.Run(rest, ctx, v); }
             if (Player.instance != null) Actions.Run(self, ctx, Player.instance);
             Actions.FlushDeferred(ctx);
         }

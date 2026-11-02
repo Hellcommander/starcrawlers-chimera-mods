@@ -129,8 +129,13 @@ namespace SCClassLoader
         [HarmonyPatch(typeof(Game), nameof(Game.LOG), typeof(string))]
         private static class Patch_Log
         {
-            private static bool Prefix(string s) =>
-                !(Fix.Value && s != null && (s.Contains("(Skill Menu hotkey) to attempt recovery") || s.Contains("Please report this bug using the Feedback tool")));
+            private static bool Prefix(string s)
+            {
+                if (s == null) return true;
+                // the event bus filters the game's info lines out of Debug.Log, so this line may be the only word of an abort
+                if (s.Contains("(Skill Menu hotkey) to attempt recovery")) watchdogFired = true;
+                return !(Fix.Value && (s.Contains("(Skill Menu hotkey) to attempt recovery") || s.Contains("Please report this bug using the Feedback tool")));
+            }
         }
     }
 }

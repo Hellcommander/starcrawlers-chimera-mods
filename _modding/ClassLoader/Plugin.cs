@@ -57,6 +57,7 @@ namespace SCClassLoader
             RunePanel.Bind(Config);
             CraftPanel.Bind(Config);
             GameFixes.Bind(Config);
+            BugFixes.Bind(Config);
             ClassLoot.Bind(Config);
             BugReport.Bind(Config);
             CompanionTraps.Bind(Config);
@@ -98,7 +99,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ZoneLoad.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -243,6 +244,7 @@ namespace SCClassLoader
             else if (dev == "allsyn") Instance.StartCoroutine(DevTestClassSynergies.RunAll());
             else if (dev == "smsyn") Instance.StartCoroutine(DevTestClassSynergies.RunShadow());
             else if (dev == "statussyn") Instance.StartCoroutine(DevTestStatusSynergies.Run());
+            else if (dev == "synbus") Instance.StartCoroutine(DevTestSynBus.Run());
             else if (dev == "conditions") Instance.StartCoroutine(DevTestConditions.Run());
             else if (dev == "triggers") Instance.StartCoroutine(DevTestTriggers.Run());
             else if (dev == "traps") Instance.StartCoroutine(DevTestTraps.Run());
@@ -272,6 +274,7 @@ namespace SCClassLoader
             else if (dev == "crew") Instance.StartCoroutine(DevTestCrew.Run());
             else if (dev == "commands") Instance.StartCoroutine(DevTestCommands.Run());
             else if (dev == "petwake") Instance.StartCoroutine(DevTestPetWake.Run());
+            else if (dev == "bugfixes") Instance.StartCoroutine(DevTestBugFixes.Run());
             else if (dev == "numpad") Instance.StartCoroutine(DevTestNumpad.Run());
             else if (dev == "minionmenu") Instance.StartCoroutine(DevTestMinionMenu.Run(null));
             else if (dev == "todos") Instance.StartCoroutine(DevTestTodos.Run(null));
@@ -294,7 +297,14 @@ namespace SCClassLoader
             else if (dev == "aiportrait") Instance.StartCoroutine(DevTestAiPortrait.Run());
             else if (dev == "aiportrait2") Instance.StartCoroutine(DevTestAiPortrait.RunAllowed());
             else if (dev == "grid") Instance.StartCoroutine(DevTestGrid.Run());
+            else if (dev == "effectbox") Instance.StartCoroutine(DevTestEffectBox.Run());
+            else if (dev == "effectbox2") Instance.StartCoroutine(DevTestEffectBox.RunReload());
             else if (dev == "busstress") Instance.StartCoroutine(DevTestBus.Run());
+            else if (dev == "buffs") Instance.StartCoroutine(DevTestBuffs.Run());
+            else if (dev == "skills") Instance.StartCoroutine(DevTestSkills.Run());
+            else if (dev == "itembus") Instance.StartCoroutine(DevTestItemBus.Run());
+            else if (dev == "hazards") Instance.StartCoroutine(DevTestHazards.Run());
+            else if (dev == "zones") Instance.StartCoroutine(DevTestZones.Run());
             else if (dev == "realtime") Instance.StartCoroutine(DevTestRealtime.Run());
             else if (dev == "realtime2") Instance.StartCoroutine(DevTestRealtime.RunOn());
             else if (dev == "plugins") Instance.StartCoroutine(DevTestPlugins.Run());

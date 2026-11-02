@@ -410,6 +410,9 @@ namespace SCClassLoader
         public string vfx;
         public string sound;
         public List<ActionSpec> actions = new List<ActionSpec>();
+
+        /// <summary>ProcHub's split of <see cref="actions"/> into what lands on you and the rest, kept per list.</summary>
+        internal List<ActionSpec> splitOf, selfActions, restActions;
     }
 
     public class SynergyPenaltySpec

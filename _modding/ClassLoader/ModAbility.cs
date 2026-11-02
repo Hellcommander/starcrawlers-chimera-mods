@@ -296,17 +296,21 @@ namespace SCClassLoader
             return true;
         }
 
-        internal ActionContext MakeContext() => new ActionContext
+        internal ActionContext MakeContext()
         {
-            caster = caster != null ? caster : Player.instance,
-            source = this,
-            classId = rt.classId,
-            sourceName = displayName,
-            rank = Rank,
-            damageMult = (Perk?.damageMult ?? 1f) * (Tuned?.power ?? 1f) * SynergyDamage,
-            chanceBonus = Perk?.chanceBonus ?? 0,
-            hitVfx = Tuned?.impactVfx ?? rt?.spec?.impactVfx,
-        };
+            Runes.Tuning t = Tuned;
+            return new ActionContext
+            {
+                caster = caster != null ? caster : Player.instance,
+                source = this,
+                classId = rt.classId,
+                sourceName = displayName,
+                rank = Rank,
+                damageMult = (Perk?.damageMult ?? 1f) * (t?.power ?? 1f) * SynergyDamage,
+                chanceBonus = Perk?.chanceBonus ?? 0,
+                hitVfx = t?.impactVfx ?? rt?.spec?.impactVfx,
+            };
+        }
 
         private static bool IsSelf(ActionSpec a) => (a.to ?? "").ToLowerInvariant() == "self";
 
@@ -449,14 +453,15 @@ namespace SCClassLoader
             }
             if (!shaped && !string.IsNullOrEmpty(s.areaVfx) && (radius > 0f || s.target == "floor")) Actions.SpawnVfx(s.areaVfx, center + Vector3.up * 0.1f);
             var struck = new List<Character>();
+            var ripple = new SkillLane.Ripple(victims.Count);
             foreach (Character v in victims)
             {
                 if (v == null || v.GetIsDead()) continue;
-                Actions.SpawnVfx(Tuned?.impactVfx ?? s.impactVfx, v.GetHitFx().position);
+                Actions.SpawnVfx(tuned?.impactVfx ?? s.impactVfx, v.GetHitFx().position);
                 ctx.target = v;
                 struck.Add(v);
                 Actions.Run(targetActions, ctx, v);
-                yield return new WaitForSeconds(0.05f);
+                if (ripple.Hold(out object wait)) yield return wait;
             }
             foreach (IEnumerator move in ctx.paced.ToList()) yield return StartCoroutine(move);
             ctx.paced.Clear();

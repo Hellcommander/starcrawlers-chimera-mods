@@ -456,24 +456,45 @@ namespace SCClassLoader
         /// A part written "Smarts|PsiPower" counts only the higher of those stats.</summary>
         private static IEnumerable<List<STAT_TYPE>> ScaleStats(ActionSpec a) => ScaleStats(a.scale);
 
-        internal static IEnumerable<List<STAT_TYPE>> ScaleStats(string scale)
+        internal static IEnumerable<List<STAT_TYPE>> ScaleStats(string scale) => ScaleParts(scale);
+
+        // read on every hit, and a skill's text never changes: each is parsed once
+        private static readonly Dictionary<string, List<List<STAT_TYPE>>> scales = new Dictionary<string, List<List<STAT_TYPE>>>();
+        private static readonly List<List<STAT_TYPE>> NoScale = new List<List<STAT_TYPE>>();
+
+        private static List<List<STAT_TYPE>> ScaleParts(string scale)
         {
-            if (string.IsNullOrEmpty(scale)) yield break;
+            if (string.IsNullOrEmpty(scale)) return NoScale;
+            if (scales.TryGetValue(scale, out var parts)) return parts;
+            parts = new List<List<STAT_TYPE>>();
             foreach (string part in scale.Split('+'))
             {
                 var any = new List<STAT_TYPE>();
                 foreach (string s in part.Split('|'))
                     if (Enum.TryParse(s.Trim(), true, out STAT_TYPE st)) any.Add(st);
-                if (any.Count > 0) yield return any;
+                if (any.Count > 0) parts.Add(any);
             }
+            return scales[scale] = parts;
+        }
+
+        private static float StatPoints(string scale, float mult, Character who)
+        {
+            double sum = 0d;
+            foreach (List<STAT_TYPE> any in ScaleParts(scale))
+            {
+                int best = who.GetStat(any[0]);
+                for (int i = 1; i < any.Count; i++) best = Math.Max(best, who.GetStat(any[i]));
+                sum += best * mult;
+            }
+            return (float)sum;
         }
 
         /// <summary>The same stat sum for anything else that scales ("PsiPower+Smarts" at `mult` per point).</summary>
         internal static float StatBonus(string scale, float mult, Character who) =>
-            who == null ? 0f : ScaleStats(new ActionSpec { scale = scale }).Sum(any => any.Max(st => who.GetStat(st)) * mult);
+            who == null ? 0f : StatPoints(scale, mult, who);
 
         private static float ScaleBonus(ActionSpec a, ActionContext ctx) =>
-            ctx.caster == null ? 0f : ScaleStats(a).Sum(any => any.Max(st => ctx.caster.GetStat(st)) * a.scaleMult);
+            ctx.caster == null ? 0f : StatPoints(a.scale, a.scaleMult, ctx.caster);
 
         /// <summary>"weapon": a share of one roll of the one weapon the skill swings (Equipped.Hand: the main hand, or
         /// an off-hand weapon that fits its gear rule at off-hand power).</summary>
@@ -493,10 +514,19 @@ namespace SCClassLoader
 
         internal static string LevelNote(int cap) => cap > 1 ? $" (grows with your level: {Mathf.RoundToInt(LevelMult(cap) * 100)}% now, full at level {cap})" : "";
 
+        private static readonly Dictionary<string, DAMAGE_TYPE> damageTypes = new Dictionary<string, DAMAGE_TYPE>();
+
+        private static DAMAGE_TYPE DamageType(string name)
+        {
+            name = name ?? "Crushing";
+            if (damageTypes.TryGetValue(name, out DAMAGE_TYPE type)) return type;
+            return damageTypes[name] = Enum.TryParse(name, true, out type) ? type : DAMAGE_TYPE.Crushing;
+        }
+
         private static void Damage(ActionSpec a, ActionContext ctx, Character t)
         {
             if (t == ctx.caster && !ctx.backfire) return; // never hurt yourself (unless your wild magic turned on you)
-            if (!Enum.TryParse(a.type ?? "Crushing", true, out DAMAGE_TYPE type)) type = DAMAGE_TYPE.Crushing;
+            DAMAGE_TYPE type = DamageType(a.type);
             float v = Random.Range(a.min, Math.Max(a.min, a.max) + 1) + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
             v += StackBonus(a, ctx, t) + WeaponBonus(a, ctx) + a.stored * ctx.stored;
             v *= ctx.damageMult * LevelMult(a.levelCap);
@@ -543,7 +573,7 @@ namespace SCClassLoader
             // negative stacks bleed that many off (a resource that drains); the effect goes when none are left
             if (a.stacks < 0 && !Scaled(a))
             {
-                if (t.effects.GetEffect(id) is ModEffect have) { have.RemoveStacks(-a.stacks); t.CalculateStats(); }
+                if (t.effects.GetEffect(id) is ModEffect have) { have.RemoveStacks(-a.stacks); BuffLane.AfterRemoved(t); }
                 return;
             }
             if (!EffectManager.instance.CanUseOn(id, t)) return;
@@ -571,7 +601,8 @@ namespace SCClassLoader
                 fresh.OnApplied(ctx);
                 if (fresh.MaxStacks > 1) fresh.AddStacks(stacks - 1, ctx);
             }
-            t.CalculateStats();
+            // a mod effect has its numbers from the start, so landing already counted them; a game effect may set them after Init
+            if (!(e is ModEffect) || !EventBus.On) t.CalculateStats();
             if (t == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
             Triggers.Inflicted(ctx.caster, t, id);
         }
@@ -715,8 +746,8 @@ namespace SCClassLoader
         public static string EffectId(string name, string classId)
         {
             if (string.IsNullOrEmpty(name)) return name;
-            if (name.StartsWith("#")) return ModEffect.MakeId(ClassRegistry.LibId, name.Substring(1));
-            if (name.StartsWith("@")) return ModEffect.MakeId(classId, name.Substring(1));
+            if (name[0] == '#') return ModEffect.MakeId(ClassRegistry.LibId, name.Substring(1));
+            if (name[0] == '@') return ModEffect.MakeId(classId, name.Substring(1));
             // "MOD_Etcher@Corroded": another class's effect
             int at = name.IndexOf('@');
             return at > 0 ? ModEffect.MakeId(name.Substring(0, at), name.Substring(at + 1)) : name;
@@ -1131,7 +1162,7 @@ namespace SCClassLoader
         private static readonly Dictionary<string, GameObject> vfxCache = new Dictionary<string, GameObject>();
 
         /// <summary>At most this many copies of one particle play at once; an area hit on six enemies isn't six explosions.</summary>
-        private const int MaxCopies = 3;
+        internal static int MaxCopies = 3;
 
         /// <summary>
         /// Spawns a vanilla particle by effect id ("EFFECT_Fire") or ability id ("VOID_PSYKER_BLAST[.field]").
@@ -1140,18 +1171,39 @@ namespace SCClassLoader
         public static void SpawnVfx(string spec, Vector3 pos)
         {
             if (string.IsNullOrEmpty(spec)) return;
+            if (!ParticleLoad.Later(spec, pos)) SpawnNow(spec, pos);
+        }
+
+        /// <summary>True when an effect was actually started.</summary>
+        internal static bool SpawnNow(string spec, Vector3 pos)
+        {
+            if (VfxLife.Copies.TryGetValue(spec, out int copies) && copies >= MaxCopies) return false;
+            if (EventBus.SkipEffect(pos)) return false;
             SplitScaleOnly(spec, out string own);
             float scale = SplitScale(spec, out string name);
             GameObject prefab = ResolveVfx(name);
-            if (prefab == null) return;
-            if (VfxLife.Live.Count(l => l != null && l.spec == spec) >= MaxCopies) return;
-            GameObject go = Object.Instantiate(prefab, pos, Quaternion.identity);
-            if (CustomVfx.AliasOnFloor(own)) CustomVfx.GroundSnap.Floor(go);
+            if (prefab == null) return false;
+            bool floor = CustomVfx.AliasOnFloor(own);
+            VfxLife kept = ParticleLoad.Reuse(spec);
+            if (kept != null)
+            {
+                kept.transform.SetPositionAndRotation(pos, Quaternion.identity);
+                if (floor) CustomVfx.GroundSnap.Floor(kept.gameObject);
+                kept.gameObject.SetActive(true);
+                kept.Replay();
+                return true;
+            }
+            GameObject go = ParticleGate.Make(prefab, pos);
+            if (floor) CustomVfx.GroundSnap.Floor(go);
             CustomVfx.Trim(own, go);
             Rescale(go, scale);
+            if (EventBus.On) ParticleLoad.Lighten(go);
             go.SetActive(true);
             Wake(prefab, go);
-            go.AddComponent<VfxLife>().spec = spec;
+            VfxLife life = go.AddComponent<VfxLife>();
+            life.spec = spec;
+            life.reusable = !CustomVfx.Has(name) && CustomVfx.Alias(own) == null && !go.GetComponentsInChildren<ParticleSystem>(true).Any(ps => ps.main.stopAction != ParticleSystemStopAction.None);
+            return true;
         }
 
         /// <summary>
@@ -1165,7 +1217,9 @@ namespace SCClassLoader
             GameObject prefab = ResolveVfx(name);
             if (prefab == null) return 0f;
             float time = Mathf.Clamp(Vector3.Distance(from, to) / Mathf.Max(1f, speed), 0.12f, 0.6f);
-            GameObject go = Object.Instantiate(prefab, from, Quaternion.identity);
+            if (EventBus.SkipEffect(from) && EventBus.SkipEffect(to)) return time; // the hit still waits for the flight nobody saw
+            GameObject go = ParticleGate.Make(prefab, from);
+            if (EventBus.On) ParticleLoad.Lighten(go);
             Rescale(go, scale);
             var t = go.AddComponent<CustomVfx.Travel>();
             t.from = from; t.to = to; t.time = time; t.arc = Mathf.Min(0.6f, Vector3.Distance(from, to) * 0.08f);
@@ -1213,27 +1267,78 @@ namespace SCClassLoader
         internal class VfxLife : MonoBehaviour
         {
             internal static readonly List<VfxLife> Live = new List<VfxLife>();
-            internal string spec;
+            internal static readonly Dictionary<string, int> Copies = new Dictionary<string, int>();
+            private const int LookEvery = 4; // asking every system whether it's done, every frame, is most of what a crowd of these costs
+            internal bool reusable;
+            private string named;
             private ParticleSystem[] systems;
             private float born;
+            private int index = -1, turn;
 
-            private void Awake() => Live.Add(this);
-            private void OnDestroy() => Live.Remove(this);
-
-            private void Start()
+            /// <summary>AddComponent wakes this before anyone can name it, so a name can arrive after it's already live.</summary>
+            internal string spec
             {
+                get => named;
+                set { Tally(-1); named = value; Tally(1); }
+            }
+
+            private void Tally(int by)
+            {
+                if (named == null || index < 0) return;
+                Copies.TryGetValue(named, out int now);
+                Copies[named] = now + by;
+            }
+
+            private void OnEnable()
+            {
+                index = Live.Count;
+                Live.Add(this);
+                Tally(1);
                 born = Time.time;
-                systems = GetComponentsInChildren<ParticleSystem>(true);
+                turn = GetInstanceID() & (LookEvery - 1);
+                if (systems == null) systems = GetComponentsInChildren<ParticleSystem>(true);
+            }
+
+            private void OnDisable()
+            {
+                Tally(-1);
+                VfxLife last = Live[Live.Count - 1];
+                Live[index] = last;
+                last.index = index;
+                Live.RemoveAt(Live.Count - 1);
+                index = -1;
+            }
+
+            internal void Replay()
+            {
+                foreach (ParticleSystem ps in systems)
+                {
+                    if (ps == null) continue;
+                    ps.Clear(false);
+                    ps.Play(false);
+                }
+            }
+
+            private void Finish()
+            {
+                if (!ParticleLoad.Keep(this)) Destroy(gameObject);
             }
 
             private void Update()
             {
                 float age = Time.time - born;
-                if (systems == null || systems.Length == 0) { if (age > 3f) Destroy(gameObject); return; }
-                if (age > 1.5f)
-                    foreach (ParticleSystem ps in systems)
-                        if (ps != null && ps.isEmitting && ps.main.loop) ps.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                if ((age > 1.6f && systems.All(ps => ps == null || !ps.IsAlive(false))) || age > 6f) Destroy(gameObject);
+                if (systems.Length == 0) { if (age > 3f) Finish(); return; }
+                if (age > 6f) { Finish(); return; }
+                if (age <= 1.5f) return;
+                if (EventBus.On && (Time.frameCount & (LookEvery - 1)) != turn) return;
+                bool alive = false;
+                foreach (ParticleSystem ps in systems)
+                {
+                    if (ps == null) continue;
+                    if (ps.isEmitting && ps.main.loop) ps.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    if (!alive && ps.IsAlive(false)) alive = true;
+                }
+                if (!alive && age > 1.6f) Finish();
             }
         }
 

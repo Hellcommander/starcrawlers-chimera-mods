@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using UnityEngine;
 
 namespace SCClassLoader
 {
@@ -32,7 +34,31 @@ namespace SCClassLoader
         {
             if (string.IsNullOrEmpty(spec)) return true;
             if (who == null || who != Player.instance || Menu_Player.instance == null) return false;
-            return Holds(spec);
+            if (!EventBus.On) return Holds(spec);
+            // the hotbar asks for every skill every frame, and a skill's rewrites ask again; gear doesn't change between those
+            if (answeredFrame != Time.frameCount) { answered.Clear(); answeredFrame = Time.frameCount; }
+            if (!answered.TryGetValue(spec, out bool held)) answered[spec] = held = Holds(spec);
+            return held;
+        }
+
+        private static readonly Dictionary<string, bool> answered = new Dictionary<string, bool>();
+        private static int answeredFrame = -1;
+
+        [HarmonyPatch]
+        private static class Patch_GearChanged
+        {
+            private static IEnumerable<System.Reflection.MethodBase> TargetMethods()
+            {
+                yield return AccessTools.Method(typeof(Item_Equipment), nameof(Item_Equipment.OnEquip));
+                yield return AccessTools.Method(typeof(Item_Equipment), nameof(Item_Equipment.OnUnequip));
+                yield return AccessTools.Method(typeof(Menu_Player), nameof(Menu_Player.ChangeWeaponSet));
+            }
+
+            private static void Postfix()
+            {
+                answered.Clear();
+                EventBus.Mark(EventBus.Items);
+            }
         }
 
         private static bool Holds(string spec)

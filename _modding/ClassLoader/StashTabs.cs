@@ -137,7 +137,7 @@ namespace SCClassLoader
             s.ClearSelected();
             s.Refresh();
             Tooltip.instance?.Hide();
-            Global_Control.instance.SaveGlobal(); // keep Game.scc and the pages file in step, so a crash can't duplicate items
+            SaveBoth();
             AudioManager.PlayEvent("event:/UI/UI_Click");
             RefreshTabs();
         }
@@ -150,7 +150,42 @@ namespace SCClassLoader
             ClearSlots(s);
             current = p;
             if (PageData(p) is InventorySaveInfo data) s.Deserialize(data);
+        }
+
+        private const float SaveDelay = 1f;
+        private static bool unsaved;
+        private static float saveAt;
+
+        /// <summary>Keeps Game.scc and the pages file in step, so a crash can't duplicate items. With the bus on, flipping through pages
+        /// writes both once, when you stop or close the stash; a crash before that leaves both as they were, and your bag too.</summary>
+        private static void SaveBoth()
+        {
+            if (EventBus.On)
+            {
+                unsaved = true;
+                saveAt = Time.unscaledTime + SaveDelay;
+                return;
+            }
             SaveFile();
+            Global_Control.instance.SaveGlobal();
+        }
+
+        /// <summary>From the bus's pump.</summary>
+        internal static void Flush()
+        {
+            if (!unsaved || Time.unscaledTime < saveAt) return;
+            unsaved = false;
+            SaveFile();
+            Global_Control.instance.SaveGlobal();
+        }
+
+        /// <summary>The bus is off or a load is on: the pump won't come back for this, and a load is no time to save Game.scc.</summary>
+        internal static void Landing()
+        {
+            if (!unsaved) return;
+            unsaved = false;
+            SaveFile();
+            if (!Game.Game_isLoading) Global_Control.instance.SaveGlobal();
         }
 
         /// <summary>Sends the item being dragged (from the stash or the inventory) to another page.</summary>
@@ -191,8 +226,7 @@ namespace SCClassLoader
             data.items.Add(saved);
             data.slotIds.Add(slot);
             SetPageData(p, data);
-            SaveFile();
-            Global_Control.instance.SaveGlobal();
+            SaveBoth();
             if (!string.IsNullOrEmpty(item.FMOD_doDrop)) AudioManager.PlayEvent(item.FMOD_doDrop);
             drag.ClearDragIcon();
             HUD.instance.SetDraggedItem(null);
@@ -301,12 +335,37 @@ namespace SCClassLoader
             }
         }
 
+        private static bool opening;
+
+        /// <summary>With the bus on, opening on another page reads that page straight into the slots: nothing moved, so there's no
+        /// page 1 to load only to swap out, and nothing to write.</summary>
+        [HarmonyPatch(typeof(Menu_Stash), nameof(Menu_Stash.Deserialize))]
+        private static class Patch_OpenPage
+        {
+            private static void Prefix(ref object d)
+            {
+                if (!opening) return;
+                opening = false;
+                try
+                {
+                    LoadFile();
+                    d = PageData(lastShown) as InventorySaveInfo ?? new InventorySaveInfo { items = new List<object>(), slotIds = new List<int>() };
+                    current = lastShown;
+                }
+                catch (Exception e) { Plugin.Log.LogError("Stash tabs: " + e); }
+            }
+        }
+
         /// <summary>Vanilla Show reloads page 1; reopen the page the player last looked at.</summary>
         [HarmonyPatch(typeof(Menu_Stash), nameof(Menu_Stash.Show))]
         private static class Patch_Show
         {
+            private static void Prefix(Menu_Stash __instance) =>
+                opening = EventBus.On && !__instance.GetIsShowing() && current == 0 && lastShown > 0 && lastShown < Total;
+
             private static void Postfix(Menu_Stash __instance)
             {
+                opening = false;
                 if (!__instance.GetIsShowing()) return;
                 try
                 {
@@ -325,8 +384,13 @@ namespace SCClassLoader
         {
             private static void Prefix(Menu_Stash __instance)
             {
-                if (current == 0) return;
-                try { Swap(__instance, 0); }
+                if (current == 0 && !unsaved) return;
+                try
+                {
+                    if (current != 0) Swap(__instance, 0);
+                    unsaved = false; // vanilla Hide writes Game.scc right after this
+                    SaveFile();
+                }
                 catch (Exception e) { Plugin.Log.LogError("Stash tabs: " + e); }
             }
         }

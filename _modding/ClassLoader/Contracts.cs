@@ -214,14 +214,24 @@ namespace SCClassLoader
         }
 
 /// <summary>Every AI character on the map, passive ones included (the game's room query skips those).</summary>
+        private static List<Character> crowd;
+        private static int crowdFrame = -1;
+
+        /// <summary>A spawn this frame has to show up in the next ask.</summary>
+        internal static void ForgetCrowd() => crowd = null;
+
         internal static IEnumerable<Character> AllCharacters()
         {
+            // with the bus on, a whole area hit shares one walk through the list; those it kills are left for the caller to skip
+            if (EventBus.On && crowd != null && crowdFrame == Time.frameCount) return crowd;
             // the list also keeps AIs from maps you've left: only those standing in this map's rooms count
             var rooms = new HashSet<Room>(Map.instance != null ? Map.instance.GetRooms().Where(r => r != null) : Enumerable.Empty<Room>());
-            return (Traverse.Create(AI_Manager.instance).Field("ais").GetValue<List<AI>>() ?? new List<AI>())
+            crowd = (Traverse.Create(AI_Manager.instance).Field("ais").GetValue<List<AI>>() ?? new List<AI>())
                 .Where(a => a != null && a.GetCharacter() != null && a.gameObject.activeInHierarchy && a.GetCharacter().GetMover()?.GetCurrentNavNode() != null
                             && rooms.Contains(a.GetCharacter().GetMover().GetCurrentNavNode().GetRoom()))
-                .Select(a => a.GetCharacter()).Distinct();
+                .Select(a => a.GetCharacter()).Distinct().ToList();
+            crowdFrame = Time.frameCount;
+            return crowd;
         }
 
         private static List<Character> Mobs(Room avoid, bool includeTagged = false) =>

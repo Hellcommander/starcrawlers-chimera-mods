@@ -402,6 +402,7 @@ namespace SCClassLoader
         {
             private float next;
             private bool have;
+            private EventBus.Watch watch;
 
             public void OnPointerClick(PointerEventData e) => Toggle();
 
@@ -410,9 +411,12 @@ namespace SCClassLoader
                 if (Time.unscaledTime >= next)
                 {
                     next = Time.unscaledTime + 0.5f;
-                    have = Player.instance != null && !Game.Game_isLoading && Socketed().Count > 0;
-                    foreach (Transform c in transform) c.gameObject.SetActive(have);
-                    GetComponent<Image>().enabled = have;
+                    if (!EventBus.Unchanged(ref watch, EventBus.Abilities | EventBus.Turn))
+                    {
+                        have = Player.instance != null && !Game.Game_isLoading && Socketed().Count > 0;
+                        foreach (Transform c in transform) c.gameObject.SetActive(have);
+                        GetComponent<Image>().enabled = have;
+                    }
                 }
                 if (have && Input.GetKeyDown(PanelKey.Value) && EventSystem.current?.currentSelectedGameObject?.GetComponent<TMP_InputField>() == null) Toggle();
             }

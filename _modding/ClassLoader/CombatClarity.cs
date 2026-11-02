@@ -148,6 +148,74 @@ namespace SCClassLoader
         // ---- pacing ----------------------------------------------------------------------------------------------
 
         private static readonly AccessTools.FieldRef<Game, float> SafetyTimerRef = AccessTools.FieldRefAccess<Game, float>("resolveSafetyTimer");
+        private const float MostStepWaits = 3f;
+        private static readonly AccessTools.FieldRef<WaitForSeconds, float> NapLength = AccessTools.FieldRefAccess<WaitForSeconds, float>("m_Seconds");
+        private static float stepsWaited;
+
+        // The game gives every enemy a frame even when its turn was over before it could yield, and another for each step
+        // inside it, so a turn lasted enemies times frame time. With the bus on, a step that already finished gives its frame
+        // back while the frame still has time. Anything still playing out waits as it always did.
+        private static int sliceFrame;
+        private static bool stepEnded;
+        private static readonly System.Diagnostics.Stopwatch slice = new System.Diagnostics.Stopwatch();
+
+        private static bool FrameNotNeeded(object cur)
+        {
+            // a coroutine over at once gives no handle, and one with a handle is still playing out
+            return EventBus.On && cur == null && stepEnded && SliceLeft();
+        }
+
+        private static bool SliceLeft()
+        {
+            if (sliceFrame != Time.frameCount)
+            {
+                sliceFrame = Time.frameCount;
+                slice.Restart();
+            }
+            return slice.Elapsed.TotalMilliseconds < BusProfile.TurnMs;
+        }
+
+        // Every swing near you waits out its impact, so with a crowd around you a turn was mostly enemies queueing to act. The
+        // first seconds of a phase stay in order, fewer of them the bigger the crowd, since nobody can follow hundreds in turn;
+        // after that a turn still playing goes on beside the next ones, as on a shared clock.
+        private const float FollowableCrowd = 30f;
+        private static readonly AccessTools.FieldRef<AI_Manager, List<AI>> Ais = AccessTools.FieldRefAccess<AI_Manager, List<AI>>("ais");
+        private static float phaseBegan, inOrderFor = MostStepWaits;
+        private static int turnsPlaying;
+
+        private static bool ActTogether => EventBus.On && !Breachwork.Api.SimultaneousTurns && Time.unscaledTime - phaseBegan >= inOrderFor;
+
+        private static IEnumerator Counted(IEnumerator inner)
+        {
+            turnsPlaying++;
+            try { while (inner.MoveNext()) yield return inner.Current; }
+            finally { turnsPlaying--; }
+        }
+
+        private static IEnumerator Tracked(IEnumerator inner)
+        {
+            try
+            {
+                while (true)
+                {
+                    stepEnded = false;
+                    if (!inner.MoveNext()) yield break;
+                    if (!FrameNotNeeded(inner.Current)) yield return inner.Current;
+                }
+            }
+            finally { stepEnded = true; }
+        }
+
+        [HarmonyPatch]
+        private static class Patch_EnemySteps
+        {
+            private static IEnumerable<System.Reflection.MethodBase> TargetMethods() =>
+                AccessTools.GetTypesFromAssembly(typeof(AI).Assembly).Where(t => typeof(AI).IsAssignableFrom(t))
+                    .SelectMany(t => AccessTools.GetDeclaredMethods(t))
+                    .Where(m => m.ReturnType == typeof(IEnumerator) && m.Name != nameof(AI.TakeTurn) && !m.IsAbstract && !m.IsGenericMethod);
+
+            private static void Postfix(ref IEnumerator __result) { if (__result != null) __result = Tracked(__result); }
+        }
 
         /// <summary>
         /// Waits (at most <paramref name="max"/> seconds) while something is busy. The turn's softlock guard aborts a
@@ -192,8 +260,12 @@ namespace SCClassLoader
             private static IEnumerator Wrap(AI_Manager am, bool isFast, IEnumerator inner)
             {
                 bool fighting = InCombat;
+                stepsWaited = 0f;
+                phaseBegan = Time.unscaledTime;
+                inOrderFor = MostStepWaits * Mathf.Min(1f, FollowableCrowd / Mathf.Max(1, Ais(am).Count));
                 if (!isFast)
                 {
+                    turnsPlaying = 0; // a coroutine stopped from outside never reports back
                     EnemyPhase = true;
                     if (fighting && WaitForMoves.Value && !Breachwork.Api.SimultaneousTurns)
                     {
@@ -204,6 +276,7 @@ namespace SCClassLoader
                 while (true)
                 {
                     object cur;
+                    stepEnded = false;
                     try
                     {
                         if (!inner.MoveNext()) break;
@@ -214,8 +287,17 @@ namespace SCClassLoader
                         Plugin.Log.LogError("Enemy turn: " + e);
                         break;
                     }
+                    // a crowd can take longer than the guard allows; a phase that keeps moving isn't stuck
+                    if (EventBus.On && !Breachwork.Api.SimultaneousTurns && Game.instance != null) SafetyTimerRef(Game.instance) = 0f;
+                    if (FrameNotNeeded(cur)) continue;
+                    if (cur is Coroutine && ActTogether)
+                    {
+                        if (!SliceLeft()) yield return null;
+                        continue;
+                    }
                     yield return cur;
                 }
+                if (EventBus.On && !Breachwork.Api.SimultaneousTurns) yield return WaitWhile(() => turnsPlaying > 0, MostStepWaits);
                 if (!isFast)
                 {
                     if (InCombat)
@@ -234,17 +316,65 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>
+        /// Hazards and world objects update one after another, a frame or more each. On a shared clock that held your action
+        /// open past the next tick, so a fight full of fields left you no gap to act in. There nobody waits for them.
+        /// </summary>
+        [HarmonyPatch]
+        private static class Patch_WorldTurn
+        {
+            private static IEnumerable<System.Reflection.MethodBase> TargetMethods() => new System.Reflection.MethodBase[]
+            {
+                AccessTools.Method(typeof(HazardManager), nameof(HazardManager.Turn)), AccessTools.Method(typeof(InteractiveManager), nameof(InteractiveManager.Turn)),
+                AccessTools.Method(typeof(AI_Manager), nameof(AI_Manager.DoAiTurn)), AccessTools.Method(typeof(Game), nameof(Game.Resolve_Wait))
+            };
+
+            private static void Postfix(ref IEnumerator __result) => __result = Together(__result);
+
+            private static IEnumerator Together(IEnumerator inner)
+            {
+                while (inner.MoveNext())
+                {
+                    if (Breachwork.Api.SimultaneousTurns && (inner.Current == null || inner.Current is Coroutine)) continue;
+                    yield return inner.Current;
+                }
+                worldDone = true;
+            }
+        }
+
+        private static bool worldDone;
+
+        /// <summary>Waiting on a step that is already over still costs a frame, and a turn has five: at low frame rates that alone kept you out for a third of every second.</summary>
+        [HarmonyPatch(typeof(Game), nameof(Game.iPlayerAction))]
+        private static class Patch_PlayerAction
+        {
+            private static void Postfix(ref IEnumerator __result) => __result = Straight(__result);
+
+            private static IEnumerator Straight(IEnumerator inner)
+            {
+                while (true)
+                {
+                    worldDone = false;
+                    if (!inner.MoveNext()) yield break;
+                    if (worldDone && Breachwork.Api.SimultaneousTurns && (inner.Current == null || inner.Current is Coroutine)) continue; // null: a coroutine over at once gives no handle
+                    yield return inner.Current;
+                }
+            }
+        }
+
         /// <summary>A visible enemy's step finishes before the next enemy acts.</summary>
         [HarmonyPatch(typeof(AI), nameof(AI.TakeTurn))]
         private static class Patch_TakeTurn
         {
-            private static void Postfix(AI __instance, ref IEnumerator __result) => __result = Wrap(__instance, __result);
+            private static void Postfix(AI __instance, ref IEnumerator __result) => __result = Counted(Tracked(Wrap(__instance, __result)));
 
             private static IEnumerator Wrap(AI ai, IEnumerator inner)
             {
                 while (true)
                 {
                     object cur;
+                    stepEnded = false;
+                    if (ActTogether && ai != null) Game.LAST_CHARACTER = ai.GetCharacter(); // who gets the credit for what lands now
                     try
                     {
                         if (!inner.MoveNext()) break;
@@ -255,6 +385,13 @@ namespace SCClassLoader
                         Plugin.Log.LogError("Enemy step: " + e);
                         break;
                     }
+                    if (FrameNotNeeded(cur)) continue;
+                    // an enemy coming out of a stun pauses a second: fine for one, minutes for a stunned crowd, so these share the same allowance
+                    if (EventBus.On && cur is WaitForSeconds nap)
+                    {
+                        if (stepsWaited >= inOrderFor) continue;
+                        stepsWaited += NapLength(nap);
+                    }
                     yield return cur;
                 }
                 if (!OneAtATime.Value || !InCombat || Breachwork.Api.SimultaneousTurns) yield break;
@@ -264,7 +401,12 @@ namespace SCClassLoader
                 Character c = ai.GetCharacter();
                 Character_Mover m = c != null ? c.GetMover() : null;
                 if (m == null || !m.isMoving || !Seen(c)) yield break;
+                // a second each reads well for a few enemies and is minutes for a crowd, so with the bus on a turn only
+                // spends so long on this; those left walk together, and their attacks still go one at a time
+                if (EventBus.On && stepsWaited >= inOrderFor) yield break;
+                float began = Time.unscaledTime;
                 yield return WaitWhile(() => m != null && m.isMoving, 1f);
+                stepsWaited += Time.unscaledTime - began;
             }
         }
 

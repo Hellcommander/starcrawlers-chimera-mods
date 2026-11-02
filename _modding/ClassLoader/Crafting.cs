@@ -112,9 +112,27 @@ namespace SCClassLoader
         private static IEnumerable<Item> Carried() =>
             (Menu_Inventory.GetItems() ?? new List<Item>()).Where(i => i != null && i.inPlayerInventory);
 
-        internal static int Count(CostSpec c) => Carried().Where(i => Matches(i, c)).Sum(i => Math.Max(1, i.stack));
+        // the hotbar asks these for every skill with an item cost, every frame
+        internal static int Count(CostSpec c)
+        {
+            List<Item> items = Menu_Inventory.GetItems();
+            if (items == null) return 0;
+            int n = 0;
+            for (int x = 0; x < items.Count; x++)
+            {
+                Item i = items[x];
+                if (i != null && i.inPlayerInventory && Matches(i, c)) n += Math.Max(1, i.stack);
+            }
+            return n;
+        }
 
-        internal static bool HasAll(IEnumerable<CostSpec> costs) => (costs ?? Enumerable.Empty<CostSpec>()).All(c => Count(c) >= c.count);
+        internal static bool HasAll(IEnumerable<CostSpec> costs)
+        {
+            if (costs == null) return true;
+            foreach (CostSpec c in costs)
+                if (Count(c) < c.count) return false;
+            return true;
+        }
 
         /// <summary>Takes the items out of the inventory, newest stacks last. Never touches equipped gear or the stash.</summary>
         internal static void Consume(CostSpec c)

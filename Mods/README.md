@@ -1880,6 +1880,29 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
 
 `[Fixes]` in the config file; each one can be turned off.
 
+Found while stress testing the event bus, and working without it (`SCCL_DEVTEST=bugfixes` shows each bug with its switch
+off, then gone with it on):
+
+- **EffectsMissNoTurn:** when an effect on a character ended, the next one in the list was skipped: it missed that
+  turn's countdown, or sat out that hit. This covers turns, hits, blocks, dodges, crits and damage dealt, so some effects
+  now run out one turn sooner than before.
+- **WarpJumpMidCast:** an enemy destroyed while its Warp Jump travelled threw an error, and so did a target destroyed in
+  that wait. Now the jump stops with its caster, and with its target gone the caster still lands.
+- **PlayerImmortalTag:** your health ignored the game's IMMORTAL tag, so damage over time could kill you in the cutscene
+  after beating Cerberus.
+- **EventSpawnWithNoRoom:** an event that spawns a mob threw an error when no tile near it was free, and the event
+  stopped there. It now looks further out, then goes on without the mob.
+- **LevelPastTheTable:** levelling past 100 threw an error in the middle of the level-up. The xp table now continues.
+- **DeadBagItems:** finding an item by name threw an error on a destroyed item still in the bag's list.
+- **TargetWithNoSkill:** aiming at a character with no skill selected threw an error.
+- **ArmCannonWithoutSkill:** the Ready effect of Arm Cannon and Thunderclap threw an error during the turn if it sat on
+  someone without the skill.
+- **EnemyAlarmOncePerTurn:** an enemy under fire looked at its attacker and called for help on every hit, because the
+  game's "already called" flag is never set. Now it's once a turn per attacker. Always on with `EventBus`.
+- **ZoneLeftovers:** destroyed quests and effects stayed in two of the game's lists, keeping old floors in memory.
+
+Found earlier:
+
 - **BossesAreElites:** perks that reward elites only looked for the game's elite tag, so a boss gave less than an elite.
   Xeno's Render Ooze now makes the elite ooze from boss, miniboss, nemesis and kill-squad corpses too.
   Mod conditions (`"tag": "elite"`) and `execute` already treat bosses as elites, whatever this is set to.
@@ -2075,7 +2098,7 @@ one apostrophe get in, as in the game. `SCCL_DEVTEST=names` and then `SCCL_DEVTE
 and the save list in game.
 
 **Interface** sets the size and see-through of every panel the loader draws: the body picker, bonus skill menu, build
-list, combat badge, crew screen, dialogs, faction screens, graveyard, hotbar page label, job tracker, minion strip, minion right-click menu, this page, order strip,
+list, combat badge, crew screen, dialogs, effect fold tab, faction screens, graveyard, hotbar page label, job tracker, minion strip, minion right-click menu, this page, order strip,
 party panel, reactions strip, Rune Matrix, load-screen class icons, stash tabs, Synergies tab and synergy tooltip. Each
 has `<Panel>Size` (50-200%) and `<Panel>Opacity` (10-100%), and `AllSize` / `AllOpacity` multiply into every one.
 Windows and HUD strips also have a small grip in the corner: drag it to change that panel's size setting (`ResizeGrips`
@@ -2093,7 +2116,9 @@ row has no tier slot there, else the points line left of the skill point count (
 them, and the crew, body picker, faction, Rune Matrix and graveyard screens have one in their top-left corner.
 Click it to fold the panel down to a `+ Name` tab, and click that to unfold it. The HUD strips remember being folded
 between sessions; screens open whole every time. `CollapseButtons` off removes the tabs and shows everything. (The
-party panel and resource bars already have their own hide tab and hotkey.)
+party panel and resource bars already have their own hide tab and hotkey.) Your effect icons have the same tab beside
+the top of their columns: folded, it reads `+ Effects` with your buffs counted in green and debuffs in red, and new
+effects keep counting there (`SCCL_DEVTEST=effectbox,effectbox2`).
 
 **Character tips:** the tip over a character (name, health, effects) shows only while you hold
 `CharacterTipKey` (Left Alt by default), so it never covers what you're about to click. `CharacterTipNeedsKey`
@@ -2272,6 +2297,32 @@ public class MyPlugin : BreachworkPlugin
 "actions": [ { "do": "MyMod:smite", "amount": 5, "perRank": 1, "scale": "Smarts", "chance": 80 } ]
 ```
 
+### The event bus
+
+An optional part of the loader, off until the player turns on the **Threading** mod in the Mod Manager (it loads the plugin
+that runs the bus, and also moves enemy paths to worker threads and stops head-turning bone work on off-screen models) or sets
+`EventBus = true` under `[Performance]` in `BepInEx/config` (or turns it on in **Options > Mod Settings**). It applies at once. With it on, game events skip characters
+with no proc listening for them and go straight to the effects that do, each turn's synergy upkeep walks only the synergies you use, with the whole pack looked at when a rank or a choice on the Synergies tab changes and every 2 seconds in case a change had no hook, and the pet strip, order bar, resource bars, reaction list, party cards and form check
+only refresh when what they show changes, with a look every 2 seconds in case a change had no hook. Damage numbers and mod
+particles off screen are skipped, and `MaxDamageNumbers` (40) and `MaxLiveEffects` (300) cap how many are up; these only change
+the look, never the damage or what a skill does. A burst of mod particles past `MaxEffectSpawnsPerFrame` (6) plays over the
+next few frames, finished effects are reused, particles (the game's too) lose their shadows, sorting and collision, the game's
+own effects go quiet where no body is drawn or past `MaxCopiesOfGameEffect` (12) copies at once, though never within 6 tiles of
+you, past `MaxCopiesOfStatusLook` (40) enemies showing the same status its particle waits for a place, looping effects further than `ParkEffectsBeyond` (20) tiles from you or in a room you can't see into stop until you come back (0 = never), a wild area spell or a blast from a status or a dying carrier lands on
+its first victim and on you at once and on the rest over the next frames, always before the turn ends, and the combat log rebuilds its text at most five times a second instead of once a line, with only its last lines built while they keep coming; the rest are back when it calms down or you scroll up. A status on an enemy applies at once while its look follows a few a frame, once that enemy is within `ParkEffectsBeyond`, and `MaxStatusGlows` (40) caps whole-body glows. Area spells and blasts find their tiles from a grid instead of walking the floor. A skill's sweep over a crowd keeps its beat up to three quarters of a second in all, then quickens, and looks up what rewrites a skill from a short list instead of everything you know and carry. `OneAtATime` spends at most 3 seconds per enemy phase on waiting for steps, after which the rest of a crowd walks together while attacks stay in order; the pause a stunned enemy takes coming round counts toward those seconds. Those seconds shrink as the crowd grows past 30 enemies, and once they're spent a turn still playing out goes on beside the next ones rather than holding them up. Enemy turns that have nothing to wait for use a set share of each frame, not a frame each. Physics and other fixed-step work runs less often while frames are slow, and back to normal once they recover. The XP bar and the skills menu update once a frame, and the game's own info lines stop going to the log, leaving warnings and errors. Each enemy answers an attacker and calls for help once a turn instead of once per hit, and fading meshes and long pursuits skip repeated work. An enemy that has started an attack plays it out instead of being cut off by a flinch. `HardwareTier` (Auto, Low, Mid, High; Auto goes by your CPU's threads) sets how much of this your computer is asked for: worker threads, the bus's share of a frame, and how many effects show at once. With the Threading mod, enemy paths are worked out on `WorkerThreads` (0 = the tier's number: half your CPU's threads on Low, all but two otherwise) when a crowd's phase starts (twice a second in Realtime with Pause), then checked against the map as each enemy moves, and bodies more than 20 tiles from you stop turning their heads, idling and sloshing their flasks, and rest their animators while no camera sees them; they still act as usual. `JobWorkers` (0 = the
+game's own number) sets how many threads Unity may use for particles, skinning and culling. `GraphicsJobs` spreads rendering
+over your threads and `IncrementalGC` spreads the garbage collector's pauses over frames; both work without `EventBus` and take effect the next time the game starts. A plugin should work with the
+bus off: check `Api.EventBusOn`.
+
+`Context.Subscribe(topic, handler)` hears `Api.Publish(topic, data)`. Handlers run on the main thread, in a later frame,
+under one 2 ms budget per frame. `Api.Publish` is safe from your own threads, but a worker must send plain data, never
+a `Character`, `Item` or other game object. It returns false when the bus is off or 4096 messages are waiting, and that
+message is gone. Messages still waiting when a level loads are dropped. The loader's own topics come at most once a frame:
+`bus:turn`, `bus:effects`, `bus:abilities`, `bus:allies`, `bus:health`, `bus:orders`, `bus:reactions`, `bus:settings`, and at
+API level 8 `bus:synergies`, for when a synergy's level may have moved; `Api.SynergyLevel(id)` reads the level you use, and
+`bus:items`, for when your bag, stash or worn gear changed, and at API level 9 `bus:hazards`, for when a hazard landed, left
+or moved tiles.
+
 ### What a plugin gets
 
 A plugin is a class deriving from `BreachworkPlugin`; every one in a dll is started, in load order. `OnLoad` runs early in
@@ -2292,6 +2343,7 @@ Everything else is on `Context`:
 | `GetSaved(key, fallback)`, `SetSaved(key, value)` | | An int, float, bool or string saved with the run. Only these, so a save still opens without your plugin. |
 | `Harmony` | | Your own Harmony instance, for anything the API doesn't cover: `Context.Harmony.PatchAll(GetType().Assembly)`. |
 | `AddPortraitButton(label, click)` | | A button on the character picture picker (API level 2). |
+| `Subscribe(topic, handler)` | | Hears a topic on the event bus, on the main thread (API level 5; see below). Returns what to call to stop. |
 | `Log`, `ModFolder`, `PathTo(file)`, `StartCoroutine(routine)` | | Log lines show on your mod's page in the Mods screen and the mod manager. |
 
 An action's handler gets an `ActionCall`: `Caster`, `Target`, `Attacker`, `Victim`, `Ally`, `Source`, `Rank`, `Center`,
@@ -2299,7 +2351,7 @@ An action's handler gets an `ActionCall`: `Caster`, `Target`, `Attacker`, `Victi
 scaling), `Stacks(who, "@Effect")`, and `Run(...)` to run built-in actions in the same context, which is the easy way to
 deal damage or apply effects with all their usual rules. `Api` has helpers for code outside a call: `EnemiesNear`,
 `IsAlly`, `Stacks`, `Counter`, `SetCounter`, `Vfx`, `FloatText`, `ParseActions`, `RunActions`, `ModLoaded`, and at API level 2
-`CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait`, and at level 3 `SimultaneousTurns`.
+`CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait`, at level 3 `SimultaneousTurns`, and at level 8 `SynergyLevel`.
 
 Names you register are always your mod's (`MyMod:name`), so plugins can't collide, and json refers to them case-insensitively.
 Files in a mod's `plugins/`, `bin/` and `obj/` folders are never read as mod data, so a plugin can keep its own json there.
@@ -2334,7 +2386,7 @@ own, spread over the second, and yours pass at about one a second. A skill with 
   tick, while the bar at the top fills. If you give none, a tick passes as a Wait. Enemies and minions walk and swing the
   whole time, during your own actions too. Exploring stays turn-based, and the
   clock stops when the game calls the fight over (nothing has seen you for 8 turns).
-- **Pause** with P: nothing changes, and you can look around and give orders. They run in order when you resume, one per
+- **Pause** with P or the button at the top: nothing changes, and you can look around and give orders. They run in order when you resume, one per
   tick. What's already swinging finishes first, which the screen shows as PAUSING.
 - A new step replaces a step already waiting, and at most 6 orders wait. An order that can't be done any more (its target
   died, the skill isn't ready, you were moved) is dropped with a line in the log, and costs nothing.

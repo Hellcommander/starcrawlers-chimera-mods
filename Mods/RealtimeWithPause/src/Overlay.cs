@@ -4,21 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace RealtimeWithPause
 {
-    /// <summary>What the clock is doing: a tint and a big PAUSED while paused, otherwise a thin bar filling up until you can act again, and the waiting orders under it.</summary>
+    /// <summary>What the clock is doing: a tint and a big PAUSED while paused, otherwise a thin bar filling up until you can act again, and the waiting orders under it. Beside the title, a button that pauses and resumes.</summary>
     internal sealed class Overlay
     {
         private static readonly Color Amber = new Color(1f, 0.76f, 0.29f);
 
         private GameObject root;
         private GameObject tint;
-        private TextMeshProUGUI title, list;
-        private RectTransform fill;
+        private TextMeshProUGUI title, list, buttonText;
+        private RectTransform fill, button;
 
-        internal static Overlay Make()
+        /// <summary>The pointer is on the button, so the click is the button's and not the world's.</summary>
+        internal bool OverButton => root.activeSelf && button.gameObject.activeSelf && RectTransformUtility.RectangleContainsScreenPoint(button, Input.mousePosition, null);
+
+        internal static Overlay Make(System.Action onPause)
         {
             var o = new Overlay { root = new GameObject("RealtimeWithPause_Overlay") };
             Object.DontDestroyOnLoad(o.root);
@@ -28,6 +32,7 @@ namespace RealtimeWithPause
             CanvasScaler s = o.root.AddComponent<CanvasScaler>();
             s.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             s.referenceResolution = new Vector2(1920f, 1080f);
+            o.root.AddComponent<GraphicRaycaster>();
 
             Image tint = o.Rect<Image>("Tint", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             tint.color = new Color(0.05f, 0.09f, 0.16f, 0.32f);
@@ -47,6 +52,28 @@ namespace RealtimeWithPause
             o.fill.anchorMin = Vector2.zero;
             o.fill.anchorMax = Vector2.one;
             o.fill.offsetMin = o.fill.offsetMax = Vector2.zero;
+
+            Image plate = o.Rect<Image>("PauseButton", new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(170f, -170f), new Vector2(310f, -128f));
+            plate.color = new Color(0.05f, 0.09f, 0.16f, 0.85f);
+            o.button = plate.rectTransform;
+            Button click = plate.gameObject.AddComponent<Button>();
+            click.targetGraphic = plate;
+            click.navigation = new Navigation { mode = Navigation.Mode.None };
+            ColorBlock colors = click.colors;
+            colors.highlightedColor = new Color(1.6f, 1.6f, 1.6f, 1f);
+            colors.pressedColor = new Color(0.8f, 0.8f, 0.8f, 1f);
+            click.colors = colors;
+            click.onClick.AddListener(() =>
+            {
+                onPause();
+                // it mustn't stay selected, or Space and Enter would press it again
+                EventSystem.current?.SetSelectedGameObject(null);
+            });
+            o.buttonText = o.Label("PauseLabel", font, 20f, 0f, 0f);
+            o.buttonText.rectTransform.SetParent(plate.transform, false);
+            o.buttonText.rectTransform.anchorMin = Vector2.zero;
+            o.buttonText.rectTransform.anchorMax = Vector2.one;
+            o.buttonText.rectTransform.offsetMin = o.buttonText.rectTransform.offsetMax = Vector2.zero;
             return o;
         }
 
@@ -73,9 +100,11 @@ namespace RealtimeWithPause
             return t;
         }
 
-        internal void Show(bool paused, bool finishing, bool held, float next, List<string> orders, KeyCode key)
+        internal void Show(bool paused, bool finishing, bool held, float next, List<string> orders, KeyCode key, bool withButton)
         {
             root.SetActive(true);
+            button.gameObject.SetActive(withButton);
+            buttonText.text = $"{(paused ? "Resume" : "Pause")} <color=#BBBBBB>({key})</color>";
             tint.SetActive(paused && !finishing);
             title.color = paused ? Amber : Color.white;
             title.text = finishing ? "PAUSING..." : paused ? "PAUSED" : held ? "REALTIME <size=70%>(holding)</size>" : "REALTIME";

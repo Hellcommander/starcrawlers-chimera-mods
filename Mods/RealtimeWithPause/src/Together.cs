@@ -2,7 +2,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Breachwork;
 using HarmonyLib;
 using UnityEngine;
@@ -22,16 +21,26 @@ namespace RealtimeWithPause
         {
             internal AI ai;
             internal bool done;
+            internal float began;
         }
+
+        // a turn this old lost its coroutine (its AI was switched off or stopped), so it can't be waited for
+        private const float LostAfter = 30f;
+
+        // the crowd's timers come up faster than a frame can start them, so a big fight stretches rather than stops
+        private const double StartingMsPerFrame = 8.0;
+        private static readonly System.Diagnostics.Stopwatch starting = new System.Diagnostics.Stopwatch();
 
         private static readonly AccessTools.FieldRef<AI_Manager, List<AI>> Ais = AccessTools.FieldRefAccess<AI_Manager, List<AI>>("ais");
         private static readonly AccessTools.FieldRef<AI_Manager, List<AI>> AisFast = AccessTools.FieldRefAccess<AI_Manager, List<AI>>("ais_fast");
         private static readonly AccessTools.FieldRef<AI_Manager, List<Corpse>> Corpses = AccessTools.FieldRefAccess<AI_Manager, List<Corpse>>("corpses");
 
-        private static readonly List<Running> running = new List<Running>();
+        private static readonly Dictionary<AI, Running> running = new Dictionary<AI, Running>();
+        private static readonly List<AI> everyone = new List<AI>(), justThisOne = new List<AI>();
+        private static readonly List<Corpse> noCorpses = new List<Corpse>();
         private static readonly Dictionary<AI, float> due = new Dictionary<AI, float>();
         private static float clock;
-        private static bool oneAi, sawYou;
+        private static bool oneAi, sawYou, fightBegins = true;
 
         internal static bool On => Api.SimultaneousTurns;
 
@@ -40,8 +49,9 @@ namespace RealtimeWithPause
         {
             get
             {
-                running.RemoveAll(r => r.done || r.ai == null || !r.ai.gameObject.activeInHierarchy);
-                return running.Count > 0;
+                foreach (Running r in running.Values)
+                    if (!r.done && r.ai != null && r.ai.gameObject.activeInHierarchy) return true;
+                return false;
             }
         }
 
@@ -50,16 +60,30 @@ namespace RealtimeWithPause
             due.Clear();
             running.Clear();
             sawYou = false;
+            FightOver();
         }
+
+        /// <summary>
+        /// The next run is a new fight. Whatever started it noticed you, and not every AI will have had its turn by the world's
+        /// first tick, as they have in a round, so that tick mustn't find nobody looking and call it off.
+        /// </summary>
+        internal static void FightOver() => fightBegins = true;
 
         /// <summary>Called every frame the world is running: starts the turn of every AI whose time has come.</summary>
         internal static void Run(float deltaTime, float tick)
         {
             AI_Manager am = AI_Manager.instance;
             if (am == null || Player.instance == null) return;
+            if (fightBegins) sawYou = true;
+            fightBegins = false;
             clock += deltaTime;
-            foreach (AI ai in Ais(am).ToList())
+            everyone.Clear();
+            everyone.AddRange(Ais(am));
+            starting.Restart();
+            foreach (AI ai in everyone)
             {
+                // those left over keep their place: a timer that's up stays up until there's room
+                if (starting.Elapsed.TotalMilliseconds >= StartingMsPerFrame) break;
                 if (ai == null || ai.GetCharacter() == null || ai.GetCharacter().GetIsDead()) continue;
                 if (!due.TryGetValue(ai, out float at))
                 {
@@ -69,7 +93,7 @@ namespace RealtimeWithPause
                 if (clock < at || Player.instance.GetIsDead()) continue;
                 bool quick = ai.GetCharacter().HasTag("FAST") || ai.GetCharacter().HasTag("TEMP_FAST");
                 due[ai] = clock + tick * Random.Range(0.8f, 1.2f) * (quick ? 0.5f : 1f);
-                if (running.Any(r => r.ai == ai && !r.done)) continue; // still busy: its next one waits a tick
+                if (running.TryGetValue(ai, out Running r) && !r.done && clock - r.began < LostAfter) continue; // still busy: its next one waits a tick
                 TakeTurnAlone(am, ai);
             }
         }
@@ -83,8 +107,13 @@ namespace RealtimeWithPause
             List<AI> all = Ais(am);
             List<Corpse> corpses = Corpses(am);
             int countdown = am.outOfCombatTimer;
-            Ais(am) = new List<AI> { ai };
-            Corpses(am) = new List<Corpse>();
+            justThisOne.Clear();
+            justThisOne.Add(ai);
+            noCorpses.Clear();
+            Ais(am) = justThisOne;
+            Corpses(am) = noCorpses;
+            // The phase counts down when nobody saw you and ends the fight at zero. That's the world's to do: one far-off AI mustn't, so it's given a step to spare.
+            am.outOfCombatTimer = Mathf.Max(countdown, 1) + 1;
             oneAi = true;
             try
             {
@@ -97,9 +126,9 @@ namespace RealtimeWithPause
                 Ais(am) = all;
                 Corpses(am) = corpses;
                 AisFast(am).Clear();
+                if (am.sawPlayerThisTurn) sawYou = true;
+                else am.outOfCombatTimer = countdown;
             }
-            if (am.sawPlayerThisTurn) sawYou = true;
-            else am.outOfCombatTimer = countdown;
         }
 
         /// <summary>The world's part of the game's AI phase: corpses and the countdown, with no AI in it.</summary>
@@ -132,8 +161,8 @@ namespace RealtimeWithPause
             Character_Mover mover = target != null ? target.GetMover() : null;
             bool moving = mover != null && mover.isMoving;
             if (moving) mover.isMoving = false;
-            var r = new Running { ai = ai };
-            running.Add(r);
+            var r = new Running { ai = ai, began = clock };
+            running[ai] = r;
             ai.StartCoroutine(Drive(r, turn));
             if (moving) mover.isMoving = true;
             yield break;
@@ -148,6 +177,7 @@ namespace RealtimeWithPause
                 yield return turn.Current;
             }
             r.done = true;
+            if (r.ai != null && running.TryGetValue(r.ai, out Running now) && now == r) running.Remove(r.ai);
         }
 
         [HarmonyPatch(typeof(AI_Manager), nameof(AI_Manager.DoAiTurn))]

@@ -61,7 +61,15 @@ namespace SCClassLoader
         internal static readonly Dictionary<string, Runtime> Specs = new Dictionary<string, Runtime>();
 
         /// <summary>The id must avoid SKILL/PASSIVE/RARE/MUTATION/CURSED/QUEST: EffectManager routes on those words.</summary>
-        internal static string MakeId(string classId, string name) => Prefix + Sanitize(classId) + "_" + Sanitize(name);
+        internal static string MakeId(string classId, string name)
+        {
+            var key = (classId, name);
+            if (!madeIds.TryGetValue(key, out string id)) madeIds[key] = id = Prefix + Sanitize(classId) + "_" + Sanitize(name);
+            return id;
+        }
+
+        /// <summary>Conditions and stack checks ask for the same few ids on every hit, and building one walks both names letter by letter.</summary>
+        private static readonly Dictionary<(string, string), string> madeIds = new Dictionary<(string, string), string>();
 
         private static string Sanitize(string s)
         {
@@ -82,7 +90,7 @@ namespace SCClassLoader
         /// <summary>Stack count lives in chargeCount, which the base class already saves and restores.</summary>
         internal int Stacks => Mathf.Max(1, chargeCount);
 
-        private static int burstDepth;
+        internal static int burstDepth;
 
         /// <summary>
         /// Adds stacks (clamped to the cap), rescales stats, and bursts at burstAt. Stacks already above a cap that
@@ -110,7 +118,7 @@ namespace SCClassLoader
             {
                 Character who = target;
                 RemoveInstant();
-                if (who != null && !who.GetIsDead()) who.CalculateStats();
+                if (who != null && !who.GetIsDead()) BuffLane.AfterRemoved(who);
                 return;
             }
             chargeCount = Stacks - n;
@@ -162,7 +170,8 @@ namespace SCClassLoader
                 {
                     var hit = AI_Manager.instance.GetEnemiesAt(bearer.GetMover().GetCurrentNavNode().transform.position, radius);
                     if (bearer != Player.instance && !TileStacks.IsAlly(bearer) && !hit.Contains(bearer)) hit.Insert(0, bearer); // your own summons don't blow themselves up
-                    foreach (Character ch in hit) Actions.Run(rest, c, ch);
+                    if (self.Count == 0) HitLane.Each(hit, rest, c);
+                    else foreach (Character ch in hit) Actions.Run(rest, c, ch);
                 }
                 else Actions.Run(rest, c, bearer);
                 Actions.Run(self, c, c.caster);
@@ -238,13 +247,16 @@ namespace SCClassLoader
         {
             EffectSpec s = rt.spec;
             int k = MaxStacks > 1 ? Stacks : 1;
-            attributeMods = (s.stats ?? new Dictionary<string, int>())
-                .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
-                .Where(x => x != null).ToList();
-            resistanceMods = (s.resists ?? new Dictionary<string, int>())
-                .Select(kv => Enum.TryParse(kv.Key, true, out DAMAGE_TYPE t) ? new DmgObj(t, kv.Value * k) : null)
-                .Where(x => x != null).ToList();
-            if (target != null && !target.GetIsDead()) target.CalculateStats();
+            if ((s.stats?.Count ?? 0) + (s.resists?.Count ?? 0) + attributeMods.Count + resistanceMods.Count > 0)
+            {
+                attributeMods = (s.stats ?? new Dictionary<string, int>())
+                    .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
+                    .Where(x => x != null).ToList();
+                resistanceMods = (s.resists ?? new Dictionary<string, int>())
+                    .Select(kv => Enum.TryParse(kv.Key, true, out DAMAGE_TYPE t) ? new DmgObj(t, kv.Value * k) : null)
+                    .Where(x => x != null).ToList();
+            }
+            if (target != null && !target.GetIsDead() && !BuffLane.MovesNothing(this)) target.CalculateStats();
             if (target == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
         }
 
@@ -265,7 +277,7 @@ namespace SCClassLoader
             try
             {
                 RemoveInstant(); // gone before the burst so chained re-applies start fresh
-                bearer.CalculateStats();
+                BuffLane.AfterRemoved(bearer);
                 // a burst on you is gone before OnApplied could ask for its shot
                 if (bearer == Player.instance) DashCam.Showcase(s.thirdPerson);
                 Vector3 at = bearer.GetHitFx().position;
@@ -278,7 +290,8 @@ namespace SCClassLoader
                 {
                     var hit = AI_Manager.instance.GetEnemiesAt(bearer.GetMover().GetCurrentNavNode().transform.position, s.burstRadius);
                     if (bearer != Player.instance && !TileStacks.IsAlly(bearer) && !hit.Contains(bearer)) hit.Insert(0, bearer); // your own summons don't blow themselves up
-                    foreach (Character c in hit) Actions.Run(rest, bctx, c);
+                    if (self.Count == 0) HitLane.Each(hit, rest, bctx);
+                    else foreach (Character c in hit) Actions.Run(rest, bctx, c);
                 }
                 else if (bearer != Player.instance) Actions.Run(rest, bctx, bearer);
                 Actions.Run(self, bctx, bctx.caster);
@@ -446,7 +459,7 @@ namespace SCClassLoader
             Character t = target;
             Unroot();
             base.Clear();
-            if (t != null && !t.GetIsDead()) t.CalculateStats();
+            if (t != null && !t.GetIsDead()) BuffLane.AfterRemoved(t);
         }
 
         public override void Deserialize(object d)
@@ -544,8 +557,9 @@ namespace SCClassLoader
             int lost = before - Mathf.Max(0, c.health);
             if (lost <= 0) return;
             if (c == Player.instance) PlayerLost += lost;
-            foreach (Effect e in c.effects.GetEffects())
-                if (e is ModEffect me) me.Taken += lost;
+            List<Effect> all = c.effects.effects;
+            for (int i = 0; i < all.Count; i++)
+                if (all[i] is ModEffect me && me != null) me.Taken += lost;
         }
 
         [HarmonyLib.HarmonyPatch(typeof(Character), nameof(Character.DamageHealth), new[] { typeof(int), typeof(Ability), typeof(bool) })]

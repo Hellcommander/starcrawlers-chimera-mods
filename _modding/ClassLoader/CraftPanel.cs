@@ -276,6 +276,7 @@ namespace SCClassLoader
             public RectTransform runes;
             private float next;
             private bool have;
+            private EventBus.Watch watch;
 
             public void OnPointerClick(PointerEventData e) => Toggle();
 
@@ -284,9 +285,12 @@ namespace SCClassLoader
                 if (Time.unscaledTime >= next)
                 {
                     next = Time.unscaledTime + 0.5f;
-                    have = Player.instance != null && !Game.Game_isLoading && Crafting.Recipes.Count > 0 && Known().Count > 0;
-                    foreach (Transform c in transform) c.gameObject.SetActive(have);
-                    GetComponent<Image>().enabled = have;
+                    if (!EventBus.Unchanged(ref watch, EventBus.Abilities | EventBus.Turn))
+                    {
+                        have = Player.instance != null && !Game.Game_isLoading && Crafting.Recipes.Count > 0 && Known().Count > 0;
+                        foreach (Transform c in transform) c.gameObject.SetActive(have);
+                        GetComponent<Image>().enabled = have;
+                    }
                     if (runes == null) runes = transform.parent.Find("SCCL_RuneTab") as RectTransform;
                     bool runesShown = runes != null && runes.GetComponent<Image>()?.enabled == true;
                     ((RectTransform)transform).anchoredPosition = new Vector2(-6f, runesShown ? 36f : 6f);

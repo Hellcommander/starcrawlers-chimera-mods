@@ -84,14 +84,16 @@ namespace RealtimeWithPause
             {
                 sinceTick = 0f;
                 Paused = false;
+                Together.FightOver();
                 overlay?.Hide();
                 return;
             }
-            if (Input.GetKeyDown(PauseKey.Value) && !Game.FEEDBACK && !Game.EVENT && !Game.VENDOR) Pause(!Paused);
+            bool canPause = !Game.FEEDBACK && !Game.EVENT && !Game.VENDOR;
+            if (Input.GetKeyDown(PauseKey.Value) && canPause) Pause(!Paused);
             bool held = Held();
             Player p = Player.instance;
             bool acting = Game.RESOLVING || p.GetIsDead() || (p.GetMover() != null && p.GetMover().isMoving);
-            (overlay ?? (overlay = Overlay.Make())).Show(Paused, Paused && Busy, held, Mathf.Clamp01(sinceAction / Tick), orders.Select(o => o.Name).ToList(), PauseKey.Value);
+            (overlay ?? (overlay = Overlay.Make(() => Pause(!Paused)))).Show(Paused, Paused && Busy, held, Mathf.Clamp01(sinceAction / Tick), orders.Select(o => o.Name).ToList(), PauseKey.Value, canPause && !MenuShowing());
             if (Paused || held) return;
 
             Together.Run(Time.deltaTime, Tick);
@@ -146,6 +148,13 @@ namespace RealtimeWithPause
             return hud != null && PauseInMenus.Value && hud.openMenus.Count > 0;
         }
 
+        /// <summary>A menu is up, and the pause button would sit on top of it.</summary>
+        private static bool MenuShowing()
+        {
+            HUD hud = HUD.instance;
+            return hud != null && (hud.openMenus.Count > 0 || (hud.menu_system != null && hud.menu_system.GetIsShowing()));
+        }
+
         // ---- orders
 
         /// <summary>The Game.PlayerAction prefix: true when the action became an order and must not run yet.</summary>
@@ -195,6 +204,16 @@ namespace RealtimeWithPause
         {
             [HarmonyPriority(Priority.First)]
             private static bool Prefix(PLAYER_ACTION action) => Current == null || !Current.TakeOrder(action);
+        }
+
+        /// <summary>The game's own "pointer is over a menu" check, which keeps a click on the button from attacking what's behind it.</summary>
+        [HarmonyPatch(typeof(HUD), nameof(HUD.OverMenuCheck))]
+        private static class Patch_OverMenu
+        {
+            private static void Postfix(ref bool __result)
+            {
+                if (Current?.overlay != null && Current.overlay.OverButton) __result = true;
+            }
         }
     }
 }

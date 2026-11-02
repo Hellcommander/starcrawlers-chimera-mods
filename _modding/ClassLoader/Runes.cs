@@ -449,7 +449,7 @@ namespace SCClassLoader
         /// <summary>What the runes in this ability's sockets and the rewrites on it (SkillMods) add up to; null when there are none.</summary>
         internal static Tuning For(string abilityId, AbilitySpec s, int open = int.MaxValue, List<SkillMods.Carried> mods = null)
         {
-            if (s == null || abilityId == null) return null;
+            if (s == null || abilityId == null || (s.runeSlots <= 0 && (mods == null || mods.Count == 0))) return null;
             // Runes left in sockets that are locked again (a lower rank) wait there and do nothing.
             var set = s.runeSlots > 0 ? Sockets(abilityId, s.runeSlots).Take(Mathf.Max(0, open)).Where(x => x != null && !IsSpent(abilityId, s, x)).ToList() : new List<string>();
             string sig = string.Join("|", set);

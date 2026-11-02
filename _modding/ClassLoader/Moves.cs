@@ -212,7 +212,7 @@ namespace SCClassLoader
                 Actions.SpawnVfx("PA_DualWield_SinisterStrike.impactEffect@0.3", from + Vector3.up * 0.4f);
                 Streak(from + Vector3.up * 0.5f, ctx.caster.GetHitFx().position, new Color(0.85f, 0.9f, 1f, 0.9f), 0.05f, 0.45f);
                 var sub = Copy(ctx, from);
-                foreach (Character c in hit) { sub.target = c; Actions.Run(a.actions, sub, c); }
+                HitLane.Each(hit.ToList(), a.actions, sub);
             }
             if (mids.Count > 0) Game.LOG($"{ctx.sourceName}: {mids.Count} {a.fieldName.ToLowerInvariant()}{(mids.Count > 1 ? "s" : "")} come back.");
         }

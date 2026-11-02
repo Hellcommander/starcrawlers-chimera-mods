@@ -64,6 +64,7 @@ namespace SCClassLoader
                 "Synergy Strain offsets what synergies add: percent less damage, and 1 less max health, for each level across your active synergies. Summons take the damage cut only, from the synergies that buff them. 0 = no strain.", new AcceptableValueRange<int>(0, 10)));
             StrainMax = cfg.Bind("Balance", "SynergyStrainMax", 20, new ConfigDescription(
                 "The most damage, in percent, that Synergy Strain can take away.", new AcceptableValueRange<int>(0, 50)));
+            EventBus.Subscribe(null, "bus:synergies", _ => SynergyPanel.Refill());
         }
 
         // ---- loading ------------------------------------------------------------------------------------------
@@ -72,6 +73,9 @@ namespace SCClassLoader
         {
             All.Clear();
             resolved.Clear();
+            ofClass.Clear();
+            inUse = new List<SynergySpec>();
+            EventBus.Mark(EventBus.Synergies);
             foreach (ModPack p in ModPacks.Ordered)
                 foreach (var (file, obj) in p.data)
                     foreach (JObject e in (obj["synergies"] as JArray ?? new JArray()).OfType<JObject>())
@@ -239,9 +243,14 @@ namespace SCClassLoader
         {
             var mine = Player_SkillControl.instance?.skillTrees;
             if (mine == null) return 0;
+            var wanted = Resolve(spec);
             int best = 0;
             foreach (Skill_Tree t in mine)
-                if (t != null && Matches(t, spec)) best = Math.Max(best, t.GetRank() + 1);
+            {
+                if (t == null) continue;
+                foreach (Skill_Tree w in wanted)
+                    if (w.internalName == t.internalName) { best = Math.Max(best, t.GetRank() + 1); break; }
+            }
             return best;
         }
 
@@ -249,7 +258,11 @@ namespace SCClassLoader
         internal static int Level(SynergySpec s)
         {
             int lvl = int.MaxValue;
-            foreach (string t in s.trees) lvl = Math.Min(lvl, TreeLevel(t));
+            foreach (string t in s.trees)
+            {
+                lvl = Math.Min(lvl, TreeLevel(t));
+                if (lvl == 0) return 0; // nearly every synergy in the pack stops at its first tree
+            }
             return Mathf.Clamp(lvl, 0, s.maxLevel);
         }
 
@@ -258,8 +271,17 @@ namespace SCClassLoader
         /// <summary>The level you actually use: its full level, unless you turned it down on the Synergies tab.</summary>
         internal static int Applied(SynergySpec s)
         {
-            int lvl = Level(s), chosen = Player.instance != null ? Player.instance.GetTag(ChoiceTag(s)) : -1;
+            int lvl = Level(s);
+            if (lvl == 0) return 0;
+            int chosen = Player.instance != null ? Player.instance.GetTag(ChoiceTag(s)) : -1;
             return chosen >= 0 ? Math.Min(lvl, chosen) : lvl;
+        }
+
+        /// <summary>The level of a synergy you use, by id; 0 when it isn't active or isn't installed.</summary>
+        internal static int AppliedOf(string id)
+        {
+            SynergySpec s = All.FirstOrDefault(x => string.Equals(x.id, id, StringComparison.OrdinalIgnoreCase));
+            return s != null ? Applied(s) : 0;
         }
 
         /// <summary>Changes wait until the fight is over, so a synergy can't be dropped just for one big hit.</summary>
@@ -273,6 +295,7 @@ namespace SCClassLoader
             level = Mathf.Clamp(level, 0, Level(s));
             if (level >= Level(s)) p.RemoveTag(ChoiceTag(s));
             else p.SetTag(ChoiceTag(s), level);
+            EventBus.Mark(EventBus.Synergies);
             Refresh(false);
         }
 
@@ -285,11 +308,24 @@ namespace SCClassLoader
         /// <summary>The skills of yours that pay for this synergy with their own price instead of Synergy Strain.</summary>
         internal static List<ModAbility> PricedBy(SynergySpec s) => Priced.Where(a => Has(s, a.ClassId)).ToList();
 
+        /// <summary>The synergies each class is part of: a priced skill asks on every cast, and the answer can't change once loaded.</summary>
+        private static readonly Dictionary<string, List<SynergySpec>> ofClass = new Dictionary<string, List<SynergySpec>>();
+
         /// <summary>The levels you use across the synergies this class is part of.</summary>
-        internal static int LevelsOf(string classId) => All.Where(s => Has(s, classId)).Sum(Applied);
+        internal static int LevelsOf(string classId)
+        {
+            if (!ofClass.TryGetValue(classId, out List<SynergySpec> mine))
+            {
+                mine = All.Where(s => Has(s, classId)).ToList();
+                if (Game.instance != null) ofClass[classId] = mine; // the trees aren't there to find before it
+            }
+            return mine.Sum(Applied);
+        }
 
         /// <summary>Levels that count towards Synergy Strain: a synergy priced by a skill doesn't.</summary>
-        private static int Strained(SynergySpec s) => PricedBy(s).Count > 0 ? 0 : Applied(s);
+        private static int Strained(SynergySpec s) => Strained(s, Applied(s));
+
+        private static int Strained(SynergySpec s, int applied) => applied == 0 || PricedBy(s).Count > 0 ? 0 : applied;
 
         /// <summary>Would these trees (a creation-screen pick) make the synergy?</summary>
         internal static bool MadeBy(SynergySpec s, IList<Skill_Tree> trees) =>
@@ -381,6 +417,13 @@ namespace SCClassLoader
             return s != null && granted.TryGetValue(GrantId(s, k), out ModAbility ab) ? ab : null;
         }
 
+        // Each turn walks the synergies you use, which still puts back a purged effect, reaches new summons and keeps the
+        // hotbar. One you don't use can only start with a rank or a choice, and both tell the bus; the bus's look every few
+        // seconds finds a change with no hook. A new list replaces this one, so a nested Refresh can't disturb a walk over it.
+        private static List<SynergySpec> inUse = new List<SynergySpec>();
+        private static EventBus.Watch look;
+        private static Player lookedFor;
+
         internal static void Refresh(bool announce = true)
         {
             Player p = Player.instance;
@@ -388,10 +431,14 @@ namespace SCClassLoader
             bool changed = false;
             var minions = AI_Manager.instance != null ? AI_Manager.instance.GetPlayerMinions().Where(c => c != null && !c.GetIsDead()).ToList() : new List<Character>();
             int levels = 0, allied = 0;
-            foreach (SynergySpec s in All)
+            bool whole = !EventBus.Unchanged(ref look, EventBus.Synergies) || p != lookedFor;
+            lookedFor = p;
+            List<SynergySpec> used = whole ? new List<SynergySpec>() : null;
+            foreach (SynergySpec s in whole ? All : inUse)
             {
                 int lvl = Applied(s);
-                int strained = Strained(s);
+                if (whole && lvl > 0) used.Add(s);
+                int strained = Strained(s, lvl);
                 levels += strained;
                 if (s.allies != null) allied += strained;
                 if (s.grants != null && s.grants.Count > 0) KeepGrants(s, lvl > 0);
@@ -409,8 +456,10 @@ namespace SCClassLoader
             foreach (Character c in minions) Keep(c, StrainAlliesId, StrainStacks(allied));
             if (announce && !Game.Game_isLoading && strainBefore == 0 && strain > 0)
                 Game.LOG("<color=#FF9C7A>Synergy Strain:</color> your synergies cost a little damage and health. The character screen's Synergies tab has the numbers.");
+            if (whole) inUse = used;
             if (changed) foreach (ModAbility a in Priced) a.Reprice();
             if (changed && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+            if (changed) EventBus.Mark(EventBus.Synergies);
         }
 
         /// <summary>Sets the effect to the level (0 = off) and returns the level it had.</summary>
@@ -475,6 +524,7 @@ namespace SCClassLoader
         {
             private static void Postfix()
             {
+                EventBus.Mark(EventBus.Synergies);
                 if (Game.Game_isLoading || Player.instance == null) return;
                 try { Refresh(); }
                 catch (Exception e) { Plugin.Log.LogError("Synergies: " + e); }

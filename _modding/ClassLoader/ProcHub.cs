@@ -37,6 +37,12 @@ namespace SCClassLoader
             if (EventBus.On && !EventBus.Listens(Player.instance, on)) return;
             try
             {
+                if (EventBus.On)
+                {
+                    foreach (ModAbility m in EventBus.AbilitiesFor(on).ToArray()) m.HandleProc(on, other); // a proc can change what you know
+                    foreach (ModEffect me in EventBus.EffectsFor(Player.instance, on)) me.HandleProc(on, other); // asked after them: an effect they just gave you hears it too
+                    return;
+                }
                 foreach (Ability a in Player_AbilityControl.instance.GetAbilities())
                     if (a is ModAbility m) m.HandleProc(on, other);
                 foreach (Effect e in Player.instance.effects.GetEffects().ToList())
@@ -61,25 +67,31 @@ namespace SCClassLoader
             if (EventBus.On && !EventBus.Listens(bearer, on)) return;
             try
             {
+                if (EventBus.On)
+                {
+                    foreach (ModEffect me in EventBus.EffectsFor(bearer, on)) me.HandleProc(on, other);
+                    return;
+                }
                 foreach (Effect e in bearer.effects.GetEffects().ToList())
                     if (e is ModEffect me) me.HandleProc(on, other);
             }
             catch (Exception e) { Plugin.Log.LogError($"Proc '{on}' on {bearer.name} failed: {e}"); }
         }
 
+        private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
+            { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain" };
+        private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb" };
+        private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
+
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
         {
             on = (on ?? "").ToLowerInvariant();
             if (!Matches(p, on, ctx)) return;
             bool pluginEvent = on.Contains(":"); // a plugin's own event: "other" is whoever it fired it about
-            bool aimsAtOther = pluginEvent || on == "hit" || on == "kill" || on == "hurt" || on == "dodge" || on == "reaction" || on == "crit" || on == "miss" || on == "cast" || on == "allydeath"
-                || on == "enemydeath" || on == "allykill" || on == "allyhurt" || on == "summon" || on == "inflict" || on == "shieldbreak" || on == "absorb" || on == "trap"
-                || on == "charge" || on == "leap" || on == "knockback" || on == "swap" || on == "chain";
+            bool aimsAtOther = pluginEvent || AimsAtOther.Contains(on);
             Character focus = aimsAtOther && other != null ? other : ctx.caster;
-            if (pluginEvent || on == "hit" || on == "kill" || on == "crit" || on == "miss" || on == "cast" || on == "enemydeath" || on == "allykill" || on == "inflict" || on == "trap"
-                || on == "charge" || on == "leap" || on == "knockback" || on == "chain") ctx.victim = other;
-            else if (on == "hurt" || on == "dodge" || on == "allyhurt" || on == "shieldbreak" || on == "absorb") ctx.attacker = other;
-            else if (on == "allydeath") ctx.victim = other;
+            if (pluginEvent || OtherIsVictim.Contains(on)) ctx.victim = other;
+            else if (OtherIsAttacker.Contains(on)) ctx.attacker = other;
             ctx.ally = on == "allydeath" || on == "summon" ? other : ally;
             ctx.target = focus;
 
@@ -101,8 +113,13 @@ namespace SCClassLoader
                 ModAudio.Play(p.sound, at, ctx.classId);
                 Actions.SpawnVfx(p.vfx, at);
 
-                var self = p.actions.Where(a => (a.to ?? "").ToLowerInvariant() == "self").ToList();
-                var rest = p.actions.Except(self).ToList();
+                if (p.splitOf != p.actions)
+                {
+                    p.selfActions = p.actions.Where(a => (a.to ?? "").ToLowerInvariant() == "self").ToList();
+                    p.restActions = p.actions.Except(p.selfActions).ToList();
+                    p.splitOf = p.actions;
+                }
+                List<ActionSpec> self = p.selfActions, rest = p.restActions;
                 if (p.radius > 0f && AI_Manager.instance != null)
                 {
                     Vector3 center = focus != null && focus.GetMover() != null && focus.GetMover().GetCurrentNavNode() != null

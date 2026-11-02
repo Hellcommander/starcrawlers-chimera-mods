@@ -132,21 +132,20 @@ namespace SCClassLoader
             {
                 int i;
                 Augments.Carry(ab, list); // first, so a stance or a charge on top of them has the last word
-                foreach (Ability a in pac.GetAbilities())
+                SkillLane.Look(pac, p);
+                foreach (ModAbility m in SkillLane.Abilities)
                 {
-                    if (!(a is ModAbility m) || m == ab) continue;
+                    if (m == ab) continue;
                     AbilitySpec ms = m.Spec;
-                    if (ms?.modifies == null || ms.modifies.Count == 0) continue;
                     if (!Equipped.Check(ms.equipped, p)) continue;
                     i = 0;
                     foreach (SkillModSpec mod in ms.modifies)
                         Take(list, mod, ab, m.ClassId, m.GetDisplayName(), $"ab:{m.internalName}#{++i}", null);
                 }
-                foreach (Effect e in p.effects.GetEffects().ToList())
+                foreach (ModEffect me in SkillLane.Effects)
                 {
-                    if (!(e is ModEffect me)) continue;
+                    if (me == null) continue;
                     EffectSpec es = me.Spec;
-                    if (es?.modifies == null || es.modifies.Count == 0) continue;
                     i = 0;
                     foreach (SkillModSpec mod in es.modifies)
                         Take(list, mod, ab, me.ClassId, me.GetName(), $"fx:{me.internalName}#{++i}", me);
@@ -634,7 +633,8 @@ namespace SCClassLoader
             p.ctx.groundAtCenter = true;
             var self = p.actions.Where(a => (a.to ?? "").ToLowerInvariant() == "self").ToList();
             var rest = p.actions.Except(self).ToList();
-            foreach (Character v in caught) { p.ctx.target = v; Actions.Run(rest, p.ctx, v); }
+            if (self.Count == 0) HitLane.Each(caught, rest, p.ctx);
+            else foreach (Character v in caught) { p.ctx.target = v; Actions.Run(rest, p.ctx, v); }
             if (caught.Count == 0) Actions.Run(rest.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap").ToList(), p.ctx, null);
             Actions.Run(self, p.ctx, p.ctx.caster);
         }

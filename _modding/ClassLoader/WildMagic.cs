@@ -114,8 +114,7 @@ namespace SCClassLoader
                     victims.AddRange(AI_Manager.instance.GetEnemiesAt(node.transform.position, radius).Where(v => v != t));
                 Actions.SpawnVfx(rt.spec.impactVfx ?? rt.spec.areaVfx ?? "PA_Psykonics_Temporal.castParticle@0.5", t.GetHitFx().position);
                 ModAudio.Play(rt.spec.sound, t.GetHitFx().position, rt.classId);
-                foreach (Character v in victims)
-                    if (v != null && !v.GetIsDead()) { c.target = v; Actions.Run(rt.spec.actions, c, v); }
+                HitLane.Each(victims, rt.spec.actions, c);
             }
         }
 
@@ -139,8 +138,7 @@ namespace SCClassLoader
                 victims.AddRange(AI_Manager.instance.GetEnemiesAt(node.transform.position, radius).Where(v => v != t));
             Actions.SpawnVfx(m.impactVfx ?? m.castVfx ?? "PA_Psykonics_Temporal.castParticle@0.5", t.GetHitFx().position);
             ModAudio.Play(m.sound, t.GetHitFx().position, EnemyAbilities.EffectClass);
-            foreach (Character v in victims)
-                if (v != null && !v.GetIsDead() && (ctx.backfire || (v != ctx.caster && !TileStacks.IsAlly(v)))) { c.target = v; Actions.Run(m.actions, c, v); }
+            HitLane.Each(victims.Where(v => v != null && (ctx.backfire || (v != ctx.caster && !TileStacks.IsAlly(v)))).ToList(), m.actions, c);
         }
 
         // ---- wild spells: exist only as wild magic. A plain wild cast is one of these WildShare of the time ----------
@@ -199,8 +197,7 @@ namespace SCClassLoader
                     Character v = n?.GetOccupant();
                     if (v != null && !v.GetIsDead() && !victims.Contains(v) && (s.friendlyFire || (v != ctx.caster && !TileStacks.IsAlly(v)))) victims.Add(v);
                 }
-            foreach (Character v in victims)
-                if (v != null && !v.GetIsDead()) { c.target = v; Actions.Run(s.actions, c, v); }
+            HitLane.Each(victims, s.actions, c);
             return true;
         }
 
@@ -329,8 +326,7 @@ namespace SCClassLoader
                 caster = caster, source = ctx.source, classId = ctx.classId, sourceName = name, rank = ctx.rank,
                 damageMult = ctx.damageMult * Actions.LevelMult(a.levelCap), chanceBonus = ctx.chanceBonus, center = pos, backfire = true,
             };
-            foreach (Character v in victims)
-                if (v != null && !v.GetIsDead()) { c2.target = v; Actions.Run(a.actions, c2, v); }
+            HitLane.Each(victims, a.actions, c2);
         }
 
         private static string ClassName(string classId) =>

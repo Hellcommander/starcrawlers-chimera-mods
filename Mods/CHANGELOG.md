@@ -4,6 +4,26 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The dates are the dates of the work.
 
+## Unreleased
+
+### Vanilla bug fixes
+
+These came out of stress testing the event bus. None needs the bus, and `[Fixes]` in the config turns each one off.
+
+- When an effect on a character ended, the next one in the list was skipped: it missed that turn's countdown, or sat out
+  that hit. Some effects now run out one turn sooner than before.
+- An enemy's Warp Jump no longer throws an error if its caster or target is destroyed while it travels.
+- Your health now respects the game's IMMORTAL tag, so damage over time can't kill you in the cutscene after beating
+  Cerberus.
+- An event that spawns a mob no longer stops with an error when no tile near it is free.
+- Levelling past 100 no longer breaks the level-up.
+- Finding an item by name no longer fails on a destroyed item left in your bag's list.
+- Aiming at a character with no skill selected no longer throws an error.
+- The Ready effect of Arm Cannon and Thunderclap no longer throws an error on someone without the skill.
+- An enemy under fire answers an attacker and calls for help once a turn instead of on every hit, because the game's
+  "already called" flag is never set.
+- `ZoneLeftovers` puts the existing clean-up of old floors from memory on a switch.
+
 ## 1.46.0 (2026-11-01)
 
 ### Retraining
