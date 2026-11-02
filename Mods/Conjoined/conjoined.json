@@ -9,7 +9,9 @@
 
   "effects": [
     { "id": "SpreadThin", "name": "Spread Thin", "icon": "icons/spread_thin.png", "description": "Your mind is running more than one body. Each other body that's up weakens this one.",
-      "duration": -1, "debuff": true, "maxStacks": 6, "damageDealtPerStack": -0.12, "stats": { "HealthMax": -4 } }
+      "duration": -1, "debuff": true, "maxStacks": 6, "damageDealtPerStack": -0.12, "stats": { "HealthMax": -4 } },
+    { "id": "HemmedIn", "name": "Hemmed In", "description": "There are bodies on every side and no room to take a step.",
+      "duration": 2, "debuff": true, "root": true }
   ],
 
   "tiers": [
@@ -25,7 +27,8 @@
         "target": "self", "instant": true, "cooldown": 6, "requires": "livingBody",
         "castVfx": "PA_Engineer_Boltron.PS_summon", "sound": "event:/Abilities/Misc/Psykonics_Warp",
         "actions": [ { "do": "swapBody" } ],
-        "perk": { "name": "Practiced Handover", "cooldownDelta": -2 }
+        "perk": { "name": "Practiced Handover", "description": "The body you step into has been running hot, waiting for you.",
+          "addProcs": [ { "on": "cast", "match": "Trade Bodies", "actions": [ { "do": "carryToBody", "effect": "#Hasted", "turns": 3 } ] } ] }
       } },
 
     { "attributes": { "Strength": 1, "Toughness": 1 },
@@ -37,7 +40,9 @@
           { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3, "perRank": 1,
             "bonusPerStack": 4, "stacksOf": "bodies" }
         ],
-        "perk": { "name": "Closing Ring", "damageMult": 1.25 }
+        "perk": { "name": "Closing Ring", "description": "With one of you on every side, it has no guarded side left. When it falls, the ring is free to close again.",
+          "resetOnKill": true,
+          "addActions": [ { "do": "effect", "effect": "#Exposed" } ] }
       } },
 
     { "attributes": { "Toughness": 2 },
@@ -46,7 +51,8 @@
         "target": "self", "instant": true, "cooldown": 40, "requires": "downedBody",
         "castVfx": "PA_Engineer_Boltron.PS_summon",
         "actions": [ { "do": "reviveBody", "amount": 50 } ],
-        "perk": { "name": "Quick Stitch", "cooldownDelta": -10 }
+        "perk": { "name": "Double Stitch", "description": "The same thread goes on through a second fallen body, if there is one.",
+          "addActions": [ { "do": "reviveBody", "amount": 30 } ] }
       } },
 
     { "attributes": { "Strength": 2, "Toughness": 1 },
@@ -63,10 +69,11 @@
         "actions": [
           { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.3, "perRank": 1,
             "bonusPerStack": 3, "stacksOf": "bodies" },
-          { "do": "knockback", "amount": 1 },
+          { "do": "knockback", "amount": 1, "when": { "perk": false } },
           { "do": "shield", "to": "self", "amount": 4, "perRank": 1, "bonusPerStack": 3, "stacksOf": "bodies" }
         ],
-        "perk": { "name": "Crushing Circle", "radiusDelta": 1 }
+        "perk": { "name": "Crushing Circle", "description": "The arms close instead of shoving. Whatever is caught stays in the ring.",
+          "addActions": [ { "do": "effect", "effect": "@HemmedIn" } ] }
       } },
 
     { "attributes": { "Toughness": 2, "Strength": 1 },

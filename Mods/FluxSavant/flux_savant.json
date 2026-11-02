@@ -589,7 +589,14 @@
         ],
         "perk": {
           "name": "Tight Coil",
-          "damageMult": 1.25
+          "description": "Wound this tight, the coil sheds aether into whatever it touches.",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Residue",
+              "chance": 50
+            }
+          ]
         },
         "runeSlotRanks": [
           2,
@@ -860,8 +867,14 @@
         ],
         "perk": {
           "name": "Batch Run",
-          "description": "The press runs cooler and is ready again sooner.",
-          "cooldownDelta": -2
+          "description": "The spent plate goes back through the press, and what comes off it tops up the runes you have slotted.",
+          "addActions": [
+            {
+              "do": "runerestore",
+              "to": "self",
+              "amount": 3
+            }
+          ]
         },
         "sound": "audio_licensed/rune_press.wav"
       }
@@ -901,7 +914,23 @@
         ],
         "perk": {
           "name": "Wide Spill",
-          "radiusDelta": 0.8
+          "description": "The catalyst doesn't dry. It pools where it lands and keeps eating at whatever walks through.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Catalyst Spill",
+              "turns": 3,
+              "radius": 1.5,
+              "affects": "enemies",
+              "look": "HAZARD_Gas@0.4",
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "EFFECT_Acid"
+                }
+              ]
+            }
+          ]
         },
         "runeSlotRanks": [
           4,
@@ -1015,7 +1044,8 @@
         ],
         "perk": {
           "name": "Standing Wave",
-          "cooldownDelta": -3
+          "description": "The lattice is always there, humming. You only have to tune it in.",
+          "instant": true
         },
         "runeSlotRanks": [
           5,
@@ -1266,8 +1296,50 @@
         ],
         "perk": {
           "name": "Fine Grit",
-          "description": "Ground finer, the shards spread wider.",
-          "radiusDelta": 0.7
+          "description": "Ground this fine, every shard carries a second reagent into the wound.",
+          "addActions": [
+            {
+              "do": "random",
+              "options": [
+                {
+                  "weight": 1,
+                  "actions": [
+                    {
+                      "do": "effect",
+                      "effect": "EFFECT_Fire"
+                    }
+                  ]
+                },
+                {
+                  "weight": 1,
+                  "actions": [
+                    {
+                      "do": "effect",
+                      "effect": "EFFECT_Shock"
+                    }
+                  ]
+                },
+                {
+                  "weight": 1,
+                  "actions": [
+                    {
+                      "do": "effect",
+                      "effect": "EFFECT_Chill"
+                    }
+                  ]
+                },
+                {
+                  "weight": 1,
+                  "actions": [
+                    {
+                      "do": "effect",
+                      "effect": "EFFECT_Acid"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         "runeSlotRanks": [
           7,

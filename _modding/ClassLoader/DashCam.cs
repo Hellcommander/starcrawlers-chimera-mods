@@ -95,6 +95,32 @@ namespace SCClassLoader
             if (runner != null) runner.StartSpin(seconds);
         }
 
+        private const float FallTime = 0.28f;
+
+        /// <summary>A creature's model comes down on `at` from above the ceiling; `landed` runs as it arrives. False if it has no model.</summary>
+        internal static bool Fall(string creature, Vector3 at, System.Action landed)
+        {
+            ModelSpec spec = WispSpec(creature, out string folder, out _);
+            if (spec == null) { Plugin.Log.LogWarning($"fallAs \"{creature}\": no creature with a model by that id"); return false; }
+            var g = new GameObject("SCCL_Fall_" + creature);
+            if (!ModelAssets.Apply(g, spec, folder)) { Object.Destroy(g); return false; }
+            Plugin.Instance.StartCoroutine(Falling(g, at + new Vector3(2.6f, 3.4f, 1.3f), at, landed));
+            return true;
+        }
+
+        private static System.Collections.IEnumerator Falling(GameObject g, Vector3 from, Vector3 to, System.Action landed)
+        {
+            for (float t = 0f; t < FallTime && g != null; t += Time.deltaTime)
+            {
+                float k = t / FallTime;
+                g.transform.position = Vector3.Lerp(from, to, k * k);
+                yield return null;
+            }
+            landed();
+            ModelParticles.Release(g);
+            if (g != null) Object.Destroy(g);
+        }
+
         [HarmonyPatch(typeof(Character_Mover), nameof(Character_Mover.PlayerMove))]
         private static class PlayerMovePatch
         {
@@ -288,7 +314,8 @@ namespace SCClassLoader
                 cam.transform.rotation = Quaternion.Slerp(fpRot, tpRot, k);
 
                 // a blink: gone for the middle of the move
-                ShowBody(k > 0.3f, !(replay && blink && p > 0.3f && p < 0.7f), at, moving);
+                // a creature waits until the camera is well out: it starts right where your eyes are, and a mesh would fill the screen
+                ShowBody(k > (form != null ? 0.8f : 0.3f), !(replay && blink && p > 0.3f && p < 0.7f), at, moving);
                 if (leaving && blend <= 0f) { showcase = false; showUntil = 0f; End(); }
             }
 

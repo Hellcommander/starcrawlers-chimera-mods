@@ -79,8 +79,18 @@
         ],
         "perk": {
           "name": "Triple Tap",
+          "description": "The third round keeps going, and so do you.",
           "addActions": [
-            { "do": "damage", "type": "Ballistic", "min": 2, "max": 4 }
+            {
+              "do": "chain",
+              "jumps": 1,
+              "radius": 3,
+              "falloff": 0.75,
+              "actions": [
+                { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "scale": "Agility", "scaleMult": 0.15, "perRank": 1 },
+                { "do": "effect", "to": "self", "effect": "@Rhythm" }
+              ]
+            }
           ]
         },
         "sound": "sfx/gunkata_doubletap.wav"
@@ -106,8 +116,11 @@
           { "do": "effect", "to": "self", "effect": "@Rhythm" }
         ],
         "perk": {
-          "name": "Double Flip",
-          "cooldownDelta": -2
+          "name": "Stick the Landing",
+          "description": "Deep enough in the beat, the landing is the lock.",
+          "addActions": [
+            { "do": "effect", "to": "self", "effect": "@Zone", "when": { "value": "stacks:@Rhythm", "of": "self", "atLeast": 5 } }
+          ]
         }
       }
     },
@@ -129,6 +142,7 @@
         ],
         "perk": {
           "name": "Both Knees",
+          "description": "One for each leg. Sometimes they stay down.",
           "addActions": [
             { "do": "stun", "turns": 1, "chance": 30 }
           ]
@@ -176,7 +190,8 @@
         ],
         "perk": {
           "name": "Encore Spin",
-          "radiusDelta": 1
+          "description": "The bow is already the first step of the next move.",
+          "instant": true
         }
       }
     },
@@ -202,13 +217,15 @@
             "actions": [
               { "do": "damage", "type": "Ballistic", "min": 3, "max": 6, "scale": "Agility", "scaleMult": 0.4, "perRank": 2 },
               { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "trueDamage": true, "ifSelfHas": "@Zone" },
+              { "do": "effect", "effect": "#Reeling", "when": { "perk": true } },
               { "do": "effect", "to": "self", "effect": "@Rhythm" }
             ]
           }
         ],
         "perk": {
           "name": "Trick Angle",
-          "cooldownDelta": -3
+          "description": "Nobody expects it from that side. Drop the first one and the beat carries straight on.",
+          "resetOnKill": true
         }
       }
     },

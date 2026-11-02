@@ -182,6 +182,38 @@
     }
    ],
    "damageTakenMult": 0.8
+  },
+  {
+   "id": "Smouldering",
+   "name": "Smouldering",
+   "icon": "icons/shadowflame.png",
+   "debuff": true,
+   "description": "Black fire has caught on it and goes on burning after it leaves the flame. If it dies burning, the fire jumps to the nearest enemy.",
+   "duration": 3,
+   "dot": {
+    "type": "Void",
+    "min": 2,
+    "max": 3
+   },
+   "vfx": "EFFECT_Void_Psyker_Drain",
+   "onDeathActions": [
+    {
+     "do": "chain",
+     "jumps": 1,
+     "radius": 3,
+     "vfx": "SmDarkBurst@0.5",
+     "actions": [
+      {
+       "do": "effect",
+       "effect": "@Smouldering"
+      },
+      {
+       "do": "effect",
+       "effect": "@Benighted"
+      }
+     ]
+    }
+   ]
   }
  ],
  "tiers": [
@@ -267,6 +299,7 @@
     ],
     "perk": {
      "name": "Pinched Twice",
+     "description": "The second pinch finds what the first one left.",
      "addActions": [
       {
        "do": "effect",
@@ -322,7 +355,8 @@
     ],
     "perk": {
      "name": "Further Gone",
-     "radiusDelta": 0.5
+     "description": "The dark drops without you having to stop for it.",
+     "instant": true
     }
    }
   },
@@ -371,7 +405,23 @@
     ],
     "perk": {
      "name": "Long Shadow",
-     "cooldownDelta": -3
+     "description": "However far it wanders, your shade stays joined to your heels, and its dark runs back along the join.",
+     "addProcs": [
+      {
+       "on": "turn",
+       "when": {
+        "value": "summons:Shade",
+        "atLeast": 1
+       },
+       "actions": [
+        {
+         "do": "effect",
+         "to": "self",
+         "effect": "@Nightwalker"
+        }
+       ]
+      }
+     ]
     }
    }
   },
@@ -440,7 +490,22 @@
     ],
     "perk": {
      "name": "Smoulder",
-     "cooldownDelta": -2
+     "description": "It catches now. Walking out of the flame no longer puts it out.",
+     "addActions": [
+      {
+       "do": "field",
+       "fieldName": "Smoulder",
+       "turns": 4,
+       "radius": 1.1,
+       "affects": "enemies",
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@Smouldering"
+        }
+       ]
+      }
+     ]
     }
    }
   },
@@ -502,7 +567,27 @@
     ],
     "perk": {
      "name": "Deeper Dark",
-     "chanceBonus": 15
+     "description": "Where the dark already runs deep, it closes over them completely for a moment, and that is all of it spent.",
+     "addActions": [
+      {
+       "do": "if",
+       "when": {
+        "value": "stacks:@Benighted",
+        "of": "target",
+        "atLeast": 3
+       },
+       "then": [
+        {
+         "do": "stun",
+         "turns": 1
+        },
+        {
+         "do": "purge",
+         "effect": "@Benighted"
+        }
+       ]
+      }
+     ]
     }
    }
   },
@@ -654,7 +739,8 @@
     ],
     "perk": {
      "name": "It Knows the Way",
-     "cooldownDelta": -6
+     "description": "You barely have to whistle now. It was already on its way.",
+     "instant": true
     }
    }
   }

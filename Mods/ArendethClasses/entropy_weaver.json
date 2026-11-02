@@ -156,7 +156,19 @@
           { "do": "effect", "effect": "@Frayed" },
           { "do": "effect", "to": "self", "effect": "@Spillover" }
         ],
-        "perk": { "name": "Loaded Coin", "damageMult": 1.25 }
+        "perk": {
+          "name": "Loaded Coin", "description": "The more you hold back, the likelier it lands on its edge.",
+          "addActions": [
+            { "do": "random", "stacksOf": "@Spillover", "stacksFrom": "self", "options": [
+              { "name": "Heads", "weight": 3, "actions": [ { "do": "effect", "effect": "@Frayed" } ] },
+              { "name": "Tails", "weight": 3, "actions": [ { "do": "effect", "effect": "@Cinderlace" } ] },
+              { "name": "On its edge", "weight": 0, "weightPerStack": 1, "actions": [
+                { "do": "effect", "effect": "@Frayed" },
+                { "do": "effect", "effect": "@Cinderlace" },
+                { "do": "effect", "to": "self", "effect": "@Crosstalk" } ] }
+            ] }
+          ]
+        }
       }
     },
     {
@@ -194,7 +206,13 @@
             ]
           }
         ],
-        "perk": { "name": "Dense Code", "cooldownDelta": -3 }
+        "perk": {
+          "name": "Reclaimed Code", "description": "Nothing a Spillnode held is lost. When one goes, it comes back through you.",
+          "addProcs": [
+            { "on": "allyDeath", "maxPerTurn": 2, "when": { "has": "@Spillwork", "of": "ally" }, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 2 } ] }
+          ]
+        }
       }
     },
     {
@@ -217,7 +235,16 @@
           { "do": "knockback", "amount": 1 },
           { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 2 }
         ],
-        "perk": { "name": "Harder Knot", "radiusDelta": 1 }
+        "perk": {
+          "name": "Harder Knot", "description": "A third knot pulls tight in the same spot and takes its time going off.",
+          "addActions": [
+            { "do": "trap", "fieldName": "Slow Knot", "affects": "enemies", "fuse": 2, "fuseOnly": true, "radius": 1.6, "maxTraps": 1, "look": "HAZARD_Energy@0.5",
+              "vfx": "PA_Elementalist_MagmaBurst.impactParticle", "sound": "event:/Abilities/Soldier/Grenade_Explode", "actions": [
+              { "do": "damage", "type": "Energy", "min": 2, "max": 9, "scale": "PsiPower", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "effect", "effect": "@Frayed", "stacks": 2 },
+              { "do": "effect", "effect": "@Cinderlace", "stacks": 2 } ] }
+          ]
+        }
       }
     },
     {
@@ -239,7 +266,14 @@
           { "do": "effect", "effect": "CHARM", "turns": 2, "chance": 25 },
           { "do": "effect", "to": "self", "effect": "@Crosstalk" }
         ],
-        "perk": { "name": "Short Circuit", "chanceBonus": 25 }
+        "perk": {
+          "name": "Short Circuit", "description": "The fault doesn't stay in one head. It jumps to the nearest ones.",
+          "addActions": [
+            { "do": "chain", "jumps": 2, "radius": 3, "actions": [
+              { "do": "effect", "effect": "CONFUSE", "turns": 2, "unlessTargetHas": "CONFUSE" },
+              { "do": "effect", "effect": "@Frayed" } ] }
+          ]
+        }
       }
     },
     {
@@ -263,7 +297,10 @@
           { "do": "cooldowns", "to": "self", "amount": 99 },
           { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 3 }
         ],
-        "perk": { "name": "Nothing Held Back", "radiusDelta": 1 }
+        "perk": {
+          "name": "Nothing Held Back", "description": "Every layer of Spillover goes with it, all at once.",
+          "addActions": [ { "do": "effect", "to": "self", "effect": "@Spillover", "stacks": 8 } ]
+        }
       }
     },
     {
@@ -291,11 +328,17 @@
                 { "do": "damage", "type": "Shock", "min": 3, "max": 9, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1 },
                 { "do": "effect", "effect": "@Frayed", "stacks": 2 } ] }
             ] },
-            { "do": "damage", "type": "Energy", "min": 1, "max": 4, "bonusPerStack": 2, "stacksOf": "@Spillover", "stacksFrom": "self", "consumeStacks": true }
+            { "do": "damage", "type": "Energy", "min": 1, "max": 4, "bonusPerStack": 2, "stacksOf": "@Spillover", "stacksFrom": "self" }
           ] },
-          { "do": "effect", "to": "self", "effect": "@Crosstalk" }
+          { "do": "effect", "to": "self", "effect": "@Crosstalk" },
+          { "do": "purge", "to": "self", "effect": "@Spillover" }
         ],
-        "perk": { "name": "Runaway Thread", "cooldownDelta": -3 }
+        "perk": {
+          "name": "Runaway Thread", "description": "Every thread you let loose now runs through your own head on the way out.",
+          "addProcs": [
+            { "on": "chain", "maxPerTurn": 2, "actions": [ { "do": "effect", "to": "self", "effect": "@Crosstalk" } ] }
+          ]
+        }
       }
     },
     {

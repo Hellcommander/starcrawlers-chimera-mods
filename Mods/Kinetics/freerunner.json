@@ -111,7 +111,22 @@
         ],
         "perk": {
           "name": "Double Knee",
-          "damageMult": 1.25
+          "description": "The first knee takes the guard away, and every second one keeps you off the floor.",
+          "undodgeable": true,
+          "addProcs": [
+            {
+              "on": "cast",
+              "match": "Flying Knee",
+              "every": 2,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Airborne"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/run_flying_knee.wav"
       }
@@ -146,7 +161,14 @@
         ],
         "perk": {
           "name": "Rail Grind",
-          "cooldownDelta": -2
+          "description": "You come off the wall feet first, into anyone standing near the landing.",
+          "radiusDelta": 1.6,
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Tripped"
+            }
+          ]
         },
         "sound": "audio_licensed/run_wall_run.wav"
       }
@@ -205,7 +227,8 @@
         ],
         "perk": {
           "name": "Long Slide",
-          "rangeDelta": 2
+          "description": "You're on your feet before the slide has finished.",
+          "instant": true
         },
         "sound": "audio_licensed/run_slide_tackle.wav"
       }
@@ -243,7 +266,38 @@
         ],
         "perk": {
           "name": "Endless Run",
-          "cooldownDelta": -3
+          "description": "Your lungs find it on their own when things go badly, and nothing sticks to you for long.",
+          "addActions": [
+            {
+              "do": "cleanse",
+              "to": "self",
+              "amount": 0
+            }
+          ],
+          "addProcs": [
+            {
+              "on": "lowHealth",
+              "threshold": 35,
+              "cooldown": 15,
+              "actions": [
+                {
+                  "do": "stamina",
+                  "to": "self",
+                  "amount": 20
+                },
+                {
+                  "do": "cleanse",
+                  "to": "self",
+                  "amount": 0
+                },
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Airborne"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/run_second_wind.wav"
       }
@@ -292,7 +346,29 @@
         ],
         "perk": {
           "name": "Big Air",
-          "radiusDelta": 1
+          "description": "From that height the landing throws everyone clear, and you roll out of it.",
+          "addActions": [
+            {
+              "do": "throw",
+              "amount": 2,
+              "fromCenter": true,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Crushing",
+                  "min": 3,
+                  "max": 5,
+                  "scale": "Agility",
+                  "scaleMult": 0.2
+                }
+              ]
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Airborne"
+            }
+          ]
         }
       }
     },
@@ -347,6 +423,7 @@
         ],
         "perk": {
           "name": "Off the Walls",
+          "description": "You come off the last one still in the air.",
           "addActions": [
             {
               "do": "effect",

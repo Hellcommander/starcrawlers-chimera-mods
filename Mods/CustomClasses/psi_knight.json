@@ -75,7 +75,13 @@
         ],
         "perk": {
           "name": "Singing Blade",
-          "damageMult": 1.25
+          "description": "A broken stance is a clear note, and the blade rings on it.",
+          "addActions": [
+            { "do": "if", "when": { "has": "#Reeling", "of": "target" }, "then": [
+              { "do": "effect", "to": "self", "effect": "@Poise", "stacks": 2 },
+              { "do": "purge", "effect": "#Reeling" }
+            ] }
+          ]
         },
         "sound": "sfx/psiknight_psiblade.wav"
       }
@@ -96,12 +102,18 @@
         "sound": "event:/Abilities/ForcePsyker/KineticSlam",
         "actions": [
           { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.3 },
-          { "do": "knockback", "amount": 3 },
+          { "do": "knockback", "amount": 3, "when": { "perk": false } },
           { "do": "effect", "effect": "#Reeling" }
         ],
         "perk": {
           "name": "Hurl",
-          "cooldownDelta": -2
+          "description": "Not just across the room. Into something.",
+          "addActions": [
+            { "do": "throw", "amount": 3, "actions": [
+              { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.4 },
+              { "do": "stun", "turns": 1, "chance": 40 }
+            ] }
+          ]
         }
       }
     },
@@ -123,6 +135,7 @@
         ],
         "perk": {
           "name": "Iron Will",
+          "description": "The shell goes up, and the mind settles behind it.",
           "addActions": [
             { "do": "effect", "effect": "@Poise", "stacks": 2 }
           ]
@@ -169,7 +182,11 @@
         ],
         "perk": {
           "name": "Shatter Mind",
-          "damageMult": 1.25
+          "description": "A big enough blow leaves nothing behind the eyes to act with.",
+          "resetOnKill": true,
+          "addActions": [
+            { "do": "silence", "turns": 2, "bossTurns": 1, "when": { "value": "stacks:@Poise", "of": "self", "atLeast": 3 } }
+          ]
         }
       }
     },
@@ -197,6 +214,7 @@
         ],
         "perk": {
           "name": "Collapsing Orbit",
+          "description": "Some of what falls inward doesn't get up right away.",
           "addActions": [
             { "do": "stun", "turns": 1, "chance": 35 }
           ]

@@ -117,7 +117,10 @@
         ],
         "perk": {
           "name": "Overwound Bolt",
-          "damageMult": 1.25
+          "description": "More charge than the head can hold. The rest arcs to the next thing already crackling.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 3, "effect": "@Static", "actions": [ { "do": "effect", "effect": "@Static" } ] }
+          ]
         }
       }
     },
@@ -141,6 +144,7 @@
         ],
         "perk": {
           "name": "Paired Towers",
+          "description": "The ground spike is already in. The second tower only needs standing up.",
           "addActions": [
             { "do": "summon", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Coil Tower", "model": { "mesh": "models/coil_tower.glb", "height": 1.4, "keepParticles": false }, "summonGroup": "CoilTower", "turns": 15, "maxSummons": 3 },
             { "do": "effect", "to": "self", "effect": "@GridFeed" }
@@ -167,8 +171,12 @@
           { "do": "effect", "effect": "@Static", "stacks": 2 }
         ],
         "perk": {
-          "name": "Wide Grid",
-          "radiusDelta": 1
+          "name": "Standing Grid",
+          "description": "The wire stays where it fell, live, for whoever walks into it next.",
+          "addActions": [
+            { "do": "field", "fieldName": "Standing Grid", "turns": 3, "radius": 1.6, "affects": "enemies", "look": "HAZARD_Shock@0.6", "actions": [
+              { "do": "effect", "effect": "@Static", "stacks": 2 } ] }
+          ]
         }
       }
     },
@@ -190,6 +198,7 @@
         ],
         "perk": {
           "name": "Long Load",
+          "description": "The wiring banks a charge in your rig before the first bolt flies.",
           "addActions": [
             { "do": "effect", "to": "self", "effect": "@GridFeed" }
           ]
@@ -219,7 +228,10 @@
         ],
         "perk": {
           "name": "Supercharged Slug",
-          "damageMult": 1.25
+          "description": "What the slug can't carry jumps off it into whoever stands closest.",
+          "addActions": [
+            { "do": "chain", "ifSummonAlive": "group:HeavyCoil", "jumps": 2, "radius": 3, "actions": [ { "do": "effect", "effect": "@Static", "stacks": 3 } ] }
+          ]
         }
       }
     },
@@ -257,7 +269,22 @@
         ],
         "perk": {
           "name": "Live Perimeter",
-          "cooldownDelta": -4
+          "description": "A second wire on a slack line. Stepping away from it is no safer than stepping up.",
+          "addActions": [
+            { "do": "arm", "reaction": {
+              "name": "Fence Snag",
+              "on": "retreat",
+              "who": "allies",
+              "charges": 2,
+              "turns": 12,
+              "priority": 45,
+              "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+              "sound": "sfx/coil_bolt.wav",
+              "actions": [
+                { "do": "effect", "effect": "@Static", "stacks": 2 },
+                { "do": "pull", "amount": 1 }
+              ] } }
+          ]
         }
       }
     },

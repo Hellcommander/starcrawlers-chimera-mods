@@ -97,6 +97,7 @@
         ],
         "perk": {
           "name": "Double Stick",
+          "description": "The second one is on before the first has finished beeping.",
           "addActions": [
             { "do": "effect", "effect": "@Charge" }
           ]
@@ -120,7 +121,23 @@
         ],
         "perk": {
           "name": "Cluster Frag",
-          "radiusDelta": 1
+          "description": "The casing is only the first surprise. The bomblets take a moment.",
+          "addActions": [
+            {
+              "do": "trap",
+              "fieldName": "Cluster Bomblets",
+              "affects": "enemies",
+              "fuse": 2,
+              "radius": 2,
+              "maxTraps": 2,
+              "vfx": "SOLDIER_FRAGOUT.explosionPrefab@0.6",
+              "sound": "sfx/demolitionist_charge_pop.wav",
+              "actions": [
+                { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.2 },
+                { "do": "effect", "effect": "@Charge" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -153,6 +170,7 @@
         ],
         "perk": {
           "name": "Long Fuse",
+          "description": "The cord burns hot enough to take the first target with it.",
           "addActions": [
             { "do": "effect", "effect": "#Burning" }
           ]
@@ -176,7 +194,18 @@
         ],
         "perk": {
           "name": "Redundant Wiring",
-          "cooldownDelta": -15
+          "description": "A second circuit, running to whoever touches you.",
+          "cooldownDelta": -10,
+          "addProcs": [
+            {
+              "on": "hurt",
+              "when": { "has": "@Switch", "of": "self" },
+              "maxPerTurn": 3,
+              "actions": [
+                { "do": "effect", "to": "attacker", "effect": "@Charge" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -197,12 +226,24 @@
         "impactVfx": "SOLDIER_ROCKET.explosionPrefab",
         "sound": "sfx/demolitionist_detonator.wav",
         "actions": [
-          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Charge", "consumeStacks": true, "ifTargetHas": "@Charge" },
-          { "do": "knockback", "amount": 1, "ifTargetHas": "@Charge" }
+          { "do": "knockback", "amount": 1, "ifTargetHas": "@Charge" },
+          { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Charge", "consumeStacks": true, "ifTargetHas": "@Charge", "when": { "perk": false } }
         ],
         "perk": {
-          "name": "Bigger Button",
-          "damageMult": 1.25
+          "name": "Chain Reaction",
+          "description": "Each blast wires the neighbours before the smoke clears. Some of them go off in the same click.",
+          "addActions": [
+            {
+              "do": "chain",
+              "ifTargetHas": "@Charge",
+              "jumps": 2,
+              "radius": 2,
+              "actions": [
+                { "do": "effect", "effect": "@Charge", "unlessTargetHas": "@Charge" }
+              ]
+            },
+            { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 4, "stacksOf": "@Charge", "consumeStacks": true, "ifTargetHas": "@Charge" }
+          ]
         }
       }
     },
@@ -224,6 +265,7 @@
         "actions": [
           {
             "do": "field",
+            "when": { "perk": false },
             "fieldName": "Welcome Mat",
             "turns": 4,
             "radius": 1.6,
@@ -236,7 +278,21 @@
         ],
         "perk": {
           "name": "Wall-to-Wall",
-          "cooldownDelta": -4
+          "description": "A bigger carpet, and its tripwires drag feet toward the middle.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Welcome Mat",
+              "turns": 4,
+              "radius": 2.6,
+              "affects": "enemies",
+              "look": "HAZARD_Fire_Mini",
+              "actions": [
+                { "do": "effect", "effect": "@Charge" },
+                { "do": "pull", "amount": 1, "pullToward": "center" }
+              ]
+            }
+          ]
         }
       }
     },

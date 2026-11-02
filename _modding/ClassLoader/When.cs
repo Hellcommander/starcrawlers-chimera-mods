@@ -43,7 +43,12 @@ namespace SCClassLoader
         public string skill;
         public int skillRank = 1;
         public bool? inCombat;
+        /// <summary>In a side area or not.</summary>
+        public bool? inSide;
         public bool? melee;
+        /// <summary>The skill being used: vanilla, mod, item, attack, self, aimed, melee, cooldown, instant or its name.
+        /// "a|b" = either, "a+b" = both, "!a" = not.</summary>
+        public string cast;
         /// <summary>Gear equipped by whoever is checked (default you): "melee", "ranged|shield", "!heavy" (see Equipped).</summary>
         public string equipped;
         /// <summary>true = only once this skill's perk is bought, false = only before (a perk that changes what the skill does).</summary>
@@ -112,6 +117,8 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.tag) && (who == null || !HasTag(who, w.tag))) return false;
             if (!string.IsNullOrEmpty(w.skill) && Synergies.TreeLevel(w.skill) < Math.Max(1, w.skillRank)) return false;
             if (w.inCombat.HasValue && InCombat() != w.inCombat.Value) return false;
+            if (w.inSide.HasValue && SideAreas.InSide != w.inSide.Value) return false;
+            if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
             if (!string.IsNullOrEmpty(w.equipped) && !Equipped.Check(w.equipped, Who(w.of, ctx, target, "self"))) return false;
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
@@ -135,6 +142,54 @@ namespace SCClassLoader
             }
             else if (w.chance < 100 && Random.Range(1, 101) > w.chance + ctx.chanceBonus) return false;
             return true;
+        }
+
+        /// <summary>The skill in question: the one acting, or for a proc or an effect the one you are using right now.</summary>
+        private static Ability Casting(ActionContext ctx) => ctx.source != null && !ctx.source.isPassive ? ctx.source : Game.PLAYER_ABILITY != null ? Game.PLAYER_ABILITY : ctx.source;
+
+        internal static bool IsCast(string cast, Ability a)
+        {
+            if (a == null) return false;
+            return cast.Split('|').Any(any => any.Split('+').All(one =>
+            {
+                string t = one.Trim();
+                return t.StartsWith("!") ? !IsCastWord(t.Substring(1).Trim(), a) : IsCastWord(t, a);
+            }));
+        }
+
+        private static bool IsCastWord(string word, Ability a)
+        {
+            switch (Lower(word))
+            {
+                case "vanilla": return !(a is ModAbility);
+                case "mod": return a is ModAbility;
+                case "item": return a.GetComponentInParent<Item>() != null || (Menu_Player.instance != null && Menu_Player.instance.GetEquipment().Any(i => i != null && i.equipTrigger != null && i.equipTrigger.equipment_ability == a));
+                case "attack": return a is ModAbility m ? SkillMods.IsAttack(m.Spec?.actions) : a.GetTargetStyle() == TARGET_STYLE.Character || a.GetTargetStyle() == TARGET_STYLE.FloorCharacter;
+                case "self": return a.GetTargetStyle() == TARGET_STYLE.None;
+                case "aimed": return a.GetTargetStyle() != TARGET_STYLE.None;
+                case "melee": return a.isMelee;
+                case "cooldown": return a.cooldown > 0;
+                case "instant": return a.isInstant;
+                default: return string.Equals(word, a.internalName, StringComparison.OrdinalIgnoreCase) || string.Equals(word, a.GetDisplayName(), StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        private static int Effects(Character who, bool debuffs)
+        {
+            int n = 0;
+            foreach (Effect e in who.effects.effects)
+                if (e != null && !e.isHidden && e.isDebuff == debuffs) n++;
+            return n;
+        }
+
+        private static float SkillsWaiting()
+        {
+            var pac = Player_AbilityControl.instance;
+            if (pac == null) return 0;
+            int n = 0;
+            foreach (Ability a in pac.abilities)
+                if (a != null && !a.isPassive && a.GetCooldownAmount() > 0) n++;
+            return n;
         }
 
         private static bool IsKind(WhenSpec w, Character who)
@@ -192,6 +247,13 @@ namespace SCClassLoader
                 case "stamina": return who?.GetStamina();
                 case "stamina%": return who == null ? (float?)null : 100f * who.GetStamina() / Mathf.Max(1, who.GetStat(STAT_TYPE.Stamina));
                 case "shield": return who?.oshielding;
+                case "healthlost": return who == null ? (float?)null : who.GetHealthMax() - who.GetHealth();
+                case "buffs": return who == null || who.effects == null ? (float?)null : Effects(who, false);
+                case "debuffs": return who == null || who.effects == null ? (float?)null : Effects(who, true);
+                case "skillscooling": return SkillsWaiting();
+                case "cost": return Casting(ctx)?.GetStaminaCost();
+                case "cooldown": return Casting(ctx)?.cooldown;
+                case "floor": return Map.instance != null ? Map.instance.floor : 0;
                 case "stacks": return who == null || arg == null ? (float?)null : Actions.StacksOn(who, Actions.EffectId(arg, ctx.classId));
                 case "counter": return who == null || arg == null ? (float?)null : Counters.Get(who, arg);
                 case "enemiesnear": return Near(who, Radius(arg), enemies: true);
@@ -269,6 +331,8 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.tag)) parts.Add($"{whose ?? "the target"} is {w.tag.ToLowerInvariant()}");
             if (!string.IsNullOrEmpty(w.skill)) parts.Add($"you have {Synergies.TreeNames(w.skill)}{(w.skillRank > 1 ? $" at rank {w.skillRank}+" : "")}");
             if (w.inCombat.HasValue) parts.Add(w.inCombat.Value ? "in combat" : "out of combat");
+            if (w.inSide.HasValue) parts.Add(w.inSide.Value ? "in a side area" : "outside side areas");
+            if (!string.IsNullOrEmpty(w.cast)) parts.Add("using " + CastWords(w.cast));
             if (w.melee.HasValue) parts.Add(w.melee.Value ? "in melee" : "at range");
             if (!string.IsNullOrEmpty(w.equipped)) parts.Add($"{whose ?? "you"} {(whose == null || whose == "you" ? "have" : "has")} {Equipped.Requirement(w.equipped)}");
             if (w.perk.HasValue) parts.Add(w.perk.Value ? "with the perk" : "without the perk");
@@ -292,11 +356,27 @@ namespace SCClassLoader
             return string.Join(", ", parts.Where(s => s.Length > 0));
         }
 
+        private static string CastWords(string cast) =>
+            string.Join(" or ", cast.Split('|').Select(any => "a " + string.Join(", ", any.Split('+').Select(one =>
+            {
+                string t = one.Trim();
+                string word = t.TrimStart('!').Trim();
+                switch (Lower(word))
+                {
+                    case "vanilla": word = "vanilla"; break;
+                    case "mod": word = "mod"; break;
+                    case "item": word = "item"; break;
+                    case "self": word = "self-cast"; break;
+                    case "cooldown": word = "cooldown"; break;
+                }
+                return (t.StartsWith("!") ? "non-" : "") + word;
+            })) + " skill"));
+
         private static bool IsGlobal(string v)
         {
             if (PluginHost.HasValue(v)) return true;
             string k = v.Split(':')[0].ToLowerInvariant();
-            return k == "level" || k == "credits" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons";
+            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons";
         }
 
         private static string Num(float v, string value) => value.EndsWith("%") ? $"{v:0.#}%" : v.ToString("0.#", CultureInfo.InvariantCulture);
@@ -311,6 +391,13 @@ namespace SCClassLoader
                 case "health": case "health%": return "health";
                 case "stamina": case "stamina%": return "stamina";
                 case "shield": return "overshield";
+                case "healthlost": return "health lost";
+                case "buffs": return "buffs";
+                case "debuffs": return "debuffs";
+                case "skillscooling": return "your skills on cooldown";
+                case "cost": return "the skill's stamina cost";
+                case "cooldown": return "the skill's cooldown";
+                case "floor": return "the floor";
                 case "stacks": return $"{Actions.EffectNameOf(arg, classId)} stacks";
                 case "counter": return arg;
                 case "enemiesnear": return $"enemies within {Radius(arg):0.#}";

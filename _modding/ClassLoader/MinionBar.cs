@@ -11,7 +11,7 @@ namespace SCClassLoader
 {
     /// <summary>
     /// The pet command strip on top of the hotbar ([Minions] CommandBar): one button per living pet showing its name
-    /// and health. Click twice to unsummon it (its scrap back, or its corpse); right-click for its orders menu (MinionMenu).
+    /// and health. Click twice to unsummon it (its scrap back, or its corpse) or, charmed, release it; right-click for its orders menu (MinionMenu).
     /// </summary>
     internal static class MinionBar
     {
@@ -19,6 +19,10 @@ namespace SCClassLoader
         private static Strip strip;
 
         internal static bool CanCommand => Player.instance != null && !Game.RESOLVING && !Game.TARGETING && !Game.Game_isLoading;
+
+        /// <summary>A button under a screen point. The strip sits outside the game's own panels, so it says so itself:
+        /// otherwise a right press starts the look, which takes the cursor before the button ever hears the click.</summary>
+        internal static bool Over(Vector2 screen) => strip != null && strip.Over(screen);
 
         internal class PetButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
         {
@@ -41,7 +45,8 @@ namespace SCClassLoader
                 {
                     armedUntil = 0f;
                     Tooltip.instance?.Hide();
-                    PetHandling.Unsummon(pet, "Command", false, keepRemains: true);
+                    if (PetHandling.IsCharmed(pet)) PetHandling.ReleaseCharm(pet, "Command");
+                    else PetHandling.Unsummon(pet, "Command", false, keepRemains: true);
                     AudioManager.PlayEvent("event:/UI/UI_Click");
                     strip?.Rebuild();
                     return;
@@ -57,9 +62,10 @@ namespace SCClassLoader
                 if (pet == null) return;
                 var (_, n) = PetHandling.PartsOf(pet);
                 string kind = PetHandling.IsConverted(pet) ? "Converted" : pet.characterType.ToString();
+                string twice = PetHandling.IsCharmed(pet) ? "release (the charm lifts and it goes back to its own side)"
+                    : $"unsummon ({(n > 0 ? "you get its scrap back" : "it leaves its body as a corpse")})";
                 Tooltip.instance?.Show_TinyTip($"{pet.GetName()}  {pet.GetHealth()}/{pet.GetHealthMax()}",
-                    $"{kind}. Click twice: unsummon ({(n > 0 ? "you get its scrap back" : "it leaves its body as a corpse")}).\n" +
-                    "Right-click: its orders.", null);
+                    $"{kind}. Click twice: {twice}.\nRight-click: its orders.", null);
             }
 
             public void OnPointerExit(PointerEventData e) => Tooltip.instance?.Hide();
@@ -71,7 +77,7 @@ namespace SCClassLoader
                 string name = pet.GetName();
                 if (name.Length > 14) name = name.Substring(0, 13) + "…";
                 text.text = armed
-                    ? "<color=#FF7272>Unsummon?</color>\n<size=80%>click again</size>"
+                    ? $"<color=#FF7272>{(PetHandling.IsCharmed(pet) ? "Release" : "Unsummon")}?</color>\n<size=80%>click again</size>"
                     : $"{name}\n<size=80%><color={(pet.GetHealth() * 3 < pet.GetHealthMax() ? "#FF7272" : "#9FD99F")}>{pet.GetHealth()}/{pet.GetHealthMax()}</color>{(PetHandling.PartsOf(pet).count > 0 ? " <color=#C79750>scrap</color>" : "")}</size>";
                 back.color = armed ? new Color(0.35f, 0.08f, 0.08f, 0.85f) : new Color(0.04f, 0.08f, 0.12f, 0.8f);
             }
@@ -90,6 +96,13 @@ namespace SCClassLoader
             private EventBus.Watch watch;
             /// <summary>While a button is armed it counts down by itself, with no event to say so.</summary>
             internal float liveUntil;
+
+            internal bool Over(Vector2 screen)
+            {
+                foreach (PetButton b in buttons)
+                    if (b != null && b.gameObject.activeInHierarchy && RectTransformUtility.RectangleContainsScreenPoint((RectTransform)b.transform, screen, null)) return true;
+                return false;
+            }
 
             internal void Rebuild()
             {

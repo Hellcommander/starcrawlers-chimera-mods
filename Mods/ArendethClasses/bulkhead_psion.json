@@ -59,7 +59,10 @@
         "actions": [ { "do": "wallSpikes", "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
           "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
                        { "do": "effect", "effect": "#Gashed" } ] } ],
-        "perk": { "name": "Barbed Steel", "description": "The spikes come out barbed.", "damageMult": 1.25 }
+        "perk": {
+          "name": "Barbed Steel", "description": "The spikes go in hooked, and they hold on.",
+          "addActions": [ { "do": "effect", "effect": "@Pinned", "when": { "value": "wallsNear", "of": "target", "atLeast": 1 } } ]
+        }
       }
     },
     {
@@ -74,7 +77,13 @@
           { "do": "wallSpikes", "amount": 2, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
             "actions": [ { "do": "damage", "type": "Piercing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2 } ] }
         ],
-        "perk": { "name": "Narrower", "radiusDelta": 0.5 }
+        "perk": {
+          "name": "Narrower", "description": "The squeeze doesn't stop when you do. The space goes on closing.",
+          "addActions": [ { "do": "field", "fieldName": "Closing Corridor", "turns": 3, "radius": 2.1, "affects": "enemies", "look": "HAZARD_Energy@0.6", "actions": [
+            { "do": "pull", "amount": 1, "pullToward": "center" },
+            { "do": "wallSpikes", "amount": 1, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
+              "actions": [ { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15 } ] } ] } ]
+        }
       }
     },
     {
@@ -90,7 +99,10 @@
             { "do": "wallSpikes", "amount": 1, "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
               "actions": [ { "do": "damage", "type": "Piercing", "min": 3, "max": 6, "scale": "Strength+PsiPower", "scaleMult": 0.25 } ] } ] }
         ],
-        "perk": { "name": "Follow Through", "cooldownDelta": -2 }
+        "perk": {
+          "name": "Follow Through", "description": "The swing never really stops. Whatever comes next is part of the same blow.",
+          "instant": true
+        }
       }
     },
     {
@@ -105,7 +117,13 @@
           { "do": "wallSpikes", "model": { "mesh": "models/bp_spike.glb", "scale": 0.6, "rotation": [90, 0, 0] },
             "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 } ] }
         ],
-        "perk": { "name": "Sealed In", "description": "The tomb stays shut a little longer.", "cooldownDelta": -3 }
+        "perk": {
+          "name": "Sealed In", "description": "The tomb doesn't open. Its walls go on closing their teeth.",
+          "addActions": [ { "do": "field", "fieldName": "Sealed Tomb", "turns": 3, "affects": "enemies", "actions": [
+            { "do": "effect", "effect": "@Pinned" },
+            { "do": "wallSpikes", "amount": 2, "model": { "mesh": "models/bp_spike.glb", "scale": 0.5, "rotation": [90, 0, 0] },
+              "actions": [ { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15 } ] } ] } ]
+        }
       }
     },
     {

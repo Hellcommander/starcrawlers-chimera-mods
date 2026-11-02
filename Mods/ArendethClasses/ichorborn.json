@@ -242,6 +242,7 @@
         "staminaCost": 10,
         "cooldown": 5,
         "dodgeable": false,
+        "procs": [ { "on": "effectLost", "match": "@Gazing", "actions": [ { "do": "counter", "to": "self", "counter": "GazeHeld", "amount": 0, "counterSet": true } ] } ],
         "travelVfx": "IchTar",
         "travelSpeed": 22,
         "impactVfx": "IchSplash@0.5",
@@ -288,8 +289,11 @@
         ],
         "perk": {
           "name": "High Tide",
-          "description": "The wave comes back around sooner.",
-          "cooldownDelta": -2
+          "description": "The wave doesn't drain away: everyone it reaches is left standing in a pool of their own.",
+          "addActions": [
+            { "do": "field", "fieldName": "Ichor Mire", "turns": 4, "radius": 0, "affects": "enemies", "look": "IchMireLook",
+              "actions": [ { "do": "damage", "type": "Bio", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.1 }, { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "@Tarred" } ] }
+          ]
         }
       }
     },
@@ -312,7 +316,6 @@
         "impactVfx": "IchBeamHit",
         "sound": "event:/Abilities/Misc/Psykonics_Warp",
         "actions": [
-          { "do": "counter", "to": "self", "counter": "GazeHeld", "amount": 0, "counterSet": true, "when": { "lacks": "@Gazing", "of": "self" } },
           { "do": "damage", "type": "Meta", "min": 4, "max": 7, "scale": "PsiPower+Smarts", "scaleMult": 0.3, "perRank": 1, "lifesteal": 0.4,
             "bonusPerStack": 8, "stacksOf": "counter:GazeHeld", "stacksFrom": "self" },
           { "do": "damage", "type": "Meta", "min": 2, "max": 3, "ifTargetHas": "@Doomsight" },
@@ -322,8 +325,11 @@
         ],
         "perk": {
           "name": "Ever-Open Eye",
-          "description": "Holding the eye open costs you less.",
-          "staminaDelta": -3
+          "description": "Hold the fourth look and what it falls on may simply stop being. What is too great to unmake loses a piece of itself.",
+          "addActions": [
+            { "do": "if", "when": { "all": [ { "value": "counter:GazeHeld", "of": "self", "atLeast": 3 }, { "has": "@Gazing", "of": "self" } ] }, "then": [
+              { "do": "execute", "amount": 20, "elitePercent": 12 } ] }
+          ]
         }
       }
     },

@@ -6,6 +6,43 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ## Unreleased
 
+### Perihelion's own art
+
+Perihelion now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
+flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning nucleus
+through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments shed ice
+as they fight. Mod authors get `"fallAs"` on a trap and `"aura"` on an effect (see `README.md`).
+
+### Aiming past your companions
+
+While you aim a skill, your minions, pets and crew no longer get in the way: the mouse reaches the enemy, tile or object
+behind them. Buffs still land on them, and holding the Force key lets any skill aim at one. `AimThroughMinions` under
+`[Orders]` turns it off. Mod authors mark a skill with `"forAllies"` (see `README.md`).
+
+### Perks
+
+Perk points are rare, so every mod class's skill perks now change how the skill plays. The perks that were only a
+number (damage x1.25, cooldown -3, area +1) are gone: they now add triggers, ground fields, status payoffs, throws and
+chains, or make a skill instant or ready again on a kill. Mod authors get `addProcs`, `instant`, `resetOnKill` and
+`undodgeable` on a perk (see `README.md`). The old number fields still work.
+
+Five skills that didn't do what they say are fixed. **Wild Tangent:** every skip now gets the Spillover bonus, not just the
+first. **Unmaking Gaze:** closing the eye clears its count at once, so the next look starts over. **Grin Without a Cat:**
+the grin stays where you stood and enemies near it turn on it. **Recall Protocol:** recalling your last drone refunds
+stamina. **Remote Detonator:** charged enemies are now knocked back. **Prism Charge:** a Zenith Hoarlight now works
+when no other Hoarlight is left.
+
+### Looking-Glass Rogue
+
+Reworked around surreal magic; the grins and the Grinning Cat stay, the rest is new. **Sentence First** (was Snicker-Snack):
+the blow lands now and a verdict falls three turns later, and a sentenced enemy that strikes you pays on the spot.
+**One Side, Other Side** (was Drink Me, Eat Me): size is a loan, taken from an enemy or handed over until it is jammed in
+place. **The Looking-Glass** (was Painted Guard): a copy of you at the opposite size; use it again to trade places and sizes.
+**Down the Rabbit Hole** (was Hedgehog Croquet): an enemy falls out of the fight for two turns and lands hard elsewhere, Painted Red adding to it. **Six Impossible
+Things** (was Mad Tea Party): spend Tea Clock hours on skills that take no time and leave no cooldown. As the cat, **No-Name
+Wood** (was Warp Pounce) makes enemies forget whose side they are on. New as the cat: **May Look at a King** hits bosses and elites hardest,
+**No Body to Behead** leaves only your head until your next turn, and **Slowly, Tail First** fades you out and bites when you're gone.
+
 ### New class
 
 - **Perihelion** (`Mods/Perihelion/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
@@ -27,8 +64,13 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   hits as hard as you do, then loses 50% of every hit after everything else is worked out. Your minions, summons and
   crew come out with it as corrupted copies with more health and the same cut, and they fall when it does. If your party
   would hit too hard, their damage is cut further and they get more health, armour, dodge, block and resistance instead.
-  It drops an epic and corrupted copies of two of your items, stronger, with their bonuses moved around and any skill or
-  effect they grant swapped for another item's.
+  It drops an epic and corrupted copies of two of your items, stronger, with their bonuses moved around. Item skills
+  become new corrupted versions, and corrupted mods with effects of their own replace some bonuses. All of them grow
+  with your best stat. Some change casting itself: Bitter Clarity lets nothing go on cooldown for a price in health,
+  Steady Void makes your next two skills take no turn, and an Afterimage strikes with your next attack. Unseen turns
+  your mod attacks into traps, and the new Wrong Hand mod can reshape them; vanilla skills get an effect of their own
+  instead. Modders get new conditions: `cast`, `inSide`, `healthLost`, `buffs`, `debuffs`, `skillsCooling`, `cost`,
+  `cooldown` and `floor`.
 
 ### New mods
 
@@ -44,6 +86,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Right-clicking a pet's button on the minion strip now opens its orders menu, the same as right-clicking it in the
   world. Break down moved into that menu.
 - New order in that menu, **Swap places**: you and the companion trade tiles, for your turn.
+- Charmed minions have **Release** in place of Unsummon, in that menu and on the strip: the charm lifts and it goes
+  back to its own side, alive where it stands, and frees its minion slot.
 
 ### Class changes
 

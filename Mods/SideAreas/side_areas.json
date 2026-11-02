@@ -350,6 +350,1148 @@
     ],
 
     // Bosses wait in a far room. A layer rolls [SideAreas] BossChance (or its kind's "bossChance"), then picks by weight.
+    // What a corrupted drop gets. "skills": a corrupted version of an item skill ("of": item ids). "effects": what those
+    // skills use, plus the mods (an id starting with Mod). A drop with a version takes "modsWithSkill" mods, one without takes
+    // "mods" and keeps its own skill; each mod replaces one of its bonuses.
+    "corruptedGear": {
+     "mods": 2,
+     "modsWithSkill": 1,
+     "effects": [
+      {
+       "id": "VoidBurn",
+       "name": "Void Burn",
+       "duration": 4,
+       "debuff": true,
+       "description": "Something is eating this from the inside.",
+       "dot": {
+        "type": "Void",
+        "min": 1,
+        "max": 3,
+        "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+        "scaleMult": 0.15
+       },
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "Hollowed",
+       "name": "Hollowed",
+       "duration": 3,
+       "debuff": true,
+       "description": "There is less of it than there was. Takes more damage.",
+       "damageTakenMult": 1.25,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "BlackRoots",
+       "name": "Black Roots",
+       "duration": 3,
+       "debuff": true,
+       "description": "Roots with no plant behind them.",
+       "root": true,
+       "dot": {
+        "type": "Void",
+        "min": 1,
+        "max": 2,
+        "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+        "scaleMult": 0.1
+       },
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "Spent",
+       "name": "Spent",
+       "duration": 4,
+       "debuff": true,
+       "description": "The power came from somewhere. Deals less damage.",
+       "damageDealtMult": 0.8,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "Doubt",
+       "name": "Doubt",
+       "duration": 3,
+       "debuff": true,
+       "description": "Takes more damage.",
+       "damageTakenMult": 1.15,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "Gnawing",
+       "name": "Gnawing",
+       "duration": 4,
+       "debuff": true,
+       "description": "The thing you fed wants more.",
+       "dot": {
+        "type": "Void",
+        "min": 1,
+        "max": 2,
+        "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+        "scaleMult": 0.05
+       },
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "Unseen",
+       "name": "Unseen",
+       "duration": 3,
+       "description": "Eyes slide off you. What you do stays behind where you did it, and what you strike with a skill of old comes away thinner.",
+       "concealment": 60,
+       "icon": "icons/shrouded.png",
+       "modifies": [
+        {
+         "skills": "attacks",
+         "name": "Left Behind",
+         "form": "trap"
+        }
+       ],
+       "procs": [
+        {
+         "on": "cast",
+         "when": {
+          "cast": "vanilla+attack"
+         },
+         "actions": [
+          {
+           "do": "effect",
+           "effect": "@Hollowed"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "SteadyVoid",
+       "name": "Steady Void",
+       "duration": 5,
+       "description": "Your hands stopped shaking. They move before you decide to, and they stopped feeling, too.",
+       "stats": {
+        "Dodge": -10
+       },
+       "icon": "icons/shrouded.png",
+       "maxStacks": 2,
+       "castRules": {
+        "freeTurn": true,
+        "consume": true
+       }
+      },
+      {
+       "id": "BitterClarity",
+       "name": "Bitter Clarity",
+       "duration": 5,
+       "description": "Very clear, and very cold. Nothing has to wait now, and everything has a price.",
+       "icon": "icons/shrouded.png",
+       "castRules": {
+        "noCooldown": true,
+        "healthCost": 0.08
+       }
+      },
+      {
+       "id": "NoOneHome",
+       "name": "No One Home",
+       "duration": 1,
+       "description": "Nothing here can be hit.",
+       "invulnerable": true,
+       "damageTakenMult": 0,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "WitherShell",
+       "name": "Wither Shell",
+       "duration": 1,
+       "description": "Nothing lands. It all goes in, and it comes back out.",
+       "invulnerable": true,
+       "damageTakenMult": 0,
+       "onExpireRadius": 3,
+       "onExpireActions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 8,
+         "max": 16,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.6
+        }
+       ],
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "MarrowFeed",
+       "name": "Marrow Feed",
+       "duration": 5,
+       "description": "Something else's strength.",
+       "hot": 1,
+       "icon": "icons/shrouded.png",
+       "hotScale": "Strength|Agility|Recognition|Smarts|PsiPower",
+       "hotScaleMult": 0.15
+      },
+      {
+       "id": "Afterimage",
+       "name": "Afterimage",
+       "duration": 3,
+       "description": "Part of you is still standing where it missed, and it swings when you do.",
+       "icon": "icons/shrouded.png",
+       "castRules": {
+        "repeat": 0.5,
+        "consume": true
+       }
+      },
+      {
+       "id": "Veiled",
+       "name": "Veiled",
+       "duration": 1,
+       "description": "For a moment nobody can quite place you.",
+       "concealment": 50,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModVoidLeech",
+       "name": "Void Leech",
+       "description": "Hits sometimes feed you.",
+       "procs": [
+        {
+         "on": "hit",
+         "actions": [
+          {
+           "do": "heal",
+           "to": "self",
+           "amount": 2,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.1
+          }
+         ],
+         "chance": 20
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModEchoingWound",
+       "name": "Echoing Wound",
+       "description": "Hits sometimes leave Void Burn.",
+       "procs": [
+        {
+         "on": "hit",
+         "actions": [
+          {
+           "do": "effect",
+           "effect": "@VoidBurn"
+          }
+         ],
+         "chance": 20
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModMirrorFlinch",
+       "name": "Mirror Flinch",
+       "description": "What hurts you sometimes gets hurt back, in Void.",
+       "procs": [
+        {
+         "on": "hurt",
+         "actions": [
+          {
+           "do": "damage",
+           "type": "Void",
+           "min": 3,
+           "max": 6,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.3,
+           "to": "attacker"
+          }
+         ],
+         "chance": 30
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModBlackoutStep",
+       "name": "Blackout Step",
+       "description": "Every fifth step leaves a thin shield behind it.",
+       "procs": [
+        {
+         "on": "move",
+         "actions": [
+          {
+           "do": "shield",
+           "to": "self",
+           "amount": 3,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.15
+          }
+         ],
+         "every": 5
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModSecondShadow",
+       "name": "Second Shadow",
+       "description": "A dodge leaves an Afterimage: your next attack strikes a second time.",
+       "procs": [
+        {
+         "on": "dodge",
+         "actions": [
+          {
+           "do": "effect",
+           "effect": "@Afterimage",
+           "to": "self"
+          }
+         ]
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModHollowReserve",
+       "name": "Hollow Reserve",
+       "description": "Falling under 30% health raises a shield, once in a while.",
+       "procs": [
+        {
+         "on": "lowHealth",
+         "actions": [
+          {
+           "do": "shield",
+           "to": "self",
+           "amount": 15,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.5
+          }
+         ],
+         "cooldown": 15
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModColdSpite",
+       "name": "Cold Spite",
+       "description": "A kill takes 2 turns off your cooldowns.",
+       "procs": [
+        {
+         "on": "kill",
+         "actions": [
+          {
+           "do": "cooldowns",
+           "to": "self",
+           "amount": 2
+          }
+         ]
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModThinVeil",
+       "name": "Thin Veil",
+       "description": "Sometimes, for a turn, you're hard to place.",
+       "procs": [
+        {
+         "on": "turn",
+         "actions": [
+          {
+           "do": "effect",
+           "effect": "@Veiled",
+           "to": "self"
+          }
+         ],
+         "chance": 15
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModSpitefulCore",
+       "name": "Spiteful Core",
+       "description": "Casting sometimes gives stamina back.",
+       "procs": [
+        {
+         "on": "cast",
+         "actions": [
+          {
+           "do": "stamina",
+           "to": "self",
+           "amount": 3,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.1
+          }
+         ],
+         "chance": 30
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModStaticBetween",
+       "name": "Static Between",
+       "description": "A critical hit stuns.",
+       "procs": [
+        {
+         "on": "crit",
+         "actions": [
+          {
+           "do": "stun",
+           "turns": 1
+          }
+         ],
+         "cooldown": 4
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModBorrowedTime",
+       "name": "Borrowed Time",
+       "description": "You deal 10% more damage and take 10% more.",
+       "damageDealtMult": 1.1,
+       "damageTakenMult": 1.1,
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      },
+      {
+       "id": "ModVoidMarrow",
+       "name": "Void Marrow",
+       "description": "Heals 2 health a turn. The light it gives off makes you easier to find.",
+       "hot": 1,
+       "stats": {
+        "Stealth": -10
+       },
+       "duration": -1,
+       "icon": "icons/shrouded.png",
+       "hotScale": "Strength|Agility|Recognition|Smarts|PsiPower",
+       "hotScaleMult": 0.05
+      },
+      {
+       "id": "ModWrongHand",
+       "name": "Wrong Hand",
+       "description": "Sometimes an attack leaves you some other way than you meant it to. Older skills spill instead.",
+       "modifies": [
+        {
+         "skills": "attacks",
+         "name": "Wrong Hand",
+         "chance": 30,
+         "roll": [
+          {
+           "name": "Bursts Out",
+           "form": "nova",
+           "power": 0.7
+          },
+          {
+           "name": "Thrown Wide",
+           "form": "grenade",
+           "power": 0.85
+          },
+          {
+           "name": "Slips Loose",
+           "form": "drifter"
+          }
+         ]
+        }
+       ],
+       "procs": [
+        {
+         "on": "cast",
+         "when": {
+          "cast": "vanilla+attack"
+         },
+         "chance": 30,
+         "actions": [
+          {
+           "do": "damage",
+           "type": "Void",
+           "min": 3,
+           "max": 6,
+           "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+           "scaleMult": 0.3
+          }
+         ]
+        }
+       ],
+       "duration": -1,
+       "icon": "icons/shrouded.png"
+      }
+     ],
+     "skills": [
+      {
+       "of": [
+        "CABBAGE_GEAR_HEAD_QUEST_REWARD"
+       ],
+       "name": "Withering Burst",
+       "description": "The leaves go black. For a turn nothing reaches you, then it all comes back out as Void.",
+       "cooldown": 50,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@WitherShell",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_3"
+       ],
+       "name": "Void Catalyst",
+       "description": "The slime that comes out isn't stable, and doesn't stay.",
+       "cooldown": 60,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "summon",
+         "creature": "Slime_Electric",
+         "summonName": "Void Catalyst",
+         "amount": 1,
+         "turns": 12,
+         "scaleStat": "Strength|Agility|Recognition|Smarts|PsiPower"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_4",
+        "GEAR_HANDS_QUEST_REWARD_4"
+       ],
+       "name": "Last Supper",
+       "description": "It fills you, and then it starts on you.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "heal",
+         "to": "self",
+         "amount": 20,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.8
+        },
+        {
+         "do": "effect",
+         "effect": "@Gnawing",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_5"
+       ],
+       "name": "Black Roots",
+       "description": "Roots with no plant behind them come up through the deck.",
+       "cooldown": 30,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@BlackRoots"
+        }
+       ],
+       "radius": 2
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_6"
+       ],
+       "name": "All Power to Nothing",
+       "description": "The shield is real. What it runs on was your aim.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "shield",
+         "to": "self",
+         "amount": 30,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 1.0
+        },
+        {
+         "do": "effect",
+         "effect": "@Spent",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_Engineer"
+       ],
+       "name": "Wrong Copy",
+       "description": "It scans nothing and prints something anyway.",
+       "cooldown": 40,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "summon",
+         "creature": "CORPSEC_DRONE",
+         "summonName": "Wrong Copy",
+         "amount": 1,
+         "turns": 15,
+         "scaleStat": "Strength|Agility|Recognition|Smarts|PsiPower"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_ForcePsyker"
+       ],
+       "name": "Geldud's Doubt",
+       "description": "A far bigger wall, and you no longer believe in it.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "shield",
+         "to": "self",
+         "amount": 60,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 2.0
+        },
+        {
+         "do": "effect",
+         "effect": "@Doubt",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_Hacker"
+       ],
+       "name": "Void Rampancy",
+       "description": "Its mind goes, and what replaces it burns.",
+       "cooldown": 30,
+       "target": "enemy",
+       "range": 7,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "CONFUSE",
+         "turns": 3
+        },
+        {
+         "do": "effect",
+         "effect": "@VoidBurn"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_A_QUEST_REWARD_Soldier"
+       ],
+       "name": "P.A.I.N, Now",
+       "description": "No fuse, no warning, and you're close enough to feel it.",
+       "cooldown": 50,
+       "target": "enemy",
+       "range": 7,
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 12,
+         "max": 22,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.6
+        },
+        {
+         "do": "stun",
+         "turns": 1
+        },
+        {
+         "do": "damage",
+         "to": "self",
+         "type": "Void",
+         "min": 3,
+         "max": 6,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.1
+        }
+       ],
+       "radius": 3
+      },
+      {
+       "of": [
+        "GEAR_ACCESSORY_MiltonsIncendiaryStapler"
+       ],
+       "name": "Milton's Black Stapler",
+       "description": "He did warn everyone. It burns without light and takes the light with it.",
+       "cooldown": 16,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 5,
+         "max": 10,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.4
+        },
+        {
+         "do": "blind"
+        }
+       ],
+       "radius": 2
+      },
+      {
+       "of": [
+        "GEAR_FEET_QUEST_REWARD_2"
+       ],
+       "name": "Slip",
+       "description": "You stop being here. Being there costs something.",
+       "cooldown": 30,
+       "target": "floor",
+       "range": 5,
+       "actions": [
+        {
+         "do": "teleport"
+        },
+        {
+         "do": "damage",
+         "to": "self",
+         "type": "Void",
+         "min": 2,
+         "max": 4,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.1
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_FEET_QUEST_REWARD_4"
+       ],
+       "name": "Keep Sinking",
+       "description": "More stamina than the boots ever gave. The water isn't water now.",
+       "cooldown": 45,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "stamina",
+         "to": "self",
+         "amount": 20,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.5
+        },
+        {
+         "do": "effect",
+         "effect": "@Gnawing",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_HANDS_QUEST_REWARD_1"
+       ],
+       "name": "Dead Hands",
+       "description": "Everyone nearby is looking at your hands, and can't look away.",
+       "cooldown": 25,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "CONFUSE",
+         "turns": 2
+        }
+       ],
+       "radius": 3
+      },
+      {
+       "of": [
+        "GEAR_HANDS_QUEST_REWARD_6"
+       ],
+       "name": "Steady Void",
+       "description": "Your next two skills are done before anyone sees you start.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@SteadyVoid",
+         "to": "self",
+         "stacks": 2
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_HEAD_QUEST_REWARD_1"
+       ],
+       "name": "Hollow Guard",
+       "description": "The uniform shows up. Nobody is in it who remembers why.",
+       "cooldown": 40,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "summon",
+         "creature": "CORPSEC_GUARD_MELEE",
+         "summonName": "Hollow Guard",
+         "amount": 1,
+         "turns": 20,
+         "scaleStat": "Strength|Agility|Recognition|Smarts|PsiPower"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_HEAD_QUEST_REWARD_5"
+       ],
+       "name": "Hollow Podling",
+       "description": "Not adorable. Doesn't stay.",
+       "cooldown": 60,
+       "target": "floor",
+       "range": 6,
+       "actions": [
+        {
+         "do": "summon",
+         "creature": "Slime_Bio",
+         "summonName": "Hollow Podling",
+         "amount": 1,
+         "turns": 15,
+         "scaleStat": "Strength|Agility|Recognition|Smarts|PsiPower"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_LEGS_QUEST_REWARD_6"
+       ],
+       "name": "Not There",
+       "description": "You don't hide. You just stop being worth noticing.",
+       "cooldown": 90,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@Unseen",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "GEAR_NECK_QUEST_REWARD_2"
+       ],
+       "name": "Present Nothing",
+       "description": "You show it an empty card. It can't stop reading.",
+       "cooldown": 40,
+       "target": "enemy",
+       "range": 7,
+       "actions": [
+        {
+         "do": "blind"
+        },
+        {
+         "do": "silence",
+         "turns": 2
+        }
+       ]
+      },
+      {
+       "of": [
+        "GOLDY_GEAR_HEAD_QUEST_REWARD"
+       ],
+       "name": "Hungry Roar",
+       "description": "The roar takes back what you needed from everyone in earshot.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 4,
+         "max": 8,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.4,
+         "lifesteal": 1
+        }
+       ],
+       "radius": 3
+      },
+      {
+       "of": [
+        "GOLDY_O_QUEST_REWARD"
+       ],
+       "name": "Overthink",
+       "description": "Everything comes back sooner, and none of it is kind.",
+       "cooldown": 40,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "cooldowns",
+         "to": "self",
+         "amount": 4
+        },
+        {
+         "do": "effect",
+         "effect": "@Gnawing",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "TOPAGAE_GEAR_HEAD_QUEST_REWARD"
+       ],
+       "name": "Rob the Hollow",
+       "description": "It finds what the target had left and takes it, and now the target knows.",
+       "cooldown": 30,
+       "target": "enemy",
+       "range": 5,
+       "actions": [
+        {
+         "do": "credits",
+         "amount": 40
+        },
+        {
+         "do": "effect",
+         "effect": "@Hollowed"
+        },
+        {
+         "do": "taunt",
+         "turns": 2
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_A_QUEST_REWARD_1"
+       ],
+       "name": "Bitter Dregs",
+       "description": "The bottom of the cup. For a while nothing you do has to wait, and all of it hurts.",
+       "cooldown": 40,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@BitterClarity",
+         "to": "self"
+        },
+        {
+         "do": "damage",
+         "to": "self",
+         "type": "Void",
+         "min": 3,
+         "max": 5,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.1
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_A_QUEST_REWARD_2"
+       ],
+       "name": "Void Eye",
+       "description": "It looks at the target and finds the part that isn't there.",
+       "cooldown": 40,
+       "target": "enemy",
+       "range": 7,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@Hollowed"
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_HM_RocksPike"
+       ],
+       "name": "Hollow Throw",
+       "description": "It goes through everything on the line.",
+       "cooldown": 12,
+       "target": "enemy",
+       "range": 6,
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 10,
+         "max": 20,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.5
+        }
+       ],
+       "shape": "line"
+      },
+      {
+       "of": [
+        "WEAPON_O_Lunchbox"
+       ],
+       "name": "Empty Lunchbox",
+       "description": "There's nothing in it. You feel full. That's the problem.",
+       "cooldown": 40,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "heal",
+         "to": "self",
+         "amount": 15,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.6
+        },
+        {
+         "do": "effect",
+         "effect": "@Gnawing",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_O_Panic_Button"
+       ],
+       "name": "Dead Button",
+       "description": "Press it and for one turn nobody is home.",
+       "cooldown": 60,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@NoOneHome",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_O_QUEST_REWARD_2"
+       ],
+       "name": "Orb of Submission",
+       "description": "It doesn't change the target's mind. It just turns the mind off.",
+       "cooldown": 40,
+       "target": "enemy",
+       "range": 6,
+       "actions": [
+        {
+         "do": "stun",
+         "turns": 2
+        },
+        {
+         "do": "silence",
+         "turns": 3
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_O_QUEST_REWARD_3"
+       ],
+       "name": "Mirror Parasite",
+       "description": "It settles in the target and feeds you from there.",
+       "cooldown": 50,
+       "target": "enemy",
+       "range": 6,
+       "actions": [
+        {
+         "do": "effect",
+         "effect": "@VoidBurn"
+        },
+        {
+         "do": "effect",
+         "effect": "@MarrowFeed",
+         "to": "self"
+        }
+       ]
+      },
+      {
+       "of": [
+        "WEAPON_O_QUEST_REWARD_4"
+       ],
+       "name": "Hollow Clang",
+       "description": "The pan rings with no sound, and everything near it stops.",
+       "cooldown": 40,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "stun",
+         "turns": 2
+        }
+       ],
+       "radius": 2
+      },
+      {
+       "of": [
+        "WEAPON_TRINART_R_QUEST_REWARD_1"
+       ],
+       "name": "The Debt",
+       "description": "It takes from the target and pays you the difference.",
+       "cooldown": 10,
+       "target": "enemy",
+       "range": 7,
+       "actions": [
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 4,
+         "max": 8,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.5,
+         "lifesteal": 0.5
+        }
+       ]
+      },
+      {
+       "of": [
+        "ZINAPRAIGON_GEAR_HEAD_QUEST_REWARD"
+       ],
+       "name": "Void Refusal",
+       "description": "A shell of nothing, and everything near it pays for it.",
+       "cooldown": 40,
+       "target": "self",
+       "range": 1.5,
+       "actions": [
+        {
+         "do": "shield",
+         "to": "self",
+         "amount": 25,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.8
+        },
+        {
+         "do": "damage",
+         "type": "Void",
+         "min": 4,
+         "max": 8,
+         "scale": "Strength|Agility|Recognition|Smarts|PsiPower",
+         "scaleMult": 0.4
+        }
+       ],
+       "radius": 3
+      }
+     ]
+    },
+
     // "creature" is an enemy id, or "self" for a corrupted copy of you ("mirror" tunes it; see the README).
     "bosses": [
       { "id": "corruptedmirror", "name": "Corrupted Mirror", "creature": "self", "weight": 10, "minFloor": 1, "health": 4, "color": "#B46CFF",
@@ -357,7 +1499,7 @@
         "text": "It steps down out of the frame in your gear, and everyone with you steps down behind it. Your skills come out of it in the wrong order, all of them running with Void, and one of them was never yours.",
         "deathText": "The Corrupted Mirror comes apart. What it carried stays on the floor.",
         "loot": [ { "type": "Random", "rarity": "Epic" } ],
-        "mirror": { "strength": 0.6, "finalDamage": 0.5, "skills": 6, "foreign": 1, "minSkills": 3, "look": "#7A2CFF", "glow": 0.6, "gearDrops": 2, "gearPower": 0.3, "escort": 6, "escortHealth": 1.5, "escortDeadly": 0.12, "escortMinDamage": 0.15, "escortDefense": 1 },
+        "mirror": { "strength": 0.6, "finalDamage": 0.5, "skills": 6, "foreign": 1, "minSkills": 3, "look": "#7A2CFF", "glow": 1.2, "gearDrops": 2, "gearPower": 0.3, "escort": 6, "escortHealth": 1.5, "escortDeadly": 0.12, "escortMinDamage": 0.15, "escortDefense": 1 },
         "challenge": {
           "model": { "mesh": "models/corrupted_mirror.glb", "height": 1.9, "glow": "#9A3CFF", "glowStrength": 2, "pulse": 0.012 },
           "title": "Corrupted Mirror",

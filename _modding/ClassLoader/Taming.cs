@@ -90,8 +90,8 @@ namespace SCClassLoader
             Actions.Run(a.then, ctx, t);
         }
 
-        /// <summary>Lets a tamed creature go: it turns on you again.</summary>
-        internal static void Release(Character c)
+        /// <summary>Lets a tamed creature go: it turns on you again. `say` replaces the log line.</summary>
+        internal static void Release(Character c, string say = null)
         {
             if (c == null) return;
             c.effects.GetEffect("CHARM")?.RemoveInstant();
@@ -101,7 +101,8 @@ namespace SCClassLoader
             // NOXP stays: it was already paid out when it was tamed
             foreach (Tag tg in c.tags.Where(x => x?.tagName != null && x.tagName.StartsWith("SCCLS_")).ToList()) c.RemoveTag(tg.tagName);
             if (c.ai != null) c.ai.SetTeam(c.ai.GetBaseTeam());
-            Game.LOG($"<color=#FF9F5C>{c.GetName()} slips its bond and turns on you!</color>");
+            AI_Manager.instance?.playerMinions.Remove(c); // the game only clears the dead from this list: it'd keep the slot
+            Game.LOG(say ?? $"<color=#FF9F5C>{c.GetName()} slips its bond and turns on you!</color>");
         }
 
         /// <summary>Re-reads the owner's attributes into every "ownerShare" effect on this creature.</summary>

@@ -137,7 +137,16 @@
         ],
         "perk": {
           "name": "Linebacker",
-          "damageMult": 1.25
+          "description": "You stay on them as they go back, and they have nowhere to look but you.",
+          "addActions": [
+            {
+              "do": "leap"
+            },
+            {
+              "do": "taunt",
+              "turns": 1
+            }
+          ]
         }
       }
     },
@@ -172,7 +181,27 @@
         ],
         "perk": {
           "name": "Detail Lead",
-          "cooldownDelta": -2
+          "description": "Touch one of yours and you answer to the whole detail.",
+          "addProcs": [
+            {
+              "on": "allyHurt",
+              "maxPerTurn": 2,
+              "when": {
+                "has": "@Guarded",
+                "of": "ally"
+              },
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Staggered"
+                },
+                {
+                  "do": "taunt",
+                  "turns": 1
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/guard_close_protection.wav"
       }
@@ -210,7 +239,14 @@
         ],
         "perk": {
           "name": "Booming Voice",
-          "cooldownDelta": -3
+          "description": "Loud enough to rattle plating. Nobody finishes what they had started.",
+          "radiusDelta": 4,
+          "addActions": [
+            {
+              "do": "silence",
+              "turns": 1
+            }
+          ]
         },
         "sound": "audio_licensed/guard_over_here.wav"
       }
@@ -260,7 +296,44 @@
         ],
         "perk": {
           "name": "Quick Hands",
-          "cooldownDelta": -3
+          "description": "You no longer wait to be hit: anyone who steps in close catches a jab first.",
+          "addActions": [
+            {
+              "do": "arm",
+              "reaction": {
+                "name": "Quick Jab",
+                "on": "approach",
+                "who": "allies",
+                "charges": 3,
+                "turns": 6,
+                "priority": 50,
+                "vfx": "PA_Shieldbearer_Charge.impactParticle@0.4",
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Crushing",
+                    "min": 2,
+                    "max": 5,
+                    "scale": "Strength+Toughness",
+                    "scaleMult": 0.2,
+                    "perRank": 1,
+                    "bonusPerStack": 1,
+                    "stacksOf": "@Resolve",
+                    "stacksFrom": "self"
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "@Staggered"
+                  },
+                  {
+                    "do": "effect",
+                    "to": "self",
+                    "effect": "@Resolve"
+                  }
+                ]
+              }
+            }
+          ]
         },
         "sound": "audio_licensed/guard_retort_stance.wav"
       }
@@ -316,7 +389,17 @@
         ],
         "perk": {
           "name": "Paid in Full",
-          "damageMult": 1.25
+          "description": "It takes them a long while to get back up to anything clever after that.",
+          "addActions": [
+            {
+              "do": "exhaust",
+              "amount": 1,
+              "bonusPerStack": 1,
+              "stacksOf": "@Resolve",
+              "stacksFrom": "self",
+              "stacksUsed": 3
+            }
+          ]
         }
       }
     },
@@ -351,6 +434,9 @@
           },
           {
             "do": "throw",
+            "when": {
+              "perk": false
+            },
             "amount": 1,
             "actions": [
               {
@@ -379,7 +465,30 @@
         ],
         "perk": {
           "name": "Make Some Room",
-          "radiusDelta": 1
+          "description": "They go twice as far, and whatever stops them stops them cold.",
+          "addActions": [
+            {
+              "do": "throw",
+              "amount": 2,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Crushing",
+                  "min": 2,
+                  "max": 3
+                },
+                {
+                  "do": "stun",
+                  "turns": 1
+                },
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Resolve"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/guard_shoulder_check.wav"
       }

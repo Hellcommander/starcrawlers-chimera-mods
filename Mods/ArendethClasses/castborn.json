@@ -147,7 +147,12 @@
         ],
         "perk": {
           "name": "Tempered Fist",
-          "damageMult": 1.25
+          "description": "Slag that meets this fist runs back into your seams.",
+          "addActions": [
+            { "do": "if", "when": { "has": "@Slagged", "of": "target" },
+              "then": [ { "do": "effect", "to": "self", "effect": "@Mending" } ],
+              "else": [ { "do": "effect", "effect": "@Slagged" } ] }
+          ]
         },
         "sound": "sfx/castborn_fist.wav"
       }
@@ -173,7 +178,8 @@
         ],
         "perk": {
           "name": "Quick Refit",
-          "cooldownDelta": -3
+          "description": "Practised hands. The ram is seated between one blow and the next.",
+          "instant": true
         }
       }
     },
@@ -199,8 +205,11 @@
         ],
         "perk": {
           "name": "Deep Seating",
-          "addActions": [
-            { "do": "shield", "to": "self", "amount": 4, "scale": "Toughness", "scaleMult": 0.4 }
+          "description": "Seated this deep, the plate throws back what hits it, hot.",
+          "addProcs": [
+            { "on": "hurt", "cooldown": 2, "when": { "all": [ { "has": "@WardFitting", "of": "self" }, { "value": "distance", "atMost": 2 } ] }, "actions": [
+              { "do": "effect", "effect": "@Slagged" },
+              { "do": "knockback", "amount": 1 } ] }
           ]
         }
       }
@@ -224,8 +233,15 @@
           { "do": "summon", "creature": "LoaderBot", "summonName": "Foundry Watchman", "model": { "mesh": "models/foundry_watchman.glb", "height": 1.6, "keepParticles": false }, "summonGroup": "FoundryWatch", "amount": 2, "turns": 20, "maxSummons": 2, "effect": "@Castbond" }
         ],
         "perk": {
-          "name": "Rapid Casting",
-          "cooldownDelta": -8
+          "name": "Hot From the Mould",
+          "description": "They arrive still glowing. Nothing near can look away, and nothing that strikes them comes away clean.",
+          "addActions": [
+            { "do": "taunt", "to": "summons", "ifSummonAlive": "group:FoundryWatch", "radius": 3, "turns": 2 }
+          ],
+          "addProcs": [
+            { "on": "allyHurt", "maxPerTurn": 2, "when": { "all": [ { "value": "summons:FoundryWatch", "of": "self", "atLeast": 1 }, { "value": "enemiesNear:2", "of": "target", "atLeast": 1 } ] }, "actions": [
+              { "do": "effect", "effect": "@Slagged" } ] }
+          ]
         }
       }
     },
@@ -253,7 +269,12 @@
         ],
         "perk": {
           "name": "Bastion Pour",
-          "cooldownDelta": -6
+          "description": "The core overflows, and the deck around you runs with melt for as long as you stand.",
+          "addActions": [
+            { "do": "field", "to": "self", "fieldName": "Bastion Melt", "turns": 6, "radius": 2.1, "affects": "enemies", "look": "HAZARD_Fire_Sludge@0.7", "actions": [
+              { "do": "damage", "type": "Fire", "min": 1, "max": 3, "scale": "Toughness", "scaleMult": 0.2 },
+              { "do": "effect", "effect": "@Slagged" } ] }
+          ]
         },
         "sound": "sfx/castborn_siege.wav"
       }
@@ -284,8 +305,11 @@
           { "do": "effect", "to": "self", "effect": "@Mending" }
         ],
         "perk": {
-          "name": "Foundry Roar",
-          "cooldownDelta": -4
+          "name": "Forced Draught",
+          "description": "The vents draw before they roar, and everything near comes in with the air.",
+          "addActions": [
+            { "do": "pull", "amount": 2 }
+          ]
         }
       }
     },

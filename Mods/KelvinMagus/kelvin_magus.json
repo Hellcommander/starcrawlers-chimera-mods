@@ -64,7 +64,7 @@
           { "do": "damage", "type": "Cryo", "min": 2, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1 },
           { "do": "effect", "effect": "@Supercooled" },
           { "do": "effect", "to": "self", "effect": "@StolenHeat" } ],
-        "perk": { "name": "Deep Draw", "addActions": [ { "do": "effect", "effect": "@Supercooled" } ] } } },
+        "perk": { "name": "Deep Draw", "description": "You reach further in, and the chill follows your hand.", "addActions": [ { "do": "effect", "effect": "@Supercooled" } ] } } },
 
     { "attributes": { "Smarts": 1 }, "addResistances": { "Cryo": 5 },
       "newAbility": {
@@ -79,7 +79,10 @@
                          { "do": "effect", "effect": "@IcedFooting" },
                          { "do": "effect", "effect": "@Supercooled" } ] },
           { "do": "effect", "to": "self", "effect": "@StolenHeat" } ],
-        "perk": { "name": "Long Winter", "cooldownDelta": -2 } } },
+        "perk": { "name": "Frost Heave", "description": "The frozen deck buckles into a bowl, and what stands on it slides to the middle.",
+          "addActions": [
+            { "do": "field", "fieldName": "Frost Heave", "turns": 4, "radius": 1.5, "affects": "enemies", "onEnter": false,
+              "actions": [ { "do": "pull", "amount": 1, "pullToward": "center" } ] } ] } } },
 
     { "attributes": { "PsiPower": 1, "Toughness": 1 },
       "newAbility": {
@@ -92,7 +95,7 @@
             "unlessSummonAlive": "self", "maxSummons": 1, "turns": 20, "effect": "@Frostbound" },
           { "do": "taunt", "to": "summons", "ifSummonAlive": "self", "radius": 3, "turns": 2 },
           { "do": "shield", "to": "summon", "ifSummonAlive": "self", "amount": 10, "perRank": 3 } ],
-        "perk": { "name": "Old Ice", "cooldownDelta": -3 } } },
+        "perk": { "name": "Old Ice", "description": "Old ice was here before you. It only has to stand up.", "instant": true } } },
 
     { "attributes": { "Smarts": 1 },
       "newAbility": {
@@ -106,7 +109,11 @@
           { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "perRank": 1,
             "bonusPerStack": 3, "stacksOf": "@StolenHeat", "stacksFrom": "self", "consumeStacks": true },
           { "do": "effect", "effect": "EFFECT_Fire" } ],
-        "perk": { "name": "Pressure Valve", "damageMult": 1.25 } } },
+        "perk": { "name": "Pressure Valve", "description": "Vent enough at once and the steam rolls on past the target, scalding whatever stands near.",
+          "addActions": [
+            { "do": "if", "when": { "value": "stacks:@StolenHeat", "of": "self", "atLeast": 3 },
+              "then": [ { "do": "chain", "jumps": 2, "radius": 2.5, "vfx": "KmSteamJet@0.5",
+                          "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] } ] } ] } } },
 
     { "attributes": { "PsiPower": 1 }, "addResistances": { "Cryo": 5 },
       "newAbility": {
@@ -122,7 +129,10 @@
                          { "do": "damage", "type": "Cryo", "min": 1, "max": 3 },
                          { "do": "effect", "effect": "@Supercooled" } ] },
           { "do": "effect", "to": "self", "effect": "@StolenHeat" } ],
-        "perk": { "name": "Hedge of Knives", "damageMult": 1.3 } } },
+        "perk": { "name": "Hedge of Knives", "description": "The spikes catch what walks through them, and hold it there to be cut again.",
+          "addActions": [
+            { "do": "field", "fieldName": "Hedge of Knives", "turns": 5, "radius": 1.2, "affects": "enemies",
+              "actions": [ { "do": "effect", "effect": "EFFECT_Root_Frozen", "turns": 1, "chance": 50 } ] } ] } } },
 
     { "attributes": { "Smarts": 1, "PsiPower": 1 },
       "newAbility": {
@@ -131,13 +141,15 @@
         "description": "Find the fault line and strike it. A frozen target breaks apart for heavy damage and its shards fly to the enemies nearby. A kill makes it ready again.",
         "travelVfx": "KmSiphonBolt", "travelSpeed": 16, "impactVfx": "KmShatter", "sound": "sfx/km_shatter.wav",
         "actions": [
+          { "do": "effect", "effect": "@FrozenSolid", "when": { "all": [ { "perk": true }, { "value": "stacks:@Supercooled", "of": "target", "atLeast": 2 } ] } },
           { "do": "chain", "ifTargetHas": "@FrozenSolid", "jumps": 2, "radius": 2.5, "vfx": "KmShatter@0.5",
             "actions": [ { "do": "damage", "type": "Cryo", "min": 3, "max": 5, "perRank": 1 },
                          { "do": "effect", "effect": "@Supercooled", "stacks": 2 } ] },
           { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 1 },
           { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 2,
             "ifTargetHas": "@FrozenSolid", "consume": true } ],
-        "perk": { "name": "Fault Line", "damageMult": 1.3 } } },
+        "perk": { "name": "Fault Line", "description": "Half frozen is frozen enough, if you know where to strike. The break takes the cold out with it.",
+          "addActions": [ { "do": "purge", "effect": "@Supercooled" } ] } } },
 
     { "attributes": { "Smarts": 1, "PsiPower": 1 }, "addResistances": { "Cryo": 10 },
       "newAbility": {
@@ -150,6 +162,9 @@
           { "do": "damage", "type": "Cryo", "min": 4, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 2 },
           { "do": "effect", "effect": "@Supercooled", "stacks": 3 },
           { "do": "effect", "to": "self", "effect": "@StolenHeat", "stacks": 4 } ],
-        "perk": { "name": "Absolute", "radiusDelta": 1 } } }
+        "perk": { "name": "Absolute", "description": "Nothing is left in them, and all of it comes to you. Few bodies are built to hold that.",
+          "addActions": [
+            { "do": "effect", "effect": "@Supercooled" },
+            { "do": "effect", "to": "self", "effect": "@StolenHeat", "stacks": 3 } ] } } }
   ]
 }

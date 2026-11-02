@@ -219,6 +219,24 @@
         "CONFUSE"
       ],
       "immuneToAllies": true
+    },
+    {
+      "id": "SecondBreath",
+      "name": "Second Breath",
+      "description": "The cap is holding the rest of its breath. It lets it go a moment later, through whatever is rotting nearby.",
+      "duration": 2,
+      "onExpireRadius": 2,
+      "onExpireActions": [
+        { "do": "damage", "type": "Void", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "ifTargetHas": "@Gloomrot" },
+        { "do": "effect", "effect": "@Gloomrot", "ifTargetHas": "@Gloomrot" }
+      ]
+    },
+    {
+      "id": "Canopied",
+      "name": "Under the Canopy",
+      "description": "The black canopy hangs over you. Anything more than a step away can lose sight of you.",
+      "duration": 2,
+      "concealment": 40
     }
   ],
   "tiers": [
@@ -382,8 +400,11 @@
         ],
         "perk": {
           "name": "Wide Seedrift",
-          "damageMult": 1.2,
-          "cooldownDelta": -1
+          "description": "The tear doesn't close behind you. What stands by it breathes the dark.",
+          "addActions": [
+            { "do": "field", "fieldName": "Open Seedrift", "turns": 3, "radius": 1.6, "affects": "enemies", "look": "HAZARD_VoidRift@0.5", "actions": [
+              { "do": "effect", "effect": "@Gloomrot" } ] }
+          ]
         }
       }
     },
@@ -423,7 +444,10 @@
         ],
         "perk": {
           "name": "Virulent Dart",
-          "damageMult": 1.25
+          "description": "Into flesh already rotting, the spores take and jump to the next body.",
+          "addActions": [
+            { "do": "chain", "when": { "value": "stacks:@Gloomrot", "of": "target", "atLeast": 3 }, "jumps": 1, "radius": 3, "actions": [ { "do": "effect", "effect": "@Gloomrot" } ] }
+          ]
         }
       }
     },
@@ -477,7 +501,21 @@
         ],
         "perk": {
           "name": "Thick Harvest",
-          "cooldownDelta": -3
+          "description": "The ground the colony rises from was already rotten.",
+          "addProcs": [
+            {
+              "on": "cast",
+              "match": "Sow the Gloom",
+              "radius": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Gloomrot",
+                  "stacks": 2
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -526,6 +564,7 @@
         ],
         "perk": {
           "name": "Long Rot",
+          "description": "The strand leaves a sickness where it first took hold.",
           "addActions": [
             {
               "do": "effect",
@@ -566,7 +605,10 @@
         ],
         "perk": {
           "name": "Slow Exhale",
-          "cooldownDelta": -2
+          "description": "There is more breath in a cap than one burst lets out. It comes a moment later.",
+          "addActions": [
+            { "do": "effect", "to": "summons", "ifSummonAlive": "group:Gloomcap", "effect": "@SecondBreath" }
+          ]
         }
       }
     },
@@ -644,8 +686,12 @@
           }
         ],
         "perk": {
-          "name": "Canopy Spread",
-          "radiusDelta": 1
+          "name": "Deep Shade",
+          "description": "The canopy stays up, and under it the colony and its keeper are hard to find.",
+          "addActions": [
+            { "do": "field", "fieldName": "Black Canopy", "turns": 5, "radius": 3, "affects": "allies", "look": "HAZARD_Miasma@0.7", "actions": [
+              { "do": "effect", "effect": "@Canopied" } ] }
+          ]
         }
       }
     },
@@ -709,6 +755,7 @@
         ],
         "perk": {
           "name": "Second Flush",
+          "description": "A second spore finds the ash just as good.",
           "addActions": [
             {
               "do": "summon",

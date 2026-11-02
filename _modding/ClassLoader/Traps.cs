@@ -138,9 +138,11 @@ namespace SCClassLoader
             Sprung.Add(tr.name);
             if (Sprung.Count > 40) Sprung.RemoveAt(0);
             var caught = Caught(tr, tripper);
-            Actions.SpawnVfx(tr.spec.vfx, tr.pos + Vector3.up * 0.1f);
+            Vector3 at = tr.pos;
+            string vfx = tr.spec.vfx, sound = tr.spec.sound, classId = tr.classId;
+            System.Action land = () => { Actions.SpawnVfx(vfx, at + Vector3.up * 0.1f); ModAudio.Play(sound, at, classId); };
             if (!string.IsNullOrEmpty(tr.spec.fall)) Moves.Streak(tr.pos + new Vector3(1.4f, 1.95f, 0.7f), tr.pos + Vector3.up * 0.1f, Moves.Hex(tr.spec.fall, Color.white), 0.14f, 0.7f);
-            ModAudio.Play(tr.spec.sound, tr.pos, tr.classId);
+            if (string.IsNullOrEmpty(tr.spec.fallAs) || !DashCam.Fall(tr.spec.fallAs, at, land)) land();
             Character first = tripper ?? caught.FirstOrDefault();
             Game.LOG(first != null ? $"<color=#FFB35C>{tr.name}</color> goes off under {first.GetName()}!" : $"<color=#FFB35C>{tr.name}</color> goes off.");
 

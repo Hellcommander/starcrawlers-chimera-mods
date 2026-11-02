@@ -107,8 +107,30 @@
           }
         ],
         "perk": {
-          "name": "Long Line",
-          "rangeDelta": 2
+          "name": "Forked Hook",
+          "description": "Two prongs, two bodies. Whoever stands nearest the first comes along with it.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 1,
+              "radius": 3,
+              "look": "#C8D0DA",
+              "actions": [
+                {
+                  "do": "tether",
+                  "look": "#C8D0DA"
+                },
+                {
+                  "do": "pull",
+                  "amount": 5
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Snagged"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -142,7 +164,30 @@
         ],
         "perk": {
           "name": "Quick Reel",
-          "cooldownDelta": -1
+          "description": "A hook already set saves you the throw: you reel in on it, and it comes loose as you land.",
+          "addActions": [
+            {
+              "do": "if",
+              "when": {
+                "has": "@Snagged"
+              },
+              "then": [
+                {
+                  "do": "stamina",
+                  "to": "self",
+                  "amount": 8
+                },
+                {
+                  "do": "cooldowns",
+                  "amount": 1
+                },
+                {
+                  "do": "purge",
+                  "effect": "@Snagged"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/grapnel_zip_line.wav"
       }
@@ -202,7 +247,16 @@
         ],
         "perk": {
           "name": "Full Swing",
-          "damageMult": 1.25
+          "description": "The line never stops: it carries you past them and out of reach.",
+          "addActions": [
+            {
+              "do": "warp",
+              "to": "self",
+              "warpTo": "away",
+              "amount": 3,
+              "vfx": "CYBERNINJA_DASH.particle_dash"
+            }
+          ]
         },
         "sound": "audio_licensed/grapnel_swing_kick.wav"
       }
@@ -273,7 +327,16 @@
         ],
         "perk": {
           "name": "Deep Barbs",
-          "cooldownDelta": -2
+          "description": "A hook already in them locks the line: they stop dead where it runs out, wall or no wall.",
+          "addActions": [
+            {
+              "do": "stun",
+              "turns": 1,
+              "ifTargetHas": "@Snagged",
+              "consume": true,
+              "unlessTargetHas": "EFFECT_Stun"
+            }
+          ]
         },
         "sound": "audio_licensed/grapnel_wall_pin.wav"
       }
@@ -330,8 +393,15 @@
           }
         ],
         "perk": {
-          "name": "Wider Arc",
-          "radiusDelta": 1
+          "name": "Full Circle",
+          "description": "You come out of the swing still moving, with a hook left in everyone it touched.",
+          "instant": true,
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Snagged"
+            }
+          ]
         },
         "sound": "audio_licensed/grapnel_pendulum.wav"
       }
@@ -357,6 +427,9 @@
           },
           {
             "do": "chain",
+            "when": {
+              "perk": false
+            },
             "jumps": 4,
             "radius": 4,
             "falloff": 0.9,
@@ -391,7 +464,40 @@
         ],
         "perk": {
           "name": "Second Strand",
-          "cooldownDelta": -2
+          "description": "A loose line finds anyone nearby, and it sets a fresh hook as the old one tears out.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 4,
+              "radius": 4,
+              "falloff": 0.9,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Piercing",
+                  "min": 5,
+                  "max": 9,
+                  "scale": "Agility+Strength",
+                  "scaleMult": 0.3,
+                  "perRank": 2
+                },
+                {
+                  "do": "pull",
+                  "amount": 1
+                },
+                {
+                  "do": "stun",
+                  "turns": 1,
+                  "ifTargetHas": "@Snagged",
+                  "consume": true
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Snagged"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/grapnel_yank.wav"
       }

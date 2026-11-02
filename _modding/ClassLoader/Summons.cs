@@ -73,7 +73,7 @@ namespace SCClassLoader
                 // A mod creature spends its turns on its prey: the body's maneuver chance (sidestepping instead of closing in
                 // or striking) reads as idling on a summon that only lives a few turns.
                 if (c.ai != null && cd != null && cd.creature) Traverse.Create(c.ai).Field("maneuverChance").SetValue(0);
-                string[] grow = (a.scaleStat ?? (cd != null && cd.creature ? cd.scaleStat : null) ?? "").Split('+');
+                string[] grow = (a.scaleStat ?? (cd != null && cd.creature ? cd.scaleStat : null) ?? "").Split('+').Select(g => Actions.BestStat(g, caster)).ToArray();
                 if (Enum.TryParse(grow[0], true, out STAT_TYPE growStat) && growStat != STAT_TYPE.Smarts)
                 {
                     c.SetTag(StatTag, (int)growStat);

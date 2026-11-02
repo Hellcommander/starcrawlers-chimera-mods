@@ -17,6 +17,9 @@ namespace SCClassLoader
         /// <summary>self | enemy | floor | point (an enemy or a floor tile: with "teleport" you land beside the enemy, or on the
         /// tile) | item | pet (one of your own summons, optionally only those of petGroup)</summary>
         public string target = "enemy";
+        /// <summary>A skill for your own side: your companions stay solid while you aim it, where any other skill's aim
+        /// passes through them. Unset, "pet" skills and those whose field "affects" allies count as this.</summary>
+        public bool? forAllies;
         /// <summary>target "pet": only summons of this summonGroup ("Hoarlight").</summary>
         public string petGroup;
         public float range = 1.5f;
@@ -295,6 +298,9 @@ namespace SCClassLoader
         public bool fuseOnly;
         /// <summary>trap: a hex colour; a streak of it comes down from overhead as it goes off.</summary>
         public string fall;
+        /// <summary>trap: a creature id whose model (mesh and particles, as "dashAs") comes down from overhead; its burst
+        /// and sound play as it lands, the trap's own effects land at once.</summary>
+        public string fallAs;
         /// <summary>springTraps: only traps this close to you (0 = all of them on the floor).</summary>
         public float near;
         /// <summary>summon: shown name of each summon (instead of the creature's own).</summary>
@@ -460,6 +466,14 @@ namespace SCClassLoader
         public float rangeDelta;
         public int chanceBonus;
         public List<ActionSpec> addActions = new List<ActionSpec>();
+        /// <summary>Triggers the skill only has once perked.</summary>
+        public List<ProcSpec> addProcs;
+        /// <summary>Using it no longer ends your turn.</summary>
+        public bool instant;
+        /// <summary>A kill with it makes it ready again.</summary>
+        public bool resetOnKill;
+        /// <summary>The primary target can no longer dodge it.</summary>
+        public bool undodgeable;
     }
 
     /// <summary>A custom status effect a class defines (ClassDef.effects).</summary>
@@ -531,6 +545,9 @@ namespace SCClassLoader
         public DamageTick dot;
         /// <summary>Healing each turn.</summary>
         public int hot;
+        /// <summary>Stats added to "hot", from whoever applied it, as in an action's "scale".</summary>
+        public string hotScale;
+        public float hotScaleMult = 0.1f;
         public int staminaPerTurn;
         public float damageDealtMult = 1f;
         public float damageTakenMult = 1f;
@@ -560,6 +577,8 @@ namespace SCClassLoader
         public float damageTakenPerStack;
         /// <summary>Vanilla effect whose particle to show on the bearer.</summary>
         public string vfx;
+        /// <summary>A mod particle looping on a bearer other than you for as long as the effect holds (on you it would fill your view).</summary>
+        public string aura;
         /// <summary>Triggers while the bearer has the effect (for buffs on you).</summary>
         public List<ProcSpec> procs = new List<ProcSpec>();
 
@@ -601,6 +620,8 @@ namespace SCClassLoader
         public List<AbilitySpec> kit;
         /// <summary>Names of your own abilities that stay usable (and on the hotbar) during the transformation.</summary>
         public List<string> keep;
+        /// <summary>While it is on you, the rules of casting change for every skill you use. See CastRuleSpec.</summary>
+        public CastRuleSpec castRules;
         /// <summary>Only this class's abilities give way to the kit; your other skill trees stay usable.</summary>
         public bool keepOtherClasses;
         /// <summary>The effect's procs count its stacks as their rank (perRank grows with the stacks). Synergies use it.</summary>
@@ -627,5 +648,8 @@ namespace SCClassLoader
         public string type = "Void";
         public int min = 1;
         public int max = 2;
+        /// <summary>Stats added to each tick, from whoever applied it, as in an action's "scale".</summary>
+        public string scale;
+        public float scaleMult = 0.1f;
     }
 }

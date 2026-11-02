@@ -108,8 +108,28 @@
           }
         ],
         "perk": {
-          "name": "Weighted Blades",
-          "damageMult": 1.25
+          "name": "Cascade",
+          "description": "Blades in a steady pattern: each one cuts, and every third keeps your hands in time.",
+          "addActions": [
+            {
+              "do": "effect",
+              "effect": "@Nicked"
+            }
+          ],
+          "addProcs": [
+            {
+              "on": "cast",
+              "match": "Knife Toss",
+              "every": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Juggling"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/blade_knife_toss.wav"
       }
@@ -130,6 +150,9 @@
         "actions": [
           {
             "do": "recall",
+            "when": {
+              "perk": false
+            },
             "fieldName": "Knife",
             "actions": [
               {
@@ -154,9 +177,33 @@
           }
         ],
         "perk": {
-          "name": "Snap Return",
-          "description": "Recall is ready again every turn.",
-          "cooldownDelta": -1
+          "name": "Barbed Return",
+          "description": "The knives come home with whatever they caught on.",
+          "addActions": [
+            {
+              "do": "recall",
+              "fieldName": "Knife",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Slashing",
+                  "min": 2,
+                  "max": 4,
+                  "scale": "Agility",
+                  "scaleMult": 0.2,
+                  "perRank": 1
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Nicked"
+                },
+                {
+                  "do": "pull",
+                  "amount": 1
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/blade_recall.wav"
       }
@@ -214,8 +261,9 @@
           }
         ],
         "perk": {
-          "name": "Wider Arc",
-          "radiusDelta": 1
+          "name": "Flourish",
+          "description": "The throw is part of the step, and you're already into the next one.",
+          "instant": true
         },
         "sound": "audio_licensed/blade_fan_of_knives.wav"
       }
@@ -302,7 +350,22 @@
         ],
         "perk": {
           "name": "Through and Through",
-          "cooldownDelta": -2
+          "description": "It doesn't stop at the first body: the next one already bleeding gets pinned as well.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 2,
+              "radius": 3,
+              "effect": "@Nicked",
+              "actions": [
+                {
+                  "do": "stun",
+                  "turns": 1,
+                  "unlessTargetHas": "EFFECT_Stun"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/blade_pinning_throw.wav"
       }
@@ -351,6 +414,9 @@
           },
           {
             "do": "recall",
+            "when": {
+              "perk": false
+            },
             "to": "self",
             "fieldName": "Knife",
             "actions": [
@@ -387,7 +453,66 @@
         ],
         "perk": {
           "name": "Encore",
-          "damageMult": 1.2
+          "description": "Some blades bounce off the deck and stick again before the rest are back in your hand.",
+          "addActions": [
+            {
+              "do": "recall",
+              "to": "self",
+              "fieldName": "Knife",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Slashing",
+                  "min": 2,
+                  "max": 4,
+                  "scale": "Agility",
+                  "scaleMult": 0.15,
+                  "perRank": 1
+                },
+                {
+                  "do": "damage",
+                  "type": "Slashing",
+                  "min": 2,
+                  "max": 4,
+                  "scale": "Agility",
+                  "scaleMult": 0.15,
+                  "perRank": 1
+                },
+                {
+                  "do": "effect",
+                  "stacks": 2,
+                  "effect": "@Nicked"
+                },
+                {
+                  "do": "field",
+                  "fieldName": "Knife",
+                  "turns": 12,
+                  "affects": "enemies",
+                  "onEnter": true,
+                  "model": {
+                    "mesh": "models/knife.obj",
+                    "texture": "models/knife.png",
+                    "scale": 1.3,
+                    "wobble": 14,
+                    "randomYaw": true
+                  },
+                  "actions": [
+                    {
+                      "do": "damage",
+                      "type": "Slashing",
+                      "min": 1,
+                      "max": 2
+                    },
+                    {
+                      "do": "effect",
+                      "effect": "@Nicked"
+                    }
+                  ],
+                  "chance": 33
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/blade_thousand_returns.wav"
       }
@@ -454,7 +579,30 @@
         ],
         "perk": {
           "name": "Seam Ripper",
-          "damageMult": 1.25
+          "description": "Pull one thread and the seam runs on through every cut body close by.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 3,
+              "radius": 3,
+              "effect": "@Nicked",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Slashing",
+                  "min": 2,
+                  "max": 4,
+                  "scale": "Agility",
+                  "scaleMult": 0.2,
+                  "perRank": 1,
+                  "bonusPerStack": 3,
+                  "stacksOf": "@Nicked",
+                  "consumeStacks": true,
+                  "ifTargetHas": "@Nicked"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/blade_pinning_throw.wav"
       }

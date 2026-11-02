@@ -85,6 +85,7 @@
         ],
         "perk": {
           "name": "Double Payload",
+          "description": "Two packets in the same envelope.",
           "addActions": [
             { "do": "effect", "effect": "@Malware" }
           ]
@@ -117,6 +118,7 @@
         ],
         "perk": {
           "name": "Botnet",
+          "description": "The first host starts sparking as it joins the network.",
           "addActions": [
             { "do": "effect", "effect": "#Shocked" }
           ]
@@ -142,7 +144,12 @@
         ],
         "perk": {
           "name": "Hardened Kernel",
-          "cooldownDelta": -5
+          "description": "Every blocked packet gets traced to its source and answered.",
+          "addProcs": [
+            { "on": "absorb", "maxPerTurn": 1, "actions": [
+              { "do": "effect", "effect": "@Malware" }
+            ] }
+          ]
         }
       }
     },
@@ -186,7 +193,12 @@
         ],
         "perk": {
           "name": "Blue Screen",
-          "damageMult": 1.25
+          "description": "The crash propagates through everything on the same network.",
+          "addActions": [
+            { "do": "chain", "jumps": 3, "radius": 3.5, "effect": "@Malware", "falloff": 0.8, "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 3, "stacksOf": "@Malware", "consumeStacks": true, "ifTargetHas": "@Malware" }
+            ] }
+          ]
         }
       }
     },
@@ -210,8 +222,16 @@
           { "do": "heal", "to": "summons", "ifSummonAlive": "group:HijackedSentry", "amount": 10, "scale": "Smarts", "scaleMult": 0.5 }
         ],
         "perk": {
-          "name": "Admin Rights",
-          "cooldownDelta": -6
+          "name": "Honeypot",
+          "description": "The sentry advertises itself as the softest target in the room, and it isn't.",
+          "addActions": [
+            { "do": "taunt", "to": "summons", "ifSummonAlive": "group:HijackedSentry", "radius": 3, "turns": 2 }
+          ],
+          "addProcs": [
+            { "on": "allyHurt", "maxPerTurn": 2, "actions": [
+              { "do": "effect", "effect": "@Malware" }
+            ] }
+          ]
         }
       }
     },

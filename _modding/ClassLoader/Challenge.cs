@@ -71,9 +71,10 @@ namespace SCClassLoader
             go.transform.SetParent(Map.instance.transform, worldPositionStays: true);
             go.transform.position = n.transform.position;
             Room room = n.GetRoom();
-            Vector3 open = n.GetLinks().Where(l => l != null).Aggregate(Vector3.zero, (a, l) => a + l.transform.position - n.transform.position);
-            open.y = 0f;
-            if (open.sqrMagnitude > 0.01f) go.transform.rotation = Quaternion.LookRotation(open); // its back to the wall
+            var walk = n.GetLinks().Where(l => l != null && !l.HasDoor() && !l.Block_Move).Select(l => Vector3.ProjectOnPlane(l.transform.position - n.transform.position, Vector3.up)).ToList();
+            Vector3 open = walk.Aggregate(Vector3.zero, (a, l) => a + l);
+            if (walk.Count > 0) open = walk.OrderByDescending(l => Vector3.Dot(l.normalized, open)).First(); // its back to the wall, facing a tile you can stand on
+            if (open.sqrMagnitude > 0.01f) go.transform.rotation = Quaternion.LookRotation(open);
             ModelAssets.Spawn(b.challenge.model, b.pack?.folder, n.transform.position, go.transform);
             var box = go.AddComponent<BoxCollider>();
             box.size = new Vector3(1f, 2f, 0.6f);

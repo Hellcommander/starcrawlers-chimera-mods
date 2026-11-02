@@ -124,7 +124,10 @@
         ],
         "perk": {
           "name": "Blue Star Bolt",
-          "damageMult": 1.25
+          "description": "Thrown from a core running hot, the star sets its target alight.",
+          "addActions": [
+            { "do": "effect", "effect": "#Burning", "stacks": 2, "when": { "value": "stacks:@Heat", "of": "self", "atLeast": 5 } }
+          ]
         }
       }
     },
@@ -158,6 +161,7 @@
         ],
         "perk": {
           "name": "Solar Whip",
+          "description": "The lash leaves plasma on the first body it touches.",
           "addActions": [
             { "do": "effect", "effect": "@Ionized" }
           ]
@@ -183,7 +187,17 @@
         ],
         "perk": {
           "name": "Neutron Heart",
-          "cooldownDelta": -6
+          "description": "A core this dense has gravity. Everything nearby drifts toward you while it lasts.",
+          "addProcs": [
+            {
+              "on": "turn",
+              "radius": 3.5,
+              "when": { "has": "@DwarfHeart", "of": "self" },
+              "actions": [
+                { "do": "pull", "amount": 1 }
+              ]
+            }
+          ]
         }
       }
     },
@@ -210,7 +224,11 @@
         ],
         "perk": {
           "name": "Pressure Release",
-          "radiusDelta": 1
+          "description": "The vent carries charged plasma out with the heat, and the burnout with it.",
+          "addActions": [
+            { "do": "effect", "effect": "@Ionized" },
+            { "do": "purge", "to": "self", "effect": "@Burnout" }
+          ]
         }
       }
     },
@@ -239,8 +257,21 @@
         ],
         "perk": {
           "name": "Solar Maximum",
-          "radiusDelta": 1,
-          "damageMult": 1.15
+          "description": "The hole takes a few turns to close, and the surface of the star keeps coming through.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Open Corona",
+              "turns": 3,
+              "radius": 3.1,
+              "affects": "enemies",
+              "look": "HAZARD_Fire_Mini",
+              "actions": [
+                { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.3 },
+                { "do": "effect", "effect": "@Ionized" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -262,12 +293,15 @@
         "sound": "event:/Abilities/Prototype/Thunderclap_Fire",
         "actions": [
           { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "PsiPower", "scaleMult": 0.5, "perRank": 1, "ifTargetHas": "@Ionized" },
-          { "do": "pull", "amount": 2, "ifTargetHas": "@Ionized", "consume": true },
+          { "do": "pull", "amount": 2, "ifTargetHas": "@Ionized", "consume": true, "when": { "perk": false } },
           { "do": "effect", "to": "self", "effect": "@Heat", "stacks": 2 }
         ],
         "perk": {
           "name": "Flux Rope",
-          "radiusDelta": 1
+          "description": "The field lines catch everything in reach, and the plasma stays on them.",
+          "addActions": [
+            { "do": "pull", "amount": 2 }
+          ]
         }
       }
     },

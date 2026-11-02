@@ -58,7 +58,11 @@
         ],
         "perk": {
           "name": "Thousand Cuts",
-          "damageMult": 1.2
+          "description": "Each one small, each one exactly where it counts.",
+          "addActions": [
+            { "do": "effect", "effect": "#Gashed" },
+            { "do": "effect", "effect": "#Gashed", "ifTargetHas": "#Exposed" }
+          ]
         }
       }
     },
@@ -79,7 +83,13 @@
         ],
         "perk": {
           "name": "Ghost",
-          "cooldownDelta": -4
+          "description": "When a job goes bad, you left a moment ago.",
+          "addProcs": [
+            { "on": "lowHealth", "cooldown": 10, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Unseen" },
+              { "do": "hazard", "to": "self", "hazard": "HAZARD_Holosmoke", "radius": 1.1, "turns": 2 }
+            ] }
+          ]
         }
       }
     },
@@ -104,6 +114,7 @@
         ],
         "perk": {
           "name": "Blackmail",
+          "description": "A weakness found out takes the strength from the arm.",
           "addActions": [
             { "do": "effect", "effect": "#Weakened" }
           ]
@@ -149,7 +160,11 @@
         ],
         "perk": {
           "name": "Paid in Full",
-          "damageMult": 1.25
+          "description": "Every clause honoured, and the next name already on the desk.",
+          "resetOnKill": true,
+          "addActions": [
+            { "do": "execute", "amount": 25, "ifTargetHas": "#Exposed", "elitePercent": 10 }
+          ]
         }
       }
     },
@@ -176,6 +191,7 @@
         ],
         "perk": {
           "name": "Clean Exit",
+          "description": "By the time you reappear, the next move is already arranged.",
           "addActions": [
             { "do": "cooldowns", "to": "self", "amount": 2 }
           ]

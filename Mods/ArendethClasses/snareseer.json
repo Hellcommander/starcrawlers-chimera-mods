@@ -82,8 +82,14 @@
         ],
         "perk": {
           "name": "Deeper Dread",
-          "description": "The thought you leave is darker: the glyph hits a quarter harder.",
-          "damageMult": 1.25
+          "description": "A mind already rattled three times over doesn't take a fourth: it locks up and the fear drains out of it.",
+          "addProcs": [
+            { "on": "trap", "match": "Dread Glyph", "cooldown": 3,
+              "when": { "all": [ { "value": "distance", "above": 0.5 }, { "value": "stacks:@Unnerved", "of": "target", "atLeast": 3 } ] },
+              "actions": [
+                { "do": "stun", "turns": 1 },
+                { "do": "purge", "effect": "@Unnerved" } ] }
+          ]
         }
       }
     },
@@ -142,8 +148,14 @@
         ],
         "perk": {
           "name": "Barbed Latch",
-          "description": "The hook bites deeper going in: its sting hits half again as hard.",
-          "damageMult": 1.5
+          "description": "The barbs stay in. Whatever it was working up to has to wait, and you see every twitch.",
+          "addProcs": [
+            { "on": "trap", "match": "Mindlatch", "maxPerTurn": 1,
+              "when": { "value": "distance", "above": 0.5 },
+              "actions": [
+                { "do": "exhaust", "amount": 2 },
+                { "do": "effect", "effect": "@Foreseen" } ] }
+          ]
         }
       }
     },
@@ -167,7 +179,16 @@
         ],
         "perk": {
           "name": "Seen Twice",
-          "cooldownDelta": -2
+          "description": "You saw what would stand on the spot you just left, and left something for it.",
+          "addProcs": [
+            { "on": "cast", "match": "Foreknown Step", "actions": [
+            { "do": "trap", "to": "self", "fieldName": "Dread Glyph", "affects": "enemies", "armTurns": 1, "charges": 1, "maxTraps": 3,
+              "look": "HAZARD_VoidRift@0.35", "vfx": "PA_Psykonics_Temporal.castParticle@0.7", "sound": "sfx/snare_spring.wav",
+              "actions": [
+                { "do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.35, "perRank": 1,
+                  "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+                { "do": "effect", "effect": "@Unnerved" } ] } ] }
+          ]
         }
       }
     },
@@ -199,7 +220,16 @@
         ],
         "perk": {
           "name": "Deeper Recursion",
-          "cooldownDelta": -2
+          "description": "The echo thinks itself once more, fainter, under whoever it caught.",
+          "addProcs": [
+            { "on": "trap", "match": "Echo Mine", "when": { "value": "distance", "above": 0.5 }, "actions": [
+              { "do": "trap", "to": "victim", "fieldName": "Faint Echo", "affects": "enemies", "armTurns": 1, "charges": 1, "radius": 1.6, "turns": 6,
+                "look": "HAZARD_VoidRift@0.2", "vfx": "PA_Psykonics_Temporal.castParticle@0.5", "sound": "sfx/snare_spring.wav",
+                "actions": [
+                  { "do": "damage", "type": "Psi", "min": 1, "max": 3, "scale": "PsiPower", "scaleMult": 0.2,
+                    "bonusPerStack": 1, "stacksOf": "@Premonition", "stacksFrom": "self" },
+                  { "do": "effect", "effect": "@Foreseen" } ] } ] }
+          ]
         }
       }
     },

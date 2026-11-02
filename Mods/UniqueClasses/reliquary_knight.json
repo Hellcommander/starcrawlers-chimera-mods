@@ -138,7 +138,12 @@
         ],
         "perk": {
           "name": "Relic Fury",
-          "damageMult": 1.25
+          "description": "The waking relic leaves its mark on every blow: scorched, dazzled or brought low.",
+          "addActions": [
+            { "do": "effect", "effect": "#Burning", "ifSelfHas": "@SunEngine" },
+            { "do": "effect", "effect": "#Reeling", "ifSelfHas": "@MoonMirror" },
+            { "do": "effect", "effect": "#Weakened", "ifSelfHas": "@WorldNail" }
+          ]
         }
       }
     },
@@ -203,7 +208,24 @@
         ],
         "perk": {
           "name": "Apocalypse Relic",
-          "radiusDelta": 1
+          "description": "The blast leaves the relic's mark behind: burning floor, blinding light, or a nail no one can look away from.",
+          "addActions": [
+            {
+              "do": "field",
+              "ifSelfHas": "@SunEngine",
+              "fieldName": "Sunfall",
+              "turns": 3,
+              "radius": 2.6,
+              "affects": "enemies",
+              "look": "HAZARD_Fire_Mini",
+              "actions": [
+                { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3 },
+                { "do": "effect", "effect": "#Burning" }
+              ]
+            },
+            { "do": "blind", "ifSelfHas": "@MoonMirror" },
+            { "do": "taunt", "turns": 2, "ifSelfHas": "@WorldNail" }
+          ]
         }
       }
     },
@@ -232,8 +254,8 @@
         ],
         "perk": {
           "name": "Crusade Step",
-          "cooldownDelta": -3,
-          "rangeDelta": 1
+          "description": "You arrive already swinging.",
+          "instant": true
         }
       }
     },

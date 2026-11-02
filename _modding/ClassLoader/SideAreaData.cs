@@ -293,6 +293,27 @@ namespace SCClassLoader
     }
 
     /// <summary>What a "self" boss takes from the player; see Corrupted.</summary>
+    /// <summary>A corrupted version of item skills: "of" lists the items whose skill it replaces.</summary>
+    public class CorruptSkillSpec : AbilitySpec
+    {
+        public List<string> of = new List<string>();
+    }
+
+    /// <summary>The "corruptedGear" block: what corrupted drops get. Every mod's entries add up.</summary>
+    public class CorruptGearSpec
+    {
+        public int mods = 2, modsWithSkill = 1;
+        public List<EffectSpec> effects = new List<EffectSpec>();
+        public List<CorruptSkillSpec> skills = new List<CorruptSkillSpec>();
+
+        /// <summary>Effect ids of the mods.</summary>
+        internal readonly List<string> modIds = new List<string>();
+        /// <summary>Item id to corrupted skill id.</summary>
+        internal readonly Dictionary<string, string> alts = new Dictionary<string, string>();
+
+        internal string AltFor(Item_Equipment eq) => eq.equipTrigger?.equipment_ability != null && alts.TryGetValue(eq.itemId, out string id) ? id : null;
+    }
+
     public class MirrorSpec
     {
         /// <summary>How much of your control it has: hard control lands that often, effects last and stack that much.</summary>
@@ -418,6 +439,7 @@ namespace SCClassLoader
         internal static readonly List<RosterSpec> Rosters = new List<RosterSpec>();
         internal static readonly List<AffixSpec> Affixes = new List<AffixSpec>();
         internal static readonly List<BossSpec> Bosses = new List<BossSpec>();
+        internal static CorruptGearSpec CorruptGear = new CorruptGearSpec();
         internal static NemesisSpec Nemesis;
 
         /// <summary>Lists in the json replace the defaults instead of being added to them.</summary>
@@ -443,12 +465,15 @@ namespace SCClassLoader
             Bosses.Clear();
             Places.All.Clear();
             Nemesis = null;
+            CorruptGear = new CorruptGearSpec();
             foreach (ModPack p in ModPacks.Ordered)
                 foreach (var (file, obj) in p.data)
                 {
                     if (!(obj["sideAreas"] is JObject sa)) continue;
                     try { RegisterEffects(p, sa["effects"] as JArray); }
                     catch (Exception e) { Plugin.Log.LogError($"{file}: side area effects: {e.Message}"); }
+                    try { RegisterCorruptGear(p, sa["corruptedGear"] as JObject); }
+                    catch (Exception e) { Plugin.Log.LogError($"{file}: corrupted gear: {e.Message}"); }
                     foreach (JObject e in (sa["anomalies"] as JArray ?? new JArray()).OfType<JObject>())
                     {
                         AnomalySpec a;
@@ -547,6 +572,33 @@ namespace SCClassLoader
             var def = new ClassDef { id = Echoes.EffectClass, name = "Echoes", tiers = new List<TierDef>(), folder = p.folder,
                 effects = arr.OfType<JObject>().Select(o => o.ToObject<EffectSpec>()).ToList() };
             ClassRegistry.RegisterEffects(def, null);
+        }
+
+        private static void RegisterCorruptGear(ModPack p, JObject o)
+        {
+            if (o == null) return;
+            CorruptGearSpec spec = o.ToObject<CorruptGearSpec>(Json);
+            RegisterEffects(p, o["effects"] as JArray);
+            CorruptGear.mods = spec.mods;
+            CorruptGear.modsWithSkill = spec.modsWithSkill;
+            CorruptGear.modIds.AddRange(spec.effects.Where(e => e.id != null && e.id.StartsWith("Mod")).Select(e => Echoes.EffectId(e.id)));
+            foreach (CorruptSkillSpec s in spec.skills)
+            {
+                string id = "CORRUPT_" + new string((s.name ?? "").Where(char.IsLetterOrDigit).ToArray());
+                ClassRegistry.Normalize(s, Echoes.EffectClass);
+                ModAbility.Specs[id] = new ModAbility.Runtime
+                {
+                    spec = s,
+                    classId = Echoes.EffectClass,
+                    internalName = id,
+                    icon = ClassRegistry.LoadSprite(p.folder, s.icon),
+                    name = ClassRegistry.Term(id, "Name", s.name),
+                    desc = ClassRegistry.Term(id, "Desc", s.description ?? ""),
+                    perkName = ClassRegistry.Term(id, "PerkName", s.name + "+"),
+                    perkDesc = ClassRegistry.Term(id, "PerkDesc", ""),
+                };
+                foreach (string item in s.of) CorruptGear.alts[item] = id;
+            }
         }
 
         /// <summary>"Name" is a side area effect; "Class@Effect" any mod class's effect; ids already in full pass through.</summary>

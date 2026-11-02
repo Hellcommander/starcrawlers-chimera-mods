@@ -39,6 +39,17 @@ ICONS = [
     (KM, "frozen_solid", ICE, "a creature's silhouette locked inside a solid block of ice"),
     (KM, "coldsink", ICE, "a frosted glass flask of liquid cold, pale blue mist spilling over its lip"),
     (LG, "looking_glass_rogue", WONDER, "an ornate oval looking-glass mirror with a wide grinning crescent smile in it, playing cards swirling around"),
+    (LG, "sentence_first", "red and gold", "a judge's gavel falling onto a playing card, the card already cut in two before the gavel lands"),
+    (LG, "sentenced", "red and gold", "a scroll with a red heart seal and a blank line where the crime should be"),
+    (LG, "looking_glass", "silver, teal and magenta", "an ornate oval mirror on a mantelpiece with its glass melting into silver mist and a hand reaching through"),
+    (LG, "reflected", "silver and teal", "a pale figure inside a hand mirror, standing the wrong way round, cracks across the glass"),
+    (LG, "no_name_wood", "misty green and violet", "a dark misty wood of thin leaning trees with blank signposts and a floating grin among the branches"),
+    (LG, "one_side", "violet and gold", "a large spotted mushroom split down the middle, one half towering and one half tiny"),
+    (LG, "rabbit_hole", "earth brown and gold", "a round burrow opening in dark earth, a pocket watch falling away down the black shaft"),
+    (LG, "six_impossible", "teal and gold", "a pocket watch with its hands spinning backward and six glowing impossible shapes orbiting it"),
+    (LG, "tail_first", "violet and pink", "a striped cat fading away from the tail forward into stars, only its front half left"),
+    (LG, "look_at_a_king", "violet and gold", "a tiny grinning cat staring up at a towering crowned king, glowing eyes"),
+    (LG, "no_body", "violet and pink", "a cat's head floating alone with no body under it, an executioner's axe passing through empty air below"),
     (LG, "curiouser", WONDER, "a glowing golden key beside a tiny door, swirling stars"),
     (LG, "snicker_snack", "silver and magenta", "a slender sword slicing a crescent arc, sparkles flying off the edge"),
     (LG, "drink_me", WONDER, "a small glass bottle with a paper tag beside a frosted little cake, sparkles"),
@@ -89,8 +100,14 @@ MESHES = [
      "small round head in a red helmet, thin arms held away from its sides, one hand holding a short spear, legs apart, front view"),
     (KM, "ice_spikes", "#9FE6FF", "prop", None, "cluster of thick jagged spikes of snow-frosted white and pale blue ice jutting straight up out of the floor, rough opaque frozen surfaces, no glass, no pedestal, no base plate"),
     (LG, "grin", "#FF70D8", "prop", None, "floating head of an eerie gaunt striped cat, an impossibly wide crescent grin far wider than its own head, the mouth stretching out past both cheeks, far too many long needle-sharp teeth, unblinking glowing yellow eyes, dark violet and magenta striped fur, uncanny, dreamlike and subtly wrong, front view"),
+    (LG, "nameless_tree", "#7CFFB0", "prop", None, "gnarled dead tree with a thick twisted trunk and bare curling branches reaching wide, pale mint and violet bark, storybook style, whole tree from roots to branch tips, no leaves, no pedestal, no base plate"),
+    (LG, "rabbit_hole", "#C8A060", "prop", None, "round rabbit burrow in the ground, a wide flat ring of dark packed earth, tangled roots and tufts of grass around a deep black hole in the middle, seen at a three quarter angle from above, no pedestal"),
     (LG, "teapot", "#5CE1C8", "prop", None, "whimsical porcelain teapot with a crooked spout, pastel teal with small red hearts painted on it"),
 ]
+
+mi.TRELLIS_PROPS = set(mi.TRELLIS_PROPS) | {"nameless_tree", "rabbit_hole"}
+mi.EXTRA_FIX.update({"nameless_tree": ["--drop-small", "0.03", "--min-luma", "95", "--saturation", "1.3", "--match-back", "0.8", "--floor"],
+                     "rabbit_hole": ["--drop-small", "0.05", "--squash", "y:0.35", "--min-luma", "60", "--match-back", "0.8", "--floor"]})
 
 ANIM = {
     "glacier_sentinel": ("a bulky golem made of blue ice", "biped", {

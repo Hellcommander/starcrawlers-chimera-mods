@@ -130,7 +130,7 @@
           { "do": "effect", "effect": "@WeepingCut" },
           { "do": "effect", "to": "self", "effect": "@Pulse" }
         ],
-        "perk": { "name": "Double Spike", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
+        "perk": { "name": "Double Spike", "description": "A second spike goes in behind the first.", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
       }
     },
     {
@@ -150,7 +150,11 @@
           { "do": "effect", "effect": "#Reeling" },
           { "do": "effect", "to": "self", "effect": "@Pulse" }
         ],
-        "perk": { "name": "Arterial Spray", "radiusDelta": 1 }
+        "perk": { "name": "Arterial Spray", "description": "What you vent doesn't go far. It lies on the deck and gets back in through every cut.", "addActions": [
+          { "do": "field", "fieldName": "Arterial Spray", "turns": 3, "radius": 2, "affects": "enemies",
+            "pulseVfx": "PA_SerratedSpines.PS_impact@0.5", "actions": [
+              { "do": "effect", "effect": "@Pressure" },
+              { "do": "effect", "effect": "@WeepingCut" } ] } ] }
       }
     },
     {
@@ -170,7 +174,9 @@
           { "do": "summon", "creature": "XENO_SLIME", "summonName": "Clotling", "model": { "mesh": "models/clotling.glb", "height": 0.7, "keepParticles": false }, "summonGroup": "Clotling", "amount": 2, "maxSummons": 4, "turns": 15, "effect": "@Clotbound" },
           { "do": "effect", "to": "self", "effect": "@OpenVein" }
         ],
-        "perk": { "name": "Iron Blood", "cooldownDelta": -5 }
+        "perk": { "name": "Iron Blood", "description": "The ward runs in your Clotlings too, and they plant themselves where enemies can't ignore them.", "addActions": [
+          { "do": "effect", "to": "summons", "ifSummonAlive": "group:Clotling", "effect": "@Clot" },
+          { "do": "taunt", "to": "summons", "ifSummonAlive": "group:Clotling", "radius": 3, "turns": 2 } ] }
       }
     },
     {
@@ -190,7 +196,8 @@
           { "do": "stun", "turns": 1 },
           { "do": "effect", "to": "self", "effect": "@Pulse" }
         ],
-        "perk": { "name": "Full Clamp", "cooldownDelta": -3 }
+        "perk": { "name": "Full Clamp", "description": "Every open cut clamps shut, and the blood that was leaving has nowhere to go but up.", "addActions": [
+          { "do": "effect", "effect": "@Pressure", "stacks": 0, "bonusPerStack": 1, "stacksOf": "@WeepingCut", "consumeStacks": true } ] }
       }
     },
     {
@@ -211,7 +218,10 @@
           { "do": "effect", "to": "self", "effect": "@OpenVein" },
           { "do": "effect", "to": "self", "effect": "@Pulse" }
         ],
-        "perk": { "name": "Long Strings", "cooldownDelta": -6 }
+        "perk": { "name": "Long Strings", "description": "The strings run on from the puppet into whoever stands closest, for a shorter dance.", "addActions": [
+          { "do": "chain", "jumps": 1, "radius": 3, "actions": [
+            { "do": "effect", "effect": "CHARM", "turns": 3, "unlessTargetHas": "@StrungUp", "when": { "not": { "tag": "boss" } } },
+            { "do": "effect", "effect": "@StrungUp", "unlessTargetHas": "@StrungUp", "when": { "not": { "tag": "boss" } } } ] } ] }
       }
     },
     {
@@ -234,7 +244,7 @@
           { "do": "effect", "to": "self", "effect": "@OpenVein" },
           { "do": "effect", "to": "self", "effect": "@Pulse" }
         ],
-        "perk": { "name": "Branching Artery", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
+        "perk": { "name": "Branching Artery", "description": "The pulse lingers in the first body it reaches, pushing harder there.", "addActions": [ { "do": "effect", "effect": "@Pressure" } ] }
       }
     },
     {
@@ -254,7 +264,10 @@
           { "do": "effect", "effect": "@WeepingCut", "stacks": 2 },
           { "do": "effect", "to": "self", "effect": "@OpenVein" }
         ],
-        "perk": { "name": "Fortissimo", "damageMult": 1.25 }
+        "perk": { "name": "Fortissimo", "description": "The beat is loud enough to carry: everyone close to the target falls into it.", "addActions": [
+          { "do": "chain", "jumps": 2, "radius": 2.5, "actions": [
+            { "do": "tether", "look": "#9A1626" },
+            { "do": "effect", "effect": "@Pressure", "stacks": 1, "bonusPerStack": 1, "stacksOf": "@Pulse", "stacksFrom": "self", "stacksUsed": 6 } ] } ] }
       }
     }
   ]

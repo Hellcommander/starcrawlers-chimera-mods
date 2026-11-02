@@ -79,7 +79,14 @@
         ],
         "perk": {
           "name": "Bullwhip",
-          "damageMult": 1.25
+          "description": "A longer lash, and the tip only cracks at the end of it.",
+          "rangeDelta": 1,
+          "addActions": [
+            { "do": "if", "when": { "value": "distance", "atLeast": 2 }, "then": [
+              { "do": "effect", "effect": "#Reeling" },
+              { "do": "effect", "to": "self", "effect": "@Applause" }
+            ] }
+          ]
         },
         "sound": "sfx/ringmaster_whip.wav"
       }
@@ -101,8 +108,14 @@
           { "do": "effect", "to": "self", "effect": "@Applause" }
         ],
         "perk": {
-          "name": "Bigger Hoop",
-          "radiusDelta": 1
+          "name": "Burning Hoop",
+          "description": "The hoop stays lit, and the crowd loves watching someone try to get out of it.",
+          "addActions": [
+            { "do": "field", "fieldName": "Hoop of Fire", "turns": 3, "radius": 2, "affects": "enemies", "look": "HAZARD_Fire_Mini", "actions": [
+              { "do": "effect", "effect": "#Burning" },
+              { "do": "effect", "to": "self", "effect": "@Applause", "chance": 25 }
+            ] }
+          ]
         }
       }
     },
@@ -130,7 +143,8 @@
         ],
         "perk": {
           "name": "Double Cannon",
-          "cooldownDelta": -3
+          "description": "The second charge is the one that puts you straight back on your feet.",
+          "instant": true
         }
       }
     },
@@ -152,7 +166,12 @@
         ],
         "perk": {
           "name": "Encore Bow",
-          "cooldownDelta": -4
+          "description": "They want it again. So do it again.",
+          "addProcs": [
+            { "on": "cast", "match": "Work the Crowd", "radius": 4, "pick": 1, "actions": [
+              { "do": "echo", "falloff": 0.7 }
+            ] }
+          ]
         }
       }
     },
@@ -178,7 +197,13 @@
         ],
         "perk": {
           "name": "Grand Grand Finale",
-          "radiusDelta": 1
+          "description": "One shell was held back for anyone who thought it was over.",
+          "addActions": [
+            { "do": "trap", "to": "self", "fieldName": "Last Shell", "affects": "enemies", "fuse": 1, "fuseOnly": true, "charges": 1, "maxTraps": 1, "radius": 3, "look": "HAZARD_Fire_Mini", "fall": "#FFB347", "vfx": "PA_Elementalist_MagmaBurst.impactParticle", "sound": "sfx/ringmaster_finale.wav", "actions": [
+              { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "effect", "effect": "#Burning" }
+            ] }
+          ]
         }
       }
     },
@@ -205,6 +230,7 @@
         ],
         "perk": {
           "name": "Head in the Jaws",
+          "description": "Stare it down long enough and the beast forgets it could bite.",
           "addActions": [
             { "do": "stun", "turns": 1, "chance": 40 }
           ]

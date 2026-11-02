@@ -805,7 +805,14 @@
         ],
         "perk": {
           "name": "Sticky Fingers",
-          "cooldownDelta": -1
+          "description": "You never reach in without something else coming away with your hand: whatever was protecting them comes off, and the theft sharpens your luck.",
+          "addActions": [
+            {
+              "do": "dispel",
+              "amount": 1,
+              "effect": "@WildEdge"
+            }
+          ]
         }
       }
     },
@@ -879,8 +886,24 @@
           }
         ],
         "perk": {
-          "name": "Wider Rift",
-          "radiusDelta": 0.5
+          "name": "Slipping Deck",
+          "description": "The loose patch tilts inward, and everything on it slides toward the middle.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Slipping Deck",
+              "turns": 4,
+              "radius": 2,
+              "affects": "enemies",
+              "actions": [
+                {
+                  "do": "pull",
+                  "amount": 1,
+                  "pullToward": "center"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -1003,7 +1026,21 @@
         ],
         "perk": {
           "name": "Deeper Well",
-          "damageMult": 1.2
+          "description": "Brim high enough before you let go and something much larger comes up with the rest, not always where you aimed it.",
+          "addActions": [
+            {
+              "do": "wildCast",
+              "amount": 1,
+              "pool": "bosses",
+              "atYou": 15,
+              "falloff": 0.85,
+              "when": {
+                "value": "stacks:@Brimming",
+                "of": "self",
+                "atLeast": 6
+              }
+            }
+          ]
         }
       }
     },

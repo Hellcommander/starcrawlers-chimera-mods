@@ -434,7 +434,7 @@ namespace SCClassLoader
             s.type = (s.type ?? "active").ToLowerInvariant();
             s.target = (s.target ?? "enemy").ToLowerInvariant();
             foreach (ActionSpec a in AllActionsOf(s)) a.@do = (a.@do ?? "").ToLowerInvariant();
-            foreach (ProcSpec p in s.procs ?? new List<ProcSpec>()) p.on = (p.on ?? "").ToLowerInvariant();
+            foreach (ProcSpec p in (s.procs ?? new List<ProcSpec>()).Concat(s.perk?.addProcs ?? new List<ProcSpec>())) p.on = (p.on ?? "").ToLowerInvariant();
             SkillMods.Normalize(s.modifies, classId);
         }
 
@@ -469,7 +469,7 @@ namespace SCClassLoader
         private static IEnumerable<ActionSpec> AllActionsOf(AbilitySpec s) =>
             (s.actions ?? new List<ActionSpec>())
             .Concat(s.perk?.addActions ?? new List<ActionSpec>())
-            .Concat((s.procs ?? new List<ProcSpec>()).SelectMany(p => p.actions ?? new List<ActionSpec>()));
+            .Concat((s.procs ?? new List<ProcSpec>()).Concat(s.perk?.addProcs ?? new List<ProcSpec>()).SelectMany(p => p.actions ?? new List<ActionSpec>()));
 
         internal static void RegisterEffects(ClassDef def, Sprite classIcon)
         {

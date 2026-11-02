@@ -32,10 +32,11 @@
               { "do": "effect", "to": "self", "effect": "@LuckyRun" } ] },
             { "name": "Tails.", "weight": 1, "actions": [
               { "do": "damage", "type": "Energy", "min": 1, "max": 3 },
-              { "do": "effect", "to": "self", "effect": "@Jinxed" } ] }
+              { "do": "effect", "to": "self", "effect": "@Jinxed", "when": { "perk": false } } ] }
           ] }
         ],
-        "perk": { "name": "Chip Back", "addActions": [ { "do": "credits", "amount": 1 } ] }
+        "perk": { "name": "Chip Back", "description": "The chip is on a thread. It always comes back, and a bad flip costs you nothing but the flip.",
+          "addActions": [ { "do": "credits", "amount": 1 } ] }
       } },
 
     { "attributes": { "Agility": 1 },
@@ -53,12 +54,14 @@
               { "do": "stun", "turns": 1, "chance": 50 } ] },
             { "name": "Triple Seven!", "weight": 1, "weightPerStack": 1, "actions": [
               { "do": "damage", "type": "Energy", "min": 10, "max": 18, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
-              { "do": "credits", "to": "self", "amount": 35 } ] },
+              { "do": "credits", "to": "self", "amount": 35 },
+              { "do": "chain", "jumps": 3, "radius": 3, "when": { "perk": true }, "actions": [ { "do": "effect", "effect": "@Staked" } ] } ] },
             { "name": "Lemons.", "weight": 3, "actions": [
               { "do": "effect", "to": "self", "effect": "@Jinxed" } ] }
           ] }
         ],
-        "perk": { "name": "Rigged Reels", "damageMult": 1.25 }
+        "perk": { "name": "Rigged Reels", "description": "The machine is on your side now. Every pull can feed the streak, and sevens put money on the whole room.",
+          "addActions": [ { "do": "effect", "to": "self", "effect": "@LuckyRun", "chance": 40 } ] }
       } },
 
     { "attributes": { "Savvy": 1, "Crit": 2 },
@@ -71,7 +74,10 @@
           { "do": "purge", "to": "self", "effect": "@Jinxed" },
           { "do": "effect", "to": "self", "effect": "@LuckyRun" }
         ],
-        "perk": { "name": "Insider Tip", "cooldownDelta": -2 }
+        "perk": { "name": "Let It Ride", "description": "When a bet comes in, the winnings go straight onto the next one.",
+          "addProcs": [
+            { "on": "kill", "when": { "has": "@Staked", "of": "victim" }, "radius": 3.5, "pick": 1,
+              "actions": [ { "do": "effect", "effect": "@Staked" }, { "do": "effect", "to": "self", "effect": "@LuckyRun" } ] } ] }
       } },
 
     { "attributes": { "Agility": 1, "Dodge": 3 },
@@ -80,7 +86,7 @@
         "target": "enemy", "range": 6, "staminaCost": 12, "cooldown": 3, "creditCost": 25,
         "impactVfx": "PA_Smuggler_Fistful.PS_impact", "sound": "event:/UI/UI_CashRegister",
         "actions": [
-          { "do": "random", "options": [
+          { "do": "random", "when": { "perk": false }, "options": [
             { "name": "Double!", "weight": 1, "actions": [
               { "do": "damage", "type": "Energy", "min": 8, "max": 16, "scale": "Savvy", "scaleMult": 0.6, "perRank": 2,
                 "bonusPerStack": 3, "stacksOf": "@LuckyRun", "stacksFrom": "self" },
@@ -89,7 +95,23 @@
               { "do": "effect", "to": "self", "effect": "@Jinxed", "stacks": 2 } ] }
           ] }
         ],
-        "perk": { "name": "Loaded Odds", "damageMult": 1.3 }
+        "perk": { "name": "Double Down", "description": "A losing bet just means the next one has to cover it. It is a very good way to go broke.",
+          "addActions": [
+            { "do": "random", "options": [
+              { "name": "Double!", "weight": 1, "actions": [
+                { "do": "damage", "type": "Energy", "min": 8, "max": 16, "scale": "Savvy", "scaleMult": 0.6, "perRank": 2,
+                  "bonusPerStack": 3, "stacksOf": "@LuckyRun", "stacksFrom": "self" },
+                { "do": "credits", "to": "self", "amount": 50 } ] },
+              { "name": "Double down...", "weight": 1, "actions": [
+                { "do": "random", "options": [
+                  { "name": "Covered!", "weight": 1, "actions": [
+                    { "do": "damage", "type": "Energy", "min": 8, "max": 16, "scale": "Savvy", "scaleMult": 0.6, "perRank": 2,
+                      "bonusPerStack": 3, "stacksOf": "@LuckyRun", "stacksFrom": "self" },
+                    { "do": "credits", "to": "self", "amount": 50 } ] },
+                  { "name": "Nothing, twice.", "weight": 1, "actions": [
+                    { "do": "effect", "to": "self", "effect": "@Jinxed", "stacks": 3 } ] }
+                ] } ] }
+            ] } ] }
       } },
 
     { "attributes": { "Savvy": 1, "LootFind": 5 },
@@ -115,7 +137,7 @@
           { "do": "execute", "amount": 10, "bonusPerStack": 12, "stacksOf": "@LuckyRun", "stacksFrom": "self",
             "consumeStacks": true, "elitePercent": 20 }
         ],
-        "perk": { "name": "All In", "cooldownDelta": -2, "chanceBonus": 10 }
+        "perk": { "name": "All In", "description": "Win and the table stays open, for whatever is left of your streak.", "resetOnKill": true }
       } },
 
     { "attributes": { "Savvy": 1, "Agility": 1, "Dodge": 3 },
@@ -130,7 +152,8 @@
           { "do": "purge", "to": "self", "effect": "@TappedOut" },
           { "do": "effect", "to": "self", "effect": "@LuckyRun", "stacks": 2 }
         ],
-        "perk": { "name": "Sore Winner", "radiusDelta": 1, "damageMult": 1.2 }
+        "perk": { "name": "Sore Winner", "description": "A real run of bad luck goes across the table with the cards, and now somebody else has money riding on it.",
+          "addActions": [ { "do": "effect", "effect": "@Staked", "when": { "value": "stacks:@Jinxed", "of": "self", "atLeast": 2 } } ] }
       } },
 
     { "attributes": { "Savvy": 2, "LootFind": 5 },
@@ -155,7 +178,7 @@
         "target": "floor", "range": 5, "staminaCost": 8, "cooldown": 3, "creditCost": 8,
         "castVfx": "PA_Smuggler_Fistful.PS_impact@0.4", "sound": "event:/UI/UI_CashRegister",
         "actions": [
-          { "do": "trap", "fieldName": "Loaded Dice", "fuse": 3, "radius": 1.6, "maxTraps": 2,
+          { "do": "trap", "fieldName": "Loaded Dice", "fuse": 3, "radius": 1.6, "maxTraps": 2, "when": { "perk": false },
             "vfx": "PA_Smuggler_Fistful.PS_impact@0.3", "sound": "event:/UI/UI_CashRegister",
             "model": { "mesh": "models/loaded_dice.obj", "texture": "models/loaded_dice.png", "scale": 0.45, "randomYaw": true, "glow": "#FF3040", "glowStrength": 0.35 },
             "actions": [
@@ -172,7 +195,21 @@
               ] }
             ] }
         ],
-        "perk": { "name": "Shaved Corners", "damageMult": 1.25, "cooldownDelta": -1 }
+        "perk": { "name": "Shaved Corners", "description": "With the corners off, these dice have forgotten how to show a one.",
+          "addActions": [
+            { "do": "trap", "fieldName": "Loaded Dice", "fuse": 3, "radius": 1.6, "maxTraps": 2,
+              "vfx": "PA_Smuggler_Fistful.PS_impact@0.3", "sound": "event:/UI/UI_CashRegister",
+              "model": { "mesh": "models/loaded_dice.obj", "texture": "models/loaded_dice.png", "scale": 0.45, "randomYaw": true, "glow": "#FF3040", "glowStrength": 0.35 },
+              "actions": [
+                { "do": "random", "stacksOf": "@LuckyRun", "stacksFrom": "self", "options": [
+                  { "name": "Boxcars!", "weight": 1, "weightPerStack": 1, "actions": [
+                    { "do": "damage", "type": "Energy", "min": 8, "max": 14, "scale": "Savvy", "scaleMult": 0.5, "perRank": 2 },
+                    { "do": "stun", "turns": 1 } ] },
+                  { "name": "Seven", "weight": 3, "actions": [
+                    { "do": "damage", "type": "Energy", "min": 5, "max": 9, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+                    { "do": "effect", "effect": "#Reeling", "chance": 50 } ] }
+                ] }
+              ] } ] }
       } }
   ]
 }

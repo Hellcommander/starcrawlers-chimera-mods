@@ -91,7 +91,18 @@
         ],
         "perk": {
           "name": "Bigger Driver",
-          "damageMult": 1.25
+          "description": "The deck jumps under whoever is standing near it, and the jolt comes back up your arms.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 2,
+              "radius": 2,
+              "actions": [
+                { "do": "if", "when": { "has": "#Reeling", "of": "target" }, "then": [ { "do": "effect", "to": "self", "effect": "@Inertia" } ] },
+                { "do": "effect", "effect": "#Reeling" }
+              ]
+            }
+          ]
         },
         "sound": "sfx/juggernaut_piledriver.wav"
       }
@@ -115,13 +126,23 @@
         "actions": [
           { "do": "teleport" },
           { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.4 },
-          { "do": "knockback", "amount": 2 },
+          { "do": "knockback", "amount": 2, "when": { "perk": false } },
           { "do": "effect", "effect": "#Reeling" },
           { "do": "effect", "to": "self", "effect": "@Inertia" }
         ],
         "perk": {
           "name": "Runaway Freight",
-          "cooldownDelta": -3
+          "description": "Whatever you hit leaves at speed. Whatever it hits regrets standing there.",
+          "addActions": [
+            {
+              "do": "throw",
+              "amount": 3,
+              "actions": [
+                { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3 },
+                { "do": "stun", "turns": 1 }
+              ]
+            }
+          ]
         }
       }
     },
@@ -143,7 +164,16 @@
         ],
         "perk": {
           "name": "Bulwark",
-          "cooldownDelta": -4
+          "description": "Every blow the plating soaks only pushes you forward.",
+          "addProcs": [
+            {
+              "on": "absorb",
+              "maxPerTurn": 2,
+              "actions": [
+                { "do": "effect", "to": "self", "effect": "@Inertia" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -189,7 +219,21 @@
         ],
         "perk": {
           "name": "Worldsplitter",
-          "radiusDelta": 1
+          "description": "The deck stays broken, and the footing around you goes with it.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Fissure",
+              "turns": 3,
+              "radius": 2.5,
+              "affects": "enemies",
+              "look": "HAZARD_Fire_Sludge",
+              "actions": [
+                { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.2 },
+                { "do": "effect", "effect": "#Reeling" }
+              ]
+            }
+          ]
         },
         "sound": "sfx/juggernaut_earthshaker.wav"
       }
@@ -215,7 +259,17 @@
         ],
         "perk": {
           "name": "Bedrock Stance",
-          "cooldownDelta": -4
+          "description": "Swinging at you is like swinging at the hull. Arms go numb.",
+          "addProcs": [
+            {
+              "on": "hurt",
+              "when": { "has": "@DugIn", "of": "self" },
+              "maxPerTurn": 3,
+              "actions": [
+                { "do": "effect", "to": "attacker", "effect": "#Weakened" }
+              ]
+            }
+          ]
         }
       }
     },

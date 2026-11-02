@@ -18,7 +18,7 @@ any of them can be picked together.
 
 `Mods/KelvinMagus/` (a frost mage that freezes enemies solid, banks the heat it steals and vents it to crack them,
 with a Glacier Sentinel golem) and `Mods/LookingGlass/` (a chaotic agile duelist that switches between Shrunk and
-Grown, deals Painted Guards, throws a Mad Tea Party and ends as the Grinning Cat; also the worked example of
+Grown, steps out of a mirror, drops enemies down a rabbit hole and ends as the Grinning Cat; also the worked example of
 conditions, counters and triggers, see its README) are single-class mods whose icons, particle sheets, meshes,
 animated summons and sounds all come from the AAMT asset pipelines (`_modding/make_kelvin_glass_assets.py`).
 `Mods/Perihelion/` is another single-class mod: a Strength and Psi Power comet that crosses the room untouchable,
@@ -114,10 +114,21 @@ is built this way.
       { "on": "hurt", "chance": 20, "radius": 0, "actions": [ { "do": "heal", "to": "self", "amount": 4 } ] }
       // "radius": 5, "pick": 1 = one random enemy within 5 (a turn proc's way to aim at somebody)
     ],
-    "perk": { "name": "Paradox Bolt", "damageMult": 1.3, "chanceBonus": 25, "cooldownDelta": -2,
-              "staminaDelta": 0, "radiusDelta": 0, "rangeDelta": 0, "addActions": [] }
+    "perk": { "name": "Paradox Bolt", "description": "One line of flavour; the rules text is generated.",
+              "addActions": [],          // run with the skill's own actions
+              "addProcs": [],            // triggers you only have once it's perked; like "procs", they watch everything you do
+                                         // ("on": "cast", "match": "Temporal Bolt" ties one to this skill)
+              "instant": false,          // it no longer ends your turn
+              "resetOnKill": false,      // a kill with it makes it ready again
+              "undodgeable": false,      // its primary target can't dodge it
+              "damageMult": 1, "chanceBonus": 0, "cooldownDelta": 0,
+              "staminaDelta": 0, "radiusDelta": 0, "rangeDelta": 0 }
   } }
 ```
+
+Perk points are rare, so a perk should change how the skill plays rather than only raise a number. The number fields suit a
+small part of a bigger change, or the price of an upside. `"when": { "perk": true }` (or `false`) on one of the skill's own
+actions swaps what it does outright.
 
 **Actions** (`"do"`): `damage`, `heal`, `stamina`, `shield` (overshield), `effect`, `stun` (`turns`), `knockback`
 (`amount`), `blind`, `cooldowns` (reduce your other cooldowns by `amount`), `purge` (remove `effect`), `teleport`
@@ -163,7 +174,12 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 
 **Resource and combo mechanics** (see `Mods/UniqueClasses/` for working examples):
 
-- Effects: `maxStacks` (stats, resists and dot scale per stack; `damageDealtPerStack` / `damageTakenPerStack` add
+- Effects: `"castRules"` changes what using a skill means while the effect is on you, for every skill you use, any
+  class's or an item's: `"freeTurn"` (it doesn't take your turn), `"noCooldown"`, `"healthCost": 0.08` (a share of your max
+  health per use, never your last point), `"repeat": 0.5` (an attack on an enemy lands again at that share of its damage)
+  `"consume"` (each use spends a stack) and `"when"` (only the casts it holds on). A skill that applies one starts with your next cast.
+- Effects: `"dot": { "scale": "Smarts", "scaleMult": 0.15 }` and `"hotScale"` + `"hotScaleMult"` add the applier's stats
+  to each tick; a summon's `"scaleStat"` takes `|` too, and picks the highest stat when it is summoned. `maxStacks` (stats, resists and dot scale per stack; `damageDealtPerStack` / `damageTakenPerStack` add
   to the damage multipliers per stack, e.g. -0.12 = 12% less per stack), `burstAt` + `burstRadius` + `burstActions`,
   `thresholds` (`[{ "at": 5, "actions": [...] }]`, one-shot triggers at a stack count), `onApplyActions`,
   `onExpireActions` + `onExpireRadius` (delayed detonations), `group` (stances: one per group),
@@ -460,6 +476,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Pet targets.** `"target": "pet"` (+ `"petGroup": "Hoarlight"`) aims a skill at one of your own summons. With a
   `{ "do": "phase" }` action the summon is spent and you land on its tile; the skill's area (`radius`) is around that spot
   and never hits the pet. Rimelight Seer's Phase Swap.
+- **Aiming past your companions.** While a skill is aimed the mouse passes through your own companions to what's behind them,
+  unless the player holds the Force key. `"forAllies": true` on a skill keeps them solid for a buff; `"pet"` skills and skills
+  with a field that `"affects": "allies"` count as this already, and `"forAllies": false` turns that off.
 - A condition's `"chanceScale": "PsiPower+Smarts"` (+ `"chancePer"`, default 1) adds those stats to its `chance` as a roll
   (5-95%): control rolls such as Coldbound Choir's charm.
 - An effect's `"root": true` holds its bearer in place while it lasts, like a vanilla root (flying and root-immune
@@ -513,6 +532,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "charges": 1,           // times it goes off before it is used up (0 = until "turns" runs out)
     "fuse": 0,              // > 0: it goes off by itself after that many of your turns (a timed mine)
     "fuseOnly": false,      // true: only the fuse or springTraps set it off, never someone on it
+    "fallAs": "PhCometNucleus", // a creature whose model comes down from overhead; "vfx" and "sound" wait for it to land
     "fall": "#CFEFFF",      // a streak of this colour comes down from overhead as it goes off
     "turns": 0,             // > 0: it fizzles out after that long; 0 = it stays on that floor until used
     "maxTraps": 3,          // most of this name at once; laying another removes the oldest
@@ -725,12 +745,18 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
 - **Numbers** (`value`):
   - your own or anyone's: `health`, `health%`, `stamina`, `stamina%`, `shield`, any stat (`Strength`, `Armor`, ...), `stacks:EFFECT`, `counter:NAME`;
   - around someone: `enemiesNear:3`, `alliesNear:3` (the number is the radius);
-  - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `distance` (you to the target), `turnsInCombat`.
+  - more about anyone: `healthLost`, `buffs`, `debuffs`;
+  - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `distance` (you to the target), `turnsInCombat`, `floor`, `skillsCooling` (your skills on cooldown);
+  - about the skill in use: `cost` (its stamina), `cooldown`.
 - **Comparisons:** `below`, `above`, `atLeast`, `atMost`, `is`.
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
 - **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
+- **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
+  `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
+  proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
+- **Where:** `inSide` holds in a side area (`false`: outside one).
 - **Gear** (`equipped`): `"when": { "equipped": "melee+shield" }` holds while you have that gear on (see below).
 - **Named conditions:** a class or library defines them once and anything can use them by name:
   `"conditions": { "Wounded": { "value": "health%", "of": "target", "below": 40 } }`.
@@ -1039,6 +1065,8 @@ and hazards; `SCCL_DEVTEST=ichorgoo` photographs her goo beside the class's and 
 `SCCL_DEVTEST=ichorvs:Hardolo` clones that save with its lowest class swapped for the Ichorborn, takes
 it to the final fight and screenshots each of the doctor's attacks next to the skill made from it
 (`ichorvs_<pair>_boss_N.png` / `_ichor_N.png`), and logs the doctor's particle fields and hazards.
+
+**Auras.** `"aura": "MyParticle"` on an effect loops a mod particle on any bearer but you (on you it would fill your view) until the effect goes. `"vfx"` on an effect takes vanilla effects only.
 
 **Third person for effects on you.** `"thirdPerson": 1.5` on an ability (or on an effect, when it lands on you or
 bursts on you) pulls the camera out over your shoulder for that many seconds, the way dashes do, so a crown of
@@ -1557,8 +1585,13 @@ Nest. Then:
   would do more, checked when they step out and again each round, their hits are cut further (never under 15% of a
   full hit), and what they lose comes back as more health, armour, dodge, block and resistance to everything. A strong
   party makes a longer fight, not a sudden death. It leaves an epic and corrupted copies of two pieces of your gear:
-  every bonus 30% stronger and moved to a different stat or damage type, any weapon damage Void, and any skill or effect
-  the item grants swapped for another item's. Your own items stay yours. In the Ichor Deep it gets stronger with depth, but never hits as hard as you do.
+  every bonus 30% stronger and moved to a different stat or damage type, any weapon damage Void, and corrupted mods in
+  place of some bonuses. An item skill with a corrupted version becomes that skill and the item takes one mod; an item
+  without keeps its own skill, loses what it did when worn, and takes two mods. Your own items stay yours. A mod adds
+  more to the `"corruptedGear"` block of `sideAreas`: `"skills"` are ordinary skills with `"of"` listing item ids,
+  their numbers usually scale with `"Strength|Agility|Recognition|Smarts|PsiPower"`, your best stat whatever your
+  class; `"effects"` are side area effects (an id starting with `Mod` is a mod, worked while the item is worn), and `"mods"` and
+  `"modsWithSkill"` set the counts. In the Ichor Deep it gets stronger with depth, but never hits as hard as you do.
 - Eight more anomalies: Alarm Grid (responder waves once you're seen), Stalker (a hunter after 20 turns), Coolant
   Breach, Void Bleed, Sentry Grid (turrets), Stim Haze (everyone hits harder), Forgotten Stores and Skeleton Shift.
 

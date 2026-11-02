@@ -87,8 +87,16 @@
         ],
         "perk": {
           "name": "Bigger Jar",
+          "description": "More than one host can hold. The rest finds the neighbours.",
           "addActions": [
-            { "do": "effect", "effect": "@Swarm" }
+            {
+              "do": "chain",
+              "jumps": 2,
+              "radius": 2.5,
+              "actions": [
+                { "do": "effect", "effect": "@Swarm" }
+              ]
+            }
           ]
         }
       }
@@ -110,8 +118,18 @@
           { "do": "heal", "amount": 4, "scale": "Smarts", "scaleMult": 0.4 }
         ],
         "perk": {
-          "name": "Surgical Swarm",
-          "cooldownDelta": -4
+          "name": "Immune Response",
+          "description": "While they work on you, anything that draws blood gets a mouthful of them.",
+          "addProcs": [
+            {
+              "on": "hurt",
+              "when": { "has": "#Regenerating", "of": "self" },
+              "maxPerTurn": 3,
+              "actions": [
+                { "do": "effect", "to": "attacker", "effect": "@Swarm" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -134,7 +152,8 @@
         ],
         "perk": {
           "name": "Homing Instinct",
-          "cooldownDelta": -2
+          "description": "They know the way home now. It barely takes a thought.",
+          "instant": true
         }
       }
     },
@@ -179,7 +198,20 @@
         ],
         "perk": {
           "name": "Plague Cloud",
-          "radiusDelta": 1
+          "description": "The jars are empty, but the air isn't.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Plague Cloud",
+              "turns": 3,
+              "radius": 2.5,
+              "affects": "enemies",
+              "look": "HAZARD_Miasma@0.7",
+              "actions": [
+                { "do": "effect", "effect": "@Swarm" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -206,7 +238,10 @@
         ],
         "perk": {
           "name": "Total Rupture",
-          "damageMult": 1.25
+          "description": "What bursts out of one host lands straight in the next.",
+          "addActions": [
+            { "do": "effect", "effect": "@Swarm", "stacks": 2 }
+          ]
         }
       }
     },

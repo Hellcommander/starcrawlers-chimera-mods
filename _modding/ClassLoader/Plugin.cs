@@ -85,6 +85,7 @@ namespace SCClassLoader
             Crew.Bind(Config);
             Commands.Bind(Config);
             MinionMenu.Bind(Config);
+            AimThrough.Bind(Config);
             UiLook.Bind(Config);
             HoverTip.Bind(Config);
             TextFit.Bind(Config);
@@ -99,7 +100,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -197,6 +198,7 @@ namespace SCClassLoader
             else if (dev == "safereturn") Instance.StartCoroutine(DevTestSafeReturn.Run());
             else if (dev == "perks") Instance.StartCoroutine(DevTestPerks.Run());
             else if (dev == "perks2") Instance.StartCoroutine(DevTestPerks2.Run());
+            else if (dev == "perkfx") Instance.StartCoroutine(DevTestPerkFx.Run());
             else if (dev == "menufps") Instance.StartCoroutine(DevTestMenuFps.Run());
             else if (dev == "classsearch") Instance.StartCoroutine(DevTestClassSearch.Run());
             else if (dev == "synergytip") Instance.StartCoroutine(DevTestSynergyTip.Run());
@@ -281,6 +283,7 @@ namespace SCClassLoader
             else if (dev == "bugfixes") Instance.StartCoroutine(DevTestBugFixes.Run());
             else if (dev == "numpad") Instance.StartCoroutine(DevTestNumpad.Run());
             else if (dev == "minionmenu") Instance.StartCoroutine(DevTestMinionMenu.Run(null));
+            else if (dev == "aimthrough") Instance.StartCoroutine(DevTestAimThrough.Run());
             else if (dev == "todos") Instance.StartCoroutine(DevTestTodos.Run(null));
             else if (dev == "todos2") Instance.StartCoroutine(DevTestTodos.RunFresh());
             else if (dev == "modder") Instance.StartCoroutine(DevTestModder.Run(null));

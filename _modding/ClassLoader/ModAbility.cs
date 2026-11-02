@@ -142,7 +142,7 @@ namespace SCClassLoader
             staminaCost = Mathf.Max(0, s.staminaCost + (p?.staminaDelta ?? 0) + (t?.stamina ?? 0) + (s.stackCost == null ? t?.cost ?? 0 : PoolGone ? StackCostAmount : 0) + priced * (rt.spec.synergyPenalty?.stamina ?? 0));
             cooldown =Mathf.Max(0, s.cooldown + (p?.cooldownDelta ?? 0) + (t?.cooldown ?? 0) + priced * (rt.spec.synergyPenalty?.cooldown ?? 0));
             // a rewrite (SkillMods) can move the aim and the delivery: the game reads these when you click the icon
-            isInstant = s.instant;
+            isInstant = s.instant || (p?.instant ?? false) || CastRules.Free(this);
             isMelee = s.melee || channelSwing;
             isRanged = !isMelee && range > 1.6f;
             targetStyle = isPassive ? TARGET_STYLE.None : s.target switch
@@ -268,6 +268,9 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(rt.spec.itemId) && i.itemId != Crafting.ResolveItem(rt.spec.itemId, null)) return false;
             return true;
         }
+
+        /// <summary>Aimed at your own side, so your companions stay in reach (AimThrough).</summary>
+        internal bool ForAllies => rt != null && (rt.spec.forAllies ?? (rt.spec.target == "pet" || AllActions.Any(a => (a.affects ?? "").ToLowerInvariant() == "allies")));
 
         public override bool CanUseOn(Character c)
         {
@@ -436,7 +439,7 @@ namespace SCClassLoader
                 center = from = node.transform.position; // a form's burst goes off where you landed
             }
 
-            if (primary != null && s.dodgeable && DodgeCheck(caster, primary))
+            if (primary != null && s.dodgeable && !(Perk?.undodgeable ?? false) && DodgeCheck(caster, primary))
             {
                 primary.OnDodge(caster);
                 SkillMods.Redraw(this);
@@ -506,7 +509,7 @@ namespace SCClassLoader
                 foreach (string b in Runes.Wear(rt.internalName, s, OpenRuneSlots, tuned?.burn ?? 0)) Game.LOG($"<color=#FF9F43>{b}</color>");
                 RefreshStats();
             }
-            if (s.resetOnKill && GetCooldownAmount() > 0 && struck.Any(v => v == null || v.GetIsDead()))
+            if ((s.resetOnKill || (Perk?.resetOnKill ?? false)) && GetCooldownAmount() > 0 && struck.Any(v => v == null || v.GetIsDead()))
             {
                 SetCooldownAmount(0);
                 if (Menu_HUD.instance != null) Menu_HUD.instance.Refresh_Cooldown();
@@ -550,14 +553,24 @@ namespace SCClassLoader
         }
 
         /// <summary>Called by ProcHub for every ModAbility the player knows.</summary>
-        internal List<ProcSpec> Procs { get { Bind(); return rt?.spec.procs; } }
+        internal List<ProcSpec> Procs
+        {
+            get
+            {
+                Bind();
+                if (rt?.spec.perk?.addProcs == null || rt.spec.perk.addProcs.Count == 0 || !Perked) return rt?.spec.procs;
+                return perkedProcs ?? (perkedProcs = (rt.spec.procs ?? new List<ProcSpec>()).Concat(rt.spec.perk.addProcs).ToList());
+            }
+        }
+
+        private List<ProcSpec> perkedProcs;
 
         internal void HandleProc(string on, Character other)
         {
-            Bind();
-            if (rt?.spec.procs == null) return;
+            List<ProcSpec> procs = Procs;
+            if (procs == null) return;
             if (!Equipped.Check(rt.spec.equipped, caster ?? Player.instance)) return;
-            foreach (ProcSpec p in rt.spec.procs)
+            foreach (ProcSpec p in procs)
                 if (string.Equals(p.on, on, System.StringComparison.OrdinalIgnoreCase))
                     ProcHub.RunProc(p, MakeContext(), on, other);
         }
@@ -584,6 +597,10 @@ namespace SCClassLoader
             if (p.chanceBonus != 0) lines.Add($"• Proc chances +{p.chanceBonus}%.");
             string add = Actions.Describe(p.addActions, rt.classId, DefaultWho());
             if (add.Length > 0) lines.Add(add);
+            if (p.instant) lines.Add("• Instant: it no longer ends your turn.");
+            if (p.resetOnKill) lines.Add("• A kill makes it ready again.");
+            if (p.undodgeable) lines.Add("• It can't be dodged.");
+            foreach (ProcSpec proc in p.addProcs ?? new List<ProcSpec>()) lines.Add(Actions.DescribeProc(proc, rt.classId, p.chanceBonus));
             return string.Join("\n", lines);
         }
 

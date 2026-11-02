@@ -571,20 +571,6 @@
             }
           },
           {
-            "do": "summon",
-            "to": "self",
-            "creature": "ZenithHoarlight",
-            "summonName": "Zenith Hoarlight",
-            "summonGroup": "ZenithHoarlight",
-            "maxSummons": 1,
-            "turns": 40,
-            "effect": "@Zenithlit",
-            "summonVfx": "PA_Elementalist_FrigidBlast.castParticle",
-            "when": {
-              "perk": true
-            }
-          },
-          {
             "do": "effect",
             "to": "self",
             "effect": "@Strain"
@@ -592,7 +578,20 @@
         ],
         "perk": {
           "name": "Zenith Calling",
-          "description": "The tear calls a Zenith Hoarlight instead of a Hoarlight: it trades places with foes to confuse them, wraps itself in a gale, and casts your lance, tether and collapse."
+          "description": "The tear calls a Zenith Hoarlight instead of a Hoarlight: it trades places with foes to confuse them, wraps itself in a gale, and casts your lance, tether and collapse.",
+          "addActions": [
+            {
+              "do": "summon",
+              "to": "self",
+              "creature": "ZenithHoarlight",
+              "summonName": "Zenith Hoarlight",
+              "summonGroup": "ZenithHoarlight",
+              "maxSummons": 1,
+              "turns": 40,
+              "effect": "@Zenithlit",
+              "summonVfx": "PA_Elementalist_FrigidBlast.castParticle"
+            }
+          ]
         }
       }
     },
@@ -638,7 +637,27 @@
         "rules": "You gain Rimeveil (8 turns: Hasted, +15 Dodge, +10 Block, take 10% less damage; each turn: Rimebite on enemies within 2, +1 Psi Power per Hoarlight near you (up to 3); every 2nd turn in combat: +1 Strain; moving: a Hoarlight condenses, at most every 3 turns). +2 Strain.\nAlways, once you know it: any spell you cast has an 8% chance to echo your last one at 60% power.",
         "perk": {
           "name": "Deep Veil",
-          "cooldownDelta": -3
+          "description": "When the mantle lets go, it takes some of your Strain with it and sets its frost into everything close.",
+          "addProcs": [
+            {
+              "on": "effectLost",
+              "match": "@Rimeveil",
+              "radius": 2.5,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Rimebite",
+                  "stacks": 3
+                },
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Strain",
+                  "stacks": -2
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -686,9 +705,9 @@
           }
         ],
         "perk": {
-          "name": "Far Phase",
-          "rangeDelta": 4,
-          "cooldownDelta": -2
+          "name": "Flash Phase",
+          "description": "You are standing in its place before the frost has finished falling, with time left to act.",
+          "instant": true
         }
       }
     },
@@ -783,6 +802,7 @@
         ],
         "perk": {
           "name": "Long Tether",
+          "description": "The chain is cold enough to bite wherever it touches.",
           "addActions": [
             {
               "do": "effect",
@@ -903,7 +923,22 @@
         ],
         "perk": {
           "name": "Deep Choir",
-          "cooldownDelta": -6
+          "description": "Minds that slip the choir go on hearing it, and it works at them until they splinter.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 4,
+              "radius": 3,
+              "falloff": 1,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@SplinteredWill",
+                  "stacks": 2
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -917,11 +952,11 @@
         "name": "Prism Charge",
         "icon": "rimelight_seer_t4.png",
         "dashAs": "Hoarlight",
-        "description": "Spend your brightest Hoarlight and become its light: you charge through the target and on to the foes beside it, landing next to each one, part blade and part spell. Every link is frosted and flung aside, every Hoarlight still with you sharpens the edge, and after the last strike you spring back a step.",
+        "description": "Spend your brightest Hoarlight (a Zenith Hoarlight will do when no other is left) and become its light: you charge through the target and on to the foes beside it, landing next to each one, part blade and part spell. Every link is frosted and flung aside, every Hoarlight still with you sharpens the edge, and after the last strike you spring back a step.",
         "range": 7,
         "cooldown": 4,
         "staminaCost": 12,
-        "requires": "summon:group:Hoarlight",
+        "usableWhen": { "any": [ { "value": "summons:Hoarlight", "atLeast": 1 }, { "value": "summons:ZenithHoarlight", "atLeast": 1 } ] },
         "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
         "sound": "sfx/rime_lance.wav",
         "actions": [
@@ -955,6 +990,12 @@
                 "amount": 2
               }
             ]
+          },
+          {
+            "do": "dismiss",
+            "to": "summon",
+            "ifSummonAlive": "group:ZenithHoarlight",
+            "when": { "value": "summons:Hoarlight", "atMost": 0 }
           },
           {
             "do": "dismiss",
@@ -1056,7 +1097,13 @@
         "rules": "Target a beast (a monster or supernatural creature, not a boss or elite) within 4 while you have no Starbound beast.\nIt gets Starbinding for 2 turns (-20 Dodge). When it ends: a 30% (+1% per point of your Psi Power and Smarts) chance, up to +50% more the more wounded it is, that it becomes your Starbound pet for good: healed, fighting with half of your attributes (kept current), +10% damage. It regenerates health by its own Health Regen the way you do, and your heals reach it. If it tears free it is Enraged and you take 3 Strain.",
         "perk": {
           "name": "Patient Binding",
-          "cooldownDelta": -8
+          "description": "The threads hold the beast still until they are finished with it.",
+          "addActions": [
+            {
+              "do": "stun",
+              "turns": 2
+            }
+          ]
         }
       }
     }

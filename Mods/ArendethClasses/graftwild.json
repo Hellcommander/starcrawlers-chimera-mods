@@ -180,7 +180,12 @@
         ],
         "perk": {
           "name": "Bramble Lash",
-          "damageMult": 1.25
+          "description": "The thorns snag on the way back and catch whoever stands beside your target.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 2.5, "actions": [
+              { "do": "effect", "effect": "#Gashed" },
+              { "do": "effect", "effect": "@Clogspore" } ] }
+          ]
         },
         "sound": "sfx/graftwild_whip.wav"
       }
@@ -207,7 +212,13 @@
         ],
         "perk": {
           "name": "Strangler Fig",
-          "radiusDelta": 1
+          "description": "The roots stay in the plating and keep hauling at whatever stands over them.",
+          "addActions": [
+            { "do": "field", "fieldName": "Strangler Roots", "turns": 4, "radius": 1.5, "affects": "enemies", "look": "HAZARD_Mushroom", "actions": [
+              { "do": "pull", "amount": 1, "pullToward": "center" },
+              { "do": "effect", "effect": "SLOW", "turns": 1 },
+              { "do": "effect", "effect": "@Clogspore" } ] }
+          ]
         }
       }
     },
@@ -237,7 +248,8 @@
         ],
         "perk": {
           "name": "Long Haunches",
-          "rangeDelta": 1
+          "description": "You land already moving, with the next blow on its way.",
+          "instant": true
         }
       }
     },
@@ -268,7 +280,11 @@
         ],
         "perk": {
           "name": "Stampede Heart",
-          "cooldownDelta": -3
+          "description": "The charge stokes the blood, and anything that drops under it doesn't slow you down.",
+          "resetOnKill": true,
+          "addActions": [
+            { "do": "effect", "to": "self", "effect": "@SapFever", "stacks": 2 }
+          ]
         }
       }
     },
@@ -288,7 +304,7 @@
         "castVfx": "PA_Force_Psyker_Kinetic_Slam.castParticle",
         "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.45",
         "actions": [
-          { "do": "damage", "type": "Bio", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@SapFever", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "damage", "type": "Bio", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@SapFever", "stacksFrom": "self", "consumeStacks": true, "when": { "perk": false } },
           { "do": "effect", "effect": "@Clogspore", "stacks": 4 },
           { "do": "effect", "effect": "#Reeling" },
           { "do": "summon", "to": "self", "creature": "PA_Engineer_Turret.characterPrefab", "summonName": "Barbvine", "model": { "mesh": "models/barbvine.glb", "height": 1.2, "keepParticles": false }, "summonGroup": "Barbvine", "amount": 2, "maxSummons": 4, "turns": 15, "effect": "@Barbvined" },
@@ -296,7 +312,10 @@
         ],
         "perk": {
           "name": "Old Growth",
-          "radiusDelta": 1
+          "description": "The fever no longer burns off in the roar: all of it lands on everyone caught, and it stays in your blood.",
+          "addActions": [
+            { "do": "damage", "type": "Bio", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@SapFever", "stacksFrom": "self" }
+          ]
         },
         "sound": "sfx/graftwild_heartgrain.wav"
       }
@@ -328,8 +347,14 @@
           { "do": "effect", "to": "self", "effect": "@SapFever" }
         ],
         "perk": {
-          "name": "Deep Roots",
-          "rangeDelta": 2
+          "name": "Forked Tendril",
+          "description": "The tendril splits on its way in and hooks the next body too.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 3.5, "actions": [
+              { "do": "tether", "look": "#5E7F2F" },
+              { "do": "pull", "amount": 3 },
+              { "do": "effect", "effect": "@Clogspore", "stacks": 2 } ] }
+          ]
         }
       }
     },

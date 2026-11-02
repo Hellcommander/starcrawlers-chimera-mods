@@ -205,7 +205,7 @@ namespace SCClassLoader
                 if (r is ParticleSystemRenderer) continue;
                 foreach (Material m in r.materials)
                 {
-                    if (m.HasProperty("_Color")) m.color = Color.Lerp(m.color, m.color * tint, 0.7f);
+                    if (m.HasProperty("_Color")) m.color = Color.Lerp(m.color, m.color * tint, 0.5f);
                     if (!m.HasProperty("_EmissionColor")) continue;
                     if (m.HasProperty("_EmissionMap") && m.GetTexture("_EmissionMap") == null && m.mainTexture != null) m.SetTexture("_EmissionMap", m.mainTexture);
                     m.EnableKeyword("_EMISSION");

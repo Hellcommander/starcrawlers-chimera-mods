@@ -69,8 +69,16 @@
           { "do": "effect", "to": "self", "effect": "@Phased" }
         ],
         "perk": {
-          "name": "Long Hop",
-          "rangeDelta": 2
+          "name": "Slipwake",
+          "description": "The space you left takes a moment to close, and it closes hard.",
+          "addProcs": [
+            { "on": "cast", "match": "Short Hop", "actions": [
+              { "do": "trap", "to": "self", "fieldName": "Phase Wake", "affects": "enemies", "fuse": 1, "fuseOnly": true, "charges": 1, "maxTraps": 1, "radius": 2, "look": "HAZARD_Energy", "vfx": "PA_Psykonics_Warp.castParticle", "sound": "event:/Abilities/Misc/Psykonics_Warp", "actions": [
+                { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.15 },
+                { "do": "effect", "effect": "#Reeling" }
+              ] }
+            ] }
+          ]
         },
         "sound": "sfx/phase_hop.wav"
       }
@@ -87,11 +95,17 @@
         "impactVfx": "PA_Blademaster_Coup.impactEffect",
         "actions": [
           { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.25, "perRank": 1 },
-          { "do": "damage", "type": "Energy", "min": 3, "max": 5, "trueDamage": true, "ifSelfHas": "@Phased" }
+          { "do": "damage", "type": "Energy", "min": 3, "max": 5, "trueDamage": true, "ifSelfHas": "@Phased", "when": { "perk": false } }
         ],
         "perk": {
           "name": "Dimensional Edge",
-          "damageMult": 1.25
+          "description": "An edge that is only partly here can't be sidestepped, and it doesn't stop at the first body.",
+          "undodgeable": true,
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 2.5, "ifSelfHas": "@Phased", "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 5, "trueDamage": true }
+            ] }
+          ]
         }
       }
     },
@@ -115,7 +129,13 @@
         ],
         "perk": {
           "name": "Twin Image",
-          "cooldownDelta": -3
+          "description": "A second copy steps out of the first as it goes.",
+          "addProcs": [
+            { "on": "effectLost", "match": "@Afterimage", "cooldown": 8, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Afterimage" },
+              { "do": "effect", "to": "self", "effect": "@Phased" }
+            ] }
+          ]
         }
       }
     },
@@ -163,7 +183,13 @@
         ],
         "perk": {
           "name": "Phase Tempest",
-          "radiusDelta": 1
+          "description": "The tear doesn't close behind you.",
+          "addActions": [
+            { "do": "field", "fieldName": "Torn Space", "turns": 3, "radius": 2, "affects": "enemies", "look": "HAZARD_Energy", "actions": [
+              { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Agility+Smarts|PsiPower", "scaleMult": 0.1 },
+              { "do": "effect", "effect": "#Reeling" }
+            ] }
+          ]
         },
         "sound": "sfx/phase_storm.wav"
       }
@@ -193,7 +219,8 @@
         ],
         "perk": {
           "name": "Clean Swap",
-          "cooldownDelta": -3
+          "description": "You are moving again before either of you has finished arriving.",
+          "instant": true
         }
       }
     },

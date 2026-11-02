@@ -59,7 +59,8 @@
             "bonusPerStack": 1, "stacksOf": "@Foresight", "stacksFrom": "self" },
           { "do": "effect", "effect": "@Profiled" }
         ],
-        "perk": { "name": "Snapline", "damageMult": 1.25 }
+        "perk": { "name": "Snapline", "description": "Every wire you string reports back along the same line. Whatever trips one goes on file.",
+          "addProcs": [ { "on": "reaction", "actions": [ { "do": "effect", "effect": "@Profiled" } ] } ] }
       }
     },
     {
@@ -84,7 +85,7 @@
               { "do": "knockback", "amount": 1 }
             ] } }
         ],
-        "perk": { "name": "Hair Trigger", "cooldownDelta": -2 }
+        "perk": { "name": "Hair Trigger", "description": "A wire this fine is strung with one hand, in passing.", "instant": true }
       }
     },
     {
@@ -99,7 +100,7 @@
         "castVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4",
         "sound": "event:/Abilities/Hacker/Hacker_Scramble",
         "actions": [
-          { "do": "arm", "reaction": {
+          { "do": "arm", "when": { "perk": false }, "reaction": {
             "name": "Interdict", "on": "special", "range": 8, "interrupt": true, "charges": 1, "turns": 8, "priority": 80,
             "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.5",
             "actions": [
@@ -108,7 +109,19 @@
               { "do": "effect", "effect": "@Profiled" }
             ] } }
         ],
-        "perk": { "name": "Hard Stop", "cooldownDelta": -2 }
+        "perk": { "name": "Hard Stop", "description": "The cut comes so late the whole motion breaks. Lesser fighters lose their footing with it, and the big move is a long time coming back.",
+          "addActions": [
+            { "do": "arm", "reaction": {
+              "name": "Hard Stop", "on": "special", "range": 8, "interrupt": true, "charges": 1, "turns": 8, "priority": 80,
+              "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.5",
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
+                { "do": "silence", "turns": 1 },
+                { "do": "exhaust", "amount": 2 },
+                { "do": "stun", "turns": 1, "when": { "not": { "tag": "boss" } } },
+                { "do": "effect", "effect": "@Profiled" }
+              ] } }
+          ] }
       }
     },
     {
@@ -164,7 +177,8 @@
           { "do": "effect", "effect": "@Profiled" },
           { "do": "spring", "to": "self" }
         ],
-        "perk": { "name": "Full Cascade", "radiusDelta": 1 }
+        "perk": { "name": "Full Cascade", "description": "Nothing burns out; it was all rerouted. Your tools come back early, ready to be strung again.",
+          "addActions": [ { "do": "cooldowns", "to": "self", "amount": 4 } ] }
       }
     },
     {
@@ -249,7 +263,11 @@
               { "do": "effect", "effect": "@Profiled" }
             ] } }
         ],
-        "perk": { "name": "Binding Terms", "cooldownDelta": -2 }
+        "perk": { "name": "Binding Terms", "description": "Anyone already on file is bound the moment the clause is written, and hauled a step closer.",
+          "addProcs": [
+            { "on": "cast", "match": "Exit Clause", "radius": 6, "actions": [
+              { "do": "effect", "effect": "SLOW", "turns": 2, "ifTargetHas": "@Profiled" },
+              { "do": "pull", "amount": 1, "ifTargetHas": "@Profiled" } ] } ] }
       }
     }
   ]

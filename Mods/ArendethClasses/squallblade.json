@@ -41,6 +41,13 @@
       ]
     },
     {
+      "id": "EyeWall",
+      "name": "Eye Wall",
+      "description": "The air around you spins too fast for anything to fly through. Shots and bolts are flung back the way they came.",
+      "duration": 8,
+      "reflect": 40
+    },
+    {
       "id": "Squallform",
       "name": "Squallform",
       "description": "Your body is a moving pressure front. You are hard to touch, your strikes tear and pile up pressure, and anyone who swings and misses is thrown aside. You fight with the squall's own moves until it blows itself out, or until you settle.",
@@ -151,7 +158,7 @@
           { "do": "effect", "effect": "@Crosswind" },
           { "do": "effect", "effect": "#Gashed", "chance": 50 }
         ],
-        "perk": { "name": "Twin Edge", "addActions": [ { "do": "effect", "effect": "@Crosswind" } ] }
+        "perk": { "name": "Twin Edge", "description": "The air closes behind the blade and cuts a second time.", "addActions": [ { "do": "effect", "effect": "@Crosswind" } ] }
       }
     },
     {
@@ -170,11 +177,14 @@
         "actions": [
           { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1, "bonusPerStack": 2, "stacksOf": "@Crosswind" },
           { "do": "damage", "type": "Crushing", "min": 1, "max": 2, "bonusPerStack": 3, "stacksOf": "@Buffeted" },
-          { "do": "knockback", "amount": 3 },
+          { "do": "knockback", "amount": 3, "when": { "perk": false } },
           { "do": "effect", "effect": "#Reeling" },
           { "do": "stamina", "to": "self", "amount": 1, "bonusPerStack": 2, "stacksOf": "@Buffeted", "stacksFrom": "target", "consumeStacks": true }
         ],
-        "perk": { "name": "Hard Front", "cooldownDelta": -2 }
+        "perk": { "name": "Hard Front", "description": "The wall doesn't let go until they meet something solid, and whatever they meet feels the storm too.", "addActions": [
+          { "do": "throw", "amount": 3, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 },
+            { "do": "effect", "effect": "@Crosswind", "stacks": 2 } ] } ] }
       }
     },
     {
@@ -194,7 +204,7 @@
           { "do": "effect", "effect": "@Crosswind", "stacks": 2 },
           { "do": "summon", "creature": "nanite_cloud", "summonName": "Air Knot", "summonGroup": "AirKnot", "amount": 2, "maxSummons": 4, "turns": 6, "effect": "@Knotted" }
         ],
-        "perk": { "name": "Tighter Knots", "addActions": [
+        "perk": { "name": "Tighter Knots", "description": "Wring a little harder and a third knot comes loose.", "addActions": [
           { "do": "summon", "creature": "nanite_cloud", "summonName": "Air Knot", "summonGroup": "AirKnot", "amount": 1, "maxSummons": 4, "turns": 6, "effect": "@Knotted" } ] }
       }
     },
@@ -222,7 +232,8 @@
             "pulseVfx": "PA_Elementalist_Tempest.impactParticle",
             "actions": [ { "do": "effect", "effect": "@Crosswind" } ] }
         ],
-        "perk": { "name": "Long Fall", "rangeDelta": 2 }
+        "perk": { "name": "Long Fall", "description": "Land on anyone wound tight enough and they go down and stay down for a moment.", "addActions": [
+          { "do": "stun", "turns": 1, "when": { "value": "stacks:@Crosswind", "of": "target", "atLeast": 4 } } ] }
       }
     },
     {
@@ -243,7 +254,8 @@
           { "do": "effect", "effect": "@Buffeted", "stacks": 2 },
           { "do": "effect", "to": "self", "effect": "@Squallform" }
         ],
-        "perk": { "name": "Eye Wall", "cooldownDelta": -4 }
+        "perk": { "name": "Eye Wall", "description": "Your edge spins so hard that nothing thrown at you arrives.", "addActions": [
+          { "do": "effect", "to": "self", "effect": "@EyeWall" } ] }
       }
     },
     {
@@ -269,7 +281,8 @@
               { "do": "pull", "amount": 1, "pullToward": "center" },
               { "do": "effect", "effect": "@Crosswind" } ] }
         ],
-        "perk": { "name": "Wider Funnel", "radiusDelta": 1 }
+        "perk": { "name": "Vortex Shedding", "description": "The funnel throws off knots of its own, one for every body it swallows.", "addActions": [
+          { "do": "summon", "creature": "nanite_cloud", "summonName": "Air Knot", "summonGroup": "AirKnot", "amount": 1, "maxSummons": 4, "turns": 6, "effect": "@Knotted" } ] }
       }
     },
     {

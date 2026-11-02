@@ -123,6 +123,7 @@
         ],
         "perk": {
           "name": "Second Glance",
+          "description": "The second pass always turns up what the first one missed.",
           "addActions": [
             { "do": "effect", "effect": "@CaseStudy" }
           ]
@@ -207,7 +208,17 @@
         ],
         "perk": {
           "name": "Airtight",
-          "cooldownDelta": -3
+          "description": "While the proof is sealed, every blow against it goes on record against whoever struck.",
+          "addProcs": [
+            {
+              "on": "absorb",
+              "maxPerTurn": 3,
+              "when": { "has": "@Sealed", "of": "self" },
+              "actions": [
+                { "do": "effect", "effect": "@CaseStudy" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -234,7 +245,10 @@
         ],
         "perk": {
           "name": "Sound Logic",
-          "damageMult": 1.25
+          "description": "Whatever is thoroughly on record has no unrecorded moves left.",
+          "addActions": [
+            { "do": "silence", "turns": 1, "bossTurns": 1, "when": { "value": "stacks:@CaseStudy", "of": "target", "atLeast": 3 } }
+          ]
         }
       }
     },
@@ -261,7 +275,10 @@
         ],
         "perk": {
           "name": "Clean Partition",
-          "cooldownDelta": -2
+          "description": "The rule admits no exceptions: all of it is set apart, studied or not.",
+          "addActions": [
+            { "do": "effect", "effect": "@Separated" }
+          ]
         }
       }
     },
@@ -288,8 +305,18 @@
           { "do": "effect", "to": "self", "effect": "@Lucidity", "when": { "value": "Smarts", "of": "self", "atLeast": 24 } }
         ],
         "perk": {
-          "name": "Sustained Clarity",
-          "cooldownDelta": -4
+          "name": "Applied Clarity",
+          "description": "While you are Lucid, striking a thing and studying it are the same act.",
+          "addProcs": [
+            {
+              "on": "hit",
+              "maxPerTurn": 2,
+              "when": { "has": "@Lucidity", "of": "self" },
+              "actions": [
+                { "do": "effect", "effect": "@CaseStudy" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -317,8 +344,11 @@
           { "do": "purge", "to": "self", "effect": "@Insight" }
         ],
         "perk": {
-          "name": "Elegant Proof",
-          "radiusDelta": 1
+          "name": "Corollaries",
+          "description": "A finished proof implies the next one. Whatever survives it is already on record.",
+          "addActions": [
+            { "do": "effect", "effect": "@CaseStudy", "stacks": 2 }
+          ]
         }
       }
     }

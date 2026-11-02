@@ -120,7 +120,14 @@
         ],
         "perk": {
           "name": "Savage Rend",
-          "damageMult": 1.25
+          "description": "Every form learns to tear in its own way.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 2.5, "ifSelfHas": "@Claws", "actions": [
+              { "do": "effect", "effect": "#Gashed" }
+            ] },
+            { "do": "effect", "effect": "#Reeling", "ifSelfHas": "@Spines" },
+            { "do": "effect", "to": "self", "effect": "@Adaptation", "ifSelfHas": "@Carapace" }
+          ]
         }
       }
     },
@@ -184,7 +191,15 @@
         ],
         "perk": {
           "name": "Rampant Mutation",
-          "radiusDelta": 1
+          "description": "The mutagen stops following your instructions and starts improvising on them.",
+          "addActions": [
+            { "do": "random", "options": [
+              { "name": "Soft Plates", "actions": [ { "do": "effect", "effect": "#Exposed" } ] },
+              { "name": "Wasted Limbs", "actions": [ { "do": "effect", "effect": "#Weakened" } ] },
+              { "name": "Wrong Joints", "actions": [ { "do": "effect", "effect": "#Reeling" } ] },
+              { "name": "Seized Nerves", "actions": [ { "do": "silence", "turns": 1 } ] }
+            ] }
+          ]
         }
       }
     },
@@ -215,7 +230,8 @@
         ],
         "perk": {
           "name": "Apex Pounce",
-          "damageMult": 1.25
+          "description": "The landing is where the attack starts, not where it ends.",
+          "instant": true
         }
       }
     },

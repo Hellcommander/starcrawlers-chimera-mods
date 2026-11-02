@@ -81,7 +81,10 @@
         ],
         "perk": {
           "name": "Deep Siphon",
-          "damageMult": 1.25
+          "description": "What your body can't hold, the idol keeps on your skin.",
+          "addActions": [
+            { "do": "shield", "to": "self", "amount": 3, "scale": "PsiPower", "scaleMult": 0.3, "when": { "value": "health%", "of": "self", "atLeast": 90 } }
+          ]
         }
       }
     },
@@ -106,7 +109,16 @@
         ],
         "perk": {
           "name": "Covet",
-          "cooldownDelta": -2
+          "description": "It takes what they have, and when they're gone the wanting moves on to someone else.",
+          "addActions": [
+            { "do": "dispel", "amount": 1, "effect": "@Whispers" }
+          ],
+          "addProcs": [
+            { "on": "kill", "maxPerTurn": 1, "radius": 3, "pick": 1, "when": { "has": "#Exposed", "of": "victim" }, "actions": [
+              { "do": "effect", "effect": "#Weakened" },
+              { "do": "effect", "effect": "#Exposed" }
+            ] }
+          ]
         }
       }
     },
@@ -129,7 +141,11 @@
         ],
         "perk": {
           "name": "Sweet Offering",
-          "cooldownDelta": -5
+          "description": "Offered enough quiet, it lets go of the wheel.",
+          "addActions": [
+            { "do": "purge", "effect": "@Possessed" },
+            { "do": "effect", "effect": "#Regenerating", "when": { "value": "stacks:@Whispers", "of": "self", "atLeast": 4 } }
+          ]
         }
       }
     },
@@ -174,7 +190,10 @@
         ],
         "perk": {
           "name": "Tithe",
-          "radiusDelta": 1
+          "description": "The louder it has been, the more it collects, and some debts come due in full.",
+          "addActions": [
+            { "do": "execute", "amount": 4, "bonusPerStack": 3, "stacksOf": "@Whispers", "stacksFrom": "self", "elitePercent": 5 }
+          ]
         }
       }
     },
@@ -209,7 +228,16 @@
         ],
         "perk": {
           "name": "Glossolalia",
-          "cooldownDelta": -3
+          "description": "The word is never the same twice, and none of them were meant for a human mouth.",
+          "addActions": [
+            { "do": "random", "options": [
+              { "name": "A word of silence", "weight": 3, "actions": [ { "do": "silence", "turns": 2 } ] },
+              { "name": "A word of frailty", "weight": 3, "actions": [ { "do": "effect", "effect": "#Exposed" } ] },
+              { "name": "A word of weakness", "weight": 3, "actions": [ { "do": "effect", "effect": "#Weakened" } ] },
+              { "name": "A word of vertigo", "weight": 3, "actions": [ { "do": "effect", "effect": "#Reeling" } ] },
+              { "name": "A word that holds", "weight": 1, "actions": [ { "do": "stun", "turns": 1 } ] }
+            ] }
+          ]
         }
       }
     },

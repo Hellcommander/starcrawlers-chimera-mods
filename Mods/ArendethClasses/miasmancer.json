@@ -36,7 +36,8 @@
           { "do": "damage", "type": "Bio", "min": 2, "max": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "perRank": 1 },
           { "do": "stamina", "to": "self", "amount": 6 }
         ],
-        "perk": { "name": "Deep Lungs", "addActions": [ { "do": "stamina", "to": "self", "amount": 3 } ] }
+        "perk": { "name": "Deep Lungs", "description": "The air around anything poisoned is the richest in the room, and you know how to draw it.",
+          "addActions": [ { "do": "stamina", "to": "self", "amount": 1, "bonusPerStack": 2, "stacksOf": "#Poisoned", "stacksFrom": "target", "stacksUsed": 4 } ] }
       }
     },
     {
@@ -51,7 +52,8 @@
           { "do": "field", "fieldName": "Caustic Mist", "turns": 3, "radius": 2, "affects": "enemies", "look": "HAZARD_Gas@0.6",
             "actions": [ { "do": "effect", "effect": "#Poisoned" }, { "do": "effect", "effect": "@Choking" } ] }
         ],
-        "perk": { "name": "Lingering Mist", "radiusDelta": 0.5 }
+        "perk": { "name": "Lingering Mist", "description": "Whatever dies poisoned breathes its last on whoever stands next to it.",
+          "addProcs": [ { "on": "kill", "radius": 2, "when": { "has": "#Poisoned", "of": "victim" }, "actions": [ { "do": "effect", "effect": "#Poisoned", "stacks": 2 }, { "do": "effect", "effect": "@Choking" } ] } ] }
       }
     },
     {
@@ -65,7 +67,8 @@
           { "do": "stamina", "to": "self", "amount": 10 },
           { "do": "heal", "to": "self", "amount": 4, "ifSkill": "SKILLTREE_ChaoticMutant" }
         ],
-        "perk": { "name": "Deeper Extraction", "addActions": [ { "do": "stamina", "to": "self", "amount": 4 } ] }
+        "perk": { "name": "Deeper Extraction", "description": "You come away with what was holding it up: whatever protects it goes, and its strength with it.",
+          "addActions": [ { "do": "dispel", "amount": 1 }, { "do": "effect", "effect": "#Weakened" } ] }
       }
     },
     {
@@ -78,7 +81,8 @@
           { "do": "damage", "type": "Bio", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.35, "perRank": 2 },
           { "do": "effect", "effect": "#Weakened" }, { "do": "effect", "effect": "#Poisoned", "stacks": 2 }
         ],
-        "perk": { "name": "Arterial Bloom", "damageMult": 1.25 }
+        "perk": { "name": "Arterial Bloom", "description": "Everyone it catches sprays, and the spray rots the next one along.",
+          "addActions": [ { "do": "chain", "jumps": 1, "radius": 3, "actions": [ { "do": "effect", "effect": "#Gashed" }, { "do": "effect", "effect": "#Poisoned" } ] } ] }
       }
     },
     {
@@ -91,7 +95,7 @@
           { "do": "damage", "type": "Bio", "min": 4, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "perRank": 2 },
           { "do": "effect", "effect": "@Corroded", "stacks": 2 }
         ],
-        "perk": { "name": "Finer Salts", "addActions": [ { "do": "effect", "effect": "@Corroded" } ] }
+        "perk": { "name": "Finer Salts", "description": "Ground this fine, the salts find every seam.", "addActions": [ { "do": "effect", "effect": "@Corroded" } ] }
       }
     },
     {
@@ -106,7 +110,8 @@
           { "do": "effect", "effect": "#Poisoned", "stacks": 3 }, { "do": "effect", "effect": "@Choking" },
           { "do": "heal", "to": "self", "amount": 8, "scale": "Smarts", "scaleMult": 0.4, "ifSkill": "SKILLTREE_ChaoticMutant" }
         ],
-        "perk": { "name": "Saturated Compound", "radiusDelta": 0.5 }
+        "perk": { "name": "Saturated Compound", "description": "Plating already eaten through gives way all at once: the salts burn off and it seizes where it stands.",
+          "addActions": [ { "do": "if", "when": { "value": "stacks:@Corroded", "of": "target", "atLeast": 4 }, "then": [ { "do": "purge", "effect": "@Corroded" }, { "do": "stun", "turns": 1 } ] } ] }
       }
     },
     {

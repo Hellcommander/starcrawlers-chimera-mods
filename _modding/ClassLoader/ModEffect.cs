@@ -189,6 +189,24 @@ namespace SCClassLoader
                     if (other != this && other is ModEffect m && m.rt != null && m.rt.spec.group == rt.spec.group) other.RemoveInstant();
             RunGroup(rt.spec.onApplyActions, 0f, null, null, null, ctx);
             if (target == Player.instance) DashCam.Showcase(rt.spec.thirdPerson);
+            else StartAura();
+        }
+
+        private GameObject aura;
+
+        /// <summary>The effect's "aura": its one-shot layers set looping, on the bearer until the effect goes.</summary>
+        private void StartAura()
+        {
+            GameObject prefab = string.IsNullOrEmpty(rt.spec.aura) ? null : Actions.ResolveVfx(rt.spec.aura);
+            if (prefab == null || aura != null) return;
+            aura = Instantiate(prefab, target.GetHitFx(), false);
+            foreach (ParticleSystem ps in aura.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                var main = ps.main;
+                main.loop = true;
+                main.playOnAwake = true;
+            }
+            aura.SetActive(true);
         }
 
         private bool expiring;
@@ -385,8 +403,13 @@ namespace SCClassLoader
         {
             Unroot();
             Unresize();
+            if (aura != null) Destroy(aura);
             base.OnDestroy();
         }
+
+        private int DotBonus(EffectSpec s) => Mathf.RoundToInt(Actions.StatBonus(s.dot.scale, s.dot.scaleMult, caster != null ? caster : target));
+
+        private int HotBonus(EffectSpec s) => Mathf.RoundToInt(Actions.StatBonus(s.hotScale, s.hotScaleMult, caster != null ? caster : target));
 
         public override void TurnOver_Instant()
         {
@@ -396,10 +419,10 @@ namespace SCClassLoader
                 EffectSpec s = rt.spec;
                 if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt))
                 {
-                    int dmg = Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) * (MaxStacks > 1 ? Stacks : 1);
+                    int dmg = (Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) + DotBonus(s)) * (MaxStacks > 1 ? Stacks : 1);
                     target.TakeDamage(caster != null && caster != target ? caster : null, new List<DmgObj> { new DmgObj(dt, dmg) }, $"{GetName()} afflicts {target.GetName()}", null, 0f);
                 }
-                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(s.hot, false);
+                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(s.hot + HotBonus(s), false);
                 if (s.staminaPerTurn != 0 && target != null) target.ModStamina(s.staminaPerTurn);
             }
             base.TurnOver_Instant();
@@ -483,8 +506,8 @@ namespace SCClassLoader
             if (s.capScale != null) lines.Add(rt.CapLine());
             foreach (StatObj st in attributeMods) lines.Add($"{(st.amount >= 0 ? "+" : "")}{st.amount} {StatObj.GetStatString(st.statType)}");
             foreach (DmgObj r in resistanceMods) lines.Add($"{(r.damage >= 0 ? "+" : "")}{r.damage} {Game.GetSpriteString(r.dmgType, isResist: true)} resistance");
-            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min}-{s.dot.max} {Game.GetSpriteString(dt)} each turn");
-            if (s.hot > 0) lines.Add($"Heals {s.hot} each turn");
+            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min + DotBonus(s)}-{s.dot.max + DotBonus(s)} {Game.GetSpriteString(dt)} each turn");
+            if (s.hot > 0) lines.Add($"Heals {s.hot + HotBonus(s)} each turn");
             if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
             if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage");
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage");
@@ -497,6 +520,7 @@ namespace SCClassLoader
             if (s.invulnerable) lines.Add("<b>Can't lose health</b>");
             if (s.preventDeath > 0) lines.Add($"<b>Prevents death once</b> (survive at {s.preventDeath} health)" + ((s.onSaveActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onSaveActions, rt.classId, "you") : "."));
             if (!string.IsNullOrEmpty(s.group)) lines.Add($"<color=#9FB7C9>Stance: replaces other {s.group} stances.</color>");
+            if (s.castRules != null) lines.Add(CastRules.Describe(s.castRules));
             string reshapes = SkillMods.Summary(s.modifies, rt.classId);
             if (reshapes.Length > 0) lines.Add(reshapes);
             if (s.burstAt > 0)

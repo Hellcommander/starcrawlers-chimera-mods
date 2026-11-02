@@ -13,7 +13,7 @@ namespace SCClassLoader
     /// <summary>
     /// Right-click one of your own companions in the world (a bot, pet, summon, crawler or Conjoined body) for a small
     /// menu at the cursor: the Orders (Commands) for that one alone, jobs to do for you (Errands: use, unlock or bash a
-    /// door or container, fetch an item), Swap places, and for pets Unsummon and Break down (PetHandling). Only a quick
+    /// door or container, fetch an item), Swap places, and for pets Unsummon and Break down, or Release for a charmed one (PetHandling). Only a quick
     /// click opens it: holding the right button still looks around, as in the base game, and a click on a hotbar or other
     /// panel is left to that panel, though the minion strip opens this same menu. A minion ordered this way takes orders
     /// even with [Orders] CommandMinions off, until it's told to Engage again.
@@ -198,6 +198,9 @@ namespace SCClassLoader
         /// <summary>Devtest: where the pointer is while picking (in place of the real mouse, which is wherever the player left it).</summary>
         internal static Vector2? TestPointer;
 
+        /// <summary>Devtest: whether the open menu has a row with this label.</summary>
+        internal static bool HasRow(string label) => IsOpen && menu.GetComponentsInChildren<Button>().Any(b => (b.GetComponentInChildren<TMP_Text>()?.text ?? "").Contains(label));
+
         /// <summary>Devtest: the pointer over a screen point while picking, and optionally a left-click there.</summary>
         internal static void TestPick(Vector2 at, bool click)
         {
@@ -232,7 +235,7 @@ namespace SCClassLoader
         {
             private static void Postfix(ref bool __result)
             {
-                if (!__result && Swallowing) __result = true;
+                if (!__result && (Swallowing || MinionBar.Over(Input.mousePosition))) __result = true;
             }
         }
 
@@ -607,7 +610,13 @@ namespace SCClassLoader
                     if (job == Errands.Job.Unlock) unlockLabel = b.GetComponentInChildren<TextMeshProUGUI>();
                 }
                 // pets (not crawlers or bodies) can also be sent away
-                if (!Commands.IsCrewLike(who))
+                if (PetHandling.IsCharmed(who) && !Commands.IsCrewLike(who))
+                {
+                    y += 4f;
+                    Button r = Item(rt, "Release", "Lift the charm: it's free of you and back on its own side. Click twice.", ref y, UiKit.DangerColor, () => Dismiss(false));
+                    petRows.Add((false, r.GetComponentInChildren<TextMeshProUGUI>(), "Release"));
+                }
+                else if (!Commands.IsCrewLike(who))
                 {
                     y += 4f;
                     var (id, n) = PetHandling.PartsOf(who);
@@ -685,7 +694,8 @@ namespace SCClassLoader
                 if (who == null || !MinionBar.CanCommand) { AudioManager.PlayEvent("event:/UI/UI_Error"); return; }
                 if (armed.HasValue && armed.Value.breakdown == breakdown && Time.unscaledTime < armedUntil)
                 {
-                    PetHandling.Unsummon(who, "Command", breakdown, keepRemains: true);
+                    if (PetHandling.IsCharmed(who)) PetHandling.ReleaseCharm(who, "Command");
+                    else PetHandling.Unsummon(who, "Command", breakdown, keepRemains: true);
                     AudioManager.PlayEvent("event:/UI/UI_Click");
                     Close();
                     return;

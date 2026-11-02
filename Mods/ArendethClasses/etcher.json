@@ -88,6 +88,7 @@
         ],
         "perk": {
           "name": "Deep Line",
+          "description": "The stream goes over the same line twice.",
           "addActions": [ { "do": "effect", "effect": "@Etched" } ]
         }
       }
@@ -117,6 +118,7 @@
         ],
         "perk": {
           "name": "Wide Pattern",
+          "description": "The drip carries a poison of its own.",
           "addActions": [ { "do": "effect", "effect": "#Poisoned" } ]
         }
       }
@@ -144,7 +146,13 @@
               { "do": "effect", "effect": "#Poisoned", "chance": 50 }
             ] }
         ],
-        "perk": { "name": "Flood the Floor", "description": "Keep a flask in every pocket: you can pour another pool sooner.", "cooldownDelta": -3 }
+        "perk": {
+          "name": "Reclaimed Bath", "description": "A drain line under the spill. What the pool eats away runs back into your flasks.",
+          "addActions": [
+            { "do": "field", "fieldName": "Etchant Runoff", "turns": 4, "radius": 2.1, "affects": "enemies", "look": "HAZARD_Acid", "onEnter": false, "actions": [
+              { "do": "effect", "to": "self", "effect": "@Reagent" } ] }
+          ]
+        }
       }
     },
     {
@@ -163,7 +171,13 @@
           { "do": "cleanse" },
           { "do": "effect", "effect": "@Neutral" }
         ],
-        "perk": { "name": "Clean Bench", "cooldownDelta": -5 }
+        "perk": {
+          "name": "Caustic Film", "description": "The buffer holds a skin of acid. Whatever lays a hand on you takes some of it away.",
+          "addProcs": [
+            { "on": "hurt", "maxPerTurn": 2, "when": { "all": [ { "has": "@Neutral", "of": "self" }, { "value": "distance", "atMost": 2 } ] }, "actions": [
+              { "do": "effect", "effect": "@Etched", "stacks": 2 } ] }
+          ]
+        }
       }
     },
     {
@@ -193,7 +207,9 @@
             ]
           }
         ],
-        "perk": { "name": "Down to Bare Metal", "damageMult": 1.25 }
+        "perk": {
+          "name": "Down to Bare Metal", "description": "When there is nothing left of them, the bench is already set for the next one.", "resetOnKill": true
+        }
       }
     },
     {
@@ -216,7 +232,16 @@
             ] },
           { "do": "cleanse", "to": "self", "amount": 1 }
         ],
-        "perk": { "name": "Thin Film", "cooldownDelta": -3 }
+        "perk": {
+          "name": "Thin Film",
+          "description": "The film lifts everything that was clinging to you, not just the worst of it.",
+          "addActions": [
+            {
+              "do": "cleanse",
+              "to": "self"
+            }
+          ]
+        }
       }
     },
     {
@@ -236,7 +261,9 @@
           { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 2, "trueDamage": true },
           { "do": "effect", "effect": "#Exposed" }
         ],
-        "perk": { "name": "Final Pass", "chanceBonus": 15 }
+        "perk": {
+          "name": "Final Pass", "description": "The last line goes on in a breath, with the hand already moving to the next tool.", "instant": true
+        }
       }
     }
   ]

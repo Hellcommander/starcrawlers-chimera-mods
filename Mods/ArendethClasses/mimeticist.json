@@ -164,7 +164,17 @@
         "description": "Rebuild yourself as a vent panther for ten turns: stalk, spring, vanish, and open every wound.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Psykonics_Temporal.castParticle",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormPanther" } ],
-        "perk": { "name": "Quick Change", "cooldownDelta": -4 }
+        "perk": {
+          "name": "Quick Change",
+          "description": "You finish the change already gone from sight.",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Unseen"
+            }
+          ]
+        }
       }
     },
     {
@@ -174,7 +184,8 @@
         "description": "Rebuild yourself as a scrap hound for ten turns: hamstring, run them down, and call a muttwolf to hunt beside you.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Psykonics_Temporal.castParticle",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormHound" } ],
-        "perk": { "name": "Quick Change", "cooldownDelta": -4 }
+        "perk": { "name": "Lead Hound", "description": "The change itself is the howl: a muttwolf is at your side before you finish, and one you call runs with it.",
+          "addActions": [ { "do": "summon", "to": "self", "creature": "MUTT_WOLF", "summonName": "Lead Hound", "summonGroup": "LeadHound", "amount": 1, "maxSummons": 1, "turns": 12 } ] }
       }
     },
     {
@@ -184,7 +195,8 @@
         "description": "Rebuild yourself as a plated hullback for ten turns: rush through them, bellow, and shell down while they break on you.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Psykonics_Temporal.castParticle",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormHullback" } ],
-        "perk": { "name": "Quick Change", "cooldownDelta": -4 }
+        "perk": { "name": "Sudden Bulk", "description": "You swell so fast that everything beside you is thrown clear, and can't look away from what you've become.", "radiusDelta": 1.6,
+          "addActions": [ { "do": "knockback", "amount": 1 }, { "do": "effect", "effect": "#Reeling" }, { "do": "taunt", "turns": 2 } ] }
       }
     },
     {
@@ -194,7 +206,9 @@
         "description": "Rebuild yourself as a sump lurker for ten turns: snare them with your tongue, roll them under, and poison whatever bites you.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Psykonics_Temporal.castParticle",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormLurker" } ],
-        "perk": { "name": "Quick Change", "cooldownDelta": -4 }
+        "perk": { "name": "Flooded Sump", "description": "The sump comes with you: foul water floods the deck where you change.",
+          "addActions": [ { "do": "field", "to": "self", "fieldName": "Flooded Sump", "turns": 6, "radius": 2, "affects": "enemies", "look": "HAZARD_Acid@0.5",
+            "actions": [ { "do": "effect", "effect": "SLOW", "turns": 1 }, { "do": "effect", "effect": "#Poisoned" } ] } ] }
       }
     },
     {
@@ -204,7 +218,8 @@
         "description": "Rebuild yourself as a lattice weaver for ten turns: web the deck, poison with your fangs, and drop on them from above.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Psykonics_Temporal.castParticle",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormWeaver" } ],
-        "perk": { "name": "Quick Change", "cooldownDelta": -4 }
+        "perk": { "name": "Tripline Silk", "description": "Threads trail from the weaver wherever it stands, and whatever strikes at it comes away tangled.",
+          "addProcs": [ { "on": "hurt", "chance": 40, "cooldown": 3, "when": { "has": "@FormWeaver", "of": "self" }, "actions": [ { "do": "effect", "to": "attacker", "effect": "@Webbed" } ] } ] }
       }
     },
     {
@@ -214,7 +229,9 @@
         "description": "Become the reactor wyrm for ten turns: slag breath, spore fallout and wings that clear a corridor.",
         "sound": "sfx/mim_shift.wav", "castVfx": "PA_Prototype_Thunderclap.impactParticle@0.4",
         "actions": [ { "do": "effect", "to": "self", "effect": "@FormWyrm" } ],
-        "perk": { "name": "Slow Cooling", "cooldownDelta": -5 }
+        "perk": { "name": "Slow Cooling", "description": "The wyrm's body stays molten when you leave it: shed it and a pool of slag is left where you stood.",
+          "addProcs": [ { "on": "effectLost", "match": "@FormWyrm", "actions": [ { "do": "field", "to": "self", "fieldName": "Cooling Slag", "turns": 4, "radius": 2, "affects": "enemies", "look": "HAZARD_Fire_Mini",
+            "actions": [ { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2 }, { "do": "effect", "effect": "#Burning" } ] } ] } ] }
       }
     },
     {

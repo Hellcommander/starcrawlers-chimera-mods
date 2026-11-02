@@ -96,11 +96,32 @@
         "sound": "sfx/shaman_coin.wav",
         "actions": [
           { "do": "damage", "type": "Energy", "min": 1, "max": 8, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1 },
-          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "chance": 50 }
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "chance": 50, "when": { "perk": false } }
         ],
         "perk": {
           "name": "Two-Headed Coin",
-          "chanceBonus": 30
+          "description": "Tails is a hit in some other branch, and that branch pays you in luck.",
+          "addActions": [
+            {
+              "do": "random",
+              "options": [
+                {
+                  "name": "Heads",
+                  "weight": 1,
+                  "actions": [
+                    { "do": "damage", "type": "Energy", "min": 3, "max": 6 }
+                  ]
+                },
+                {
+                  "name": "Tails",
+                  "weight": 1,
+                  "actions": [
+                    { "do": "effect", "to": "self", "effect": "@Possibility" }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -123,7 +144,16 @@
         ],
         "perk": {
           "name": "Best Outcome",
-          "cooldownDelta": -4
+          "description": "With 3 or more Possibility spent, you step into a branch where those skills were never used.",
+          "addActions": [
+            {
+              "do": "if",
+              "when": { "value": "stacks:@Possibility", "of": "self", "atLeast": 3 },
+              "then": [
+                { "do": "cooldowns", "amount": 3 }
+              ]
+            }
+          ]
         }
       }
     },
@@ -147,7 +177,34 @@
         ],
         "perk": {
           "name": "Schrodinger's Shaman",
-          "cooldownDelta": -5
+          "description": "When you become definite again, one of you was fine and the other left you their luck.",
+          "addProcs": [
+            {
+              "on": "effectLost",
+              "match": "@Unobserved",
+              "actions": [
+                {
+                  "do": "random",
+                  "options": [
+                    {
+                      "name": "The one who was fine",
+                      "weight": 1,
+                      "actions": [
+                        { "do": "heal", "to": "self", "amount": 6, "scale": "Savvy", "scaleMult": 0.5 }
+                      ]
+                    },
+                    {
+                      "name": "The one who wasn't",
+                      "weight": 1,
+                      "actions": [
+                        { "do": "effect", "to": "self", "effect": "@Possibility", "stacks": 3 }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -171,7 +228,18 @@
         ],
         "perk": {
           "name": "Full Coverage",
-          "cooldownDelta": -15
+          "description": "The claim also covers what ails you and how tired you are.",
+          "addProcs": [
+            {
+              "on": "lowHealth",
+              "threshold": 30,
+              "when": { "has": "@Insurance", "of": "self" },
+              "actions": [
+                { "do": "cleanse", "to": "self" },
+                { "do": "stamina", "to": "self", "amount": 20, "scale": "Savvy", "scaleMult": 0.5 }
+              ]
+            }
+          ]
         }
       }
     },
@@ -197,8 +265,10 @@
         ],
         "perk": {
           "name": "Total Collapse",
-          "damageMult": 1.2,
-          "radiusDelta": 1
+          "description": "Somewhere among the branches each of them died. Possibility picks that one.",
+          "addActions": [
+            { "do": "execute", "amount": 5, "bonusPerStack": 5, "stacksOf": "@Possibility", "stacksFrom": "self", "elitePercent": 10 }
+          ]
         }
       }
     },
@@ -227,7 +297,8 @@
                 "name": "Glancing Branch",
                 "weight": 4,
                 "actions": [
-                  { "do": "damage", "type": "Energy", "min": 4, "max": 7, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 }
+                  { "do": "damage", "type": "Energy", "min": 4, "max": 7, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+                  { "do": "effect", "to": "self", "effect": "@Possibility", "stacks": 2, "when": { "perk": true } }
                 ]
               },
               {
@@ -253,7 +324,8 @@
         ],
         "perk": {
           "name": "Every Road Leads Here",
-          "damageMult": 1.25
+          "description": "A glancing branch hands you 2 Possibility, and a road that ends here opens again.",
+          "resetOnKill": true
         }
       }
     },

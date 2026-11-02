@@ -205,7 +205,12 @@
         ],
         "perk": {
           "name": "Tight Orbit",
-          "damageMult": 1.25
+          "description": "A close pass by something heavy slings the mote home faster, and the sky turns with it.",
+          "addActions": [
+            { "do": "if", "when": { "value": "stacks:@Sag", "of": "target", "atLeast": 3 }, "then": [
+              { "do": "effect", "to": "self", "effect": "@Orbit" },
+              { "do": "cooldowns", "to": "self", "amount": 1 } ] }
+          ]
         },
         "sound": "sfx/gravemote_dart.wav"
       }
@@ -230,8 +235,13 @@
           { "do": "effect", "to": "self", "effect": "@Orbit" }
         ],
         "perk": {
-          "name": "Wide Lock",
-          "radiusDelta": 1
+          "name": "Standing Lock",
+          "description": "The floor stays heavy after the spell: whoever remains on it keeps sliding toward the middle.",
+          "addActions": [
+            { "do": "field", "fieldName": "Standing Lock", "turns": 3, "radius": 1.6, "affects": "enemies", "look": "HAZARD_VoidRift@0.5", "actions": [
+              { "do": "pull", "amount": 1, "pullToward": "center" },
+              { "do": "effect", "effect": "@Sag", "chance": 50 } ] }
+          ]
         }
       }
     },
@@ -255,8 +265,22 @@
           { "do": "shield", "to": "self", "amount": 2, "bonusPerStack": 2, "stacksOf": "@Orbit", "stacksFrom": "self" }
         ],
         "perk": {
-          "name": "Clockwork Heavens",
-          "cooldownDelta": -3
+          "name": "Wake of the Fold",
+          "description": "The fold closes behind you and drags down whatever stood too close.",
+          "addProcs": [
+            {
+              "on": "cast",
+              "match": "Lagrange Slip",
+              "radius": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Sag",
+                  "stacks": 2
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -280,7 +304,11 @@
         ],
         "perk": {
           "name": "Shard Swarm",
-          "cooldownDelta": -2
+          "description": "The sliver breaks up on the way down and a second piece finds the next foe along.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 3, "actions": [
+              { "do": "effect", "effect": "@Inbound" } ] }
+          ]
         }
       }
     },
@@ -314,7 +342,14 @@
         ],
         "perk": {
           "name": "Supernova Seed",
-          "radiusDelta": 1
+          "description": "The point doesn't stay crushed. Two turns later it bursts back out, worst of all for whatever is still sagging.",
+          "addActions": [
+            { "do": "trap", "fieldName": "Supernova Seed", "affects": "enemies", "radius": 2.5, "fuse": 2, "fuseOnly": true, "charges": 1, "maxTraps": 1,
+              "look": "HAZARD_VoidRift", "fall": "#FFD8A0", "vfx": "VoidPsyker_Ascendance.impactParticle", "actions": [
+                { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "PsiPower", "scaleMult": 0.4, "bonusPerStack": 3, "stacksOf": "@Sag" },
+                { "do": "knockback", "amount": 2 },
+                { "do": "effect", "effect": "@Cratered" } ] }
+          ]
         },
         "sound": "sfx/gravemote_collapse.wav"
       }
@@ -345,6 +380,7 @@
         ],
         "perk": {
           "name": "Binary Leash",
+          "description": "A second cord winds around the same chest and bears down on it.",
           "addActions": [
             { "do": "effect", "effect": "@Sag" }
           ]
@@ -370,12 +406,17 @@
         "actions": [
           { "do": "if", "when": { "value": "summons:Moonlet", "atLeast": 1 },
             "then": [ { "do": "detonate", "to": "summons", "ifSummonAlive": "group:Moonlet" } ],
-            "else": [ { "do": "summon", "creature": "nanite_cloud", "summonName": "Moonlet", "summonGroup": "Moonlet", "amount": 1, "maxSummons": 1, "turns": 20, "effect": "@Moonbound" } ] },
-          { "do": "effect", "to": "self", "effect": "@MassDebt", "stacks": 2 }
+            "else": [ { "do": "summon", "creature": "nanite_cloud", "summonName": "Moonlet", "summonGroup": "Moonlet", "amount": 1, "maxSummons": 1, "turns": 20, "effect": "@Moonbound" },
+                      { "do": "effect", "to": "self", "effect": "@MassDebt", "stacks": 2, "when": { "perk": true } } ] },
+          { "do": "effect", "to": "self", "effect": "@MassDebt", "stacks": 2, "when": { "perk": false } }
         ],
         "perk": {
-          "name": "Quick Capture",
-          "cooldownDelta": -2
+          "name": "Settled Mass",
+          "description": "Letting the moon go costs you nothing, and when it falls, everything you owe falls with it.",
+          "addProcs": [
+            { "on": "allyDeath", "when": { "has": "@Moonbound", "of": "ally" }, "actions": [
+              { "do": "purge", "to": "self", "effect": "@MassDebt" } ] }
+          ]
         }
       }
     }

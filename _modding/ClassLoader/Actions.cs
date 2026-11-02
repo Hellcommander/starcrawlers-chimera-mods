@@ -495,6 +495,13 @@ namespace SCClassLoader
             return (float)sum;
         }
 
+        /// <summary>The highest of "Strength|Agility" on this character, or the one stat named.</summary>
+        internal static string BestStat(string any, Character who)
+        {
+            if (who == null || !any.Contains("|")) return any;
+            return ScaleParts(any).First().OrderByDescending(who.GetStat).First().ToString();
+        }
+
         /// <summary>The same stat sum for anything else that scales ("PsiPower+Smarts" at `mult` per point).</summary>
         internal static float StatBonus(string scale, float mult, Character who) =>
             who == null ? 0f : StatPoints(scale, mult, who);
@@ -1029,6 +1036,7 @@ namespace SCClassLoader
         private static string SummonGrowth(ActionSpec a)
         {
             string stat = a.scaleStat ?? EnemyRegistry.DefOf(EnemyRegistry.Creature(a.creature))?.scaleStat;
+            if (stat != null && stat.Contains("|")) return $", growing with {ScaleWords(stat)}";
             var names = (stat ?? "").Split('+').Select(x => Enum.TryParse(x, true, out STAT_TYPE st) && st != STAT_TYPE.Smarts ? StatObj.GetStatString(st) : null).Where(x => x != null).ToList();
             return names.Count > 0 ? $", growing with your {string.Join(" and ", names)}" : "";
         }
@@ -1051,7 +1059,7 @@ namespace SCClassLoader
         }
 
         private static string ScaleWords(List<List<STAT_TYPE>> stats) =>
-            string.Join(" and ", stats.Select(any => any.Count == 1 ? StatObj.GetStatString(any[0]) : string.Join(" or ", any.Select(st => StatObj.GetStatString(st))) + ", whichever is higher"));
+            string.Join(" and ", stats.Select(any => any.Count > 3 ? "your best stat" : any.Count == 1 ? StatObj.GetStatString(any[0]) : string.Join(" or ", any.Select(st => StatObj.GetStatString(st))) + ", whichever is higher"));
 
         /// <summary>"Smarts and Psi Power" for a "scale" string.</summary>
         internal static string ScaleWords(string scale) => ScaleWords(ScaleStats(scale).ToList());

@@ -88,6 +88,31 @@ namespace SCClassLoader
             AI_Manager.instance.RefreshPlayerMinionList();
         }
 
+        /// <summary>Held by a charm (Command, Join Us, Dominate, a binding...) rather than built or summoned.</summary>
+        internal static bool IsCharmed(Character c) =>
+            c.effects.GetEffect("CHARM") != null || c.HasTag(Taming.Tag) || c.HasTag("HACKER_CHARM") || c.HasTag("THOUGHTLEADER_MINION");
+
+        /// <summary>Lifts the charm from a minion: it's itself again, on its own side, and alive where it stands.</summary>
+        internal static void ReleaseCharm(Character t, string source)
+        {
+            if (!IsPet(t) || !IsCharmed(t)) return;
+            // Command follows its bot from floor to floor and boosts it for as long as it holds this
+            if (Player_AbilityControl.instance.GetAbility("PA_Hacker_Command") is PA_Hacker_Command cmd && cmd.victim == t)
+            {
+                cmd.victim = null;
+                cmd.charm_effect = null;
+            }
+            t.effects.GetEffect("EFFECT_Hacker_Optimization")?.RemoveInstant();
+            // a Thought Leader convert's effect rewrote its base team, so there's no side left to go back to
+            t.effects.GetEffect("EFFECT_ThoughtLeader_Minion")?.RemoveInstant();
+            if (t.ai.GetBaseTeam() == AI.AI_TEAM.Player) t.ai.InitTeam(AI.AI_TEAM.Hostile);
+            Taming.Release(t, $"{source}: {t.GetName()} is released from the charm.");
+            t.RemoveTag("HACKER_CHARM");
+            t.RemoveTag("THOUGHTLEADER_MINION");
+            t.ai.SetTarget(null);
+            AI_Manager.instance.RefreshPlayerMinionList();
+        }
+
         private static int spentParts;
         private static string spentPartsId;
         private static float spentPartsAt;

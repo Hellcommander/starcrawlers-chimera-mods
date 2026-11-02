@@ -99,7 +99,17 @@
         ],
         "perk": {
           "name": "Bold Syntax",
-          "damageMult": 1.5
+          "description": "Written large enough that the nearest body picks it up too.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 1,
+              "radius": 3.5,
+              "actions": [
+                { "do": "effect", "effect": "@Mark" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -123,8 +133,17 @@
         ],
         "perk": {
           "name": "Infinite Loop",
-          "addActions": [
-            { "do": "damage", "type": "Energy", "min": 2, "max": 3, "ifTargetHas": "@Loop" }
+          "description": "A recursion doesn't stop because its host did. It moves to the next one.",
+          "addProcs": [
+            {
+              "on": "enemyDeath",
+              "radius": 3.5,
+              "pick": 1,
+              "when": { "has": "@Loop", "of": "victim" },
+              "actions": [
+                { "do": "effect", "effect": "@Loop" }
+              ]
+            }
           ]
         }
       }
@@ -154,7 +173,12 @@
         ],
         "perk": {
           "name": "Deep Cut",
-          "damageMult": 1.25
+          "description": "A sigil no one can step around, cut deep enough to re-ink the glyphs beneath it.",
+          "undodgeable": true,
+          "addActions": [
+            { "do": "effect", "effect": "@Mark", "ifTargetHas": "@Mark" },
+            { "do": "effect", "effect": "@Loop", "ifTargetHas": "@Loop" }
+          ]
         }
       }
     },
@@ -180,7 +204,10 @@
         ],
         "perk": {
           "name": "Root Access",
-          "damageMult": 1.25
+          "description": "A host running a Compiled Exploit stops running its own code.",
+          "addActions": [
+            { "do": "effect", "effect": "CONFUSE", "ifTargetHas": "@Compiled", "consume": true }
+          ]
         }
       }
     },
@@ -208,7 +235,12 @@
         ],
         "perk": {
           "name": "Buffer Overrun",
-          "chanceBonus": 30
+          "description": "Written past the end of the buffer, every glyph spills into the one that comes next.",
+          "addActions": [
+            { "do": "effect", "effect": "@Sever", "ifTargetHas": "@Loop" },
+            { "do": "effect", "effect": "@Loop", "ifTargetHas": "@Mark" },
+            { "do": "effect", "effect": "@Mark" }
+          ]
         }
       }
     },
@@ -230,6 +262,7 @@
         "actions": [
           {
             "do": "chain",
+            "when": { "perk": false },
             "jumps": 3,
             "radius": 3.5,
             "effect": "@Mark",
@@ -243,7 +276,21 @@
         ],
         "perk": {
           "name": "Polymorphic Worm",
-          "damageMult": 1.3
+          "description": "It rewrites itself to fit any host, Marked or not, and Marks each one it leaves.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 3,
+              "radius": 3.5,
+              "falloff": 0.85,
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
+                { "do": "effect", "effect": "@Compiled", "ifTargetHas": "@Sever" },
+                { "do": "effect", "effect": "@Loop" },
+                { "do": "effect", "effect": "@Mark" }
+              ]
+            }
+          ]
         }
       }
     },

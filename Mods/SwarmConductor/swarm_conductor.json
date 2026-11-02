@@ -34,7 +34,10 @@
         "actions": [
           { "do": "summon", "creature": "CORPSEC_DRONE", "summonName": "Scrap Drone", "summonGroup": "ScrapDrones", "maxSummons": 2, "effect": "@Linked" }
         ],
-        "perk": { "name": "Spare Parts", "cooldownDelta": -1 }
+        "perk": { "name": "Spare Parts", "description": "Nothing you run is ever wasted. What falls apart gets bolted back together.",
+          "addProcs": [
+            { "on": "allyDeath", "cooldown": 6, "actions": [
+              { "do": "summon", "to": "self", "creature": "CORPSEC_DRONE", "summonName": "Scrap Drone", "summonGroup": "ScrapDrones", "maxSummons": 2, "effect": "@Linked" } ] } ] }
       } },
 
     { "attributes": { "Smarts": 1, "Recognition": 1 },
@@ -45,7 +48,8 @@
         "actions": [
           { "do": "summon", "creature": "CORPSEC_DRONE", "maxSummons": 4, "effect": "@Linked" }
         ],
-        "perk": { "name": "Fast Handshake", "cooldownDelta": -1 }
+        "perk": { "name": "Fast Handshake", "description": "Whatever joins your link comes online at full bandwidth.",
+          "addProcs": [ { "on": "summon", "actions": [ { "do": "effect", "effect": "@Prioritized" } ] } ] }
       } },
 
     { "attributes": { "Smarts": 1, "Recognition": 1 },
@@ -58,7 +62,8 @@
             "bonusPerStack": 4, "stacksOf": "summons" },
           { "do": "effect", "effect": "@Designated" }
         ],
-        "perk": { "name": "Shared Targeting", "damageMult": 1.25 }
+        "perk": { "name": "Shared Targeting", "description": "The paint carries over to the nearest thing standing beside it.",
+          "addActions": [ { "do": "chain", "jumps": 1, "radius": 4, "actions": [ { "do": "effect", "effect": "@Designated" } ] } ] }
       } },
 
     { "attributes": { "Smarts": 1, "Recognition": 1 },
@@ -69,7 +74,10 @@
         "actions": [
           { "do": "effect", "to": "summons", "effect": "@Prioritized" }
         ],
-        "perk": { "name": "Clean Channel", "cooldownDelta": -2 }
+        "perk": { "name": "Clean Channel", "description": "The surge flushes whatever got into your machines and hardens their shells.",
+          "addActions": [
+            { "do": "cleanse", "to": "summons" },
+            { "do": "shield", "to": "summons", "amount": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 } ] }
       } },
 
     { "attributes": { "Smarts": 1, "Dodge": 3 },
@@ -77,11 +85,12 @@
         "name": "Recall Protocol", "icon": "icons/recall_protocol.png", "description": "Cut one drone loose before it is scrapped. The strain of running it lifts, and you get some stamina back.",
         "target": "self", "instant": true, "cooldown": 2,
         "castVfx": "PA_Engineer_Boltron.PS_summon",
-        "actions": [
-          { "do": "stamina", "to": "self", "amount": 6, "ifSummonAlive": "CORPSEC_DRONE" },
-          { "do": "dismiss", "to": "summon", "ifSummonAlive": "CORPSEC_DRONE" }
+        "procs": [ { "on": "cast", "match": "Recall Protocol", "actions": [ { "do": "stamina", "to": "self", "amount": 6, "ifSummonAlive": "CORPSEC_DRONE" } ] } ],
+        "actions": [ { "do": "dismiss", "to": "summon", "ifSummonAlive": "CORPSEC_DRONE" }
         ],
-        "perk": { "name": "Hot Swap", "cooldownDelta": -1 }
+        "perk": { "name": "Hot Swap", "description": "Dropping one connection frees the channel for the next.",
+          "addProcs": [
+            { "on": "cast", "match": "Recall Protocol", "actions": [ { "do": "cooldowns", "to": "self", "amount": 2, "ifSummonAlive": "CORPSEC_DRONE" } ] } ] }
       } },
 
     { "attributes": { "Smarts": 2, "Recognition": 1 },
@@ -95,7 +104,8 @@
             "bonusPerStack": 3, "stacksOf": "summons" },
           { "do": "stun", "turns": 1, "chance": 25 }
         ],
-        "perk": { "name": "Full Saturation", "radiusDelta": 1, "damageMult": 1.2 }
+        "perk": { "name": "Full Saturation", "description": "At this much signal everything in the room shows up on every scope you run.",
+          "addActions": [ { "do": "effect", "effect": "@Designated" } ] }
       } },
 
     { "attributes": { "Smarts": 1, "Recognition": 1, "Armor": 1 },
@@ -108,7 +118,8 @@
           { "do": "effect", "to": "summon", "effect": "@Prioritized", "ifSummonAlive": "self" },
           { "do": "summon", "creature": "CORPSEC_TARANTULA", "turns": 15, "maxSummons": 1, "effect": "@Spearhead", "unlessSummonAlive": "self" }
         ],
-        "perk": { "name": "Heavy Clearance", "cooldownDelta": -3 }
+        "perk": { "name": "Heavy Clearance", "description": "It has clearance to walk out in front, and nobody nearby can look at anything else.",
+          "addActions": [ { "do": "taunt", "to": "summons", "ifSummonAlive": "self", "radius": 4, "turns": 2 } ] }
       } },
 
     { "attributes": { "Smarts": 2, "Recognition": 1 },
@@ -139,7 +150,9 @@
           { "do": "summon", "creature": "SCCLMOB_SwarmConductor_LatticeDrone", "summonName": "Lattice Drone", "summonGroup": "Lattice",
             "maxSummons": 2, "effect": "@Lattice" }
         ],
-        "perk": { "name": "Tooling Up", "cooldownDelta": -2 }
+        "perk": { "name": "Tooling Up", "description": "With two patterns running, the foundry starts refitting everything else on your link to match.",
+          "addActions": [
+            { "do": "effect", "to": "summons", "ifSummonAlive": "any", "effect": "@Lattice", "when": { "value": "summons:Lattice", "atLeast": 2 } } ] }
       } }
   ]
 }

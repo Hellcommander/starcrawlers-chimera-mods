@@ -13,7 +13,7 @@ namespace SCClassLoader
     /// no spec to copy, so a vanilla build keeps the body's own Nemesis skills beside the copies. Your resistances guard
     /// against other damage types, and its weapon hits with Void. When it dies it leaves corrupted copies of some of your
     /// gear: the same item, every bonus stronger and moved to a different stat or damage type, any weapon damage Void, and
-    /// any skill or effect it grants swapped for another item's. Only the donor's id is kept, in a tag on the item.
+    /// its skill swapped for a corrupted version where it has one, and bonuses swapped for corrupted mods (see corruptedGear).
     /// Your minions and party come with it, so numbers don't settle the fight: each is the same creature with its stats as
     /// they stand now and more health, all its damage Void. They last as long as their originals would have, and fall when
     /// it does. All of them hit as hard as you and yours do, then "finalDamage" cuts what lands: the last step of the hit,
@@ -27,8 +27,8 @@ namespace SCClassLoader
     {
         /// <summary>Tag values: the seed, then strength, health share and what's left of a hit, in percent.</summary>
         internal const string Tag = "SCCLB_CORRUPT", StrengthTag = "SCCLB_CORRUPTSTR", HealthTag = "SCCLB_CORRUPTHP", FinalTag = "SCCLB_CORRUPTFINAL";
-        /// <summary>On an item: this is a corrupted copy; the item whose skill it has; the effect it grants instead.</summary>
-        internal const string ItemTag = "SCCL_CORRUPTED", SkillTag = "SCCL_CORRUPTSKILL_", EffectTag = "SCCL_CORRUPTFX_";
+        /// <summary>On an item: this is a corrupted copy; the corrupted skill it has; a corrupted mod on it.</summary>
+        internal const string ItemTag = "SCCL_CORRUPTED", SkillTag = "SCCL_CORRUPTSKILL_", ModTag = "SCCL_CORRUPTMOD_";
         /// <summary>On a copy of your minion: that it is one; the turns it has left, if timed; its boss.</summary>
         internal const string EscortTag = "SCCLB_ESCORT", EscortLifeTag = "SCCLB_ESCORTLIFE", EscortOfTag = "SCCLB_ESCORTOF_";
         /// <summary>On a copy of your minion: its base stats and resistances. A save keeps neither on a creature.</summary>
@@ -451,46 +451,86 @@ namespace SCClassLoader
             .Where(e => e != null && !(e is Item_Cursed_Relic) && e.equipTrigger != null && (e.equipTrigger.equipment_ability != null || !string.IsNullOrEmpty(e.equipTrigger.equipment_effect)))
             .GroupBy(e => e.itemId).Select(g => g.First()).ToList());
 
-        /// <summary>A skill from another item, and an effect from another: a weapon's skills may need a weapon, so they stay among weapons.</summary>
+        /// <summary>
+        /// The corrupted version of its skill if it has one. Mods take the place of bonuses: some with a new skill, more
+        /// without, where they replace what the item did when worn as well (it keeps its skill).
+        /// </summary>
         private static void TwistGrants(Item_Equipment eq)
         {
-            Item_OnUse_Trigger on = eq.equipTrigger;
-            if (on == null) return;
-            bool armed = eq is Item_Weapon;
-            var kin = Granters.Where(d => d.itemId != eq.itemId && d is Item_Weapon == armed).OrderBy(_ => UnityEngine.Random.value).ToList();
-            if (on.equipment_ability != null)
+            CorruptGearSpec gear = SideAreaData.CorruptGear;
+            string skill = gear.AltFor(eq);
+            if (skill != null) eq.tags.Add(new Tag(SkillTag + skill, 1));
+            var lines = eq.stats.Where(st => st != null).OrderBy(_ => UnityEngine.Random.value).ToList();
+            foreach (string mod in gear.modIds.OrderBy(_ => UnityEngine.Random.value).Take(skill != null ? gear.modsWithSkill : gear.mods))
             {
-                Item_Equipment donor = kin.FirstOrDefault(d => d.equipTrigger.equipment_ability != null && d.equipTrigger.equipment_ability.internalName != on.equipment_ability.internalName);
-                if (donor != null) eq.tags.Add(new Tag(SkillTag + donor.itemId, 1));
-            }
-            if (!string.IsNullOrEmpty(on.equipment_effect))
-            {
-                string other = kin.Select(d => d.equipTrigger.equipment_effect).FirstOrDefault(e => !string.IsNullOrEmpty(e) && e != on.equipment_effect);
-                if (other != null) eq.tags.Add(new Tag(EffectTag + other, 1));
+                eq.tags.Add(new Tag(ModTag + mod, 1));
+                if (lines.Count <= 1) continue; // something of the item stays
+                eq.stats.Remove(lines[0]);
+                lines.RemoveAt(0);
             }
             Grant(eq, eq.tags);
         }
 
-        /// <summary>Puts on the item what its tags say it was given instead.</summary>
+        /// <summary>Puts on the item what its tags say it has instead.</summary>
         private static void Grant(Item_Equipment eq, List<Tag> tags)
         {
+            if (tags == null || !tags.Any(t => t?.tagName == ItemTag)) return;
             Item_OnUse_Trigger on = eq.equipTrigger;
-            if (on == null || tags == null) return;
-            foreach (Tag t in tags.Where(t => t?.tagName != null))
-                if (t.tagName.StartsWith(EffectTag)) on.equipment_effect = t.tagName.Substring(EffectTag.Length);
-                else if (t.tagName.StartsWith(SkillTag) && on.equipment_ability != null) GiveSkill(on, t.tagName.Substring(SkillTag.Length));
+            if (on == null) return;
+            Tag skill = tags.FirstOrDefault(t => t?.tagName != null && t.tagName.StartsWith(SkillTag));
+            if (skill != null) GiveSkill(on, skill.tagName.Substring(SkillTag.Length));
+            else on.equipment_effect = "";
         }
 
-        private static void GiveSkill(Item_OnUse_Trigger on, string donorId)
+        private static void GiveSkill(Item_OnUse_Trigger on, string abId)
         {
-            // the database's own, never a new item: one entering the world can act on you (a Cursed Relic curses you)
-            var donor = ItemDatabase.instance.GetItem(donorId, false, RARITY.None) as Item_Equipment;
-            Ability skill = donor?.equipTrigger?.equipment_ability;
-            if (skill == null || skill.internalName == on.equipment_ability.internalName) return;
+            if (on.equipment_ability == null || on.equipment_ability.internalName == abId || !ModAbility.Specs.TryGetValue(abId, out ModAbility.Runtime rt)) return;
+            if (rt.icon == null) rt.icon = on.equipment_ability.GetSprite();
             UnityEngine.Object.Destroy(on.equipment_ability.gameObject);
-            Ability mine = UnityEngine.Object.Instantiate(skill, on.transform, false);
-            mine.name = skill.name;
-            on.equipment_ability = mine;
+            var go = new GameObject(ModAbility.Prefix + abId);
+            go.transform.SetParent(on.transform, false);
+            on.equipment_ability = go.AddComponent<ModAbility>();
+        }
+
+        private static IEnumerable<string> ModsOn(Item it) =>
+            it.tags.Where(t => t?.tagName != null && t.tagName.StartsWith(ModTag)).Select(t => t.tagName.Substring(ModTag.Length));
+
+        /// <summary>A mod works while the item is worn, and a load brings its effect back with the character's own.</summary>
+        [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.OnEquip))]
+        private static class Patch_ModsOn
+        {
+            private static void Postfix(Item_Equipment __instance)
+            {
+                if (Game.Game_isLoading) return;
+                foreach (string mod in ModsOn(__instance))
+                    if (Player.instance.effects.GetEffect(mod) == null) EffectManager.instance.ApplyEffect(mod, Player.instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.OnUnequip))]
+        private static class Patch_ModsOff
+        {
+            private static void Postfix(Item_Equipment __instance)
+            {
+                foreach (string mod in ModsOn(__instance))
+                    if (!Menu_Player.instance.GetEquipment().Any(e => e != null && e != __instance && ModsOn(e).Contains(mod)))
+                        Player.instance.effects.RemoveEffect(mod, isInstant: true);
+            }
+        }
+
+        private static string ModLines(Item it) => string.Concat(ModsOn(it).Where(ModEffect.Specs.ContainsKey).Select(m =>
+            $"\n<color=#B46CFF>{ModEffect.Specs[m].spec.name}</color>: {ModEffect.Specs[m].spec.description}"));
+
+        [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.GetStatString))]
+        private static class Patch_ModText
+        {
+            private static void Postfix(Item_Equipment __instance, ref string __result) => __result += ModLines(__instance);
+        }
+
+        [HarmonyPatch(typeof(Item_Weapon), nameof(Item_Weapon.GetStatString))]
+        private static class Patch_ModTextWeapon
+        {
+            private static void Postfix(Item_Weapon __instance, ref string __result) => __result += ModLines(__instance);
         }
 
         /// <summary>Before the game reads the saved skill's state back in: that state is the donor's skill's.</summary>

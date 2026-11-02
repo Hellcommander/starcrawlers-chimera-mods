@@ -34,6 +34,15 @@
       "description": "Spitting blood and still upright. For a few turns every hit lands soft, as if you'd stopped feeling them.",
       "duration": 3,
       "damageTakenMult": 0.6
+    },
+    {
+      "id": "Kneecapped",
+      "name": "Kneecapped",
+      "description": "One leg has stopped taking orders. It isn't going anywhere for a moment.",
+      "duration": 2,
+      "debuff": true,
+      "root": true,
+      "stats": { "Dodge": -5 }
     }
   ],
   "tiers": [
@@ -69,7 +78,8 @@
           { "do": "effect", "effect": "#Gashed", "chance": 35 },
           { "do": "stun", "turns": 1, "chance": 25 }
         ],
-        "perk": { "name": "Heavier Pipe", "damageMult": 1.25 }
+        "perk": { "name": "Heavier Pipe", "description": "Once you're warmed up, the knee stops being a target and starts being a problem.", "addActions": [
+          { "do": "effect", "effect": "@Kneecapped", "when": { "value": "stacks:@Grit", "of": "self", "atLeast": 4 } } ] }
       }
     },
     {
@@ -86,10 +96,13 @@
         "actions": [
           { "do": "damage", "type": "Crushing", "min": 3, "max": 7, "scale": "Strength", "scaleMult": 0.3, "bonusPerStack": 1, "stacksOf": "@Grit", "stacksFrom": "self" },
           { "do": "stun", "turns": 1, "chance": 60 },
-          { "do": "knockback", "amount": 1 },
+          { "do": "knockback", "amount": 1, "when": { "perk": false } },
           { "do": "effect", "to": "self", "effect": "@Grit" }
         ],
-        "perk": { "name": "Bigger Chair", "cooldownDelta": -1 }
+        "perk": { "name": "Bigger Chair", "description": "It carries them with it, and it doesn't stop at the first thing in the way.", "addActions": [
+          { "do": "throw", "amount": 2, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.2 },
+            { "do": "effect", "effect": "#Reeling" } ] } ] }
       }
     },
     {
@@ -111,7 +124,7 @@
           { "do": "effect", "effect": "#Gashed" },
           { "do": "effect", "to": "self", "effect": "@Grit" }
         ],
-        "perk": { "name": "No Rules", "addActions": [ { "do": "stun", "turns": 1, "chance": 50 } ] }
+        "perk": { "name": "No Rules", "description": "Land it clean and they fold where they stand.", "addActions": [ { "do": "stun", "turns": 1, "chance": 50 } ] }
       }
     },
     {
@@ -131,7 +144,10 @@
           { "do": "stun", "turns": 1, "chance": 40 },
           { "do": "effect", "to": "self", "effect": "@Grit" }
         ],
-        "perk": { "name": "Last Call", "radiusDelta": 1 }
+        "perk": { "name": "Last Call", "description": "Everyone in reach now has a grudge, and every jaw you clip warms you up.", "addActions": [
+          { "do": "taunt", "turns": 2 },
+          { "do": "if", "when": { "value": "health", "of": "target", "above": 0 }, "then": [
+            { "do": "effect", "to": "self", "effect": "@Grit" } ] } ] }
       }
     },
     {
@@ -152,7 +168,12 @@
           { "do": "knockback", "amount": 2 },
           { "do": "stun", "turns": 1 }
         ],
-        "perk": { "name": "Wall to Wall", "radiusDelta": 1 }
+        "perk": { "name": "Wall to Wall", "description": "The room stays wrecked. Whoever crosses the twisted plating cuts themselves on it and gives you something to swing at.", "addActions": [
+          { "do": "field", "to": "self", "fieldName": "Wreckage", "turns": 4, "radius": 2.5, "affects": "enemies",
+            "pulseVfx": "PA_Barbarian_FlyingSmash.triggerParticle@0.25", "actions": [
+              { "do": "effect", "effect": "#Gashed" },
+              { "do": "effect", "effect": "#Reeling" },
+              { "do": "effect", "to": "self", "effect": "@Grit", "chance": 50 } ] } ] }
       }
     },
     {
@@ -176,7 +197,7 @@
           { "do": "effect", "effect": "#Reeling" },
           { "do": "effect", "to": "self", "effect": "@Grit" }
         ],
-        "perk": { "name": "Running Start", "rangeDelta": 2 }
+        "perk": { "name": "Running Start", "description": "You hit them at a run and you're still running.", "instant": true }
       }
     },
     {

@@ -18,15 +18,15 @@
       "description": "You are the comet now, and nothing can take health from you until your next turn.",
       "duration": 1,
       "invulnerable": true,
-      "damageTakenMult": 0,
-      "vfx": "EFFECT_Xeno_Energy_Shield"
+      "damageTakenMult": 0
     },
     {
       "id": "Calved",
       "name": "Calved",
       "icon": "icons/split_nucleus.png",
       "description": "A fragment split from a crawler's nucleus. It holds that crawler's gear and skills at reduced strength, and it won't hold together for long.",
-      "duration": -1
+      "duration": -1,
+      "aura": "PhCalved"
     }
   ],
   "tiers": [
@@ -47,7 +47,6 @@
         "dashTrail": "#BFE8FF",
         "castVfx": "PhCharge",
         "areaVfx": "PhImpact",
-        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
         "sound": "event:/Abilities/ForcePsyker/KineticSlam",
         "castActions": [
           { "do": "effect", "to": "self", "effect": "@Incandescent" }
@@ -108,9 +107,8 @@
         ],
         "perk": {
           "name": "Fast Fracture",
-          "description": "You have learned where you crack.",
-          "cooldownDelta": -2,
-          "staminaDelta": -4
+          "description": "You have learned where you crack, and it takes no time at all.",
+          "instant": true
         }
       }
     },
@@ -130,7 +128,7 @@
         "sound": "event:/Abilities/Prototype/ArmCannon_Charge",
         "actions": [
           { "do": "trap", "fieldName": "Ephemeris", "affects": "enemies", "fuse": 2, "fuseOnly": true, "charges": 1, "maxTraps": 1, "radius": 2.6,
-            "look": "PhMark", "vfx": "PhImpact", "fall": "#CFEFFF", "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+            "look": "PhMark", "vfx": "PhImpact", "fall": "#CFEFFF", "fallAs": "PhCometNucleus", "sound": "event:/Abilities/ForcePsyker/KineticSlam",
             "actions": [
               { "do": "damage", "type": "Crushing", "min": 5, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
               { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.1, "perRank": 1 },
@@ -143,8 +141,11 @@
         ],
         "perk": {
           "name": "Tight Orbit",
-          "description": "You come back around sooner.",
-          "cooldownDelta": -2
+          "description": "The comet's weight arrives ahead of it, and what stands near the mark is drawn in tight.",
+          "addActions": [
+            { "do": "field", "fieldName": "Tight Orbit", "turns": 2, "radius": 2.6, "affects": "enemies", "onEnter": false,
+              "actions": [ { "do": "pull", "amount": 1, "pullToward": "center" } ] }
+          ]
         }
       }
     },
@@ -161,7 +162,7 @@
         "staminaCost": 12,
         "cooldown": 6,
         "areaVfx": "PhTidal",
-        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.25",
+        "impactVfx": "PhStrike@0.6",
         "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
         "actions": [
           { "do": "pull", "amount": 2, "pullToward": "center" },
@@ -170,8 +171,8 @@
         ],
         "perk": {
           "name": "Roche Limit",
-          "description": "The pull reaches farther.",
-          "radiusDelta": 0.8
+          "description": "Past this line a body stops holding itself together, and every gap in its guard shows.",
+          "addActions": [ { "do": "effect", "effect": "#Exposed" } ]
         }
       }
     },
@@ -206,7 +207,6 @@
         "cooldown": 4,
         "castVfx": "PhCalve",
         "areaVfx": "PhImpact@0.7",
-        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.3",
         "sound": "event:/Abilities/Misc/Psykonics_Warp",
         "actions": [
           { "do": "phase" },
@@ -252,7 +252,6 @@
         "thirdPerson": 1.0,
         "castVfx": "PhCharge",
         "areaVfx": "PhExtinction",
-        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.5",
         "sound": "event:/Abilities/Soldier/Grenade_Explode",
         "castActions": [
           { "do": "effect", "to": "self", "effect": "@Incandescent" }
@@ -271,8 +270,14 @@
         ],
         "perk": {
           "name": "Crater Rim",
-          "description": "The blast reaches the far walls.",
-          "radiusDelta": 1.0
+          "description": "The crater goes on burning, and it stands between them and you.",
+          "addActions": [
+            { "do": "field", "fieldName": "Crater Rim", "turns": 3, "radius": 2.1, "affects": "enemies", "look": "HAZARD_Fire_Mini@0.5",
+              "actions": [
+                { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "PsiPower", "scaleMult": 0.15 },
+                { "do": "effect", "effect": "#Burning" }
+              ] }
+          ]
         }
       }
     }

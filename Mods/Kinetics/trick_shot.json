@@ -139,6 +139,9 @@
           },
           {
             "do": "ricochet",
+            "when": {
+              "perk": false
+            },
             "fieldName": "Coin",
             "radius": 4,
             "actions": [
@@ -155,8 +158,49 @@
           }
         ],
         "perk": {
-          "name": "Hot Loads",
-          "damageMult": 1.25
+          "name": "Keep the Change",
+          "description": "Some coins spin away from the bounce and land at the next one's feet.",
+          "addActions": [
+            {
+              "do": "ricochet",
+              "fieldName": "Coin",
+              "radius": 4,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Ballistic",
+                  "min": 3,
+                  "max": 5,
+                  "scale": "Agility+Recognition",
+                  "scaleMult": 0.15,
+                  "perRank": 1
+                },
+                {
+                  "do": "field",
+                  "fieldName": "Coin",
+                  "turns": 10,
+                  "affects": "enemies",
+                  "onEnter": false,
+                  "model": {
+                    "mesh": "models/coin.obj",
+                    "texture": "models/coin.png",
+                    "scale": 0.9,
+                    "offset": [
+                      0,
+                      0.45,
+                      0
+                    ],
+                    "bob": 0.06,
+                    "spin": 140,
+                    "glow": "#FFD966",
+                    "glowStrength": 0.6
+                  },
+                  "actions": [],
+                  "chance": 50
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -200,7 +244,36 @@
         ],
         "perk": {
           "name": "Pocketful",
-          "rangeDelta": 2
+          "description": "A second coin goes with the first, polished bright enough to catch the eye of anyone walking past.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Coin",
+              "turns": 10,
+              "affects": "enemies",
+              "onEnter": true,
+              "model": {
+                "mesh": "models/coin.obj",
+                "texture": "models/coin.png",
+                "scale": 0.9,
+                "offset": [
+                  0,
+                  0.45,
+                  0
+                ],
+                "bob": 0.06,
+                "spin": 140,
+                "glow": "#FFD966",
+                "glowStrength": 0.6
+              },
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Dazzled"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/trick_coin_flick.wav"
       }
@@ -258,7 +331,35 @@
         ],
         "perk": {
           "name": "Big Spender",
-          "radiusDelta": 1
+          "description": "Real credits in the throw: more coins on the floor, and fewer in your account.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Coin",
+              "turns": 10,
+              "affects": "enemies",
+              "onEnter": false,
+              "model": {
+                "mesh": "models/coin.obj",
+                "texture": "models/coin.png",
+                "scale": 0.9,
+                "offset": [
+                  0,
+                  0.45,
+                  0
+                ],
+                "bob": 0.06,
+                "spin": 140,
+                "glow": "#FFD966",
+                "glowStrength": 0.6
+              },
+              "actions": []
+            },
+            {
+              "do": "credits",
+              "amount": -5
+            }
+          ]
         },
         "sound": "audio_licensed/trick_pocket_change.wav"
       }
@@ -305,7 +406,36 @@
         ],
         "perk": {
           "name": "Steady Hands",
-          "cooldownDelta": -3
+          "description": "While you read the room you're already covering it: anyone who closes in gets shot on the way.",
+          "addActions": [
+            {
+              "do": "arm",
+              "reaction": {
+                "name": "Steady Shot",
+                "on": "approach",
+                "charges": 2,
+                "turns": 4,
+                "priority": 50,
+                "vfx": "PA_Smuggler_Fistful.PS_impact@0.6",
+                "sound": "audio_licensed/trick_bank_shot.wav",
+                "actions": [
+                  {
+                    "do": "damage",
+                    "type": "Ballistic",
+                    "min": 3,
+                    "max": 6,
+                    "scale": "Agility+Recognition",
+                    "scaleMult": 0.25,
+                    "perRank": 1
+                  },
+                  {
+                    "do": "effect",
+                    "effect": "@Dazzled"
+                  }
+                ]
+              }
+            }
+          ]
         },
         "sound": "audio_licensed/trick_deadeye.wav"
       }
@@ -360,6 +490,9 @@
           },
           {
             "do": "ricochet",
+            "when": {
+              "perk": false
+            },
             "to": "self",
             "fieldName": "Coin",
             "radius": 5,
@@ -383,7 +516,36 @@
         ],
         "perk": {
           "name": "House Always Wins",
-          "damageMult": 1.2
+          "description": "Play enough hands and someone pays with everything they have.",
+          "addActions": [
+            {
+              "do": "ricochet",
+              "to": "self",
+              "fieldName": "Coin",
+              "radius": 5,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Ballistic",
+                  "min": 3,
+                  "max": 5,
+                  "scale": "Agility+Recognition",
+                  "scaleMult": 0.15,
+                  "perRank": 1
+                },
+                {
+                  "do": "effect",
+                  "turns": 2,
+                  "effect": "#Exposed"
+                },
+                {
+                  "do": "execute",
+                  "amount": 10,
+                  "elitePercent": 4
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -455,7 +617,31 @@
         ],
         "perk": {
           "name": "Stacked Deck",
-          "cooldownDelta": -3
+          "description": "The shot that stops them goes on to bounce off every coin in the room.",
+          "addProcs": [
+            {
+              "on": "reaction",
+              "actions": [
+                {
+                  "do": "ricochet",
+                  "to": "self",
+                  "fieldName": "Coin",
+                  "radius": 4,
+                  "actions": [
+                    {
+                      "do": "damage",
+                      "type": "Ballistic",
+                      "min": 3,
+                      "max": 5,
+                      "scale": "Agility+Recognition",
+                      "scaleMult": 0.15,
+                      "perRank": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/trick_deadeye.wav"
       }

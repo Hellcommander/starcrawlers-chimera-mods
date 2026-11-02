@@ -60,12 +60,25 @@
         "icon": "corsair_t1.png",
         "description": "All style, plenty of substance.",
         "actions": [
-          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
-          { "do": "effect", "effect": "#Gashed" }
+          { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1, "when": { "perk": false } },
+          { "do": "effect", "effect": "#Gashed", "when": { "perk": false } }
         ],
         "perk": {
           "name": "Twin Flourish",
-          "damageMult": 1.25
+          "description": "The second blade never waits for the first to finish.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 1,
+              "radius": 2,
+              "falloff": 0.7,
+              "actions": [
+                { "do": "if", "when": { "has": "#Reeling", "of": "target" }, "then": [ { "do": "effect", "to": "self", "effect": "@Spoils" } ] },
+                { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "scale": "Savvy", "scaleMult": 0.4, "perRank": 1 },
+                { "do": "effect", "effect": "#Gashed" }
+              ]
+            }
+          ]
         },
         "sound": "sfx/corsair_flourish.wav"
       }
@@ -91,7 +104,8 @@
         ],
         "perk": {
           "name": "Quick Hook",
-          "cooldownDelta": -3
+          "description": "You land with your balance, and your turn, intact.",
+          "instant": true
         }
       }
     },
@@ -113,7 +127,10 @@
         ],
         "perk": {
           "name": "Bottomless Bottle",
-          "cooldownDelta": -4
+          "description": "Whatever ails you goes down with it, and comes back as swagger.",
+          "addActions": [
+            { "do": "cleanse", "to": "self", "effect": "@Spoils" }
+          ]
         }
       }
     },
@@ -154,11 +171,15 @@
         "sound": "sfx/corsair_volley.wav",
         "actions": [
           { "do": "damage", "type": "Ballistic", "min": 4, "max": 8, "scale": "Savvy", "scaleMult": 0.4, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Spoils", "stacksFrom": "self", "consumeStacks": true },
-          { "do": "knockback", "amount": 2 }
+          { "do": "knockback", "amount": 2, "when": { "perk": false } }
         ],
         "perk": {
-          "name": "Full Volley",
-          "radiusDelta": 1
+          "name": "Grapeshot",
+          "description": "Loose change makes fine shrapnel, and nobody gets blown out of reach.",
+          "addActions": [
+            { "do": "effect", "effect": "#Gashed", "bonusPerStack": 1, "stacksOf": "@Spoils", "stacksFrom": "self", "stacksUsed": 4 },
+            { "do": "effect", "effect": "#Reeling" }
+          ]
         }
       }
     },
@@ -181,7 +202,17 @@
         ],
         "perk": {
           "name": "Feed the Sharks",
-          "chanceBonus": 10
+          "description": "Blood in the water brings the rest of them into it.",
+          "addProcs": [
+            {
+              "on": "kill",
+              "when": { "has": "#Gashed", "of": "victim" },
+              "radius": 2.5,
+              "actions": [
+                { "do": "effect", "effect": "#Gashed", "stacks": 2 }
+              ]
+            }
+          ]
         },
         "sound": "sfx/corsair_flourish.wav"
       }

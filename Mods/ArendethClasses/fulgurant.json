@@ -157,9 +157,9 @@
           { "do": "warp", "to": "self", "warpTo": "away", "amount": 3 }
         ],
         "perk": {
-          "name": "Lingering Ghost",
-          "description": "The afterspark takes longer to run to ground.",
-          "cooldownDelta": -2
+          "name": "Ahead of the Flash",
+          "description": "The flash is still in their eyes and you are already somewhere else.",
+          "instant": true
         }
       }
     },

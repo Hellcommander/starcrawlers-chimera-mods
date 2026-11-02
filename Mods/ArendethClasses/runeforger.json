@@ -126,6 +126,7 @@
         ],
         "perk": {
           "name": "Double Ring",
+          "description": "A second ring forms inside the first, and sometimes it holds a glyph of its own.",
           "addActions": [
             { "do": "random", "to": "self", "chance": 50, "options": [
               { "name": "A second kinetic glyph", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RfKineticGlyph", "amount": 1 } ] },
@@ -162,8 +163,11 @@
         ],
         "perk": {
           "name": "Well-Worn Anvil",
-          "cooldownDelta": -2,
-          "staminaDelta": -4
+          "description": "It unfolds in your hands without a thought, and the hammer's rhythm settles your grip.",
+          "instant": true,
+          "addActions": [
+            { "do": "effect", "to": "self", "effect": "@GraversFocus" }
+          ]
         }
       }
     },
@@ -182,15 +186,17 @@
         "impactVfx": "PA_Engineer_Spidermine.PS_explode_energy@0.5",
         "sound": "event:/Abilities/VoidPsyker/VoidPsyker_Shadowcoil_Impact",
         "actions": [
-          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 2, "stacksOf": "group:Residue" },
+          { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 2, "stacksOf": "group:Residue", "when": { "perk": false } },
           { "do": "hazard", "hazard": "CONSUME_UTL_Mine", "radius": 0, "turns": 0, "chance": 40 },
           { "do": "knockback", "amount": 1 },
           { "do": "summon", "creature": "nanite_cloud", "summonName": "Glyph Residue", "summonGroup": "Residue", "amount": 1, "maxSummons": 6, "turns": 8, "effect": "@Residual" }
         ],
         "perk": {
           "name": "Clean Burn",
-          "damageMult": 1.25,
-          "chanceBonus": 20
+          "description": "Burned without a trace of waste, the flash goes through plating as if it were not there.",
+          "addActions": [
+            { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1, "bonusPerStack": 2, "stacksOf": "group:Residue", "trueDamage": true }
+          ]
         }
       }
     },
@@ -220,7 +226,8 @@
         ],
         "perk": {
           "name": "Quick Socket",
-          "cooldownDelta": -4
+          "description": "Chassis down, glyph in, and your hands are already moving on to the next thing.",
+          "instant": true
         }
       }
     },
@@ -249,7 +256,12 @@
         ],
         "perk": {
           "name": "Master's Mark",
-          "radiusDelta": 1
+          "description": "You sign the wreckage: the deck around you stays branded, and anyone standing on it is marked.",
+          "addActions": [
+            { "do": "field", "to": "self", "fieldName": "Master's Mark", "turns": 4, "radius": 3, "affects": "enemies",
+              "look": "HAZARD_Energy@0.6", "actions": [
+                { "do": "effect", "effect": "#Marked" } ] }
+          ]
         },
         "sound": "audio_licensed/rune_cascade.wav"
       }
@@ -277,7 +289,11 @@
         ],
         "perk": {
           "name": "Double-Struck Plate",
-          "cooldownDelta": -3
+          "description": "The plate rings under every blow, and the ringing steadies your hand for the next etching.",
+          "addProcs": [
+            { "on": "hurt", "when": { "has": "@EtchedWard", "of": "self" }, "actions": [
+              { "do": "effect", "to": "self", "effect": "@GraversFocus" } ] }
+          ]
         }
       }
     },

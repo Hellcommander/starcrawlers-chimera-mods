@@ -140,7 +140,20 @@
         ],
         "perk": {
           "name": "Sustained Note",
-          "damageMult": 1.25
+          "description": "The hole it leaves keeps ringing, and whatever stands in it goes Off-Key.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Held Note",
+              "turns": 3,
+              "radius": 1.6,
+              "affects": "enemies",
+              "look": "HAZARD_VoidRift@0.35",
+              "actions": [
+                { "do": "effect", "effect": "@OffKey" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -165,7 +178,11 @@
         ],
         "perk": {
           "name": "Erasure Canticle",
-          "chanceBonus": 30
+          "description": "The verse leaves nothing: no blessing on the target, and no sound from it for a moment.",
+          "addActions": [
+            { "do": "dispel", "effect": "@Dissonance" },
+            { "do": "silence", "turns": 1, "bossTurns": 1 }
+          ]
         }
       }
     },
@@ -192,7 +209,10 @@
         ],
         "perk": {
           "name": "Choir of Lead",
-          "radiusDelta": 1
+          "description": "The floor sinks where you sing it, and everything slides toward the low point.",
+          "addActions": [
+            { "do": "pull", "amount": 2, "pullToward": "center" }
+          ]
         }
       }
     },
@@ -215,7 +235,18 @@
         ],
         "perk": {
           "name": "Deeper Horizon",
-          "cooldownDelta": -10
+          "description": "What reaches into the pocket gets drawn further in, and comes out of tune.",
+          "addProcs": [
+            {
+              "on": "hurt",
+              "maxPerTurn": 2,
+              "when": { "has": "@Horizon", "of": "self" },
+              "actions": [
+                { "do": "pull", "amount": 1 },
+                { "do": "effect", "effect": "@OffKey" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -240,7 +271,11 @@
         ],
         "perk": {
           "name": "Grand Requiem",
-          "damageMult": 1.25
+          "description": "Sung in Feedback, the choir takes the noise off you and lays it on them.",
+          "addActions": [
+            { "do": "stun", "turns": 1, "ifSelfHas": "@Feedback", "ifTargetHas": "@OffKey" },
+            { "do": "purge", "to": "self", "effect": "@Feedback" }
+          ]
         }
       }
     },
@@ -269,6 +304,7 @@
         ],
         "perk": {
           "name": "Subsonic Verse",
+          "description": "The lowest note can flatten a body already bowed under the hymn.",
           "addActions": [
             { "do": "stun", "turns": 1, "chance": 40, "ifTargetHas": "@Heavy" }
           ]

@@ -89,7 +89,23 @@
             { "name": "a brine jug", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhBrineJug", "amount": 1 } ] },
             { "name": "a grit sack", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhGritSack", "amount": 1 } ] } ] }
         ],
-        "perk": { "name": "Locker Raider", "cooldownDelta": -2 }
+        "perk": {
+          "name": "Burst Pipe",
+          "description": "Whatever you rip open comes out under pressure, all over whoever is standing near it.",
+          "addProcs": [
+            {
+              "on": "cast",
+              "match": "Scrounge",
+              "radius": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Slicked"
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     {
@@ -104,7 +120,8 @@
           { "do": "effect", "effect": "EFFECT_Fire" },
           { "do": "hazard", "hazard": "HAZARD_Fire_Mini" }
         ],
-        "perk": { "name": "Hotter Coals", "damageMult": 1.25 }
+        "perk": { "name": "Running Fire", "description": "Coals hot enough to run: the flame jumps from one oiled body to the next.",
+          "addActions": [ { "do": "chain", "jumps": 3, "radius": 3, "effect": "@Slicked", "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] } ] }
       }
     },
     {
@@ -118,7 +135,9 @@
           { "do": "damage", "type": "Cryo", "min": 2, "max": 5, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 },
           { "do": "effect", "effect": "@Frosted" }, { "do": "effect", "effect": "SLOW", "turns": 2 }
         ],
-        "perk": { "name": "Wider Splash", "radiusDelta": 0.5 }
+        "perk": { "name": "Standing Coolant", "description": "The coolant pools on the deck, and whoever crosses it frosts over again.",
+          "addActions": [ { "do": "field", "fieldName": "Coolant Pool", "turns": 4, "radius": 1.5, "affects": "enemies", "look": "HAZARD_Cryo@0.5",
+            "actions": [ { "do": "effect", "effect": "@Frosted" }, { "do": "effect", "effect": "SLOW", "turns": 1 } ] } ] }
       }
     },
     {
@@ -146,7 +165,7 @@
           { "do": "damage", "type": "Crushing", "min": 2, "max": 5, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 },
           { "do": "effect", "effect": "@Gritted" }, { "do": "blind", "chance": 30 }
         ],
-        "perk": { "name": "Coarse Grit", "addActions": [ { "do": "effect", "effect": "#Gashed" } ] }
+        "perk": { "name": "Coarse Grit", "description": "Sharp enough to open skin as well as eyes.", "addActions": [ { "do": "effect", "effect": "#Gashed" } ] }
       }
     },
     {
@@ -161,7 +180,13 @@
           { "do": "effect", "effect": "@Slicked" }, { "do": "effect", "effect": "@Brined" }, { "do": "effect", "effect": "@Frosted" },
           { "do": "effect", "effect": "EFFECT_Fire" }
         ],
-        "perk": { "name": "Bigger Barrel", "radiusDelta": 0.5 }
+        "perk": { "name": "Bottom of the Barrel", "description": "The barrel splits and keeps on spilling: whatever stands in the mess gets a fresh dose of something, and it keeps going off.",
+          "addActions": [ { "do": "field", "fieldName": "Barrel Spill", "turns": 4, "radius": 2, "affects": "enemies", "look": "HAZARD_Acid@0.5", "actions": [ { "do": "random", "options": [
+            { "name": "oil", "weight": 1, "actions": [ { "do": "effect", "effect": "@Slicked" } ] },
+            { "name": "coolant", "weight": 1, "actions": [ { "do": "effect", "effect": "@Frosted" } ] },
+            { "name": "brine", "weight": 1, "actions": [ { "do": "effect", "effect": "@Brined" } ] },
+            { "name": "grit", "weight": 1, "actions": [ { "do": "effect", "effect": "@Gritted" } ] },
+            { "name": "embers", "weight": 1, "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] } ] } ] } ] }
       }
     },
     {

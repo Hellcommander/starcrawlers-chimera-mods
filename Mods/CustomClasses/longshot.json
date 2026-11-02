@@ -60,11 +60,15 @@
         "description": "A careful shot that paints the target if you were steady.",
         "actions": [
           { "do": "damage", "type": "Ballistic", "min": 3, "max": 6, "scale": "Recognition", "scaleMult": 0.4, "perRank": 1 },
-          { "do": "effect", "effect": "#Marked", "ifSelfHas": "@Steady" }
+          { "do": "effect", "effect": "#Marked", "ifSelfHas": "@Steady", "when": { "perk": false } }
         ],
         "perk": {
           "name": "Match-Grade Rounds",
-          "damageMult": 1.25
+          "description": "A round that lands where the last one was painted settles your hands.",
+          "addActions": [
+            { "do": "if", "when": { "has": "#Marked", "of": "target" }, "then": [ { "do": "effect", "to": "self", "effect": "@Steady" } ] },
+            { "do": "effect", "effect": "#Marked", "ifSelfHas": "@Steady" }
+          ]
         },
         "sound": "sfx/longshot_measured.wav"
       }
@@ -87,7 +91,10 @@
         ],
         "perk": {
           "name": "Suppressing Fire",
-          "chanceBonus": 30
+          "description": "Heads down means hands off the big guns too.",
+          "addActions": [
+            { "do": "silence", "turns": 2, "bossTurns": 1 }
+          ]
         }
       }
     },
@@ -111,7 +118,18 @@
         ],
         "perk": {
           "name": "Eagle Eye",
-          "cooldownDelta": -4
+          "description": "While the world is narrow, you pick who stands out in it.",
+          "addProcs": [
+            {
+              "on": "turn",
+              "when": { "all": [ { "inCombat": true }, { "has": "#Focused", "of": "self" } ] },
+              "radius": 8,
+              "pick": 1,
+              "actions": [
+                { "do": "effect", "effect": "#Marked" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -156,7 +174,11 @@
         ],
         "perk": {
           "name": "One Kill",
-          "damageMult": 1.25
+          "description": "Anything that drops frees the barrel. Anything that doesn't stays painted.",
+          "resetOnKill": true,
+          "addActions": [
+            { "do": "effect", "effect": "#Marked" }
+          ]
         }
       }
     },
@@ -177,6 +199,7 @@
         "actions": [
           {
             "do": "arm",
+            "when": { "perk": false },
             "reaction": {
               "name": "Killing Window",
               "on": "special",
@@ -196,8 +219,28 @@
           { "do": "effect", "to": "self", "effect": "@Steady" }
         ],
         "perk": {
-          "name": "Wide Window",
-          "chanceBonus": 20
+          "name": "Slammed Shut",
+          "description": "Your round always gets there first. Whatever they were winding up never happens.",
+          "addActions": [
+            {
+              "do": "arm",
+              "reaction": {
+                "name": "Killing Window",
+                "on": "special",
+                "range": 9,
+                "charges": 2,
+                "turns": 8,
+                "priority": 60,
+                "interrupt": true,
+                "vfx": "PA_Prototype_ArmCannon.impactParticle@0.5",
+                "sound": "sfx/longshot_measured.wav",
+                "actions": [
+                  { "do": "damage", "type": "Piercing", "min": 5, "max": 9, "scale": "Recognition", "scaleMult": 0.5, "perRank": 2, "bonusPerStack": 2, "stacksOf": "@Steady", "stacksFrom": "self" },
+                  { "do": "effect", "effect": "#Marked" }
+                ]
+              }
+            }
+          ]
         }
       }
     },

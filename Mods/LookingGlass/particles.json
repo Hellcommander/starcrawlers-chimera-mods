@@ -633,6 +633,66 @@
      "radius": 0.3
     }
    ]
+  },
+  {
+   "id": "LgGlassBreak",
+   "light": {
+    "color": "#B8F0FF",
+    "range": 5,
+    "intensity": 2,
+    "time": 0.8
+   },
+   "layers": [
+    {
+     "texture": "shard",
+     "blend": "add",
+     "count": 22,
+     "life": [
+      0.8,
+      1.3
+     ],
+     "speed": [
+      1,
+      2.5
+     ],
+     "size": [
+      0.18,
+      0.28
+     ],
+     "color": "#E8FBFF",
+     "color2": "#8FD8F0",
+     "shape": "ring",
+     "radius": 0.6,
+     "orbit": 220,
+     "gravity": -0.3,
+     "drag": 1.0,
+     "spin": [
+      -360,
+      360
+     ]
+    },
+    {
+     "texture": "star",
+     "blend": "add",
+     "count": 12,
+     "life": [
+      0.5,
+      0.9
+     ],
+     "speed": [
+      0.5,
+      1.4
+     ],
+     "size": [
+      0.06,
+      0.12
+     ],
+     "color": "#E8FBFF",
+     "color2": "#8FD8F0",
+     "shape": "sphere",
+     "radius": 0.5
+    }
+   ]
   }
  ]
 }

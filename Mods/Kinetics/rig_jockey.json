@@ -355,7 +355,20 @@
         ],
         "perk": {
           "name": "Double Stroke",
-          "damageMult": 1.25
+          "description": "On the return stroke the piston blows off steam, so jabs alone never tip the rig over.",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "stacks": -2,
+              "when": {
+                "value": "stacks:@Heat",
+                "of": "self",
+                "atLeast": 9
+              },
+              "effect": "@Heat"
+            }
+          ]
         },
         "sound": "audio_licensed/rig_piston_jab.wav"
       }
@@ -431,7 +444,15 @@
         ],
         "perk": {
           "name": "Long Stride",
-          "rangeDelta": 2
+          "description": "The legs reset before the rig has landed, and the pistons run hotter for it.",
+          "instant": true,
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Heat"
+            }
+          ]
         }
       }
     },
@@ -477,7 +498,35 @@
         ],
         "perk": {
           "name": "Quick Release",
-          "cooldownDelta": -3
+          "description": "When the shield goes, the plates blow outward and take the heat with them.",
+          "addProcs": [
+            {
+              "on": "shieldBreak",
+              "cooldown": 4,
+              "actions": [
+                {
+                  "do": "throw",
+                  "amount": 2,
+                  "actions": [
+                    {
+                      "do": "damage",
+                      "type": "Crushing",
+                      "min": 3,
+                      "max": 5,
+                      "scale": "Toughness",
+                      "scaleMult": 0.25
+                    }
+                  ]
+                },
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "stacks": -3,
+                  "effect": "@Heat"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/rig_plate_up.wav"
       }
@@ -524,7 +573,33 @@
         ],
         "perk": {
           "name": "Wide Vents",
-          "radiusDelta": 1
+          "description": "The steam hangs around you, and they have to walk back through it.",
+          "addActions": [
+            {
+              "do": "field",
+              "to": "self",
+              "fieldName": "Vent Scald",
+              "turns": 3,
+              "radius": 2.5,
+              "affects": "enemies",
+              "look": "HAZARD_Fire_Mini",
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Fire",
+                  "min": 1,
+                  "max": 3,
+                  "scale": "Strength",
+                  "scaleMult": 0.15
+                },
+                {
+                  "do": "effect",
+                  "chance": 35,
+                  "effect": "EFFECT_Fire"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -619,7 +694,24 @@
         ],
         "perk": {
           "name": "Seismic",
-          "damageMult": 1.2
+          "description": "The shock runs through the deck and shakes the plating loose on everyone standing near.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 3,
+              "radius": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Stripped"
+                },
+                {
+                  "do": "exhaust",
+                  "amount": 1
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -706,8 +798,14 @@
         ],
         "perk": {
           "name": "Pry Bar",
-          "description": "Better leverage: the claw is ready again sooner.",
-          "cooldownDelta": -3
+          "description": "Better leverage: everything comes off at once, and the claw is free the moment the wreck drops.",
+          "resetOnKill": true,
+          "addActions": [
+            {
+              "do": "dispel",
+              "amount": 0
+            }
+          ]
         },
         "sound": "audio_licensed/rig_piston_jab.wav"
       }

@@ -124,8 +124,10 @@
         ],
         "perk": {
           "name": "Borrowed Minute",
+          "description": "Borrow enough and being Unmoored becomes a problem for later as well.",
           "addActions": [
-            { "do": "cooldowns", "amount": 1 }
+            { "do": "cooldowns", "amount": 1 },
+            { "do": "purge", "effect": "@Unmoored" }
           ]
         }
       }
@@ -150,7 +152,10 @@
         ],
         "perk": {
           "name": "Compound Interest",
-          "damageMult": 1.3
+          "description": "A paid debt reopens with interest if the debtor lives through paying it.",
+          "addActions": [
+            { "do": "effect", "effect": "@Ledger", "stacks": 2 }
+          ]
         }
       }
     },
@@ -175,7 +180,17 @@
         ],
         "perk": {
           "name": "Saved Game",
-          "cooldownDelta": -8
+          "description": "When the revision ends, your cooldowns and some of the strain revert with you.",
+          "addProcs": [
+            {
+              "on": "effectLost",
+              "match": "@Revision",
+              "actions": [
+                { "do": "cooldowns", "to": "self", "amount": 3 },
+                { "do": "effect", "to": "self", "effect": "@Paradox", "stacks": -3 }
+              ]
+            }
+          ]
         }
       }
     },
@@ -199,6 +214,7 @@
         ],
         "perk": {
           "name": "Living Timeline",
+          "description": "That timeline isn't quite dead: a fainter you casts it a second time.",
           "addActions": [
             { "do": "echo", "falloff": 0.4 }
           ]
@@ -227,7 +243,20 @@
         ],
         "perk": {
           "name": "Heat Death",
-          "radiusDelta": 1
+          "description": "The patch stays old for a while, and whatever walks onto it starts to age.",
+          "addActions": [
+            {
+              "do": "field",
+              "fieldName": "Aged Ground",
+              "turns": 4,
+              "radius": 2.1,
+              "affects": "enemies",
+              "look": "HAZARD_Miasma@0.7",
+              "actions": [
+                { "do": "effect", "effect": "@Aging", "unlessTargetHas": "@Aging" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -253,7 +282,10 @@
         ],
         "perk": {
           "name": "Late Fees",
-          "damageMult": 1.25
+          "description": "Whoever survives collection starts paying in years.",
+          "addActions": [
+            { "do": "effect", "effect": "@Aging" }
+          ]
         }
       }
     },

@@ -164,7 +164,13 @@
         ],
         "perk": {
           "name": "Long Arms",
-          "rangeDelta": 1
+          "description": "If they're too heavy to come to you, you go to them.",
+          "rangeDelta": 1,
+          "addActions": [
+            {
+              "do": "leap"
+            }
+          ]
         }
       }
     },
@@ -183,6 +189,9 @@
         "actions": [
           {
             "do": "throw",
+            "when": {
+              "perk": false
+            },
             "amount": 3,
             "actions": [
               {
@@ -207,8 +216,28 @@
         ],
         "perk": {
           "name": "Overhead",
-          "description": "Harder landings.",
-          "damageMult": 1.25
+          "description": "Nothing is too big to lift. Bosses fly as well.",
+          "addActions": [
+            {
+              "do": "throw",
+              "amount": 3,
+              "bosses": true,
+              "actions": [
+                {
+                  "do": "damage",
+                  "type": "Crushing",
+                  "min": 4,
+                  "max": 8,
+                  "scale": "Strength",
+                  "scaleMult": 0.4
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Dazed"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/grappler_body_slam.wav"
       }
@@ -241,7 +270,18 @@
         ],
         "perk": {
           "name": "Bear Hug",
-          "cooldownDelta": -3
+          "description": "You don't wait for them to come. Anyone in arm's reach is hauled in and held.",
+          "radiusDelta": 2.5,
+          "addActions": [
+            {
+              "do": "pull",
+              "amount": 2
+            },
+            {
+              "do": "effect",
+              "effect": "@Held"
+            }
+          ]
         },
         "sound": "audio_licensed/grappler_iron_clinch.wav"
       }
@@ -277,6 +317,9 @@
           },
           {
             "do": "throw",
+            "when": {
+              "perk": false
+            },
             "amount": 2,
             "actions": [
               {
@@ -295,7 +338,29 @@
         ],
         "perk": {
           "name": "Bridge",
-          "damageMult": 1.25
+          "description": "You don't let go. They stay pinned at your feet and your Grip tightens, but there is no throw.",
+          "addActions": [
+            {
+              "do": "effect",
+              "turns": 3,
+              "effect": "@Held"
+            },
+            {
+              "do": "exhaust",
+              "amount": 2,
+              "afterStun": true,
+              "when": {
+                "not": {
+                  "tag": "boss"
+                }
+              }
+            },
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Grip"
+            }
+          ]
         },
         "sound": "audio_licensed/grappler_suplex.wav"
       }
@@ -360,7 +425,33 @@
         ],
         "perk": {
           "name": "Ring Out",
-          "cooldownDelta": -4
+          "description": "The deck jumps under everyone close, and it throws them clear of the crater.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 3,
+              "radius": 2.5,
+              "actions": [
+                {
+                  "do": "throw",
+                  "amount": 2,
+                  "unlessTargetHas": "EFFECT_Stun",
+                  "actions": [
+                    {
+                      "do": "damage",
+                      "type": "Crushing",
+                      "min": 3,
+                      "max": 6
+                    },
+                    {
+                      "do": "effect",
+                      "effect": "@Dazed"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -430,7 +521,20 @@
         ],
         "perk": {
           "name": "Full Rotation",
-          "damageMult": 1.25
+          "description": "Every body the swing connects with sets your hands tighter.",
+          "addProcs": [
+            {
+              "on": "chain",
+              "maxPerTurn": 3,
+              "actions": [
+                {
+                  "do": "effect",
+                  "to": "self",
+                  "effect": "@Grip"
+                }
+              ]
+            }
+          ]
         },
         "sound": "audio_licensed/grappler_body_slam.wav"
       }

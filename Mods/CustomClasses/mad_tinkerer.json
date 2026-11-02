@@ -87,8 +87,21 @@
           { "do": "effect", "to": "self", "effect": "#Shocked", "chance": 10 }
         ],
         "perk": {
-          "name": "Insulated Grip",
-          "damageMult": 1.2
+          "name": "Jumper Cables",
+          "description": "Anything already twitching makes an excellent conductor.",
+          "addActions": [
+            {
+              "do": "chain",
+              "ifTargetHas": "#Shocked",
+              "jumps": 2,
+              "radius": 3,
+              "falloff": 0.75,
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 1, "max": 3, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 },
+                { "do": "effect", "effect": "#Shocked" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -110,8 +123,19 @@
           { "do": "effect", "effect": "#Burning", "chance": 30 }
         ],
         "perk": {
-          "name": "Mass Production",
-          "chanceBonus": 25
+          "name": "Feature Creep",
+          "description": "Nobody asked for the gravity setting.",
+          "addActions": [
+            {
+              "do": "random",
+              "options": [
+                { "name": "Sticky Foam", "actions": [ { "do": "stun", "turns": 1 } ] },
+                { "name": "Gravity Setting", "actions": [ { "do": "pull", "amount": 2, "pullToward": "center" } ] },
+                { "name": "Flashbulb", "actions": [ { "do": "blind" } ] },
+                { "name": "Static Bloom", "actions": [ { "do": "effect", "effect": "#Shocked" }, { "do": "exhaust", "amount": 1 } ] }
+              ]
+            }
+          ]
         }
       }
     },
@@ -133,7 +157,18 @@
         ],
         "perk": {
           "name": "Liquid Cooling",
-          "cooldownDelta": -5
+          "description": "When the redline drops, the coolant goes out the vents and over everyone nearby.",
+          "addProcs": [
+            {
+              "on": "effectLost",
+              "match": "@Overclock",
+              "radius": 3,
+              "actions": [
+                { "do": "effect", "effect": "#Chilled" },
+                { "do": "purge", "to": "self", "effect": "#Weakened" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -182,7 +217,8 @@
         ],
         "perk": {
           "name": "Mostly Safe",
-          "damageMult": 1.2
+          "description": "It has a timer now. You set it and carry on.",
+          "instant": true
         }
       }
     },
@@ -207,7 +243,17 @@
         ],
         "perk": {
           "name": "Spare Chassis",
-          "cooldownDelta": -4
+          "description": "You built a second one for parts. It has other ideas.",
+          "addProcs": [
+            {
+              "on": "turn",
+              "chance": 25,
+              "when": { "inCombat": true },
+              "actions": [
+                { "do": "summon", "to": "self", "unlessSummonAlive": "self", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Rattletrap", "model": { "mesh": "models/rattletrap.glb", "height": 1.1, "keepParticles": false }, "turns": 25, "maxSummons": 1, "effect": "@Rattletrap" }
+              ]
+            }
+          ]
         }
       }
     },

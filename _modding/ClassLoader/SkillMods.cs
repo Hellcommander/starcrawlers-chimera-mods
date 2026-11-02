@@ -245,7 +245,7 @@ namespace SCClassLoader
         }
 
         /// <summary>Does it strike anyone, directly, through a chain or a random outcome? "others" and "attacks" leave buffs and stances alone.</summary>
-        private static bool IsAttack(List<ActionSpec> actions) =>
+        internal static bool IsAttack(List<ActionSpec> actions) =>
             Any(actions, a => Is(a, "damage") || Is(a, "wildcast") || Is(a, "surge"));
 
         /// <summary>Only a skill's top-level actions are lower-cased at load; nested ones keep the file's spelling.</summary>

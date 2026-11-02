@@ -59,8 +59,11 @@
           { "do": "effect", "effect": "#Shocked" }
         ],
         "perk": {
-          "name": "Hot Round",
-          "damageMult": 1.25
+          "name": "Live Round",
+          "description": "The spark doesn't stop at the wound.",
+          "addActions": [
+            { "do": "chain", "jumps": 1, "radius": 3, "actions": [ { "do": "effect", "effect": "#Shocked" } ] }
+          ]
         },
         "sound": "audio_licensed/arcgunner_round.wav"
       }
@@ -89,6 +92,7 @@
         ],
         "perk": {
           "name": "Branching Bolt",
+          "description": "The bolt leaves its first target charged behind it.",
           "addActions": [
             { "do": "effect", "effect": "#Shocked" }
           ]
@@ -110,7 +114,18 @@
         ],
         "perk": {
           "name": "Supercapacitor",
-          "cooldownDelta": -4
+          "description": "What the shield was holding has to go somewhere when it fails.",
+          "addProcs": [
+            {
+              "on": "shieldBreak",
+              "maxPerTurn": 1,
+              "radius": 2.5,
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "bonusPerStack": 2, "stacksOf": "@Static", "stacksFrom": "self" },
+                { "do": "effect", "effect": "#Shocked" }
+              ]
+            }
+          ]
         }
       }
     },
@@ -156,7 +171,10 @@
         ],
         "perk": {
           "name": "Lightning Slug",
-          "damageMult": 1.25
+          "description": "The round grounds through everything already carrying current.",
+          "addActions": [
+            { "do": "chain", "ifTargetHas": "#Shocked", "jumps": 2, "radius": 3.5, "effect": "#Shocked", "actions": [ { "do": "stun", "turns": 1 } ] }
+          ]
         }
       }
     }
