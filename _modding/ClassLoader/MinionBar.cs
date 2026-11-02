@@ -11,7 +11,7 @@ namespace SCClassLoader
 {
     /// <summary>
     /// The pet command strip on top of the hotbar ([Minions] CommandBar): one button per living pet showing its name
-    /// and health. Click twice to unsummon it (its scrap back, or its corpse); right-click twice to break it down for the scrap it cost.
+    /// and health. Click twice to unsummon it (its scrap back, or its corpse); right-click for its orders menu (MinionMenu).
     /// </summary>
     internal static class MinionBar
     {
@@ -25,24 +25,27 @@ namespace SCClassLoader
             public Character pet;
             public TextMeshProUGUI text;
             public Image back;
-            private bool armedBreakdown;
             private float armedUntil;
 
             public void OnPointerClick(PointerEventData e)
             {
                 if (pet == null || !CanCommand) return;
-                bool breakdown = e.button == PointerEventData.InputButton.Right;
-                if (breakdown && PetHandling.PartsOf(pet).count == 0) { AudioManager.PlayEvent("event:/UI/UI_Error"); return; }
-                if (Time.unscaledTime < armedUntil && armedBreakdown == breakdown)
+                if (e.button == PointerEventData.InputButton.Right)
+                {
+                    Tooltip.instance?.Hide();
+                    if (!MinionMenu.OpenFor(pet, e.position)) AudioManager.PlayEvent("event:/UI/UI_Error");
+                    return;
+                }
+                if (e.button != PointerEventData.InputButton.Left) return;
+                if (Time.unscaledTime < armedUntil)
                 {
                     armedUntil = 0f;
                     Tooltip.instance?.Hide();
-                    PetHandling.Unsummon(pet, "Command", breakdown, keepRemains: true);
+                    PetHandling.Unsummon(pet, "Command", false, keepRemains: true);
                     AudioManager.PlayEvent("event:/UI/UI_Click");
                     strip?.Rebuild();
                     return;
                 }
-                armedBreakdown = breakdown;
                 armedUntil = Time.unscaledTime + ArmSeconds;
                 if (strip != null) strip.liveUntil = armedUntil + 0.5f;
                 AudioManager.PlayEvent("event:/UI/UI_Click");
@@ -52,11 +55,11 @@ namespace SCClassLoader
             public void OnPointerEnter(PointerEventData e)
             {
                 if (pet == null) return;
-                var (id, n) = PetHandling.PartsOf(pet);
+                var (_, n) = PetHandling.PartsOf(pet);
                 string kind = PetHandling.IsConverted(pet) ? "Converted" : pet.characterType.ToString();
                 Tooltip.instance?.Show_TinyTip($"{pet.GetName()}  {pet.GetHealth()}/{pet.GetHealthMax()}",
                     $"{kind}. Click twice: unsummon ({(n > 0 ? "you get its scrap back" : "it leaves its body as a corpse")}).\n" +
-                    (n > 0 ? $"Right-click twice: break down for {n}× {ItemRegistry.NameOf(id)}." : "Nothing to break down: it cost no scrap."), null);
+                    "Right-click: its orders.", null);
             }
 
             public void OnPointerExit(PointerEventData e) => Tooltip.instance?.Hide();
@@ -68,7 +71,7 @@ namespace SCClassLoader
                 string name = pet.GetName();
                 if (name.Length > 14) name = name.Substring(0, 13) + "…";
                 text.text = armed
-                    ? $"<color=#FF7272>{(armedBreakdown ? "Break down?" : "Unsummon?")}</color>\n<size=80%>click again</size>"
+                    ? "<color=#FF7272>Unsummon?</color>\n<size=80%>click again</size>"
                     : $"{name}\n<size=80%><color={(pet.GetHealth() * 3 < pet.GetHealthMax() ? "#FF7272" : "#9FD99F")}>{pet.GetHealth()}/{pet.GetHealthMax()}</color>{(PetHandling.PartsOf(pet).count > 0 ? " <color=#C79750>scrap</color>" : "")}</size>";
                 back.color = armed ? new Color(0.35f, 0.08f, 0.08f, 0.85f) : new Color(0.04f, 0.08f, 0.12f, 0.8f);
             }

@@ -277,9 +277,18 @@ namespace SCClassLoader
     {
         private static void Prefix(Character __instance, ref int dmg)
         {
-            if (__instance == null || __instance.isDead || __instance.health - dmg > 0) return;
+            if (__instance == null || __instance.isDead) return;
+            if (Immortal(__instance)) { dmg = 0; return; }
+            if (__instance.health - dmg > 0) return;
             foreach (Effect e in __instance.effects.GetEffects().ToList())
                 if (e is ModEffect me && me.TrySave(ref dmg)) return;
+        }
+
+        internal static bool Immortal(Character c)
+        {
+            foreach (Effect e in c.effects.GetEffects())
+                if (e is ModEffect me && me.Invulnerable) return true;
+            return false;
         }
     }
 
@@ -290,7 +299,9 @@ namespace SCClassLoader
     {
         private static void Prefix(Player __instance, ref int dmg)
         {
-            if (__instance == null || __instance.isDead || __instance.health - dmg > 0) return;
+            if (__instance == null || __instance.isDead) return;
+            if (Patch_PreventDeath.Immortal(__instance)) { dmg = 0; return; }
+            if (__instance.health - dmg > 0) return;
             foreach (Effect e in __instance.effects.GetEffects().ToList())
                 if (e is ModEffect me && me.TrySave(ref dmg)) return;
         }

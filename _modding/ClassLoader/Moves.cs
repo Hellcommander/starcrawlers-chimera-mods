@@ -13,8 +13,8 @@ namespace SCClassLoader
     {
         private static bool Alive(Character c) => c != null && !c.GetIsDead();
 
-        private static bool Movable(Character t) =>
-            Alive(t) && t.GetMover() != null && !t.HasTag("BOSS") && !t.HasTag("NOKNOCKBACK") && !t.FLAG_isRooted;
+        private static bool Movable(Character t, bool bosses = false) =>
+            Alive(t) && t.GetMover() != null && !t.FLAG_isRooted && (t.HasTag("BOSS") ? bosses && !t.HasTag("IMMORTAL") : !t.HasTag("NOKNOCKBACK"));
 
         private static Character OccupantOf(NavNode n) => n == null ? null : TileStacks.On(n).FirstOrDefault(c => Alive(c));
 
@@ -24,10 +24,10 @@ namespace SCClassLoader
         /// </summary>
         internal static void Throw(ActionSpec a, ActionContext ctx, Character t)
         {
-            if (!Movable(t) || t == ctx.caster || ctx.caster == null) return;
+            if (!Movable(t, a.bosses) || t == ctx.caster || ctx.caster == null) return;
             NavNode start = t.GetMover().GetCurrentNavNode();
             if (start == null) return;
-            Vector3 dir = t.transform.position - ctx.caster.transform.position;
+            Vector3 dir = t.transform.position - (a.fromCenter && ctx.center.HasValue ? ctx.center.Value : ctx.caster.transform.position);
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.01f) dir = ctx.caster.transform.forward;
             dir.Normalize();
@@ -38,7 +38,7 @@ namespace SCClassLoader
             {
                 NavNode next = node.GetLinks().Where(l => l != null && Vector3.Dot((l.transform.position - node.transform.position).normalized, dir) > 0.7f)
                     .OrderByDescending(l => Vector3.Dot((l.transform.position - node.transform.position).normalized, dir)).FirstOrDefault();
-                if (next == null || next.BlockCheck() || next.Block_Move) { wall = true; break; }
+                if (next == null || next.BlockCheck() || next.Block_Move || (next.Block_Boss && t.HasTag("BOSS"))) { wall = true; break; }
                 Character there = OccupantOf(next);
                 if (there != null && there != t) { hitWho = there; break; }
                 if (!t.GetMover().MoveCheck(node, next)) { wall = true; break; }
@@ -64,6 +64,7 @@ namespace SCClassLoader
         {
             Character me = ctx.caster;
             if (!Alive(me) || !Alive(t) || me == t || me.GetMover() == null || t.GetMover() == null) return;
+            if (ctx.spreading && t != ctx.aimed) return;
             NavNode here = me.GetMover().GetCurrentNavNode(), there = t.GetMover().GetCurrentNavNode();
             if (here == null || there == null || there.GetLinks().Contains(here)) return; // already beside it
             NavNode land = there.GetLinks().Where(l => l != null && !l.IsOccupied() && !l.BlockCheck() && !l.Block_Move && !l.HasDoor())
@@ -101,6 +102,7 @@ namespace SCClassLoader
             if (!Alive(t) || !Alive(me)) return;
             string mode = (a.warpTo ?? "random").ToLowerInvariant();
             Character mover = mode == "behind" ? me : t;
+            if (mover == me && ctx.spreading && t != ctx.aimed) return;
             if (mover.GetMover() == null || (mover != me && !Movable(mover))) return;
             NavNode from = mover.GetMover().GetCurrentNavNode();
             if (from == null) return;
@@ -338,7 +340,7 @@ namespace SCClassLoader
         private static ActionContext Copy(ActionContext ctx, Vector3 center) => new ActionContext
         {
             caster = ctx.caster, source = ctx.source, classId = ctx.classId, sourceName = ctx.sourceName, rank = ctx.rank,
-            damageMult = ctx.damageMult, chanceBonus = ctx.chanceBonus, center = center, deferredSelfConsume = ctx.deferredSelfConsume,
+            damageMult = ctx.damageMult, chanceBonus = ctx.chanceBonus, center = center, deferredSelfConsume = ctx.deferredSelfConsume, share = ctx.share,
         };
     }
 }

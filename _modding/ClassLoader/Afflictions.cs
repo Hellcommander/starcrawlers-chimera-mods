@@ -156,6 +156,9 @@ namespace SCClassLoader
         // ---- exhaust --------------------------------------------------------------------------------------------
 
         /// <summary>Every special attack (ability with a cooldown) of an enemy needs `turns` more turns to come back.</summary>
+        /// <summary>The enemy turns `t` will still sit out to a stun.</summary>
+        internal static int StunLeft(Character t) => Math.Max(0, t.effects.GetEffect("EFFECT_Stun")?.duration ?? 0);
+
         internal static void Exhaust(ActionContext ctx, Character t, int turns)
         {
             if (!IsEnemy(t) || turns <= 0) return;

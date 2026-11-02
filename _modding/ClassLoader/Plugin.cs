@@ -99,7 +99,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ZoneLoad.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -179,6 +179,8 @@ namespace SCClassLoader
             else if (dev == "qol") Instance.StartCoroutine(DevTestQol.Run());
             else if (dev == "gambler") Instance.StartCoroutine(DevTestGambler.Run());
             else if (dev == "elites") Instance.StartCoroutine(DevTestElites.Run());
+            else if (dev == "bosses") Instance.StartCoroutine(DevTestBosses.Run(false));
+            else if (dev == "bosses:hardolo") Instance.StartCoroutine(DevTestBosses.Run(true));
             else if (dev == "chemistry") Instance.StartCoroutine(DevTestChemistry.Run());
             else if (dev == "regen") Instance.StartCoroutine(DevTestRegen.Run());
             else if (dev == "stackcaps") Instance.StartCoroutine(DevTestStackCaps.Run());
@@ -253,6 +255,8 @@ namespace SCClassLoader
             else if (dev == "dice") Instance.StartCoroutine(DevTestTraps.RunDice());
             else if (dev == "equipped") Instance.StartCoroutine(DevTestEquipped.Run());
             else if (dev == "fulgurant") Instance.StartCoroutine(DevTestFulgurant.Run());
+            else if (dev == "perihelion") Instance.StartCoroutine(DevTestPerihelion.Run());
+            else if (dev == "perispell") Instance.StartCoroutine(DevTestPeriSpell.Run());
             else if (dev == "snareseer") Instance.StartCoroutine(DevTestSnareseer.Run());
             else if (dev == "revenge") Instance.StartCoroutine(DevTestRevenge.Run());
             else if (dev == "mimeticist") Instance.StartCoroutine(DevTestMimeticist.Run());
@@ -300,6 +304,8 @@ namespace SCClassLoader
             else if (dev == "effectbox") Instance.StartCoroutine(DevTestEffectBox.Run());
             else if (dev == "effectbox2") Instance.StartCoroutine(DevTestEffectBox.RunReload());
             else if (dev == "busstress") Instance.StartCoroutine(DevTestBus.Run());
+            else if (dev == "streamcensus") Instance.StartCoroutine(DevTestStreaming.RunCensus());
+            else if (dev == "streaming") Instance.StartCoroutine(DevTestStreaming.Run());
             else if (dev == "buffs") Instance.StartCoroutine(DevTestBuffs.Run());
             else if (dev == "skills") Instance.StartCoroutine(DevTestSkills.Run());
             else if (dev == "itembus") Instance.StartCoroutine(DevTestItemBus.Run());

@@ -111,6 +111,8 @@ namespace SCClassLoader
             }
             try { SideKinds.Finish(kind, arrival); }
             catch (Exception e) { Plugin.Log.LogError($"Side area kind {kind.id}: " + e); }
+            try { Bosses.OnEchoBuilt(kind, arrival); }
+            catch (Exception e) { Plugin.Log.LogError("Side area boss: " + e); }
             Game.LOG(anoms.Length > 0 ? $"<color=#D070FF>This {kind.name.ToLowerInvariant()}:</color> {AnomalyNames(anoms)}." : $"<color=#D070FF>This {kind.name.ToLowerInvariant()} seems quiet.</color>");
             foreach (AnomalySpec x in anoms.Select(Get).Where(a => a != null)) Game.LOG($"<color=#9FB7C9>{x.name}: {x.text}</color>");
             Plugin.Log.LogInfo($"Echoes: {kind.id}, anomalies {string.Join(",", anoms)}, vault {(kind.vault ? "grade " + grade : "none")}");
@@ -288,7 +290,11 @@ namespace SCClassLoader
 
         internal static void Spew(LOOT_TYPE type, RARITY rarity, NavNode at)
         {
-            Item item = LootManager.instance.Generate_Loot(type, rarity);
+            Spew(LootManager.instance.Generate_Loot(type, rarity), at);
+        }
+
+        internal static void Spew(Item item, NavNode at)
+        {
             if (item == null || at == null) return;
             LootManager.instance.SprinkleLootDust(item);
             Map.instance.AddItem(item);
@@ -413,6 +419,7 @@ namespace SCClassLoader
         {
             foreach (AnomalySpec a in ActiveSpecs.Where(a => a.lights != null)) Darken(a.lights);
             Plugin.Instance.StartCoroutine(CheckVaultSoon());
+            Plugin.Instance.StartCoroutine(Bosses.RestoreSoon());
         }
 
         private static IEnumerator CheckVaultSoon()
@@ -431,6 +438,7 @@ namespace SCClassLoader
                 try { Turn(); } catch (Exception e) { Plugin.Log.LogError("Echo turn: " + e); }
                 try { SideKinds.Turn(); } catch (Exception e) { Plugin.Log.LogError("Side area turn: " + e); }
                 try { SideLayers.Turn(); } catch (Exception e) { Plugin.Log.LogError("Tower turn: " + e); }
+                try { Bosses.Turn(); } catch (Exception e) { Plugin.Log.LogError("Boss turn: " + e); }
             }
         }
 
@@ -546,6 +554,7 @@ namespace SCClassLoader
                 p.CalculateStats();
             }
             if (D == null) return;
+            Challenge.Forget();
             foreach (string k in D.Keys.Where(k => k.StartsWith("timer_") || k.StartsWith("hunted_") || k.StartsWith("alarm_")).ToList()) D.Remove(k);
             foreach (string k in new[] { "echo_anoms", "echo_turn", "collapse_turns", "vault_room", "vault_grade", "vault_open" }) D.Remove(k);
         }

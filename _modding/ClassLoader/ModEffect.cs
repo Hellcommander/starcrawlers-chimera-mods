@@ -138,7 +138,7 @@ namespace SCClassLoader
         }
 
         private float DealtMult => rt.spec.damageDealtMult + rt.spec.damageDealtPerStack * (MaxStacks > 1 ? Stacks : 1);
-        private float TakenMult => rt.spec.damageTakenMult + rt.spec.damageTakenPerStack * (MaxStacks > 1 ? Stacks : 1);
+        private float TakenMult => rt.spec.invulnerable && !Invulnerable ? 1f : rt.spec.damageTakenMult + rt.spec.damageTakenPerStack * (MaxStacks > 1 ? Stacks : 1);
 
         /// <summary>Runs actions as this effect: default target is the bearer, or enemies around it with a radius.</summary>
         /// <summary>Health the bearer has lost since this effect went on (for "stored" damage: a revenge counter).</summary>
@@ -225,6 +225,9 @@ namespace SCClassLoader
                     if (e is ModEffect m) m.OnBearerDying();
             }
         }
+
+        /// <summary>On the player this rests on the [Fixes] PlayerImmortalTag switch: off, the effect protects nothing.</summary>
+        internal bool Invulnerable { get { Bind(); return rt != null && rt.spec.invulnerable && (!(target is Player) || BugFixes.ImmortalPlayer.Value); } }
 
         /// <summary>Lethal-damage check from the DamageHealth patch. True if this effect saved the bearer.</summary>
         internal bool TrySave(ref int dmg)
@@ -491,6 +494,7 @@ namespace SCClassLoader
             if ((s.onApplyActions?.Count ?? 0) > 0) lines.Add("<b>When applied:</b>\n" + Actions.Describe(s.onApplyActions, rt.classId, "the bearer"));
             if ((s.onDeathActions?.Count ?? 0) > 0) lines.Add("<b>If the bearer dies with it:</b>\n" + Actions.Describe(s.onDeathActions, rt.classId, "beside the bearer"));
             if ((s.onExpireActions?.Count ?? 0) > 0) lines.Add("<b>When it runs out:</b>\n" + Actions.Describe(s.onExpireActions, rt.classId, s.onExpireRadius > 0 ? $"enemies within {s.onExpireRadius:0.#}" : "the bearer"));
+            if (s.invulnerable) lines.Add("<b>Can't lose health</b>");
             if (s.preventDeath > 0) lines.Add($"<b>Prevents death once</b> (survive at {s.preventDeath} health)" + ((s.onSaveActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onSaveActions, rt.classId, "you") : "."));
             if (!string.IsNullOrEmpty(s.group)) lines.Add($"<color=#9FB7C9>Stance: replaces other {s.group} stances.</color>");
             string reshapes = SkillMods.Summary(s.modifies, rt.classId);

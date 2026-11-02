@@ -53,7 +53,7 @@ namespace SCClassLoader
             Enabled = cfg.Bind("Performance", "EventBus", false,
                 "Optional. Game events skip characters with nothing listening, and HUD panels only refresh when what they show changes. Helps with very large crowds of enemies, summons and effects. Off = everything polls as usual.");
             JobWorkers = cfg.Bind("Performance", "JobWorkers", 0,
-                "Needs EventBus on. Threads Unity may use for particles, skinning and culling. 0 = the game's own number; anything above your CPU's limit is lowered to it.");
+                "Needs EventBus on. Threads Unity may use for particles, skinning and culling. 0 = the game's own number, at most 8, since a big CPU spends more waking more of them than they save; anything above your CPU's limit is lowered to it.");
             MaxDamageNumbers = cfg.Bind("Performance", "MaxDamageNumbers", 40,
                 "Needs EventBus on. Most floating damage numbers at once; crits may go to twice this. Off-screen ones are skipped. Only the numbers: the damage and the combat log are unchanged.");
             MaxLiveEffects = cfg.Bind("Performance", "MaxLiveEffects", 300,
@@ -64,7 +64,9 @@ namespace SCClassLoader
                 "Spreads memory cleanup over many frames instead of stopping the game for it, which is the hitch you feel about once a second in a big fight. Takes effect the next time the game starts. Turn it off again if you see crashes.");
             SyncBootConfig();
             BusProfile.Init(cfg);
+            BusTune.Init(cfg);
             BusWorkers.Init(cfg);
+            AssetStream.Init(cfg);
             ParticleLoad.Init(cfg);
             StatusLook.Init(cfg);
             gameWorkers = JobsUtility.JobWorkerCount;
@@ -95,11 +97,16 @@ namespace SCClassLoader
             catch (Exception e) { Plugin.Log.LogWarning("Library: couldn't set boot options: " + e.Message); }
         }
 
-        private static void ApplyWorkers()
+        internal static void ApplyWorkers()
         {
-            int want = On && JobWorkers.Value > 0 ? Mathf.Clamp(JobWorkers.Value, 1, JobsUtility.JobWorkerMaximumCount) : gameWorkers;
+            int want = !On ? gameWorkers : Trial > 0 ? Trial : SettledWorkers;
             if (JobsUtility.JobWorkerCount != want) JobsUtility.JobWorkerCount = want;
         }
+
+        /// <summary>The number <see cref="BusTune"/> is trying right now, 0 when it isn't.</summary>
+        internal static int Trial;
+        internal static int GameWorkers => gameWorkers;
+        internal static int SettledWorkers => JobWorkers.Value > 0 ? Mathf.Clamp(JobWorkers.Value, 1, JobsUtility.JobWorkerMaximumCount) : Mathf.Min(gameWorkers, BusProfile.MostJobWorkers);
 
         // ---- what's only there to look at
 

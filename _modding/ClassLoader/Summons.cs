@@ -30,7 +30,8 @@ namespace SCClassLoader
         {
             Character caster = ctx.caster ?? Player.instance;
             if (caster == null || AI_Manager.instance == null || Map.instance == null) return;
-            Character prefab = Resolve(a.creature);
+            bool copy = Mirrors.IsSelf(a.creature);
+            Character prefab = copy ? Mirrors.Body() : Resolve(a.creature);
             if (prefab == null) { Plugin.Log.LogWarning($"{ctx.sourceName}: summon creature '{a.creature}' not found"); return; }
             if (a.anySide && (ForceLoose ?? UnityEngine.Random.value < 0.5f)) { Loose(a, ctx, near ?? caster, howMany ?? Math.Max(1, a.amount)); return; }
 
@@ -79,6 +80,7 @@ namespace SCClassLoader
                     if (grow.Length > 1 && Enum.TryParse(grow[1], true, out STAT_TYPE growStat2)) c.SetTag(StatTag2, (int)growStat2);
                 }
                 AI_Manager.instance.RegisterMinion(c);
+                if (copy) Mirrors.Fit(c, a.strength, a.healthShare, a.look);
                 // Mid-fight it joins in at once: an idle pet only wakes when it spots someone itself or a cast
                 // alerts the spot, and self-cast summons (a veil, a stance) alert nothing.
                 if (c.ai != null && When.InCombat()) c.ai.ChangeState(AI.AI_STATE.Active);
@@ -88,7 +90,7 @@ namespace SCClassLoader
                     c.ai.SetTarget(near);
                     c.ai.ChangeState(AI.AI_STATE.Active);
                 }
-                try
+                if (!copy) try
                 {
                     Effect scalar = EffectManager.instance.ApplyEffect("Effect_PASSIVE_Pet_Scalar", c);
                     if (scalar != null)
@@ -292,7 +294,7 @@ namespace SCClassLoader
                 .ThenBy(n => Vector3.Distance(n.transform.position, pos)).FirstOrDefault();
         }
 
-        private static NavNode FreeNode(Vector3 pos, float r) =>
+        internal static NavNode FreeNode(Vector3 pos, float r) =>
             Map.instance.GetNavNodesAt(pos, r, validNodesOnly: true)
                 .Where(n => n != null && !n.IsOccupied() && !n.BlockCheck() && !n.Block_Move)
                 .OrderBy(n => Vector3.Distance(n.transform.position, pos)).FirstOrDefault();

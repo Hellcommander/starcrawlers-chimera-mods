@@ -13,10 +13,10 @@ namespace SCClassLoader
     /// <summary>
     /// Right-click one of your own companions in the world (a bot, pet, summon, crawler or Conjoined body) for a small
     /// menu at the cursor: the Orders (Commands) for that one alone, jobs to do for you (Errands: use, unlock or bash a
-    /// door or container, fetch an item), and for pets Unsummon and Break down (PetHandling). Only a quick click opens
-    /// it: holding the right button still looks around, as in the base game, and a click on a hotbar or other panel is
-    /// left to that panel. A minion ordered this way takes orders even with [Orders] CommandMinions off, until it's
-    /// told to Engage again.
+    /// door or container, fetch an item), Swap places, and for pets Unsummon and Break down (PetHandling). Only a quick
+    /// click opens it: holding the right button still looks around, as in the base game, and a click on a hotbar or other
+    /// panel is left to that panel, though the minion strip opens this same menu. A minion ordered this way takes orders
+    /// even with [Orders] CommandMinions off, until it's told to Engage again.
     /// Focus, Unleash, Move here and the jobs then ask for a click in the world: the enemy (outlined), the floor tile
     /// (marked) or the thing to deal with; right-click or Esc calls it off. The order strip's Focus, Unleash and Move here
     /// buttons pick the same way for the whole group. While picking, and over the menu, clicks don't also reach the
@@ -65,8 +65,9 @@ namespace SCClassLoader
             if (EventSystem.current == null) return false;
             uiHits.Clear();
             EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = at }, uiHits);
-            // the picking prompt follows the cursor but takes no clicks
-            return uiHits.Any(h => h.gameObject != null && (prompt == null || !h.gameObject.transform.IsChildOf(prompt)));
+            // the picking prompt follows the cursor but takes no clicks, and neither do numbers floating up from a hit
+            return uiHits.Any(h => h.gameObject != null && (prompt == null || !h.gameObject.transform.IsChildOf(prompt))
+                                   && h.gameObject.GetComponentInParent<FloatingCombatText>() == null);
         }
 
         private static readonly Dictionary<int, bool> seeThrough = new Dictionary<int, bool>();
@@ -495,6 +496,26 @@ namespace SCClassLoader
 
         // ---- the menu -------------------------------------------------------------------------------------------
 
+        /// <summary>The menu for a companion from somewhere other than the world (the minion strip).</summary>
+        internal static bool OpenFor(Character c, Vector2 at)
+        {
+            if (c == null || !Mine(c) || !CanOpen()) return false;
+            Open(c, at);
+            return IsOpen;
+        }
+
+        /// <summary>How far off, in tiles, you can still trade places with a companion you can see.</summary>
+        private const float SwapRange = 8f;
+
+        /// <summary>Why you can't trade places with it right now (null: you can).</summary>
+        internal static string WhyNoSwap(Character c)
+        {
+            if (!Afflictions.CanSwap(Player.instance, c) || !c.FLAG_canMove) return $"{c.GetName()} can't be moved.";
+            if (Vector3.Distance(c.transform.position, Player.instance.transform.position) > SwapRange
+                || c.ai?.detection == null || !c.ai.detection.CanSeePlayer()) return $"{c.GetName()} is too far off to trade places with.";
+            return null;
+        }
+
         private static void Open(Character c, Vector2 at)
         {
             if (menu == null && !Make()) return;
@@ -579,6 +600,7 @@ namespace SCClassLoader
                     orders.Add((o, b.GetComponent<Image>()));
                 }
                 y += 4f;
+                Item(rt, "Swap places", "You and it trade tiles. Takes your turn.", ref y, UiKit.ButtonColor, SwapPlaces);
                 foreach (var (job, name, tip) in Errands.All)
                 {
                     Button b = Item(rt, name + "…", tip, ref y, UiKit.ButtonColor, () => Job(job));
@@ -627,6 +649,28 @@ namespace SCClassLoader
                 AudioManager.PlayEvent("event:/UI/UI_Click");
                 Commands.OrderBar.Refresh();
                 Close();
+            }
+
+            private void SwapPlaces()
+            {
+                if (who == null || !MinionBar.CanCommand) { AudioManager.PlayEvent("event:/UI/UI_Error"); return; }
+                string why = WhyNoSwap(who);
+                if (why != null) { Fail(why); return; }
+                Character c = who;
+                NavNode was = Player.instance.GetMover().GetCurrentNavNode();
+                Afflictions.Swap(new ActionContext { caster = Player.instance, sourceName = "Swap places" }, c);
+                if (Player.instance.GetMover().GetCurrentNavNode() == was) { Fail($"There's no room to trade places with {c.GetName()}."); return; }
+                AudioManager.PlayEvent("event:/UI/UI_Click");
+                Close();
+                CullManager.instance.UpdateCulling();
+                Plugin.Instance.StartCoroutine(SpendTurn());
+            }
+
+            /// <summary>The game drops an action asked for while it resolves, and this menu is already closed.</summary>
+            private static System.Collections.IEnumerator SpendTurn()
+            {
+                for (float t = 0f; t < 3f && Game.RESOLVING; t += Time.unscaledDeltaTime) yield return null;
+                Game.instance.PlayerAction(PLAYER_ACTION.Wait);
             }
 
             private void Job(Errands.Job job)

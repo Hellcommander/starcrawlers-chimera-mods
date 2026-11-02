@@ -254,7 +254,11 @@ namespace Breachwork
         public static bool EventBusOn => EventBus.On;
 
         /// <summary>Runs the event bus for as long as your plugin is loaded, whatever the setting says (needs apiLevel 6).</summary>
-        public static void RunEventBus() => EventBus.RunByPlugin = true;
+        public static void RunEventBus()
+        {
+            EventBus.RunByPlugin = true;
+            EventBus.ApplyWorkers();
+        }
 
         /// <summary>
         /// Runs work on one of the bus's worker threads (needs apiLevel 6). It must only touch what it was handed, never a game

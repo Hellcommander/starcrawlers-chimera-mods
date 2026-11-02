@@ -39,6 +39,7 @@ namespace SCClassLoader
             ConfirmLeave = cfg.Bind("SideAreas", "ConfirmLeave", true, "Ask before a way out takes you back to the real floor (any job is turned in as it stands).");
             Brightness = cfg.Bind("SideAreas", "Brightness", 100, new ConfigDescription(
                 "Percent brightness of the generated side areas' lights (100 = as the places are made; a blackout still goes dark).", new AcceptableValueRange<int>(25, 300)));
+            Bosses.Bind(cfg);
             EliteChance = cfg.Bind("SideAreas", "EliteChance", 12, "Percent chance that an enemy in a side area is an elite (an affix, more health, maybe a drop). Kinds can set their own.");
         }
 
@@ -344,7 +345,7 @@ namespace SCClassLoader
 
         private static bool VisitKey(string k) =>
             VisitKeys.Contains(k) || (k.StartsWith("obj_") && k != "obj_total") || k.StartsWith("timer_") || k.StartsWith("hunted_") || k.StartsWith("alarm_")
-            || k.StartsWith("lift_") || k.StartsWith("vault_") || k.StartsWith("tower_");
+            || k.StartsWith("lift_") || k.StartsWith("vault_") || k.StartsWith("tower_") || k.StartsWith("boss_");
 
         /// <summary>The side area left behind this floor's breach ({"level": LevelSaveInfo, "state": its keys}), or null for a fresh one.</summary>
         private static Dictionary<string, object> KeptAt(int floor) =>
@@ -394,8 +395,7 @@ namespace SCClassLoader
             Places.NameOnMap();
             Player_AbilityControl.instance.LevelChangeComplete();
             Game.Game_isTransitioning = false;
-            Game.instance.EndTurn();
-            Game.instance.PostCleanup();
+            ArrivalTurn();
             ApplyFog(Theme);
             try { Echoes.OnEchoRestored(); Contracts.OnEchoRestored(); SideKinds.OnEchoRestored(); SideLayers.OnEchoRestored(); Echoes.ReapplyPlayerEffects(); }
             catch (Exception e) { Plugin.Log.LogError("Side areas: settling the kept side area: " + e); }
@@ -502,8 +502,7 @@ namespace SCClassLoader
             Places.NameOnMap();
             Player_AbilityControl.instance.LevelChangeComplete();
             Game.Game_isTransitioning = false;
-            Game.instance.EndTurn();
-            Game.instance.PostCleanup();
+            ArrivalTurn();
             ApplyFog(theme);
             UnityEngine.Object.Instantiate(lm.warpParticle, Player.instance.GetHitFx().position, Quaternion.identity);
             AudioManager.PlayEvent("event:/Abilities/Misc/Psykonics_Warp");
@@ -635,8 +634,7 @@ namespace SCClassLoader
             Player_AbilityControl.instance.LevelChangeComplete();
             Menu_MiniMap.instance.Reset();
             Game.Game_isTransitioning = false;
-            Game.instance.EndTurn();
-            Game.instance.PostCleanup();
+            ArrivalTurn();
             Menu_MiniMap.instance.Init();
             lm.GetLevel(origin)?.OnPlayerEntered();
             UnityEngine.Object.Instantiate(lm.warpParticle, Player.instance.GetHitFx().position, Quaternion.identity);
@@ -686,6 +684,18 @@ namespace SCClassLoader
         }
 
         /// <summary>Whatever went wrong mid-transition, the game must not stay in its loading state.</summary>
+        /// <summary>The turn an arrival costs. An effect that throws in it mustn't leave you half arrived, with no map and no input.</summary>
+        internal static void ArrivalTurn()
+        {
+            try { Game.instance.EndTurn(); }
+            catch (Exception e)
+            {
+                Plugin.Log.LogError("Side areas: the arrival turn failed: " + e);
+                Game.SetResolve(false);
+            }
+            Game.instance.PostCleanup();
+        }
+
         internal static void Unstick()
         {
             Game.Game_isLoading = false;

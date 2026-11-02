@@ -42,6 +42,12 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>
+        /// Most of Unity's own job threads, past which waking them costs more than they do: at 8 instead of 63 particles, physics and
+        /// rendering all took less time on the main thread with the same crowd. Only a big CPU reaches it.
+        /// </summary>
+        internal const int MostJobWorkers = 8;
+
         /// <summary>The bus's share of a frame on the main thread.</summary>
         internal static double PumpMs => Tier == BusTier.Low ? 1.5 : Tier == BusTier.Mid ? 2.0 : 3.0;
 

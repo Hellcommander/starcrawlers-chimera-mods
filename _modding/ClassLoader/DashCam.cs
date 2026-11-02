@@ -87,6 +87,14 @@ namespace SCClassLoader
             Shots++;
         }
 
+        /// <summary>Over your shoulder while you turn twice on the spot with your weapon out and swing it (a nova through a blade).</summary>
+        internal static void Spin(float seconds)
+        {
+            if (seconds <= 0f || SkillShots == null || !SkillShots.Value) return;
+            Showcase(seconds);
+            if (runner != null) runner.StartSpin(seconds);
+        }
+
         [HarmonyPatch(typeof(Character_Mover), nameof(Character_Mover.PlayerMove))]
         private static class PlayerMovePatch
         {
@@ -140,6 +148,30 @@ namespace SCClassLoader
             // a showcase: no move, the shot holds until showUntil
             private bool showcase;
             private float showUntil;
+
+            // a spin: the body turns on the spot, wearing what you have on this moment
+            private const float SpinTurns = 720f;
+            private float spinLeft, spinTime, spinAngle;
+            private bool spinStarted;
+
+            internal void StartSpin(float seconds)
+            {
+                spinLeft = spinTime = seconds;
+                spinAngle = 0f;
+                spinStarted = false;
+            }
+
+            /// <summary>Your weapon and gear on the body, and its melee swing, once per spin.</summary>
+            private void BeginSpin()
+            {
+                spinStarted = true;
+                try { Wear.Dress(body.transform, Mirrors.Worn, BodyId().Replace("Nemesis_", ""), Player.instance.playerName); }
+                catch (System.Exception e) { Plugin.Log.LogWarning($"Spin: dressing: {e.Message}"); }
+                if (bodyAnim == null) return;
+                int melee = Animator.StringToHash("Melee");
+                for (int layer = 0; layer < bodyAnim.layerCount; layer++)
+                    if (bodyAnim.HasState(layer, melee)) { bodyAnim.Play(melee, layer); return; }
+            }
 
             internal void HoldOn(Character_Mover m, float seconds)
             {
@@ -278,7 +310,14 @@ namespace SCClassLoader
                 body.transform.position = place;
                 // down the move while moving, then turning to face where you face
                 Quaternion face = moving ? Quaternion.LookRotation(dir) : Quaternion.LookRotation(Flat(mover.transform.forward, dir));
-                body.transform.rotation = Quaternion.Slerp(body.transform.rotation, face, moving ? 1f : 10f * Time.deltaTime);
+                if (!moving && spinLeft > 0f)
+                {
+                    if (!spinStarted) BeginSpin();
+                    spinLeft -= Time.deltaTime;
+                    spinAngle += SpinTurns / spinTime * Time.deltaTime;
+                    body.transform.rotation = face * Quaternion.Euler(0f, spinAngle, 0f);
+                }
+                else body.transform.rotation = Quaternion.Slerp(body.transform.rotation, face, moving ? 1f : 10f * Time.deltaTime);
                 if (bodyAnim != null)
                 {
                     Set(bodyAnim, "inCombat", true);

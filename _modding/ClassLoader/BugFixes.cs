@@ -40,7 +40,7 @@ namespace SCClassLoader
             WarpMidCast = cfg.Bind("Fixes", "WarpJumpMidCast", true,
                 "An enemy's Warp Jump survives its caster or target being destroyed while it travels (vanilla threw an error).");
             ImmortalPlayer = cfg.Bind("Fixes", "PlayerImmortalTag", true,
-                "The player's health respects the game's IMMORTAL tag, as enemies' does. Damage over time can't kill you in the cutscene after beating Cerberus.");
+                "The player's health respects the game's IMMORTAL tag, as enemies' does. Damage over time can't kill you in the cutscene after beating Cerberus. The Perihelion's Incandescent needs this on too.");
             EventSpawn = cfg.Bind("Fixes", "EventSpawnWithNoRoom", true,
                 "An event that spawns a mob looks further out when no tile near it is free, and goes on without the mob if none is (vanilla threw an error and the event stopped).");
             LevelTable = cfg.Bind("Fixes", "LevelPastTheTable", true,

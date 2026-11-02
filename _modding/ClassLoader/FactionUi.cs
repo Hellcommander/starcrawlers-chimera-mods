@@ -316,8 +316,8 @@ namespace SCClassLoader
                 }
                 if (Time.unscaledTime < next) return;
                 next = Time.unscaledTime + 0.5f;
-                string job = Factions.Active ? Contracts.TrackerText() : null, echo = Echoes.TrackerLine(), kind = SideKinds.TrackerLine(), tower = SideLayers.TrackerLine(), breach = BreachFinder.TrackerLine();
-                string s = string.Join("\n", new[] { job, tower, kind, echo, breach }.Where(x => !string.IsNullOrEmpty(x)));
+                string job = Factions.Active ? Contracts.TrackerText() : null, echo = Echoes.TrackerLine(), kind = SideKinds.TrackerLine(), tower = SideLayers.TrackerLine(), boss = Bosses.TrackerLine(), breach = BreachFinder.TrackerLine();
+                string s = string.Join("\n", new[] { job, tower, kind, boss, echo, breach }.Where(x => !string.IsNullOrEmpty(x)));
                 text.gameObject.SetActive(!string.IsNullOrEmpty(s));
                 if (!string.IsNullOrEmpty(s)) text.text = s;
             }

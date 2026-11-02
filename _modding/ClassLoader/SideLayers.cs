@@ -79,7 +79,7 @@ namespace SCClassLoader
         /// <summary>The keys that belong to one layer and travel with its snapshot.</summary>
         private static bool LayerKey(string k) =>
             (k.StartsWith("obj_") && k != "obj_total") || k.StartsWith("timer_") || k.StartsWith("hunted_") || k.StartsWith("alarm_") || k.StartsWith("lift_")
-            || k.StartsWith("vault_") || k == "echo_anoms" || k == "echo_turn" || k == "collapse_turns" || k == "deeper_pos";
+            || k.StartsWith("vault_") || k.StartsWith("boss_") || k == "echo_anoms" || k == "echo_turn" || k == "collapse_turns" || k == "deeper_pos";
 
         // ---- building -----------------------------------------------------------------------------------------
 
@@ -485,8 +485,7 @@ namespace SCClassLoader
             Menu_MiniMap.instance.Init();
             Player_AbilityControl.instance.LevelChangeComplete();
             Game.Game_isTransitioning = false;
-            Game.instance.EndTurn();
-            Game.instance.PostCleanup();
+            SideAreas.ArrivalTurn();
             SideAreas.ApplyFog(ThemeOf(layer));
             try { Echoes.OnEchoRestored(); SideKinds.OnEchoRestored(); Echoes.ReapplyPlayerEffects(); }
             catch (Exception e) { Plugin.Log.LogError("Towers: settling the layer: " + e); }

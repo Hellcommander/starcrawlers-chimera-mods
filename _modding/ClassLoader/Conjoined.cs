@@ -163,6 +163,13 @@ namespace SCClassLoader
             catch (Exception e) { Plugin.Log.LogWarning($"Conjoined: dressing {b.Name}: {e.Message}"); }
         }
 
+        /// <summary>Puts a body's gear on another character.</summary>
+        internal static void DressLike(Character copy, Character src)
+        {
+            Body b = Bodies.FirstOrDefault(x => x.Id == src.GetTag(BodyTag));
+            if (b != null) Wear.Dress(copy, slot => Worn(b, slot), b.Model.Replace("Nemesis_", ""), b.Name);
+        }
+
         /// <summary>A fresh copy of what the body has equipped in `slot` (the first match: the main hand for weapons), or null.</summary>
         private static Item Worn(Body b, EQUIP_TYPE slot)
         {

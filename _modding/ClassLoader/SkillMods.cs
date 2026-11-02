@@ -276,6 +276,8 @@ namespace SCClassLoader
             "lifesteal", "trueDamage", "weapon", "channel", "scale", "scaleMult", "perRank", "bonus", "chance", "levelCap",
             // on each target
             "stun", "knockback", "pull", "blind", "silence", "taunt", "exhaust", "purge", "effect", "effectTurns", "execute", "hazard", "swap",
+            // "nova" form only: that many copies of you go out the other ways round you (Mirrors.Nova)
+            "mirrors",
             // on you, once per cast
             "heal", "shield", "stamina", "cooldowns", "selfEffect",
         };
@@ -427,7 +429,7 @@ namespace SCClassLoader
         /// Runs the form at cast time, after the skill has picked its victims. True = the form took the actions away
         /// (a trap, a monster, a drifter) and the skill's own hit loop must not run.
         /// </summary>
-        internal static bool Deliver(Runes.Tuning t, ModAbility ab, ActionContext ctx, List<Character> victims, Vector3 center, Vector3 from, float radius, List<ActionSpec> targetActions)
+        internal static bool Deliver(Runes.Tuning t, ModAbility ab, ActionContext ctx, List<Character> victims, Vector3 center, Vector3 from, float radius, List<ActionSpec> targetActions, Vector3 origin, Character primary)
         {
             if (t?.form == null) return false;
             string name = string.IsNullOrEmpty(t.formName) ? ab.GetDisplayName() : t.formName;
@@ -480,19 +482,27 @@ namespace SCClassLoader
                     return true;
                 case "nova":
                     {
-                        // the skill's own bolt flies out to every side and lands in its own impact, so the burst can be
-                        // seen from behind your own eyes
-                        string fx = t.travelVfx ?? ab.Spec?.travelVfx, hit = t.impactVfx ?? ab.Spec?.impactVfx;
-                        if (ctx.caster != null)
+                        Vector3 aim = center - origin;
+                        aim.y = 0f;
+                        bool moved = MovesYou(ab.Spec) && aim.sqrMagnitude >= 0.01f;
+                        if (moved) { ctx.spreading = true; ctx.aimed = primary; }
+                        if (Pierces(t) == 0)
+                            foreach (Character c in NovaHits(center, radius))
+                                if (!victims.Contains(c)) victims.Add(c);
+                        if (t.adds.TryGetValue("mirrors", out JToken carried) && Mirrors.Nova(ab, ctx, origin, center, radius, targetActions, I(carried)))
+                            return false; // you're one of the ring: your own strike goes on as it would
+                        Item_Weapon weapon = NovaWeapon(t, ab, ctx, targetActions);
+                        if (weapon != null && !IsGun(weapon))
                         {
-                            Vector3 at = ctx.caster.GetHitFx().position;
-                            for (int d = 0; d < 8; d++)
-                            {
-                                Vector3 end = from + Quaternion.Euler(0f, 45f * d, 0f) * Vector3.forward * (Mathf.Max(1f, radius) + 1.5f) + Vector3.up * 0.9f; // past the hits, so it reads as a volley
-                                Actions.SpawnTravel(fx, at, end, 7f);
-                                if (!string.IsNullOrEmpty(hit)) Actions.SpawnVfx(hit, end);
-                            }
+                            // a blade reaches the next tile, and you swing it where you are: even a dash spins where it lands
+                            victims.RemoveAll(v => v != null && v != primary && Vector3.Distance(Vector3.ProjectOnPlane(v.transform.position - center, Vector3.up), Vector3.zero) > SpinReach);
+                            NovaSpread(t, ab, ctx, victims, center, from, center, null, SpinReach, targetActions, weapon);
+                            return false;
                         }
+                        if (moved && Pierces(t) == 0)
+                            foreach (Character c in NovaHits(origin, radius))
+                                if (!victims.Contains(c)) victims.Add(c);
+                        NovaSpread(t, ab, ctx, victims, moved ? origin : center, moved ? origin : from, center, moved ? Mathf.Round(Mathf.Atan2(aim.x, aim.z) * Mathf.Rad2Deg / 45f) * 45f : (float?)null, radius, targetActions, weapon);
                         return false;
                     }
                 case "scatter":
@@ -513,6 +523,161 @@ namespace SCClassLoader
                 default:
                     return false;
             }
+        }
+
+        /// <summary>Does the skill take you somewhere? A nova can't send you eight ways, so such a skill keeps its aim.</summary>
+        internal static bool MovesYou(AbilitySpec s) => s != null && (Moving(s.actions) || Moving(s.perk?.addActions));
+
+        private static bool Moving(List<ActionSpec> actions) =>
+            Any(actions, a => Is(a, "teleport") || Is(a, "leap") || (Is(a, "chain") && a.leap) || (Is(a, "warp") && string.Equals(a.warpTo, "behind", StringComparison.OrdinalIgnoreCase)));
+
+        private const float SpinReach = 1.6f, SpinTime = 0.6f;
+
+        private static bool IsGun(Item_Weapon w) => w.weaponType == WEAPON_TYPE.Ranged || w.weaponType == WEAPON_TYPE.HeavyRanged;
+
+        /// <summary>The weapon a nova goes out through, when the skill involves one: a gun out of ammo leaves it a plain nova.</summary>
+        private static Item_Weapon NovaWeapon(Runes.Tuning t, ModAbility ab, ActionContext ctx, List<ActionSpec> actions)
+        {
+            AbilitySpec s = t.spec ?? ab.Spec;
+            if (s == null || ctx.caster != Player.instance) return null;
+            if (!s.melee && !t.adds.ContainsKey("channel") && !Any(actions, a => Is(a, "damage") && (a.weapon > 0f || a.channel))) return null;
+            Item_Weapon w = Equipped.Hand(s.equipped, Player.instance, out _);
+            return w != null && (!IsGun(w) || w.CanAttack()) ? w : null;
+        }
+
+        /// <summary>Where the last nova's ways ended, how many of them reached a tile, and whether it was "spell", "shots" or "spin" (tests).</summary>
+        internal static readonly List<Vector3> NovaEnds = new List<Vector3>();
+        internal static int NovaTiles;
+        internal static string NovaKind;
+
+        /// <summary>
+        /// The skill goes out each way from `start`, as far as the nova reaches or the floor runs, and lands on that tile
+        /// whether or not anyone stands there: its own bolt, its own impact, and whatever it leaves on the ground, so a cast
+        /// into an empty room still shows. `gone` is the way you took yourself, which it leaves out. A wall right
+        /// beside `start` stops that way at the wall. Ground as wide as a field goes down once, at `center`. With a
+        /// `weapon` it's the weapon going off instead of the skill's bolt: a gun's shots, or a blade's spin.
+        /// </summary>
+        private static void NovaSpread(Runes.Tuning t, ModAbility ab, ActionContext ctx, List<Character> victims, Vector3 start, Vector3 from, Vector3 center, float? gone, float radius, List<ActionSpec> actions, Item_Weapon weapon)
+        {
+            if (ctx.caster == null || Map.instance == null) return;
+            AbilitySpec s = t.spec ?? ab.Spec;
+            string fx = First(t.travelVfx, ab.Spec?.travelVfx);
+            string hit = First(t.impactVfx, s?.impactVfx, t.areaVfx, s?.areaVfx, ctx.hitVfx) ?? "PA_Elementalist_ChainLightning.shockImpact";
+            var ground = actions.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap").ToList();
+            var everyWay = ground.Where(a => a.radius <= 0f || a.@do == "trap").ToList();
+            var taken = new HashSet<NavNode>(victims.Where(v => v != null && v.GetMover() != null).Select(v => v.GetMover().GetCurrentNavNode()));
+            NavNode first = Map.instance.GetNearestNavNodeAt(start, 1f);
+            int tiles = Mathf.Max(1, Mathf.FloorToInt(radius));
+            Vector3 at = (start - from).sqrMagnitude < 0.25f && gone == null ? ctx.caster.GetHitFx().position : start + Vector3.up * 0.9f;
+            var ends = new List<Vector3>();
+            float flight = 0f;
+            NovaEnds.Clear();
+            NovaTiles = 0;
+            NovaKind = weapon == null ? "spell" : IsGun(weapon) ? "shots" : "spin";
+            for (int d = gone == null ? 0 : 1; d < 8; d++)
+            {
+                Vector3 way = Quaternion.Euler(0f, (gone ?? 0f) + 45f * d, 0f) * Vector3.forward;
+                NavNode tile = first != null ? Mirrors.Reach(first, Mathf.RoundToInt(way.x), Mathf.RoundToInt(way.z), tiles, pastFolk: true) : null;
+                Vector3 end = (tile != null ? tile.transform.position : start + way * 0.6f) + Vector3.up * 0.9f;
+                ends.Add(end);
+                NovaEnds.Add(end);
+                if (weapon != null) { }
+                else if (string.IsNullOrEmpty(fx)) Moves.Streak(at, end, Moves.Hex(ab.Spec?.dashTrail, new Color(1f, 0.82f, 0.55f, 0.8f)), 0.05f, 0.45f);
+                else flight = Mathf.Max(flight, Actions.SpawnTravel(fx, at, end, 7f));
+                if (tile == null) continue;
+                NovaTiles++;
+                if (everyWay.Count == 0 || taken.Contains(tile) || NovaTiles % 2 == 0) continue; // every other tile: at most four, spread round the ring
+                ctx.center = tile.transform.position;
+                ctx.groundAtCenter = true;
+                ctx.groundLaid = null;
+                Actions.Run(everyWay, ctx, ctx.caster);
+            }
+            ctx.center = center;
+            ctx.groundAtCenter = false;
+            ctx.groundLaid = new HashSet<ActionSpec>(everyWay.Where(a => a.@do == "trap")); // each way has had one
+            if (victims.Count == 0)
+            {
+                ctx.groundAtCenter = true;
+                Actions.Run(ground.Except(everyWay).ToList(), ctx, ctx.caster);
+                ctx.groundAtCenter = false;
+            }
+            Plugin.Instance.StartCoroutine(weapon != null ? WeaponVolley(weapon, ab, at, ends, hit) : NovaLands(hit, ends, flight));
+        }
+
+        /// <summary>
+        /// One pull of the trigger or one swing, as the game's own sweep and gun-fu play them: a round's ammo and noise,
+        /// however many ways it goes. A gun's shots go round from `at`; a blade's arc goes round you where you stand by then.
+        /// </summary>
+        private static System.Collections.IEnumerator WeaponVolley(Item_Weapon w, ModAbility ab, Vector3 at, List<Vector3> ends, string hit)
+        {
+            bool gun = IsGun(w);
+            Player_Control pc = Player_Control.instance;
+            pc.Handimator_R.SetTrigger(w.GetAnimTrigger());
+            Item_Equipment held = pc.GetWeapon_Mainhand();
+            if (held != null) held.StartCoroutine(held.DoAttackFX(null));
+            ab.OnAttack(new List<DmgObj>(), w);
+            yield return null; // a leap has landed by now
+            Vector3 here = Player.instance.GetHitFx().position;
+            AudioManager.PlayEvent("event:/Effects/Whirlwind", here);
+            Actions.SpawnVfx(gun ? "PA_Gunslinger_GunFuMaster.particle" : "PA_Barbarian_SweepingStrike.triggerParticle", Player.instance.transform.position);
+            if (!gun) DashCam.Spin(SpinTime);
+            foreach (Vector3 end in ends)
+            {
+                if (gun)
+                {
+                    WeaponShot(held as Item_Weapon ?? w, at, end);
+                    if (w.impactParticle != null) ParticleGate.Make(w.impactParticle, end);
+                    else Actions.SpawnPattern(hit, end);
+                }
+                else
+                {
+                    Vector3 way = Vector3.ProjectOnPlane(end - at, Vector3.up);
+                    Ability.DoWeaponAttack(here, here + way.normalized * Mathf.Min(1.2f, way.magnitude));
+                }
+                yield return new WaitForSeconds(gun ? 0.03f : SpinTime / 10f);
+            }
+        }
+
+        /// <summary>The weapon's shot one way: its tracer, and a copy of each particle it aims at a target, since those aim at characters and an empty tile has none.</summary>
+        private static void WeaponShot(Item_Weapon w, Vector3 at, Vector3 end)
+        {
+            Ability.DoWeaponAttack(at, end);
+            foreach (WeaponFX fx in w.weaponFx ?? new WeaponFX[0])
+            {
+                if (fx == null) continue;
+                foreach (ParticleSystem ps in HarmonyLib.Traverse.Create(fx).Field("targetedParticleSystems").GetValue<ParticleSystem[]>() ?? new ParticleSystem[0])
+                {
+                    if (ps == null) continue;
+                    GameObject shot = ParticleGate.Make(ps.gameObject, at);
+                    Vector3 size = ps.transform.lossyScale;
+                    shot.transform.rotation = Quaternion.LookRotation(end - at);
+                    shot.transform.localScale = fx.zScaleToTarget ? new Vector3(size.x, size.y, Vector3.Distance(at, end)) : size;
+                    shot.SetActive(true);
+                    ParticleSystem fired = shot.GetComponent<ParticleSystem>();
+                    fired.Emit(fired.emission.burstCount > 0 ? Mathf.Max(1, (int)fired.emission.GetBurst(0).count.constant) : 1);
+                    UnityEngine.Object.Destroy(shot, 3f);
+                }
+            }
+        }
+
+        private static string First(params string[] vfx) => vfx.FirstOrDefault(v => !string.IsNullOrEmpty(v));
+
+        private static System.Collections.IEnumerator NovaLands(string hit, List<Vector3> ends, float flight)
+        {
+            yield return new WaitForSeconds(flight);
+            foreach (Vector3 end in ends) Actions.SpawnPattern(hit, end);
+        }
+
+        /// <summary>Who a nova hits: everyone in the radius, and along the diagonals as many tiles as it goes straight on, where a circle stops short.</summary>
+        internal static List<Character> NovaHits(Vector3 center, float radius)
+        {
+            var hit = AI_Manager.instance.GetEnemiesAt(center, radius);
+            foreach (Character c in AI_Manager.instance.GetEnemiesAt(center, radius * 1.42f))
+            {
+                float x = Mathf.Abs(c.transform.position.x - center.x), z = Mathf.Abs(c.transform.position.z - center.z);
+                if (!hit.Contains(c) && Mathf.Abs(x - z) < 0.5f && Mathf.Max(x, z) <= radius) hit.Add(c);
+            }
+            return hit;
         }
 
         /// <summary>Says what a gamble made of the skill as it leaves you.</summary>
@@ -703,7 +868,7 @@ namespace SCClassLoader
                              (m.burstOn == "contact" ? "as soon as an enemy stands beside it" : "when it dies") + $" (it lasts {(m.turns > 0 ? m.turns : 4)} turns)");
                     break;
                 case "drifter": bits.Add($"let loose to wander the deck for {(m.turns > 0 ? m.turns : 4)} turns, going off on whoever it meets, friend or foe"); break;
-                case "nova": bits.Add($"a nova around you, hitting {area}, no aiming"); break;
+                case "nova": bits.Add($"goes out all eight ways, hitting {area} and as many tiles along the diagonals, no aiming; a skill that moves you keeps its aim, you go that way and the rest leave from where you stood; a skill that uses your weapon fires its shots all eight ways, or spins a melee weapon through every tile beside you"); break;
                 case "line": bits.Add("a line from you that pierces everyone on it"); break;
                 case "cone": bits.Add("a cone from you"); break;
                 case "area": bits.Add($"bursts over {area}"); break;

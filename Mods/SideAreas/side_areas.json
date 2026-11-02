@@ -344,9 +344,30 @@
       // The endless descent after beating Cerberus (see the loader's Endless.cs): never rolled on a floor (weight 0),
       // opened in the arena once you choose to stay. No bottom; the loader scales each depth and rerolls each layer.
       { "id": "ichordeep", "name": "Ichor Deep", "weight": 0, "theme": "any", "color": "#9BFF5C", "places": ["mine", "derelict", "lab", "outpost"],
-        "replace": 0.5, "deeper": 9999, "jobs": false, "anomalyOdds": [10, 55, 35], "exclude": ["collapse"], "vaultGrade": 1, "eliteChance": 0.15,
+        "replace": 0.5, "deeper": 9999, "jobs": false, "anomalyOdds": [10, 55, 35], "exclude": ["collapse"], "vaultGrade": 1, "eliteChance": 0.15, "bossChance": 0.3,
         "text": "Cerberus's ichor seeps down through here, and what lives in it grows stronger the deeper you go.",
         "arrival": "Any way out leads back to the arena; somewhere in here is a rift one depth further down." }
+    ],
+
+    // Bosses wait in a far room. A layer rolls [SideAreas] BossChance (or its kind's "bossChance"), then picks by weight.
+    // "creature" is an enemy id, or "self" for a corrupted copy of you ("mirror" tunes it; see the README).
+    "bosses": [
+      { "id": "corruptedmirror", "name": "Corrupted Mirror", "creature": "self", "weight": 10, "minFloor": 1, "health": 4, "color": "#B46CFF",
+        "arrival": "Something in here is throwing a light that isn't on any fitting.",
+        "text": "It steps down out of the frame in your gear, and everyone with you steps down behind it. Your skills come out of it in the wrong order, all of them running with Void, and one of them was never yours.",
+        "deathText": "The Corrupted Mirror comes apart. What it carried stays on the floor.",
+        "loot": [ { "type": "Random", "rarity": "Epic" } ],
+        "mirror": { "strength": 0.6, "finalDamage": 0.5, "skills": 6, "foreign": 1, "minSkills": 3, "look": "#7A2CFF", "glow": 0.6, "gearDrops": 2, "gearPower": 0.3, "escort": 6, "escortHealth": 1.5, "escortDeadly": 0.12, "escortMinDamage": 0.15, "escortDefense": 1 },
+        "challenge": {
+          "model": { "mesh": "models/corrupted_mirror.glb", "height": 1.9, "glow": "#9A3CFF", "glowStrength": 2, "pulse": 0.012 },
+          "title": "Corrupted Mirror",
+          "text": "Black glass in a frame of torn plate, split from top to bottom. Your reflection is already looking at you, and it isn't alone. Violet light leaks from every crack and the air around it tastes of Void.\n\nWhatever is in there is built from you: your gear and your people, with more health than you have. Touch the glass and it comes out.",
+          "accept": "Touch the glass",
+          "decline": "Leave it",
+          "glow": "#8A3CFF",
+          "tracker": "A Corrupted Mirror stands in here",
+          "far": "The glass is out of reach from here.",
+          "breakVfx": "PA_Engineer_Boltron.PS_summon" } }
     ],
 
     "vaults": [

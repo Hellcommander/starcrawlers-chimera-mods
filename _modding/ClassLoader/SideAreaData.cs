@@ -172,6 +172,8 @@ namespace SCClassLoader
         /// <summary>The generated place this kind leads into (see PlaceSpec), or one of several; none = an echo of a real floor.</summary>
         public string place;
         public List<string> places;
+        /// <summary>Chance of a boss per layer (-1 = the config's BossChance; see BossSpec).</summary>
+        public float bossChance = -1f;
         /// <summary>Rooms to grow in its place: [min, max] (default: the place's own).</summary>
         public int[] size;
 
@@ -236,6 +238,84 @@ namespace SCClassLoader
     {
         public string name = "Shift Overseer", drop = "Rare";
         public float health = 1.6f;
+    }
+
+    // ---- bosses ----------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// A boss waiting in a far room of a side area, from "sideAreas": { "bosses": [...] }. A layer rolls for one, then
+    /// picks by weight among those allowed there. It stays put until you find it or it notices you, then its health bar
+    /// comes up; it drops its "loot" when it dies. With a "challenge" it isn't there at all until you call it out.
+    /// </summary>
+    public class BossSpec
+    {
+        public string id, name;
+        public bool enabled = true;
+        /// <summary>0 keeps it out of the roll (a boss for another mod to place, or an example).</summary>
+        public int weight = 10, minFloor, maxFloor = 99;
+        /// <summary>The Ichor Deep only from this depth on.</summary>
+        public int minDepth;
+        /// <summary>Only in these kinds (empty = any kind).</summary>
+        public List<string> kinds;
+        /// <summary>An enemy id, or "self" for a corrupted copy of the player (see "mirror").</summary>
+        public string creature;
+        /// <summary>Health multiplier; a "self" boss has this many times your health.</summary>
+        public float health = 3f;
+        /// <summary>A side area effect on it ("Name", or "Class@Effect").</summary>
+        public string effect;
+        public int effectStacks = 1;
+        /// <summary>#RRGGBB of its lines in the log.</summary>
+        public string color = "#FF5C8A";
+        /// <summary>Logged when you arrive, when it first notices you or you find it, and when it dies.</summary>
+        public string arrival, text, deathText;
+        public List<LootRoll> loot = new List<LootRoll>();
+        /// <summary>Skills on top of its own, in the format of an enemy's "skills".</summary>
+        public List<MobSkillSpec> skills = new List<MobSkillSpec>();
+        public MirrorSpec mirror = new MirrorSpec();
+        /// <summary>The prop that starts this fight, so it only happens if you choose it. Null: the boss just waits there.</summary>
+        public ChallengeSpec challenge;
+
+        [JsonIgnore] public ModPack pack;
+    }
+
+    /// <summary>A boss you call out by clicking a prop in the side area; see Challenge.</summary>
+    public class ChallengeSpec
+    {
+        public ModelSpec model;
+        /// <summary>The dialog: its title and text, and the buttons that start the fight and walk away.</summary>
+        public string title, text, accept, decline;
+        /// <summary>#RRGGBB of the light on the prop.</summary>
+        public string glow;
+        /// <summary>The tracker line while it stands, and the log line for a click from too far off.</summary>
+        public string tracker, far;
+        /// <summary>The sound and particle when it breaks.</summary>
+        public string sound, breakVfx;
+    }
+
+    /// <summary>What a "self" boss takes from the player; see Corrupted.</summary>
+    public class MirrorSpec
+    {
+        /// <summary>How much of your control it has: hard control lands that often, effects last and stack that much.</summary>
+        public float strength = 0.6f;
+        /// <summary>What's left of every hit from it and its people, as the last step of the hit: after block, crits, shields,
+        /// armour and resistance. It hits as hard as you until then.</summary>
+        public float finalDamage = 0.5f;
+        /// <summary>Skills it casts at most, how many come from classes you don't have (at least 1), and the fewest it may
+        /// have: a build with too few skills to copy is topped up from those classes.</summary>
+        public int skills = 6, foreign = 1, minSkills = 3;
+        /// <summary>The glow on its body and how strong it is.</summary>
+        public string look = "#7A2CFF";
+        public float glow = 0.6f;
+        /// <summary>Corrupted copies of your gear it drops, and how much stronger their bonuses are.</summary>
+        public int gearDrops = 2;
+        public float gearPower = 0.3f;
+        /// <summary>Corrupted copies of your minions and party that fight beside it at most, and the health each has for its
+        /// original's.</summary>
+        public int escort = 6;
+        public float escortHealth = 1.5f;
+        /// <summary>The share of your health all of them together may take in a round. Past it their hits are cut, down to
+        /// "escortMinDamage" of a full hit, and "escortDefense" of what each loses comes back as toughness.</summary>
+        public float escortDeadly = 0.12f, escortMinDamage = 0.15f, escortDefense = 1f;
     }
 
     // ---- who lives there -------------------------------------------------------------------------------------
@@ -337,12 +417,15 @@ namespace SCClassLoader
         internal static readonly Dictionary<int, VaultSpec> Vaults = new Dictionary<int, VaultSpec>();
         internal static readonly List<RosterSpec> Rosters = new List<RosterSpec>();
         internal static readonly List<AffixSpec> Affixes = new List<AffixSpec>();
+        internal static readonly List<BossSpec> Bosses = new List<BossSpec>();
         internal static NemesisSpec Nemesis;
 
         /// <summary>Lists in the json replace the defaults instead of being added to them.</summary>
         private static readonly JsonSerializer Json = new JsonSerializer { ObjectCreationHandling = ObjectCreationHandling.Replace };
 
         internal static RosterSpec Roster(string id) => Rosters.FirstOrDefault(r => string.Equals(r.id, id, StringComparison.OrdinalIgnoreCase));
+
+        internal static BossSpec Boss(string id) => Bosses.FirstOrDefault(b => string.Equals(b.id, id, StringComparison.OrdinalIgnoreCase));
 
         internal static AnomalySpec Anomaly(string id) => Anomalies.FirstOrDefault(a => string.Equals(a.id, id, StringComparison.OrdinalIgnoreCase));
         internal static KindSpec Kind(string id) => Kinds.FirstOrDefault(k => string.Equals(k.id, id, StringComparison.OrdinalIgnoreCase)) ?? Classic;
@@ -357,6 +440,7 @@ namespace SCClassLoader
             Vaults.Clear();
             Rosters.Clear();
             Affixes.Clear();
+            Bosses.Clear();
             Places.All.Clear();
             Nemesis = null;
             foreach (ModPack p in ModPacks.Ordered)
@@ -423,6 +507,18 @@ namespace SCClassLoader
                         Affixes.RemoveAll(x => string.Equals(x.id, a.id, StringComparison.OrdinalIgnoreCase));
                         if (a.enabled) Affixes.Add(a);
                     }
+                    foreach (JObject e in (sa["bosses"] as JArray ?? new JArray()).OfType<JObject>())
+                    {
+                        BossSpec b;
+                        try { b = e.ToObject<BossSpec>(Json); }
+                        catch (Exception ex) { Plugin.Log.LogError($"{file}: a boss could not be read: {ex.Message}"); continue; }
+                        if (string.IsNullOrEmpty(b.id) || string.IsNullOrEmpty(b.creature)) { Plugin.Log.LogError($"{file}: a boss needs an \"id\" and a \"creature\""); continue; }
+                        Bosses.RemoveAll(x => string.Equals(x.id, b.id, StringComparison.OrdinalIgnoreCase));
+                        if (!b.enabled) continue;
+                        b.pack = p;
+                        b.name = b.name ?? b.id;
+                        Bosses.Add(b);
+                    }
                     if (sa["nemesis"] is JObject nem)
                     {
                         try { Nemesis = nem.ToObject<NemesisSpec>(Json); }
@@ -441,7 +537,7 @@ namespace SCClassLoader
                 foreach (string id in r.tiers.SelectMany(t => t ?? new List<string>()).Distinct())
                     if (!id.Contains(":") && AI_Manager.instance != null && AI_Manager.instance.GetCharacter(id) == null) Plugin.Log.LogWarning($"Roster {r.id}: no enemy '{id}'");
             if (Anomalies.Count == 0) Plugin.Log.LogWarning("Side areas: no anomalies loaded (is Mods/SideAreas installed?); echoes will be quiet");
-            Plugin.Log.LogInfo($"Side areas: {Kinds.Count} kind(s) [{string.Join(", ", Kinds.Select(k => k.id))}], {Anomalies.Count} anomalies, vault grades {string.Join("/", Vaults.Keys.OrderBy(g => g))}, {Rosters.Count} rosters, {Affixes.Count} affixes, places [{string.Join(", ", Places.All.Select(x => x.id))}], rivals {(Nemesis != null ? "on" : "off")}");
+            Plugin.Log.LogInfo($"Side areas: {Kinds.Count} kind(s) [{string.Join(", ", Kinds.Select(k => k.id))}], {Anomalies.Count} anomalies, vault grades {string.Join("/", Vaults.Keys.OrderBy(g => g))}, {Rosters.Count} rosters, {Affixes.Count} affixes, bosses [{string.Join(", ", Bosses.Select(b => b.id))}], places [{string.Join(", ", Places.All.Select(x => x.id))}], rivals {(Nemesis != null ? "on" : "off")}");
         }
 
         /// <summary>A mod's own side area effects, registered next to the built-in echo effects.</summary>

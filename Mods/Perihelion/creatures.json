@@ -1,0 +1,24 @@
+{
+  "creatures": [
+    {
+      "id": "PhCometHead",
+      "name": "Comet Head",
+      "subtitle": "A Crawler in Flight",
+      "description": "What a Perihelion is for the length of a charge: a knot of white light and a long burning tail. It is never summoned; Comet Charge wears it for the dash.",
+      "type": "Supernatural",
+      "role": "hover",
+      "health": 1.0,
+      "healthPerLevel": 1,
+      "model": {
+        "offset": [0, 0.5, 0],
+        "keepParticles": false,
+        "particles": [ { "id": "PhCometCore" }, { "id": "PhCometComa" }, { "id": "PhCometTail", "follow": false } ],
+        "deathVfx": "PhCometBurst"
+      },
+      "skills": [
+        { "id": "Graze", "name": "Graze", "verb": "grazes", "range": 1.5, "cooldown": 0, "melee": true,
+          "actions": [ { "do": "damage", "type": "Fire", "min": 1, "max": 2 } ] }
+      ]
+    }
+  ]
+}

@@ -128,6 +128,12 @@ namespace SCClassLoader
             Apply(c.gameObject, spec, folder);
         }
 
+        /// <summary>The look another character carries, by its tag.</summary>
+        internal static void ApplyByTag(Character c, string key)
+        {
+            if (TryGet(key, out ModelSpec spec, out string folder)) ApplyTagged(c, spec, folder);
+        }
+
         /// <summary>Puts the look on a character object (a live one or a prefab clone).</summary>
         internal static bool Apply(GameObject go, ModelSpec spec, string folder)
         {

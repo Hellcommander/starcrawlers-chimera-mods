@@ -21,6 +21,9 @@ with a Glacier Sentinel golem) and `Mods/LookingGlass/` (a chaotic agile duelist
 Grown, deals Painted Guards, throws a Mad Tea Party and ends as the Grinning Cat; also the worked example of
 conditions, counters and triggers, see its README) are single-class mods whose icons, particle sheets, meshes,
 animated summons and sounds all come from the AAMT asset pipelines (`_modding/make_kelvin_glass_assets.py`).
+`Mods/Perihelion/` is another single-class mod: a Strength and Psi Power comet that crosses the room untouchable,
+throws what's around its landing into the walls, most bosses included, and splits off copies of you. It requires the
+immortal fix (`PlayerImmortalTag` under `[Fixes]`, on by default): with it off, its charges don't protect you.
 `Mods/ShadowMagus/` is a third: a Guile caster whose spells scale with Recognition and Psi Power and whose control
 rolls (blind, scatter, silence, shrink) scale with Recognition alone through `chanceScale`. It Benights enemies, feeds a
 crit line (Darkvision, a crit chain, an execute), stands its own Shade up as an `ownerShare` summon, scatters a room
@@ -90,7 +93,7 @@ is built this way.
   "newAbility": {
     "name": "Chrono Bolt", "icon": "chrono_bolt.png", "description": "flavor text",
     "type": "active",            // active | passive
-    "target": "enemy",           // enemy | floor | self
+    "target": "enemy",           // enemy | floor | self | point (enemy or tile: a tile lands there, an enemy lands beside it)
     "range": 7, "radius": 0,     // radius > 0 hits every enemy in that area (around you for self abilities)
     "shape": "line", "width": 1, // or "cone" with "angle": 60: everyone in that shape from you toward the target, out to range
     "staminaCost": 12, "cooldown": 0, "instant": false, "dodgeable": false, "melee": false,
@@ -100,6 +103,8 @@ is built this way.
     "travelVfx": "MyBolt", "travelSpeed": 14,                        // flies caster -> target before the hit lands
     "areaVfx": "MyBlastRing",                                        // once at the centre of an area / floor aim point
     "dashAs": "Hoarlight",       // a creature id: while it moves you (leap, warp), the third-person dash shot shows you as it
+    "dashTrail": "MyTail",       // a particle laid along the path of the move
+    "castActions": [ ... ],      // run on the caster the moment the skill goes off, before any teleport or wait
     "sound": "event:/Abilities/Misc/Psykonics_Warp",                 // vanilla FMOD event
     "actions": [
       { "do": "damage", "type": "Energy", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
@@ -162,7 +167,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   to the damage multipliers per stack, e.g. -0.12 = 12% less per stack), `burstAt` + `burstRadius` + `burstActions`,
   `thresholds` (`[{ "at": 5, "actions": [...] }]`, one-shot triggers at a stack count), `onApplyActions`,
   `onExpireActions` + `onExpireRadius` (delayed detonations), `group` (stances: one per group),
-  `preventDeath` + `onSaveActions` (cheat death once; kept for the rare class whose theme earns it, like Looking Glass's
+  `invulnerable` (no health can be lost while it's on, from hits, damage over time or anything else; on the player it needs `PlayerImmortalTag` under `[Fixes]`), `preventDeath` + `onSaveActions` (cheat death once; kept for the rare class whose theme earns it, like Looking Glass's
   Grinning Cat: a save is a boss's move, so most classes trigger on a `lowHealth` threshold instead).
   **Revenge counters:** every effect keeps a tally of the health its bearer loses while it is on, and a `damage`
   action in its `onExpireActions`, `onDeathActions`, `burstActions` or `thresholds` can add a share of it with
@@ -358,8 +363,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
       that bursts into the skill over its radius when it dies, or with `"burstOn": "contact"` as soon as an enemy
       stands beside it at your turn. The carried spell is saved with the game, so a loaded creature still goes off.
     - `drifter`: let loose to wander the deck (`turns`, `steps`, `stepChance`), going off on whoever it meets, you included.
-    - `nova`: a burst around you, no aiming (radius default 2.5). Pair it with `"power": 0.6` and `"stamina": 8` for a
-      wide, weak, tiring version; `travelVfx` streaks out to every side.
+    - `nova`: a burst around you, no aiming (radius default 2.5, and as many tiles along the diagonals). Pair it with `"power": 0.6` and `"stamina": 8` for a
+      wide, weak, tiring version. It starts wherever the skill went off (the aim point of a `"target"` skill or a `"point"` skill) and goes
+      out all eight ways, each landing on the last tile it reaches, so it shows with nobody there: `travelVfx` flies out, the
+      impact plays, and tile-sized fields, hazards and traps go down on every other tile (four at most). Wide ground goes down once, in the middle. A skill
+      that moves you (`teleport`, `leap`, a leaping `chain`, `warp` behind) keeps its aim: you go that way, once, and the other seven leave from the tile you left.
+      A skill that involves your weapon (`melee`, `weapon`, `channel`) goes off through it, for a round's ammo: a gun fires its own shots down each way
+      instead of the skill's bolt (a gun with no ammo stays a plain nova), and a melee weapon spins through the eight tiles beside you, where you land if the skill moves you.
     - `line` / `cone`: that shape from you toward the aim point (`width`, `angle`). `area`: a burst around the target.
       `chain`: hops on (`jumps`, default 1). `scatter`: the aimed foe and `jumps` (default 2) random others in reach.
   - **`add` keys**: skill traits `resetOnKill`, `instant`, `dodgeable`, `melee`, `command`, `reactionSlots`, `pierce`
@@ -388,7 +398,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     ]
     ```
 - **Physical moves.**
-  - `{ "do": "throw", "amount": 3, "actions": [ ...impact... ] }` throws the target up to 3 tiles straight away from
+  - `{ "do": "throw", "amount": 3, "actions": [ ...impact... ] }` (`"bosses": true` throws bosses too, even `NOKNOCKBACK`
+    ones; Cerberus, rooted bosses and tiles closed to bosses still hold; `"fromCenter": true` throws away from the
+    aim point instead of you) throws the target up to 3 tiles straight away from
     you. If it slams into someone, both take the impact actions; into a wall, it takes them alone. Landing in a
     field or hazard sets that off. Bosses and unmovable enemies aren't thrown.
   - `{ "do": "leap" }` puts you on the free tile beside the target nearest to you (hookshots, pounces, charges); put
@@ -420,6 +432,17 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   sockets with hardware items), Bodyguard, Freerunner, Trick Shot, Blade Juggler and Grapnel Acrobat. Its props
   (coin, throwing knife, grapnel spike, deck debris) are generated by `_modding/make_kinetics_models.py`, and its
   icons by `_modding/make_kinetics_icons.py`.
+- `"add": { "mirrors": 7 }` on a `"form": "nova"` rewrite (or a rewrite that holds alongside one) makes you one point of
+  the nova: you take the way you aimed, and that many copies take the others, evenly round you, diagonals too. They
+  leave from where you stood and set the spell off where they land. `Mods/Perihelion/synergies.json`
+  does this to Spellsmith's Nova Form. A rewrite never takes the aim from a `"target": "point"` skill: a charge still
+  carries you, and the form shapes what happens where you land.
+- `"creature": "self"` makes copies of the player: your class's crawler body, your gear and stats as they are now,
+  your weapon, and every class skill that aims at a target (`Mods/Perihelion/` Split Nucleus). `"strength": 0.4` is
+  the share of your damage; stuns, blinds, silences, taunts and set-backs land that often and last that share of
+  their turns, other effects keep that share of their turns and stacks. `"healthShare": 0.3` is their health and
+  `"look": "#6FB4F0"` tints them. A copy leaves no corpse and gives no xp. Skills with no action spec (vanilla
+  ones) aren't copied.
 - `"summonName": "Hoarlight"` names the summons. `"summonGroup": "Hoarlight"` puts summons from several abilities
   (and effects) in one pool: `maxSummons` counts the whole pool, and `"group:Hoarlight"` works in `ifSummonAlive`,
   `unlessSummonAlive` and `stacksOf` (+N per Hoarlight). `{ "do": "dismiss", "to": "summon", "ifSummonAlive":
@@ -489,6 +512,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "radius": 1.6,          // when it goes off, its actions hit everyone it affects this close; 0 = only who set it off
     "charges": 1,           // times it goes off before it is used up (0 = until "turns" runs out)
     "fuse": 0,              // > 0: it goes off by itself after that many of your turns (a timed mine)
+    "fuseOnly": false,      // true: only the fuse or springTraps set it off, never someone on it
+    "fall": "#CFEFFF",      // a streak of this colour comes down from overhead as it goes off
     "turns": 0,             // > 0: it fizzles out after that long; 0 = it stays on that floor until used
     "maxTraps": 3,          // most of this name at once; laying another removes the oldest
     "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.45", "sound": "event:/Abilities/Smuggler/Smugger_Flashbang",
@@ -575,7 +600,8 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   (basic attacks); with none it closes in instead. A channel already under way finishes. Bosses shrug it off, unless
   the action adds `"bossTurns": 1`: a boss is then silenced for that many turns and wears **Composed**, which stops any
   other silence until 3 turns after this one ends, so a boss can't be held silent.
-- `{ "do": "exhaust", "amount": 2 }`: every ability of the enemy that has a cooldown needs 2 more turns to come back
+- `{ "do": "exhaust", "amount": 2 }` (`"afterStun": true`, placed after the stun, counts the turns from when it
+  recovers, since cooldowns tick while stunned): every ability of the enemy that has a cooldown needs 2 more turns to come back
   (the enemy-side stamina burn: their big moves wait). Basic attacks are untouched. Works with `bonusPerStack`.
 - `{ "do": "swap" }`: you and the target trade tiles (stepping onto a tile triggers what's there, like walking). Not
   with bosses, NOKNOCKBACK or rooted enemies, or when either tile is shared.
@@ -665,9 +691,10 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 - `SwapWithPets = true`: with tile sharing off, walking into one of your pets (forwards, backwards or strafing) swaps
   places with it, so a pet with nowhere to step aside no longer blocks a corridor. Off = the vanilla nudge.
 - `CommandBar = true`: a strip on top of the hotbar with a button per pet (name and health; "scrap" = it cost scrap).
-  Click it twice to unsummon the pet (no corpse, no loot). Right-click twice to break it down: you get back the scrap
-  it cost (Engineer turrets, or any summon paid for with Mech Parts). Pets that cost no scrap can't be broken down,
-  so summoning never turns into a scrap source.
+  Click it twice to unsummon the pet (no corpse, no loot). Right-click it for the same menu as right-clicking the pet
+  in the world: orders, jobs, Swap places, Unsummon and Break down, which gives back the scrap it cost (Engineer
+  turrets, or any summon paid for with Mech Parts). Pets that cost no scrap can't be broken down, so summoning never
+  turns into a scrap source.
 - `GigamawEatsMinions = true`: the BioLabs plant's lasher vines devour converted minions (any type) and organic
   pets (humanoid or monster) standing in reach, and each one counts toward the feedings that open the fight.
   Mechanical pets are never eaten. Off = vanilla (they only get nicked for 5%).
@@ -1518,6 +1545,20 @@ Nest. Then:
   with more health and a chance to drop a rare.
 - **Rival crawlers**: 15% of side areas from floor 2 hold a named rival (a Nemesis body with two affixes, three times
   the health, an epic drop), marked on the minimap.
+- **Corrupted Mirror**: a side area may hold a boss (15% per area, `[SideAreas] BossChance`; 30% per layer in the Ichor
+  Deep; a tower only on its top layer). The first is optional: a cracked black mirror stands by a wall in a far room,
+  marked on the minimap, and nothing happens unless you click it from the next tile and choose to touch the glass. A
+  corrupted copy of you steps out, in your gear, with your stats and four times your health. It hits as hard as you do,
+  then loses 50% of every hit as the very last step, after block, crits, shields, armour and resistance.
+  Your skills come out of it shuffled, all dealing Void, with at least one from a class you don't have. Your resistances
+  guard other damage types. Your minions, summons and crew come out beside it as corrupted copies too (up to 6), with
+  1.5 times their health and the same 50% cut, all Void; a timed summon's copy runs out when the summon would have, and
+  they all fall when the mirror does. Together they may only take about 12% of your health in a round: if your party
+  would do more, checked when they step out and again each round, their hits are cut further (never under 15% of a
+  full hit), and what they lose comes back as more health, armour, dodge, block and resistance to everything. A strong
+  party makes a longer fight, not a sudden death. It leaves an epic and corrupted copies of two pieces of your gear:
+  every bonus 30% stronger and moved to a different stat or damage type, any weapon damage Void, and any skill or effect
+  the item grants swapped for another item's. Your own items stay yours. In the Ichor Deep it gets stronger with depth, but never hits as hard as you do.
 - Eight more anomalies: Alarm Grid (responder waves once you're seen), Stalker (a hunter after 20 turns), Coolant
   Breach, Void Bleed, Sentry Grid (turrets), Stim Haze (everyone hits harder), Forgotten Stores and Skeleton Shift.
 
@@ -1527,7 +1568,7 @@ rifts, the sealed vault, objectives, hunters and rivals are marked on the minima
 tracker and the Wire list the floors whose breach you haven't used yet.
 
 **Modding side areas.** A mod's `"sideAreas"` object adds or replaces (by `id`) `places`, `anomalies`, `kinds`, `rosters`,
-`affixes`, `vaults` (loot per grade), `nemesis` (rival bodies and names) and `effects`. `Mods/SideAreas/side_areas.json`
+`affixes`, `vaults` (loot per grade), `nemesis` (rival bodies and names), `bosses` and `effects`. `Mods/SideAreas/side_areas.json`
 holds every built-in one and shows each field. An anomaly combines parts: `lights`, `hazards`, `doors`, `spawn`,
 `caches`, `timer`, `pulse`, `hunter`, `alarm`, `playerEffect` / `enemyEffect`, `thin`, `vaultGrade`, `notWith`. A kind
 sets `theme` (near, deeper, shallower, any, same, floor:N), `anomalyOdds`, `force` / `exclude` / `only`, `rosters` and
@@ -1535,6 +1576,19 @@ sets `theme` (near, deeper, shallower, any, same, floor:N), `anomalyOdds`, `forc
 `holdout`, `bounty`, with a `model` prop on its pads). A kind picks its place with `place` (or `places`, one rolled per
 breach) and can set `size` ([min, max] rooms); a kind with neither is an *echo*, a copy of a neighbouring Chimera floor
 (the old mode, kept for mods).
+
+A **boss** sets `creature` (an enemy id, or `self` for a corrupted copy of the player), `weight` (0 keeps it out of the
+roll, for another mod to place), `minFloor` / `maxFloor`, `minDepth` (Ichor Deep), `kinds`, `health`, `effect`, `color`,
+`arrival` / `text` / `deathText` log lines, `loot` and `skills` (an enemy's format). A layer rolls `[SideAreas] BossChance`,
+or its kind's `bossChance` (0 to 1). The boss waits in a far room with a skull on the minimap, and its health bar comes up
+when you find it or it notices you. Give it a `challenge` and it stays out of the level until the player calls it: a
+`model` prop stands by a wall, a click asks first (`title`, `text`, `accept`, `decline`), and saying yes breaks the prop
+(`breakVfx`, `sound`) and brings the boss out beside it (`glow`, `tracker`, `far`). A `self` boss reads `mirror`:
+`strength` (status effects), `finalDamage` (what's left of a hit, last of all), `skills`, `foreign`, `minSkills`, `look`,
+`glow`, `gearDrops`, `gearPower`, `escort`, `escortHealth`, `escortDeadly` (the share of your health all the copies
+together may take in a round), `escortMinDamage` (the lowest share of a hit that cut can reach) and `escortDefense` (how
+much of what a copy loses comes back as toughness).
+`Mods/ExampleEnemies/enemies.json` adds a boss from another mod.
 
 A **place** sets its layout `style` (`spine`, `hub`, `grid` or `caves`), `rooms`, `roomSize`, `corridor`, `spine`,
 `height`, `loops` (second ways round), `archways` (gaps with no door), `lockedDoors` / `jammedOpen`, `tilesPerEnemy` /
@@ -1778,9 +1832,11 @@ you order it from its right-click menu), so a minion build plays as tactics rath
   - On the crew screen, each crawler has its own standing-order buttons.
   - **Right-click one of your companions** in the world (an Engineer bot, pet, summon, charmed bot, crew crawler or
     Conjoined body) for a small menu at the cursor with the orders for that one alone. The lit one is its current
-    order, and the header shows what it's doing and to whom. Pets also get **Unsummon** and, if they cost scrap,
-    **Break down** (click twice, as on the minion strip). Only a quick click opens it: holding the right button
-    still looks around, clicks on the hotbar and other panels are theirs, and it never opens on enemies or
+    order, and the header shows what it's doing and to whom. **Swap places** trades tiles with it for your turn, within
+    8 tiles and in sight; a turret or anything else that can't move refuses. Pets also get **Unsummon** and, if they
+    cost scrap, **Break down** (click twice). Right-clicking its button on the minion strip opens the same menu. Only a
+    quick click opens it: holding the right button still looks around, clicks on the hotbar and other panels are
+    theirs, and it never opens on enemies or
     neutrals. A minion ordered from its menu takes orders even with `CommandMinions` off, until you tell it to
     Engage. Click anywhere else to close it. `[Orders] MinionMenu` (on) turns it off; its size and opacity are
     `[Interface] MinionMenuSize`/`Opacity`.
@@ -2311,7 +2367,7 @@ own effects go quiet where no body is drawn or past `MaxCopiesOfGameEffect` (12)
 you, past `MaxCopiesOfStatusLook` (40) enemies showing the same status its particle waits for a place, looping effects further than `ParkEffectsBeyond` (20) tiles from you or in a room you can't see into stop until you come back (0 = never), a wild area spell or a blast from a status or a dying carrier lands on
 its first victim and on you at once and on the rest over the next frames, always before the turn ends, and the combat log rebuilds its text at most five times a second instead of once a line, with only its last lines built while they keep coming; the rest are back when it calms down or you scroll up. A status on an enemy applies at once while its look follows a few a frame, once that enemy is within `ParkEffectsBeyond`, and `MaxStatusGlows` (40) caps whole-body glows. Area spells and blasts find their tiles from a grid instead of walking the floor. A skill's sweep over a crowd keeps its beat up to three quarters of a second in all, then quickens, and looks up what rewrites a skill from a short list instead of everything you know and carry. `OneAtATime` spends at most 3 seconds per enemy phase on waiting for steps, after which the rest of a crowd walks together while attacks stay in order; the pause a stunned enemy takes coming round counts toward those seconds. Those seconds shrink as the crowd grows past 30 enemies, and once they're spent a turn still playing out goes on beside the next ones rather than holding them up. Enemy turns that have nothing to wait for use a set share of each frame, not a frame each. Physics and other fixed-step work runs less often while frames are slow, and back to normal once they recover. The XP bar and the skills menu update once a frame, and the game's own info lines stop going to the log, leaving warnings and errors. Each enemy answers an attacker and calls for help once a turn instead of once per hit, and fading meshes and long pursuits skip repeated work. An enemy that has started an attack plays it out instead of being cut off by a flinch. `HardwareTier` (Auto, Low, Mid, High; Auto goes by your CPU's threads) sets how much of this your computer is asked for: worker threads, the bus's share of a frame, and how many effects show at once. With the Threading mod, enemy paths are worked out on `WorkerThreads` (0 = the tier's number: half your CPU's threads on Low, all but two otherwise) when a crowd's phase starts (twice a second in Realtime with Pause), then checked against the map as each enemy moves, and bodies more than 20 tiles from you stop turning their heads, idling and sloshing their flasks, and rest their animators while no camera sees them; they still act as usual. `JobWorkers` (0 = the
 game's own number) sets how many threads Unity may use for particles, skinning and culling. `GraphicsJobs` spreads rendering
-over your threads and `IncrementalGC` spreads the garbage collector's pauses over frames; both work without `EventBus` and take effect the next time the game starts. A plugin should work with the
+over your threads and `IncrementalGC` spreads the garbage collector's pauses over frames; both work without `EventBus` and take effect the next time the game starts. `AssetStreaming` (off) takes textures nothing on your floor uses out of video memory, about 4 GB of the game's 7, and reads them back from disk when something needs them, which can cost a short pause the first time. The current floor stays whole, a texture stays `AssetStreamingKeepSeconds` (120) after its last use, smaller ones than `AssetStreamingSkipSmallerThanKB` (512) always stay, and so do UI art, fonts and any texture whose name contains a word in `AssetStreamingNeverUnload`. A plugin should work with the
 bus off: check `Api.EventBusOn`.
 
 `Context.Subscribe(topic, handler)` hears `Api.Publish(topic, data)`. Handlers run on the main thread, in a later frame,

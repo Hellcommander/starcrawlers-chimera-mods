@@ -67,6 +67,15 @@ namespace SCClassLoader
         public bool die;
 
         [JsonIgnore] internal string key, classId, packId;
+        /// <summary>A copy of your own skill (Mirrors): its share of your strength, the class rank it scales with, and
+        /// whether the caster leaps to its target first (your charge, on a copy that has to walk).</summary>
+        [JsonIgnore] internal float share;
+        [JsonIgnore] internal int copyRank;
+        /// <summary>A copy that hits at full damage whatever its share of status effects (the Corrupted Mirror).</summary>
+        [JsonIgnore] internal bool fullDamage;
+        [JsonIgnore] internal bool leapFirst;
+
+        internal MobSkillSpec ShallowCopy() => (MobSkillSpec)MemberwiseClone();
     }
 
     /// <summary>Enemies the skill brings in, on the caster's side.</summary>
@@ -269,6 +278,7 @@ namespace SCClassLoader
                     foreach (MobSkillSpec s in ps.skills) Attach(prefab.gameObject, s);
                     if (!string.IsNullOrEmpty(ps.prefix)) Plugin.Log.LogWarning($"Enemy patch {ps.key}: \"prefix\" only applies to chance-based patches");
                 }
+            Bosses.PrepareSkills();
             if (Patches.Count > 0) Plugin.Log.LogInfo($"Enemy skills: {Patches.Count} patch(es) for {string.Join(", ", Patches.SelectMany(x => x.enemies).Distinct())}");
         }
 
@@ -367,18 +377,21 @@ namespace SCClassLoader
         internal static ActionContext Context(ModMobAbility ab, MobSkillSpec s, Character target)
         {
             Character caster = ab.GetComponent<Character>();
-            float mult = 1f + s.floorScale * Math.Max(0, Game.FLOOR);
+            float mult = s.fullDamage ? 1f : s.share > 0f ? s.share : 1f + s.floorScale * Math.Max(0, Game.FLOOR);
             STAT_TYPE pw = Enum.TryParse(s.power ?? "", true, out STAT_TYPE st) ? st : s.melee ? STAT_TYPE.MeleePower : STAT_TYPE.RangedPower;
-            try
-            {
-                var probe = caster.ApplyPower(pw, new List<DmgObj> { new DmgObj(DAMAGE_TYPE.Crushing, 100) });
-                if (probe != null && probe.Count > 0 && probe[0].damage > 0) mult *= probe[0].damage / 100f;
-            }
-            catch { }
+            // a copy's own skills scale with its stats in their actions; only its weapon swing names a power
+            if (s.share <= 0f || !string.IsNullOrEmpty(s.power))
+                try
+                {
+                    var probe = caster.ApplyPower(pw, new List<DmgObj> { new DmgObj(DAMAGE_TYPE.Crushing, 100) });
+                    if (probe != null && probe.Count > 0 && probe[0].damage > 0) mult *= probe[0].damage / 100f;
+                }
+                catch { }
             return new ActionContext
             {
-                caster = caster, target = target, source = ab, classId = s.classId, rank = Mathf.Clamp(Game.FLOOR / 2 + 1, 1, 5),
+                caster = caster, target = target, source = ab, classId = s.classId, rank = s.share > 0f ? s.copyRank : Mathf.Clamp(Game.FLOOR / 2 + 1, 1, 5),
                 sourceName = $"{caster.GetName()}'s {s.name ?? s.id}", damageMult = mult, center = target != null ? target.transform.position : caster.transform.position,
+                share = s.share > 0f ? s.share : 1f,
             };
         }
 
@@ -398,6 +411,7 @@ namespace SCClassLoader
             if (caster == null || caster.GetIsDead()) yield break;
 
             ActionContext ctx = Context(ab, s, target);
+            if (s.leapFirst && target != caster) Moves.Leap(new ActionSpec(), ctx, target);
             List<Character> targets;
             if (Shapes.Is(s.shape) && target != caster)
             {

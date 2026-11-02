@@ -71,6 +71,7 @@ namespace SCClassLoader
                 "enemy" => TARGET_STYLE.Character,
                 "pet" => TARGET_STYLE.Character,
                 "floor" => TARGET_STYLE.Floor,
+                "point" => TARGET_STYLE.FloorCharacter,
                 "item" => TARGET_STYLE.Item,
                 _ => TARGET_STYLE.None,
             };
@@ -149,6 +150,7 @@ namespace SCClassLoader
                 "enemy" => TARGET_STYLE.Character,
                 "pet" => TARGET_STYLE.Character,
                 "floor" => TARGET_STYLE.Floor,
+                "point" => TARGET_STYLE.FloorCharacter,
                 "item" => TARGET_STYLE.Item,
                 _ => TARGET_STYLE.None,
             };
@@ -278,6 +280,8 @@ namespace SCClassLoader
                 return RangeCheck(c.GetMover() != null ? c.GetMover().GetCurrentNavNode() : null);
             }
             AI.AI_TEAM team = c.ai.GetBaseTeam();
+            // "point": someone of your own on the aimed tile is just the tile; you land beside them
+            if (rt.spec.target == "point" && (team == AI.AI_TEAM.Player || team == AI.AI_TEAM.Passive)) return RangeCheck(c.GetMover() != null ? c.GetMover().GetCurrentNavNode() : null);
             if (team == AI.AI_TEAM.Player || team == AI.AI_TEAM.Passive) return false;
             if (rt.spec.targetWhen != null && !When.Check(rt.spec.targetWhen, MakeContext(), c)) return false;
             return base.CanUseOn(c);
@@ -289,7 +293,7 @@ namespace SCClassLoader
             if (AllActions.Any(a => a.@do == "teleport"))
             {
                 // Like the vanilla Warp: a free, walkable node in the room you are standing in.
-                if (n.IsOccupied() || n.BlockCheck() || n.Block_Move) return false;
+                if ((rt.spec.target != "point" && n.IsOccupied()) || n.BlockCheck() || n.Block_Move) return false;
                 NavNode here = caster != null && caster.GetMover() != null ? caster.GetMover().GetCurrentNavNode() : null;
                 if (here == null || n.GetRoom() != here.GetRoom()) return false;
             }
@@ -313,6 +317,9 @@ namespace SCClassLoader
         }
 
         private static bool IsSelf(ActionSpec a) => (a.to ?? "").ToLowerInvariant() == "self";
+
+        /// <summary>What a cast does right now, perk and runes included (Mirrors copy it).</summary>
+        internal List<ActionSpec> CurrentActions { get { Bind(); return AllActions.ToList(); } }
 
         public override IEnumerator Use()
         {
@@ -373,13 +380,22 @@ namespace SCClassLoader
                 if (node == null) yield break;
                 center = node.transform.position;
             }
+            else if (s.target == "point")
+            {
+                Character aimed = Game.TARGET_C != null ? Game.TARGET_C : target;
+                if (aimed != null && aimed.ai != null && aimed.ai.GetBaseTeam() != AI.AI_TEAM.Player && aimed.ai.GetBaseTeam() != AI.AI_TEAM.Passive) primary = aimed;
+                node = primary != null && primary.GetMover() != null ? primary.GetMover().GetCurrentNavNode() : Game.TARGET_N != null ? Game.TARGET_N : targetNode;
+                if (node == null) yield break;
+                center = node.transform.position;
+            }
 
             ModAudio.Play(s.sound, caster.GetHitFx().position, rt.classId);
             if (caster == Player.instance) DashCam.Showcase(s.thirdPerson);
             Actions.SpawnVfx(s.castVfx, caster.GetHitFx().position);
+            Actions.Run(rt.spec.castActions, ctx, caster);
             if (channelSwing || channelShot) yield return FireWeapon(primary, primary != null ? primary.GetHitFx().position : center + Vector3.up * 0.3f);
             else if (s.melee && primary != null) Ability.DoWeaponAttack(caster, primary);
-            Vector3 from = caster.GetMover().GetCurrentNavNode().transform.position;
+            Vector3 from = caster.GetMover().GetCurrentNavNode().transform.position, origin = from;
             bool shaped = Shapes.Is(s.shape);
             if (shaped && !string.IsNullOrEmpty(s.travelVfx))
             {
@@ -398,10 +414,26 @@ namespace SCClassLoader
 
             if (node != null && AllActions.Any(a => a.@do == "teleport"))
             {
-                node = LandingNode(node);
-                if (node == null) yield break;
-                yield return Teleport(node);
-                center = node.transform.position;
+                NavNode stood = caster.GetMover().GetCurrentNavNode();
+                // aimed at an enemy you can already reach, or with nowhere free beside it, you strike from where you stand
+                NavNode land = s.target == "point" && primary != null && node.GetLinks().Contains(stood) ? stood : LandingNode(node);
+                if (land == null && s.target == "point") land = stood;
+                if (land == null) yield break;
+                node = land;
+                if (node != stood)
+                {
+                    Vector3 left = stood.transform.position;
+                    yield return Teleport(node);
+                    if (caster == Player.instance && !string.IsNullOrEmpty(s.dashAs))
+                    {
+                        Vector3 via = primary != null ? primary.transform.position : node.transform.position;
+                        float flew = Vector3.Distance(left, via) + Vector3.Distance(via, node.transform.position);
+                        if (!string.IsNullOrEmpty(s.dashTrail)) Moves.Streak(left + Vector3.up * 1.1f, node.transform.position + Vector3.up * 1.1f, Moves.Hex(s.dashTrail, Color.white), 0.1f, 0.7f);
+                        DashCam.Teleported(left, node.transform.position, blink: false, s.dashAs, primary != null ? primary.transform.position : (Vector3?)null);
+                        yield return new WaitForSeconds(Mathf.Clamp(0.1f * flew, 0.25f, 0.6f)); // the hit lands as you arrive
+                    }
+                }
+                center = from = node.transform.position; // a form's burst goes off where you landed
             }
 
             if (primary != null && s.dodgeable && DodgeCheck(caster, primary))
@@ -434,7 +466,7 @@ namespace SCClassLoader
             int pierces = SkillMods.Pierces(tuned);
             if (pierces > 0) victims = victims.OrderBy(v => (v.transform.position - from).sqrMagnitude).Take(pierces + 1).ToList();
             // a rewrite (a stance, a passive) may deliver the spell another way: a laid trap, a walking bomb, a loose drifter
-            bool delivered = tuned?.form != null && targetActions.Count > 0 && SkillMods.Deliver(tuned, this, ctx, victims, center, from, radius, targetActions);
+            bool delivered = tuned?.form != null && targetActions.Count > 0 && SkillMods.Deliver(tuned, this, ctx, victims, center, from, radius, targetActions, origin, primary);
             // wild magic may change the spell's form as it leaves you
             if (!delivered && caster == Player.instance && (s.target == "enemy" || s.target == "floor") && targetActions.Count > 0 && WildMagic.RollForm(out string wildForm))
                 WildMagic.Convert(wildForm, GetDisplayName(), ctx, victims, center, from, range, targetActions);
@@ -444,14 +476,14 @@ namespace SCClassLoader
             {
                 Actions.Run(targetActions, ctx, caster);
             }
-            else if (victims.Count == 0 && s.target == "floor")
+            else if (victims.Count == 0 && (s.target == "floor" || s.target == "point"))
             {
                 // Nobody at the aim point: ground (coins, knives, fields) still goes down there.
                 ctx.groundAtCenter = true;
                 Actions.Run(targetActions.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap" || a.@do == "raisewall").ToList(), ctx, caster);
                 ctx.groundAtCenter = false;
             }
-            if (!shaped && !string.IsNullOrEmpty(s.areaVfx) && (radius > 0f || s.target == "floor")) Actions.SpawnVfx(s.areaVfx, center + Vector3.up * 0.1f);
+            if (!shaped && !string.IsNullOrEmpty(s.areaVfx) && (radius > 0f || s.target == "floor" || s.target == "point")) Actions.SpawnVfx(s.areaVfx, center + Vector3.up * 0.1f);
             var struck = new List<Character>();
             var ripple = new SkillLane.Ripple(victims.Count);
             foreach (Character v in victims)
@@ -599,6 +631,7 @@ namespace SCClassLoader
                 if (s.target == "enemy") info.Add($"Target an enemy within {range:0.#}");
                 else if (s.target == "pet") info.Add($"Target {(string.IsNullOrEmpty(s.petGroup) ? "one of your summons" : "one of your " + s.petGroup + "s")} within {range:0.#}");
                 else if (s.target == "floor") info.Add($"Target a spot within {range:0.#}");
+                else if (s.target == "point") info.Add($"Target an enemy or a spot within {range:0.#}");
                 else if (s.target == "item") info.Add($"Use on an inventory item{(string.IsNullOrEmpty(s.itemTag) ? "" : " tagged " + s.itemTag.ToLowerInvariant())}");
                 if (s.itemCost != null && s.itemCost.Count > 0) info.Add("costs " + string.Join(", ", Costs.Select(Crafting.Describe)));
                 if (s.creditCost > 0) info.Add($"costs <color=#FFD966>{s.creditCost} credits</color>");

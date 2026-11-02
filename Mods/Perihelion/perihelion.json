@@ -1,0 +1,280 @@
+{
+  "id": "MOD_Perihelion",
+  "name": "Perihelion",
+  "description": "Crawlers who hold a comet's path in their heads and their muscles, and take it when they need to be elsewhere. The point of an orbit where a comet burns brightest is the point where it strikes.\n\nComet Charge carries you across a room faster than anything can answer: you can't lose health until your next turn, and everything around your landing flies back. What hits a wall takes more damage, is stunned and can't use its specials for a turn after it recovers. Split Nucleus sheds fragments of you that wear your gear and use your skills at reduced strength. Damage scales with [STR] and [PSI].\n\nRequires the immortal fix: PlayerImmortalTag under [Fixes] in the Breachwork Loader config, on by default.",
+  "archetype": "Muscle",
+  "icon": "icons/perihelion.png",
+  "iconFrom": "SKILLTREE_ForcePsyker",
+  "attributePriorities": {
+    "Strength": 4,
+    "PsiPower": 4,
+    "Toughness": 1
+  },
+  "effects": [
+    {
+      "id": "Incandescent",
+      "name": "Incandescent",
+      "icon": "icons/comet_charge.png",
+      "description": "You are the comet now, and nothing can take health from you until your next turn.",
+      "duration": 1,
+      "invulnerable": true,
+      "damageTakenMult": 0,
+      "vfx": "EFFECT_Xeno_Energy_Shield"
+    },
+    {
+      "id": "Calved",
+      "name": "Calved",
+      "icon": "icons/split_nucleus.png",
+      "description": "A fragment split from a crawler's nucleus. It holds that crawler's gear and skills at reduced strength, and it won't hold together for long.",
+      "duration": -1
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "point",
+        "name": "Comet Charge",
+        "icon": "icons/comet_charge.png",
+        "description": "You leave the deck as a comet and arrive before anything can answer. Whatever stands around your landing is thrown back, and a wall is a very bad thing to be thrown into.",
+        "rules": "You streak to the spot you pick, or land beside the enemy you pick. You can't lose health until your next turn.\nEverything within 2.1 of your landing takes Crushing damage and is thrown back 2 tiles, most bosses included.\nWhat hits a wall or another body takes more damage, is stunned for 2 turns, and its special attacks stay down for 1 turn after it recovers.\nLanding within 2.6 of your Ephemeris mark brings its comet down at once.\nScales with Strength + Psi Power.",
+        "range": 6,
+        "radius": 2.1,
+        "staminaCost": 14,
+        "cooldown": 5,
+        "dashAs": "PhCometHead",
+        "dashTrail": "#BFE8FF",
+        "castVfx": "PhCharge",
+        "areaVfx": "PhImpact",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.4",
+        "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+        "castActions": [
+          { "do": "effect", "to": "self", "effect": "@Incandescent" }
+        ],
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+          { "do": "throw", "amount": 2, "bosses": true, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+            { "do": "stun", "turns": 2 },
+            { "do": "exhaust", "amount": 1, "afterStun": true }
+          ] },
+          { "do": "springTraps", "to": "self", "fieldName": "Ephemeris", "near": 2.6 }
+        ],
+        "perk": {
+          "name": "Burning Tail",
+          "description": "The debris behind you is still on fire when it lands.",
+          "addActions": [ { "do": "effect", "effect": "#Burning" } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Strike",
+        "name": "Coma Strike",
+        "icon": "icons/coma_strike.png",
+        "description": "A blow with the comet's glowing shell wrapped around your arm. The shell burns what it touches.",
+        "staminaCost": 6,
+        "cooldown": 1,
+        "impactVfx": "PhStrike",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.2, "weapon": 0.5, "perRank": 1 },
+          { "do": "effect", "effect": "#Burning", "chance": 35 }
+        ],
+        "perk": {
+          "name": "Bow Shock",
+          "description": "The shell hits a moment before your fist does. Enemies are pushed back a tile, and a wall behind them stuns them for a turn.",
+          "addActions": [ { "do": "throw", "amount": 1, "actions": [ { "do": "stun", "turns": 1 } ] } ]
+        }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Split Nucleus",
+        "icon": "icons/split_nucleus.png",
+        "description": "Comets calve under strain, and so do you. Two fragments of you break away for a few turns, in your gear and at your strength as it stands now. They fight with your weapon and your skills, for reduced damage and weaker status effects: 40% of your damage, and stuns, blinds and silences land 40% as often. Each has 30% of your health.",
+        "staminaCost": 18,
+        "cooldown": 10,
+        "instant": false,
+        "castVfx": "PhCalve",
+        "sound": "event:/Abilities/Cyberninja/Cyberninja_Vanish",
+        "actions": [
+          { "do": "summon", "creature": "self", "summonName": "Fragment of You", "amount": 2, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment",
+            "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#6FB4F0", "effect": "@Calved", "summonVfx": "PhCalve" }
+        ],
+        "perk": {
+          "name": "Fast Fracture",
+          "description": "You have learned where you crack.",
+          "cooldownDelta": -2,
+          "staminaDelta": -4
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "point",
+        "name": "Ephemeris",
+        "icon": "icons/ephemeris.png",
+        "description": "An ephemeris says where a comet will be, and when. You work one out for a spot on this deck, and what you worked out is already on its way down.",
+        "rules": "Mark an enemy's tile or a spot within 7. In 2 turns a comet falls on the mark, and stepping on or off it changes nothing.\nEverything within 2.6 of the mark takes Crushing and Fire damage and is thrown outward 2 tiles.\nWhat hits a wall or another body takes more damage, is stunned for 2 turns, and its special attacks stay down for 1 turn after it recovers.\nLanding Comet Charge or Extinction Arc within 2.6 of the mark brings the comet down at once.\nOne mark at a time. Scales with Strength + Psi Power.",
+        "range": 7,
+        "staminaCost": 12,
+        "cooldown": 7,
+        "castVfx": "PhSurge",
+        "sound": "event:/Abilities/Prototype/ArmCannon_Charge",
+        "actions": [
+          { "do": "trap", "fieldName": "Ephemeris", "affects": "enemies", "fuse": 2, "fuseOnly": true, "charges": 1, "maxTraps": 1, "radius": 2.6,
+            "look": "PhMark", "vfx": "PhImpact", "fall": "#CFEFFF", "sound": "event:/Abilities/ForcePsyker/KineticSlam",
+            "actions": [
+              { "do": "damage", "type": "Crushing", "min": 5, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+              { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.1, "perRank": 1 },
+              { "do": "throw", "amount": 2, "fromCenter": true, "actions": [
+                { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+                { "do": "stun", "turns": 2 },
+                { "do": "exhaust", "amount": 1, "afterStun": true }
+              ] }
+            ] }
+        ],
+        "perk": {
+          "name": "Tight Orbit",
+          "description": "You come back around sooner.",
+          "cooldownDelta": -2
+        }
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "floor",
+        "name": "Tidal Pull",
+        "icon": "icons/tidal_pull.png",
+        "description": "A passing comet's weight, pressed on one spot of the deck. Everything nearby is dragged toward it and left off balance, packed close for your landing.",
+        "range": 6,
+        "radius": 2.6,
+        "staminaCost": 12,
+        "cooldown": 6,
+        "areaVfx": "PhTidal",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.25",
+        "sound": "event:/Abilities/Misc/Psykonics_Telekinesis",
+        "actions": [
+          { "do": "pull", "amount": 2, "pullToward": "center" },
+          { "do": "damage", "type": "Psi", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "effect", "effect": "#Reeling" }
+        ],
+        "perk": {
+          "name": "Roche Limit",
+          "description": "The pull reaches farther.",
+          "radiusDelta": 0.8
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Outgassing",
+        "icon": "icons/outgassing.png",
+        "description": "Heat a comet and it vents. When something hurts you, a jet of burning gas sometimes throws it back a tile. If that puts it into a wall or another body, it is stunned for a turn.",
+        "procs": [
+          { "on": "hurt", "chance": 30, "cooldown": 2, "vfx": "PhOutgas", "actions": [
+            { "do": "damage", "to": "attacker", "type": "Fire", "min": 2, "max": 4, "scale": "Strength+PsiPower", "scaleMult": 0.15, "perRank": 1 },
+            { "do": "throw", "to": "attacker", "amount": 1, "actions": [ { "do": "stun", "turns": 1 } ] }
+          ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Strength": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "pet",
+        "petGroup": "Fragment",
+        "name": "Rejoin Fragment",
+        "icon": "icons/rejoin_fragment.png",
+        "description": "Call a fragment back and fall to it. You land where it stood and take it back into you, healing some of what you've lost. The crash throws everything near it back a tile, and a wall stuns.",
+        "requires": "summon:group:Fragment",
+        "range": 7,
+        "radius": 2.1,
+        "staminaCost": 10,
+        "cooldown": 4,
+        "castVfx": "PhCalve",
+        "areaVfx": "PhImpact@0.7",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.3",
+        "sound": "event:/Abilities/Misc/Psykonics_Warp",
+        "actions": [
+          { "do": "phase" },
+          { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+          { "do": "throw", "amount": 1, "actions": [ { "do": "stun", "turns": 1 } ] },
+          { "do": "heal", "to": "self", "amount": 6, "perRank": 2, "scale": "Toughness", "scaleMult": 0.5 }
+        ],
+        "perk": {
+          "name": "Clean Return",
+          "description": "The fragment comes back with nearly everything it took.",
+          "addActions": [ { "do": "stamina", "to": "self", "amount": 12 } ]
+        }
+      }
+    },
+    {
+      "attributes": { "PsiPower": 1 },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Short Period",
+        "icon": "icons/short_period.png",
+        "description": "Your orbit tightens with every impact that ends something. When you or one of your allies makes a kill, all your other skills come back a turn sooner.",
+        "procs": [
+          { "on": "kill", "maxPerTurn": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 1 } ] },
+          { "on": "allyKill", "maxPerTurn": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 1 } ] }
+        ]
+      }
+    },
+    {
+      "attributes": { "Strength": 1, "PsiPower": 1 },
+      "newAbility": {
+        "base": "Bolt",
+        "target": "point",
+        "name": "Extinction Arc",
+        "icon": "icons/extinction_arc.png",
+        "description": "The comet that doesn't come back around. You go high and come down across the whole room, and the deck rings for a long while afterward.",
+        "rules": "You streak to the spot you pick, or land beside the enemy you pick. You can't lose health until your next turn.\nEverything within 3.2 of your landing takes heavy Crushing and Fire damage, starts Burning and is thrown back 3 tiles.\nWhat hits a wall or another body takes more damage, is stunned for 2 turns, and its special attacks stay down for 2 turns after it recovers.\nLanding within 2.6 of your Ephemeris mark brings its comet down at once.\nScales with Strength + Psi Power.",
+        "range": 9,
+        "radius": 3.2,
+        "staminaCost": 28,
+        "cooldown": 14,
+        "dashAs": "PhCometHead",
+        "dashTrail": "#FFD9A0",
+        "thirdPerson": 1.0,
+        "castVfx": "PhCharge",
+        "areaVfx": "PhExtinction",
+        "impactVfx": "PA_Force_Psyker_Kinetic_Slam.impactParticle@0.5",
+        "sound": "event:/Abilities/Soldier/Grenade_Explode",
+        "castActions": [
+          { "do": "effect", "to": "self", "effect": "@Incandescent" }
+        ],
+        "actions": [
+          { "do": "teleport" },
+          { "do": "damage", "type": "Crushing", "min": 6, "max": 11, "scale": "Strength+PsiPower", "scaleMult": 0.4, "perRank": 2 },
+          { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "PsiPower", "scaleMult": 0.25 },
+          { "do": "effect", "effect": "#Burning", "stacks": 2 },
+          { "do": "throw", "amount": 3, "actions": [
+            { "do": "damage", "type": "Crushing", "min": 4, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.25, "perRank": 1 },
+            { "do": "stun", "turns": 2 },
+            { "do": "exhaust", "amount": 2, "afterStun": true }
+          ] },
+          { "do": "springTraps", "to": "self", "fieldName": "Ephemeris", "near": 2.6 }
+        ],
+        "perk": {
+          "name": "Crater Rim",
+          "description": "The blast reaches the far walls.",
+          "radiusDelta": 1.0
+        }
+      }
+    }
+  ]
+}

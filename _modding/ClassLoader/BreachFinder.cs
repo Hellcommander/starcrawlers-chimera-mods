@@ -64,6 +64,7 @@ namespace SCClassLoader
             Room vault = Echoes.VaultRoom;
             if (vault != null && !Echoes.VaultOpen) Mark("star", vault.transform.position);
             foreach (Vector3 p in SideKinds.MarkerSpots()) Mark("quest", p);
+            foreach (Vector3 p in Challenge.MarkerSpots()) Mark("quest", p);
             foreach (var (pos, up) in SideLayers.LiftSpots()) Mark(up ? "quest" : "star", pos); // the way on, and the way back down
         }
 

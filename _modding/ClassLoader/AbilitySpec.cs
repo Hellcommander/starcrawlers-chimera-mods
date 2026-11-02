@@ -14,7 +14,8 @@ namespace SCClassLoader
         public string icon;
         /// <summary>active | passive</summary>
         public string type = "active";
-        /// <summary>self | enemy | floor | item | pet (one of your own summons, optionally only those of petGroup)</summary>
+        /// <summary>self | enemy | floor | point (an enemy or a floor tile: with "teleport" you land beside the enemy, or on the
+        /// tile) | item | pet (one of your own summons, optionally only those of petGroup)</summary>
         public string target = "enemy";
         /// <summary>target "pet": only summons of this summonGroup ("Hoarlight").</summary>
         public string petGroup;
@@ -50,6 +51,8 @@ namespace SCClassLoader
         /// <summary>A creature id ("Hoarlight"): while this ability moves you (leap, warp), the third-person dash shot
         /// shows you as that creature (its model, glow and particles) streaking through the target, not as your crawler.</summary>
         public string dashAs;
+        /// <summary>With dashAs on a "teleport" skill: a line of this colour ("#FFD08A") left along the path.</summary>
+        public string dashTrail;
         /// <summary>Seconds the camera pulls out over your shoulder as you use it, to see what it does on your body (DashCam).</summary>
         public float thirdPerson;
         /// <summary>Particle that flies from the caster to the target (enemy or floor) before the hit lands.</summary>
@@ -62,6 +65,8 @@ namespace SCClassLoader
         public string sound;
 
         public List<ActionSpec> actions = new List<ActionSpec>();
+        /// <summary>Run on you as the cast starts, before any move or hit (protection that has to cover the landing).</summary>
+        public List<ActionSpec> castActions;
         /// <summary>Passive (or always-on) triggers.</summary>
         public List<ProcSpec> procs = new List<ProcSpec>();
         /// <summary>Upgrade bought with a perk point.</summary>
@@ -275,6 +280,23 @@ namespace SCClassLoader
         /// turns = lifetime (0 = permanent), maxSummons = cap of living summons from this ability, effect = applied to each summon.</summary>
         public string creature;
         public int maxSummons;
+        /// <summary>summon, "creature": "self": how strongly the copy fights (0.4 = 40% of your damage, and its stuns, blinds
+        /// and silences land 40% as often; effects it puts on last and stack that much). See Mirrors.</summary>
+        public float strength = 0.4f;
+        /// <summary>summon, "creature": "self": the copy's health as a share of yours.</summary>
+        public float healthShare = 0.3f;
+        /// <summary>exhaust: count the turns from when the target recovers. Cooldowns tick while stunned, so a plain set-back under a stun runs out unseen. Put it after the stun.</summary>
+        public bool afterStun;
+        /// <summary>throw: bosses fly too, past the game's NOKNOCKBACK on them. Not Cerberus (IMMORTAL), whose fight runs on platforms, or rooted bosses, or onto tiles closed to bosses.</summary>
+        public bool bosses;
+        /// <summary>throw: away from the aim point, not from you (something that lands there).</summary>
+        public bool fromCenter;
+        /// <summary>trap: only its fuse (or springTraps) sets it off, never someone stepping or standing on it.</summary>
+        public bool fuseOnly;
+        /// <summary>trap: a hex colour; a streak of it comes down from overhead as it goes off.</summary>
+        public string fall;
+        /// <summary>springTraps: only traps this close to you (0 = all of them on the floor).</summary>
+        public float near;
         /// <summary>summon: shown name of each summon (instead of the creature's own).</summary>
         public string summonName;
         /// <summary>summon: the summon stays on the tile it appears on (it still attacks what comes within reach).</summary>
@@ -349,6 +371,8 @@ namespace SCClassLoader
         public ReactionSpec reaction;
         /// <summary>Fields the loader doesn't know: a code plugin's action reads its own from here (ActionCall.Arg).</summary>
         [Newtonsoft.Json.JsonExtensionData] public IDictionary<string, Newtonsoft.Json.Linq.JToken> extra;
+
+        internal ActionSpec ShallowCopy() => (ActionSpec)MemberwiseClone();
     }
 
     /// <summary>
@@ -561,6 +585,9 @@ namespace SCClassLoader
         public List<ActionSpec> onDeathActions = new List<ActionSpec>();
         /// <summary>Only one effect per group can be on a character; applying one removes the others (stances).</summary>
         public string group;
+        /// <summary>The bearer can't lose health while it lasts, whatever the source (hits, damage over time, hazards, executes).
+        /// With "damageTakenMult": 0 the hits also show as nothing.</summary>
+        public bool invulnerable;
         /// <summary>When the bearer would die: survive at this much health, run onSaveActions, and lose the effect.</summary>
         public int preventDeath;
         /// <summary>Seconds the camera pulls out over your shoulder when this lands on you (DashCam).</summary>

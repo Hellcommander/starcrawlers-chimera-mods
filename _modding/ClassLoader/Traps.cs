@@ -139,6 +139,7 @@ namespace SCClassLoader
             if (Sprung.Count > 40) Sprung.RemoveAt(0);
             var caught = Caught(tr, tripper);
             Actions.SpawnVfx(tr.spec.vfx, tr.pos + Vector3.up * 0.1f);
+            if (!string.IsNullOrEmpty(tr.spec.fall)) Moves.Streak(tr.pos + new Vector3(1.4f, 1.95f, 0.7f), tr.pos + Vector3.up * 0.1f, Moves.Hex(tr.spec.fall, Color.white), 0.14f, 0.7f);
             ModAudio.Play(tr.spec.sound, tr.pos, tr.classId);
             Character first = tripper ?? caught.FirstOrDefault();
             Game.LOG(first != null ? $"<color=#FFB35C>{tr.name}</color> goes off under {first.GetName()}!" : $"<color=#FFB35C>{tr.name}</color> goes off.");
@@ -161,9 +162,10 @@ namespace SCClassLoader
         }
 
         /// <summary>"springTraps": your traps of that name (all of them with none) on this floor go off now.</summary>
-        internal static void Spring(ActionSpec a)
+        internal static void Spring(ActionSpec a, ActionContext ctx = null)
         {
-            foreach (Trap tr in Here().Where(t => string.IsNullOrEmpty(a.fieldName) || Same(t.name, a.fieldName)).ToList())
+            foreach (Trap tr in Here().Where(t => (string.IsNullOrEmpty(a.fieldName) || Same(t.name, a.fieldName))
+                && (a.near <= 0f || ctx?.caster == null || Vector3.Distance(t.pos, ctx.caster.transform.position) <= a.near)).ToList())
                 GoOff(tr, null);
         }
 
@@ -176,7 +178,7 @@ namespace SCClassLoader
                 if (tr.arm > 0) tr.arm--;
                 if (tr.fuse > 0 && --tr.fuse == 0) { GoOff(tr, null); if (traps.Contains(tr)) Remove(tr); continue; }
                 if (tr.life > 0 && --tr.life == 0) { Game.LOG($"{tr.name} fizzles out."); Remove(tr); continue; }
-                if (!Live(tr)) continue;
+                if (!Live(tr) || tr.spec.fuseOnly) continue;
                 // Someone standing in it when your turn ends (it was laid under them, or they stopped there).
                 Character c = tr.zone.SelectMany(TileStacks.On).FirstOrDefault(x => GroundFields.Affects(tr.spec.affects, x));
                 if (c != null) GoOff(tr, c);
@@ -274,7 +276,7 @@ namespace SCClassLoader
         {
             yield return null;
             if (c == null || c.GetIsDead() || c.GetMover()?.GetCurrentNavNode() != n) yield break;
-            foreach (Trap tr in Here().Where(t => Live(t) && t.zone.Contains(n)).ToList())
+            foreach (Trap tr in Here().Where(t => Live(t) && !t.spec.fuseOnly && t.zone.Contains(n)).ToList())
             {
                 if (!GroundFields.Affects(tr.spec.affects, c)) continue;
                 try { GoOff(tr, c); } catch (Exception e) { Plugin.Log.LogError("Trap: " + e); }

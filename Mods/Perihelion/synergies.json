@@ -1,0 +1,29 @@
+{
+  "synergies": [
+    {
+      "id": "CometBreakup",
+      "name": "Comet Breakup",
+      "trees": [
+        "MOD_Perihelion",
+        "MOD_Spellsmith"
+      ],
+      "description": "A comet doesn't burst, it breaks up. Under Nova Form your attacks from other classes go out all eight ways at once: you take the way you aimed, and seven Fragments of You streak out the other seven from where you stood, each setting the spell off where it lands with a copy's weaker status effects. A spell laid on the ground stays a plain nova.",
+      "bonus": {
+        "modifies": [
+          {
+            "skills": "others",
+            "name": "Comet Breakup",
+            "summary": "seven Fragments of You take the other seven ways round you",
+            "when": {
+              "has": "MOD_Spellsmith@Novaform",
+              "of": "self"
+            },
+            "add": {
+              "mirrors": 7
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

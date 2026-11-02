@@ -163,7 +163,7 @@ namespace SCClassLoader
                 if (!touched) return;
                 spec = s.ShallowCopy();
                 string own = s.target;
-                spec.target = target ?? (form != null ? SkillMods.DefaultTarget(form, own) : own);
+                spec.target = own == "point" ? own : target ?? (form == "nova" && SkillMods.MovesYou(s) ? own : form != null ? SkillMods.DefaultTarget(form, own) : own); // a "point" skill goes where you chose: a form shapes what happens there, it never takes the aim (or the charge) away, and a nova leaves any skill that moves you its aim
                 if (form == "line" || form == "cone") spec.shape = form;
                 else if (form == "trap" || form == "grenade" || form == "monster" || form == "nova" || form == "drifter" || form == "area" || form == "scatter") spec.shape = null;
                 if (shape != null) spec.shape = Shapes.Is(shape) ? shape : null;
@@ -491,7 +491,7 @@ namespace SCClassLoader
                 if (chain != null) chain.jumps += t.jumps;
                 else
                 {
-                    var hits = acts.Where(a => !IsSelf(a) && a.@do != "field" && a.@do != "hazard" && a.@do != "trap").ToList();
+                    var hits = acts.Where(a => !IsSelf(a) && a.@do != "field" && a.@do != "hazard" && a.@do != "trap" && a.@do != "teleport").ToList();
                     if (hits.Count > 0)
                     {
                         var wrap = new ActionSpec { @do = "chain", jumps = t.jumps, radius = 2.5f, falloff = 0.8f, actions = hits };

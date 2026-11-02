@@ -13,7 +13,7 @@
       "id": "Stoked",
       "name": "Stoked",
       "description": "Your next attack from another class hits a quarter harder and sets its target Burning, keeping whatever your stance or load gives it. A quenched attack chills instead of burning.",
-      "duration": 4,
+      "duration": 2,
       "modifies": [
         {
           "skills": "others",
@@ -35,7 +35,7 @@
       "id": "WhiteHeat",
       "name": "White Heat",
       "description": "Your next attack from another class is worked white-hot: it ignores armor, shields and resistances.",
-      "duration": 4,
+      "duration": 2,
       "modifies": [
         {
           "skills": "others",
@@ -51,7 +51,7 @@
       "id": "Buried",
       "name": "Buried Charge",
       "description": "Your next attack from another class goes into the deck instead of the air, keeping whatever your stance gives it.",
-      "duration": 4,
+      "duration": 2,
       "group": "load",
       "modifies": [
         {
@@ -59,7 +59,7 @@
           "name": "Buried",
           "form": "trap",
           "armTurns": 1,
-          "turns": 8,
+          "turns": 5,
           "radius": 1,
           "model": { "mesh": "models/items/ss_buried_charge.glb", "scale": 0.8, "glow": "#FFB050", "glowStrength": 0.12 },
           "areaVfx": "fx_spellsmith_buried",
@@ -72,7 +72,7 @@
       "id": "Lobbing",
       "name": "Lobbing Arm",
       "description": "Your attacks from other classes are thrown in an arc and burst where they land.",
-      "duration": 40,
+      "duration": 10,
       "group": "forge",
       "modifies": [
         {
@@ -91,7 +91,7 @@
       "id": "Kindled",
       "name": "Kindled Shell",
       "description": "Your next attack from another class is packed into a Kindled Shell that walks it to the enemy, keeping whatever your stance gives it.",
-      "duration": 4,
+      "duration": 2,
       "group": "load",
       "modifies": [
         {
@@ -101,7 +101,7 @@
           "creature": "PA_Engineer_Spidermine.characterPrefab",
           "summonName": "Kindled Shell",
           "model": { "mesh": "models/items/ss_kindled_shell.glb", "scale": 1.4, "keepParticles": false, "bob": 0.03, "wobble": 5, "glow": "#FFB050", "glowStrength": 0.12, "deathVfx": "fx_spellsmith_shell" },
-          "turns": 4,
+          "turns": 3,
           "radius": 1.5,
           "burstOn": "contact",
           "areaVfx": "fx_spellsmith_shell",
@@ -114,7 +114,7 @@
       "id": "Novaform",
       "name": "Nova Form",
       "description": "Your attacks from other classes fire out of you in every direction at once: wider, weaker, and more tiring.",
-      "duration": 40,
+      "duration": 10,
       "group": "forge",
       "modifies": [
         {
@@ -132,7 +132,7 @@
       "id": "Hammered",
       "name": "Hammer Form",
       "description": "Your attacks from other classes are channelled through your weapon: they take its reach, accuracy and on-hit effects, keep their own damage, and shove.",
-      "duration": 40,
+      "duration": 10,
       "group": "forge",
       "modifies": [
         {
@@ -151,7 +151,7 @@
       "id": "Masterwork",
       "name": "Masterwork",
       "description": "Your next attack from another class is instant, runs on through three more enemies, stuns all of them, and a kill makes it ready again.",
-      "duration": 4,
+      "duration": 2,
       "group": "load",
       "modifies": [
         {
@@ -203,14 +203,14 @@
       "id": "Loosed",
       "name": "Loosed Spell",
       "description": "Your next attack from another class is let loose to wander the deck, going off on whoever it meets. That includes you, and once in a long while it comes out as an echo of a boss's attack.",
-      "duration": 4,
+      "duration": 2,
       "group": "load",
       "modifies": [
         {
           "skills": "others",
           "name": "Loosed",
           "form": "drifter",
-          "turns": 6,
+          "turns": 4,
           "radius": 1.1,
           "target": "floor",
           "consume": true,
@@ -292,7 +292,7 @@
         "target": "self",
         "instant": true,
         "staminaCost": 4,
-        "cooldown": 3,
+        "cooldown": 2,
         "sound": "sfx/ss_bury.wav",
         "actions": [
           {
@@ -318,7 +318,7 @@
         "sound": "sfx/ss_lob.wav",
         "instant": true,
         "staminaCost": 0,
-        "cooldown": 2,
+        "cooldown": 1,
         "actions": [
           {
             "do": "effect",
@@ -343,7 +343,7 @@
         "sound": "sfx/ss_kindle.wav",
         "instant": true,
         "staminaCost": 6,
-        "cooldown": 5,
+        "cooldown": 3,
         "actions": [
           {
             "do": "effect",
@@ -368,7 +368,7 @@
         "sound": "sfx/ss_nova.wav",
         "instant": true,
         "staminaCost": 0,
-        "cooldown": 2,
+        "cooldown": 1,
         "actions": [
           {
             "do": "effect",
@@ -429,7 +429,7 @@
         "sound": "sfx/ss_hammer.wav",
         "instant": true,
         "staminaCost": 0,
-        "cooldown": 2,
+        "cooldown": 1,
         "actions": [
           {
             "do": "effect",
@@ -454,7 +454,7 @@
         "sound": "sfx/ss_loose.wav",
         "instant": true,
         "staminaCost": 6,
-        "cooldown": 6,
+        "cooldown": 4,
         "actions": [
           {
             "do": "effect",
@@ -480,7 +480,7 @@
         "sound": "sfx/ss_masterwork.wav",
         "instant": true,
         "staminaCost": 6,
-        "cooldown": 9,
+        "cooldown": 6,
         "actions": [
           {
             "do": "effect",

@@ -27,6 +27,8 @@ namespace SCClassLoader
         public Item item;
         public float damageMult = 1f;
         public int chanceBonus;
+        /// <summary>A copy of you is casting (Mirrors): how much of a skill's control and effects reach the target.</summary>
+        public float share = 1f;
         /// <summary>The ability's aim point (the enemy's or floor tile's position; you for self abilities).</summary>
         public Vector3? center;
         /// <summary>Wide ground (fields/hazards with a radius) already laid by this cast, so an area ability lays it once.</summary>
@@ -37,6 +39,9 @@ namespace SCClassLoader
         public bool backfire;
         /// <summary>Ground (fields, hazards) goes at the aim point, not under the target: a floor-aimed ability with nobody there.</summary>
         public bool groundAtCenter;
+        /// <summary>A nova that moves you: you go the way you aimed, once, not to everyone it reaches (null aimed = the aim was a tile).</summary>
+        public bool spreading;
+        public Character aimed;
         /// <summary>Set by area abilities: stacks consumed from yourself are removed once, after every target is hit
         /// (effect id -> how many; 0 = all).</summary>
         public Dictionary<string, int> deferredSelfConsume;
@@ -128,6 +133,7 @@ namespace SCClassLoader
             if (a.when != null && !When.Check(a.when, ctx, t)) return;
             if (a.chance < 100 && Random.Range(1, 101) > a.chance + ctx.chanceBonus) return;
             if (SparesAlly(a, act, ctx, t)) return;
+            if (ctx.share < 1f && (a = Mirrors.Weaken(a, act, ctx)) == null) return;
 
             switch (act)
             {
@@ -148,14 +154,14 @@ namespace SCClassLoader
                 case "ricochet": Moves.Ricochet(a, ctx); break;
                 case "taunt": Afflictions.Taunt(a, ctx, t); break;
                 case "silence": Afflictions.Silence(a, ctx, t); break;
-                case "exhaust": Afflictions.Exhaust(ctx, t, Math.Max(1, a.amount + StackBonus(a, ctx, t))); break;
+                case "exhaust": Afflictions.Exhaust(ctx, t, Math.Max(1, a.amount + StackBonus(a, ctx, t)) + (a.afterStun ? Afflictions.StunLeft(t) + 1 : 0)); break;
                 case "swap": Afflictions.Swap(ctx, t); break;
                 case "arm": Reactions.Arm(a, ctx); break;
                 case "spring": Reactions.Spring(ctx); break;
                 case "hazard": GroundFields.LayHazard(a, ctx, t); break;
                 case "field": GroundFields.Lay(a, ctx, t); break;
                 case "trap": Traps.Lay(a, ctx, t); break;
-                case "springtraps": Traps.Spring(a); break;
+                case "springtraps": Traps.Spring(a, ctx); break;
                 case "wallspikes": Walls.Spikes(a, ctx, t); break;
                 case "wildcast": WildMagic.Cast(a, ctx, t); break;
                 case "surge": WildMagic.Surge(a, ctx, t); break;
@@ -437,7 +443,7 @@ namespace SCClassLoader
         {
             caster = x.caster, target = x.target, attacker = x.attacker, victim = x.victim, source = x.source,
             classId = x.classId, sourceName = x.sourceName, rank = x.rank, damageMult = x.damageMult,
-            chanceBonus = x.chanceBonus, deferredSelfConsume = x.deferredSelfConsume, hitVfx = x.hitVfx, paced = x.paced,
+            chanceBonus = x.chanceBonus, deferredSelfConsume = x.deferredSelfConsume, hitVfx = x.hitVfx, paced = x.paced, share = x.share,
         };
 
         private static int Turns(ActionSpec a) => Math.Max(1, a.turns > 0 ? a.turns : a.amount);
@@ -584,6 +590,7 @@ namespace SCClassLoader
             if (existing is ModEffect me && (me.MaxStacks > 1 || !me.Stackable))
             {
                 if (a.turns > 0) existing.OverrideDuration(a.turns + ExtraTurns(a, ctx, t)); else existing.RefreshDuration();
+                if (me.Invulnerable) existing.isFirstTurn = true; // or the refresh runs out on your own turn, before the enemies' it was cast to outlast
                 if (me.MaxStacks > 1) me.AddStacks(stacks, ctx);
                 Triggers.Inflicted(ctx.caster, t, id);
                 return;
@@ -849,8 +856,8 @@ namespace SCClassLoader
                 case "swap": s = $"You trade places with {who}"; break;
                 case "throw":
                     {
-                        string imp = Describe(a.actions, classId, "both").Replace("• ", "").Replace("\n", "; ");
-                        s = $"Throws {who} up to {Math.Max(1, a.amount)} tiles away from you" + (imp.Length > 0 ? $"; slamming into someone or a wall: {imp}" : "");
+                        string imp = Describe(a.actions, classId, "both").Replace("• ", "").Replace("\n", "; ").TrimEnd('.', ' ');
+                        s = $"Throws {who} up to {Math.Max(1, a.amount)} tile{(Math.Max(1, a.amount) > 1 ? "s" : "")} away from you" + (imp.Length > 0 ? $"; slamming into someone or a wall: {imp}" : "");
                         break;
                     }
                 case "leap": s = $"You leap to {who}"; break;
@@ -1174,10 +1181,16 @@ namespace SCClassLoader
             if (!ParticleLoad.Later(spec, pos)) SpawnNow(spec, pos);
         }
 
-        /// <summary>True when an effect was actually started.</summary>
-        internal static bool SpawnNow(string spec, Vector3 pos)
+        /// <summary>One of a pattern that only reads whole (a nova's eight ways): past MaxCopies, and never held back a frame.</summary>
+        internal static void SpawnPattern(string spec, Vector3 pos)
         {
-            if (VfxLife.Copies.TryGetValue(spec, out int copies) && copies >= MaxCopies) return false;
+            if (!string.IsNullOrEmpty(spec)) SpawnNow(spec, pos, capped: false);
+        }
+
+        /// <summary>True when an effect was actually started.</summary>
+        internal static bool SpawnNow(string spec, Vector3 pos, bool capped = true)
+        {
+            if (capped && VfxLife.Copies.TryGetValue(spec, out int copies) && copies >= MaxCopies) return false;
             if (EventBus.SkipEffect(pos)) return false;
             SplitScaleOnly(spec, out string own);
             float scale = SplitScale(spec, out string name);

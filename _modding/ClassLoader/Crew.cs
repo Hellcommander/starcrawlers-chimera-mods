@@ -271,6 +271,13 @@ namespace SCClassLoader
             try { Wear.Dress(c, m); } catch (Exception e) { Plugin.Log.LogWarning("Crew wear: " + e.Message); }
         }
 
+        /// <summary>Puts a crew member's gear on another body.</summary>
+        internal static void DressLike(Character copy, Character src)
+        {
+            Member m = Members.FirstOrDefault(x => NpcOf(x) == src);
+            if (m != null) Wear.Dress(copy, m);
+        }
+
         /// <summary>The crew member's basic attack: a melee strike or a ranged shot with no cooldown and some damage.</summary>
         internal static Ability BasicAttack(Character c, bool melee) => Loadout.BasicAttack(c, melee);
 
