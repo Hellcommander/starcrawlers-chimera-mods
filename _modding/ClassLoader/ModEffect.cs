@@ -110,7 +110,7 @@ namespace SCClassLoader
             {
                 Character who = target;
                 RemoveInstant();
-                if (who != null && !who.GetIsDead()) who.CalculateStats();
+                if (who != null && !who.GetIsDead()) BuffLane.AfterRemoved(who);
                 return;
             }
             chargeCount = Stacks - n;
@@ -238,13 +238,16 @@ namespace SCClassLoader
         {
             EffectSpec s = rt.spec;
             int k = MaxStacks > 1 ? Stacks : 1;
-            attributeMods = (s.stats ?? new Dictionary<string, int>())
-                .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
-                .Where(x => x != null).ToList();
-            resistanceMods = (s.resists ?? new Dictionary<string, int>())
-                .Select(kv => Enum.TryParse(kv.Key, true, out DAMAGE_TYPE t) ? new DmgObj(t, kv.Value * k) : null)
-                .Where(x => x != null).ToList();
-            if (target != null && !target.GetIsDead()) target.CalculateStats();
+            if ((s.stats?.Count ?? 0) + (s.resists?.Count ?? 0) + attributeMods.Count + resistanceMods.Count > 0)
+            {
+                attributeMods = (s.stats ?? new Dictionary<string, int>())
+                    .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
+                    .Where(x => x != null).ToList();
+                resistanceMods = (s.resists ?? new Dictionary<string, int>())
+                    .Select(kv => Enum.TryParse(kv.Key, true, out DAMAGE_TYPE t) ? new DmgObj(t, kv.Value * k) : null)
+                    .Where(x => x != null).ToList();
+            }
+            if (target != null && !target.GetIsDead() && !BuffLane.MovesNothing(this)) target.CalculateStats();
             if (target == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
         }
 
@@ -265,7 +268,7 @@ namespace SCClassLoader
             try
             {
                 RemoveInstant(); // gone before the burst so chained re-applies start fresh
-                bearer.CalculateStats();
+                BuffLane.AfterRemoved(bearer);
                 // a burst on you is gone before OnApplied could ask for its shot
                 if (bearer == Player.instance) DashCam.Showcase(s.thirdPerson);
                 Vector3 at = bearer.GetHitFx().position;
@@ -446,7 +449,7 @@ namespace SCClassLoader
             Character t = target;
             Unroot();
             base.Clear();
-            if (t != null && !t.GetIsDead()) t.CalculateStats();
+            if (t != null && !t.GetIsDead()) BuffLane.AfterRemoved(t);
         }
 
         public override void Deserialize(object d)
@@ -544,8 +547,9 @@ namespace SCClassLoader
             int lost = before - Mathf.Max(0, c.health);
             if (lost <= 0) return;
             if (c == Player.instance) PlayerLost += lost;
-            foreach (Effect e in c.effects.GetEffects())
-                if (e is ModEffect me) me.Taken += lost;
+            List<Effect> all = c.effects.effects;
+            for (int i = 0; i < all.Count; i++)
+                if (all[i] is ModEffect me && me != null) me.Taken += lost;
         }
 
         [HarmonyLib.HarmonyPatch(typeof(Character), nameof(Character.DamageHealth), new[] { typeof(int), typeof(Ability), typeof(bool) })]

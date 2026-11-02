@@ -28,6 +28,7 @@ namespace SCClassLoader
             ("CombatBadge", "the combat round badge and the combat banner at the top of the screen"),
             ("CrewScreen", "the crew screen"),
             ("Dialogs", "the pop-up choices such as the Ichor Deep's and the ones after the credits"),
+            ("EffectBox", "the fold tab on your effect icons"),
             ("FactionScreens", "the job board, auction, standing, contact and encounter screens"),
             ("Graveyard", "the graveyard of fallen crawlers"),
             ("HotbarPage", "the hotbar page label"),
@@ -149,7 +150,7 @@ namespace SCClassLoader
             public RectTransform scaled;
             public string title;
             public Corner corner;
-            public bool remember, collapsed, gripped;
+            public bool remember, collapsed, gripped, noGrip;
             public RectTransform gripHome;
             public float gripLift;
             private RectTransform tab, grip;
@@ -167,10 +168,13 @@ namespace SCClassLoader
 
             internal Vector3 Pivot => (scaled != null ? scaled : transform).position;
 
+            /// <summary>Folded as the player sees it: with the tabs turned off nothing stays folded.</summary>
+            internal bool Folded => collapsed && (collapseButtons == null || collapseButtons.Value);
+
             /// <summary>Panels that clear their children take the grip with them, so it comes back here.</summary>
             private void KeepGrip()
             {
-                if (!gripped && title == null) return;
+                if (noGrip || (!gripped && title == null)) return;
                 if (grip == null) MakeGrip();
                 bool show = (resizeGrips == null || resizeGrips.Value) && !collapsed && HasContent();
                 if (grip.gameObject.activeSelf != show) grip.gameObject.SetActive(show);

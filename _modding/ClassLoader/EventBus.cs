@@ -233,11 +233,14 @@ namespace SCClassLoader
             {
                 // what's waiting may name things the load has destroyed
                 while (queue.TryDequeue(out _)) Interlocked.Decrement(ref queued);
+                if (!Game.Game_isLoading) BuffLane.Flush(); // turned off with a redraw still owed
+                BuffLane.Forget();
                 return;
             }
             pumping = true;
             try
             {
+                BuffLane.Flush();
                 for (int i = 0; i < stamps.Length; i++)
                 {
                     if (stamps[i] == delivered[i]) continue;

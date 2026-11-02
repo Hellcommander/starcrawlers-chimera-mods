@@ -295,6 +295,7 @@ namespace SCClassLoader
             else if (dev == "aiportrait2") Instance.StartCoroutine(DevTestAiPortrait.RunAllowed());
             else if (dev == "grid") Instance.StartCoroutine(DevTestGrid.Run());
             else if (dev == "busstress") Instance.StartCoroutine(DevTestBus.Run());
+            else if (dev == "buffs") Instance.StartCoroutine(DevTestBuffs.Run());
             else if (dev == "realtime") Instance.StartCoroutine(DevTestRealtime.Run());
             else if (dev == "realtime2") Instance.StartCoroutine(DevTestRealtime.RunOn());
             else if (dev == "plugins") Instance.StartCoroutine(DevTestPlugins.Run());

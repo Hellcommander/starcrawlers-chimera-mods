@@ -543,7 +543,7 @@ namespace SCClassLoader
             // negative stacks bleed that many off (a resource that drains); the effect goes when none are left
             if (a.stacks < 0 && !Scaled(a))
             {
-                if (t.effects.GetEffect(id) is ModEffect have) { have.RemoveStacks(-a.stacks); t.CalculateStats(); }
+                if (t.effects.GetEffect(id) is ModEffect have) { have.RemoveStacks(-a.stacks); BuffLane.AfterRemoved(t); }
                 return;
             }
             if (!EffectManager.instance.CanUseOn(id, t)) return;
@@ -571,7 +571,8 @@ namespace SCClassLoader
                 fresh.OnApplied(ctx);
                 if (fresh.MaxStacks > 1) fresh.AddStacks(stacks - 1, ctx);
             }
-            t.CalculateStats();
+            // a mod effect has its numbers from the start, so landing already counted them; a game effect may set them after Init
+            if (!(e is ModEffect) || !EventBus.On) t.CalculateStats();
             if (t == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
             Triggers.Inflicted(ctx.caster, t, id);
         }
