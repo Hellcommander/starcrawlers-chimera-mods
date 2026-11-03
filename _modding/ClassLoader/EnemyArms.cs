@@ -7,6 +7,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
+using I2.Loc;
 using Newtonsoft.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -663,7 +664,12 @@ namespace SCClassLoader
             public string baseId;
             public bool ranged, drawn;
             public Renderer[] own;
+            /// <summary>Attacks named for the weapon they were made with ("Pistol Whip"), renamed while the spare is out.</summary>
+            public readonly Dictionary<Ability, LocalizedString> renamed = new Dictionary<Ability, LocalizedString>();
         }
+
+        /// <summary>What the combat log calls an attack made with the spare: "Carbonite Baton Strike", "Street Special Shot".</summary>
+        internal static string SpareAttackName(SpareMark s) => $"{ItemRegistry.NameOf(s.baseId)} {(s.ranged ? "Shot" : "Strike")}";
 
         /// <summary>On an enemy once its spare is rolled: the spare, or none.</summary>
         private class SpareRoll : MonoBehaviour { public SpareMark spare; }
@@ -722,6 +728,23 @@ namespace SCClassLoader
             s.drawn = on;
             s.gameObject.SetActive(on);
             foreach (Renderer r in s.own) if (r != null) r.enabled = !on;
+            // the log names the attack ("Guard Pistol Whip hits you"): with the spare out, it names the spare. A plain
+            // "Shoot" or "Attack" fits any weapon and stays.
+            Character c = s.GetComponentInParent<Character>();
+            if (on && c != null)
+            {
+                foreach (Ability a in c.GetComponentsInChildren<Ability>(true))
+                    if (Attack(a) && Fits(a, s.ranged) && !s.renamed.ContainsKey(a) && !Generic.Contains(Strip(a.displayName).ToLowerInvariant()))
+                    {
+                        s.renamed[a] = a.displayName;
+                        a.displayName = ClassRegistry.Term("EW_SPARE_" + s.baseId, s.ranged ? "Shot" : "Strike", SpareAttackName(s));
+                    }
+            }
+            else
+            {
+                foreach (var kv in s.renamed) if (kv.Key != null) kv.Key.displayName = kv.Value;
+                s.renamed.Clear();
+            }
             if (on) SpareDraws++;
         }
 
