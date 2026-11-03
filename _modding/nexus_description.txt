@@ -221,8 +221,8 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 [*][b]Hiring:[/b] four crawlers can be hired in side areas through their faction: Soldier, Smuggler, Cyberninja and Force Psyker. You can have up to two at once ([b]F6[/b] opens the crew screen).
 [*][b]Gear:[/b] give them weapons and armour from your pack. Their weapon replaces their basic attack, and what they wear shows on them.
 [*][b]Wages:[/b] pay them every floor. Miss two paydays and they walk off with your gear, or turn on you.
-[*][b]Orders:[/b] crew and Conjoined bodies take orders: Engage, Focus, Guard, Hold, Follow, Stand down, Move here, Fall back and Unleash.
-[*][b]Giving orders:[/b] use the order strip ([b]O[/b]), [b]Alt+1[/b] to [b]Alt+9[/b], or right-click a companion. Your summons and pets can take orders too: turn on CommandMinions, or order one from its right-click menu.
+[*][b]Orders:[/b] crew and Conjoined bodies take orders: Engage, Focus, Guard, Hold, Follow, Stand down, Move here, Fall back, Unleash, Kite (keep their distance), Shield (stand between you and the nearest enemy), Flank (go round to your target's far side), Draw fire (pull the enemy that's after you onto themselves) and Scatter (never stand next to each other or you).
+[*][b]Giving orders:[/b] use the order strip ([b]O[/b]), [b]Alt+1[/b] to [b]Alt+9[/b], or right-click a companion. The newer orders have no key until you set one. Your summons and pets can take orders too: turn on CommandMinions, or order one from its right-click menu.
 [*][b]Orders menu:[/b] right-click a pet's button on the minion strip for its orders, including [b]Swap places[/b]. Charmed enemies can be [b]Released[/b] back to their own side, freeing the slot.
 [*][b]Aiming past companions:[/b] while you aim, your minions, pets and crew don't get in the way of the enemy behind them. Buffs still land on them.
 [*][b]Idle allies:[/b] idle pets, summons and crew join fights.
@@ -269,7 +269,7 @@ Crafting, class search, retraining, your own character portraits, hotbar and sta
 [*][b]Sounds that never go silent:[/b] a mod sound that is missing or won't load plays a vanilla sound instead.
 [*][b]Diagonal steps:[/b] W+Q, W+E, S+Q and S+E, the numpad (Num Lock on or off), or a controller. No corner cutting, and a diagonal costs about 1.41 turns, as it should.
 [*][b]Summons:[/b] they step out behind you instead of standing up in front of the camera, where a skill asks for it, and a summon's look turns with its body.
-[*][b]Shared tiles:[/b] you, your pets and your allies can stand on the same tile (up to three).
+[*][b]Shared tiles:[/b] you, your pets and your allies can stand on the same tile (up to three) without flickering into each other, and a corpse is hidden while someone stands in it.
 [*][b]Saved builds:[/b] the creation screen's custom preset keeps a list of builds, not just one. Right-clicking it saves the classes you've already picked as a build, without wiping them.
 [*][b]Autosave:[/b] the game's hidden autosaves now respect the autosave option, and you can choose to autosave on every floor change.
 [*][b]Key binding:[/b] Enter, Backspace, Delete, the numpad keys and more can now be bound on the Keybindings screen, and hotbar rows 2 and 3 show their modifier (Ctrl+1, Alt+1).
@@ -412,7 +412,7 @@ The loader is a modding framework in its own right, and the bundled mods are wri
 [*][b]Portrait tools:[/b] any program can make portraits. Give it a folder with a [i]portrait_tool.json[/i] and it gets a job file with the character's classes, gear and effects. The Portrait Maker's source is included as an example.
 [*][b]Side area bosses:[/b] any mod can add bosses, from an enemy or a copy of the player, with their own skills, loot and an optional prop that starts the fight only when the player chooses.
 [*][b]Patching:[/b] later mods can patch or replace earlier mods' entries by id.
-[*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
+[*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. The example script (the Spark Tinker class) and the example plugin are off by default; turn them on in the mod manager. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
 [/list]
 
 [line]
