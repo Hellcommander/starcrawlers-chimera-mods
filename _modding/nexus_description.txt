@@ -1,5 +1,5 @@
 [center][size=6][b]Breachwork: a mod pack for StarCrawlers Chimera[/b][/size]
-[size=3][i]59 new classes, skill reshaping, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
+[size=3][i]60 new classes, skill reshaping, side areas, factions, new enemies, crew, an endless descent after the ending, skill synergies, quality of life and vanilla bug fixes[/i][/size][/center]
 
 [line]
 
@@ -7,9 +7,9 @@
 
 Breachwork is a large content expansion for [b]StarCrawlers Chimera[/b]. Extract it into the game folder, start a new character, and you have far more to build, more places to go and more that wants you dead.
 [list]
-[*][b]59 new classes[/b] to mix into your 7-tree build, next to vanilla trees or each other. Become a lightning duelist, rebuild yourself in the shape of what you eat, wire a room with traps, or play one mind in four bodies.
-[*][b]253 synergies:[/b] pairs of trees work together when you take both.
-[*][b]Side areas:[/b] breaches on Chimera's floors lead to freshly generated places with anomalies, objectives and sealed vaults.
+[*][b]60 new classes[/b] to mix into your 7-tree build, next to vanilla trees or each other. Become a lightning duelist, cross a room as a comet, rebuild yourself in the shape of what you eat, wire a room with traps, or play one mind in four bodies.
+[*][b]313 synergies:[/b] pairs of trees work together when you take both, and status synergies tie a class that exploits Burning, Toxified and the like to any class that causes them.
+[*][b]Side areas:[/b] breaches on Chimera's floors lead to freshly generated places with anomalies, objectives, sealed vaults and, now and then, a boss.
 [*][b]Five factions[/b] hire you for jobs, track your reputation and come after you when you cross them.
 [*][b]Ten new enemies[/b], each with its own skills, model and animations.
 [*][b]Crew:[/b] hire party members who wear the gear you give them and take orders.
@@ -29,9 +29,9 @@ Breachwork is a large content expansion for [b]StarCrawlers Chimera[/b]. Extract
 
 [size=5][b]Main features[/b][/size]
 
-[size=4][b]1. 59 new classes[/b][/size]
+[size=4][b]1. 60 new classes[/b][/size]
 
-Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the extra slots). Each has its own icon and a particle effect for each skill, and its abilities, stacks and resources are explained in the tooltips. Skills cost stamina unless a class's mechanic says otherwise, and a class's stacks and meters show as bars beside your health and stamina, toggled with [b]F3[/b]. Pick 7 trees as usual: a new class can sit next to any vanilla tree or any other new class.
+Every class has up to 9 tiers (vanilla trees have 7; the skills screen gets the extra slots). Each has its own icon and a particle effect for each skill, and its abilities, stacks and resources are explained in the tooltips. Skills cost stamina unless a class's mechanic says otherwise, and a class's stacks and meters show as bars beside your health and stamina, toggled with [b]F3[/b]. Perk points are rare, so every skill perk changes how its skill plays (a trigger, a ground field, a chain, an instant cast) instead of adding a number. Pick 7 trees as usual: a new class can sit next to any vanilla tree or any other new class.
 
 [spoiler]
 [size=3][b]Arendeth Classes (22)[/b][/size]
@@ -102,16 +102,17 @@ Body-first classes built on movement, grabs and thrown things.
 [*][b]Grapnel Acrobat[/b] (Guile): hookshot melee with yanks, zips, swing kicks, wall pins and a spinning finisher.
 [/list]
 
-[size=3][b]Standalone classes (8)[/b][/size]
+[size=3][b]Standalone classes (9)[/b][/size]
 [list]
 [*][b]Kelvin Magus[/b] (Intellect): four layers of Supercooled freeze an enemy solid. The heat you steal is banked as Stolen Heat, which feeds a Glacier Sentinel golem or vents as a Thermal Plume, and fire cracks frozen enemies apart. Hoard ten and you overheat.
-[*][b]Looking-Glass Rogue[/b] (Guile): Drink Me, Eat Me switches you between Shrunk (very hard to hit) and Grown (heavy blows that send enemies flying), and most of the kit changes with it. Dodges and kills build Wonder, which tilts every random roll your way, and a Tea Clock ticks through each fight and pours at six. Painted Guards daub enemies red for the claws and teeth of the last ranks, where you learn to vanish, leave your grin behind and become the Grinning Cat.
+[*][b]Looking-Glass Rogue[/b] (Guile): surreal magic. Sentence First lands the blow now and the verdict three turns later, and One Side, Other Side treats size as a loan, taken from an enemy or handed over until they're stuck. Your reflection steps out of the glass at the opposite size, enemies drop down a rabbit hole and land hard somewhere else, and the hours of the Tea Clock buy six impossible things that take no time. Dodges and kills build Wonder, which tilts every random roll your way. In the last ranks you leave your grin behind and become the Grinning Cat, who makes enemies forget whose side they're on.
 [*][b]Flux Savant[/b] (Intellect): rune sockets in your skills retune their element, shape and power, and the runes run flat until you spend stamina to recharge them. A growing augment pool changes how each spell behaves and lands, and taking flaws gives points back. Reagents react on contact, and an Instability meter can backfire. Rune Matrix on [b]F4[/b].
 [*][b]Odds Breaker[/b] (Guile): every trick costs real credits up front. Winning builds a Lucky Run that makes jackpots likelier and feeds Cash Out. Loaded Dice left on the floor roll for the first enemy to step on them and everyone around it. Starts with a small bankroll.
 [*][b]Swarm Conductor[/b] (Intellect): hijacks Chimera's CorpSec drones over a neural link, gives them orders and builds a couple of its own. Hijacks and orders cost stamina, and machines you recall or lose give some back.
 [*][b]Reaction Architect[/b] (Intellect): spends its turns wiring the room with tripwires, cut-offs and retorts that fire on the enemy's moves (closing in, backing off, shooting from afar, hitting, debuffing, missing or winding up a big move), then releases them all at once. Nine tiers, up to Exit Clause.
 [*][b]Conjoined[/b] (Muscle): one mind in up to four bodies, gained at tiers 1, 3 and 5. Each body is a full character with its own level, classes, gear and hotbar, while inventory, credits and quests are shared. The others fight beside you; click a party card to switch bodies, free out of combat or with Trade Bodies in it. If the body you play falls, you wake up in another.
 [*][b]Shadow Magus[/b] (Guile): a caster of the dark, driven by Recognition and Psi Power. Benighted dims enemies' aim, crits build Darkvision and chain or finish Benighted targets, Lose Them scatters a room blind, and Swallowed shrinks an enemy into the dark. A Shade of yourself pools dark that enemies lose you in, and The Thing in the Dark whistles up a Horror of your own; both are ranged casters with seven spells each. While you're Unlit or a Nightwalker, Horrors that would hunt you turn on whoever else is nearest. Snuff pays for the class's synergies itself, in place of Synergy Strain.
+[*][b]Comet Breaker[/b] (Muscle): comet magic driven by Strength and Psi Power. Comet Charge crosses the room to an enemy or a tile, you can't lose health until your next turn, and everything around your landing flies back, bosses too; whatever hits a wall is stunned. Ephemeris marks where a comet falls two turns later, and landing beside the mark brings it down at once. Split Nucleus makes two copies of you that fight with your gear and skills.
 [/list]
 [/spoiler]
 
@@ -119,9 +120,11 @@ Body-first classes built on movement, grabs and thrown things.
 
 [size=4][b]2. Skill Synergies[/b][/size]
 
-[b]253 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without.
+[b]313 pairs of skill trees[/b], vanilla and new, work together when you take both. Every synergy is a class interaction, not a flat bonus: marks spread, one class's resource pays for the other's effect, attackers get marked, and foes are shoved, stunned or silenced. Its level is the lower of the two ranks, up to 5, and raises its odds. [b]Synergy Strain[/b] sets a price on them, so a character with synergies isn't simply stronger than one without.
 
-Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar.
+Hover a tree on the creation screen to see what it pairs with and which pairs your picks already make. In game, the log announces new and grown synergies. A [b]Synergies[/b] view on the character screen, beside Attributes and Resistances, lists the ones you have and what each costs you, so they don't crowd your buff bar. On the skills screen, right-click a class's icon to see and use the skills your synergies give it.
+
+[b]Status Synergies[/b], a separate mod, adds 17 synergies built on a status instead of a pair of classes. A class that exploits Burning, Gashed, Toxified and the like works with any class that causes them, and each payoff spends the status, trading one effect for another.
 
 [size=4][b]3. Skill reshaping[/b][/size]
 
@@ -151,6 +154,8 @@ Each new floor has a 60% chance of a purple [b]breach pad[/b] somewhere off the 
 [b]Anomalies:[/b] each breach rolls one to three, such as Blackout, Gas Leak, Lockdown, Infestation, Collapsing Echo (50 turns to get out), Static Storm, Reinforced Garrison, Rich Seam, Alarm Grid, Stalker, Sentry Grid and Stim Haze. A rare Reliquary raises the vault two grades.
 
 [b]The vault:[/b] the room furthest from where you arrive is sealed, and a warden outside carries the override. Vaults go from grade 1 to 5: harder visits give better loot, and grade 5 holds a guaranteed legendary.
+
+[b]Bosses:[/b] side areas (15%) and the Ichor Deep (30%) can hold a boss. The [b]Corrupted Mirror[/b] is optional: a cracked black mirror stands in a far room, marked on the minimap, and nothing happens unless you touch the glass. Out comes a corrupted copy of you and your party, with your gear, shuffled skills that all deal Void, and four times your health, but it loses half of every hit. It drops an epic and corrupted copies of two of your items, with new item skills and mods that can change casting itself.
 
 [b]Who's inside:[/b] themed enemy rosters (CorpSec Detail, Rogue Machines, Scrap Pirates, Escaped Specimens and more), elites with affixes (Armored, Frenzied, Hulking, Shrouded, Mending), and named rival crawlers that drop epics.
 
@@ -218,6 +223,8 @@ Crew is optional and off by default; turn on [b]TeamPlay[/b] in Mod Settings.
 [*][b]Wages:[/b] pay them every floor. Miss two paydays and they walk off with your gear, or turn on you.
 [*][b]Orders:[/b] crew and Conjoined bodies take orders: Engage, Focus, Guard, Hold, Follow, Stand down, Move here, Fall back and Unleash.
 [*][b]Giving orders:[/b] use the order strip ([b]O[/b]), [b]Alt+1[/b] to [b]Alt+9[/b], or right-click a companion. Your summons and pets can take orders too: turn on CommandMinions, or order one from its right-click menu.
+[*][b]Orders menu:[/b] right-click a pet's button on the minion strip for its orders, including [b]Swap places[/b]. Charmed enemies can be [b]Released[/b] back to their own side, freeing the slot.
+[*][b]Aiming past companions:[/b] while you aim, your minions, pets and crew don't get in the way of the enemy behind them. Buffs still land on them.
 [*][b]Idle allies:[/b] idle pets, summons and crew join fights.
 [*][b]Traps:[/b] your allies don't walk onto live traps you can see, and crew and Conjoined bodies next to one try to disarm it when their odds are good.
 [/list]
@@ -247,6 +254,8 @@ Crafting, class search, retraining, your own character portraits, hotbar and sta
 [*][b]Character pictures:[/b] click the picture frame on the creation screen or above the character sheet and press [b]Load picture[/b] to pick a png or jpg from anywhere on your computer, or drop files in the game's [i]Portraits[/i] folder. Any size works, and each Conjoined body has its own picture.
 [*][b]Make Portrait:[/b] the [b]Character Portrait Tools[/b] mod, off by default, makes a picture of your character with no AI and nothing to download. The game renders your class's crawler body in one frame, in a ready pose with your real weapons, shield, stowed weapon, headgear, armour colour and tentacle arms, and the room you're in blurred behind. It needs a running game, not the creation screen, and glasses, masks and similar are left out for now.
 [*][b]Other portrait tools:[/b] the [b]Tool[/b] setting in Mod Settings swaps the render for another tool. [b]PortraitMaker[/b] is the optional Portrait Maker download on the Files tab, which draws a stylised picture from code. Your [url=https://github.com/Hellcommander/aamt]AAMT toolkit[/url]'s Tools\StarCrawlersChimera folder paints one with your own local AI and needs an NVIDIA GPU. They all run on your own computer, so nothing goes to an online service.
+[*][b]Enemy weapons (optional):[/b] turn on [b]Enemy Weapons[/b] in Mod Settings and a dead enemy's weapon can stay where it lands (30% of the time, always from a boss), keeping its model and kind, for you to pick up and use. Enemies may also carry a spare weapon of the other kind for attacks their own can't make. Enemy weapons run in a low-power mode: they hit at 75% of floor loot, but guns need no ammo and melee ones save stamina. With the event bus on, the first drop also brings a Scrap Bot that grinds loose weapons into scrap and rebuilds broken props.
+[*][b]Big fights (optional):[/b] the [b]Threading[/b] mod, off by default, turns on the event bus, moves enemy pathing to worker threads and skips work on off-screen models. [b]AssetStreaming[/b] lets textures your floor doesn't use leave video memory (on one test save, 7.1 GB went down to 2.7 GB). Neither changes what a skill does.
 [*][b]Hotbar pages:[/b] 4 pages by default. Flip them with the square bracket keys, Ctrl+Page Up/Down or the mouse wheel over the hotbar. Your saves still load without the mod and show page 1.
 [*][b]Stash pages:[/b] 6 tabs of 120 slots. Drop an item on a tab to send it there. The [b]Own[/b] tab is saved with your character and takes items the shared stash refuses.
 [*][b]Death recap:[/b] the death screen says exactly what killed you: the enemy, its skill, the damage, your health and the three hits before.
@@ -265,7 +274,7 @@ Crafting, class search, retraining, your own character portraits, hotbar and sta
 [*][b]Autosave:[/b] the game's hidden autosaves now respect the autosave option, and you can choose to autosave on every floor change.
 [*][b]Key binding:[/b] Enter, Backspace, Delete, the numpad keys and more can now be bound on the Keybindings screen, and hotbar rows 2 and 3 show their modifier (Ctrl+1, Alt+1).
 [*][b]Character names:[/b] up to 32 characters (or 64), with the case you type.
-[*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking. Skill tooltips now say where a stack stops.
+[*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking, and your effect icons fold away behind a tab that counts your buffs and debuffs. Skill tooltips now say where a stack stops.
 [/list]
 [/spoiler]
 
@@ -289,8 +298,13 @@ More than twenty fixes, from the "UH OH!" turn freeze to the Apartment locker lo
 [/list]
 [*][b]Perks that didn't match their tooltips:[/b] Iron Harvest, Avast Ye!, Pyramid Scheme, Nanite Replication, Mech Part, Unobtanium Chrome Job, Tempt Fate, Bastion, Lucky Find and Old Faithful.
 [*][b]Chemistry:[/b] Try Anything Once now lowers addiction for every chem, Weirdest Science no longer cuts some chems short or doubles the whole dose, and chems fed to your pet slime count properly.
+[*][b]Effects:[/b] when an effect ended, the next one in the list skipped its turn or sat out a hit. That no longer happens, so some effects now run out a turn sooner.
+[*][b]Errors:[/b] enemy Warp Jumps, fire setting off reactions like Flashpoint, events spawning mobs with no free tile, aiming with no skill selected, and Arm Cannon's or Thunderclap's Ready effect no longer throw errors.
 [*][b]Other fixes:[/b]
 [list]
+[*]Levelling past 100 no longer breaks the level-up.
+[*]Damage over time can't kill you in the cutscene after Cerberus.
+[*]An enemy under fire calls for help once a turn instead of on every hit.
 [*]Combo Builder keeps its combo through a save and load.
 [*]Demented and Doomed can roll their full 5 charges.
 [*]Health Regen above 7 now heals more per turn.
@@ -388,14 +402,15 @@ Report mod bugs on [url=https://github.com/Hellcommander/starcrawlers-chimera-mo
 
 [size=5][b]For modders[/b][/size]
 
-The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
+The loader is a modding framework in its own right, and the bundled mods are written with it. [i]Mods\MAKING_A_CLASS.md[/i] walks you from an empty folder to a three-skill class, and [i]Mods\README.md[/i] documents every field. Mods are folders of JSON or XML plus PNG, WAV and OBJ/GLB files, with a [i]mod.json[/i] for the name, version and dependencies. When data isn't enough, Lua scripts and C# plugins add to it.
 [list]
-[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. Passives can turn one stat into another, and mod classes that change gear for good can be kept out of class swaps. There's a shared library of status effects and ability templates to build on.
+[*][b]Classes:[/b] build abilities from scratch out of actions, effects, procs, conditions, counters and triggers, or borrow and tweak vanilla tiers. Most of what base-game skills do can be built in class files, perks can add procs or make a skill instant, and status synergies need only a status and a class. Passives can turn one stat into another, and mod classes that change gear for good can be kept out of class swaps. There's a shared library of status effects and ability templates to build on.
 [*][b]Content:[/b] items, crafting recipes, creatures and summons, enemies with their own skills, synergies, factions, and side area places, kinds, anomalies and vaults.
 [*][b]Assets:[/b] your own sounds, particle effects, 3D models and textures. [i]BreachworkModManager.exe --seal-audio[/i] seals a mod's sounds into an encrypted [i]sounds.pak[/i], for sound packs whose terms require embedded audio.
 [*][b]Lua scripts:[/b] [i]scripts/*.lua[/i] add actions, conditions, numbers and events. They run sandboxed, with no access to files, the internet or the game's code, so they need no OK from the player.
 [*][b]C# plugins:[/b] [i]plugins/*.dll[/i] can reach anything, so a mod with a plugin stays out until the player allows it. Your plugin is your own work, on your own terms.
 [*][b]Portrait tools:[/b] any program can make portraits. Give it a folder with a [i]portrait_tool.json[/i] and it gets a job file with the character's classes, gear and effects. The Portrait Maker's source is included as an example.
+[*][b]Side area bosses:[/b] any mod can add bosses, from an enemy or a copy of the player, with their own skills, loot and an optional prop that starts the fight only when the player chooses.
 [*][b]Patching:[/b] later mods can patch or replace earlier mods' entries by id.
 [*][b]Examples:[/b] the example class, item, enemy, script and plugin mods show the format and are safe to delete. [b]Realtime with Pause[/b] is an unfinished, source-only example plugin with no dll, so it does nothing unless you build it.
 [/list]
