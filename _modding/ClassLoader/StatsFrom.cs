@@ -37,7 +37,7 @@ namespace SCClassLoader
             {
                 var pac = Player_AbilityControl.instance;
                 if (Off || __instance != Player.instance || pac == null || __instance.effects == null || Game.Game_isLoading) return;
-                bool raised = false;
+                bool raised = false, sourced = false;
                 foreach (ModAbility a in pac.GetAbilities().OfType<ModAbility>())
                     foreach (StatFromSpec s in a.Spec?.statsFrom ?? Enumerable.Empty<StatFromSpec>())
                     {
@@ -50,9 +50,20 @@ namespace SCClassLoader
                         StatObj slot = group.FirstOrDefault(x => x != null && x.statType == to);
                         if (slot == null) continue;
                         if (s.start <= 0) slot.amount += amount;
-                        else slot.amount = slot.amount > 0 ? Math.Min(slot.amount, Math.Max(1, s.start - amount)) : Math.Max(1, s.start - amount);
+                        else
+                        {
+                            // with ShieldRegenPastCap on, what goes past every turn is kept for it to count
+                            // and effects that shorten it still do, on top of whichever of gear and this is better
+                            int value = s.start - amount;
+                            int mods = __instance.secondaryAttributes_mods.Where(x => x != null && x.statType == to).Sum(x => x.amount);
+                            int gear = slot.amount - mods;
+                            slot.amount = (gear > 0 ? Math.Min(gear, value) : value + gear) + mods;
+                            if (!ShieldRegen.PastCap.Value) slot.amount = Math.Max(1, slot.amount);
+                            sourced |= to == STAT_TYPE.ShieldRegen;
+                        }
                         raised |= to == STAT_TYPE.ShieldMax;
                     }
+                ShieldRegen.Settle(__instance, sourced);
                 __instance.shieldingMax = __instance.secondaryAttributes[14].amount; // the base method read it, and drew the bar, before this ran
                 __instance.shieldRegen = __instance.secondaryAttributes[15].amount;
                 if (raised && Menu_Player.instance.playerShieldItem == null && __instance.shielding > __instance.shieldingMax) __instance.shielding = __instance.shieldingMax; // its buffs ended

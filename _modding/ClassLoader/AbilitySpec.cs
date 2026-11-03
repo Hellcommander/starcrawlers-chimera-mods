@@ -715,6 +715,8 @@ namespace SCClassLoader
         public List<string> immune;
         /// <summary>No damage from your own side reaches the bearer (your summons, bursts and damage over time).</summary>
         public bool immuneToAllies;
+        /// <summary>Hits on the bearer don't restart its Shield Regen count, so a shield keeps refilling under fire (see ShieldRegen).</summary>
+        public bool steadyShield;
         /// <summary>How much of a reflected attack goes back (default 1 = all of it).</summary>
         public float reflectShare;
         public float damageDealtPerStack;

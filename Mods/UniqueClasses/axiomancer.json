@@ -1,7 +1,7 @@
 {
   "id": "MOD_Axiomancer",
   "name": "Axiomancer",
-  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They observe a target until nothing about it is unknown, work out what must happen next, and reality has no choice but to follow the proof.\n\nFirst Principles turns your Smarts, and a little of your Psi Power, into a small shield pool that needs no shield in hand and recharges every turn, faster when you are surrounded, so a hybrid build can wade into a swarm. Cold Read files a Case Study on an enemy and may Silence, Expose or Weaken it. Notes are your offense: Refutation turns a studied enemy's attacks back on it, Excluded Middle and Grand Synthesis cash them in. Insight is your defense: it swells the pool, and Cognitive Shell and Grand Synthesis spend it. Favors [SMT] and [PSI].",
+  "description": "A scholar who found out that a sufficiently rigorous thought has mass. They observe a target until nothing about it is unknown, work out what must happen next, and reality has no choice but to follow the proof.\n\nFirst Principles turns your Smarts, and a little of your Psi Power, into a small shield pool that needs no shield in hand and keeps refilling even while you are surrounded, so a hybrid build can wade into a swarm. Cold Read files a Case Study on an enemy and may Silence, Expose or Weaken it. Notes are your offense: Refutation turns a studied enemy's attacks back on it, Excluded Middle and Grand Synthesis cash them in. Insight is your defense: it swells the pool, and Cognitive Shell and Grand Synthesis spend it. Favors [SMT] and [PSI].",
   "archetype": "Intellect",
   "icon": "axiomancer.png",
   "attributePriorities": {
@@ -45,6 +45,13 @@
       }
     },
     {
+      "id": "UnderPressure",
+      "name": "Under Pressure",
+      "description": "Enemies on every side only sharpen the reasoning: their blows no longer interrupt your shield pool's refill.",
+      "duration": 2,
+      "steadyShield": true
+    },
+    {
       "id": "Separated",
       "name": "Separated",
       "description": "Set apart by definition. It cannot move.",
@@ -78,24 +85,18 @@
         "base": "Passive",
         "name": "First Principles",
         "icon": "axiomancer_t0.png",
-        "description": "A sufficiently rigorous thought has mass. You keep a small shield pool made of nothing but reasoning, no shield in hand needed: 1 point for every 3 Smarts and every 6 Psi Power. It recharges every turn, more with high Smarts and Psi Power, and faster still when two or more enemies are beside you. You also start with Shield Regen of 8, 1 point every 8 turns with no gear needed. It drops by 1 for every 6 Smarts and Psi Power combined and every 2 class ranks, down to every turn, or your gear's rate if that is better.",
+        "description": "A sufficiently rigorous thought has mass. You keep a small shield pool made of nothing but reasoning, no shield in hand needed: 1 point for every 3 Smarts and every 6 Psi Power. It refills on its own the way health does: 1 point every 8 turns with no gear needed, 1 turn sooner for every 12 Smarts and Psi Power combined, or your gear's rate if that is better. Hits restart the count, but with two or more enemies beside you, you are Under Pressure and their blows no longer interrupt it.",
         "statsFrom": [
           { "stat": "ShieldMax", "from": "Smarts", "per": 3 },
           { "stat": "ShieldMax", "from": "PsiPower", "per": 6 },
-          { "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 6, "rankPer": 2, "start": 8 }
+          { "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 12, "start": 8 }
         ],
         "procs": [
           {
             "on": "turn",
-            "actions": [
-              { "do": "recharge", "to": "self", "amount": 1, "scale": "Smarts+PsiPower", "scaleMult": 0.05 }
-            ]
-          },
-          {
-            "on": "turn",
             "when": { "value": "enemiesNear:1.5", "of": "self", "atLeast": 2 },
             "actions": [
-              { "do": "recharge", "to": "self", "amount": 2 }
+              { "do": "effect", "to": "self", "effect": "@UnderPressure" }
             ]
           }
         ]
@@ -138,7 +139,7 @@
         "base": "Passive",
         "name": "Refutation",
         "icon": "axiomancer_t2.png",
-        "description": "An attack you predicted is only evidence. When your shield takes a hit from an enemy with a Case Study, one note is spent to disprove it: the blow turns back on the attacker as Psi damage, your shield recharges 2 and you gain Insight. Up to 3 times a turn.",
+        "description": "An attack you predicted is only evidence. When your shield takes a hit from an enemy with a Case Study, one note is spent to disprove it: the blow turns back on the attacker as Psi damage, your shield recharges 1 and you gain Insight. Up to 3 times a turn.",
         "procs": [
           {
             "on": "absorb",
@@ -148,7 +149,7 @@
             "sound": "event:/Abilities/Misc/Psykonics_Dominate",
             "actions": [
               { "do": "damage", "type": "Psi", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "bonusPerStack": 2, "stacksOf": "@CaseStudy", "stacksFrom": "target", "stacksUsed": 1, "consumeStacks": true },
-              { "do": "recharge", "to": "self", "amount": 2 },
+              { "do": "recharge", "to": "self", "amount": 1 },
               { "do": "effect", "to": "self", "effect": "@Insight" }
             ]
           }
@@ -164,7 +165,7 @@
         "base": "Passive",
         "name": "Quiet Mind",
         "icon": "axiomancer_t3.png",
-        "description": "A mind left idle cools into clarity. Waiting a turn gives Insight (more with 16 Smarts) and recovers stamina and shield pool in proportion to your Smarts. Ending a turn in a fight with your stamina nearly full turns the unspent effort into Insight.",
+        "description": "A mind left idle cools into clarity. Waiting a turn gives Insight (more with 16 Smarts) and recovers stamina and a little shield pool in proportion to your Smarts. Ending a turn in a fight with your stamina nearly full turns the unspent effort into Insight.",
         "procs": [
           {
             "on": "wait",
@@ -172,7 +173,7 @@
               { "do": "effect", "to": "self", "effect": "@Insight", "stacks": 2 },
               { "do": "effect", "to": "self", "effect": "@Insight", "when": { "value": "Smarts", "of": "self", "atLeast": 16 } },
               { "do": "stamina", "to": "self", "amount": 3, "scale": "Smarts", "scaleMult": 0.3 },
-              { "do": "recharge", "to": "self", "amount": 2, "scale": "Smarts", "scaleMult": 0.2 }
+              { "do": "recharge", "to": "self", "amount": 1, "scale": "Smarts", "scaleMult": 0.1 }
             ]
           },
           {

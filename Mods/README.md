@@ -191,6 +191,7 @@ skill landed on, a burst's bearer), never below a tenth, so a blast hits hardest
     "critDamagePerStack": 0.0,    // the same, added per stack
     "immune": [ "#Poisoned", "EFFECT_Poison", "CONFUSE" ], // effects (mod or vanilla) the bearer can't get while it holds
     "immuneToAllies": false,      // true: no damage from your own side reaches the bearer (your summons, bursts, damage over time)
+    "steadyShield": false,        // true: hits don't restart the bearer's Shield Regen count (vanilla restarts it on every hit)
     "hidden": false,              // true: kept off the buff bar, and purge and the buff / debuff counts pass over it (a counter, a passive's inner rule)
     "trance": false,              // true (on you): you sit down and your turns pass on their own while it holds, a meditation
     "endWhen": { "value": "stamina%", "atLeast": 100 }, // checked each turn (of = the bearer); once it holds the effect ends as if it ran out
@@ -717,8 +718,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `bonusPerStack` adds spells. `"pool": "monsters"` throws the mod monsters' attacks instead (plain-effect ones), and
   `"pool": "all"` mixes both. The Wildcaster is built on it; `SCCL_DEVTEST=wildcaster` tests it.
   - `"from"` can add stats (`"Smarts+PsiPower"`). For a stat where lower is better, such as `ShieldRegen` (turns per
-    point), add `"start"`: `{ "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 6, "rankPer": 2, "start": 8 }` gives 8
-    minus total / 6 minus class rank / 2, at least 1, and only when that beats your gear.
+    point), add `"start"`: `{ "stat": "ShieldRegen", "from": "Smarts+PsiPower", "per": 12, "start": 8 }` gives 8
+    minus total / 12 (and minus class rank / `rankPer` if set), used only when that beats your gear. Effects that shorten Shield Regen
+    (`"stats": { "ShieldRegen": -2 }`) still count on top, and what goes past every turn refills more per turn
+    (see ShieldRegenPastCap).
   - `"statsFrom": [{ "stat": "PsiPower", "from": "Smarts", "per": 2 }]` on a passive: while you know it, one point of a
     stat for every `per` points of another, with gear and effects counted and kept current.
   - `"do": "recharge"`: fills your regular shield pool (`ShieldMax`) by `amount` plus scaling, up to its maximum. No shield
@@ -2309,6 +2312,10 @@ Found earlier:
 - **HealthRegenPastCap:** the game heals 1 HP every (8 − Health Regen) turns, so at 7 Health Regen you heal every
   turn and more did nothing. Now every 5 points past 7 heal 1 more HP per turn (12 heals 2 a turn, 32 heals 6).
   Up to 7 nothing changes. The Health Regen tip on the character sheet says what yours heals.
+- **ShieldRegenPastCap:** Shield Regen works the same way, as turns per shield point, and every source adds into one
+  total. At 1 the pool refills every turn and more did nothing; going past it was worse, since a total of 0 fell back
+  to every 8 turns and one below 0 never refilled. Now it stops at every turn and every 5 points past it refill 1 more
+  per turn. A pool with no Shield Regen of its own, only effects that shorten it, starts from vanilla's 8.
 - **LockerSaveFix:** the game only saved the apartment locker while your inventory held something.
   - **Duplicate:** take an item out of the locker and equip it, so your inventory is empty again, then close. The locker isn't saved, so reopening it brings the item back while you're still wearing it.
   - **Loss:** move your last items into the locker and close it. Reopening it shows the older contents, and the items you just moved are gone.

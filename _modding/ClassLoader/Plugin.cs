@@ -67,6 +67,7 @@ namespace SCClassLoader
             Elites.Bind(Config);
             ChemistryFixes.Bind(Config);
             HealthRegen.Bind(Config);
+            ShieldRegen.Bind(Config);
             StackCaps.Bind(Config);
             StuckTurns.Bind(Config);
             EndGame.Bind(Config);
