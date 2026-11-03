@@ -195,11 +195,16 @@ namespace SCClassLoader
         public string unlessSummonAlive;
 
         // giveItem / consumeItem / salvage / craft
-        /// <summary>giveItem/consumeItem: item id ("Mod:Id" or vanilla). consumeItem may use "tag" instead.</summary>
+        /// <summary>giveItem/consumeItem: item id ("Mod:Id" or vanilla). consumeItem may use "tag" instead. giveItem takes
+        /// "$item": another of the item the skill is aimed at, or of the item behind the trigger (the consumable a
+        /// "useItem" proc saw used, the item a "craft" proc saw made).</summary>
         public string item;
         public string tag;
         /// <summary>salvage: what the targeted item breaks into.</summary>
         public List<GiveSpec> gives;
+        /// <summary>salvage: breaks down the whole stack instead of one; "gives" counts once for every "amount" items in
+        /// it (default 1), rounded down, so "amount": 2 turns ammo into parts at 2 to 1.</summary>
+        public bool whole;
         /// <summary>craft: limit the Fabricator to these recipe ids (default: every field recipe).</summary>
         public List<string> recipes;
 
@@ -648,6 +653,14 @@ namespace SCClassLoader
         /// <summary>% chance, per stack, that each round your guns spend goes back into the load (the shot still has
         /// its full damage). On the crawler only.</summary>
         public int ammoSave;
+        /// <summary>% chance, per stack, that a skill's itemCost isn't spent (the skill still needs the items to hand). On
+        /// the crawler only.</summary>
+        public int keepCost;
+        /// <summary>Effects your consumables put on you (a chem, a stim, a medkit's buff) last this share longer, per stack:
+        /// 1 = twice as long. Effects with no set length aren't changed. On the crawler only.</summary>
+        public float itemTurns;
+        /// <summary>Effects your consumables put on you go on each of your summons too, for as long. On the crawler only.</summary>
+        public bool shareItems;
         /// <summary>Rules for the floor's damaging hazards while this is on the crawler, whoever laid them (see HazardRuleSpec).</summary>
         public List<HazardRuleSpec> hazardRules;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>

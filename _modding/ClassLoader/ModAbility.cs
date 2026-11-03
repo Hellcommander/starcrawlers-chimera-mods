@@ -409,7 +409,7 @@ namespace SCClassLoader
             ctx.paced = new List<IEnumerator>();
             if (s.target != "self" && !AllActions.Any(x => x.@do == "echo")) Actions.LastUsed = this; // echo only replays offensive spells
             caster.ModStamina(-GetStaminaCost());
-            if (rt.spec.itemCost != null && caster == Player.instance) foreach (CostSpec c in Costs) Crafting.Consume(c);
+            if (rt.spec.itemCost != null && caster == Player.instance && !Consumables.KeepsCost(GetDisplayName())) foreach (CostSpec c in Costs) Crafting.Consume(c);
             if (rt.spec.stackCost?.effect != null && caster.effects.GetEffect(Actions.EffectId(rt.spec.stackCost.effect, rt.classId)) is ModEffect paid)
                 paid.RemoveStacks(StackCostAmount);
             if (rt.spec.creditCost > 0 && caster == Player.instance)

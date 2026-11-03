@@ -673,6 +673,15 @@ namespace SCClassLoader
 
         internal int AmmoSaveOdds { get { Bind(); return (rt?.spec.ammoSave ?? 0) * Math.Max(1, Stacks); } }
 
+        /// <summary>This effect's consumable rules for its stacks: itemTurns, shareItems, keepCost.</summary>
+        internal (float, bool, int) ItemRules()
+        {
+            Bind();
+            if (rt == null) return (0f, false, 0);
+            int n = Math.Max(1, Stacks);
+            return (rt.spec.itemTurns * n, rt.spec.shareItems, rt.spec.keepCost * n);
+        }
+
         /// <summary>This effect's "hazardRules", each with the stacks it counts for.</summary>
         internal IEnumerable<(HazardRuleSpec, int)> HazardRules()
         {
@@ -728,6 +737,9 @@ namespace SCClassLoader
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
             if (s.keepItem > 0) lines.Add($"{s.keepItem * Math.Max(1, Stacks)}% chance a {(string.IsNullOrEmpty(s.keepItemMatch) ? "consumable" : string.Join(" or ", s.keepItemMatch.Split('|').Select(x => x.Trim().ToLowerInvariant())) + " item")} you use isn't used up");
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
+            if (s.keepCost > 0) lines.Add($"{s.keepCost * Math.Max(1, Stacks)}% chance a skill's item cost isn't spent");
+            if (s.itemTurns > 0f) lines.Add($"What your consumables put on you lasts {Mathf.RoundToInt(s.itemTurns * Math.Max(1, Stacks) * 100)}% longer");
+            if (s.shareItems) lines.Add("What your consumables put on you goes on your summons too");
             if (AmmoSaveOdds > 0) lines.Add($"{AmmoSaveOdds}% chance each round your guns fire goes back into the load");
             if ((s.grantTags?.Count ?? 0) > 0) lines.Add(string.Join("; ", s.grantTags.Select(TagWords)));
             foreach (var (r, n) in HazardRules()) { string w = SCClassLoader.HazardRules.Describe(r, n); if (w.Length > 0) lines.Add(w); }

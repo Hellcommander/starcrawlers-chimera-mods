@@ -249,6 +249,7 @@ namespace SCClassLoader
             AudioManager.PlayEvent("event:/UI/Shing");
             Game.LOG($"You fabricate {name}{(r.amount > 1 ? $" ×{r.amount}" : "")}.");
             Menu_Inventory.instance.Refresh();
+            ProcHub.FireItem("craft", made, $"{made.GetName(false)}|{r.outputId}");
             return null;
         }
 

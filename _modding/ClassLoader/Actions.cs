@@ -1052,7 +1052,14 @@ namespace SCClassLoader
         private static void GiveItem(ActionSpec a, ActionContext ctx)
         {
             if (ctx.caster != Player.instance || string.IsNullOrEmpty(a.item)) return;
-            string id = Crafting.ResolveItem(a.item, null);
+            string id;
+            if (a.item.Equals("$item", StringComparison.OrdinalIgnoreCase))
+            {
+                Item behind = ctx.item != null ? ctx.item : ProcHub.ItemNow;
+                if (behind == null || string.IsNullOrEmpty(behind.itemId)) return;
+                id = behind.itemId;
+            }
+            else id = Crafting.ResolveItem(a.item, null);
             if (Crafting.Give(id, Math.Max(1, a.amount)) != null) Game.LOG($"{ctx.sourceName}: you get {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(id)}.");
         }
 
@@ -1070,7 +1077,10 @@ namespace SCClassLoader
             Item it = ctx.item;
             if (it == null || ctx.caster != Player.instance) return;
             string name = it.GetName(false);
-            if (it.stack > 1) { it.SetStack(it.stack - 1); it.CalculateValue(); }
+            // "whole": the stack goes, and the gives count once per "amount" items in it
+            int used = a.whole ? Math.Max(1, it.stack) : 1;
+            int times = a.whole ? used / Math.Max(1, a.amount) : 1;
+            if (it.stack > used) { it.SetStack(it.stack - used); it.CalculateValue(); }
             else
             {
                 Menu_Inventory.instance.RemoveItem(it, null, isSilent: true);
@@ -1079,9 +1089,12 @@ namespace SCClassLoader
             var got = new List<string>();
             foreach (GiveSpec g in a.gives ?? new List<GiveSpec>())
             {
-                if (g.chance < 100 && Random.Range(1, 101) > g.chance + ctx.chanceBonus) continue;
+                int count = 0;
+                for (int i = 0; i < times; i++)
+                    if (g.chance >= 100 || Random.Range(1, 101) <= g.chance + ctx.chanceBonus) count += Math.Max(1, g.count);
+                if (count <= 0) continue;
                 string id = Crafting.ResolveItem(g.item, null);
-                if (Crafting.Give(id, Math.Max(1, g.count)) != null) got.Add($"{Math.Max(1, g.count)}× {ItemRegistry.NameOf(id)}");
+                if (Crafting.Give(id, count) != null) got.Add($"{count}× {ItemRegistry.NameOf(id)}");
             }
             Menu_Inventory.instance.Refresh();
             Game.LOG($"{ctx.sourceName}: {System.Text.RegularExpressions.Regex.Replace(name, "<.*?>", "")} breaks down into {(got.Count > 0 ? string.Join(", ", got) : "nothing useful")}.");
@@ -1267,9 +1280,11 @@ namespace SCClassLoader
                         s = $"Tries to bind {who} to you for good ({odds}, up to +50% more the more wounded it is; not bosses or elites){(a.maxSummons > 0 ? $", at most {a.maxSummons} at a time" : "")}{won}{lost}";
                         break;
                     }
-                case "giveitem": s = $"Gives you {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null))}"; break;
+                case "giveitem": s = "$item".Equals(a.item, StringComparison.OrdinalIgnoreCase)
+                        ? $"Gives you {(a.amount > 1 ? a.amount + " more" : "another")} of that item"
+                        : $"Gives you {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null))}"; break;
                 case "consumeitem": s = $"Uses up {Math.Max(1, a.amount)}× {(a.item != null ? ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null)) : (a.tag ?? "?").ToLowerInvariant())}"; break;
-                case "salvage": s = $"Breaks the item down into {string.Join(", ", (a.gives ?? new List<GiveSpec>()).Select(g => $"{g.count}× {ItemRegistry.NameOf(Crafting.ResolveItem(g.item, null))}{(g.chance < 100 ? $" ({g.chance}%)" : "")}"))}"; break;
+                case "salvage": s = $"Breaks {(a.whole ? "the whole stack" : "the item")} down into {string.Join(", ", (a.gives ?? new List<GiveSpec>()).Select(g => $"{g.count}× {ItemRegistry.NameOf(Crafting.ResolveItem(g.item, null))}{(g.chance < 100 ? $" ({g.chance}%)" : "")}"))}{(a.whole ? $" for every {(a.amount > 1 ? a.amount + " items" : "item")} in it" : "")}"; break;
                 case "craft": s = "Opens field crafting"; break;
                 case "tune":
                     {
@@ -1594,6 +1609,7 @@ namespace SCClassLoader
                 "summon" => "when an ally joins you",
                 "inflict" => string.IsNullOrEmpty(p.match) ? "when you put an effect on an enemy" : $"when you inflict {EffectName(p.match, classId)}",
                 "useitem" => string.IsNullOrEmpty(p.match) ? "when you use an item" : $"when you use {p.match}",
+                "craft" => string.IsNullOrEmpty(p.match) ? "when you fabricate an item" : $"when you fabricate {p.match}",
                 "ammo" => string.IsNullOrEmpty(p.match) ? "when your gun fires rounds" : $"when your gun fires {p.match} rounds",
                 "equip" => string.IsNullOrEmpty(p.match) ? "when you equip an item" : $"when you equip {p.match}",
                 "unequip" => string.IsNullOrEmpty(p.match) ? "when you take off an item" : $"when you take off {p.match}",

@@ -228,6 +228,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     while you carry them, whoever laid them, and `clearHazards` puts hazards out, with `value:cleared` for what follows.
   - Summons take `chaos` to arrive on the chaos side, fighting you and your enemies alike.
   - Skills take `cooldownOn` to cool down by a trigger, such as kills, instead of by turns.
+  - Consumables: effects take `itemTurns` (what your consumables put on you lasts longer), `shareItems` (it goes on
+    your summons too) and `keepCost` (a skill's item cost may not be spent). A `craft` trigger fires when you fabricate
+    an item, `giveItem` takes `"$item"` for more of the item behind the trigger or the skill, and `salvage` takes
+    `whole` to break down a whole stack.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
   as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
   rules text reads "1 per ..." instead of "0, +1 per ...".

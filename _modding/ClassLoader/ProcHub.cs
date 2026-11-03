@@ -20,6 +20,18 @@ namespace SCClassLoader
         private static readonly Dictionary<(ProcSpec, Character), ProcState> states = new Dictionary<(ProcSpec, Character), ProcState>();
         internal static int TurnCount;
 
+        /// <summary>The item behind the current event (the consumable "useItem" saw used, the item "craft" saw made),
+        /// for giveItem "$item".</summary>
+        internal static Item ItemNow { get; private set; }
+
+        public static void FireItem(string on, Item it, string what)
+        {
+            Item prev = ItemNow;
+            ItemNow = it;
+            try { Fire(on, null, what); }
+            finally { ItemNow = prev; }
+        }
+
         public static void Fire(string on, Character other, string what, Character withAlly = null)
         {
             string prev = detail;

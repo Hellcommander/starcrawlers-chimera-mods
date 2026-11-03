@@ -549,7 +549,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `FLYING` (can't be rooted, floats over traps), `IMMUNE_ROOT`. Conditions with `"tag"` see granted tags as well.
 - **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
   use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
-  items carrying one of those tags, or whose id or name contains one.
+  items carrying one of those tags, or whose id or name contains one. `"keepCost": 25` gives a 25% chance (per stack)
+  that a skill's `itemCost` isn't spent; the skill still needs the items to hand.
+- **Consumables on you.** Two effect keys work on what your consumables (chems, stims, a kit's buff) put on you:
+  - `"itemTurns": 1` makes it last that share longer, per stack (1 = twice as long). Effects with no set length, like
+    charges, aren't changed.
+  - `"shareItems": true` puts it on each of your summons as well, for as long. A summon the item can't be used on (the
+    game keeps chems off robots) is skipped.
 - **Ammo.** Every round your guns fire goes through one place (attacks, gun skills, channelled shots), and three keys
   work on it:
   - On a skill, `"ammoMult": 2` makes each shot it fires through your gun (a `channel`, a rewrite that shoots) spend
@@ -959,6 +965,7 @@ Static Grip need a ranged weapon.
 - `summon` (an ally joins you: a summon, a pet, a charmed or hacked enemy, a hire; aims at the newcomer, noticed when your turn ends);
 - `inflict` (you put an effect on an enemy; `"match"` is the effect id; aims at that enemy. Your summons' effects don't count);
 - `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
+- `craft` (you fabricate an item at a crafting window; `"match"` is its name or id; `giveItem` `"$item"` gives more of it);
 - `ammo` (your gun fired; `"match"` is the ammo's name or id, `"value:rounds"` the rounds it spent; see Ammo);
 - `search` (you open a container nobody searched yet), `newFloor` (stairs take you to another floor; side areas and the Apartment don't count);
 - `shieldBreak` (a hit takes your shield to nothing; aims at the attacker);
@@ -1572,10 +1579,15 @@ floors stay as they are. Patched enemies keep their skills through saves.
 New ability actions (in class files, `newAbility.actions`):
 
 - `{ "do": "craft", "recipes": ["LinemansCowl"] }` opens the crafting window with field recipes (optionally only these).
-- `{ "do": "giveItem", "item": "MyMod:ScrapHelm", "amount": 1 }` puts an item in your inventory.
+- `{ "do": "giveItem", "item": "MyMod:ScrapHelm", "amount": 1 }` puts an item in your inventory. `"item": "$item"`
+  gives more of the item the skill is aimed at, or of the item behind the trigger: the consumable a `useItem` proc saw
+  used, the item a `craft` proc saw made. `{ "on": "craft", "chance": 25, "actions": [ { "do": "giveItem", "item":
+  "$item" } ] }` is a brewer who sometimes makes two.
 - `{ "do": "consumeItem", "item": "...", "amount": 2 }` or `"tag": "MECHPARTS"` uses items up if you have them.
 - `{ "do": "salvage", "gives": [ { "item": "...", "count": 2, "chance": 50 } ] }` destroys the targeted item and hands
-  out the parts. Use it with `"target": "item"` (see below).
+  out the parts. Use it with `"target": "item"` (see below). `"whole": true` breaks down the whole stack instead of one,
+  and the gives count once for every `"amount"` items in it (default 1), rounded down: `"amount": 2` turns a stack of
+  rounds into parts at 2 to 1, each `chance` rolled per batch.
 - `{ "do": "tune", "stat": "Strength", "min": 1, "max": 3, "limit": 3 }` works a lasting change into a piece of gear,
   saved with it: the item the skill is aimed at, or with `"slot": "mainhand"` (or `"offhand"`, `"head"`, `"torso"`,
   `"hands"`, `"legs"`, `"feet"`, `"neck"`, `"belt"`, `"accessory"`) the one you have equipped there. `"stat"` adds

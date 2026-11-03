@@ -372,7 +372,7 @@ namespace SCClassLoader
         [HarmonyPatch(typeof(Item_Consumable), nameof(Item_Consumable.UseComplete))]
         private static class Patch_UseItem
         {
-            private static void Prefix(Item_Consumable __instance) => ProcHub.Fire("useitem", null, ItemDetail(__instance));
+            private static void Prefix(Item_Consumable __instance) => ProcHub.FireItem("useitem", __instance, ItemDetail(__instance));
         }
 
         /// <summary>Effects' "keepItem": a roll before the item is spent; on a success the use goes through (its cooldown
