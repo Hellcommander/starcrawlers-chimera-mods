@@ -4,12 +4,14 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## 2.0.0 (unreleased)
+## 2.0.0 (2026-11-03)
+
+Covers everything since 1.46.0.
 
 ### Skills and interface
 
-- **Toxic Breath** (Mutagenic Brew) now leaves a Toxic Cloud over its whole cone for three turns: anyone in it or walking
-  in is poisoned and choking. Fields can follow a skill's cone or line with `"overShape": true`.
+- **Toxic Breath** (Mutagenic Brew) now leaves a Toxic Cloud over its whole cone for three turns: anyone in it or
+  walking in is poisoned and choking. Fields can follow a skill's cone or line with `"overShape": true`.
 - Right-clicking a class's icon on the skills screen lists the skills your synergies give that class; picking one starts
   it.
 - 54 new synergies (`Mods/Synergies/synergies_k.json`) reach the 140 class skills none touched before, Bounty Hand and
@@ -18,8 +20,11 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Allies and summons no longer path onto a live trap you can see: they go round or wait. A companion's disarm now pays
   the experience yours would.
 - The example classes grew to nine skills each: Arc Gunner, Cadence Fencer, Bounty Hand and Spark Tinker.
-- `SpecialButtonsBesideCapstone` (`[Interface]`, off by default): when the ninth column has no room, one ninth-tier skill
-  shrinks to a quarter of its area and the ChimeraLinq and Vendordamus Beacon buttons share its cell at that size.
+- The Apartment Portal button on the skills screen sits beside the perk point count, so it no longer covers a tree's
+  extra tier slot (`PortalBesidePerks`, `[Interface]`). The ChimeraLinq and Vendordamus Beacon buttons take the first
+  free spot in that column (`SpecialButtonsInFreeSpots`).
+- `SpecialButtonsBesideCapstone` (`[Interface]`, off by default): when the ninth column has no room, one ninth-tier
+  skill shrinks to a quarter of its area and the ChimeraLinq and Vendordamus Beacon buttons share its cell at that size.
 - Realtime with Pause has an on-screen pause button.
 - A cast that spends a whole counter now spends what it read, so a kill during that cast can add to the counter.
 - XML mods: `of` on a condition reads correctly again.
@@ -28,10 +33,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### New class
 
-- **Comet Breaker** (`Mods/CometBreaker/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
-  takes you to an enemy or a tile, you can't lose health until your next turn, and everything around your landing flies
-  back, every boss but Cerberus included; what hits a wall takes more damage, is stunned for 2 turns and can't use its
-  specials for a turn after it recovers. Ephemeris marks a spot where a comet falls two turns later, and landing a
+- **Comet Breaker** (`Mods/CometBreaker/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet
+  Charge takes you to an enemy or a tile, you can't lose health until your next turn, and everything around your landing
+  flies back, every boss but Cerberus included; what hits a wall takes more damage, is stunned for 2 turns and can't use
+  its specials for a turn after it recovers. Ephemeris marks a spot where a comet falls two turns later, and landing a
   charge beside the mark brings it down at once. Split Nucleus makes two copies of you that fight with your gear and
   skills for reduced damage and weaker status effects. Requires the immortal fix (`PlayerImmortalTag` under `[Fixes]`,
   on by default): with it off, its charges don't protect you. Spellsmith's forms all work on its charges, and together
@@ -43,10 +48,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   fight may fight on as a Fragment of You. Snareseer, Foretold Fall: a trap catching something may shift your Ephemeris
   mark onto it, and landing sets off your traps within 2.6 before the blast throws anything. Phase Drifter, Late
   Arrival: charging while Phased spends it, and the rest of you lands on the same spot a turn later.
-- Comet Breaker now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
-  flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning nucleus
-  through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments shed ice
-  as they fight.
+- Comet Breaker now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen
+  rock flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning
+  nucleus through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments
+  shed ice as they fight.
 
 ### New boss
 
@@ -100,13 +105,13 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - **Perks:** Perk points are rare, so every mod class's skill perks now change how the skill plays. The perks that were
   only a number (damage x1.25, cooldown -3, area +1) are gone: they now add triggers, ground fields, status payoffs,
   throws and chains, or make a skill instant or ready again on a kill.
-- **Looking-Glass Rogue:** Reworked around surreal magic; the grins and the Grinning Cat stay, the rest is new. **Sentence
-  First** (was Snicker-Snack): the blow lands now and a verdict falls three turns later, and a sentenced enemy that
-  strikes you pays on the spot. **One Side, Other Side** (was Drink Me, Eat Me): size is a loan, taken from an enemy or
-  handed over until it is jammed in place. **The Looking-Glass** (was Painted Guard): a copy of you at the opposite
-  size; use it again to trade places and sizes. **Down the Rabbit Hole** (was Hedgehog Croquet): an enemy falls out of
-  the fight for two turns and lands hard elsewhere, Painted Red adding to it. **Six Impossible Things** (was Mad Tea
-  Party): spend Tea Clock hours on skills that take no time and leave no cooldown. As the cat, **No-Name Wood** (was
+- **Looking-Glass Rogue:** Reworked around surreal magic; the grins and the Grinning Cat stay, the rest is new.
+  **Sentence First** (was Snicker-Snack): the blow lands now and a verdict falls three turns later, and a sentenced
+  enemy that strikes you pays on the spot. **One Side, Other Side** (was Drink Me, Eat Me): size is a loan, taken from
+  an enemy or handed over until it is jammed in place. **The Looking-Glass** (was Painted Guard): a copy of you at the
+  opposite size; use it again to trade places and sizes. **Down the Rabbit Hole** (was Hedgehog Croquet): an enemy falls
+  out of the fight for two turns and lands hard elsewhere, Painted Red adding to it. **Six Impossible Things** (was Mad
+  Tea Party): spend Tea Clock hours on skills that take no time and leave no cooldown. As the cat, **No-Name Wood** (was
   Warp Pounce) makes enemies forget whose side they are on. New as the cat: **May Look at a King** hits bosses and
   elites hardest, **No Body to Behead** leaves only your head until your next turn, and **Slowly, Tail First** fades you
   out and bites when you're gone.
@@ -137,9 +142,9 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### Interface
 
-- **Aiming past your companions:** While you aim a skill, your minions, pets and crew no longer get in the way: the mouse
-  reaches the enemy, tile or object behind them. Buffs still land on them, and holding the Force key lets any skill aim
-  at one. `AimThroughMinions` under `[Orders]` turns it off.
+- **Aiming past your companions:** While you aim a skill, your minions, pets and crew no longer get in the way: the
+  mouse reaches the enemy, tile or object behind them. Buffs still land on them, and holding the Force key lets any
+  skill aim at one. `AimThroughMinions` under `[Orders]` turns it off.
 - Your effect icons get a fold tab beside the top of their columns. Folded, it reads `+ Effects` with your buffs counted
   in green and your debuffs in red.
 - The Mods button on the title menu now waits for the menu to be ready instead of trying once, so it no longer goes
@@ -152,10 +157,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   particles, status looks, damage numbers, hits, items and the combat log are spread over frames or capped. These change
   the look and the timing of the work, never the damage or what a skill does.
 - `GraphicsJobs` and `IncrementalGC` under `[Performance]` work without the bus and apply the next time the game starts.
-- `AssetStreaming` under `[Performance]`, off by default: every floor's textures sit in video
-  memory from the first menu on, about 7 GB. With this on, those nothing on your floor uses leave, and they come back
-  from disk when something needs them; on a floor 6 test save that went from 7,093 MB to 2,724 MB. The event bus's
-  workers decide what goes, whether or not `EventBus` is on. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
+- `AssetStreaming` under `[Performance]`, off by default: every floor's textures sit in video memory from the first menu
+  on, about 7 GB. With this on, those nothing on your floor uses leave, and they come back from disk when something
+  needs them; on a floor 6 test save that went from 7,093 MB to 2,724 MB. The event bus's workers decide what goes,
+  whether or not `EventBus` is on. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
 
 ### Modding
 
@@ -179,8 +184,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Novas reach as many tiles along the diagonals as straight on; a circle stopped one short of the corners.
 - Perks take `addProcs`, `instant`, `resetOnKill` and `undodgeable`, and `"when": { "perk": true }` on a skill's own
   actions swaps what they do. The old number fields still work.
-- `"castRules"` on an effect changes what using any skill means while it's on you: `freeTurn`, `noCooldown`, `healthCost`,
-  `repeat`, `consume` and `when`.
+- `"castRules"` on an effect changes what using any skill means while it's on you: `freeTurn`, `noCooldown`,
+  `healthCost`, `repeat`, `consume` and `when`.
 - New conditions: `cast` (`vanilla`, `mod`, `item`, `attack` and more), `inSide`, `healthLost`, `buffs`, `debuffs`,
   `skillsCooling`, `cost`, `cooldown` and `floor`.
 - `"forAllies"` on a skill keeps your companions solid for a buff, `"fallAs"` on a trap brings a creature's model down
