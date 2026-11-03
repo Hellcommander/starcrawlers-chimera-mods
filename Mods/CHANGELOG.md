@@ -71,7 +71,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - **Threading** (`Mods/Threading/`), off by default: for very large fights. It turns on the event bus, moves enemy paths
   to worker threads and stops head-turning work on off-screen models. Turn it off and the game runs as it always did.
 - **Enemy weapons** (loader config, `[EnemyWeapons]`), off by default: the weapon that falls from a dead enemy's hand
-  now stays where it lands, and you can pick it up and use it. Every one drops, with no roll. It keeps the enemy's own
+  now stays where it lands, and you can pick it up and use it. It drops at `DropChance` (30% by default); a boss's
+  always drops. At the same odds, an enemy holding one weapon carries a spare of the other kind from the floor's loot
+  for the attacks its own can't make: a gunman draws a blade for its pistol-whip, a brawler a sidearm for its shots,
+  and puts it away for the next attack its own weapon makes. A spare always drops. A weapon keeps the enemy's own
   model and its kind: a guard's pistol drops as a pistol, a ChefBot's cleaver as a cleaver. Weapons the base game kept
   fixed to the body fall too, as does one the enemy carried but wasn't holding. Mugs, briefcases and claws stay junk,
   and other loot still comes from the inventory everyone carries. Enemies run their weapons in a low-power mode: they

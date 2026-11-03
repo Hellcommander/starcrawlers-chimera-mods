@@ -302,7 +302,29 @@ namespace SCClassLoader
             if (pivot.GetComponent<WearMark>() == null) pivot.AddComponent<WearMark>();
             foreach (Renderer r in own) r.enabled = false;
             if (def?.wear != null) return;
+            FitHeld(c, it, pivot, main, hand);
+        }
 
+        /// <summary>
+        /// A weapon model held where the body holds its own (same parent, same spot, same long axis), sized by its kind;
+        /// in the right hand when its own rides in a holster or on its back (inHand false). For an enemy's spare: the
+        /// body's own weapon stays as it is.
+        /// </summary>
+        internal static GameObject Hold(Component c, Item_Weapon it, Renderer main, out bool inHand)
+        {
+            Transform rightHand = Bone(c, "RightHand"), leftHand = Bone(c, "LeftHand");
+            inHand = main != null && new[] { rightHand, leftHand }.Any(h => h != null && main.transform.IsChildOf(h));
+            if (!inHand) main = null;
+            Transform hand = main != null ? main.transform : rightHand;
+            if (hand == null || it == null || it.worldObject == null) return null;
+            GameObject pivot = Copy(it.worldObject, main != null ? hand.parent ?? hand : hand);
+            if (pivot == null) return null;
+            FitHeld(c, it, pivot, main, hand);
+            return pivot;
+        }
+
+        private static void FitHeld(Component c, Item it, GameObject pivot, Renderer main, Transform hand)
+        {
             pivot.transform.position = hand.position;
             pivot.transform.localScale = Vector3.one;
             pivot.transform.rotation = Quaternion.identity;
