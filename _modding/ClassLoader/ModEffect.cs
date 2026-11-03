@@ -399,6 +399,7 @@ namespace SCClassLoader
             Root();
             Resize();
             Grant();
+            StartTrance();
         }
 
         /// <summary>Bearers of "grantTags" effects, so the game's tag checks find them without the tag being saved.</summary>
@@ -477,6 +478,7 @@ namespace SCClassLoader
             Unroot();
             Unresize();
             Ungrant();
+            EndTrance();
             if (aura != null) Destroy(aura);
             base.OnDestroy();
         }
@@ -491,19 +493,81 @@ namespace SCClassLoader
             if (rt != null && !isFirstTurn && target != null && !target.GetIsDead())
             {
                 EffectSpec s = rt.spec;
+                float k = Ramp(s);
                 if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt))
                 {
-                    int dmg = (Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) + DotBonus(s)) * (MaxStacks > 1 ? Stacks : 1);
+                    int dmg = Mathf.RoundToInt((Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) + DotBonus(s)) * (MaxStacks > 1 ? Stacks : 1) * k);
                     target.TakeDamage(caster != null && caster != target ? caster : null, new List<DmgObj> { new DmgObj(dt, dmg) }, $"{GetName()} afflicts {target.GetName()}", null, 0f);
                 }
-                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(s.hot + HotBonus(s), false);
-                if (s.staminaPerTurn != 0 && target != null) target.ModStamina(s.staminaPerTurn);
+                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(Mathf.RoundToInt((s.hot + HotBonus(s)) * k), false);
+                if (s.staminaPerTurn != 0 && target != null) target.ModStamina(Mathf.RoundToInt(s.staminaPerTurn * k));
+                if (s.ramp != 0f) amountA++;
                 RefreshShares();
                 // stacks scale it through the actions' own bonusPerStack + stacksOf
                 if ((s.tickActions?.Count ?? 0) > 0 && target != null && !target.GetIsDead())
                     RunGroup(s.tickActions, s.tickRadius, null, null, null, null);
+                if (s.endWhen != null && !ending && target != null && !target.GetIsDead()
+                    && When.Check(s.endWhen, new ActionContext { caster = target, classId = rt.classId, sourceName = GetName() }, target))
+                {
+                    ending = true;
+                    Plugin.Instance.StartCoroutine(EndNow());
+                }
             }
+            if (tranced && target is Player p) p.FLAG_skipTurn = true;
             base.TurnOver_Instant();
+        }
+
+        /// <summary>"ramp": how far the per-turn amounts have grown, by the turns held (kept in amountA, which the game saves).</summary>
+        private float Ramp(EffectSpec s) => s.ramp == 0f ? 1f : Mathf.Clamp(1f + s.ramp * amountA, 0f, Mathf.Max(1f, s.rampMax));
+
+        private bool ending;
+
+        /// <summary>"endWhen": ends as if it ran out, once the game is done walking the bearer's effects.</summary>
+        private System.Collections.IEnumerator EndNow()
+        {
+            yield return null;
+            Character bearer = target;
+            if (rt == null || bearer == null || bearer.effects == null || bearer.effects.GetEffect(internalName) != this) yield break;
+            Ended++;
+            Expired_Duration();
+            if (!bearer.GetIsDead()) bearer.CalculateStats();
+            if (bearer == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+        }
+
+        /// <summary>Effects ended by their endWhen (tests).</summary>
+        internal static int Ended;
+
+        // ---- trance: the crawler sits out its turns -------------------------------------------------------------
+
+        private bool tranced;
+        /// <summary>Trance effects on the crawler right now; the last one going stands you back up.</summary>
+        internal static int Trancing;
+
+        private void StartTrance()
+        {
+            if (rt == null || !rt.spec.trance || tranced || !(target is Player p) || p.GetIsDead()) return;
+            tranced = true;
+            Trancing++;
+            p.FLAG_skipTurn = true;
+            if (Trancing == 1 && !Game.Game_isLoading && Player_Control.instance != null) Player_Control.instance.Player_Sit();
+        }
+
+        private void EndTrance()
+        {
+            if (!tranced) return;
+            tranced = false;
+            if (--Trancing > 0) return;
+            Trancing = 0;
+            if (Player.instance != null) Player.instance.FLAG_skipTurn = false;
+            if (!Game.Game_isLoading && Player_Control.instance != null && Plugin.Instance != null && Player.instance != null && !Player.instance.GetIsDead())
+                Plugin.Instance.StartCoroutine(StandUp());
+        }
+
+        private static System.Collections.IEnumerator StandUp()
+        {
+            Player_Control.instance.Player_Stand();
+            yield return new WaitForSeconds(1f);
+            if (Trancing == 0 && Player_Control.instance != null) Player_Control.instance.playerAnim.enabled = false;
         }
 
         public override List<DmgObj> OnDealDamage(Ability ability, Character victim, List<DmgObj> dmgList, Item_Weapon attackerWeapon, float critDmgMod)
@@ -745,6 +809,7 @@ namespace SCClassLoader
             Character t = target;
             Unroot();
             Ungrant();
+            EndTrance();
             base.Clear();
             if (t != null && !t.GetIsDead()) BuffLane.AfterRemoved(t);
         }
@@ -753,7 +818,7 @@ namespace SCClassLoader
         {
             base.Deserialize(d);
             Bind();
-            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); Grant(); }
+            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); Grant(); StartTrance(); }
         }
 
         public override string GetDescription()
@@ -767,9 +832,13 @@ namespace SCClassLoader
             if (s.capScale != null) lines.Add(rt.CapLine());
             foreach (StatObj st in attributeMods) lines.Add($"{(st.amount >= 0 ? "+" : "")}{st.amount} {StatObj.GetStatString(st.statType)}");
             foreach (DmgObj r in resistanceMods) lines.Add($"{(r.damage >= 0 ? "+" : "")}{r.damage} {Game.GetSpriteString(r.dmgType, isResist: true)} resistance");
-            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min + DotBonus(s)}-{s.dot.max + DotBonus(s)} {Game.GetSpriteString(dt)} each turn");
-            if (s.hot > 0) lines.Add($"Heals {s.hot + HotBonus(s)} each turn");
-            if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
+            float k = Ramp(s);
+            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {Mathf.RoundToInt((s.dot.min + DotBonus(s)) * k)}-{Mathf.RoundToInt((s.dot.max + DotBonus(s)) * k)} {Game.GetSpriteString(dt)} each turn");
+            if (s.hot > 0) lines.Add($"Heals {Mathf.RoundToInt((s.hot + HotBonus(s)) * k)} each turn");
+            if (s.staminaPerTurn != 0) lines.Add($"{Mathf.RoundToInt(s.staminaPerTurn * k):+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
+            if (s.ramp != 0f) lines.Add($"{(s.ramp > 0f ? "Grows" : "Fades")} by {Mathf.RoundToInt(Mathf.Abs(s.ramp) * 100)}% of itself each turn it holds{(s.ramp > 0f ? $", up to {Mathf.Max(1f, s.rampMax):0.#}×" : "")}");
+            if (s.trance) lines.Add("<b>You sit and let your turns pass</b>");
+            if (s.endWhen != null) lines.Add($"Ends once {When.Describe(s.endWhen, rt.classId)}");
             if (DealtMult != 1f) lines.Add(OnlySummons(s.dealtWith)
                 ? $"Your summons and allies deal {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage"
                 : $"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");

@@ -269,7 +269,7 @@ namespace SCClassLoader
                 case "health": return who?.GetHealth();
                 case "health%": return who == null ? (float?)null : 100f * who.GetHealth() / Mathf.Max(1, who.GetHealthMax());
                 case "stamina": return who?.GetStamina();
-                case "stamina%": return who == null ? (float?)null : 100f * who.GetStamina() / Mathf.Max(1, who.GetStat(STAT_TYPE.Stamina));
+                case "stamina%": return who == null ? (float?)null : 100f * who.GetStamina() / Mathf.Max(1, who.GetStaminaMax());
                 case "shield": return who?.oshielding;
                 case "healthlost": return who == null ? (float?)null : who.GetHealthMax() - who.GetHealth();
                 case "buffs": return who == null || who.effects == null ? (float?)null : Effects(who, false);

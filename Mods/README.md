@@ -189,6 +189,9 @@ skill landed on, a burst's bearer), never below a tenth, so a blast hits hardest
     "immune": [ "#Poisoned", "EFFECT_Poison", "CONFUSE" ], // effects (mod or vanilla) the bearer can't get while it holds
     "immuneToAllies": false,      // true: no damage from your own side reaches the bearer (your summons, bursts, damage over time)
     "hidden": false,              // true: kept off the buff bar, and purge and the buff / debuff counts pass over it (a counter, a passive's inner rule)
+    "trance": false,              // true (on you): you sit down and your turns pass on their own while it holds, a meditation
+    "endWhen": { "value": "stamina%", "atLeast": 100 }, // checked each turn (of = the bearer); once it holds the effect ends as if it ran out
+    "ramp": 0.0, "rampMax": 3.0,  // hot, staminaPerTurn and dot grow by this share each turn it holds, up to rampMax times their base
     "vfx": "EFFECT_Void_Psyker_Drain", "procs": [] }
 ]
 ```
@@ -491,6 +494,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     at the target, one after another (a beat apart inside a skill); once it falls, the rest turn on the nearest enemy
     within the radius of where it stood, homing missiles finding a new mark. Each shot draws a `look` streak from you
     and plays `vfx` and `sound` where it lands.
+  - `{ "do": "attempt", "amount": 6, "odds": 10, "oddsPerTry": 10, "tryCost": 2, "scale": "PsiPower", "scaleMult": 0.3,
+    "resistStat": "Smarts", "resistMult": 0.2, "actions": [...], "else": [...] }` is a hold on the target, a mind
+    being bent. It rolls once a try for up to `amount` tries (default 6), each `oddsPerTry` likelier, at `odds` plus your
+    `scale` stats times `scaleMult`, less the target's `resistStat` times `resistMult`. Each try costs `tryCost` stamina,
+    and it stops when you can't pay. The first try that lands runs `actions` on the target; if none lands, `else` runs
+    (`"to": "self"` for a backlash on you). Inside a skill the tries come a second apart under a cast bar with a `look`
+    streak to the target's head; from a trigger they all roll at once. On several targets it holds them one by one.
   - `{ "do": "tether", "look": "#C8D0DA" }` draws a hook line from you to the target for a moment (purely visual). Leaps,
     recalls and ricochets draw their own short streaks (dash, knife flying home, gold tracer).
   - A field can carry a mesh: `"model": { "mesh": "models/knife.obj", "texture": "models/knife.png", "wobble": 14,
@@ -542,6 +552,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Breaking effects.** `"breakOnHurt": true` on an effect ends it the moment its bearer takes damage (true damage
   doesn't count; it skips every effect). `"onBreakActions"` run on the bearer as it breaks, or on you with
   `"to": "self"`: a camouflage that drops, a crystal shell that bursts, a trance that snaps.
+- **Trances.** `"trance": true` on an effect on you sits you down, and your turns pass by themselves while it holds.
+  Give it a way out: `breakOnHurt` (a hit wakes you), `endWhen` (a condition checked at the end of each of your turns,
+  such as full stamina) or a duration. With `"staminaPerTurn": 4, "ramp": 0.5` the rest deepens: 4, 6, 8, 10, then 12 a
+  turn (`rampMax` 3). A meditation is all four together: `trance`, `breakOnHurt`, `endWhen` and `ramp`.
 - **Opening locks.** `{ "do": "unlock", "radius": 3 }` opens every locked door and container within 3 of you (default
   2.5), by the base Hacker's rules: sealed, broken and boss doors stay shut, and an opened container spills its loot.
   `"odds": 60` rolls once per lock.
@@ -679,6 +693,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "fall": "#CFEFFF",      // a streak of this colour comes down from overhead as it goes off
     "turns": 0,             // > 0: it fizzles out after that long; 0 = it stays on that floor until used
     "maxTraps": 3,          // most of this name at once; laying another removes the oldest
+    "scatter": 0,           // > 0: lays that many at once on random tiles within "spread" (default 3) of the aim, a cluster bomb's bomblets
     "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.45", "sound": "event:/Abilities/Smuggler/Smugger_Flashbang",
     "model": { "mesh": "models/snare.glb", "scale": 0.4 },   // or "look": a hazard id; default: the vanilla mine's look
     "actions": [ { "do": "damage", "type": "Energy", "min": 6, "max": 10 }, { "do": "stun", "turns": 1 } ] }
@@ -688,7 +703,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   feet). It goes off when someone it affects steps into it, or is standing in it when your turn ends. Allies walk over
   enemy traps safely, and your allies' paths stay off a trap that hits `"all"`. Actions with `"to": "self"` run once
   on you. Traps are saved with the game and stay on their floor while you are away. In its actions, a `field` or
-  `hazard` goes down where the trap was.
+  `hazard` goes down where the trap was. With `scatter` each bomblet is its own trap: one stepped on goes off alone.
 - **Wild magic.** `{ "do": "wildCast", "amount": 2, "falloff": 0.8 }` casts random spells from other installed classes at
   the target: any active, aimed mod skill made only of plain effects (damage, statuses, control, ground, chains) and with
   no cost of its own, so a borrowed spell never moves you, summons, crafts or spends another class's resources. Its
@@ -744,8 +759,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   at once, live yet or not (no name = all of them): a remote detonator. `"near": 2.6` limits it to traps that close to
   you, and on a skill rewrite's action `"first": true` runs it before the skill's own actions, so a blast hasn't moved
   anyone off the traps yet.
-- `{ "do": "moveTraps", "fieldName": "Ephemeris" }` moves your traps of that name under the target, keeping their fuse
-  (`"look"` colours the streak). `{ "do": "ready" }` makes the skill going off now ready again when it ends, without
+- `{ "do": "moveTraps", "fieldName": "Ephemeris" }` pulls your traps of that name (all of yours with no name) under
+  the target, or onto the aim point of a skill aimed at the floor, keeping their fuse (`"look"` colours the streak).
+  `"near": 7` pulls only those that close to where they land, a magnet that draws in the mines around its blast. A live
+  trap that lands on someone it affects goes off there and then, as if they had stepped on it. `{ "do": "ready" }` makes the skill going off now ready again when it ends, without
   ending your turn; its stamina is still paid each cast. `Mods/CometBreaker/synergies.json` uses all of these, and
   `SCCL_DEVTEST=cometsyn` plays them.
 

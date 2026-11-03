@@ -239,6 +239,15 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     fires when a crafting skill (Homebrew, Break It Down) uses up an item as material.
   - Damage actions take `"hands": "both"` to land once with each weapon you hold.
   - A `volley` action fires several shots at a target, and the shots left when it falls find the nearest enemy.
+  - Traps take `scatter` to strew several bomblets over random tiles around the aim.
+  - `moveTraps` can pull every trap of yours or only those within `near`, and onto a floor skill's aim point. A trap
+    that lands on someone goes off there.
+  - Effects take `trance` to sit you down while your turns pass on their own, `endWhen` to end once a condition
+    holds, and `ramp` to make their per-turn healing, stamina or damage grow each turn.
+  - An `attempt` action holds a target for several tries with rising odds, paid in stamina, then runs its actions
+    if one lands or its `else` actions if none does.
+- The `stamina%` condition now reads your real stamina maximum. It read too high before, so Axiomancer's Insight came
+  well short of 90% stamina.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
   as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
   rules text reads "1 per ..." instead of "0, +1 per ...".

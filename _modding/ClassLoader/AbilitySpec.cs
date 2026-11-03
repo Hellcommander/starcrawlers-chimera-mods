@@ -327,8 +327,20 @@ namespace SCClassLoader
         /// <summary>trap: a creature id whose model (mesh and particles, as "dashAs") comes down from overhead; its burst
         /// and sound play as it lands, the trap's own effects land at once.</summary>
         public string fallAs;
-        /// <summary>springTraps: only traps this close to you (0 = all of them on the floor).</summary>
+        /// <summary>springTraps: only traps this close to you (0 = all of them on the floor). moveTraps: only traps this
+        /// close to where they are pulled.</summary>
         public float near;
+        /// <summary>trap: lays this many at once, each on a random free tile within "spread" of the aim (default 3), not
+        /// one under it: a cluster bomb's bomblets. maxTraps still caps them.</summary>
+        public int scatter;
+        public float spread;
+        /// <summary>attempt: % odds added each try after the first, so the hold tightens the longer it lasts.</summary>
+        public int oddsPerTry;
+        /// <summary>attempt: stamina each try costs you; when you can't pay, it stops (failed).</summary>
+        public int tryCost;
+        /// <summary>attempt: the target's stat that pushes back ("Smarts"), taking resistMult % odds off per point.</summary>
+        public string resistStat;
+        public float resistMult = 0.2f;
         /// <summary>raiseWall: on the tile this many steps behind the target as you see it, if the way there is open (something for a throw to hit).</summary>
         public int behind;
         /// <summary>raiseWall: the class whose folder holds "model", for a synergy borrowing another class's wall.</summary>
@@ -647,6 +659,16 @@ namespace SCClassLoader
         /// applied it as the caster.</summary>
         public bool breakOnHurt;
         public List<ActionSpec> onBreakActions = new List<ActionSpec>();
+        /// <summary>The crawler sits down and sits out its turns while it holds (they pass on their own): a meditation,
+        /// a trance. Pair it with breakOnHurt and endWhen so something brings you back. On the crawler only.</summary>
+        public bool trance;
+        /// <summary>Checked at the end of each of the bearer's turns: once it holds the effect ends as if it ran out
+        /// (onExpireActions run). "of" defaults to the bearer: { "value": "stamina%", "atLeast": 100 }.</summary>
+        public WhenSpec endWhen;
+        /// <summary>hot, staminaPerTurn and dot grow by this share of themselves for each turn the effect has held
+        /// (0.5 = +50% a turn), up to rampMax times their base (default 3): a rest that deepens, a burn that spreads.</summary>
+        public float ramp;
+        public float rampMax = 3f;
         /// <summary>Added to the share of a roll your off-hand weapon deals (the game's base is 0.5): 0.25 = off-hand swings
         /// at 75%. Per stack. On the crawler only.</summary>
         public float offhandPower;
