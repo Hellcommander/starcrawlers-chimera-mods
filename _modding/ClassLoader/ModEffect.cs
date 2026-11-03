@@ -375,6 +375,7 @@ namespace SCClassLoader
             description = rt.desc;
             icon = rt.icon;
             isDebuff = s.debuff;
+            if (s.hidden) isHidden = true;
             isStackable = true; // refresh-vs-stack is decided in Actions
             duration = s.duration;
             spawnParticle = rt.particle;
@@ -622,9 +623,42 @@ namespace SCClassLoader
                 else if (k.Equals("item", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() != null) return true; }
                 else if (k.Equals("offhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == true) return true; }
                 else if (k.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == false) return true; }
+                else if (k.Equals("summons", StringComparison.OrdinalIgnoreCase)) { if (summonHit) return true; }
                 else if (Enum.TryParse(k, true, out DAMAGE_TYPE t) && d.dmgType == t) return true;
             }
             return false;
+        }
+
+        /// <summary>Set while your effects weigh a hit one of your allies deals (see Patch_SummonHits).</summary>
+        private static bool summonHit;
+        internal static int SummonHitsScaled;
+
+        /// <summary>
+        /// dealtWith "summons": a hit dealt by anyone fighting on your side but you (summons, pets, hirelings) also passes
+        /// through your effects that name the word, so a rule on you can make your minions hit harder. The ally's own
+        /// effects have had their say by then.
+        /// </summary>
+        [HarmonyLib.HarmonyPatch(typeof(Character_Effect_Control), nameof(Character_Effect_Control.OnDealDamage))]
+        private static class Patch_SummonHits
+        {
+            private static void Postfix(Character_Effect_Control __instance, Ability ability, List<DmgObj> __result)
+            {
+                Character by = __instance.character;
+                if (summonHit || __result == null || by == null || by == Player.instance || !TileStacks.IsAlly(by) || Player.instance?.effects == null) return;
+                summonHit = true;
+                try
+                {
+                    foreach (Effect e in Player.instance.effects.GetEffects())
+                    {
+                        if (!(e is ModEffect m) || m.rt == null || m.DealtMult == 1f) continue;
+                        string f = m.rt.spec.dealtWith;
+                        if (string.IsNullOrEmpty(f) || f.IndexOf("summons", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                        ScaleWhere(__result, Mathf.Max(0f, m.DealtMult), f, ability);
+                        SummonHitsScaled++;
+                    }
+                }
+                finally { summonHit = false; }
+            }
         }
 
         /// <summary>Which hand a hit came from: the auto-attack's swing (its off-hand pass runs on the left hand's animator),
@@ -636,6 +670,8 @@ namespace SCClassLoader
                 return Equipped.Hand(m.Spec.equipped, Player.instance, out bool off) != null ? off : (bool?)null;
             return null;
         }
+
+        private static bool OnlySummons(string filter) => string.Equals((filter ?? "").Trim(), "summons", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>Words for a "dealtWith" / "takenFrom" filter: " with melee hits", " from Fire or Cryo".</summary>
         private static string HitWords(string filter, bool dealt)
@@ -651,6 +687,7 @@ namespace SCClassLoader
                     case "item": return "grenades and other items";
                     case "offhand": return "off-hand swings";
                     case "mainhand": return "main-hand swings";
+                    case "summons": return "your summons' and allies' hits";
                     default: return w;
                 }
             }
@@ -733,7 +770,9 @@ namespace SCClassLoader
             if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min + DotBonus(s)}-{s.dot.max + DotBonus(s)} {Game.GetSpriteString(dt)} each turn");
             if (s.hot > 0) lines.Add($"Heals {s.hot + HotBonus(s)} each turn");
             if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
-            if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
+            if (DealtMult != 1f) lines.Add(OnlySummons(s.dealtWith)
+                ? $"Your summons and allies deal {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage"
+                : $"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
             if (s.keepItem > 0) lines.Add($"{s.keepItem * Math.Max(1, Stacks)}% chance a {(string.IsNullOrEmpty(s.keepItemMatch) ? "consumable" : string.Join(" or ", s.keepItemMatch.Split('|').Select(x => x.Trim().ToLowerInvariant())) + " item")} you use isn't used up");
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
@@ -778,7 +817,9 @@ namespace SCClassLoader
             if (rt == null) return "";
             var parts = new List<string>();
             if (MaxStacks > 1) parts.Add($"<color=#FFD15C>x{Stacks}/{MaxStacks}</color>");
-            if (DealtMult != 1f) parts.Add($"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.dealtWith, true)}");
+            if (DealtMult != 1f) parts.Add(OnlySummons(rt.spec.dealtWith)
+                ? $"your summons and allies deal {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%"
+                : $"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.dealtWith, true)}");
             if (TakenMult != 1f) parts.Add($"takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.takenFrom, false)}");
             // the words only when there are no numbers to go on (stat changes are already on the row above)
             bool numbers = parts.Count > (MaxStacks > 1 ? 1 : 0) || attributeMods.Count > 0 || resistanceMods.Count > 0;

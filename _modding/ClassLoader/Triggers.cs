@@ -9,7 +9,7 @@ namespace SCClassLoader
     /// <summary>
     /// The extra proc triggers ("on") beyond hit / kill / hurt / dodge / turn / reaction: crit, miss, cast, move, wait,
     /// heal, lowHealth, allyDeath, effectGained, effectLost, combatStart, combatEnd, enterRoom, loot, levelUp,
-    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, newFloor, shieldBreak, absorb (in ProcHub).
+    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, smash, newFloor, shieldBreak, absorb (in ProcHub).
     /// Each one is a small patch that hands the event to ProcHub.
     /// </summary>
     internal static class Triggers
@@ -458,6 +458,39 @@ namespace SCClassLoader
         {
             private static void Prefix(Container __instance, out bool __state) => __state = !__instance.completed && !__instance.isMimic;
             private static void Postfix(bool __state) { if (__state) ProcHub.Fire("search", null); }
+        }
+
+        /// <summary>smash: a prop breaks near you (a crate, a console, a door), from anything: a blast, a charge, a thrown
+        /// body. Counted once per prop, however many of its pieces go; the game's own "destroy" demands hear the same
+        /// break. Radius procs centre on the prop.</summary>
+        [HarmonyPatch(typeof(Destructible), nameof(Destructible.Trigger), new[] { typeof(Vector3), typeof(PSMeshRendererUpdater) })]
+        internal static class Patch_Smash
+        {
+            private static int depth;
+            private static readonly HashSet<int> broken = new HashSet<int>();
+            internal static int Smashed;
+
+            private static void Prefix(Destructible __instance, out bool __state) =>
+                __state = depth++ == 0 && !__instance.triggered && !Game.Game_isLoading;
+
+            private static void Postfix(Destructible __instance, bool __state)
+            {
+                if (!__state || Player.instance == null) return;
+                Transform root = __instance.transform;
+                for (Transform up = root.parent; up != null; up = up.parent)
+                    if (up.GetComponent<Destructible>() != null) root = up;
+                if (broken.Count > 4000) broken.Clear();
+                if (!broken.Add(root.GetInstanceID())) return;
+                Vector3 at = __instance.transform.position;
+                Room room = __instance.GetComponentInParent<Room>();
+                bool near = room != null && room == Player.CURRENT_ROOM
+                    || Vector3.Distance(at, Player.instance.transform.position) <= 6f;
+                if (!near) return;
+                Smashed++;
+                ProcHub.FireAt("smash", at);
+            }
+
+            private static Exception Finalizer(Exception __exception) { depth--; return __exception; }
         }
 
         /// <summary>shieldBreak: a hit takes your shield from something to nothing.</summary>

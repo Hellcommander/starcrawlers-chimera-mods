@@ -589,6 +589,9 @@ namespace SCClassLoader
         public string icon;
         public int duration = 3;
         public bool debuff;
+        /// <summary>Kept off the buff bar and the bearer's effect list: inner workings (a counter, a hidden pool, a
+        /// rule a passive keeps on you). "purge" and the buff / debuff counts pass over it.</summary>
+        public bool hidden;
         /// <summary>Re-applying refreshes the duration instead of stacking.</summary>
         public bool stackable;
         /// <summary>
@@ -627,7 +630,8 @@ namespace SCClassLoader
         public string redirectTo;
         /// <summary>damageDealtMult (and its per-stack part) only on these hits: "melee", "ranged", "attack" (a weapon attack,
         /// not a skill), "skill", "mainhand" / "offhand" (the hand that swung) or damage types, joined with "|"
-        /// ("ranged|Fire"). Unset = every hit.</summary>
+        /// ("ranged|Fire"). "summons" is the hits of anyone fighting on your side but you (summons, pets, hirelings),
+        /// for an effect on you: "dealtWith": "summons" makes your minions hit harder, not you. Unset = every hit.</summary>
         public string dealtWith;
         /// <summary>damageTakenMult only on these hits, the same words: "ranged" for a deflector, "Fire|Cryo" for insulation.</summary>
         public string takenFrom;

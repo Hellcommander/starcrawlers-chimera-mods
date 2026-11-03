@@ -232,6 +232,9 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     your summons too) and `keepCost` (a skill's item cost may not be spent). A `craft` trigger fires when you fabricate
     an item, `giveItem` takes `"$item"` for more of the item behind the trigger or the skill, and `salvage` takes
     `whole` to break down a whole stack.
+  - `dealtWith` takes `"summons"`, so an effect on you makes your summons and other allies hit harder instead of you.
+  - A `smash` trigger fires when a prop breaks near you, and its radius procs hit the enemies around the wreck.
+  - Effects take `hidden` to stay off the buff bar.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
   as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
   rules text reads "1 per ..." instead of "0, +1 per ...".

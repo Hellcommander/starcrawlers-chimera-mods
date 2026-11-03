@@ -184,6 +184,7 @@ skill landed on, a burst's bearer), never below a tenth, so a blast hits hardest
     "critDamagePerStack": 0.0,    // the same, added per stack
     "immune": [ "#Poisoned", "EFFECT_Poison", "CONFUSE" ], // effects (mod or vanilla) the bearer can't get while it holds
     "immuneToAllies": false,      // true: no damage from your own side reaches the bearer (your summons, bursts, damage over time)
+    "hidden": false,              // true: kept off the buff bar, and purge and the buff / debuff counts pass over it (a counter, a passive's inner rule)
     "vfx": "EFFECT_Void_Psyker_Drain", "procs": [] }
 ]
 ```
@@ -521,7 +522,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `"attack"` (a weapon attack), `"skill"` or `"item"` (grenades and other consumables), `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
   swing, or a skill that swings your off-hand weapon) or damage types, joined with `|`. `{ "damageTakenMult": 0.5, "takenFrom": "ranged" }` is a deflector field,
   `{ "damageTakenMult": 0.6, "takenFrom": "Fire|Cryo" }` insulation, `{ "damageDealtMult": 1.3, "dealtWith": "melee" }`
-  a brawler's stance.
+  a brawler's stance. `"dealtWith": "summons"` on an effect on you scales the hits of everyone fighting on your side
+  but you (summons, pets, hirelings) instead of your own: `{ "damageDealtMult": 1.25, "dealtWith": "summons" }` is a
+  pack leader's presence.
 - **Held cooldowns.** `"cooldownWhile": "@Stance"` on an ability stops its cooldown counting down while you carry that
   effect, so a stance, form or shield can't be used again until it has ended and its cooldown has run. Skills that cut
   cooldowns still work on it. `"cooldownOn": "kill"` makes the cooldown count a trigger instead of turns: turns
@@ -967,6 +970,9 @@ Static Grip need a ranged weapon.
 - `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
 - `craft` (you fabricate an item at a crafting window; `"match"` is its name or id; `giveItem` `"$item"` gives more of it);
 - `ammo` (your gun fired; `"match"` is the ammo's name or id, `"value:rounds"` the rounds it spent; see Ammo);
+- `smash` (a crate, console, door or other prop breaks near you, from anything: a blast, a charge, a thrown body;
+  once per prop. A `"radius"` proc hits the enemies around the wreck, and `"vfx"` plays there:
+  `{ "on": "smash", "radius": 2, "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 6 } ] }` is shrapnel);
 - `search` (you open a container nobody searched yet), `newFloor` (stairs take you to another floor; side areas and the Apartment don't count);
 - `shieldBreak` (a hit takes your shield to nothing; aims at the attacker);
 - `absorb` (your shield takes a hit, even one that never reaches your health; aims at the attacker);

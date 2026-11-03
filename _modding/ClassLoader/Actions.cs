@@ -1566,7 +1566,7 @@ namespace SCClassLoader
             if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
             if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
             if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
-            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") : DefaultProcWho(p.on);
+            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") + (string.Equals(p.on, "smash", StringComparison.OrdinalIgnoreCase) ? " of the wreck" : "") : DefaultProcWho(p.on);
             string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";
             return head + "\n" + Describe(p.actions, classId, who);
         }
@@ -1614,6 +1614,7 @@ namespace SCClassLoader
                 "equip" => string.IsNullOrEmpty(p.match) ? "when you equip an item" : $"when you equip {p.match}",
                 "unequip" => string.IsNullOrEmpty(p.match) ? "when you take off an item" : $"when you take off {p.match}",
                 "search" => "when you search a container",
+                "smash" => "when a crate, console or door breaks near you",
                 "newfloor" => "when you reach another floor",
                 "shieldbreak" => "when your shield breaks",
                 "absorb" => "when your shield takes a hit",

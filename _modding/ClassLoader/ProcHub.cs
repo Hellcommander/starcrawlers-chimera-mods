@@ -32,6 +32,18 @@ namespace SCClassLoader
             finally { ItemNow = prev; }
         }
 
+        /// <summary>Where the current event happened when it isn't about a character (the prop "smash" saw break): its
+        /// vfx plays there and radius procs centre on it.</summary>
+        internal static Vector3? PlaceNow { get; private set; }
+
+        public static void FireAt(string on, Vector3 at)
+        {
+            Vector3? prev = PlaceNow;
+            PlaceNow = at;
+            try { Fire(on, null); }
+            finally { PlaceNow = prev; }
+        }
+
         public static void Fire(string on, Character other, string what, Character withAlly = null)
         {
             string prev = detail;
@@ -122,7 +134,9 @@ namespace SCClassLoader
             Actions.ProcDepth++;
             try
             {
-                Vector3 at = focus != null ? focus.GetHitFx().position : ctx.caster.GetHitFx().position;
+                Vector3? place = focus == ctx.caster ? PlaceNow : null;
+                if (place.HasValue) ctx.center = place;
+                Vector3 at = place ?? (focus != null ? focus.GetHitFx().position : ctx.caster.GetHitFx().position);
                 ModAudio.Play(p.sound, at, ctx.classId);
                 Actions.SpawnVfx(p.vfx, at);
 
@@ -135,7 +149,7 @@ namespace SCClassLoader
                 List<ActionSpec> self = p.selfActions, rest = p.restActions;
                 if (p.radius > 0f && AI_Manager.instance != null)
                 {
-                    Vector3 center = focus != null && focus.GetMover() != null && focus.GetMover().GetCurrentNavNode() != null
+                    Vector3 center = place.HasValue ? place.Value : focus != null && focus.GetMover() != null && focus.GetMover().GetCurrentNavNode() != null
                         ? focus.GetMover().GetCurrentNavNode().transform.position : focus != null ? focus.transform.position : ctx.caster.transform.position;
                     var near = AI_Manager.instance.GetEnemiesAt(center, p.radius).Where(c => c != null && !c.GetIsDead() && c != ctx.caster).ToList();
                     if (p.pick > 0) near = near.OrderBy(_ => Random.value).Take(p.pick).ToList();
