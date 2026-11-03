@@ -400,6 +400,44 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>Rounds the last shot spent, for "value:rounds" (the shot as fired, before any were saved).</summary>
+        internal static int Rounds;
+
+        /// <summary>
+        /// Every round the crawler fires goes through here (attacks, gun skills, channels). Effects' "ammoSave" rolls
+        /// each round and slips the saved ones back into the load first, so the shot keeps its per-round ammo damage;
+        /// after the shot, the "ammo" trigger fires ("match" = the ammo's name or id, value:rounds = rounds fired).
+        /// </summary>
+        [HarmonyPatch(typeof(Player), nameof(Player.ConsumeAmmo))]
+        private static class Patch_Ammo
+        {
+            private static void Prefix(Player __instance, int amount, out (int fired, string id) __state)
+            {
+                __state = (0, null);
+                Item_Ammo ammo = __instance?.GetAmmo();
+                if (ammo == null || amount <= 0) return;
+                __state = (amount, ItemDetail(ammo));
+                int odds = 0;
+                foreach (Effect e in __instance.effects.GetEffects())
+                    if (e is ModEffect m) odds += m.AmmoSaveOdds;
+                if (odds <= 0) return;
+                int saved = 0;
+                for (int i = 0; i < amount; i++) if (UnityEngine.Random.Range(1, 101) <= odds) saved++;
+                if (saved == 0) return;
+                ammo.stack += saved;
+                Game.LOG($"<color=#FFD15C>{saved} round{(saved > 1 ? "s" : "")} saved.</color>");
+            }
+
+            private static void Postfix((int fired, string id) __state)
+            {
+                if (__state.fired <= 0) return;
+                int prev = Rounds;
+                Rounds = __state.fired;
+                try { ProcHub.Fire("ammo", Game.TARGET_C, __state.id); }
+                finally { Rounds = prev; }
+            }
+        }
+
         [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.OnEquip))]
         private static class Patch_Equip
         {

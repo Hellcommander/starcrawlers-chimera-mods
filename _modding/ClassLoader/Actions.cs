@@ -195,6 +195,7 @@ namespace SCClassLoader
                 case "heal":
                     {
                         int amt = Amount(a, ctx) + StackBonus(a, ctx, t);
+                        if (amt <= 0) break;
                         t.Heal(amt, false);
                         Game.LOG($"{ctx.sourceName}: {t.GetName()} {Ability.T("General/heals")} {amt}.");
                         if (HUD.instance != null) HUD.instance.MakeFct("<color=#5CFF6B>+" + amt + "</color>", t.GetHitFx().position, false);
@@ -399,7 +400,7 @@ namespace SCClassLoader
             // counts read as the thing counted: "+3 per enemy within 4 of you"
             string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
                 : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
-                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed" : head == "rounds" ? "round the shot fired"
                 : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
             if (one != null) return div != null ? $"{div} (counting each {one})" : one;
             string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
@@ -731,7 +732,8 @@ namespace SCClassLoader
         internal static int Amount(ActionSpec a, ActionContext ctx)
         {
             float v = a.amount + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
-            return Math.Max(1, Mathf.RoundToInt(v));
+            // with bonusPerStack a base of 0 is meant: nothing happens without stacks
+            return Math.Max(a.amount == 0 && a.bonusPerStack != 0 ? 0 : 1, Mathf.RoundToInt(v));
         }
 
         /// <summary>A drain's size: "amount": -15 drains 15, plus its rank and stat scaling.</summary>
@@ -1460,7 +1462,10 @@ namespace SCClassLoader
                 string used = a.consumeStacks && !a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) && !a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) && a.stacksOf != "summons" && a.stacksOf != "bodies" ? (a.stacksUsed > 0 ? $" (uses up to {a.stacksUsed} and spends only those)" : " (consumes them)") : a.stacksUsed > 0 ? $" (counts up to {a.stacksUsed})" : "";
                 // effect and summon actions scale a count (stacks, summons) rather than an amount
                 int baseN = act == "effect" ? a.stacks : act == "summon" ? a.amount : -1;
-                if (baseN < 0) s += $", +{a.bonusPerStack} per {per}{used}";
+                // a base of 0 is the per-stack amount alone: "Heals you for 1 per round the shot fired"
+                int zero = baseN < 0 && a.amount == 0 ? s.IndexOf(">0<", StringComparison.Ordinal) : -1;
+                if (zero >= 0) s = s.Substring(0, zero) + $">{Math.Abs(a.bonusPerStack)}<" + s.Substring(zero + 3) + $" per {per}{used}";
+                else if (baseN < 0) s += $", +{a.bonusPerStack} per {per}{used}";
                 else if (baseN > 0) s += $" ({baseN}, plus {a.bonusPerStack} more per {per}){used}";
                 else s += $": {a.bonusPerStack} per {per}{used}";
             }
@@ -1569,6 +1574,7 @@ namespace SCClassLoader
                 "summon" => "when an ally joins you",
                 "inflict" => string.IsNullOrEmpty(p.match) ? "when you put an effect on an enemy" : $"when you inflict {EffectName(p.match, classId)}",
                 "useitem" => string.IsNullOrEmpty(p.match) ? "when you use an item" : $"when you use {p.match}",
+                "ammo" => string.IsNullOrEmpty(p.match) ? "when your gun fires rounds" : $"when your gun fires {p.match} rounds",
                 "equip" => string.IsNullOrEmpty(p.match) ? "when you equip an item" : $"when you equip {p.match}",
                 "unequip" => string.IsNullOrEmpty(p.match) ? "when you take off an item" : $"when you take off {p.match}",
                 "search" => "when you search a container",

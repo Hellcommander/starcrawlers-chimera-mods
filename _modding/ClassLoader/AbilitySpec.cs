@@ -41,6 +41,10 @@ namespace SCClassLoader
         /// <summary>The cooldown doesn't count down while you carry this effect ("@Stance"): a stance, form or shield that
         /// can't be used again until it has ended and its cooldown run. Other skills that cut cooldowns still do.</summary>
         public string cooldownWhile;
+        /// <summary>When this skill fires your gun (a channel, or a rewrite that shoots), each shot spends this many
+        /// times the gun's rounds, rounded up (1.5: a burst; 2: a double load). Each extra round also adds the ammo's
+        /// damage, as in the game's Suppression. The skill can't be used without the rounds.</summary>
+        public float ammoMult;
         /// <summary>An order to your summons: still usable while transformed. Unset = worked out from the actions
         /// (everything aimed at your summons or you, nothing summoned, at least one action on a summon).</summary>
         public bool? command;
@@ -634,6 +638,9 @@ namespace SCClassLoader
         /// contains it; several joined with "|".</summary>
         public int keepItem;
         public string keepItemMatch;
+        /// <summary>% chance, per stack, that each round your guns spend goes back into the load (the shot still has
+        /// its full damage). On the crawler only.</summary>
+        public int ammoSave;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;

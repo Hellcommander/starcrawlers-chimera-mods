@@ -79,7 +79,7 @@ namespace SCClassLoader
         }
 
         private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
-            { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain" };
+            { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain", "ammo" };
         private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb", "block" };
         private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
 

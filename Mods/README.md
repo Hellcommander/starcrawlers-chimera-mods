@@ -99,6 +99,7 @@ is built this way.
     "staminaCost": 12, "cooldown": 0, "instant": false, "dodgeable": false, "melee": false,
     "resetOnKill": false,        // true = a kill with it makes it ready again
     "cooldownWhile": "@Stance",  // the cooldown doesn't count down while you carry this effect (stances, shields)
+    "ammoMult": 1.5,             // its gun shots spend 1.5x the gun's rounds, rounded up (see Ammo)
     "castVfx": "PA_Psykonics_Temporal.castParticle",                 // borrowed vanilla particles,
     "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",       // see vanilla_reference.txt; "name@0.5" = half size
     "travelVfx": "MyBolt", "travelSpeed": 14,                        // flies caster -> target before the hit lands
@@ -228,7 +229,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered). A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:rounds"` (rounds the shot fired, in an `ammo` proc). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -528,6 +529,16 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
   use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
   items carrying one of those tags, or whose id or name contains one.
+- **Ammo.** Every round your guns fire goes through one place (attacks, gun skills, channelled shots), and three keys
+  work on it:
+  - On a skill, `"ammoMult": 2` makes each shot it fires through your gun (a `channel`, a rewrite that shoots) spend
+    twice the gun's rounds, rounded up. Each extra round adds the ammo's damage, as in the game's Suppression, and the
+    skill can't be used without enough rounds loaded. Below 1 a skill spends fewer, never less than one.
+  - On an effect, `"ammoSave": 20` gives each round fired a 20% chance (per stack; several effects add up) to go
+    back into the load. The shot keeps its full ammo damage.
+  - The `ammo` trigger fires after each shot (`"match"` is the ammo's name or id), aimed at your target, and
+    `"value:rounds"` is how many rounds it fired: `{ "on": "ammo", "actions": [ { "do": "giveItem", ... } ] }` for
+    parts per shot, or `"stacksOf": "value:rounds"` for something per round.
 - **Model animation.** Besides `bob` and `spin`, a model takes `wobble` (degrees of rocking that settles after it
   appears), `pulse` (breathing in size, 0.1 = ±10%) and `randomYaw` (each copy turned differently).
 - `Mods/Kinetics/` has seven Muscle and Guile classes built on these: Grappler, Rig Jockey (hardpoints are rune
@@ -927,6 +938,7 @@ Static Grip need a ranged weapon.
 - `summon` (an ally joins you: a summon, a pet, a charmed or hacked enemy, a hire; aims at the newcomer, noticed when your turn ends);
 - `inflict` (you put an effect on an enemy; `"match"` is the effect id; aims at that enemy. Your summons' effects don't count);
 - `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
+- `ammo` (your gun fired; `"match"` is the ammo's name or id, `"value:rounds"` the rounds it spent; see Ammo);
 - `search` (you open a container nobody searched yet), `newFloor` (stairs take you to another floor; side areas and the Apartment don't count);
 - `shieldBreak` (a hit takes your shield to nothing; aims at the attacker);
 - `absorb` (your shield takes a hit, even one that never reaches your health; aims at the attacker);

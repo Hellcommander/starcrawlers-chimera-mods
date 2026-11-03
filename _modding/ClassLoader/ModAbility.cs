@@ -132,6 +132,22 @@ namespace SCClassLoader
             Ability.DoWeaponAttack(caster.GetHitFx().position, aim);
         }
 
+        /// <summary>Rounds one shot of this skill spends: the gun's own, times "ammoMult" rounded up.</summary>
+        private int RoundsFor(Item_Weapon w)
+        {
+            int use = w.GetAmmoUse();
+            float mult = rt?.spec.ammoMult ?? 0f;
+            return mult > 0f && use > 0 ? Mathf.Max(1, Mathf.CeilToInt(use * mult - 0.001f)) : use;
+        }
+
+        /// <summary>"ammoMult": the skill's shots spend more (or fewer) rounds than the gun's own, each adding its ammo damage.</summary>
+        public override List<DmgObj> ConsumeAmmo(List<DmgObj> dmgList, Item_Weapon weapon)
+        {
+            if (weapon == null || (rt?.spec.ammoMult ?? 0f) <= 0f || weapon.GetAmmoUse() <= 0 || DEBUG_CONTROL.instance != null && DEBUG_CONTROL.instance.DEBUG_UnlimitedAmmo)
+                return base.ConsumeAmmo(dmgList, weapon);
+            return Player.instance.ConsumeAmmo(dmgList, Mathf.Min(RoundsFor(weapon), Player.instance.GetAmmoCount()), weapon);
+        }
+
         private bool ChannelShotHits(Character t)
         {
             int chance = CalculateHitChance(t, null);
@@ -251,7 +267,9 @@ namespace SCClassLoader
                 else if (!Conjoined.Requirement(req)) return false;
             }
             if (!Equipped.Check(rt.spec.equipped, caster)) { _useFail = "equipped"; return false; }
-            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _)?.CanAttack() == false) return false; // no ammo, no shot
+            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _) is Item_Weapon gun && !gun.CanAttack()) return false; // no ammo, no shot
+            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _) is Item_Weapon loaded && loaded.GetAmmoUse() > 0
+                && !Player.instance.AmmoCheck(RoundsFor(loaded))) return false;
             if (rt.spec.usableWhen != null && !When.Check(rt.spec.usableWhen, MakeContext(), caster)) return false;
             return base.CanUse();
         }
@@ -723,6 +741,7 @@ namespace SCClassLoader
                 if (s.dodgeable) info.Add("can be dodged");
                 if (s.instant) info.Add("instant");
                 if (s.resetOnKill) info.Add("<color=#FFD15C>a kill makes it ready again</color>");
+                if (s.ammoMult > 0f && !Mathf.Approximately(s.ammoMult, 1f)) info.Add($"each shot spends {s.ammoMult:0.##}x your gun's rounds{(s.ammoMult > 1f ? ", each adding its ammo damage" : "")}");
                 if (!string.IsNullOrEmpty(s.cooldownWhile)) info.Add($"its cooldown waits while you have {Actions.EffectNameOf(s.cooldownWhile, rt.classId)}");
                 if (IsCommand) info.Add("a command (usable in any transformation)");
                 if (!string.IsNullOrEmpty(s.ifSkill)) info.Add($"<color=#7FE0A0>from your {Synergies.TreeNames(s.ifSkill)} training</color>");

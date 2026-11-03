@@ -222,6 +222,11 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     enemy lose track of you, for ambushes and stealth.
   - Effects take `grantTags` to count as having game tags while they last, such as `BULLET_DODGER` to dodge ranged
     attacks.
+  - Ammo: skills take `ammoMult` for shots that spend more rounds, effects take `ammoSave` for a chance a round isn't
+    spent, and an `ammo` trigger fires per shot with `value:rounds`.
+- A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
+  as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
+  rules text reads "1 per ..." instead of "0, +1 per ...".
 - Rules text no longer ends a nested list with two full stops, and wall conditions read as a sentence ("the target has
   at least 1 wall beside it").
 - Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.
