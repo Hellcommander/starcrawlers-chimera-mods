@@ -117,7 +117,7 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.has) && (who == null || Actions.StacksOn(who, Actions.EffectId(w.has, ctx.classId)) <= 0)) return false;
             if (!string.IsNullOrEmpty(w.lacks) && who != null && Actions.StacksOn(who, Actions.EffectId(w.lacks, ctx.classId)) > 0) return false;
             if (!string.IsNullOrEmpty(w.tag) && (who == null || !HasTag(who, w.tag))) return false;
-            if (!string.IsNullOrEmpty(w.skill) && Synergies.TreeLevel(w.skill) < Math.Max(1, w.skillRank)) return false;
+            if (!string.IsNullOrEmpty(w.skill) && Synergies.TreeLevel(w.skill, ctx.classId) < Math.Max(1, w.skillRank)) return false;
             if (w.inCombat.HasValue && InCombat() != w.inCombat.Value) return false;
             if (w.inSide.HasValue && SideAreas.InSide != w.inSide.Value) return false;
             if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
@@ -263,7 +263,7 @@ namespace SCClassLoader
                 case "alliesnear": return Near(who, Radius(arg), enemies: false);
                 case "corpses": return who == null ? (float?)null : Corpses.Near(who.transform.position, string.IsNullOrEmpty(arg) ? 3f : Radius(arg)).Count;
                 case "summons": return Summons.Matching(string.IsNullOrEmpty(arg) ? "any" : (arg.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? arg : "group:" + arg), ctx).Count;
-                case "rank": return Synergies.TreeLevel(arg);
+                case "rank": return Synergies.TreeLevel(arg, ctx.classId);
                 case "level": return Player.instance != null ? Player.instance.level : 0;
                 case "credits": return Menu_Inventory.instance != null ? Menu_Inventory.instance.GetCredits() : 0;
                 case "distance":

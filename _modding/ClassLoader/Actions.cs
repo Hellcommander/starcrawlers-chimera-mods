@@ -131,8 +131,8 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(a.ifSelfHas) && (ctx.caster == null || ctx.caster.effects.GetEffect(EffectId(a.ifSelfHas, ctx.classId)) == null)) return;
             if (!string.IsNullOrEmpty(a.ifSummonAlive) && Summons.Matching(a.ifSummonAlive, ctx).Count == 0) return;
             if (!string.IsNullOrEmpty(a.unlessSummonAlive) && Summons.Matching(a.unlessSummonAlive, ctx).Count > 0) return;
-            if (!string.IsNullOrEmpty(a.ifSkill) && Synergies.TreeLevel(a.ifSkill) < Math.Max(1, a.skillRank)) return;
-            if (!string.IsNullOrEmpty(a.unlessSkill) && Synergies.TreeLevel(a.unlessSkill) > 0) return;
+            if (!string.IsNullOrEmpty(a.ifSkill) && Synergies.TreeLevel(a.ifSkill, ctx.classId) < Math.Max(1, a.skillRank)) return;
+            if (!string.IsNullOrEmpty(a.unlessSkill) && Synergies.TreeLevel(a.unlessSkill, ctx.classId) > 0) return;
             string act = (a.@do ?? "").ToLowerInvariant();
             // "if" branches on its condition; everywhere else the condition gates the action
             if (act == "if")

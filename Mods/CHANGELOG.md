@@ -214,6 +214,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   - Skills aimed at items take `itemKind` and `itemRarity`.
   - Effects take `keepItem` for a chance that a used consumable isn't spent, and hit filters take `item` for grenades
     and other consumables (which `skill` no longer counts).
+  - Tree specs (`ifSkill`, conditions, `rank:`, synergy trees) take `archetype:Muscle`, `archetype:Guile` or
+    `archetype:Intellect` for any other class of that archetype.
 - Rules text no longer ends a nested list with two full stops, and wall conditions read as a sentence ("the target has
   at least 1 wall beside it").
 - Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.

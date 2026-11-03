@@ -798,6 +798,11 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 - **Synergy kit skills:** a kit ability with `"ifSkill": "MOD_Fulgurant"` (a tree id, mod class id or name; `"A|B"` =
   either; `"skillRank"` for a minimum) only joins the kit if you have that tree too, so a form can get its own take on
   another class's skill. Its tooltip says which training it comes from. The Mimeticist's forms have eight.
+- **Archetype combos.** Anywhere a tree is named (`ifSkill`, `unlessSkill`, a condition's `skill`, `rank:TREE`, a
+  synergy's `trees`), `"archetype:Muscle"` (or `Guile`, `Intellect`) stands for every class of that archetype, at your
+  best rank among them. It never counts the class asking, so in a Guile class's own skill it means *another* Guile
+  class, and a synergy `"trees": ["MOD_Duelist", "archetype:Guile"]` needs a second Guile class beside the Duelist.
+  A tree you name outright still counts itself. Mix freely: `"ifSkill": "archetype:Muscle|SKILLTREE_Hacker"`.
 - `SCCL_DEVTEST=forms` checks all of this in game.
 
 **Pets** (`[Minions]` in the config file):
@@ -2028,7 +2033,8 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
 ```jsonc
 { "synergies": [ {
   "id": "Accelerant", "name": "Accelerant",
-  "trees": ["SKILLTREE_Pyromaniac", "SKILLTREE_Chemistry"],   // ids, mod class ids or display names; "A|B" = either
+  "trees": ["SKILLTREE_Pyromaniac", "SKILLTREE_Chemistry"],   // ids, mod class ids or display names; "A|B" = either;
+                                                              // "archetype:Guile" = any other Guile class (see below)
   "description": "One sentence: what it does in play.",
   "bonus": {                                                  // an effect on you (any effect field)
     "procChancePerStack": 5,                                  // each level past the first adds this to every proc's chance
