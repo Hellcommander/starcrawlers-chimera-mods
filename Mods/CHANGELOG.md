@@ -28,6 +28,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Scripts: `game.has_class(id)` says whether anyone in the party has a class.
 - The Threading mod's source, `Mods/Threading/src/`, is now free to use, copy and change for any purpose, like the
   example plugins. It holds no third-party code.
+- The event bus is free to use the same way: its code in the loader (`EventBus.cs`, `Bus*.cs`, `*Lane.cs` and the files
+  they need) holds no third-party code. The Threading mod only switches it on.
 
 ## 2.0.0 (2026-11-03)
 

@@ -39,6 +39,8 @@ license doesn't apply to it. Anything of ours shipped along with one stays under
 
 The example code in `Mods/ExamplePlugin/src/`, `Mods/RealtimeWithPause/src/`, `Mods/CharacterPortraits/src/`, `Mods/CharacterPortraits/toolsrc/`, `Mods/Threading/src/` and
 `Mods/ExampleScript/scripts/` is free to use, copy and change for any purpose, with no conditions and no credit needed.
+So is the event bus, which lives in the loader because it needs the game's internals: in `_modding/ClassLoader/`, the files
+`EventBus.cs`, `Bus*.cs`, `*Lane.cs`, `NodeIndex.cs`, `Pursuit.cs`, `ZoneLoad.cs`, `ParticleGate.cs` and `ParticleLoad.cs`.
 
 We don't review plugins or scripts and don't stand behind them.
 
