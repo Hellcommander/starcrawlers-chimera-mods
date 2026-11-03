@@ -375,6 +375,7 @@ namespace SCClassLoader
             description = rt.desc;
             icon = rt.icon;
             isDebuff = s.debuff;
+            if (s.hidden) isHidden = true;
             isStackable = true; // refresh-vs-stack is decided in Actions
             duration = s.duration;
             spawnParticle = rt.particle;
@@ -398,6 +399,7 @@ namespace SCClassLoader
             Root();
             Resize();
             Grant();
+            StartTrance();
         }
 
         /// <summary>Bearers of "grantTags" effects, so the game's tag checks find them without the tag being saved.</summary>
@@ -476,6 +478,7 @@ namespace SCClassLoader
             Unroot();
             Unresize();
             Ungrant();
+            EndTrance();
             if (aura != null) Destroy(aura);
             base.OnDestroy();
         }
@@ -490,19 +493,81 @@ namespace SCClassLoader
             if (rt != null && !isFirstTurn && target != null && !target.GetIsDead())
             {
                 EffectSpec s = rt.spec;
+                float k = Ramp(s);
                 if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt))
                 {
-                    int dmg = (Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) + DotBonus(s)) * (MaxStacks > 1 ? Stacks : 1);
+                    int dmg = Mathf.RoundToInt((Random.Range(s.dot.min, Mathf.Max(s.dot.min, s.dot.max) + 1) + DotBonus(s)) * (MaxStacks > 1 ? Stacks : 1) * k);
                     target.TakeDamage(caster != null && caster != target ? caster : null, new List<DmgObj> { new DmgObj(dt, dmg) }, $"{GetName()} afflicts {target.GetName()}", null, 0f);
                 }
-                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(s.hot + HotBonus(s), false);
-                if (s.staminaPerTurn != 0 && target != null) target.ModStamina(s.staminaPerTurn);
+                if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(Mathf.RoundToInt((s.hot + HotBonus(s)) * k), false);
+                if (s.staminaPerTurn != 0 && target != null) target.ModStamina(Mathf.RoundToInt(s.staminaPerTurn * k));
+                if (s.ramp != 0f) amountA++;
                 RefreshShares();
                 // stacks scale it through the actions' own bonusPerStack + stacksOf
                 if ((s.tickActions?.Count ?? 0) > 0 && target != null && !target.GetIsDead())
                     RunGroup(s.tickActions, s.tickRadius, null, null, null, null);
+                if (s.endWhen != null && !ending && target != null && !target.GetIsDead()
+                    && When.Check(s.endWhen, new ActionContext { caster = target, classId = rt.classId, sourceName = GetName() }, target))
+                {
+                    ending = true;
+                    Plugin.Instance.StartCoroutine(EndNow());
+                }
             }
+            if (tranced && target is Player p) p.FLAG_skipTurn = true;
             base.TurnOver_Instant();
+        }
+
+        /// <summary>"ramp": how far the per-turn amounts have grown, by the turns held (kept in amountA, which the game saves).</summary>
+        private float Ramp(EffectSpec s) => s.ramp == 0f ? 1f : Mathf.Clamp(1f + s.ramp * amountA, 0f, Mathf.Max(1f, s.rampMax));
+
+        private bool ending;
+
+        /// <summary>"endWhen": ends as if it ran out, once the game is done walking the bearer's effects.</summary>
+        private System.Collections.IEnumerator EndNow()
+        {
+            yield return null;
+            Character bearer = target;
+            if (rt == null || bearer == null || bearer.effects == null || bearer.effects.GetEffect(internalName) != this) yield break;
+            Ended++;
+            Expired_Duration();
+            if (!bearer.GetIsDead()) bearer.CalculateStats();
+            if (bearer == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+        }
+
+        /// <summary>Effects ended by their endWhen (tests).</summary>
+        internal static int Ended;
+
+        // ---- trance: the crawler sits out its turns -------------------------------------------------------------
+
+        private bool tranced;
+        /// <summary>Trance effects on the crawler right now; the last one going stands you back up.</summary>
+        internal static int Trancing;
+
+        private void StartTrance()
+        {
+            if (rt == null || !rt.spec.trance || tranced || !(target is Player p) || p.GetIsDead()) return;
+            tranced = true;
+            Trancing++;
+            p.FLAG_skipTurn = true;
+            if (Trancing == 1 && !Game.Game_isLoading && Player_Control.instance != null) Player_Control.instance.Player_Sit();
+        }
+
+        private void EndTrance()
+        {
+            if (!tranced) return;
+            tranced = false;
+            if (--Trancing > 0) return;
+            Trancing = 0;
+            if (Player.instance != null) Player.instance.FLAG_skipTurn = false;
+            if (!Game.Game_isLoading && Player_Control.instance != null && Plugin.Instance != null && Player.instance != null && !Player.instance.GetIsDead())
+                Plugin.Instance.StartCoroutine(StandUp());
+        }
+
+        private static System.Collections.IEnumerator StandUp()
+        {
+            Player_Control.instance.Player_Stand();
+            yield return new WaitForSeconds(1f);
+            if (Trancing == 0 && Player_Control.instance != null) Player_Control.instance.playerAnim.enabled = false;
         }
 
         public override List<DmgObj> OnDealDamage(Ability ability, Character victim, List<DmgObj> dmgList, Item_Weapon attackerWeapon, float critDmgMod)
@@ -622,9 +687,42 @@ namespace SCClassLoader
                 else if (k.Equals("item", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() != null) return true; }
                 else if (k.Equals("offhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == true) return true; }
                 else if (k.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == false) return true; }
+                else if (k.Equals("summons", StringComparison.OrdinalIgnoreCase)) { if (summonHit) return true; }
                 else if (Enum.TryParse(k, true, out DAMAGE_TYPE t) && d.dmgType == t) return true;
             }
             return false;
+        }
+
+        /// <summary>Set while your effects weigh a hit one of your allies deals (see Patch_SummonHits).</summary>
+        private static bool summonHit;
+        internal static int SummonHitsScaled;
+
+        /// <summary>
+        /// dealtWith "summons": a hit dealt by anyone fighting on your side but you (summons, pets, hirelings) also passes
+        /// through your effects that name the word, so a rule on you can make your minions hit harder. The ally's own
+        /// effects have had their say by then.
+        /// </summary>
+        [HarmonyLib.HarmonyPatch(typeof(Character_Effect_Control), nameof(Character_Effect_Control.OnDealDamage))]
+        private static class Patch_SummonHits
+        {
+            private static void Postfix(Character_Effect_Control __instance, Ability ability, List<DmgObj> __result)
+            {
+                Character by = __instance.character;
+                if (summonHit || __result == null || by == null || by == Player.instance || !TileStacks.IsAlly(by) || Player.instance?.effects == null) return;
+                summonHit = true;
+                try
+                {
+                    foreach (Effect e in Player.instance.effects.GetEffects())
+                    {
+                        if (!(e is ModEffect m) || m.rt == null || m.DealtMult == 1f) continue;
+                        string f = m.rt.spec.dealtWith;
+                        if (string.IsNullOrEmpty(f) || f.IndexOf("summons", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                        ScaleWhere(__result, Mathf.Max(0f, m.DealtMult), f, ability);
+                        SummonHitsScaled++;
+                    }
+                }
+                finally { summonHit = false; }
+            }
         }
 
         /// <summary>Which hand a hit came from: the auto-attack's swing (its off-hand pass runs on the left hand's animator),
@@ -636,6 +734,8 @@ namespace SCClassLoader
                 return Equipped.Hand(m.Spec.equipped, Player.instance, out bool off) != null ? off : (bool?)null;
             return null;
         }
+
+        private static bool OnlySummons(string filter) => string.Equals((filter ?? "").Trim(), "summons", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>Words for a "dealtWith" / "takenFrom" filter: " with melee hits", " from Fire or Cryo".</summary>
         private static string HitWords(string filter, bool dealt)
@@ -651,6 +751,7 @@ namespace SCClassLoader
                     case "item": return "grenades and other items";
                     case "offhand": return "off-hand swings";
                     case "mainhand": return "main-hand swings";
+                    case "summons": return "your summons' and allies' hits";
                     default: return w;
                 }
             }
@@ -671,6 +772,25 @@ namespace SCClassLoader
             }
         }
 
+        internal int AmmoSaveOdds { get { Bind(); return (rt?.spec.ammoSave ?? 0) * Math.Max(1, Stacks); } }
+
+        /// <summary>This effect's consumable rules for its stacks: itemTurns, shareItems, keepCost.</summary>
+        internal (float, bool, int) ItemRules()
+        {
+            Bind();
+            if (rt == null) return (0f, false, 0);
+            int n = Math.Max(1, Stacks);
+            return (rt.spec.itemTurns * n, rt.spec.shareItems, rt.spec.keepCost * n);
+        }
+
+        /// <summary>This effect's "hazardRules", each with the stacks it counts for.</summary>
+        internal IEnumerable<(HazardRuleSpec, int)> HazardRules()
+        {
+            Bind();
+            if (rt?.spec.hazardRules == null) yield break;
+            foreach (HazardRuleSpec r in rt.spec.hazardRules) if (r != null) yield return (r, Math.Max(1, Stacks));
+        }
+
         internal float OffhandPower { get { Bind(); return (rt?.spec.offhandPower ?? 0f) * Math.Max(1, Stacks); } }
 
         /// <summary>This effect's "keepItem" chance for a consumable being used (0 when it doesn't match).</summary>
@@ -689,6 +809,7 @@ namespace SCClassLoader
             Character t = target;
             Unroot();
             Ungrant();
+            EndTrance();
             base.Clear();
             if (t != null && !t.GetIsDead()) BuffLane.AfterRemoved(t);
         }
@@ -697,7 +818,7 @@ namespace SCClassLoader
         {
             base.Deserialize(d);
             Bind();
-            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); Grant(); }
+            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); Grant(); StartTrance(); }
         }
 
         public override string GetDescription()
@@ -711,14 +832,25 @@ namespace SCClassLoader
             if (s.capScale != null) lines.Add(rt.CapLine());
             foreach (StatObj st in attributeMods) lines.Add($"{(st.amount >= 0 ? "+" : "")}{st.amount} {StatObj.GetStatString(st.statType)}");
             foreach (DmgObj r in resistanceMods) lines.Add($"{(r.damage >= 0 ? "+" : "")}{r.damage} {Game.GetSpriteString(r.dmgType, isResist: true)} resistance");
-            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min + DotBonus(s)}-{s.dot.max + DotBonus(s)} {Game.GetSpriteString(dt)} each turn");
-            if (s.hot > 0) lines.Add($"Heals {s.hot + HotBonus(s)} each turn");
-            if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
-            if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
+            float k = Ramp(s);
+            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {Mathf.RoundToInt((s.dot.min + DotBonus(s)) * k)}-{Mathf.RoundToInt((s.dot.max + DotBonus(s)) * k)} {Game.GetSpriteString(dt)} each turn");
+            if (s.hot > 0) lines.Add($"Heals {Mathf.RoundToInt((s.hot + HotBonus(s)) * k)} each turn");
+            if (s.staminaPerTurn != 0) lines.Add($"{Mathf.RoundToInt(s.staminaPerTurn * k):+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
+            if (s.ramp != 0f) lines.Add($"{(s.ramp > 0f ? "Grows" : "Fades")} by {Mathf.RoundToInt(Mathf.Abs(s.ramp) * 100)}% of itself each turn it holds{(s.ramp > 0f ? $", up to {Mathf.Max(1f, s.rampMax):0.#}×" : "")}");
+            if (s.trance) lines.Add("<b>You sit and let your turns pass</b>");
+            if (s.endWhen != null) lines.Add($"Ends once {When.Describe(s.endWhen, rt.classId)}");
+            if (DealtMult != 1f) lines.Add(OnlySummons(s.dealtWith)
+                ? $"Your summons and allies deal {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage"
+                : $"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
             if (s.keepItem > 0) lines.Add($"{s.keepItem * Math.Max(1, Stacks)}% chance a {(string.IsNullOrEmpty(s.keepItemMatch) ? "consumable" : string.Join(" or ", s.keepItemMatch.Split('|').Select(x => x.Trim().ToLowerInvariant())) + " item")} you use isn't used up");
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
+            if (s.keepCost > 0) lines.Add($"{s.keepCost * Math.Max(1, Stacks)}% chance a skill's item cost isn't spent");
+            if (s.itemTurns > 0f) lines.Add($"What your consumables put on you lasts {Mathf.RoundToInt(s.itemTurns * Math.Max(1, Stacks) * 100)}% longer");
+            if (s.shareItems) lines.Add("What your consumables put on you goes on your summons too");
+            if (AmmoSaveOdds > 0) lines.Add($"{AmmoSaveOdds}% chance each round your guns fire goes back into the load");
             if ((s.grantTags?.Count ?? 0) > 0) lines.Add(string.Join("; ", s.grantTags.Select(TagWords)));
+            foreach (var (r, n) in HazardRules()) { string w = SCClassLoader.HazardRules.Describe(r, n); if (w.Length > 0) lines.Add(w); }
             if (s.breakOnHurt) lines.Add("<b>Breaks when the bearer is hurt</b>" + ((s.onBreakActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onBreakActions, rt.classId, "the bearer") : "."));
             if ((s.hazardProof?.Count ?? 0) > 0) lines.Add(s.hazardProof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase)) ? "No harm from hazards"
                 : "No harm from " + string.Join(", ", s.hazardProof.Select(p => p.Replace("HAZARD_", "").Replace('_', ' ').ToLowerInvariant())));
@@ -754,7 +886,9 @@ namespace SCClassLoader
             if (rt == null) return "";
             var parts = new List<string>();
             if (MaxStacks > 1) parts.Add($"<color=#FFD15C>x{Stacks}/{MaxStacks}</color>");
-            if (DealtMult != 1f) parts.Add($"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.dealtWith, true)}");
+            if (DealtMult != 1f) parts.Add(OnlySummons(rt.spec.dealtWith)
+                ? $"your summons and allies deal {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%"
+                : $"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.dealtWith, true)}");
             if (TakenMult != 1f) parts.Add($"takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.takenFrom, false)}");
             // the words only when there are no numbers to go on (stat changes are already on the row above)
             bool numbers = parts.Count > (MaxStacks > 1 ? 1 : 0) || attributeMods.Count > 0 || resistanceMods.Count > 0;

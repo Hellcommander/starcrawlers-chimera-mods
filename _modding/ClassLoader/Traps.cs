@@ -18,7 +18,9 @@ namespace SCClassLoader
     ///    after that many turns (a timed mine), turns = it fizzles after that long (0 = stays until used), maxTraps =
     ///    a cap per name (laying one more removes the oldest). Saved with the game (SideAreas.Data "traps"), per floor.
     ///  - "springTraps" sets off your traps (of one name, or all) on this floor right away: a remote detonator.
-    ///  - "moveTraps" moves your traps of one name under the target, fuse and all.
+    ///    "scatter" lays several at once on random tiles around the aim (a cluster bomb's bomblets).
+    ///  - "moveTraps" pulls your traps (of one name, or all; "near" = only those that close) under the target or onto
+    ///    the aim point, fuse and all; a live one landing on someone it affects goes off.
     ///  - Proc trigger "trap": one of your traps went off ("match" = its name; the victim is who it caught).
     ///  - Vanilla floor traps only go off on your side. An enemy you knock back, pull, throw, warp or swap onto one now
     ///    sets it off too ([Traps] ShoveIntoTraps), and you get the experience if it dies.
@@ -75,7 +77,42 @@ namespace SCClassLoader
             NavNode node = Map.instance.GetNearestNavNodeAt(at, 1f);
             if (node == null) return;
             string name = a.fieldName ?? ctx.sourceName ?? "Trap";
+            if (a.scatter <= 0) { LayAt(a, ctx, node, name); return; }
 
+            // A cluster: random tiles around the aim, each lobbed out from it; or with "trail" the tiles along the way there.
+            bool trail = a.trail && ctx.caster != null;
+            var spots = (trail ? (IEnumerable<NavNode>)Trail(ctx.caster.transform.position, node.transform.position) : Map.instance.GetNavNodesAt(node.transform.position, a.spread > 0f ? a.spread : 3f)
+                    .OrderBy(_ => UnityEngine.Random.value))
+                .Where(n => n != null && !n.Block_Move && !Here().Any(o => o.node == n && Same(o.name, name)))
+                .Take(a.scatter).ToList();
+            foreach (NavNode n in spots)
+            {
+                Vector3 from = (trail ? n.transform.position + Vector3.up * 0.9f : node.transform.position + Vector3.up * 0.5f);
+                Moves.Streak(from, n.transform.position + Vector3.up * 0.05f, Moves.Hex(a.fall, new Color(1f, 0.7f, 0.36f)), 0.03f, 0.45f);
+                LayAt(a, ctx, n, name, quiet: true);
+            }
+            Scattered += spots.Count;
+            if (spots.Count > 0) Game.LOG($"{ctx.sourceName}: {spots.Count} {name.ToLowerInvariant()}{(spots.Count > 1 && !name.EndsWith("s") ? "s" : "")} scatter across the floor.");
+        }
+
+        /// <summary>The tiles a line from you to the aim crosses, nearest first, leaving out your own tile and the ones beside it.</summary>
+        private static List<NavNode> Trail(Vector3 from, Vector3 to)
+        {
+            var tiles = new List<NavNode>();
+            float len = Vector3.Distance(from, to);
+            for (float d = 1.5f; d <= len + 0.01f; d += 0.5f)
+            {
+                NavNode n = Map.instance.GetNearestNavNodeAt(Vector3.Lerp(from, to, d / Mathf.Max(0.01f, len)), 0.6f);
+                if (n != null && !tiles.Contains(n) && Vector3.Distance(n.transform.position, from) > 1.1f) tiles.Add(n);
+            }
+            return tiles;
+        }
+
+        /// <summary>Traps laid by scatter (tests).</summary>
+        internal static int Scattered;
+
+        private static void LayAt(ActionSpec a, ActionContext ctx, NavNode node, string name, bool quiet = false)
+        {
             foreach (Trap old in Here().Where(o => o.node == node && Same(o.name, name)).ToList()) Remove(old);
             if (a.maxTraps > 0)
                 foreach (Trap old in Here().Where(o => Same(o.name, name)).Reverse().Skip(a.maxTraps - 1).ToList()) Remove(old);
@@ -88,6 +125,8 @@ namespace SCClassLoader
             };
             Place(tr);
             traps.Add(tr);
+            Record();
+            if (quiet) return;
             string who = Same(ctx.sourceName, name) ? "" : $"{ctx.sourceName}: ";
             Game.LOG($"{who}{name} set{(tr.arm > 0 ? $", live in {tr.arm} turn{(tr.arm > 1 ? "s" : "")}" : "")}{(tr.fuse > 0 ? $"; it goes off in {tr.fuse} turns" : "")}.");
             Record();
@@ -172,12 +211,25 @@ namespace SCClassLoader
                 GoOff(tr, null);
         }
 
-        /// <summary>"moveTraps": your traps of that name go under the target, keeping their fuse; one going off right now stays.</summary>
-        internal static void Move(ActionSpec a, Character t)
+        /// <summary>
+        /// "moveTraps": your traps of that name (all of yours with none) go under the target, or onto the aim point of a
+        /// skill aimed at the floor, keeping their fuse; "near" only pulls those that close. One going off right now
+        /// stays. A live trap landing on someone it affects goes off there and then, as if they had stepped on it.
+        /// </summary>
+        internal static void Move(ActionSpec a, ActionContext ctx, Character t)
         {
-            NavNode node = t?.GetMover()?.GetCurrentNavNode();
+            string to = (a.to ?? "").ToLowerInvariant();
+            bool aimed = ctx != null && (to == "" || to == "target") && ctx.center.HasValue;
+            if (aimed)
+            {
+                if (ctx.groundLaid == null) ctx.groundLaid = new HashSet<ActionSpec>();
+                if (!ctx.groundLaid.Add(a)) return; // once per cast, not once per enemy in the blast
+            }
+            NavNode node = aimed ? Map.instance?.GetNearestNavNodeAt(ctx.center.Value, 1f) : t?.GetMover()?.GetCurrentNavNode();
             if (node == null) return;
-            foreach (Trap tr in Here().Where(o => Same(o.name, a.fieldName) && o.node != node && o.firedTick != tick).ToList())
+            var moved = new List<Trap>();
+            foreach (Trap tr in Here().Where(o => (string.IsNullOrEmpty(a.fieldName) || Same(o.name, a.fieldName)) && o.node != node && o.firedTick != tick
+                && (a.near <= 0f || Vector3.Distance(o.pos, node.transform.position) <= a.near)).ToList())
             {
                 foreach (GameObject v in tr.visuals) if (v != null) Object.Destroy(v);
                 tr.visuals.Clear();
@@ -185,10 +237,26 @@ namespace SCClassLoader
                 tr.node = node;
                 tr.pos = node.transform.position;
                 Place(tr);
-                Game.LOG($"<color=#FFB35C>{tr.name}</color> shifts onto {t.GetName()}.");
+                moved.Add(tr);
+            }
+            Moved += moved.Count;
+            if (moved.Count > 0)
+            {
+                Character under = TileStacks.On(node).FirstOrDefault(c => c != null && !c.GetIsDead());
+                string names = moved.Count == 1 ? $"<color=#FFB35C>{moved[0].name}</color> shifts" : $"{moved.Count} of your traps shift";
+                Game.LOG(under != null ? $"{names} onto {under.GetName()}." : $"{names} together.");
             }
             Record();
+            foreach (Trap tr in moved)
+            {
+                if (!Live(tr) || tr.spec.fuseOnly) continue;
+                Character c = tr.zone.SelectMany(TileStacks.On).FirstOrDefault(x => x != null && !x.GetIsDead() && GroundFields.Affects(tr.spec.affects, x));
+                if (c != null) GoOff(tr, c);
+            }
         }
+
+        /// <summary>Traps moved by moveTraps (tests).</summary>
+        internal static int Moved;
 
         private static void Tick()
         {
@@ -206,6 +274,9 @@ namespace SCClassLoader
             }
             Record();
         }
+
+        /// <summary>Where this floor's traps of that name lie (tests).</summary>
+        internal static List<Vector3> Positions(string name) => Here().Where(t => Same(t.name, name)).Select(t => t.pos).ToList();
 
         internal static int CountHere(string name) => Here().Count(t => string.IsNullOrEmpty(name) || Same(t.name, name));
 

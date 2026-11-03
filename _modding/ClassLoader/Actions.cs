@@ -52,6 +52,8 @@ namespace SCClassLoader
         public List<IEnumerator> paced;
         /// <summary>Tiles the last "rush" in this cast covered ("value:rushed").</summary>
         public int rushed;
+        /// <summary>Tiles "clearHazards" has cleared so far in this cast ("value:cleared").</summary>
+        public int cleared;
     }
 
     /// <summary>Runs ActionSpecs and writes their rules text. Shared by abilities, procs and effects.</summary>
@@ -97,7 +99,7 @@ namespace SCClassLoader
         }
 
         private static readonly HashSet<string> Hostile = new HashSet<string>
-            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard", "forget" };
+            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard", "forget", "attempt" };
 
         /// <summary>An ignoresAllies class (astral magic) never lands a hostile action on its own side.</summary>
         private static bool SparesAlly(ActionSpec a, string act, ActionContext ctx, Character t)
@@ -176,10 +178,12 @@ namespace SCClassLoader
                 case "arm": Reactions.Arm(a, ctx); break;
                 case "spring": Reactions.Spring(ctx); break;
                 case "hazard": GroundFields.LayHazard(a, ctx, t); break;
+                case "clearhazards": HazardRules.Clear(a, ctx, t); break;
                 case "field": GroundFields.Lay(a, ctx, t); break;
                 case "trap": Traps.Lay(a, ctx, t); break;
                 case "springtraps": Traps.Spring(a, ctx); break;
-                case "movetraps": Traps.Move(a, t); break;
+                case "movetraps": Traps.Move(a, ctx, t); break;
+                case "attempt": Attempt(a, ctx, t); break;
                 case "ready": CastRules.Ready(); break;
                 case "wallspikes": Walls.Spikes(a, ctx, t); break;
                 case "wildcast": WildMagic.Cast(a, ctx, t); break;
@@ -195,6 +199,7 @@ namespace SCClassLoader
                 case "heal":
                     {
                         int amt = Amount(a, ctx) + StackBonus(a, ctx, t);
+                        if (amt <= 0) break;
                         t.Heal(amt, false);
                         Game.LOG($"{ctx.sourceName}: {t.GetName()} {Ability.T("General/heals")} {amt}.");
                         if (HUD.instance != null) HUD.instance.MakeFct("<color=#5CFF6B>+" + amt + "</color>", t.GetHitFx().position, false);
@@ -242,6 +247,7 @@ namespace SCClassLoader
                 case "cleanse": Dispel(a, ctx, t, debuffs: true); break;
                 case "chain": if (!string.IsNullOrEmpty(a.sound) && t != null) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId); Chain(a, ctx, t); break;
                 case "echo": Echo(a, ctx, t); break;
+                case "volley": Volley(a, ctx, t); break;
                 case "cast": CastSkill(a, ctx, t); break;
                 case "shorten": Shorten(a, ctx, t); break;
                 case "xp": Xp(a, ctx); break;
@@ -399,7 +405,7 @@ namespace SCClassLoader
             // counts read as the thing counted: "+3 per enemy within 4 of you"
             string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
                 : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
-                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed" : head == "cleared" ? "tile cleared" : head == "rounds" ? "round the shot fired"
                 : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
             if (one != null) return div != null ? $"{div} (counting each {one})" : one;
             string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
@@ -503,6 +509,137 @@ namespace SCClassLoader
                     .OrderBy(e => Vector3.Distance(e.transform.position, p)).FirstOrDefault();
             }
         }
+
+        internal static int VolleyRetargets;
+
+        /// <summary>
+        /// "volley": "amount" shots of "actions" at the target, one after another; once it falls, the rest turn on the
+        /// nearest enemy within "radius" (3 unset) of where it stood, a salvo of homing missiles finding a new mark. Each
+        /// shot draws a "look" streak from you and plays "vfx" and "sound" where it lands. Inside a skill the shots
+        /// come a beat apart and the skill waits for them.
+        /// </summary>
+        private static void Volley(ActionSpec a, ActionContext ctx, Character first)
+        {
+            if (ctx.paced != null) { ctx.paced.Add(Shots(a, ctx, first, true)); return; }
+            IEnumerator run = Shots(a, ctx, first, false);
+            while (run.MoveNext()) { }
+        }
+
+        private static IEnumerator Shots(ActionSpec a, ActionContext ctx, Character cur, bool paced)
+        {
+            int n = Math.Max(1, a.amount);
+            Vector3 at = cur != null ? cur.transform.position : ctx.caster.transform.position;
+            for (int shot = 0; shot < n; shot++)
+            {
+                if (cur == null || cur.GetIsDead() || cur.GetHealth() <= 0)
+                {
+                    if (AI_Manager.instance == null) yield break;
+                    Character dead = cur;
+                    cur = AI_Manager.instance.GetEnemiesAt(at, a.radius > 0f ? a.radius : 3f)
+                        .Where(e => e != null && e != dead && e != ctx.caster && !e.GetIsDead() && e.GetHealth() > 0)
+                        .OrderBy(e => Vector3.Distance(e.transform.position, at)).FirstOrDefault();
+                    if (cur == null) yield break;
+                    VolleyRetargets++;
+                }
+                at = cur.transform.position;
+                Vector3 hit = cur.GetHitFx().position;
+                if (!string.IsNullOrEmpty(a.look) && ctx.caster != null) Moves.Streak(ctx.caster.GetHitFx().position, hit, Moves.Hex(a.look, Color.white), 0.025f, 0.35f);
+                if (!string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, hit);
+                if (!string.IsNullOrEmpty(a.sound)) ModAudio.Play(a.sound, hit, ctx.classId);
+                var c = Clone(ctx); c.target = cur; c.paced = null;
+                Run(a.actions, c, cur);
+                if (paced && shot < n - 1) yield return new WaitForSeconds(0.15f);
+            }
+        }
+
+        /// <summary>
+        /// "attempt": a hold on the target that rolls its odds once a beat for up to "amount" tries (default 6), each try
+        /// "oddsPerTry" likelier and costing "tryCost" stamina, until one lands. Odds = "odds" + your "scale" stats ×
+        /// scaleMult − the target's "resistStat" × resistMult. A landed try runs "actions" on the target, none landing
+        /// runs "else". Inside a skill the tries come a second apart under a cast bar; from a trigger they roll at once.
+        /// With "together", a skill that hits several targets holds them all in one hold: each beat costs tryCost once
+        /// and rolls every target still held, and a target that's caught drops out while the rest go on.
+        /// </summary>
+        private static void Attempt(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (t == null || t.GetIsDead() || ctx.caster == null) return;
+            if (ctx.paced != null)
+            {
+                if (a.together)
+                {
+                    var key = (ctx.paced, a);
+                    if (Holds.TryGetValue(key, out var held)) { if (!held.Contains(t)) held.Add(t); return; }
+                    held = new List<Character> { t };
+                    Holds[key] = held;
+                    ctx.paced.Add(Tries(a, ctx, held, true, key));
+                    return;
+                }
+                ctx.paced.Add(Tries(a, ctx, new List<Character> { t }, true, null));
+                return;
+            }
+            IEnumerator run = Tries(a, ctx, new List<Character> { t }, false, null);
+            while (run.MoveNext()) { }
+        }
+
+        /// <summary>Holds of a "together" attempt being gathered while a skill resolves, by its paced list and action.</summary>
+        private static readonly Dictionary<(List<IEnumerator>, ActionSpec), List<Character>> Holds = new Dictionary<(List<IEnumerator>, ActionSpec), List<Character>>();
+
+        /// <summary>Tries rolled, holds that landed, and the most targets one hold had (tests).</summary>
+        internal static int Attempts, AttemptsWon, AttemptsHeld;
+
+        internal static float AttemptOdds(ActionSpec a, Character me, Character t, int i) =>
+            a.odds + StatBonus(a.scale, a.scaleMult, me) - (string.IsNullOrEmpty(a.resistStat) ? 0f : StatBonus(a.resistStat, a.resistMult, t)) + a.oddsPerTry * i;
+
+        private static IEnumerator Tries(ActionSpec a, ActionContext ctx, List<Character> held, bool paced, (List<IEnumerator>, ActionSpec)? key)
+        {
+            // the skill has finished gathering targets by the time paced moves run
+            if (key.HasValue) Holds.Remove(key.Value);
+            Character me = ctx.caster;
+            var left = held.Where(x => x != null && !x.GetIsDead()).ToList();
+            if (left.Count == 0) yield break;
+            AttemptsHeld = Math.Max(AttemptsHeld, left.Count);
+            int tries = a.amount > 0 ? a.amount : 6;
+            bool bar = paced && me == Player.instance && Menu_HUD.instance != null;
+            if (bar)
+            {
+                Menu_HUD.instance.SetCastBarTitle(ctx.sourceName ?? "", Moves.Hex(a.look, Color.cyan));
+                Menu_HUD.instance.StartCoroutine(Menu_HUD.instance.ShowCastBar(tries));
+            }
+            if (!string.IsNullOrEmpty(a.sound)) ModAudio.Play(a.sound, left[0].GetHitFx().position, ctx.classId);
+            for (int i = 0; i < tries && left.Count > 0; i++)
+            {
+                left.RemoveAll(x => x == null || x.GetIsDead());
+                if (left.Count == 0 || me == null || me.GetIsDead()) break;
+                if (a.tryCost > 0)
+                {
+                    if (me.GetStamina() < a.tryCost) break;
+                    me.ModStamina(-a.tryCost);
+                }
+                foreach (Character t in left.ToList())
+                {
+                    Attempts++;
+                    if (!string.IsNullOrEmpty(a.look)) Moves.Streak(me.GetHitFx().position, t.GetHeadFx().position, Moves.Hex(a.look, Color.white), 0.02f, paced ? 0.9f : 0.3f);
+                    if (Random.Range(0, 100) >= Mathf.Clamp(Mathf.RoundToInt(AttemptOdds(a, me, t, i)), 0, 100)) continue;
+                    left.Remove(t);
+                    AttemptsWon++;
+                    if (!string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, t.GetHitFx().position);
+                    Game.LOG($"{ctx.sourceName} takes hold of {t.GetName()}.");
+                    var c = Clone(ctx); c.target = t; c.paced = null;
+                    Run(a.actions, c, t);
+                }
+                if (left.Count > 0 && paced && i < tries - 1) yield return new WaitForSeconds(1f);
+            }
+            if (bar) Menu_HUD.instance.CancelCastBar();
+            foreach (Character t in left)
+            {
+                if (t == null) continue;
+                Game.LOG($"{t.GetName()} throws off {ctx.sourceName}.");
+                var c = Clone(ctx); c.target = t; c.paced = null;
+                Run(a.@else, c, t);
+            }
+        }
+
+        private static string Plural(string name) => name.EndsWith("s") ? name : name + "s";
 
         /// <summary>The last new ability you used, for echo actions.</summary>
         internal static ModAbility LastUsed;
@@ -731,7 +868,8 @@ namespace SCClassLoader
         internal static int Amount(ActionSpec a, ActionContext ctx)
         {
             float v = a.amount + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
-            return Math.Max(1, Mathf.RoundToInt(v));
+            // with bonusPerStack a base of 0 is meant: nothing happens without stacks
+            return Math.Max(a.amount == 0 && a.bonusPerStack != 0 ? 0 : 1, Mathf.RoundToInt(v));
         }
 
         /// <summary>A drain's size: "amount": -15 drains 15, plus its rank and stat scaling.</summary>
@@ -851,9 +989,26 @@ namespace SCClassLoader
             return Mathf.Max(0.1f, 1f - a.areaFalloff * Mathf.Round(d.magnitude));
         }
 
+        internal static int BothHandHits;
+
         private static void Damage(ActionSpec a, ActionContext ctx, Character t)
         {
             if (t == ctx.caster && !ctx.backfire) return; // never hurt yourself (unless your wild magic turned on you)
+            // "hands": "both": the hit once with each weapon held, main hand first; a fallen target takes no second swing
+            if ((a.weapon > 0f || a.channel) && string.Equals(a.hands, "both", StringComparison.OrdinalIgnoreCase) && ctx.caster is Player pl && !Equipped.Forcing)
+            {
+                var hands = Equipped.BothHands(pl);
+                if (hands.Count > 1)
+                {
+                    foreach (var (w, off) in hands)
+                    {
+                        if (t == null || t.GetIsDead() || t.GetHealth() <= 0) break;
+                        using (Equipped.Force(w, off)) Damage(a, ctx, t);
+                        BothHandHits++;
+                    }
+                    return;
+                }
+            }
             DAMAGE_TYPE type = Weakest(a.type, t) ?? DamageType(a.type);
             float v = Random.Range(a.min, Math.Max(a.min, a.max) + 1) + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
             v += StackBonus(a, ctx, t) + WeaponBonus(a, ctx) + a.stored * ctx.stored;
@@ -1047,7 +1202,14 @@ namespace SCClassLoader
         private static void GiveItem(ActionSpec a, ActionContext ctx)
         {
             if (ctx.caster != Player.instance || string.IsNullOrEmpty(a.item)) return;
-            string id = Crafting.ResolveItem(a.item, null);
+            string id;
+            if (a.item.Equals("$item", StringComparison.OrdinalIgnoreCase))
+            {
+                Item behind = ctx.item != null ? ctx.item : ProcHub.ItemNow;
+                if (behind == null || string.IsNullOrEmpty(behind.itemId)) return;
+                id = behind.itemId;
+            }
+            else id = Crafting.ResolveItem(a.item, null);
             if (Crafting.Give(id, Math.Max(1, a.amount)) != null) Game.LOG($"{ctx.sourceName}: you get {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(id)}.");
         }
 
@@ -1065,7 +1227,10 @@ namespace SCClassLoader
             Item it = ctx.item;
             if (it == null || ctx.caster != Player.instance) return;
             string name = it.GetName(false);
-            if (it.stack > 1) { it.SetStack(it.stack - 1); it.CalculateValue(); }
+            // "whole": the stack goes, and the gives count once per "amount" items in it
+            int used = a.whole ? Math.Max(1, it.stack) : 1;
+            int times = a.whole ? used / Math.Max(1, a.amount) : 1;
+            if (it.stack > used) { it.SetStack(it.stack - used); it.CalculateValue(); }
             else
             {
                 Menu_Inventory.instance.RemoveItem(it, null, isSilent: true);
@@ -1074,9 +1239,12 @@ namespace SCClassLoader
             var got = new List<string>();
             foreach (GiveSpec g in a.gives ?? new List<GiveSpec>())
             {
-                if (g.chance < 100 && Random.Range(1, 101) > g.chance + ctx.chanceBonus) continue;
+                int count = 0;
+                for (int i = 0; i < times; i++)
+                    if (g.chance >= 100 || Random.Range(1, 101) <= g.chance + ctx.chanceBonus) count += Math.Max(1, g.count);
+                if (count <= 0) continue;
                 string id = Crafting.ResolveItem(g.item, null);
-                if (Crafting.Give(id, Math.Max(1, g.count)) != null) got.Add($"{Math.Max(1, g.count)}× {ItemRegistry.NameOf(id)}");
+                if (Crafting.Give(id, count) != null) got.Add($"{count}× {ItemRegistry.NameOf(id)}");
             }
             Menu_Inventory.instance.Refresh();
             Game.LOG($"{ctx.sourceName}: {System.Text.RegularExpressions.Regex.Replace(name, "<.*?>", "")} breaks down into {(got.Count > 0 ? string.Join(", ", got) : "nothing useful")}.");
@@ -1189,7 +1357,30 @@ namespace SCClassLoader
                             : $"<color={DmgObj.GetDamageColor(type)}>{range}{Scaling(a)}{(a.weapon > 0f ? $" (+{Mathf.RoundToInt(a.weapon * 100)}% weapon, with its on-hit effects)" : "")}{(a.stored > 0f ? $" (+{Mathf.RoundToInt(a.stored * 100)}% of the damage it took while this lasted)" : "")} {Game.GetSpriteString(type)}</color>";
                         s = $"Deals {kind}{(a.trueDamage ? " <color=#FFFFFF>true damage</color>" : "")} to {who}{LevelNote(a.levelCap)}";
                         if (a.areaFalloff > 0f) s += $", {Mathf.RoundToInt(a.areaFalloff * 100)}% less for each tile from the centre";
+                        if ((a.weapon > 0f || a.channel) && string.Equals(a.hands, "both", StringComparison.OrdinalIgnoreCase))
+                            s += a.weapon > 0f ? ", once with each weapon you hold (the off-hand one's roll at its usual share)" : ", once with each weapon you hold";
                         break;
+                    }
+                case "volley":
+                    {
+                        string per = Joined(Describe(a.actions, classId, "it"));
+                        int n = Math.Max(1, a.amount);
+                        s = $"Fires {n} shot{(n > 1 ? "s" : "")} at {who}, one after another; once it falls, the rest turn on the nearest enemy within {(a.radius > 0f ? a.radius : 3f):0.#} of it. Each shot: {per}";
+                        break;
+                    }
+                case "attempt":
+                    {
+                        int n = a.amount > 0 ? a.amount : 6;
+                        string yes = Describe(a.actions, classId, who).Replace("• ", "    - ");
+                        string no = Describe(a.@else, classId, who).Replace("• ", "    - ");
+                        string odds = $"{a.odds}%{(string.IsNullOrEmpty(a.scale) ? "" : $" + {Mathf.RoundToInt(a.scaleMult * 100)}% of your {a.scale.Replace("+", " and ")}")}"
+                            + (string.IsNullOrEmpty(a.resistStat) ? "" : $", less {Mathf.RoundToInt(a.resistMult * 100)}% of its {a.resistStat}");
+                        s = $"Bears down on {(a.together ? $"{who}, all at once," : who)} for up to {n} tr{(n > 1 ? "ies" : "y")}, a second apart, at odds of {odds}"
+                            + (a.oddsPerTry != 0 ? $", {a.oddsPerTry:+#;-#}% each try after" : "")
+                            + (a.tryCost > 0 ? $"; each try costs {a.tryCost} {StatObj.GetStatString(STAT_TYPE.Stamina)}{(a.together ? " however many it holds" : "")} and it stops when you can't pay" : "")
+                            + (a.together ? "; each one caught drops out while the rest are held" : "")
+                            + $".\n  If one lands:\n{(yes.Length > 0 ? yes : "    - nothing")}" + (no.Length > 0 ? $"\n  If none does:\n{no}" : "");
+                        return "• " + (a.chance < 100 ? $"{a.chance}%: " : "") + s;
                     }
                 case "heal": s = $"Heals {who} for <color=#5CFF6B>{a.amount}{Scaling(a)}</color>"; break;
                 case "stamina": s = $"{(a.amount >= 0 ? "Restores" : "Drains")} <color=#7CFC00>{Math.Abs(a.amount)}{Scaling(a)}</color> {StatObj.GetStatString(STAT_TYPE.Stamina)} for {who}"; break;
@@ -1237,7 +1428,7 @@ namespace SCClassLoader
                             $"Strikes {who}, then jumps to up to {a.jumps} nearby {link}{(a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "")}:\n{inner}";
                         break;
                     }
-                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
+                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.chaos ? ", fighting everyone near it, you included" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
                 case "corpses":
                     {
                         string many = a.amount > 0 ? $"up to {a.amount} {(a.amount == 1 ? "corpse" : "corpses")}" : "every corpse";
@@ -1262,9 +1453,11 @@ namespace SCClassLoader
                         s = $"Tries to bind {who} to you for good ({odds}, up to +50% more the more wounded it is; not bosses or elites){(a.maxSummons > 0 ? $", at most {a.maxSummons} at a time" : "")}{won}{lost}";
                         break;
                     }
-                case "giveitem": s = $"Gives you {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null))}"; break;
+                case "giveitem": s = "$item".Equals(a.item, StringComparison.OrdinalIgnoreCase)
+                        ? $"Gives you {(a.amount > 1 ? a.amount + " more" : "another")} of that item"
+                        : $"Gives you {Math.Max(1, a.amount)}× {ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null))}"; break;
                 case "consumeitem": s = $"Uses up {Math.Max(1, a.amount)}× {(a.item != null ? ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null)) : (a.tag ?? "?").ToLowerInvariant())}"; break;
-                case "salvage": s = $"Breaks the item down into {string.Join(", ", (a.gives ?? new List<GiveSpec>()).Select(g => $"{g.count}× {ItemRegistry.NameOf(Crafting.ResolveItem(g.item, null))}{(g.chance < 100 ? $" ({g.chance}%)" : "")}"))}"; break;
+                case "salvage": s = $"Breaks {(a.whole ? "the whole stack" : "the item")} down into {string.Join(", ", (a.gives ?? new List<GiveSpec>()).Select(g => $"{g.count}× {ItemRegistry.NameOf(Crafting.ResolveItem(g.item, null))}{(g.chance < 100 ? $" ({g.chance}%)" : "")}"))}{(a.whole ? $" for every {(a.amount > 1 ? a.amount + " items" : "item")} in it" : "")}"; break;
                 case "craft": s = "Opens field crafting"; break;
                 case "tune":
                     {
@@ -1340,6 +1533,7 @@ namespace SCClassLoader
                 case "arm": s = a.reaction != null ? Reactions.Describe(a.reaction, classId) : "Arms nothing"; break;
                 case "spring": s = "Every armed reaction goes off once right now at the nearest enemy it can reach, spending a charge"; break;
                 case "hazard": s = $"Leaves {GroundFields.HazardName(a.hazard)} on the floor{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
+                case "clearhazards": s = $"Puts out {(string.IsNullOrEmpty(a.hazard) || a.hazard.Equals("all", StringComparison.OrdinalIgnoreCase) ? "fire, acid and other harmful ground" : GroundFields.HazardName(a.hazard).ToLowerInvariant())}{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
                 case "field":
                     {
                         string aff = (a.affects ?? "enemies").ToLowerInvariant() switch { "allies" => "allies", "all" => "anyone", _ => "enemies" };
@@ -1357,13 +1551,20 @@ namespace SCClassLoader
                         if (a.fuse > 0) extra.Add($"goes off by itself after {a.fuse} turn{(a.fuse > 1 ? "s" : "")}");
                         if (a.turns > 0) extra.Add($"fizzles after {a.turns} turns");
                         if (a.maxTraps > 0) extra.Add($"up to {a.maxTraps} at once");
-                        s = $"Sets {(a.fieldName ?? "a trap")}{(a.armTurns > 0 ? $" (live after {a.armTurns} turn{(a.armTurns > 1 ? "s" : "")})" : "")}: the first {aff} to "
-                          + (a.triggerRadius > 0 ? $"come within {a.triggerRadius:0.#}" : "step on it") + $" sets it off: {inner}"
+                        string what = a.scatter > 0 && a.trail
+                            ? $"up to {a.scatter} × {(a.fieldName ?? "trap")}, one on each tile along the way to the aim"
+                            : a.scatter > 0
+                            ? $"{a.scatter} × {(a.fieldName ?? "trap")}, strewn over random tiles within {(a.spread > 0f ? a.spread : 3f):0.#} of the aim"
+                            : a.fieldName ?? "a trap";
+                        s = $"Sets {what}{(a.armTurns > 0 ? $" (live after {a.armTurns} turn{(a.armTurns > 1 ? "s" : "")})" : "")}: the first {aff} to "
+                          + (a.triggerRadius > 0 ? $"come within {a.triggerRadius:0.#}" : "step on " + (a.scatter > 0 ? "one" : "it")) + $" sets {(a.scatter > 0 ? "that one" : "it")} off: {inner}"
                           + (extra.Count > 0 ? $" ({string.Join("; ", extra)})" : "");
                         break;
                     }
                 case "springtraps": s = $"Sets off every {(a.fieldName ?? "trap of yours").ToLowerInvariant()} on this floor at once"; break;
-                case "movetraps": s = $"Moves your {(a.fieldName ?? "trap").ToLowerInvariant()} under {who}, keeping its fuse"; break;
+                case "movetraps":
+                    s = $"Pulls your {(a.fieldName == null ? "traps" : Plural(a.fieldName.ToLowerInvariant()))}{(a.near > 0f ? $" within {a.near:0.#}" : " on this floor")} in under {who}, fuses and all; a live one landing on someone it catches goes off";
+                    break;
                 case "ready": s = "The skill you are using is ready again and doesn't end your turn"; break;
                 case "wallspikes":
                     {
@@ -1460,7 +1661,10 @@ namespace SCClassLoader
                 string used = a.consumeStacks && !a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) && !a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) && a.stacksOf != "summons" && a.stacksOf != "bodies" ? (a.stacksUsed > 0 ? $" (uses up to {a.stacksUsed} and spends only those)" : " (consumes them)") : a.stacksUsed > 0 ? $" (counts up to {a.stacksUsed})" : "";
                 // effect and summon actions scale a count (stacks, summons) rather than an amount
                 int baseN = act == "effect" ? a.stacks : act == "summon" ? a.amount : -1;
-                if (baseN < 0) s += $", +{a.bonusPerStack} per {per}{used}";
+                // a base of 0 is the per-stack amount alone: "Heals you for 1 per round the shot fired"
+                int zero = baseN < 0 && a.amount == 0 ? s.IndexOf(">0<", StringComparison.Ordinal) : -1;
+                if (zero >= 0) s = s.Substring(0, zero) + $">{Math.Abs(a.bonusPerStack)}<" + s.Substring(zero + 3) + $" per {per}{used}";
+                else if (baseN < 0) s += $", +{a.bonusPerStack} per {per}{used}";
                 else if (baseN > 0) s += $" ({baseN}, plus {a.bonusPerStack} more per {per}){used}";
                 else s += $": {a.bonusPerStack} per {per}{used}";
             }
@@ -1534,7 +1738,23 @@ namespace SCClassLoader
 
         public static string DescribeProc(ProcSpec p, string classId, int chanceBonus)
         {
-            string when = (p.on ?? "").ToLowerInvariant() switch
+            string when = ProcWhen(p, classId);
+            int chance = Math.Min(100, p.chance + chanceBonus);
+            if (p.when != null) { string c = When.Describe(p.when, classId); if (c.Length > 0) when += $", if {c}"; }
+            if (p.every > 1) when = $"every {p.every}{Ordinal(p.every)} time {when.Replace("when ", "").Replace("each turn", "a turn passes")}";
+            var limits = new List<string>();
+            if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
+            if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
+            if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
+            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") + (string.Equals(p.on, "smash", StringComparison.OrdinalIgnoreCase) ? " of the wreck" : "") : DefaultProcWho(p.on);
+            string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";
+            return head + "\n" + Describe(p.actions, classId, who);
+        }
+
+        /// <summary>A trigger in words: "when you kill", "each turn".</summary>
+        internal static string ProcWhen(ProcSpec p, string classId)
+        {
+            return (p.on ?? "").ToLowerInvariant() switch
             {
                 "hit" => "when you hit",
                 "kill" => "when you kill",
@@ -1569,9 +1789,12 @@ namespace SCClassLoader
                 "summon" => "when an ally joins you",
                 "inflict" => string.IsNullOrEmpty(p.match) ? "when you put an effect on an enemy" : $"when you inflict {EffectName(p.match, classId)}",
                 "useitem" => string.IsNullOrEmpty(p.match) ? "when you use an item" : $"when you use {p.match}",
+                "craft" => string.IsNullOrEmpty(p.match) ? "when you fabricate an item" : $"when you fabricate {p.match}",
+                "ammo" => string.IsNullOrEmpty(p.match) ? "when your gun fires rounds" : $"when your gun fires {p.match} rounds",
                 "equip" => string.IsNullOrEmpty(p.match) ? "when you equip an item" : $"when you equip {p.match}",
                 "unequip" => string.IsNullOrEmpty(p.match) ? "when you take off an item" : $"when you take off {p.match}",
                 "search" => "when you search a container",
+                "smash" => "when a crate, console or door breaks near you",
                 "newfloor" => "when you reach another floor",
                 "shieldbreak" => "when your shield breaks",
                 "absorb" => "when your shield takes a hit",
@@ -1589,16 +1812,6 @@ namespace SCClassLoader
                 "chain" => "when one of your chains jumps to another enemy",
                 _ => PluginHost.EventText(p.on) ?? p.on,
             };
-            int chance = Math.Min(100, p.chance + chanceBonus);
-            if (p.when != null) { string c = When.Describe(p.when, classId); if (c.Length > 0) when += $", if {c}"; }
-            if (p.every > 1) when = $"every {p.every}{Ordinal(p.every)} time {when.Replace("when ", "").Replace("each turn", "a turn passes")}";
-            var limits = new List<string>();
-            if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
-            if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
-            if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
-            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") : DefaultProcWho(p.on);
-            string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";
-            return head + "\n" + Describe(p.actions, classId, who);
         }
 
         public static string DefaultProcWho(string on) => (on ?? "").ToLowerInvariant() switch
@@ -1625,6 +1838,7 @@ namespace SCClassLoader
             "chain" => "the enemy it jumped to",
             "summon" => "the new ally",
             "inflict" => "that enemy",
+            "useitem" => "whoever it was used on",
             _ => "you",
         };
 

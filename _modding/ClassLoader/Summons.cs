@@ -33,7 +33,7 @@ namespace SCClassLoader
             bool copy = Mirrors.IsSelf(a.creature);
             Character prefab = copy ? Mirrors.Body() : Resolve(a.creature);
             if (prefab == null) { Plugin.Log.LogWarning($"{ctx.sourceName}: summon creature '{a.creature}' not found"); return; }
-            if (a.hostile || (a.anySide && (ForceLoose ?? UnityEngine.Random.value < 0.5f))) { Loose(a, ctx, near ?? caster, howMany ?? Math.Max(1, a.amount)); return; }
+            if (a.hostile || a.chaos || (a.anySide && (ForceLoose ?? UnityEngine.Random.value < 0.5f))) { Loose(a, ctx, near ?? caster, howMany ?? Math.Max(1, a.amount)); return; }
 
             string ownerTag = !string.IsNullOrEmpty(a.summonGroup) ? GroupTag(a.summonGroup) : OwnerTagPrefix + (ctx.source != null ? ctx.source.internalName : ctx.classId);
             int count = howMany ?? Math.Max(1, a.amount);
@@ -179,7 +179,7 @@ namespace SCClassLoader
         public static int Count() =>
             AI_Manager.instance == null ? 0 : AI_Manager.instance.GetPlayerMinions().Count(m => m != null && !m.GetIsDead());
 
-        // ---- "anySide" summons that came in against you ------------------------------------------------------------
+        // ---- "anySide" summons that came in against you, and "chaos" ones against everyone ---------------------------
 
         internal static bool? ForceLoose; // devtests
         internal static int LooseSpawned; // devtests
@@ -194,7 +194,7 @@ namespace SCClassLoader
                 Character prefab = Resolve(a.creature); // a boss's minions: a fresh pick each time
                 NavNode node = FreeNode(center, 2.6f);
                 if (prefab == null || node == null) return;
-                Character c = AI_Manager.instance.Spawn_Character(prefab, node.transform.position, Quaternion.identity, AI.AI_TEAM.Hostile);
+                Character c = AI_Manager.instance.Spawn_Character(prefab, node.transform.position, Quaternion.identity, a.chaos ? AI.AI_TEAM.Chaos : AI.AI_TEAM.Hostile);
                 if (c == null) return;
                 c.level = ctx.caster.level;
                 c.SetTag("NOXP", 1);
@@ -209,7 +209,7 @@ namespace SCClassLoader
                 LooseSpawned++;
                 if (c.ai != null && When.InCombat()) c.ai.ChangeState(AI.AI_STATE.Active);
                 Actions.SpawnVfx(string.IsNullOrEmpty(a.summonVfx) ? "PA_Engineer_Boltron.PS_summon" : a.summonVfx, c.GetHitFx().position);
-                Game.LOG($"<color=#FF6B6B>{c.GetName()}</color> comes through against you!");
+                Game.LOG(a.chaos ? $"<color=#C78BFF>{c.GetName()}</color> comes through, hostile to all!" : $"<color=#FF6B6B>{c.GetName()}</color> comes through against you!");
             }
         }
 

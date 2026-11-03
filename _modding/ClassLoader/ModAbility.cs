@@ -42,6 +42,7 @@ namespace SCClassLoader
 
         public override void ReduceCooldown(int amount)
         {
+            if (TurnTick && !string.IsNullOrEmpty(Spec?.cooldownOn)) return; // "cooldownOn": turns don't count, the trigger does
             string hold = TurnTick ? Spec?.cooldownWhile : null;
             Character who = caster != null ? caster : Player.instance;
             if (!string.IsNullOrEmpty(hold) && who != null && Actions.StacksOn(who, Actions.EffectId(hold, ClassId)) > 0) return;
@@ -130,6 +131,22 @@ namespace SCClassLoader
             yield return new WaitForSeconds(w.attackResolveDelay);
             OnAttack(new List<DmgObj>(), w);
             Ability.DoWeaponAttack(caster.GetHitFx().position, aim);
+        }
+
+        /// <summary>Rounds one shot of this skill spends: the gun's own, times "ammoMult" rounded up.</summary>
+        private int RoundsFor(Item_Weapon w)
+        {
+            int use = w.GetAmmoUse();
+            float mult = rt?.spec.ammoMult ?? 0f;
+            return mult > 0f && use > 0 ? Mathf.Max(1, Mathf.CeilToInt(use * mult - 0.001f)) : use;
+        }
+
+        /// <summary>"ammoMult": the skill's shots spend more (or fewer) rounds than the gun's own, each adding its ammo damage.</summary>
+        public override List<DmgObj> ConsumeAmmo(List<DmgObj> dmgList, Item_Weapon weapon)
+        {
+            if (weapon == null || (rt?.spec.ammoMult ?? 0f) <= 0f || weapon.GetAmmoUse() <= 0 || DEBUG_CONTROL.instance != null && DEBUG_CONTROL.instance.DEBUG_UnlimitedAmmo)
+                return base.ConsumeAmmo(dmgList, weapon);
+            return Player.instance.ConsumeAmmo(dmgList, Mathf.Min(RoundsFor(weapon), Player.instance.GetAmmoCount()), weapon);
         }
 
         private bool ChannelShotHits(Character t)
@@ -251,7 +268,9 @@ namespace SCClassLoader
                 else if (!Conjoined.Requirement(req)) return false;
             }
             if (!Equipped.Check(rt.spec.equipped, caster)) { _useFail = "equipped"; return false; }
-            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _)?.CanAttack() == false) return false; // no ammo, no shot
+            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _) is Item_Weapon gun && !gun.CanAttack()) return false; // no ammo, no shot
+            if (channelShot && Equipped.Hand(rt.spec.equipped, Player.instance, out _) is Item_Weapon loaded && loaded.GetAmmoUse() > 0
+                && !Player.instance.AmmoCheck(RoundsFor(loaded))) return false;
             if (rt.spec.usableWhen != null && !When.Check(rt.spec.usableWhen, MakeContext(), caster)) return false;
             return base.CanUse();
         }
@@ -381,6 +400,7 @@ namespace SCClassLoader
         public override IEnumerator Use()
         {
             Bind();
+            if (skillClass == SKILL_CLASS.Null && skillTree != null) skillClass = skillTree.skillClass; // a form's or synergy's skill, given its tree late
             RefreshStats();
             if (caster == null) caster = Player.instance;
             Runes.Tuning tuned = Tuned;
@@ -390,7 +410,7 @@ namespace SCClassLoader
             ctx.paced = new List<IEnumerator>();
             if (s.target != "self" && !AllActions.Any(x => x.@do == "echo")) Actions.LastUsed = this; // echo only replays offensive spells
             caster.ModStamina(-GetStaminaCost());
-            if (rt.spec.itemCost != null && caster == Player.instance) foreach (CostSpec c in Costs) Crafting.Consume(c);
+            if (rt.spec.itemCost != null && caster == Player.instance && !Consumables.KeepsCost(GetDisplayName())) foreach (CostSpec c in Costs) Crafting.Consume(c);
             if (rt.spec.stackCost?.effect != null && caster.effects.GetEffect(Actions.EffectId(rt.spec.stackCost.effect, rt.classId)) is ModEffect paid)
                 paid.RemoveStacks(StackCostAmount);
             if (rt.spec.creditCost > 0 && caster == Player.instance)
@@ -619,6 +639,29 @@ namespace SCClassLoader
 
         private List<ProcSpec> perkedProcs;
 
+        /// <summary>The triggers some loaded skill's "cooldownOn" counts, so other triggers needn't walk your skills.</summary>
+        internal static readonly HashSet<string> CooldownTriggers = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>"cooldownOn": a trigger fired for you; each skill counting it takes one off its cooldown.</summary>
+        internal static void CountTrigger(string on)
+        {
+            if (!CooldownTriggers.Contains(on) || Player_AbilityControl.instance == null) return;
+            bool turn = TurnTick;
+            TurnTick = false; // a trigger fired inside the turn's own count still counts
+            try
+            {
+                foreach (Ability a in Player_AbilityControl.instance.GetAbilities())
+                {
+                    if (!(a is ModAbility m) || !string.Equals(m.Spec?.cooldownOn, on, System.StringComparison.OrdinalIgnoreCase) || m.GetCooldownAmount() <= 0) continue;
+                    m.ReduceCooldown(1);
+                    if (m.GetCooldownAmount() > 0) continue;
+                    Game.LOG($"<color=#FFD15C>{m.GetDisplayName()} is ready again!</color>");
+                    if (Menu_HUD.instance != null) Menu_HUD.instance.Refresh_Cooldown();
+                }
+            }
+            finally { TurnTick = turn; }
+        }
+
         internal void HandleProc(string on, Character other)
         {
             List<ProcSpec> procs = Procs;
@@ -723,6 +766,8 @@ namespace SCClassLoader
                 if (s.dodgeable) info.Add("can be dodged");
                 if (s.instant) info.Add("instant");
                 if (s.resetOnKill) info.Add("<color=#FFD15C>a kill makes it ready again</color>");
+                if (s.ammoMult > 0f && !Mathf.Approximately(s.ammoMult, 1f)) info.Add($"each shot spends {s.ammoMult:0.##}x your gun's rounds{(s.ammoMult > 1f ? ", each adding its ammo damage" : "")}");
+                if (!string.IsNullOrEmpty(s.cooldownOn) && cooldown > 0) info.Add($"<color=#FFD15C>turns don't cool it down: each time {Actions.ProcWhen(new ProcSpec { on = s.cooldownOn }, rt.classId).Replace("when ", "").Replace("each turn", "a turn passes")} counts one</color>");
                 if (!string.IsNullOrEmpty(s.cooldownWhile)) info.Add($"its cooldown waits while you have {Actions.EffectNameOf(s.cooldownWhile, rt.classId)}");
                 if (IsCommand) info.Add("a command (usable in any transformation)");
                 if (!string.IsNullOrEmpty(s.ifSkill)) info.Add($"<color=#7FE0A0>from your {Synergies.TreeNames(s.ifSkill)} training</color>");

@@ -7,6 +7,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
+using I2.Loc;
 using Newtonsoft.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -20,13 +21,15 @@ namespace SCClassLoader
     /// are let go here too. The vanilla weapon it looks like (a baton, a rifle) decides how it is used; its damage types
     /// and on-hit effects come from the attack the enemy made with it, and its strength from the floor's loot. Other
     /// loot still comes from the inventory everyone carries, as in the base game. Each enemy-and-weapon pair is a
-    /// "recipe" kept in BepInEx/config so a saved weapon rebuilds after a restart.
+    /// "recipe" kept in BepInEx/config so a saved weapon rebuilds after a restart. Weapons stay at "DropChance"; at the
+    /// same odds an enemy holding one weapon carries a spare of the other kind for the attacks its weapon can't make (a
+    /// gunman's blade for the pistol-whip, a brawler's sidearm for its shots), draws it for those and always drops it.
     /// The first drop comes with a Scrap Bot Kit (see <see cref="ScrapBot"/>).
     /// </summary>
     internal static class EnemyArms
     {
         internal static ConfigEntry<bool> Enabled, OnHitEffects, BotOn, ScrapBossWeapons;
-        internal static ConfigEntry<int> DamagePercent, MeleeSaving, HarvestRange, BossScrapBonus, RebuildCost, RebuildRange, KeepScrap, ScrapPrice,
+        internal static ConfigEntry<int> DropChance, DamagePercent, MeleeSaving, HarvestRange, BossScrapBonus, RebuildCost, RebuildRange, KeepScrap, ScrapPrice,
             RepairCost, RepairPercent, BotArmor, BotHealth;
         internal static ConfigEntry<string> HarvestUpTo, ScrapParts;
 
@@ -41,6 +44,9 @@ namespace SCClassLoader
         {
             Enabled = cfg.Bind("EnemyWeapons", "Enabled", false,
                 "The weapon that falls from a dead enemy's hand stays where it lands, and you can pick it up and use it: its attack's damage types and on-hit effects, as strong as the floor's loot. A boss's is Epic or better.");
+            DropChance = cfg.Bind("EnemyWeapons", "DropChance", 30, new ConfigDescription(
+                "Percent of enemies whose weapon stays on the floor when they die (a boss's always does). The same odds give an enemy with one weapon a spare of the other kind, a sidearm or a blade, that it switches to for the attacks its own weapon can't make and that always drops.",
+                new AcceptableValueRange<int>(0, 100)));
             DamagePercent = cfg.Bind("EnemyWeapons", "LowPowerDamage", 75, new ConfigDescription(
                 "Enemies run their weapons in a low-power mode: weaker than the floor's loot, but a gun needs no ammo and a melee weapon draws less of your stamina. Its damage, in percent of a normal weapon from the same floor.",
                 new AcceptableValueRange<int>(25, 300)));
@@ -476,7 +482,7 @@ namespace SCClassLoader
                     arms.Add(new Arm { root = d.transform, path = PathOf(d.transform, c.transform), baseId = b, ranged = rg, loose = true });
             // in hand first, then stowed: a weapon it only draws to attack (a ChefBot's cleaver) is still in its kit, and
             // drops all the same; a stowed copy of one it already holds (a holstered pose of the same gun) does not
-            var all = c.GetComponentsInChildren<Transform>(true).Where(t => t != c.transform).ToList();
+            var all = c.GetComponentsInChildren<Transform>(true).Where(t => t != c.transform && t.GetComponentInParent<SpareMark>(true) == null).ToList();
             foreach (bool inHand in new[] { true, false })
                 foreach (Transform t in all)
                 {
@@ -595,11 +601,17 @@ namespace SCClassLoader
                     if (!Eligible(__instance, out bool boss)) return;
                     NavNode n = __instance.GetMover()?.GetCurrentNavNode();
                     if (n == null) return;
-                    foreach (Arm arm in ArmsOf(__instance))
+                    SpareMark spare = SpareOf(__instance);
+                    if (spare != null) Draw(spare, false); // its own weapon back in hand, so it falls as itself
+                    bool drops = boss || Rolls(ForceDrop);
+                    var arms = drops ? ArmsOf(__instance) : new List<Arm>();
+                    if (spare != null) arms.Add(new Arm { root = spare.transform, baseId = spare.baseId, ranged = spare.ranged, stowed = true });
+                    foreach (Arm arm in arms)
                     {
                         Recipe r = RecipeFor(__instance, boss, arm);
                         if (r == null) continue;
                         if (!arm.loose) LetGo(arm.root);
+                        if (arm.root == spare?.transform) SparesDropped++;
                         Plugin.Instance.StartCoroutine(Follow(r, arm.root, n));
                     }
                 }
@@ -641,6 +653,117 @@ namespace SCClassLoader
                 yield return new WaitForSeconds(0.1f);
                 Spew(Object.Instantiate(kitTpl), died.transform.position, died.GetRoom());
                 Game.LOG("Among its gear: a <color=#C79750>Scrap Bot Kit</color>.");
+            }
+        }
+
+        // ---- spares ------------------------------------------------------------------------------------------
+
+        /// <summary>A spare carried on an enemy: hidden until the attack it's for, then in the hand in place of its own weapon.</summary>
+        internal class SpareMark : MonoBehaviour
+        {
+            public string baseId;
+            public bool ranged, drawn;
+            public Renderer[] own;
+            /// <summary>Attacks named for the weapon they were made with ("Pistol Whip"), renamed while the spare is out.</summary>
+            public readonly Dictionary<Ability, LocalizedString> renamed = new Dictionary<Ability, LocalizedString>();
+        }
+
+        /// <summary>What the combat log calls an attack made with the spare: "Carbonite Baton Strike", "Street Special Shot".</summary>
+        internal static string SpareAttackName(SpareMark s) => $"{ItemRegistry.NameOf(s.baseId)} {(s.ranged ? "Shot" : "Strike")}";
+
+        /// <summary>On an enemy once its spare is rolled: the spare, or none.</summary>
+        private class SpareRoll : MonoBehaviour { public SpareMark spare; }
+
+        /// <summary>For tests: spares handed out, drawn and dropped; forced rolls for drops and spares (null = DropChance).</summary>
+        internal static int SparesGiven, SpareDraws, SparesDropped;
+        internal static bool? ForceDrop, ForceSpare;
+
+        private static bool Rolls(bool? forced) => forced ?? UnityEngine.Random.Range(1, 101) <= DropChance.Value;
+
+        /// <summary>A weapon attack of a kind: a gun's shots, or a swing, stab or charge (not a throw or a spell).</summary>
+        private static bool Fits(Ability a, bool ranged) => ranged ? a is MA_Ranged : IsMelee(a);
+
+        private static bool Attack(Ability a) =>
+            a != null && !a.isPassive && !(a is Ability_Player) && a.damageList != null && a.damageList.Any(d => d != null && d.damage > 0);
+
+        /// <summary>
+        /// Its spare, rolled the first time it's asked (its first attack or its death): at DropChance, an enemy with one
+        /// weapon in hand and an attack that weapon can't make carries one of the other kind from the floor's loot.
+        /// </summary>
+        internal static SpareMark SpareOf(Character c)
+        {
+            if (c == null || !Enabled.Value) return null;
+            SpareRoll roll = c.GetComponent<SpareRoll>();
+            if (roll != null) return roll.spare;
+            if (!Eligible(c, out bool boss)) return null;
+            roll = c.gameObject.AddComponent<SpareRoll>();
+            List<Arm> arms = ArmsOf(c);
+            // a weapon drawn only to attack is the game's own switching; a second weapon is a pair already
+            if (arms.Count != 1 || arms[0].stowed) return null;
+            Ability sig = Signature(c, boss, arms[0].ranged);
+            if (sig == null) return null;
+            bool mainRanged = arms[0].ranged ?? !IsMelee(sig);
+            Ability other = c.GetComponentsInChildren<Ability>(true).Where(a => Attack(a) && Fits(a, !mainRanged)).FirstOrDefault();
+            if (other == null || !Rolls(ForceSpare)) return null;
+            DAMAGE_TYPE main = other.damageList.Where(d => d != null && d.damage > 0).OrderByDescending(d => d.damage).First().dmgType;
+            Item_Weapon b = PickBase(mainRanged, false, main);
+            if (b == null) return null;
+            Renderer[] own = arms[0].root.GetComponentsInChildren<Renderer>(true).Where(r => r is MeshRenderer || r is SkinnedMeshRenderer).ToArray();
+            GameObject held = Wear.Hold(c, b, own.OrderByDescending(r => r.bounds.size.magnitude).FirstOrDefault(), out bool replaces);
+            if (held == null) return null;
+            var mark = held.AddComponent<SpareMark>();
+            mark.baseId = b.itemId;
+            mark.ranged = !mainRanged;
+            mark.own = replaces ? own : new Renderer[0]; // a holstered weapon stays in its holster while the spare is out
+            held.SetActive(false);
+            roll.spare = mark;
+            SparesGiven++;
+            return mark;
+        }
+
+        /// <summary>The spare into the hand (its own weapon hidden), or back away.</summary>
+        internal static void Draw(SpareMark s, bool on)
+        {
+            if (s == null || s.drawn == on) return;
+            s.drawn = on;
+            s.gameObject.SetActive(on);
+            foreach (Renderer r in s.own) if (r != null) r.enabled = !on;
+            // the log names the attack ("Guard Pistol Whip hits you"): with the spare out, it names the spare. A plain
+            // "Shoot" or "Attack" fits any weapon and stays.
+            Character c = s.GetComponentInParent<Character>();
+            if (on && c != null)
+            {
+                foreach (Ability a in c.GetComponentsInChildren<Ability>(true))
+                    if (Attack(a) && Fits(a, s.ranged) && !s.renamed.ContainsKey(a) && !Generic.Contains(Strip(a.displayName).ToLowerInvariant()))
+                    {
+                        s.renamed[a] = a.displayName;
+                        a.displayName = ClassRegistry.Term("EW_SPARE_" + s.baseId, s.ranged ? "Shot" : "Strike", SpareAttackName(s));
+                    }
+            }
+            else
+            {
+                foreach (var kv in s.renamed) if (kv.Key != null) kv.Key.displayName = kv.Value;
+                s.renamed.Clear();
+            }
+            if (on) SpareDraws++;
+        }
+
+        [HarmonyPatch(typeof(Ability), nameof(Ability.AbilityUse))]
+        private static class Patch_Swap
+        {
+            private static void Prefix(Ability __instance)
+            {
+                if (!Enabled.Value || !Attack(__instance)) return;
+                try
+                {
+                    Character c = __instance.GetComponentInParent<Character>();
+                    if (c == null || c == Player.instance || c.ai == null) return;
+                    SpareMark s = SpareOf(c);
+                    if (s == null) return;
+                    if (Fits(__instance, s.ranged)) Draw(s, true);
+                    else if (Fits(__instance, !s.ranged)) Draw(s, false);
+                }
+                catch (Exception e) { Plugin.Log.LogError("Enemy weapons: spare: " + e); }
             }
         }
 

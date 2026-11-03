@@ -23,6 +23,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Realtime with Pause has an on-screen pause button.
 - A cast that spends a whole counter now spends what it read, so a kill during that cast can add to the counter.
 - XML mods: `of` on a condition reads correctly again.
+- `Mods/MAKING_A_CLASS.md`, a step-by-step guide to making your own mod and class, from an empty folder to a
+  three-skill class with its own effect and perks.
 
 ### New class
 
@@ -71,7 +73,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - **Threading** (`Mods/Threading/`), off by default: for very large fights. It turns on the event bus, moves enemy paths
   to worker threads and stops head-turning work on off-screen models. Turn it off and the game runs as it always did.
 - **Enemy weapons** (loader config, `[EnemyWeapons]`), off by default: the weapon that falls from a dead enemy's hand
-  now stays where it lands, and you can pick it up and use it. Every one drops, with no roll. It keeps the enemy's own
+  now stays where it lands, and you can pick it up and use it. It drops at `DropChance` (30% by default); a boss's
+  always drops. At the same odds, an enemy holding one weapon carries a spare of the other kind from the floor's loot
+  for the attacks its own can't make: a gunman draws a blade for its pistol-whip, a brawler a sidearm for its shots,
+  and puts it away for the next attack its own weapon makes. A spare always drops. A weapon keeps the enemy's own
   model and its kind: a guard's pistol drops as a pistol, a ChefBot's cleaver as a cleaver. Weapons the base game kept
   fixed to the body fall too, as does one the enemy carried but wasn't holding. Mugs, briefcases and claws stay junk,
   and other loot still comes from the inventory everyone carries. Enemies run their weapons in a low-power mode: they
@@ -222,6 +227,42 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     enemy lose track of you, for ambushes and stealth.
   - Effects take `grantTags` to count as having game tags while they last, such as `BULLET_DODGER` to dodge ranged
     attacks.
+  - Ammo: skills take `ammoMult` for shots that spend more rounds, effects take `ammoSave` for a chance a round isn't
+    spent, and an `ammo` trigger fires per shot with `value:rounds`.
+  - Effects take `hazardRules`, so the floor's fire, acid and other hazards spread more or hurt your enemies more
+    while you carry them, whoever laid them, and `clearHazards` puts hazards out, with `value:cleared` for what follows.
+  - Summons take `chaos` to arrive on the chaos side, fighting you and your enemies alike.
+  - Skills take `cooldownOn` to cool down by a trigger, such as kills, instead of by turns.
+  - Consumables: effects take `itemTurns` (what your consumables put on you lasts longer), `shareItems` (it goes on
+    your summons too) and `keepCost` (a skill's item cost may not be spent). A `craft` trigger fires when you fabricate
+    an item, `giveItem` takes `"$item"` for more of the item behind the trigger or the skill, and `salvage` takes
+    `whole` to break down a whole stack.
+  - `dealtWith` takes `"summons"`, so an effect on you makes your summons and other allies hit harder instead of you.
+  - A `smash` trigger fires when a prop breaks near you, and its radius procs hit the enemies around the wreck.
+  - Effects take `hidden` to stay off the buff bar.
+  - The `useItem` trigger aims at whoever the item was used on, such as the enemy a grenade landed on, and no longer
+    fires when a crafting skill (Homebrew, Break It Down) uses up an item as material.
+  - Damage actions take `"hands": "both"` to land once with each weapon you hold.
+  - A `volley` action fires several shots at a target, and the shots left when it falls find the nearest enemy.
+  - Traps take `scatter` to strew several bomblets over random tiles around the aim.
+  - `moveTraps` can pull every trap of yours or only those within `near`, and onto a floor skill's aim point. A trap
+    that lands on someone goes off there.
+  - Effects take `trance` to sit you down while your turns pass on their own, `endWhen` to end once a condition
+    holds, and `ramp` to make their per-turn healing, stamina or damage grow each turn.
+  - An `attempt` action holds a target for several tries with rising odds, paid in stamina, then runs its actions
+    if one lands or its `else` actions if none does. With `together`, a skill holds all its targets in one hold that
+    costs stamina once a beat.
+  - Scattered traps take `trail` to drop along the line from you to the aim.
+  - Combo conditions: `cast` takes an archetype (`muscle`, `guile`, `intellect`), `lastCast` reads the skill you used
+    before, `switched` holds when the archetype changed, and the `castStreak` value counts skills of one archetype in
+    a row.
+- Mod skills now carry their class's archetype, so the game's Combology counts them. Using one no longer breaks a
+  running combo.
+- The `stamina%` condition now reads your real stamina maximum. It read too high before, so Axiomancer's Insight came
+  well short of 90% stamina.
+- A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
+  as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
+  rules text reads "1 per ..." instead of "0, +1 per ...".
 - Rules text no longer ends a nested list with two full stops, and wall conditions read as a sentence ("the target has
   at least 1 wall beside it").
 - Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.

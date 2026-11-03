@@ -3,6 +3,9 @@
 The Breachwork Loader (a BepInEx plugin in `BepInEx/plugins/StarCrawlersClassLoader`) adds new
 skill trees to character creation, so you get more Dredmor-style combos to pick your 7 from.
 
+New to modding? [MAKING_A_CLASS.md](MAKING_A_CLASS.md) walks you through making your own mod and class step by step.
+This README is the full reference.
+
 ## Adding a class
 
 1. Make a folder under `Mods/`, e.g. `Mods/MyClasses/`, with a `mod.json` (see [mod.json](#modjson)); if you
@@ -99,6 +102,8 @@ is built this way.
     "staminaCost": 12, "cooldown": 0, "instant": false, "dodgeable": false, "melee": false,
     "resetOnKill": false,        // true = a kill with it makes it ready again
     "cooldownWhile": "@Stance",  // the cooldown doesn't count down while you carry this effect (stances, shields)
+    "cooldownOn": "kill",        // the cooldown counts this trigger instead of turns (see Held cooldowns)
+    "ammoMult": 1.5,             // its gun shots spend 1.5x the gun's rounds, rounded up (see Ammo)
     "castVfx": "PA_Psykonics_Temporal.castParticle",                 // borrowed vanilla particles,
     "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",       // see vanilla_reference.txt; "name@0.5" = half size
     "travelVfx": "MyBolt", "travelSpeed": 14,                        // flies caster -> target before the hit lands
@@ -151,6 +156,10 @@ A `damage` action can also take `"weapon": 0.4`: it adds 40% of a roll of your m
 off-hand weapon that fits the skill's gear rule, see Gear requirements), for skills
 that are half blade and half spell (nothing without a weapon; mod summons and enemies ignore it). Such a hit is a weapon
 hit as well: your weapon's own on-hit effects, your ammo's and every passive that answers weapon hits go off with it.
+Add `"hands": "both"` (with `"weapon"` or `"channel"`) and the whole hit lands once with each weapon you hold, main
+hand first: the off-hand one rolls its own weapon at the game's off-hand share, each sets off its own on-hit effects,
+and a target that falls to the first takes no second. With one weapon (or a shield in the other hand) it is one hit.
+A twin-blade flurry: `{ "do": "damage", "type": "Slashing", "min": 2, "max": 4, "weapon": 0.6, "hands": "both" }`.
 
 A `damage` action's `"type": "weakest"` deals whichever damage type the target resists least, the way an analyser
 finds the gap in its armour; `"weakest:Fire|Cryo|Shock"` picks among those only, the first listed on a tie.
@@ -182,6 +191,10 @@ skill landed on, a burst's bearer), never below a tenth, so a blast hits hardest
     "critDamagePerStack": 0.0,    // the same, added per stack
     "immune": [ "#Poisoned", "EFFECT_Poison", "CONFUSE" ], // effects (mod or vanilla) the bearer can't get while it holds
     "immuneToAllies": false,      // true: no damage from your own side reaches the bearer (your summons, bursts, damage over time)
+    "hidden": false,              // true: kept off the buff bar, and purge and the buff / debuff counts pass over it (a counter, a passive's inner rule)
+    "trance": false,              // true (on you): you sit down and your turns pass on their own while it holds, a meditation
+    "endWhen": { "value": "stamina%", "atLeast": 100 }, // checked each turn (of = the bearer); once it holds the effect ends as if it ran out
+    "ramp": 0.0, "rampMax": 3.0,  // hot, staminaPerTurn and dot grow by this share each turn it holds, up to rampMax times their base
     "vfx": "EFFECT_Void_Psyker_Drain", "procs": [] }
 ]
 ```
@@ -228,7 +241,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered). A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:cleared"` (tiles its `clearHazards` cleared), `"value:rounds"` (rounds the shot fired, in an `ammo` proc). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -256,6 +269,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - `"stacksOf": "summons"` counts your living minions, so `bonusPerStack` can scale with the size of your army.
 - `"hostile": true` brings the summon in against you every time (an `anySide` one only when the coin goes that way):
   something a curse lets loose, a price paid in enemies.
+- `"chaos": true` brings it in on the chaos side, the game's own side for loose nanite clouds: it fights whoever is
+  near, you, your summons and your enemies alike, and they all fight it. Like a hostile one it gives no xp, `"maxSummons"`
+  (default 3) caps how many are out, and it goes when its `"turns"` end: a thing let out of a jar, a rift that bites
+  both ways.
 - `"to": "summons"` runs an action on every living pet (or only those matching `ifSummonAlive`), e.g. a buff for
   the whole swarm.
 - `{ "do": "order", "pets": "group:ScrapDrones", "actions": [ ... ] }` has each matching summon carry out the nested
@@ -476,6 +493,19 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     one runs the actions on every enemy standing on it or in the straight line between it and you.
   - `{ "do": "ricochet", "fieldName": "Coin", "radius": 4, "actions": [...] }` uses up every field of that name; from
     each, the actions hit the nearest enemy within the radius.
+  - `{ "do": "volley", "amount": 4, "radius": 3, "look": "#FF8040", "actions": [...] }` fires 4 shots of the actions
+    at the target, one after another (a beat apart inside a skill); once it falls, the rest turn on the nearest enemy
+    within the radius of where it stood, homing missiles finding a new mark. Each shot draws a `look` streak from you
+    and plays `vfx` and `sound` where it lands.
+  - `{ "do": "attempt", "amount": 6, "odds": 10, "oddsPerTry": 10, "tryCost": 2, "scale": "PsiPower", "scaleMult": 0.3,
+    "resistStat": "Smarts", "resistMult": 0.2, "actions": [...], "else": [...] }` is a hold on the target, a mind
+    being bent. It rolls once a try for up to `amount` tries (default 6), each `oddsPerTry` likelier, at `odds` plus your
+    `scale` stats times `scaleMult`, less the target's `resistStat` times `resistMult`. Each try costs `tryCost` stamina,
+    and it stops when you can't pay. The first try that lands runs `actions` on the target; if none lands, `else` runs
+    (`"to": "self"` for a backlash on you). Inside a skill the tries come a second apart under a cast bar with a `look`
+    streak to the target's head; from a trigger they all roll at once. On several targets it holds them one by one;
+    with `"together": true` a skill holds them all in one hold, as one mind bending a crowd: each beat costs `tryCost`
+    once and rolls every target still held, and each one caught drops out while the rest are held.
   - `{ "do": "tether", "look": "#C8D0DA" }` draws a hook line from you to the target for a moment (purely visual). Leaps,
     recalls and ricochets draw their own short streaks (dash, knife flying home, gold tracer).
   - A field can carry a mesh: `"model": { "mesh": "models/knife.obj", "texture": "models/knife.png", "wobble": 14,
@@ -497,18 +527,40 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Hazard proof.** An effect's `"hazardProof": [ "HAZARD_Fire", "HAZARD_Acid" ]` (or `[ "all" ]`) stops those floor
   hazards' damage on its bearer. An id also covers its kin (`HAZARD_Fire` stops `HAZARD_Fire_Mini`); what a hazard puts
   on you is stopped with `immune` as usual. Hits from skills of the same damage type still land.
+- **Hazard rules.** An effect on you can change how the floor's damaging hazards (fire, acid, gas, ...) behave while
+  it lasts, wherever they are and whoever laid them, as the game's Pyromaniac makes every fire spread:
+  `"hazardRules": [ { "hazard": "HAZARD_Fire", "spread": 20, "damage": 0.25 } ]`.
+  - `"hazard"`: an id (covering its kin, as in `hazardProof`) or `"all"`.
+  - `"spread"`: % chance, per stack, that each such hazard creeps onto a free tile beside it each turn, on top of its
+    own spreading. Hazards that never spread start to. Only hazards that run out spread, and the new tile gets half to
+    all of the turns the old one had left, as the game's own spread does. Walls, closed doors and hidden tiles stop it.
+  - `"damage"`: added to the share of damage it deals on tiles where only your enemies stand (0.25 = a quarter more),
+    per stack. You and your summons take its usual damage; pair it with `hazardProof` to walk through your own fire.
+- **Clearing hazards.** `{ "do": "clearHazards", "radius": 2 }` puts out the damaging hazards on the tiles around the
+  cast's aim point (or the target), or under the target without a radius; `"hazard": "HAZARD_Fire"` clears only that
+  kind. Traps and mines stay. `"value:cleared"` counts the tiles cleared for the actions after it:
+  `{ "do": "heal", "to": "self", "amount": 0, "stacksOf": "value:cleared", "bonusPerStack": 3 }` drinks the fire in.
 - **Hit filters.** `"dealtWith"` and `"takenFrom"` on an effect limit its `damageDealtMult` / `damageTakenMult` to some
   hits: `"melee"`, `"ranged"` (by the skill or attack the hit came from; damage over time and hazards are neither),
   `"attack"` (a weapon attack), `"skill"` or `"item"` (grenades and other consumables), `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
   swing, or a skill that swings your off-hand weapon) or damage types, joined with `|`. `{ "damageTakenMult": 0.5, "takenFrom": "ranged" }` is a deflector field,
   `{ "damageTakenMult": 0.6, "takenFrom": "Fire|Cryo" }` insulation, `{ "damageDealtMult": 1.3, "dealtWith": "melee" }`
-  a brawler's stance.
+  a brawler's stance. `"dealtWith": "summons"` on an effect on you scales the hits of everyone fighting on your side
+  but you (summons, pets, hirelings) instead of your own: `{ "damageDealtMult": 1.25, "dealtWith": "summons" }` is a
+  pack leader's presence.
 - **Held cooldowns.** `"cooldownWhile": "@Stance"` on an ability stops its cooldown counting down while you carry that
   effect, so a stance, form or shield can't be used again until it has ended and its cooldown has run. Skills that cut
-  cooldowns still work on it.
+  cooldowns still work on it. `"cooldownOn": "kill"` makes the cooldown count a trigger instead of turns: turns
+  passing don't cool it down, and each time the trigger fires for you takes one off. Any trigger name works (`kill`,
+  `crit`, `dodge`, `block`, ...); `"cooldown": 1` with `"cooldownOn": "kill"` is ready again after your next kill,
+  whatever made it, and `"cooldown": 3` with `"crit"` after three critical hits.
 - **Breaking effects.** `"breakOnHurt": true` on an effect ends it the moment its bearer takes damage (true damage
   doesn't count; it skips every effect). `"onBreakActions"` run on the bearer as it breaks, or on you with
   `"to": "self"`: a camouflage that drops, a crystal shell that bursts, a trance that snaps.
+- **Trances.** `"trance": true` on an effect on you sits you down, and your turns pass by themselves while it holds.
+  Give it a way out: `breakOnHurt` (a hit wakes you), `endWhen` (a condition checked at the end of each of your turns,
+  such as full stamina) or a duration. With `"staminaPerTurn": 4, "ramp": 0.5` the rest deepens: 4, 6, 8, 10, then 12 a
+  turn (`rampMax` 3). A meditation is all four together: `trance`, `breakOnHurt`, `endWhen` and `ramp`.
 - **Opening locks.** `{ "do": "unlock", "radius": 3 }` opens every locked door and container within 3 of you (default
   2.5), by the base Hacker's rules: sealed, broken and boss doors stay shut, and an opened container spills its loot.
   `"odds": 60` rolls once per lock.
@@ -527,7 +579,23 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `FLYING` (can't be rooted, floats over traps), `IMMUNE_ROOT`. Conditions with `"tag"` see granted tags as well.
 - **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
   use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
-  items carrying one of those tags, or whose id or name contains one.
+  items carrying one of those tags, or whose id or name contains one. `"keepCost": 25` gives a 25% chance (per stack)
+  that a skill's `itemCost` isn't spent; the skill still needs the items to hand.
+- **Consumables on you.** Two effect keys work on what your consumables (chems, stims, a kit's buff) put on you:
+  - `"itemTurns": 1` makes it last that share longer, per stack (1 = twice as long). Effects with no set length, like
+    charges, aren't changed.
+  - `"shareItems": true` puts it on each of your summons as well, for as long. A summon the item can't be used on (the
+    game keeps chems off robots) is skipped.
+- **Ammo.** Every round your guns fire goes through one place (attacks, gun skills, channelled shots), and three keys
+  work on it:
+  - On a skill, `"ammoMult": 2` makes each shot it fires through your gun (a `channel`, a rewrite that shoots) spend
+    twice the gun's rounds, rounded up. Each extra round adds the ammo's damage, as in the game's Suppression, and the
+    skill can't be used without enough rounds loaded. Below 1 a skill spends fewer, never less than one.
+  - On an effect, `"ammoSave": 20` gives each round fired a 20% chance (per stack; several effects add up) to go
+    back into the load. The shot keeps its full ammo damage.
+  - The `ammo` trigger fires after each shot (`"match"` is the ammo's name or id), aimed at your target, and
+    `"value:rounds"` is how many rounds it fired: `{ "on": "ammo", "actions": [ { "do": "giveItem", ... } ] }` for
+    parts per shot, or `"stacksOf": "value:rounds"` for something per round.
 - **Model animation.** Besides `bob` and `spin`, a model takes `wobble` (degrees of rocking that settles after it
   appears), `pulse` (breathing in size, 0.1 = ±10%) and `randomYaw` (each copy turned differently).
 - `Mods/Kinetics/` has seven Muscle and Guile classes built on these: Grappler, Rig Jockey (hardpoints are rune
@@ -630,6 +698,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "fall": "#CFEFFF",      // a streak of this colour comes down from overhead as it goes off
     "turns": 0,             // > 0: it fizzles out after that long; 0 = it stays on that floor until used
     "maxTraps": 3,          // most of this name at once; laying another removes the oldest
+    "scatter": 0,           // > 0: lays that many at once on random tiles within "spread" (default 3) of the aim, a cluster bomb's bomblets
+    "trail": false,         // with scatter: one on each tile along the line from you to the aim instead (not beside you), a rocket shedding mines
     "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.45", "sound": "event:/Abilities/Smuggler/Smugger_Flashbang",
     "model": { "mesh": "models/snare.glb", "scale": 0.4 },   // or "look": a hazard id; default: the vanilla mine's look
     "actions": [ { "do": "damage", "type": "Energy", "min": 6, "max": 10 }, { "do": "stun", "turns": 1 } ] }
@@ -639,7 +709,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   feet). It goes off when someone it affects steps into it, or is standing in it when your turn ends. Allies walk over
   enemy traps safely, and your allies' paths stay off a trap that hits `"all"`. Actions with `"to": "self"` run once
   on you. Traps are saved with the game and stay on their floor while you are away. In its actions, a `field` or
-  `hazard` goes down where the trap was.
+  `hazard` goes down where the trap was. With `scatter` each bomblet is its own trap: one stepped on goes off alone.
 - **Wild magic.** `{ "do": "wildCast", "amount": 2, "falloff": 0.8 }` casts random spells from other installed classes at
   the target: any active, aimed mod skill made only of plain effects (damage, statuses, control, ground, chains) and with
   no cost of its own, so a borrowed spell never moves you, summons, crafts or spends another class's resources. Its
@@ -695,8 +765,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   at once, live yet or not (no name = all of them): a remote detonator. `"near": 2.6` limits it to traps that close to
   you, and on a skill rewrite's action `"first": true` runs it before the skill's own actions, so a blast hasn't moved
   anyone off the traps yet.
-- `{ "do": "moveTraps", "fieldName": "Ephemeris" }` moves your traps of that name under the target, keeping their fuse
-  (`"look"` colours the streak). `{ "do": "ready" }` makes the skill going off now ready again when it ends, without
+- `{ "do": "moveTraps", "fieldName": "Ephemeris" }` pulls your traps of that name (all of yours with no name) under
+  the target, or onto the aim point of a skill aimed at the floor, keeping their fuse (`"look"` colours the streak).
+  `"near": 7` pulls only those that close to where they land, a magnet that draws in the mines around its blast. A live
+  trap that lands on someone it affects goes off there and then, as if they had stepped on it. `{ "do": "ready" }` makes the skill going off now ready again when it ends, without
   ending your turn; its stamina is still paid each cast. `Mods/CometBreaker/synergies.json` uses all of these, and
   `SCCL_DEVTEST=cometsyn` plays them.
 
@@ -861,17 +933,23 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
   - around someone: `enemiesNear:3`, `alliesNear:3` (the number is the radius);
   - more about anyone: `healthLost`, `buffs`, `debuffs`;
   - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `distance` (you to the target), `turnsInCombat`, `floor`, `skillsCooling` (your skills on cooldown);
-  - about the skill in use: `cost` (its stamina), `cooldown`.
+  - about the skill in use: `cost` (its stamina), `cooldown`, `castStreak` (skills of its archetype in a row, this one counted).
 - **Comparisons:** `below`, `above`, `atLeast`, `atMost`, `is`.
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
 - **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
-- **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
+- **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant`,
+  an archetype (`muscle`, `guile`, `intellect`) or a skill's name. A mod skill has its class's archetype.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
   That is the last skill you used even between casts, so pair it with `"casting": true` (a skill of yours is going off
   right now) on a `hit` proc that a trap or a damage tick must not set off.
+- **Combos:** `lastCast` reads the skill you used before this one, in the same words as `cast`. `"switched": true` holds
+  when the skill in use has another archetype than your last one, as the game's Combology counts a combo, and
+  `false` when it is the same again. With the `castStreak` value, `"when": { "value": "castStreak", "atLeast": 3 }`
+  holds on a third skill of one archetype in a row. Skills with no archetype (items) don't count. Mod skills now count
+  toward the game's own Combology too; before, using one broke a running combo.
 - **Where:** `inSide` holds in a side area (`false`: outside one).
 - **Gear** (`equipped`): `"when": { "equipped": "melee+shield" }` holds while you have that gear on (see below).
 - **Named conditions:** a class or library defines them once and anything can use them by name:
@@ -887,8 +965,8 @@ Static Grip need a ranged weapon.
   `damage:TYPE` (it deals that type: `damage:Shock`). `unarmed` = no weapon in either hand (a shield is fine).
 - One hand only: `mainhand:KIND` / `offhand:KIND` (`offhand:melee`), or `mainhand` / `offhand` for anything there.
   `shield` = a shield generator in either hand, `dualWield` = a weapon in each hand.
-- **One weapon per swing.** A skill's `"weapon"` share (and the on-hit effects that come with it) uses one weapon,
-  never both: the main-hand one if it fits the rule, else the off-hand one that does, at the game's off-hand power
+- **One weapon per swing.** A skill's `"weapon"` share (and the on-hit effects that come with it) uses one weapon
+  unless the action says `"hands": "both"` (see Brand-new abilities): the main-hand one if it fits the rule, else the off-hand one that does, at the game's off-hand power
   (50%, raised by dual-wield skills, the same as an off-hand attack). A rule that names no weapon (`dualWield`) uses
   the main hand. With a blade and an off-hand pistol, Arc Round fires the pistol at half power; the tooltip names the
   weapon it swings and the power.
@@ -926,7 +1004,14 @@ Static Grip need a ranged weapon.
 - `allyHurt` (one of your summons or pets is hit; aims at the attacker);
 - `summon` (an ally joins you: a summon, a pet, a charmed or hacked enemy, a hire; aims at the newcomer, noticed when your turn ends);
 - `inflict` (you put an effect on an enemy; `"match"` is the effect id; aims at that enemy. Your summons' effects don't count);
-- `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
+- `useItem` (you use a consumable; aims at whoever it was used on: you for a chem or medkit, the one standing where a
+  grenade or other thrown item landed. An item a crafting skill uses up as material doesn't count), `equip`, `unequip`
+  (`"match"` is the item's name or id);
+- `craft` (you fabricate an item at a crafting window; `"match"` is its name or id; `giveItem` `"$item"` gives more of it);
+- `ammo` (your gun fired; `"match"` is the ammo's name or id, `"value:rounds"` the rounds it spent; see Ammo);
+- `smash` (a crate, console, door or other prop breaks near you, from anything: a blast, a charge, a thrown body;
+  once per prop. A `"radius"` proc hits the enemies around the wreck, and `"vfx"` plays there:
+  `{ "on": "smash", "radius": 2, "actions": [ { "do": "damage", "type": "Piercing", "min": 4, "max": 6 } ] }` is shrapnel);
 - `search` (you open a container nobody searched yet), `newFloor` (stairs take you to another floor; side areas and the Apartment don't count);
 - `shieldBreak` (a hit takes your shield to nothing; aims at the attacker);
 - `absorb` (your shield takes a hit, even one that never reaches your health; aims at the attacker);
@@ -1539,10 +1624,15 @@ floors stay as they are. Patched enemies keep their skills through saves.
 New ability actions (in class files, `newAbility.actions`):
 
 - `{ "do": "craft", "recipes": ["LinemansCowl"] }` opens the crafting window with field recipes (optionally only these).
-- `{ "do": "giveItem", "item": "MyMod:ScrapHelm", "amount": 1 }` puts an item in your inventory.
+- `{ "do": "giveItem", "item": "MyMod:ScrapHelm", "amount": 1 }` puts an item in your inventory. `"item": "$item"`
+  gives more of the item the skill is aimed at, or of the item behind the trigger: the consumable a `useItem` proc saw
+  used, the item a `craft` proc saw made. `{ "on": "craft", "chance": 25, "actions": [ { "do": "giveItem", "item":
+  "$item" } ] }` is a brewer who sometimes makes two.
 - `{ "do": "consumeItem", "item": "...", "amount": 2 }` or `"tag": "MECHPARTS"` uses items up if you have them.
 - `{ "do": "salvage", "gives": [ { "item": "...", "count": 2, "chance": 50 } ] }` destroys the targeted item and hands
-  out the parts. Use it with `"target": "item"` (see below).
+  out the parts. Use it with `"target": "item"` (see below). `"whole": true` breaks down the whole stack instead of one,
+  and the gives count once for every `"amount"` items in it (default 1), rounded down: `"amount": 2` turns a stack of
+  rounds into parts at 2 to 1, each `chance` rolled per batch.
 - `{ "do": "tune", "stat": "Strength", "min": 1, "max": 3, "limit": 3 }` works a lasting change into a piece of gear,
   saved with it: the item the skill is aimed at, or with `"slot": "mainhand"` (or `"offhand"`, `"head"`, `"torso"`,
   `"hands"`, `"legs"`, `"feet"`, `"neck"`, `"belt"`, `"accessory"`) the one you have equipped there. `"stat"` adds

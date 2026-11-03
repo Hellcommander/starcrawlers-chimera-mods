@@ -41,6 +41,14 @@ namespace SCClassLoader
         /// <summary>The cooldown doesn't count down while you carry this effect ("@Stance"): a stance, form or shield that
         /// can't be used again until it has ended and its cooldown run. Other skills that cut cooldowns still do.</summary>
         public string cooldownWhile;
+        /// <summary>The cooldown counts this trigger ("kill", "crit", "dodge", ... any proc "on") instead of turns: each
+        /// time it fires for you the cooldown drops by one, and turns passing don't count. Cooldown 1 + "kill": ready
+        /// again after your next kill, whatever made it.</summary>
+        public string cooldownOn;
+        /// <summary>When this skill fires your gun (a channel, or a rewrite that shoots), each shot spends this many
+        /// times the gun's rounds, rounded up (1.5: a burst; 2: a double load). Each extra round also adds the ammo's
+        /// damage, as in the game's Suppression. The skill can't be used without the rounds.</summary>
+        public float ammoMult;
         /// <summary>An order to your summons: still usable while transformed. Unset = worked out from the actions
         /// (everything aimed at your summons or you, nothing summoned, at least one action on a summon).</summary>
         public bool? command;
@@ -187,11 +195,16 @@ namespace SCClassLoader
         public string unlessSummonAlive;
 
         // giveItem / consumeItem / salvage / craft
-        /// <summary>giveItem/consumeItem: item id ("Mod:Id" or vanilla). consumeItem may use "tag" instead.</summary>
+        /// <summary>giveItem/consumeItem: item id ("Mod:Id" or vanilla). consumeItem may use "tag" instead. giveItem takes
+        /// "$item": another of the item the skill is aimed at, or of the item behind the trigger (the consumable a
+        /// "useItem" proc saw used, the item a "craft" proc saw made).</summary>
         public string item;
         public string tag;
         /// <summary>salvage: what the targeted item breaks into.</summary>
         public List<GiveSpec> gives;
+        /// <summary>salvage: breaks down the whole stack instead of one; "gives" counts once for every "amount" items in
+        /// it (default 1), rounded down, so "amount": 2 turns ammo into parts at 2 to 1.</summary>
+        public bool whole;
         /// <summary>craft: limit the Fabricator to these recipe ids (default: every field recipe).</summary>
         public List<string> recipes;
 
@@ -217,6 +230,10 @@ namespace SCClassLoader
         /// <summary>Damage actions: the hit counts as a weapon hit (your weapon's and ammo's on-hit effects go off) with
         /// no weapon damage added. Comes with SkillMods' "channel".</summary>
         public bool channel;
+        /// <summary>Damage actions with "weapon" or "channel": "both" lands the hit once with each weapon you hold, the
+        /// off-hand at its usual share, each with its own on-hit effects (one hit with one weapon or a shield in the
+        /// other hand). Only for you.</summary>
+        public string hands;
         /// <summary>Damage actions run by an effect (onExpireActions, onDeathActions, a burst or threshold): adds this
         /// share of the health its bearer lost while the effect was on it (0.5 = half). A revenge counter.</summary>
         public float stored;
@@ -310,8 +327,25 @@ namespace SCClassLoader
         /// <summary>trap: a creature id whose model (mesh and particles, as "dashAs") comes down from overhead; its burst
         /// and sound play as it lands, the trap's own effects land at once.</summary>
         public string fallAs;
-        /// <summary>springTraps: only traps this close to you (0 = all of them on the floor).</summary>
+        /// <summary>springTraps: only traps this close to you (0 = all of them on the floor). moveTraps: only traps this
+        /// close to where they are pulled.</summary>
         public float near;
+        /// <summary>trap: lays this many at once, each on a random free tile within "spread" of the aim (default 3), not
+        /// one under it: a cluster bomb's bomblets. maxTraps still caps them.</summary>
+        public int scatter;
+        public float spread;
+        /// <summary>trap with scatter: they drop on the tiles along the line from you to the aim instead (not the tile
+        /// beside you), one a tile, as a rocket sheds bomblets on its way.</summary>
+        public bool trail;
+        /// <summary>attempt: % odds added each try after the first, so the hold tightens the longer it lasts.</summary>
+        public int oddsPerTry;
+        /// <summary>attempt: stamina each try costs you; when you can't pay, it stops (failed).</summary>
+        public int tryCost;
+        /// <summary>attempt: the target's stat that pushes back ("Smarts"), taking resistMult % odds off per point.</summary>
+        public string resistStat;
+        public float resistMult = 0.2f;
+        /// <summary>attempt: a skill hitting several targets holds them all at once, paying tryCost once a beat, not one hold after another.</summary>
+        public bool together;
         /// <summary>raiseWall: on the tile this many steps behind the target as you see it, if the way there is open (something for a throw to hit).</summary>
         public int behind;
         /// <summary>raiseWall: the class whose folder holds "model", for a synergy borrowing another class's wall.</summary>
@@ -411,6 +445,9 @@ namespace SCClassLoader
         public string pets;
         /// <summary>summon: a coin toss decides whose side it arrives on. Against you it gives no xp and goes when its turns end.</summary>
         public bool anySide;
+        /// <summary>summon: it arrives on the chaos side, the game's own side for loose nanite clouds: it fights everyone
+        /// near it, you, your summons and your enemies alike, and they fight it. It gives no xp and goes when its turns end.</summary>
+        public bool chaos;
         /// <summary>surge: what it is called in the log ("Thundercrunch, Doctor Cerberus's").</summary>
         public string surgeName;
         /// <summary>surge: % chance it lands on you instead of the target; your Crit (luck) takes half of itself off it,
@@ -465,8 +502,8 @@ namespace SCClassLoader
     {
         /// <summary>hit | kill | hurt | dodge | turn | reaction | crit | miss | cast | move | wait | heal | lowHealth |
         /// allyDeath | effectGained | effectLost | combatStart | combatEnd | enterRoom | loot | levelUp | enemyDeath | allyKill |
-        /// allyHurt | summon | inflict | useItem | equip | unequip | search | newFloor | shieldBreak | absorb | trap | charge | leap |
-        /// teleport | knockback | swap | chain</summary>
+        /// allyHurt | summon | inflict | useItem | craft | ammo | equip | unequip | search | smash | newFloor | shieldBreak | absorb |
+        /// block | trap | charge | leap | teleport | knockback | swap | chain</summary>
         public string on;
         public int chance = 100;
         /// <summary>Only when this holds (target = the other character of the event, if any).</summary>
@@ -573,6 +610,9 @@ namespace SCClassLoader
         public string icon;
         public int duration = 3;
         public bool debuff;
+        /// <summary>Kept off the buff bar and the bearer's effect list: inner workings (a counter, a hidden pool, a
+        /// rule a passive keeps on you). "purge" and the buff / debuff counts pass over it.</summary>
+        public bool hidden;
         /// <summary>Re-applying refreshes the duration instead of stacking.</summary>
         public bool stackable;
         /// <summary>
@@ -611,7 +651,8 @@ namespace SCClassLoader
         public string redirectTo;
         /// <summary>damageDealtMult (and its per-stack part) only on these hits: "melee", "ranged", "attack" (a weapon attack,
         /// not a skill), "skill", "mainhand" / "offhand" (the hand that swung) or damage types, joined with "|"
-        /// ("ranged|Fire"). Unset = every hit.</summary>
+        /// ("ranged|Fire"). "summons" is the hits of anyone fighting on your side but you (summons, pets, hirelings),
+        /// for an effect on you: "dealtWith": "summons" makes your minions hit harder, not you. Unset = every hit.</summary>
         public string dealtWith;
         /// <summary>damageTakenMult only on these hits, the same words: "ranged" for a deflector, "Fire|Cryo" for insulation.</summary>
         public string takenFrom;
@@ -623,6 +664,16 @@ namespace SCClassLoader
         /// applied it as the caster.</summary>
         public bool breakOnHurt;
         public List<ActionSpec> onBreakActions = new List<ActionSpec>();
+        /// <summary>The crawler sits down and sits out its turns while it holds (they pass on their own): a meditation,
+        /// a trance. Pair it with breakOnHurt and endWhen so something brings you back. On the crawler only.</summary>
+        public bool trance;
+        /// <summary>Checked at the end of each of the bearer's turns: once it holds the effect ends as if it ran out
+        /// (onExpireActions run). "of" defaults to the bearer: { "value": "stamina%", "atLeast": 100 }.</summary>
+        public WhenSpec endWhen;
+        /// <summary>hot, staminaPerTurn and dot grow by this share of themselves for each turn the effect has held
+        /// (0.5 = +50% a turn), up to rampMax times their base (default 3): a rest that deepens, a burn that spreads.</summary>
+        public float ramp;
+        public float rampMax = 3f;
         /// <summary>Added to the share of a roll your off-hand weapon deals (the game's base is 0.5): 0.25 = off-hand swings
         /// at 75%. Per stack. On the crawler only.</summary>
         public float offhandPower;
@@ -634,6 +685,19 @@ namespace SCClassLoader
         /// contains it; several joined with "|".</summary>
         public int keepItem;
         public string keepItemMatch;
+        /// <summary>% chance, per stack, that each round your guns spend goes back into the load (the shot still has
+        /// its full damage). On the crawler only.</summary>
+        public int ammoSave;
+        /// <summary>% chance, per stack, that a skill's itemCost isn't spent (the skill still needs the items to hand). On
+        /// the crawler only.</summary>
+        public int keepCost;
+        /// <summary>Effects your consumables put on you (a chem, a stim, a medkit's buff) last this share longer, per stack:
+        /// 1 = twice as long. Effects with no set length aren't changed. On the crawler only.</summary>
+        public float itemTurns;
+        /// <summary>Effects your consumables put on you go on each of your summons too, for as long. On the crawler only.</summary>
+        public bool shareItems;
+        /// <summary>Rules for the floor's damaging hazards while this is on the crawler, whoever laid them (see HazardRuleSpec).</summary>
+        public List<HazardRuleSpec> hazardRules;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;

@@ -20,6 +20,30 @@ namespace SCClassLoader
         private static readonly Dictionary<(ProcSpec, Character), ProcState> states = new Dictionary<(ProcSpec, Character), ProcState>();
         internal static int TurnCount;
 
+        /// <summary>The item behind the current event (the consumable "useItem" saw used, the item "craft" saw made),
+        /// for giveItem "$item".</summary>
+        internal static Item ItemNow { get; private set; }
+
+        public static void FireItem(string on, Item it, string what, Character usedOn = null)
+        {
+            Item prev = ItemNow;
+            ItemNow = it;
+            try { Fire(on, usedOn, what); }
+            finally { ItemNow = prev; }
+        }
+
+        /// <summary>Where the current event happened when it isn't about a character (the prop "smash" saw break): its
+        /// vfx plays there and radius procs centre on it.</summary>
+        internal static Vector3? PlaceNow { get; private set; }
+
+        public static void FireAt(string on, Vector3 at)
+        {
+            Vector3? prev = PlaceNow;
+            PlaceNow = at;
+            try { Fire(on, null); }
+            finally { PlaceNow = prev; }
+        }
+
         public static void Fire(string on, Character other, string what, Character withAlly = null)
         {
             string prev = detail;
@@ -34,6 +58,7 @@ namespace SCClassLoader
         {
             if (Actions.ProcDepth > 0 || Player.instance == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
             PluginHost.Fire(on, Player.instance, other, detail, ally); // first, so procs see what a plugin keeps up to date
+            ModAbility.CountTrigger(on);
             if (EventBus.On && !EventBus.Listens(Player.instance, on)) return;
             try
             {
@@ -79,9 +104,9 @@ namespace SCClassLoader
         }
 
         private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
-            { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain" };
+            { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain", "ammo" };
         private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb", "block" };
-        private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
+        private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap", "useitem" };
 
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
         {
@@ -109,7 +134,9 @@ namespace SCClassLoader
             Actions.ProcDepth++;
             try
             {
-                Vector3 at = focus != null ? focus.GetHitFx().position : ctx.caster.GetHitFx().position;
+                Vector3? place = focus == ctx.caster ? PlaceNow : null;
+                if (place.HasValue) ctx.center = place;
+                Vector3 at = place ?? (focus != null ? focus.GetHitFx().position : ctx.caster.GetHitFx().position);
                 ModAudio.Play(p.sound, at, ctx.classId);
                 Actions.SpawnVfx(p.vfx, at);
 
@@ -122,7 +149,7 @@ namespace SCClassLoader
                 List<ActionSpec> self = p.selfActions, rest = p.restActions;
                 if (p.radius > 0f && AI_Manager.instance != null)
                 {
-                    Vector3 center = focus != null && focus.GetMover() != null && focus.GetMover().GetCurrentNavNode() != null
+                    Vector3 center = place.HasValue ? place.Value : focus != null && focus.GetMover() != null && focus.GetMover().GetCurrentNavNode() != null
                         ? focus.GetMover().GetCurrentNavNode().transform.position : focus != null ? focus.transform.position : ctx.caster.transform.position;
                     var near = AI_Manager.instance.GetEnemiesAt(center, p.radius).Where(c => c != null && !c.GetIsDead() && c != ctx.caster).ToList();
                     if (p.pick > 0) near = near.OrderBy(_ => Random.value).Take(p.pick).ToList();

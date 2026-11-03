@@ -18,8 +18,8 @@ namespace SCClassLoader
     /// neck, accessory, ammo (something in it). item:ID (vanilla or "Mod:Id"), tag:TAG (any equipped item carrying it).
     /// Only the active weapon set counts. Gear is read from the crawler you're playing; anyone else has none.
     ///
-    /// A skill swings one weapon, never both (Hand): the main-hand one if it fits the skill's rule, else the off-hand
-    /// one at the game's off-hand power (50%, more with dual-wield skills).
+    /// A skill swings one weapon (Hand): the main-hand one if it fits the skill's rule, else the off-hand one at the
+    /// game's off-hand power (50%, more with dual-wield skills). A damage action with "hands": "both" swings each in turn.
     /// </summary>
     internal static class Equipped
     {
@@ -75,6 +75,7 @@ namespace SCClassLoader
         /// fits, else an off-hand weapon that does. No rule (or nothing fits) = the main hand, as before.</summary>
         internal static Item_Weapon Hand(string spec, Player pl, out bool offhand)
         {
+            if (forced != null && pl == Player.instance) { offhand = forcedOff; return forced; }
             offhand = false;
             Item_Weapon main = pl?.GetMainhandWeapon(), off = pl?.GetOffhandWeapon();
             if (IsShield(off)) off = null;
@@ -82,6 +83,38 @@ namespace SCClassLoader
             if (main != null && !IsShield(main) && Fits(spec, main)) return main;
             if (Fits(spec, off)) { offhand = true; return off; }
             return main;
+        }
+
+        private static Item_Weapon forced;
+        private static bool forcedOff;
+
+        /// <summary>A "hands": "both" hit: each weapon you hold in turn, the off-hand one at off-hand power.</summary>
+        internal static List<(Item_Weapon w, bool off)> BothHands(Player pl)
+        {
+            var hands = new List<(Item_Weapon, bool)>();
+            Item_Weapon main = pl?.GetMainhandWeapon(), off = pl?.GetOffhandWeapon();
+            if (main != null && !IsShield(main)) hands.Add((main, false));
+            if (off != null && !IsShield(off) && off != main) hands.Add((off, true));
+            return hands;
+        }
+
+        /// <summary>Every skill-weapon lookup answers with this hand until the returned scope ends.</summary>
+        internal static IDisposable Force(Item_Weapon w, bool offhand)
+        {
+            Item_Weapon was = forced;
+            bool wasOff = forcedOff;
+            forced = w;
+            forcedOff = offhand;
+            return new Restore(() => { forced = was; forcedOff = wasOff; });
+        }
+
+        internal static bool Forcing => forced != null;
+
+        private sealed class Restore : IDisposable
+        {
+            private Action undo;
+            public Restore(Action u) => undo = u;
+            public void Dispose() { undo?.Invoke(); undo = null; }
         }
 
         /// <summary>Share of a roll an off-hand swing deals (the game's own off-hand modifier); 1 for the main hand.</summary>

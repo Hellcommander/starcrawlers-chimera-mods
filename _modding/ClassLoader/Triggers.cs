@@ -9,7 +9,7 @@ namespace SCClassLoader
     /// <summary>
     /// The extra proc triggers ("on") beyond hit / kill / hurt / dodge / turn / reaction: crit, miss, cast, move, wait,
     /// heal, lowHealth, allyDeath, effectGained, effectLost, combatStart, combatEnd, enterRoom, loot, levelUp,
-    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, newFloor, shieldBreak, absorb (in ProcHub).
+    /// enemyDeath, allyKill / allyHurt (in ProcHub), summon, inflict, useItem, equip, unequip, search, smash, newFloor, shieldBreak, absorb (in ProcHub).
     /// Each one is a small patch that hands the event to ProcHub.
     /// </summary>
     internal static class Triggers
@@ -368,11 +368,39 @@ namespace SCClassLoader
             private static void Postfix(int __state) { if (Game.FLOOR != __state) ProcHub.Fire("newfloor", null, Game.FLOOR.ToString()); }
         }
 
-        /// <summary>useItem: a consumable you used, just before it's spent ("match" = its name or id).</summary>
+        /// <summary>useItem: a consumable you used, just before it's spent ("match" = its name or id). Aims at whoever it
+        /// was used on: you for a chem or medkit, the one standing where a grenade or other thrown item landed. An item a
+        /// crafting skill uses up as material (Homebrew's chem, Break It Down's part) isn't a use.</summary>
         [HarmonyPatch(typeof(Item_Consumable), nameof(Item_Consumable.UseComplete))]
-        private static class Patch_UseItem
+        internal static class Patch_UseItem
         {
-            private static void Prefix(Item_Consumable __instance) => ProcHub.Fire("useitem", null, ItemDetail(__instance));
+            internal static Character LastOn;
+            internal static int Fired;
+
+            private static void Prefix(Item_Consumable __instance)
+            {
+                if (IsMaterial(__instance)) return;
+                Character on = null;
+                Item_OnUse_Trigger use = __instance.useTrigger;
+                if (use != null && use.use_ability != null) on = use.use_ability.targetNode != null ? use.use_ability.targetNode.GetOccupant() : null;
+                else if (use != null && __instance.target_player) on = use.target;
+                if (on != null && on.GetIsDead()) on = null;
+                LastOn = on;
+                Fired++;
+                ProcHub.FireItem("useitem", __instance, ItemDetail(__instance), on);
+            }
+
+            private static readonly Dictionary<Type, System.Reflection.FieldInfo> materialFields = new Dictionary<Type, System.Reflection.FieldInfo>();
+
+            /// <summary>The skill being used holds the item as what it works on ("targetItem"): it's spent as material.</summary>
+            private static bool IsMaterial(Item_Consumable it)
+            {
+                Ability ab = Game.PLAYER_ABILITY;
+                if (ab == null || Game.PLAYER_ITEM == it) return false;
+                Type t = ab.GetType();
+                if (!materialFields.TryGetValue(t, out var f)) materialFields[t] = f = AccessTools.Field(t, "targetItem");
+                return f != null && ReferenceEquals(f.GetValue(ab), it);
+            }
         }
 
         /// <summary>Effects' "keepItem": a roll before the item is spent; on a success the use goes through (its cooldown
@@ -400,6 +428,44 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>Rounds the last shot spent, for "value:rounds" (the shot as fired, before any were saved).</summary>
+        internal static int Rounds;
+
+        /// <summary>
+        /// Every round the crawler fires goes through here (attacks, gun skills, channels). Effects' "ammoSave" rolls
+        /// each round and slips the saved ones back into the load first, so the shot keeps its per-round ammo damage;
+        /// after the shot, the "ammo" trigger fires ("match" = the ammo's name or id, value:rounds = rounds fired).
+        /// </summary>
+        [HarmonyPatch(typeof(Player), nameof(Player.ConsumeAmmo))]
+        private static class Patch_Ammo
+        {
+            private static void Prefix(Player __instance, int amount, out (int fired, string id) __state)
+            {
+                __state = (0, null);
+                Item_Ammo ammo = __instance?.GetAmmo();
+                if (ammo == null || amount <= 0) return;
+                __state = (amount, ItemDetail(ammo));
+                int odds = 0;
+                foreach (Effect e in __instance.effects.GetEffects())
+                    if (e is ModEffect m) odds += m.AmmoSaveOdds;
+                if (odds <= 0) return;
+                int saved = 0;
+                for (int i = 0; i < amount; i++) if (UnityEngine.Random.Range(1, 101) <= odds) saved++;
+                if (saved == 0) return;
+                ammo.stack += saved;
+                Game.LOG($"<color=#FFD15C>{saved} round{(saved > 1 ? "s" : "")} saved.</color>");
+            }
+
+            private static void Postfix((int fired, string id) __state)
+            {
+                if (__state.fired <= 0) return;
+                int prev = Rounds;
+                Rounds = __state.fired;
+                try { ProcHub.Fire("ammo", Game.TARGET_C, __state.id); }
+                finally { Rounds = prev; }
+            }
+        }
+
         [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.OnEquip))]
         private static class Patch_Equip
         {
@@ -420,6 +486,39 @@ namespace SCClassLoader
         {
             private static void Prefix(Container __instance, out bool __state) => __state = !__instance.completed && !__instance.isMimic;
             private static void Postfix(bool __state) { if (__state) ProcHub.Fire("search", null); }
+        }
+
+        /// <summary>smash: a prop breaks near you (a crate, a console, a door), from anything: a blast, a charge, a thrown
+        /// body. Counted once per prop, however many of its pieces go; the game's own "destroy" demands hear the same
+        /// break. Radius procs centre on the prop.</summary>
+        [HarmonyPatch(typeof(Destructible), nameof(Destructible.Trigger), new[] { typeof(Vector3), typeof(PSMeshRendererUpdater) })]
+        internal static class Patch_Smash
+        {
+            private static int depth;
+            private static readonly HashSet<int> broken = new HashSet<int>();
+            internal static int Smashed;
+
+            private static void Prefix(Destructible __instance, out bool __state) =>
+                __state = depth++ == 0 && !__instance.triggered && !Game.Game_isLoading;
+
+            private static void Postfix(Destructible __instance, bool __state)
+            {
+                if (!__state || Player.instance == null) return;
+                Transform root = __instance.transform;
+                for (Transform up = root.parent; up != null; up = up.parent)
+                    if (up.GetComponent<Destructible>() != null) root = up;
+                if (broken.Count > 4000) broken.Clear();
+                if (!broken.Add(root.GetInstanceID())) return;
+                Vector3 at = __instance.transform.position;
+                Room room = __instance.GetComponentInParent<Room>();
+                bool near = room != null && room == Player.CURRENT_ROOM
+                    || Vector3.Distance(at, Player.instance.transform.position) <= 6f;
+                if (!near) return;
+                Smashed++;
+                ProcHub.FireAt("smash", at);
+            }
+
+            private static Exception Finalizer(Exception __exception) { depth--; return __exception; }
         }
 
         /// <summary>shieldBreak: a hit takes your shield from something to nothing.</summary>
