@@ -254,6 +254,8 @@ namespace SCClassLoader
             Bind();
             if (rt == null || rt.spec.preventDeath <= 0 || target == null) return false;
             if (target.health - dmg > 0) return false;
+            if (rt.spec.preventDeathWhen != null
+                && !When.Check(rt.spec.preventDeathWhen, new ActionContext { caster = target, classId = rt.classId, sourceName = GetName() }, target)) return false;
             dmg = Mathf.Max(0, target.health - rt.spec.preventDeath);
             Game.LOG($"<color=#FFD15C>{GetName()} keeps {target.GetName()} alive!</color>");
             var keep = target;
@@ -474,7 +476,7 @@ namespace SCClassLoader
         public override List<DmgObj> OnDealDamage(Ability ability, Character victim, List<DmgObj> dmgList, Item_Weapon attackerWeapon, float critDmgMod)
         {
             Bind();
-            if (rt != null && DealtMult != 1f) Scale(dmgList, Mathf.Max(0f, DealtMult));
+            if (rt != null && DealtMult != 1f) ScaleWhere(dmgList, Mathf.Max(0f, DealtMult), rt.spec.dealtWith, ability);
             if (rt != null && critDmgMod > 0f)
             {
                 float extra = rt.spec.critDamage + rt.spec.critDamagePerStack * (MaxStacks > 1 ? Stacks : 1);
@@ -486,20 +488,42 @@ namespace SCClassLoader
         public override List<DmgObj> OnTakeDamage(Character victim, List<DmgObj> dmgList, string attackString, Ability dmgSource, float critDmgMod)
         {
             Bind();
-            if (rt != null && TakenMult != 1f) Scale(dmgList, Mathf.Max(0f, TakenMult));
+            if (rt != null && HazardProof(dmgSource)) { Scale(dmgList, 0f); return dmgList; }
+            if (rt != null && TakenMult != 1f) ScaleWhere(dmgList, Mathf.Max(0f, TakenMult), rt.spec.takenFrom, dmgSource);
             if (rt != null && rt.spec.redirect > 0f) Redirect(dmgList);
+            if (rt != null && rt.spec.breakOnHurt && !breaking && dmgList.Any(d => d != null && d.damage > 0))
+            {
+                breaking = true;
+                Plugin.Instance.StartCoroutine(Break());
+            }
             return dmgList;
+        }
+
+        private bool breaking;
+
+        /// <summary>"breakOnHurt": ends once the hit has landed, not in the middle of the game's walk over the bearer's effects.</summary>
+        private System.Collections.IEnumerator Break()
+        {
+            yield return null;
+            Character bearer = target;
+            if (rt == null || bearer == null || bearer.effects == null || bearer.effects.GetEffect(internalName) != this) yield break;
+            Game.LOG($"<color=#FFD15C>{GetName()} breaks.</color>");
+            RunGroup(rt.spec.onBreakActions, 0f, null, null, null, null);
+            bearer.effects.RemoveEffect(internalName, true);
+            if (!bearer.GetIsDead()) bearer.CalculateStats();
+            if (bearer == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
         }
 
         private static bool redirecting;
 
         /// <summary>
         /// A bodyguard's cover: part of each hit the bearer takes goes to whoever put the effect on (if alive and not the
-        /// bearer). Note the game hands OnTakeDamage the attacker, not the bearer; the bearer is this effect's target.
+        /// bearer), or with "redirectTo" to one of that side's summons. Note the game hands OnTakeDamage the attacker, not
+        /// the bearer; the bearer is this effect's target.
         /// </summary>
         private void Redirect(List<DmgObj> dmgList)
         {
-            Character guard = caster, victim = target;
+            Character guard = string.IsNullOrEmpty(rt.spec.redirectTo) ? caster : Guard(), victim = target;
             if (redirecting || guard == null || guard.GetIsDead() || victim == null || guard == victim) return;
             float part = Mathf.Clamp01(rt.spec.redirect);
             var moved = new List<DmgObj>();
@@ -517,11 +541,90 @@ namespace SCClassLoader
             finally { redirecting = false; }
         }
 
+        /// <summary>"hazardProof": a hazard hurts through a bare Ability it adds to itself, so the hit's source tells which one it was.</summary>
+        private bool HazardProof(Ability src)
+        {
+            var proof = rt.spec.hazardProof;
+            if (proof == null || proof.Count == 0 || src == null) return false;
+            Hazard hz = src.GetComponent<Hazard>();
+            if (hz == null) return false;
+            string id = string.IsNullOrEmpty(hz.internalName) ? hz.name.Replace("(Clone)", "").Trim() : hz.internalName;
+            return proof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase) || id.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>"redirectTo": the matching summon of yours nearest the bearer. Your summons only stand guard for your side.</summary>
+        private Character Guard()
+        {
+            if (target == null || caster == null || (caster != Player.instance && !TileStacks.IsAlly(caster))) return null;
+            string which = rt.spec.redirectTo.Equals("summon", StringComparison.OrdinalIgnoreCase) ? "any" : rt.spec.redirectTo;
+            Vector3 at = target.transform.position;
+            return Summons.Matching(which, new ActionContext { caster = caster, classId = rt.classId })
+                .Where(s => s != target).OrderBy(s => (s.transform.position - at).sqrMagnitude).FirstOrDefault();
+        }
+
         private static void Scale(List<DmgObj> list, float m)
         {
             foreach (DmgObj d in list)
                 if (d != null && d.damage > 0) d.damage = Mathf.Max(m < 1f ? 0 : 1, Mathf.RoundToInt(d.damage * m));
         }
+
+        /// <summary>Scale, but only the parts of a hit "dealtWith" / "takenFrom" names; unset, all of it.</summary>
+        private static void ScaleWhere(List<DmgObj> list, float m, string filter, Ability by)
+        {
+            if (string.IsNullOrEmpty(filter)) { Scale(list, m); return; }
+            foreach (DmgObj d in list)
+                if (d != null && d.damage > 0 && Hits(filter, by, d)) d.damage = Mathf.Max(m < 1f ? 0 : 1, Mathf.RoundToInt(d.damage * m));
+        }
+
+        /// <summary>"melee" and "ranged" ask the skill or attack the hit came from (none for damage over time or a hazard);
+        /// any other word is a damage type.</summary>
+        private static bool Hits(string filter, Ability by, DmgObj d)
+        {
+            foreach (string w in filter.Split('|'))
+            {
+                string k = w.Trim();
+                if (k.Equals("melee", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isMelee) return true; }
+                else if (k.Equals("ranged", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isRanged && !by.isMelee) return true; }
+                else if (k.Equals("attack", StringComparison.OrdinalIgnoreCase)) { if (by is PA_AutoAttack) return true; }
+                else if (k.Equals("skill", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack)) return true; }
+                else if (k.Equals("offhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == true) return true; }
+                else if (k.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == false) return true; }
+                else if (Enum.TryParse(k, true, out DAMAGE_TYPE t) && d.dmgType == t) return true;
+            }
+            return false;
+        }
+
+        /// <summary>Which hand a hit came from: the auto-attack's swing (its off-hand pass runs on the left hand's animator),
+        /// or the weapon a mod skill swings. Null when no weapon swung it.</summary>
+        private static bool? Offhand(Ability by)
+        {
+            if (by is PA_AutoAttack aa) return Player_Control.instance != null && aa.Handimator != null && aa.Handimator == Player_Control.instance.Handimator_L;
+            if (by is ModAbility m && m.Spec != null && (m.Spec.actions ?? new List<ActionSpec>()).Any(a => a != null && (a.weapon > 0f || a.channel)) && Player.instance != null)
+                return Equipped.Hand(m.Spec.equipped, Player.instance, out bool off) != null ? off : (bool?)null;
+            return null;
+        }
+
+        /// <summary>Words for a "dealtWith" / "takenFrom" filter: " with melee hits", " from Fire or Cryo".</summary>
+        private static string HitWords(string filter, bool dealt)
+        {
+            if (string.IsNullOrEmpty(filter)) return "";
+            string Word(string w)
+            {
+                switch (w.ToLowerInvariant())
+                {
+                    case "melee": case "ranged": return w.ToLowerInvariant() + " hits";
+                    case "attack": return "weapon attacks";
+                    case "skill": return "skills";
+                    case "offhand": return "off-hand swings";
+                    case "mainhand": return "main-hand swings";
+                    default: return w;
+                }
+            }
+            var parts = filter.Split('|').Select(w => Word(w.Trim())).ToList();
+            return (dealt ? " with " : " from ") + string.Join(" or ", parts);
+        }
+
+        internal float OffhandPower { get { Bind(); return (rt?.spec.offhandPower ?? 0f) * Math.Max(1, Stacks); } }
 
         public override void Clear()
         {
@@ -552,8 +655,13 @@ namespace SCClassLoader
             if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {s.dot.min + DotBonus(s)}-{s.dot.max + DotBonus(s)} {Game.GetSpriteString(dt)} each turn");
             if (s.hot > 0) lines.Add($"Heals {s.hot + HotBonus(s)} each turn");
             if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
-            if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage");
-            if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage");
+            if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
+            if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
+            if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
+            if (s.breakOnHurt) lines.Add("<b>Breaks when the bearer is hurt</b>" + ((s.onBreakActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onBreakActions, rt.classId, "the bearer") : "."));
+            if ((s.hazardProof?.Count ?? 0) > 0) lines.Add(s.hazardProof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase)) ? "No harm from hazards"
+                : "No harm from " + string.Join(", ", s.hazardProof.Select(p => p.Replace("HAZARD_", "").Replace('_', ' ').ToLowerInvariant())));
+            if (s.redirect > 0f) lines.Add($"{Mathf.RoundToInt(Mathf.Clamp01(s.redirect) * 100)}% of each hit goes to {(string.IsNullOrEmpty(s.redirectTo) ? "whoever put this on" : "the nearest of your summons")}");
             foreach (ProcSpec p in s.procs ?? new List<ProcSpec>()) lines.Add(Actions.DescribeProc(p, rt.classId, ProcChanceBonus));
             foreach (ThresholdSpec th in s.thresholds ?? new List<ThresholdSpec>())
                 lines.Add($"<b>At {th.at} stacks:</b>\n" + Actions.Describe(th.actions, rt.classId, th.radius > 0 ? $"enemies within {th.radius:0.#}" : "the bearer"));
@@ -562,7 +670,7 @@ namespace SCClassLoader
             if ((s.onDeathActions?.Count ?? 0) > 0) lines.Add("<b>If the bearer dies with it:</b>\n" + Actions.Describe(s.onDeathActions, rt.classId, "beside the bearer"));
             if ((s.onExpireActions?.Count ?? 0) > 0) lines.Add("<b>When it runs out:</b>\n" + Actions.Describe(s.onExpireActions, rt.classId, s.onExpireRadius > 0 ? $"enemies within {s.onExpireRadius:0.#}" : "the bearer"));
             if (s.invulnerable) lines.Add("<b>Can't lose health</b>");
-            if (s.preventDeath > 0) lines.Add($"<b>Prevents death once</b> (survive at {s.preventDeath} health)" + ((s.onSaveActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onSaveActions, rt.classId, "you") : "."));
+            if (s.preventDeath > 0) lines.Add($"<b>Prevents death once</b> (survive at {s.preventDeath} health{(s.preventDeathWhen != null ? ", only when " + When.Describe(s.preventDeathWhen, rt.classId) : "")})" + ((s.onSaveActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onSaveActions, rt.classId, "you") : "."));
             if (!string.IsNullOrEmpty(s.group)) lines.Add($"<color=#9FB7C9>Stance: replaces other {s.group} stances.</color>");
             if (s.castRules != null) lines.Add(CastRules.Describe(s.castRules));
             string reshapes = SkillMods.Summary(s.modifies, rt.classId);
@@ -585,8 +693,8 @@ namespace SCClassLoader
             if (rt == null) return "";
             var parts = new List<string>();
             if (MaxStacks > 1) parts.Add($"<color=#FFD15C>x{Stacks}/{MaxStacks}</color>");
-            if (DealtMult != 1f) parts.Add($"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%");
-            if (TakenMult != 1f) parts.Add($"takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}%");
+            if (DealtMult != 1f) parts.Add($"deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.dealtWith, true)}");
+            if (TakenMult != 1f) parts.Add($"takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}%{HitWords(rt.spec.takenFrom, false)}");
             // the words only when there are no numbers to go on (stat changes are already on the row above)
             bool numbers = parts.Count > (MaxStacks > 1 ? 1 : 0) || attributeMods.Count > 0 || resistanceMods.Count > 0;
             string d = numbers ? "" : rt.spec.description ?? "";

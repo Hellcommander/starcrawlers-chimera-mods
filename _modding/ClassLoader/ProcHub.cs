@@ -305,6 +305,21 @@ namespace SCClassLoader
         }
     }
 
+    /// <summary>Enemies and mob summons never reach the three-argument overload either: Mob overrides DamageHealth(int, Ability)
+    /// with its own health change, so a preventDeath or invulnerable effect on one did nothing until this looked there.</summary>
+    [HarmonyPatch(typeof(Mob), nameof(Mob.DamageHealth), new[] { typeof(int), typeof(Ability) })]
+    internal static class Patch_PreventDeathMob
+    {
+        private static void Prefix(Mob __instance, ref int dmg)
+        {
+            if (__instance == null || __instance.isDead) return;
+            if (Patch_PreventDeath.Immortal(__instance)) { dmg = 0; return; }
+            if (__instance.health - dmg > 0) return;
+            foreach (Effect e in __instance.effects.GetEffects().ToList())
+                if (e is ModEffect me && me.TrySave(ref dmg)) return;
+        }
+    }
+
     /// <summary>The player's damage never reaches the three-argument overload: Player overrides DamageHealth(int, Ability)
     /// with its own death-blow checks and health change, so cheat-death has to look there too.</summary>
     [HarmonyPatch(typeof(Player), nameof(Player.DamageHealth), new[] { typeof(int), typeof(Ability) })]

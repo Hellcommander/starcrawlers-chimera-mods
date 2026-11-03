@@ -495,7 +495,7 @@ namespace SCClassLoader
                 }
                 foreach (ActionSpec a in (es.burstActions ?? new List<ActionSpec>()).Concat(es.onApplyActions ?? new List<ActionSpec>())
                     .Concat(es.onExpireActions ?? new List<ActionSpec>()).Concat(es.onSaveActions ?? new List<ActionSpec>())
-                    .Concat(es.onDeathActions ?? new List<ActionSpec>()).Concat(es.tickActions ?? new List<ActionSpec>())
+                    .Concat(es.onDeathActions ?? new List<ActionSpec>()).Concat(es.tickActions ?? new List<ActionSpec>()).Concat(es.onBreakActions ?? new List<ActionSpec>())
                     .Concat((es.thresholds ?? new List<ThresholdSpec>()).SelectMany(th => th.actions ?? new List<ActionSpec>())))
                     a.@do = (a.@do ?? "").ToLowerInvariant();
                 SkillMods.Normalize(es.modifies, def.id);

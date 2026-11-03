@@ -17,7 +17,7 @@ namespace SCClassLoader
     /// Value checks read a number and compare it:
     ///   { "value": "health%", "of": "target", "below": 30 }
     /// Values: health, health%, stamina, stamina%, shield, armor (any stat by name, e.g. "Strength"),
-    /// stacks:EFFECT, counter:NAME, enemiesNear:R, alliesNear:R, summons, summons:GROUP, rank:TREE, level, credits,
+    /// stacks:EFFECT, counter:NAME, enemiesNear:R, alliesNear:R, corpses:R, summons, summons:GROUP, rank:TREE, level, credits,
     /// distance (caster to target), turnsInCombat. "equipped" checks your gear (see Equipped).
     /// </summary>
     [JsonConverter(typeof(WhenConverter))]
@@ -261,6 +261,7 @@ namespace SCClassLoader
                 case "counter": return who == null || arg == null ? (float?)null : Counters.Get(who, arg);
                 case "enemiesnear": return Near(who, Radius(arg), enemies: true);
                 case "alliesnear": return Near(who, Radius(arg), enemies: false);
+                case "corpses": return who == null ? (float?)null : Corpses.Near(who.transform.position, string.IsNullOrEmpty(arg) ? 3f : Radius(arg)).Count;
                 case "summons": return Summons.Matching(string.IsNullOrEmpty(arg) ? "any" : (arg.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? arg : "group:" + arg), ctx).Count;
                 case "rank": return Synergies.TreeLevel(arg);
                 case "level": return Player.instance != null ? Player.instance.level : 0;
@@ -343,7 +344,7 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.value))
             {
                 string what = ValueName(w.value, classId);
-                string owner = w.value.StartsWith("enemiesNear", StringComparison.OrdinalIgnoreCase) || w.value.StartsWith("alliesNear", StringComparison.OrdinalIgnoreCase)
+                string owner = w.value.StartsWith("enemiesNear", StringComparison.OrdinalIgnoreCase) || w.value.StartsWith("alliesNear", StringComparison.OrdinalIgnoreCase) || w.value.StartsWith("corpses", StringComparison.OrdinalIgnoreCase)
                     ? (whose == null || whose == "you" ? "" : " around " + whose)
                     : IsGlobal(w.value) ? "" : $" of {whose ?? "yours"}".Replace("of yours", "(yours)").Replace("of you", "(yours)");
                 var cmp = new List<string>();
@@ -352,7 +353,14 @@ namespace SCClassLoader
                 if (w.atLeast.HasValue) cmp.Add($"at least {Num(w.atLeast.Value, w.value)}");
                 if (w.atMost.HasValue) cmp.Add($"at most {Num(w.atMost.Value, w.value)}");
                 if (w.@is.HasValue) cmp.Add($"exactly {Num(w.@is.Value, w.value)}");
-                parts.Add($"{what}{owner} {string.Join(" and ", cmp)}".Trim());
+                if (w.value.StartsWith("wallsNear", StringComparison.OrdinalIgnoreCase))
+                {
+                    // "the target has at least 1 wall beside it", "you have at most 2 walls beside you"
+                    bool you = whose == null || whose == "you";
+                    float n = w.atLeast ?? w.atMost ?? w.below ?? w.above ?? w.@is ?? 0f;
+                    parts.Add($"{(you ? "you have" : whose + " has")} {string.Join(" and ", cmp)} {(Mathf.Approximately(n, 1f) && !w.above.HasValue ? "wall" : "walls")} beside {(you ? "you" : "it")}");
+                }
+                else parts.Add($"{what}{owner} {string.Join(" and ", cmp)}".Trim());
             }
             if (!string.IsNullOrEmpty(w.chanceScale)) parts.Add($"a {w.chance}% (+{w.chancePer:0.#}% per point of {w.chanceScale.Replace("+", " and ")}) roll succeeds");
             else if (w.chance < 100) parts.Add($"{w.chance}% of the time");
@@ -409,6 +417,7 @@ namespace SCClassLoader
                 case "counter": return arg;
                 case "enemiesnear": return $"enemies within {Radius(arg):0.#}";
                 case "alliesnear": return $"allies within {Radius(arg):0.#}";
+                case "corpses": return $"corpses within {(string.IsNullOrEmpty(arg) ? 3f : Radius(arg)):0.#}";
                 case "summons": return string.IsNullOrEmpty(arg) ? "your summons" : $"your {arg.Replace("group:", "")}s";
                 case "rank": return $"your {Synergies.TreeNames(arg)} rank";
                 case "level": return "your level";

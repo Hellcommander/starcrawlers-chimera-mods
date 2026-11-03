@@ -371,7 +371,7 @@ namespace SCClassLoader
 
         private static bool CorpseOf(Corpse c, Body b) => CorpseTag(c, BodyTag) == b.Id && CorpseTag(c, StampTag) == b.Stamp;
 
-        private static List<Corpse> Corpses() => Traverse.Create(AI_Manager.instance).Field("corpses").GetValue<List<Corpse>>() ?? new List<Corpse>();
+        private static List<Corpse> Corpses() => SCClassLoader.Corpses.All();
 
         /// <summary>The free tile a trade with this corpse lands on: its own, or the nearest beside it if something stands there.</summary>
         private static NavNode CorpseTile(Corpse c) =>

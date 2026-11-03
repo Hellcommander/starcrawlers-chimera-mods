@@ -37,6 +37,24 @@ namespace SCClassLoader
         /// <summary>The class's rank, counted like "rank:TREE" conditions: 1 when just taken.</summary>
         internal int ClassRank => Rank + 1;
 
+        /// <summary>True while the game counts every cooldown down for the turn, so "cooldownWhile" stops only that count.</summary>
+        internal static bool TurnTick;
+
+        public override void ReduceCooldown(int amount)
+        {
+            string hold = TurnTick ? Spec?.cooldownWhile : null;
+            Character who = caster != null ? caster : Player.instance;
+            if (!string.IsNullOrEmpty(hold) && who != null && Actions.StacksOn(who, Actions.EffectId(hold, ClassId)) > 0) return;
+            base.ReduceCooldown(amount);
+        }
+
+        [HarmonyLib.HarmonyPatch(typeof(Player_AbilityControl), nameof(Player_AbilityControl.Turn))]
+        private static class Patch_TurnTick
+        {
+            private static void Prefix() => TurnTick = true;
+            private static void Finalizer() => TurnTick = false;
+        }
+
         protected override void Awake()
         {
             Bind();
@@ -266,7 +284,43 @@ namespace SCClassLoader
             if (i is Item_Equipment eq && Menu_Player.instance.IsEquipped(eq)) return false;
             if (!string.IsNullOrEmpty(rt.spec.itemTag) && !i.HasTag(rt.spec.itemTag)) return false;
             if (!string.IsNullOrEmpty(rt.spec.itemId) && i.itemId != Crafting.ResolveItem(rt.spec.itemId, null)) return false;
+            if (!string.IsNullOrEmpty(rt.spec.itemKind) && !rt.spec.itemKind.Split('|').Any(k => ItemKind(i, k.Trim()))) return false;
+            if (!string.IsNullOrEmpty(rt.spec.itemRarity) && System.Enum.TryParse(rt.spec.itemRarity, true, out RARITY least) && i.rarity < least) return false;
+            // a tuning skill skips gear that has taken all the tuning it can
+            foreach (ActionSpec t in AllActions.Where(x => x != null && x.limit > 0 && string.Equals(x.@do, "tune", System.StringComparison.OrdinalIgnoreCase)))
+                if (i.GetTag(string.IsNullOrEmpty(t.tag) ? "SCCL_TUNED" : t.tag) >= t.limit) return false;
             return true;
+        }
+
+        private static string KindWord(string kind)
+        {
+            switch (kind.ToLowerInvariant())
+            {
+                case "gear": return "gear";
+                case "weapon": return "a weapon";
+                case "melee": return "a melee weapon";
+                case "ranged": return "a ranged weapon";
+                case "armor": return "armor";
+                case "consumable": return "a consumable";
+                default: return $"{kind.ToLowerInvariant()} gear";
+            }
+        }
+
+        private static bool ItemKind(Item i, string kind)
+        {
+            var eq = i as Item_Equipment;
+            WEAPON_TYPE? wt = (i as Item_Weapon)?.GetWeaponType();
+            bool gear = eq != null && eq.equipType != EQUIP_TYPE.None && eq.equipType != EQUIP_TYPE.Ammo;
+            switch (kind.ToLowerInvariant())
+            {
+                case "gear": return gear;
+                case "weapon": return gear && i is Item_Weapon && wt != WEAPON_TYPE.Shield;
+                case "melee": return wt == WEAPON_TYPE.Melee || wt == WEAPON_TYPE.HeavyMelee;
+                case "ranged": return wt == WEAPON_TYPE.Ranged || wt == WEAPON_TYPE.HeavyRanged;
+                case "armor": return gear && !(i is Item_Weapon);
+                case "consumable": return i is Item_Consumable;
+                default: return gear && System.Enum.TryParse(kind, true, out EQUIP_TYPE slot) && eq.equipType == slot;
+            }
         }
 
         /// <summary>Aimed at your own side, so your companions stay in reach (AimThrough).</summary>
@@ -649,7 +703,13 @@ namespace SCClassLoader
                 else if (s.target == "pet") info.Add($"Target {(string.IsNullOrEmpty(s.petGroup) ? "one of your summons" : "one of your " + s.petGroup + "s")} within {range:0.#}");
                 else if (s.target == "floor") info.Add($"Target a spot within {range:0.#}");
                 else if (s.target == "point") info.Add($"Target an enemy or a spot within {range:0.#}");
-                else if (s.target == "item") info.Add($"Use on an inventory item{(string.IsNullOrEmpty(s.itemTag) ? "" : " tagged " + s.itemTag.ToLowerInvariant())}");
+                else if (s.target == "item")
+                {
+                    string kinds = string.IsNullOrEmpty(s.itemKind) ? "an inventory item"
+                        : string.Join(" or ", s.itemKind.Split('|').Select(k => KindWord(k.Trim()))) + " in your bag";
+                    string least = string.IsNullOrEmpty(s.itemRarity) || s.itemRarity.Equals("Common", System.StringComparison.OrdinalIgnoreCase) ? "" : $" ({s.itemRarity.ToLowerInvariant()} or better)";
+                    info.Add($"Use on {kinds}{least}{(string.IsNullOrEmpty(s.itemTag) ? "" : " tagged " + s.itemTag.ToLowerInvariant())}");
+                }
                 if (s.itemCost != null && s.itemCost.Count > 0) info.Add("costs " + string.Join(", ", Costs.Select(Crafting.Describe)));
                 if (s.creditCost > 0) info.Add($"costs <color=#FFD966>{s.creditCost} credits</color>");
                 if (s.stackCost?.effect != null && !PoolGone)
@@ -663,6 +723,7 @@ namespace SCClassLoader
                 if (s.dodgeable) info.Add("can be dodged");
                 if (s.instant) info.Add("instant");
                 if (s.resetOnKill) info.Add("<color=#FFD15C>a kill makes it ready again</color>");
+                if (!string.IsNullOrEmpty(s.cooldownWhile)) info.Add($"its cooldown waits while you have {Actions.EffectNameOf(s.cooldownWhile, rt.classId)}");
                 if (IsCommand) info.Add("a command (usable in any transformation)");
                 if (!string.IsNullOrEmpty(s.ifSkill)) info.Add($"<color=#7FE0A0>from your {Synergies.TreeNames(s.ifSkill)} training</color>");
                 if (!string.IsNullOrEmpty(s.attachTo)) info.Add($"<color=#7FE0A0>right-click {s.attachTo} on your hotbar to use it</color>");

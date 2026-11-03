@@ -191,8 +191,32 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     bearer stat worked out from the applier's.
   - `"stacksOf": "value:NAME"` counts any condition value, such as `value:enemiesNear:4` or `value:Toughness/2`.
   - `cast` fires another skill by name for free, and `order` has your summons carry out actions themselves.
+  - Damage takes `"type": "weakest"`, the type the target resists least, and `areaFalloff`, less damage further from
+    the centre.
+  - `cooldowns` takes `skill` to move one skill's cooldown, `shorten` takes turns off effects or adds them, and `xp`
+    gives experience the way a won floor event does.
+  - `preventDeathWhen` saves the bearer only while a condition holds.
+  - `ammo` refunds or spends loaded rounds, and `anchor` and `rewind` mark a tile and pull you back to it, with your
+    health if you like.
+  - Effects take `dealtWith` and `takenFrom` to limit their damage changes to melee, ranged or some damage types, and
+    `redirectTo` to send a bodyguard share to one of your summons.
+  - An effect's tooltip now says when part of each hit goes to someone else.
+  - `corpses` uses the bodies lying near you, and the `corpses:R` value counts them.
+  - `loot` drops items the game rolls, by type and rarity.
+  - Summons take `hostile` to arrive against you, and effects take `hazardProof` against floor hazards.
+  - `cooldownWhile` holds a skill's cooldown while you carry an effect, for stances and shields.
+  - `breakOnHurt` ends an effect when its bearer is hurt, and `onBreakActions` run as it breaks.
+  - `unlock` opens the locked doors and containers around you, by the Hacker's rules.
+  - `disarm` disarms the traps around you and salvages their parts, and `steal` takes items from vendors nearby.
+  - Effects take `offhandPower` to raise what your off-hand weapon deals.
+  - Hit filters also take `attack`, `skill`, `mainhand` and `offhand`.
+  - `tune` adds a lasting stat or weapon damage to a piece of gear, with a limit per item.
+  - Skills aimed at items take `itemKind` and `itemRarity`.
+- Rules text no longer ends a nested list with two full stops, and wall conditions read as a sentence ("the target has
+  at least 1 wall beside it").
 - Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.
 - `ignoresAllies` now spares your companions vanilla debuffs too, not only mod effects.
+- `preventDeath` and `invulnerable` effects now work on enemies and creature summons, which ignored them before.
 
 ### Vanilla bug fixes
 
