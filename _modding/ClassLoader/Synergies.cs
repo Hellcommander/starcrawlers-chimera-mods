@@ -222,6 +222,12 @@ namespace SCClassLoader
             var r = new List<Skill_Tree>();
             foreach (string part in (spec ?? "").Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
             {
+                if (Archetype(part) is SKILL_CLASS arch)
+                {
+                    // "archetype:Guile": every class of that archetype
+                    foreach (Skill_Tree a in GameTrees.Where(x => x.skillClass == arch && x.internalName != "NYI" && !r.Contains(x))) r.Add(a);
+                    continue;
+                }
                 Skill_Tree t = GameTrees.FirstOrDefault(x => string.Equals(x.internalName, part, StringComparison.OrdinalIgnoreCase))
                                ?? GameTrees.FirstOrDefault(x => string.Equals((string)x.displayName, part, StringComparison.OrdinalIgnoreCase));
                 if (t != null && !r.Contains(t)) r.Add(t);
@@ -230,38 +236,65 @@ namespace SCClassLoader
             return r;
         }
 
+        /// <summary>"archetype:Muscle" (Guile, Intellect) -> that archetype; null for a tree name.</summary>
+        private static SKILL_CLASS? Archetype(string part) =>
+            part.StartsWith("archetype:", StringComparison.OrdinalIgnoreCase) && Enum.TryParse(part.Substring(10).Trim(), true, out SKILL_CLASS c) ? c : (SKILL_CLASS?)null;
+
         internal static string TreeNames(string spec)
         {
-            var trees = Resolve(spec);
-            return trees.Count > 0 ? string.Join(" or ", trees.Select(t => (string)t.displayName)) : spec;
+            if ((spec ?? "").IndexOf("archetype:", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                var trees = Resolve(spec);
+                return trees.Count > 0 ? string.Join(" or ", trees.Select(t => (string)t.displayName)) : spec;
+            }
+            var words = new List<string>();
+            foreach (string part in spec.Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
+                words.Add(Archetype(part) is SKILL_CLASS c ? $"another {c} class" : TreeNames(part));
+            return string.Join(" or ", words);
         }
 
         private static bool Matches(Skill_Tree t, string spec) => t != null && Resolve(spec).Any(x => x.internalName == t.internalName);
 
-        /// <summary>Your level in a tree spec: rank + 1 of the best matching tree you have (0 = you don't have it).</summary>
-        internal static int TreeLevel(string spec)
+        /// <summary>Your level in a tree spec: rank + 1 of the best matching tree you have (0 = you don't have it). Trees in
+        /// `except` don't count, so "archetype:Guile" asked by a Guile class means another Guile class.</summary>
+        internal static int TreeLevel(string spec, params string[] except) => Best(spec, except, out _);
+
+        /// <summary>`except` drops only an archetype's trees, so a class's own "ifSkill": "MOD_Me" still counts itself and
+        /// overlapping synergy specs work as before.</summary>
+        private static int Best(string spec, string[] except, out string which)
         {
+            which = null;
             var mine = Player_SkillControl.instance?.skillTrees;
             if (mine == null) return 0;
             var wanted = Resolve(spec);
+            List<Skill_Tree> named = (spec ?? "").IndexOf("archetype:", StringComparison.OrdinalIgnoreCase) < 0 ? null
+                : Resolve(string.Join("|", spec.Split('|').Select(x => x.Trim()).Where(x => x.Length > 0 && Archetype(x) == null)));
             int best = 0;
             foreach (Skill_Tree t in mine)
             {
                 if (t == null) continue;
+                if (except != null && except.Contains(t.internalName) && named != null && !named.Any(n => n.internalName == t.internalName)) continue;
                 foreach (Skill_Tree w in wanted)
-                    if (w.internalName == t.internalName) { best = Math.Max(best, t.GetRank() + 1); break; }
+                    if (w.internalName == t.internalName)
+                    {
+                        if (t.GetRank() + 1 > best) { best = t.GetRank() + 1; which = t.internalName; }
+                        break;
+                    }
             }
             return best;
         }
 
-        /// <summary>The synergy's level for you right now (0 = not active).</summary>
+        /// <summary>The synergy's level for you right now (0 = not active). A tree an earlier spec used doesn't count for a
+        /// later archetype spec, so "MOD_Duelist + archetype:Guile" needs a second Guile class beside the Duelist.</summary>
         internal static int Level(SynergySpec s)
         {
             int lvl = int.MaxValue;
+            var used = new List<string>();
             foreach (string t in s.trees)
             {
-                lvl = Math.Min(lvl, TreeLevel(t));
+                lvl = Math.Min(lvl, Best(t, used.ToArray(), out string which));
                 if (lvl == 0) return 0; // nearly every synergy in the pack stops at its first tree
+                if (which != null) used.Add(which);
             }
             return Mathf.Clamp(lvl, 0, s.maxLevel);
         }

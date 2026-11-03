@@ -327,6 +327,8 @@ namespace SCClassLoader
         /// <summary>warp: where it lands - "behind" (you, on the far side of the target), "random" (the target, a random
         /// free tile within amount), "away" (the target, the free tile within amount farthest from you).</summary>
         public string warpTo;
+        /// <summary>rush: which way you go from the way you face - "forward" (default), "back", "left" or "right".</summary>
+        public string direction;
         /// <summary>show: seconds the model stays up (default 0.8); "showStyle": "pop" (default) or "snap" (jaws closing).</summary>
         public float showTime;
         public string showStyle;
@@ -624,6 +626,14 @@ namespace SCClassLoader
         /// <summary>Added to the share of a roll your off-hand weapon deals (the game's base is 0.5): 0.25 = off-hand swings
         /// at 75%. Per stack. On the crawler only.</summary>
         public float offhandPower;
+        /// <summary>Game character tags the bearer counts as having while this is on: "BULLET_DODGER" (dodge rolls work on
+        /// ranged attacks too), "NOKNOCKBACK", "FLYING", ... Read live, never written to the save.</summary>
+        public List<string> grantTags;
+        /// <summary>% chance a consumable you use isn't spent (per stack, the chances of several effects add up). On the
+        /// crawler only. keepItemMatch narrows it to items carrying that tag ("CHEM", "GRENADE") or whose id or name
+        /// contains it; several joined with "|".</summary>
+        public int keepItem;
+        public string keepItemMatch;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;

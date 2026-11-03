@@ -228,7 +228,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`. A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -453,6 +453,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     field or hazard sets that off. Bosses and unmovable enemies aren't thrown.
   - `{ "do": "leap" }` puts you on the free tile beside the target nearest to you (hookshots, pounces, charges); put
     it first in an enemy-target ability's actions.
+  - `{ "do": "rush", "amount": 4, "actions": [ ...hit... ] }` runs you up to 4 tiles the way you face, with no target
+    to aim at (Dash, Lunge, a shield charge): put it on a `"target": "self"` skill. You stop at a wall, a closed door or
+    anyone in the way, and the nested actions hit an enemy you run into (not an ally). `"direction": "back"` is a
+    backflip, `"left"` / `"right"` a sidestep; you keep facing the same way. `"value:rushed"` counts the tiles you
+    covered, for scaling: `{ "do": "damage", ..., "stacksOf": "value:rushed", "bonusPerStack": 2 }` hits harder the
+    farther you ran. Rooted, you don't move but still hit an enemy right beside you that way. A forward rush fires
+    `charge` triggers, the others `leap`.
   - `{ "do": "warp", "warpTo": "behind" }` blinks you onto the free tile beside the target farthest from where you
     stood, facing it. `"warpTo": "random"` (or `"away"`, the farthest spot from you) blinks whoever the action is aimed
     at to a free tile up to `amount` (default 3) away in the same room: enemies, or you with `"to": "self"`. Bosses,
@@ -492,7 +499,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   on you is stopped with `immune` as usual. Hits from skills of the same damage type still land.
 - **Hit filters.** `"dealtWith"` and `"takenFrom"` on an effect limit its `damageDealtMult` / `damageTakenMult` to some
   hits: `"melee"`, `"ranged"` (by the skill or attack the hit came from; damage over time and hazards are neither),
-  `"attack"` (a weapon attack) or `"skill"`, `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
+  `"attack"` (a weapon attack), `"skill"` or `"item"` (grenades and other consumables), `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
   swing, or a skill that swings your off-hand weapon) or damage types, joined with `|`. `{ "damageTakenMult": 0.5, "takenFrom": "ranged" }` is a deflector field,
   `{ "damageTakenMult": 0.6, "takenFrom": "Fire|Cryo" }` insulation, `{ "damageDealtMult": 1.3, "dealtWith": "melee" }`
   a brawler's stance.
@@ -514,6 +521,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Off-hand power.** An effect's `"offhandPower": 0.25` adds 25% of the weapon's roll to what your off-hand weapon
   deals (the game's base is 50%), per stack, for the attack's off-hand swing and for skills that swing the off-hand
   weapon alike. Pair it with `"dealtWith": "offhand"` for a dual-wielder's stance.
+- **Granted tags.** An effect's `"grantTags": [ "BULLET_DODGER" ]` makes the bearer count as having those game tags
+  while it lasts. The tag is read live and never saved, so it can't outlast the effect. Tags the game acts on:
+  `BULLET_DODGER` (dodge rolls work against ranged attacks too), `NOKNOCKBACK` (no knockback, bumps, throws or warps),
+  `FLYING` (can't be rooted, floats over traps), `IMMUNE_ROOT`. Conditions with `"tag"` see granted tags as well.
+- **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
+  use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
+  items carrying one of those tags, or whose id or name contains one.
 - **Model animation.** Besides `bob` and `spin`, a model takes `wobble` (degrees of rocking that settles after it
   appears), `pulse` (breathing in size, 0.1 = ±10%) and `randomYaw` (each copy turned differently).
 - `Mods/Kinetics/` has seven Muscle and Guile classes built on these: Grappler, Rig Jockey (hardpoints are rune
@@ -708,6 +722,9 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   "to": "summons", "ifSummonAlive": "group:Gloomcap", "radius": 3, "turns": 2 }`: enemies within `radius` (default 4)
   that can see that ally attack it instead. The enemy wears **Taunted** and goes back to normal when it can't see its
   taunter, when the taunter dies, or when the turns run out. A later taunt by someone else takes over.
+- `{ "do": "forget" }` on an enemy: it loses track of you. It stops hunting you, turns a random way and goes idle, as
+  the game's Memory Hole and Stealth do, so `"unaware": true` holds on it again (an ambush reset, a flashbang, a
+  vanish). Bosses keep their focus. On an area skill it reaches everyone the skill hits.
 - `{ "do": "silence", "turns": 2 }`: the enemy wears **Silenced** and can only use its abilities without a cooldown
   (basic attacks); with none it closes in instead. A channel already under way finishes. Bosses shrug it off, unless
   the action adds `"bossTurns": 1`: a boss is then silenced for that many turns and wears **Composed**, which stops any
@@ -795,6 +812,11 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 - **Synergy kit skills:** a kit ability with `"ifSkill": "MOD_Fulgurant"` (a tree id, mod class id or name; `"A|B"` =
   either; `"skillRank"` for a minimum) only joins the kit if you have that tree too, so a form can get its own take on
   another class's skill. Its tooltip says which training it comes from. The Mimeticist's forms have eight.
+- **Archetype combos.** Anywhere a tree is named (`ifSkill`, `unlessSkill`, a condition's `skill`, `rank:TREE`, a
+  synergy's `trees`), `"archetype:Muscle"` (or `Guile`, `Intellect`) stands for every class of that archetype, at your
+  best rank among them. It never counts the class asking, so in a Guile class's own skill it means *another* Guile
+  class, and a synergy `"trees": ["MOD_Duelist", "archetype:Guile"]` needs a second Guile class beside the Duelist.
+  A tree you name outright still counts itself. Mix freely: `"ifSkill": "archetype:Muscle|SKILLTREE_Hacker"`.
 - `SCCL_DEVTEST=forms` checks all of this in game.
 
 **Pets** (`[Minions]` in the config file):
@@ -844,7 +866,7 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
-- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
+- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
 - **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
@@ -2025,7 +2047,8 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
 ```jsonc
 { "synergies": [ {
   "id": "Accelerant", "name": "Accelerant",
-  "trees": ["SKILLTREE_Pyromaniac", "SKILLTREE_Chemistry"],   // ids, mod class ids or display names; "A|B" = either
+  "trees": ["SKILLTREE_Pyromaniac", "SKILLTREE_Chemistry"],   // ids, mod class ids or display names; "A|B" = either;
+                                                              // "archetype:Guile" = any other Guile class (see below)
   "description": "One sentence: what it does in play.",
   "bonus": {                                                  // an effect on you (any effect field)
     "procChancePerStack": 5,                                  // each level past the first adds this to every proc's chance

@@ -90,6 +90,69 @@ namespace SCClassLoader
         }
 
         /// <summary>
+        /// "rush": you run up to `amount` tiles the way you face (Dash, Lunge, a shield charge; "direction": "back" is a
+        /// backflip, "left" / "right" a sidestep), stopping at a wall, a closed door or anyone in the way. Its "actions"
+        /// hit an enemy you run into, and "value:rushed" counts the tiles you covered for scaling. Rooted, you stay put
+        /// but still hit an enemy right beside you that way. Aimed at nobody: put it on a "self" skill.
+        /// </summary>
+        internal static void Rush(ActionSpec a, ActionContext ctx, Character t)
+        {
+            Character me = ctx.caster;
+            if (!Alive(me) || me.GetMover() == null) return;
+            if (ctx.spreading && t != ctx.aimed) return;
+            NavNode start = me.GetMover().GetCurrentNavNode();
+            if (start == null) return;
+            Vector3 face = me == Player.instance && Player_Control.instance != null ? Player_Control.instance.transform.forward : me.transform.forward;
+            face.y = 0f;
+            string way = (a.direction ?? "forward").ToLowerInvariant();
+            Vector3 dir = way == "back" ? -face : way == "left" ? Quaternion.Euler(0f, -90f, 0f) * face : way == "right" ? Quaternion.Euler(0f, 90f, 0f) * face : face;
+            // the grid's own eight ways, as the game's dashes snap them
+            dir = new Vector3(Mathf.Round(dir.normalized.x), 0f, Mathf.Round(dir.normalized.z));
+            if (dir.sqrMagnitude < 0.01f) return;
+            dir.Normalize();
+            NavNode node = start;
+            Character hitWho = null;
+            int moved = 0;
+            for (int i = 0; i < Math.Max(1, a.amount); i++)
+            {
+                NavNode next = node.GetLinks().Where(l => l != null && Vector3.Dot((l.transform.position - node.transform.position).normalized, dir) > 0.9f)
+                    .OrderByDescending(l => Vector3.Dot((l.transform.position - node.transform.position).normalized, dir)).FirstOrDefault();
+                if (next == null || next.BlockCheck() || next.Block_Move) break;
+                if (node.HasDoor() && !node.GetDoor().isOpen || next.HasDoor() && !next.GetDoor().isOpen) break;
+                Character there = OccupantOf(next);
+                if (there != null) { hitWho = there; break; }
+                if (me.FLAG_isRooted || !me.GetMover().MoveCheck(node, next)) break;
+                node = next;
+                moved++;
+            }
+            ctx.rushed = moved;
+            if (node != start)
+            {
+                Actions.SpawnVfx("CYBERNINJA_DASH.particle_dash", me.GetHitFx().position);
+                Streak(me.GetHitFx().position, node.transform.position + Vector3.up * 1.1f, new Color(0.55f, 0.95f, 1f, 0.7f), 0.06f, 0.35f);
+                Sfx("moves_leap", me.transform.position, ctx, 0.5f);
+                start.ClearOccupant();
+                me.GetMover().transform.position = node.transform.position;
+                NavNode land = node;
+                Triggers.Styled(way == "forward" ? "charge" : "leap", hitWho, () => me.GetMover().SetCurrentNavNode(land));
+                node.OnEnterNode(me);
+                node.SetOccupant(me);
+                if (me == Player.instance)
+                {
+                    Player.CURRENT_ROOM = node.GetRoom();
+                    node.GetRoom().Discover();
+                    Map.instance.UpdateOcclusion();
+                    CullManager.instance.UpdateCulling();
+                    DashCam.Teleported(start.transform.position, node.transform.position, blink: false, DashAs(ctx), hitWho != null ? hitWho.transform.position : (Vector3?)null);
+                }
+            }
+            if (hitWho == null || hitWho == Player.instance || TileStacks.IsAlly(hitWho) || a.actions == null) return;
+            if (moved > 0) ScreenShake.GetInstance().Shake(0.1f, 2f);
+            Game.LOG($"{ctx.sourceName}: {(me == Player.instance ? "you run" : me.GetName() + " runs")} into {hitWho.GetName()}{(moved > 0 ? $" after {moved} tile{(moved > 1 ? "s" : "")}" : "")}.");
+            Actions.Run(a.actions, ctx, hitWho);
+        }
+
+        /// <summary>
         /// "warp": a blink through folded space with a flash at both ends. warpTo "behind": you land on the free tile
         /// beside the target farthest from where you stood, facing it (a pounce from nowhere). "random" / "away": the
         /// one the action is aimed at ("to": "self" for you) lands on a random free tile within `amount` (default 3) in

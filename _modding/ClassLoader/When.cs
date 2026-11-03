@@ -59,6 +59,12 @@ namespace SCClassLoader
         public string kind;
         /// <summary>"kind" read once: a check per hit shouldn't split the text and name the enum each time.</summary>
         internal CHARACTER_TYPE[] kinds;
+        /// <summary>true = whoever is checked (default the target) hasn't noticed anyone yet: it's idle, as the game's
+        /// Assassin Strike reads it; false = it's alert.</summary>
+        public bool? unaware;
+        /// <summary>"you" = whoever is checked (default the target) has you in its field of view; "away" = it's turned
+        /// from you (you're behind or beside it).</summary>
+        public string facing;
         public int chance = 100;
         /// <summary>Stats that add to `chance` (a control roll on "PsiPower+Smarts"), `chancePer` points of chance each.</summary>
         public string chanceScale;
@@ -113,11 +119,11 @@ namespace SCClassLoader
             if (w.any != null && w.any.Count > 0 && !w.any.Any(x => Check(x, ctx, target, depth + 1))) return false;
             if (w.not != null && Check(w.not, ctx, target, depth + 1)) return false;
 
-            Character who = Who(w.of, ctx, target, w.value == null && (w.has != null || w.lacks != null || w.tag != null || w.kind != null) ? "target" : "self");
+            Character who = Who(w.of, ctx, target, w.value == null && (w.has != null || w.lacks != null || w.tag != null || w.kind != null || w.unaware.HasValue || w.facing != null) ? "target" : "self");
             if (!string.IsNullOrEmpty(w.has) && (who == null || Actions.StacksOn(who, Actions.EffectId(w.has, ctx.classId)) <= 0)) return false;
             if (!string.IsNullOrEmpty(w.lacks) && who != null && Actions.StacksOn(who, Actions.EffectId(w.lacks, ctx.classId)) > 0) return false;
             if (!string.IsNullOrEmpty(w.tag) && (who == null || !HasTag(who, w.tag))) return false;
-            if (!string.IsNullOrEmpty(w.skill) && Synergies.TreeLevel(w.skill) < Math.Max(1, w.skillRank)) return false;
+            if (!string.IsNullOrEmpty(w.skill) && Synergies.TreeLevel(w.skill, ctx.classId) < Math.Max(1, w.skillRank)) return false;
             if (w.inCombat.HasValue && InCombat() != w.inCombat.Value) return false;
             if (w.inSide.HasValue && SideAreas.InSide != w.inSide.Value) return false;
             if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
@@ -126,6 +132,8 @@ namespace SCClassLoader
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
             if (!string.IsNullOrEmpty(w.kind) && (who == null || !IsKind(w, who))) return false;
+            if (w.unaware.HasValue && (who?.ai == null || (who.ai.GetState() == AI.AI_STATE.Idle) != w.unaware.Value)) return false;
+            if (!string.IsNullOrEmpty(w.facing) && (who == null || FacesYou(who, ctx) != !w.facing.Equals("away", StringComparison.OrdinalIgnoreCase))) return false;
             if (!string.IsNullOrEmpty(w.value))
             {
                 float? v = Value(w.value, ctx, who, target);
@@ -235,6 +243,19 @@ namespace SCClassLoader
             return false;
         }
 
+        /// <summary>Has whoever is checked got the caster in its field of view, by the game's own sight cone? (You have
+        /// none, so for you it's the way you face.)</summary>
+        internal static bool FacesYou(Character who, ActionContext ctx)
+        {
+            Character me = ctx.caster != null && ctx.caster != who ? ctx.caster : Player.instance;
+            if (me == null || me == who) return true;
+            if (who.ai?.detection != null) return who.ai.detection.GetFacing(me.GetHitFx().position) == "front";
+            Vector3 fwd = who == Player.instance && Player_Control.instance != null ? Player_Control.instance.transform.forward : who.transform.forward;
+            Vector3 to = me.transform.position - who.transform.position;
+            fwd.y = to.y = 0f;
+            return Vector3.Angle(fwd, to) <= 60f;
+        }
+
         internal static bool InCombat() => LevelManager.instance != null && LevelManager.instance.IsInCombat();
 
         /// <summary>A named number about a character (or the fight); null when it can't be read.</summary>
@@ -263,7 +284,7 @@ namespace SCClassLoader
                 case "alliesnear": return Near(who, Radius(arg), enemies: false);
                 case "corpses": return who == null ? (float?)null : Corpses.Near(who.transform.position, string.IsNullOrEmpty(arg) ? 3f : Radius(arg)).Count;
                 case "summons": return Summons.Matching(string.IsNullOrEmpty(arg) ? "any" : (arg.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? arg : "group:" + arg), ctx).Count;
-                case "rank": return Synergies.TreeLevel(arg);
+                case "rank": return Synergies.TreeLevel(arg, ctx.classId);
                 case "level": return Player.instance != null ? Player.instance.level : 0;
                 case "credits": return Menu_Inventory.instance != null ? Menu_Inventory.instance.GetCredits() : 0;
                 case "distance":
@@ -272,6 +293,7 @@ namespace SCClassLoader
                         return a == null || b == null ? (float?)null : Vector3.Distance(a.transform.position, b.transform.position);
                     }
                 case "turnsincombat": return Counters.TurnsInCombat;
+                case "rushed": return ctx.rushed;
                 case "wallsnear": return who == null ? (float?)null : Walls.Count(who);
                 default:
                     if (who != null && parsed.stat.HasValue) return who.GetStat(parsed.stat.Value);
@@ -341,6 +363,9 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.equipped)) parts.Add($"{whose ?? "you"} {(whose == null || whose == "you" ? "have" : "has")} {Equipped.Requirement(w.equipped)}");
             if (w.perk.HasValue) parts.Add(w.perk.Value ? "with the perk" : "without the perk");
             if (!string.IsNullOrEmpty(w.kind)) parts.Add($"{whose ?? "the target"} is {string.Join(" or ", w.kind.Split('|').Select(k => k.Trim().ToLowerInvariant()))}");
+            if (w.unaware.HasValue) parts.Add($"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} {(w.unaware.Value ? "unaware of you" : "alert")}");
+            if (!string.IsNullOrEmpty(w.facing)) parts.Add(w.facing.Equals("away", StringComparison.OrdinalIgnoreCase)
+                ? $"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} turned away from you" : $"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} facing you");
             if (!string.IsNullOrEmpty(w.value))
             {
                 string what = ValueName(w.value, classId);
@@ -391,7 +416,7 @@ namespace SCClassLoader
         {
             if (PluginHost.HasValue(v)) return true;
             string k = v.Split(':')[0].ToLowerInvariant();
-            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons";
+            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons" || k == "rushed";
         }
 
         private static string Num(float v, string value) => value.EndsWith("%") ? $"{v:0.#}%" : v.ToString("0.#", CultureInfo.InvariantCulture);
@@ -424,6 +449,7 @@ namespace SCClassLoader
                 case "credits": return "your credits";
                 case "distance": return "distance to the target";
                 case "turnsincombat": return "turns in this fight";
+                case "rushed": return "tiles you rushed";
                 case "wallsnear": return "walls beside";
                 default: return Enum.TryParse(k, true, out STAT_TYPE st) ? StatObj.GetStatString(st) : k;
             }

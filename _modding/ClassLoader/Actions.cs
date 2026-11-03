@@ -50,6 +50,8 @@ namespace SCClassLoader
         /// <summary>Moves that play out over time (a leaping chain's hops). The ability waits for them before its own
         /// self actions; null = run everything at once (procs, effects).</summary>
         public List<IEnumerator> paced;
+        /// <summary>Tiles the last "rush" in this cast covered ("value:rushed").</summary>
+        public int rushed;
     }
 
     /// <summary>Runs ActionSpecs and writes their rules text. Shared by abilities, procs and effects.</summary>
@@ -95,7 +97,7 @@ namespace SCClassLoader
         }
 
         private static readonly HashSet<string> Hostile = new HashSet<string>
-            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard" };
+            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard", "forget" };
 
         /// <summary>An ignoresAllies class (astral magic) never lands a hostile action on its own side.</summary>
         private static bool SparesAlly(ActionSpec a, string act, ActionContext ctx, Character t)
@@ -131,8 +133,8 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(a.ifSelfHas) && (ctx.caster == null || ctx.caster.effects.GetEffect(EffectId(a.ifSelfHas, ctx.classId)) == null)) return;
             if (!string.IsNullOrEmpty(a.ifSummonAlive) && Summons.Matching(a.ifSummonAlive, ctx).Count == 0) return;
             if (!string.IsNullOrEmpty(a.unlessSummonAlive) && Summons.Matching(a.unlessSummonAlive, ctx).Count > 0) return;
-            if (!string.IsNullOrEmpty(a.ifSkill) && Synergies.TreeLevel(a.ifSkill) < Math.Max(1, a.skillRank)) return;
-            if (!string.IsNullOrEmpty(a.unlessSkill) && Synergies.TreeLevel(a.unlessSkill) > 0) return;
+            if (!string.IsNullOrEmpty(a.ifSkill) && Synergies.TreeLevel(a.ifSkill, ctx.classId) < Math.Max(1, a.skillRank)) return;
+            if (!string.IsNullOrEmpty(a.unlessSkill) && Synergies.TreeLevel(a.unlessSkill, ctx.classId) > 0) return;
             string act = (a.@do ?? "").ToLowerInvariant();
             // "if" branches on its condition; everywhere else the condition gates the action
             if (act == "if")
@@ -160,6 +162,8 @@ namespace SCClassLoader
                 case "pull": Pull(a, ctx, t); break;
                 case "throw": Moves.Throw(a, ctx, t); break;
                 case "leap": Moves.Leap(a, ctx, t); break;
+                case "rush": Moves.Rush(a, ctx, t); break;
+                case "forget": Forget(ctx, t); break;
                 case "warp": Moves.Warp(a, ctx, t); break;
                 case "show": Moves.Show(a, ctx, t); break;
                 case "tether": Moves.Tether(a, ctx, t); break;
@@ -395,7 +399,7 @@ namespace SCClassLoader
             // counts read as the thing counted: "+3 per enemy within 4 of you"
             string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
                 : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
-                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed"
                 : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
             if (one != null) return div != null ? $"{div} (counting each {one})" : one;
             string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
@@ -1021,6 +1025,17 @@ namespace SCClassLoader
         }
 
         /// <summary>Sends one of your own minions away: no death, no corpse, no loot. Never works on enemies.</summary>
+        /// <summary>"forget": an enemy drops you as its target, turns a random way and goes idle (unaware), as the game's
+        /// Memory Hole and Stealth do. Bosses keep their focus.</summary>
+        private static void Forget(ActionContext ctx, Character t)
+        {
+            if (t?.ai == null || t == Player.instance || TileStacks.IsAlly(t) || t.HasTag("BOSS")) return;
+            if (t.ai.GetTarget() == Player.instance || t.ai.GetTarget() == ctx.caster) t.ai.SetTarget(null);
+            NavNode at = t.GetMover()?.GetCurrentNavNode();
+            if (at != null) t.ai.SetFacing(at.transform.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
+            t.ai.ChangeState(AI.AI_STATE.Idle);
+        }
+
         private static void Dismiss(ActionContext ctx, Character t)
         {
             if (t == null || t == ctx.caster) return;
@@ -1288,6 +1303,16 @@ namespace SCClassLoader
                         break;
                     }
                 case "leap": s = $"You leap to {who}"; break;
+                case "forget": s = $"{char.ToUpperInvariant(who[0])}{who.Substring(1)} loses track of you: it stops hunting you and looks away, unaware again"; break;
+                case "rush":
+                    {
+                        int n = Math.Max(1, a.amount);
+                        string way = (a.direction ?? "").ToLowerInvariant() switch { "back" => "back", "left" => "to your left", "right" => "to your right", _ => "ahead" };
+                        string imp = Describe(a.actions, classId, "it").Replace("• ", "").Replace("\n", "; ").TrimEnd('.', ' ');
+                        s = $"You rush up to {n} tile{(n > 1 ? "s" : "")} {way}, stopping at a wall, a closed door or anyone in the way"
+                          + (imp.Length > 0 ? $"; an enemy you run into: {imp}" : "");
+                        break;
+                    }
                 case "warp":
                     s = (a.warpTo ?? "").ToLowerInvariant() == "behind" ? $"You warp behind {who}"
                       : (a.warpTo ?? "").ToLowerInvariant() == "away" ? $"Warps {who} up to {Math.Max(1, a.amount)} tiles away from you"
