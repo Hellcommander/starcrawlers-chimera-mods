@@ -17,8 +17,8 @@ namespace SCClassLoader
     /// click opens it: holding the right button still looks around, as in the base game, and a click on a hotbar or other
     /// panel is left to that panel, though the minion strip opens this same menu. A minion ordered this way takes orders
     /// even with [Orders] CommandMinions off, until it's told to Engage again.
-    /// Focus, Unleash, Move here and the jobs then ask for a click in the world: the enemy (outlined), the floor tile
-    /// (marked) or the thing to deal with; right-click or Esc calls it off. The order strip's Focus, Unleash and Move here
+    /// Focus, Unleash, Flank, Move here and the jobs then ask for a click in the world: the enemy (outlined), the floor tile
+    /// (marked) or the thing to deal with; right-click or Esc calls it off. The order strip's Focus, Unleash, Flank and Move here
     /// buttons pick the same way for the whole group. While picking, and over the menu, clicks don't also reach the
     /// game (no swing at what's behind, no door opening, no lockpick dialog).
     /// </summary>
@@ -311,9 +311,9 @@ namespace SCClassLoader
         internal static bool Picking => picking;
         internal static Character PickingFor => picking ? pickOne : null;
 
-        private static bool NeedsPick(Commands.Order o) => o == Commands.Order.Focus || o == Commands.Order.Unleash || o == Commands.Order.MoveTo;
+        private static bool NeedsPick(Commands.Order o) => Commands.NeedsTarget(o) || o == Commands.Order.MoveTo;
 
-        /// <summary>Focus, Unleash or Move here for one companion (or, with `one` null, a group): click the enemy or tile next.
+        /// <summary>Focus, Unleash, Flank or Move here for one companion (or, with `one` null, a group): click the enemy or tile next.
         /// False when the order needs no pick (or there's nobody to give it to): give it straight away.</summary>
         internal static bool StartPicking(Commands.Order o, Character one, Commands.Group g)
         {
@@ -596,12 +596,17 @@ namespace SCClassLoader
                 header.rectTransform.offsetMin = new Vector2(4f, 0f);
                 header.rectTransform.offsetMax = new Vector2(-4f, 0f);
                 y += 48f;
-                foreach (var (o, name, tip) in Commands.All)
+                // the orders in two columns, so the menu stays short
+                float half = (Width - 2f * Pad - 4f) / 2f;
+                for (int i = 0; i < Commands.All.Length; i++)
                 {
-                    bool pick = NeedsPick(o);
-                    Button b = Item(rt, pick ? name + "…" : name, tip, ref y, UiKit.ButtonColor, () => Pick(o));
+                    var (o, name, tip) = Commands.All[i];
+                    float rowY = y + (i / 2) * Row;
+                    Button b = Item(rt, NeedsPick(o) ? name + "…" : name, tip, ref rowY, UiKit.ButtonColor, () => Pick(o), half);
+                    UiKit.At((RectTransform)b.transform, Pad + (i % 2) * (half + 4f), y + (i / 2) * Row);
                     orders.Add((o, b.GetComponent<Image>()));
                 }
+                y += (Commands.All.Length + 1) / 2 * Row;
                 y += 4f;
                 Item(rt, "Swap places", "You and it trade tiles. Takes your turn.", ref y, UiKit.ButtonColor, SwapPlaces);
                 foreach (var (job, name, tip) in Errands.All)
@@ -640,9 +645,9 @@ namespace SCClassLoader
                 rt.sizeDelta = new Vector2(Width, y + Pad - 2f);
             }
 
-            private Button Item(RectTransform rt, string name, string tip, ref float y, Color color, Action click)
+            private Button Item(RectTransform rt, string name, string tip, ref float y, Color color, Action click, float width = 0f)
             {
-                Button b = UiKit.Button(rt, name, font, 17f, new Vector2(Width - 2f * Pad, Row - 2f), click, color);
+                Button b = UiKit.Button(rt, name, font, 17f, new Vector2(width > 0f ? width : Width - 2f * Pad, Row - 2f), click, color);
                 var brt = (RectTransform)b.transform;
                 UiKit.At(brt, Pad, y);
                 y += Row;

@@ -139,8 +139,8 @@ namespace SCClassLoader
             string state = m.Downed ? "<color=#FF8F5C>down until the next floor</color>" : c == null ? "<color=#9FB7C9>joins you on arrival</color>" : $"<color=#5CFF6B>{c.GetHealth()}/{c.GetHealthMax()} health</color>";
             Text(card, $"<b>{m.Name}</b>  <color=#9FB7C9>{m.Kind.name}, level {lvl}, {tree?.displayName} rank {Crew.TreeRank(m) + 1}</color>", 20, new Vector2(w - 200f, 30f), 92f, 10f, TextAlignmentOptions.Left);
             string pay = m.Missed == 0 ? "<color=#9FB7C9>paid up</color>" : $"<color=#FFC35C>owed a payday: pay up next floor or they go</color>";
-            Text(card, state + "   " + pay, 16, new Vector2(w - 200f, 24f), 92f, 40f, TextAlignmentOptions.Left);
-            Text(card, $"<color=#C9D6E0>{StatLine(m, c)}</color>", 15, new Vector2(w - 230f, 44f), 92f, 64f, TextAlignmentOptions.TopLeft).enableWordWrapping = true;
+            Text(card, state + "   " + pay, 16, new Vector2(w - 305f, 24f), 92f, 40f, TextAlignmentOptions.Left);
+            Text(card, $"<color=#C9D6E0>{StatLine(m, c)}</color>", 15, new Vector2(w - 335f, 44f), 92f, 64f, TextAlignmentOptions.TopLeft).enableWordWrapping = true;
 
             var dismiss = UiKit.Button(card, "Dismiss", font, 16, new Vector2(100f, 30f), () => { Crew.Dismiss(m); Show(); }, UiKit.DangerColor);
             UiKit.At((RectTransform)dismiss.transform, w - 110f, 10f);
@@ -150,12 +150,14 @@ namespace SCClassLoader
             Commands.Order now = Commands.OrderOf(key);
             // standing orders only: Move here and Unleash are given from the strip, aimed at the moment
             var standing = Commands.All.Where(x => x.order != Commands.Order.MoveTo && x.order != Commands.Order.Unleash).ToArray();
+            // two columns of buttons down the card's right side
+            int perColumn = (standing.Length + 1) / 2;
             for (int i = 0; i < standing.Length; i++)
             {
                 var (o, name, tip) = standing[i];
                 var ob = UiKit.Button(card, name, font, 14, new Vector2(100f, 21f), () => { Commands.Give(key, o); Show(); }, o == now ? UiKit.OnColor : UiKit.ButtonColor);
-                UiKit.At((RectTransform)ob.transform, w - 110f, 44f + i * 23f);
-                Hover(ob.gameObject, () => info.text = $"<b>{name}</b>\n{tip}" + (o == Commands.Order.Focus ? "\n<color=#9FB7C9>Uses the last enemy you hit.</color>" : ""));
+                UiKit.At((RectTransform)ob.transform, w - 215f + i / perColumn * 105f, 44f + i % perColumn * 23f);
+                Hover(ob.gameObject, () => info.text = $"<b>{name}</b>\n{tip}" + (o == Commands.Order.Focus || o == Commands.Order.Flank ? "\n<color=#9FB7C9>Uses the last enemy you hit.</color>" : ""));
             }
 
             for (int i = 0; i < Crew.Slots.Length; i++)

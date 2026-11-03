@@ -4,6 +4,18 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## Unreleased
+
+- Five new orders for crew, pets and summons: **Kite** (keep their distance), **Shield** (stand between you and the
+  nearest enemy), **Flank** (go round your target to its far side), **Draw fire** (taunt the enemy that's after you
+  onto themselves) and **Scatter** (never stand next to each other or you). The order strip shows its orders in rows
+  of seven, the right-click menu in two columns, and the crew screen's buttons in two columns. The new orders have no
+  key until you set one.
+- Allies on a shared tile no longer flicker into each other: they keep apart while walking on or off it, and the
+  one left behind glides back to the middle of its tile instead of standing half on the next one.
+- A corpse is hidden while someone stands in it, so two bodies aren't drawn inside each other
+  (`[Interface] HideCorpsesUnderfoot`, on). It can still be looted, butchered or used.
+
 ## 2.0.0 (2026-11-03)
 
 Covers everything since 1.46.0.

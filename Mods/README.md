@@ -1091,7 +1091,11 @@ share.
   others directly). **Area attacks hit everyone on the tile**: explosions, grenades, beams, slams, warps, channel
   blasts, damage fields such as fire and acid, trap bombs and the BioLabs lasher vines all pass their damage, and any
   effect they put on the tile's main occupant in the same moment, to the others.
-- Characters sharing your tile stand behind your shoulders; elsewhere they spread out on the tile.
+- Characters sharing your tile stand behind your shoulders; elsewhere they spread out on the tile. They glide to
+  their spots, keep apart while walking on or off a shared tile, and glide back to the middle once alone again.
+- Corpses: `[Interface] HideCorpsesUnderfoot = true` hides a corpse while anyone living stands in it (two bodies
+  drawn inside each other flicker), and shows it again when they step off. Only the look: it can still be looted,
+  butchered or used.
 - Events that clear or lock tiles (room locks, boss anchors, loot drops, summoning circles) first move the extra
   characters to free tiles next to them.
 - How it works, for modders: a tile still has one occupant as far as the game is concerned. The others are kept in a
@@ -2084,11 +2088,17 @@ you order it from its right-click menu), so a minion build plays as tactics rath
 | Move here | They go to the floor tile you're aiming at (or a few steps ahead of you) and hold it. |
 | Fall back | They regroup beside you, on the side away from the enemy, and only fight what comes adjacent. |
 | Unleash | A one-off: next turn each uses its strongest ready special move on your target, then carries on with its order. If it can't within three turns, the order is called off. |
+| Kite | They keep their distance: they shoot or strike, then an enemy within two tiles makes them step (up to two tiles) to the free tile with the most room. They close in no nearer than about four. For gunners and casters. |
+| Shield | They stand beside you on the side of the nearest enemy, between you and it, and fight only from there. With no enemy about they stay at your side. |
+| Flank | They go round your target to its far side from you, so it stands between you, and attack it from there, stepping round again after each strike. Back to Engage when it drops. |
+| Draw fire | Each goes to an enemy that's after you (one each while there are enough, else the one nearest you; as near as it can get if you block the way) and, once within two tiles and in its sight, taunts it onto themselves, renewed every turn they stay close. |
+| Scatter | After each attack they step away from anyone next to them, so one blast can't catch them all. One already in melee keeps its enemy in reach and spreads round it. |
 
 - **Giving orders:**
   - The order strip above the hotbar is out of the way until you call it up with `O` (`[Orders] OrderBarKey`; it
-    remembers being up, and only shows while you have someone to order). Companions use their own AI until you
-    give an order. `Alt+1` to `Alt+9` give the orders whether the strip is up or not.
+    remembers being up, and only shows while you have someone to order), in rows of seven. Companions use their own
+    AI until you give an order. `Alt+1` to `Alt+9` give the first nine orders whether the strip is up or not; Kite,
+    Shield, Flank, Draw fire and Scatter have no key until you set one (`[Orders] KiteKey` and so on).
   - Its first button (or `Alt+0`) switches who hears them: everyone, your crew (with Conjoined bodies), or your minions.
   - The first versions used `Ctrl+number`, which is also the game's second action bar; settings still on those
     defaults move to `Alt` once.
@@ -2103,7 +2113,7 @@ you order it from its right-click menu), so a minion build plays as tactics rath
     neutrals. A minion ordered from its menu takes orders even with `CommandMinions` off, until you tell it to
     Engage. Click anywhere else to close it. `[Orders] MinionMenu` (on) turns it off; its size and opacity are
     `[Interface] MinionMenuSize`/`Opacity`.
-  - **Choosing the target or the spot:** Focus…, Unleash… and Move here… (in the menu, and the order strip's
+  - **Choosing the target or the spot:** Focus…, Unleash…, Flank… and Move here… (in the menu, and the order strip's
     buttons for the whole group) then ask for a click in the world: the enemy to go after (outlined under the
     cursor) or the floor tile to go to (marked with the game's target marker). A note by the cursor says what
     you're picking and what's under it; right-click or Esc cancels (that Esc doesn't also open the game menu).
@@ -2120,7 +2130,8 @@ you order it from its right-click menu), so a minion build plays as tactics rath
     Quest objects and other contraptions stay yours to use. While picking (and over the menu), your click
     doesn't also swing at, open or lockpick whatever is behind it.
 - **Saving:** orders are saved with the run. Minions keep theirs for as long as they live.
-- **Test:** `SCCL_DEVTEST=commands` checks every order over real turns; `SCCL_DEVTEST=minionmenu:<save>` loads one of
+- **Test:** `SCCL_DEVTEST=commands` checks every order over real turns (`orders_4_kite.png` to `orders_8_scatter.png`
+  show the newer ones); `SCCL_DEVTEST=minionmenu:<save>` loads one of
   your saves with saving off (Hardolo by default) and plays the right-click menu with its own minions: orders,
   picking a target and a tile, the strip's group pick, opening, unlocking and bashing a door, opening a container
   and fetching its loot, and unsummoning.

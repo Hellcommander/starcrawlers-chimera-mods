@@ -53,6 +53,7 @@ namespace SCClassLoader
             PetWake.Bind(Config);
             PartyPanel.Bind(Config);
             TileStacks.Bind(Config);
+            CorpseClearance.Bind(Config);
             ResourceBars.Bind(Config);
             RunePanel.Bind(Config);
             CraftPanel.Bind(Config);
@@ -101,7 +102,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); CorpseClearance.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();

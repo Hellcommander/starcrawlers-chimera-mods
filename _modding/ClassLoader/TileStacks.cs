@@ -168,7 +168,10 @@ namespace SCClassLoader
             foreach (NavNode n in stacks.Keys.ToList()) if (n == null) stacks.Remove(n);
         }
 
-        /// <summary>Re-checks every stack (a teleport or an odd ClearOccupant can leave one stale).</summary>
+        /// <summary>Tests: log each stack the sweep had to put together itself.</summary>
+        internal static bool Repairs;
+
+        /// <summary>Re-checks every stack (a teleport or an odd ClearOccupant can leave one stale) and stacks allies found sharing a tile unregistered.</summary>
         internal static void Sweep()
         {
             foreach (NavNode n in stacks.Keys.ToList())
@@ -176,10 +179,25 @@ namespace SCClassLoader
                 if (n == null) { stacks.Remove(n); continue; }
                 Normalize(n);
             }
+            var everyone = (Traverse.Create(AI_Manager.instance).Field("ais").GetValue<List<AI>>() ?? new List<AI>())
+                .Where(a => a != null).Select(a => a.GetCharacter()).Concat(new[] { (Character)Player.instance }).ToList();
+            // Allies who reached one tile some way that never told us (a dash, a charge, a teleport): stack them now,
+            // or they stand inside each other with nothing spreading them out.
+            foreach (var g in everyone.Where(c => Alive(c) && IsAlly(c) && c.GetMover()?.GetCurrentNavNode() != null).GroupBy(c => c.GetMover().GetCurrentNavNode()))
+            {
+                var here = g.ToList();
+                if (here.Count < 2 || (stacks.TryGetValue(g.Key, out var known) && here.All(known.Contains))) continue;
+                if (!stacks.ContainsKey(g.Key)) stacks[g.Key] = new List<Character>();
+                foreach (Character c in here)
+                {
+                    if (!stacks[g.Key].Contains(c)) stacks[g.Key].Add(c);
+                    if (c.GetComponent<StackSpot>() == null) c.gameObject.AddComponent<StackSpot>();
+                }
+                if (Repairs) Plugin.Log.LogInfo($"Tile stacks: {string.Join(", ", here.Select(c => c.GetName()))} were on {g.Key.name} unstacked; spread out now");
+                Normalize(g.Key);
+            }
             // Crowded left over from a save, or from a stack that broke up some odd way.
             var crowded = new HashSet<Character>(stacks.Values.SelectMany(l => l));
-            var everyone = (Traverse.Create(AI_Manager.instance).Field("ais").GetValue<List<AI>>() ?? new List<AI>())
-                .Where(a => a != null).Select(a => a.GetCharacter()).Concat(new[] { (Character)Player.instance });
             foreach (Character c in everyone)
                 if (Alive(c) && !crowded.Contains(c) && c.effects.GetEffect(CrowdedId) != null) Crowd(c, 0);
         }
@@ -207,12 +225,21 @@ namespace SCClassLoader
                 s.slot = k;
                 s.slots = m;
                 float a = (k + 0.5f) / m * Mathf.PI * 2f;
-                s.offset = youHere ? Vector3.zero : new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * spacing * 0.22f;
+                // as far apart as the tile allows: two bodies of a soldier's width still clip at a smaller ring
+                s.offset = youHere ? Vector3.zero : new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * spacing * 0.32f;
                 s.spacing = spacing;
             }
         }
 
-        /// <summary>Keeps a stacked character at its spot on the tile while it isn't walking.</summary>
+        private static readonly AccessTools.FieldRef<Character_Mover, float> MoveLerp = AccessTools.FieldRefAccess<Character_Mover, float>("moveLerp");
+        private static readonly AccessTools.FieldRef<Character_Mover, NavNode> MoveFrom = AccessTools.FieldRefAccess<Character_Mover, NavNode>("moveOrigin");
+        private static readonly AccessTools.FieldRef<Character_Mover, bool> Jumping = AccessTools.FieldRefAccess<Character_Mover, bool>("isJumping");
+
+        /// <summary>
+        /// Keeps a stacked character at its spot on the tile, and carries that spot through a walk: the game lerps
+        /// every body from tile centre to tile centre, so two allies walking into (or out of) one tile together would
+        /// otherwise pass right through each other. The offset blends from the tile it left to the tile it's entering.
+        /// </summary>
         internal class StackSpot : MonoBehaviour
         {
             public NavNode node;
@@ -222,27 +249,52 @@ namespace SCClassLoader
             public float spacing = 1.6f;
             private Character ch;
             private bool active;
+            /// <summary>The offset it stood at last, blended away (or into the next one) as it walks off.</summary>
+            private Vector3 applied, leaving;
+            private bool wasMoving;
 
             internal void Release() { active = false; node = null; }
 
+            private Vector3 Want()
+            {
+                if (!(behindPlayer && Player.instance != null)) return offset;
+                Vector3 back = -Player.instance.transform.forward, right = Player.instance.transform.right;
+                float side = slots <= 1 ? 0f : Mathf.Lerp(-1f, 1f, slot / (float)(slots - 1));
+                return (back * 0.32f + right * side * 0.22f) * spacing;
+            }
+
             private void LateUpdate()
             {
-                if (node == null) return;
                 if (ch == null) ch = GetComponent<Character>();
                 Character_Mover m = ch != null ? ch.GetMover() : null;
-                if (m == null || m.GetCurrentNavNode() != node || m.isMoving) return;
-                Vector3 off = offset;
-                if (behindPlayer && Player.instance != null)
+                if (m == null) return;
+                bool here = node != null && m.GetCurrentNavNode() == node;
+                if (m.isMoving)
                 {
-                    Vector3 back = -Player.instance.transform.forward, right = Player.instance.transform.right;
-                    float side = slots <= 1 ? 0f : Mathf.Lerp(-1f, 1f, slot / (float)(slots - 1));
-                    off = (back * 0.32f + right * side * 0.22f) * spacing;
+                    if (!wasMoving) leaving = applied; // where it stood on the tile it's leaving
+                    wasMoving = true;
+                    Vector3 to = here ? Want() : Vector3.zero;
+                    NavNode from = MoveFrom(m), dest = m.GetCurrentNavNode();
+                    if ((leaving == Vector3.zero && to == Vector3.zero) || Jumping(m) || from == null || dest == null) return;
+                    // where the game's straight step puts it this frame, plus the blended spot: set, never added to
+                    float t = MoveLerp(m);
+                    transform.position = Vector3.Lerp(from.transform.position, dest.transform.position, t) + Vector3.Lerp(leaving, to, t);
+                    return;
                 }
+                wasMoving = false;
+                NavNode on = here ? node : m.GetCurrentNavNode();
+                // the stack broke up round it: back to the middle of its own tile, not left standing half on the next
+                Vector3 goal = here ? Want() : Vector3.zero;
+                if (on == null || (!here && applied == Vector3.zero)) { applied = Vector3.zero; return; }
+                applied = Vector3.MoveTowards(applied, goal, Glide * Time.deltaTime);
                 // a write marks the whole character moved, for every renderer under it
-                Vector3 want = node.transform.position + off;
+                Vector3 want = on.transform.position + applied;
                 if (transform.position != want) transform.position = want;
-                active = true;
+                active = here;
             }
+
+            /// <summary>How fast it slides into its spot or back to the middle (m/s): a glide, not a jump.</summary>
+            private const float Glide = 2.5f;
 
             private void OnDisable() { if (active && node != null && ch != null) transform.position = node.transform.position; }
         }
