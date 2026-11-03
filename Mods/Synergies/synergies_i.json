@@ -315,7 +315,7 @@
         "SKILLTREE_ChaoticMutant",
         "MOD_Miasmancer"
       ],
-      "description": "A mutant's gut is half a still already. With both, you can heave the brew straight up from your belly: Toxic Breath, a cone of poison that leaves the air choking.",
+      "description": "A mutant's gut is half a still already. With both, you can heave the brew straight up from your belly: Toxic Breath, a cone of poison gas that hangs where it lands.",
       "bonus": {},
       "icon": "toxic_breath.png",
       "grants": [
@@ -328,8 +328,9 @@
           "angle": 70,
           "staminaCost": 12,
           "cooldown": 5,
-          "description": "Heave up a gutful of mutated brew in a wide cone. It poisons deep and leaves the air thick and choking. The more of a mutant you are, the worse it gets: it hits harder with every Chaotic Mutant rank, rots their strength at rank 3, and at rank 5 can drop them retching.",
+          "description": "Heave up a gutful of mutated brew in a wide cone. The gas hangs over the deck for three turns, poisoning and choking anyone caught in it or walking in. The more of a mutant you are, the worse it gets: it hits harder with every Chaotic Mutant rank, rots their strength at rank 3, and at rank 5 can drop them retching.",
           "sound": "sfx/toxic_breath.wav",
+          "travelVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.25",
           "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35",
           "actions": [
             {
@@ -343,12 +344,27 @@
             },
             {
               "do": "effect",
-              "effect": "#Poisoned",
-              "stacks": 3
+              "effect": "#Poisoned"
             },
             {
-              "do": "effect",
-              "effect": "MOD_Miasmancer@Choking"
+              "do": "field",
+              "fieldName": "Toxic Cloud",
+              "turns": 3,
+              "radius": 4,
+              "overShape": true,
+              "affects": "enemies",
+              "look": "HAZARD_Gas@0.5",
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "#Poisoned",
+                  "stacks": 2
+                },
+                {
+                  "do": "effect",
+                  "effect": "MOD_Miasmancer@Choking"
+                }
+              ]
             },
             {
               "do": "effect",

@@ -609,6 +609,13 @@ namespace SCClassLoader
                     Button b = Item(rt, name + "…", tip, ref y, UiKit.ButtonColor, () => Job(job));
                     if (job == Errands.Job.Unlock) unlockLabel = b.GetComponentInChildren<TextMeshProUGUI>();
                 }
+                if (who.HasTag(EnemyArms.BotTag) && ScrapBot.Running)
+                {
+                    y += 4f;
+                    int count = ScrapBot.PackCount();
+                    Item(rt, $"Scrap pack weapons ({count})", $"It grinds the {count} enemy weapon{(count == 1 ? "" : "s")} in your pack into scrap (never what you're wearing{(EnemyArms.ScrapBossWeapons.Value ? "" : ", never boss weapons")}). It carries {ScrapBot.Scrap} scrap.",
+                        ref y, UiKit.ButtonColor, () => { ScrapBot.ScrapPack(); Close(); });
+                }
                 // pets (not crawlers or bodies) can also be sent away
                 if (PetHandling.IsCharmed(who) && !Commands.IsCrewLike(who))
                 {

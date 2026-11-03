@@ -1,0 +1,196 @@
+{
+  "synergies": [
+    {
+      "id": "CometBreakup",
+      "name": "Comet Breakup",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_Spellsmith"
+      ],
+      "description": "A comet doesn't burst, it breaks up. Under Nova Form your attacks from other classes go out all eight ways at once: you take the way you aimed, and seven Fragments of You streak out the other seven from where you stood, each setting the spell off where it lands with a copy's weaker status effects. A spell laid on the ground stays a plain nova.",
+      "bonus": {
+        "modifies": [
+          {
+            "skills": "others",
+            "name": "Comet Breakup",
+            "summary": "seven Fragments of You take the other seven ways round you",
+            "when": {
+              "has": "MOD_Spellsmith@Novaform",
+              "of": "self"
+            },
+            "add": {
+              "mirrors": 7
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "GravityAssist",
+      "name": "Gravity Assist",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_GrapnelAcrobat"
+      ],
+      "description": "A hook in something is a line to swing round. When Comet Charge hits an enemy with a hook in it, the hook may tear loose and sling you onward: the charge is ready again and doesn't end your turn. Each level adds 10% to these odds.",
+      "bonus": {
+        "procChancePerStack": 10,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 50,
+            "when": {
+              "all": [
+                { "casting": true },
+                { "cast": "Comet Charge" },
+                { "has": "MOD_GrapnelAcrobat@Snagged", "of": "victim" }
+              ]
+            },
+            "actions": [
+              { "do": "tether", "look": "#C8D0DA" },
+              { "do": "purge", "effect": "MOD_GrapnelAcrobat@Snagged" },
+              { "do": "ready" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "EjectaPlating",
+      "name": "Ejecta Plating",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_BulkheadPsion"
+      ],
+      "description": "Your landing tears the deck up, and your mind stands it on end. What Comet Charge or Extinction Arc strikes may get a plate raised two tiles behind it before it flies, a wall like any other for 3 turns. Each level adds 8% to these odds.",
+      "bonus": {
+        "procChancePerStack": 8,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 35,
+            "when": {
+              "all": [
+                { "casting": true },
+                { "cast": "Comet Charge|Extinction Arc" }
+              ]
+            },
+            "actions": [
+              {
+                "do": "raiseWall",
+                "behind": 2,
+                "amount": 3,
+                "turns": 3,
+                "modelFrom": "MOD_BulkheadPsion",
+                "model": { "mesh": "models/bp_bulkhead.glb", "scale": 1.7, "offset": [0, 0.85, 0], "glow": "#6FB8FF", "glowStrength": 0.25 }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CastOffShape",
+      "name": "Cast-Off Shape",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_Mimeticist"
+      ],
+      "description": "You calve under strain, and a borrowed body is a strain. When a shape ends in a fight, it may break away from you and fight on as a Fragment of You for 5 turns, and Rejoin Fragment can fall to it like any other. Two fragments at most. Each level adds 10% to these odds.",
+      "bonus": {
+        "procChancePerStack": 10,
+        "procs": [
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormPanther", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] },
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormHound", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] },
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormHullback", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] },
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormLurker", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] },
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormWeaver", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] },
+          { "on": "effectLost", "match": "MOD_Mimeticist@FormWyrm", "chance": 40, "when": { "inCombat": true }, "actions": [ { "do": "summon", "to": "self", "creature": "self", "summonName": "Fragment of You", "amount": 1, "turns": 5, "maxSummons": 2, "summonGroup": "Fragment", "summonAt": "beside", "strength": 0.4, "healthShare": 0.3, "look": "#A8F040", "effect": "MOD_CometBreaker@Calved", "summonVfx": "PhCalve" } ] }
+        ]
+      }
+    },
+    {
+      "id": "ForetoldFall",
+      "name": "Foretold Fall",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_Snareseer"
+      ],
+      "description": "You saw where the comet would be needed. A trap of yours catching something may shift your Ephemeris mark onto it, the comet still due when it was due. Landing Comet Charge or Extinction Arc sets off every trap of yours within 2.6 before the blast throws anything. Each level adds 10% to the odds of the shift.",
+      "bonus": {
+        "procChancePerStack": 10,
+        "procs": [
+          {
+            "on": "trap",
+            "chance": 40,
+            "when": { "value": "distance", "above": 0.5 },
+            "actions": [
+              { "do": "moveTraps", "fieldName": "Ephemeris", "look": "#C08CFF" }
+            ]
+          }
+        ],
+        "modifies": [
+          {
+            "skills": "Comet Charge|Extinction Arc",
+            "name": "Foretold Fall",
+            "summary": "sets off your traps within 2.6 before it throws anything",
+            "actions": [
+              { "do": "springTraps", "near": 2.6, "first": true }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "LateArrival",
+      "name": "Late Arrival",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_PhaseDrifter"
+      ],
+      "description": "Out of sync, you land twice. Use Comet Charge or Extinction Arc while Phased and the Phased is spent: a turn later the rest of you arrives on the same spot, and everything within 2.1 of it is thrown back 2 tiles, most bosses included. What hits a wall or another body is hurt and stunned for a turn, and its special attacks stay down after it recovers for a turn per level, up to 3.",
+      "bonus": {
+        "modifies": [
+          {
+            "skills": "Comet Charge|Extinction Arc",
+            "name": "Late Arrival",
+            "summary": "the rest of you lands here a turn later, and Phased is spent",
+            "when": {
+              "has": "MOD_PhaseDrifter@Phased",
+              "of": "self"
+            },
+            "selfActions": [
+              {
+                "do": "trap",
+                "fieldName": "Late Arrival",
+                "affects": "enemies",
+                "fuse": 1,
+                "fuseOnly": true,
+                "charges": 1,
+                "maxTraps": 1,
+                "radius": 2.1,
+                "look": "HAZARD_VoidRift@0.3",
+                "vfx": "PhImpact@0.8",
+                "sound": "event:/Abilities/Misc/Psykonics_Warp",
+                "actions": [
+                  {
+                    "do": "throw",
+                    "amount": 2,
+                    "fromCenter": true,
+                    "bosses": true,
+                    "actions": [
+                      { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+PsiPower", "scaleMult": 0.2, "perRank": 1 },
+                      { "do": "stun", "turns": 1 },
+                      { "do": "exhaust", "afterStun": true, "bonusPerStack": 1, "stacksOf": "SCCL_Synergy@LateArrival", "stacksFrom": "self", "stacksUsed": 3 }
+                    ]
+                  }
+                ]
+              },
+              { "do": "purge", "effect": "MOD_PhaseDrifter@Phased" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

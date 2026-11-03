@@ -131,9 +131,14 @@ namespace SCClassLoader
         {
             if (lists != null) return lists;
             lists = new Dictionary<string, Type>();
-            foreach (Type t in typeof(XmlMods).Assembly.GetTypes().Where(x => x.IsPublic && x.IsClass && x.Namespace == typeof(XmlMods).Namespace))
-                foreach (FieldInfo f in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                    if (IsListType(f.FieldType, out Type e) && !lists.ContainsKey(f.Name)) lists[f.Name] = e;
+            var fields = typeof(XmlMods).Assembly.GetTypes().Where(x => x.IsPublic && x.IsClass && x.Namespace == typeof(XmlMods).Namespace)
+                .SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.Instance)).ToList();
+            foreach (FieldInfo f in fields)
+                if (IsListType(f.FieldType, out Type e) && !lists.ContainsKey(f.Name)) lists[f.Name] = e;
+            // A name that's a plain value in some other class can't be guessed from the name alone ("of" on a condition):
+            // only the class it's read into can say, through the hint.
+            foreach (FieldInfo f in fields)
+                if (!IsListType(f.FieldType, out _) && (f.FieldType == typeof(string) || f.FieldType.IsValueType)) lists.Remove(f.Name);
             return lists;
         }
     }

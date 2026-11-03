@@ -7,7 +7,7 @@
   Closing Line spends all of it. No status effect is needed to track it.
 -->
 <class id="MOD_CadenceFencer" name="Cadence Fencer" archetype="Guile" iconFrom="SKILLTREE_Blademaster">
-  <description>A duelist who keeps count. Every clean cut adds to your Cadence; a miss costs you one. Spend the whole count on a finishing line against a wounded foe.
+  <description>A duelist who keeps count. Every clean cut adds to your Cadence; a miss costs you one. Spend the whole count on a finishing line against a wounded foe, and a finish that kills leaves you part of the count for the next.
 
 Example class written in XML (conditions, counters, triggers). Favors [AGL] and [STR].</description>
   <attributePriorities Agility="4" Strength="2" />
@@ -22,6 +22,18 @@ Example class written in XML (conditions, counters, triggers). Favors [AGL] and 
     </Wounded>
     <InRhythm value="counter:Cadence" of="self" atLeast="3" />
   </conditions>
+
+  <effects>
+    <effect id="Tempo" name="Perfect Time" description="Nothing can break your count, and every dodge adds to it." duration="4">
+      <procs>
+        <proc on="dodge">
+          <actions>
+            <action do="counter" to="self" counter="Cadence" amount="1" counterMax="5" />
+          </actions>
+        </proc>
+      </procs>
+    </effect>
+  </effects>
 
   <tiers>
     <tier>
@@ -67,6 +79,7 @@ Example class written in XML (conditions, counters, triggers). Favors [AGL] and 
             </actions>
           </proc>
           <proc on="miss">
+            <when lacks="@Tempo" of="self" />
             <actions>
               <action do="counter" to="self" counter="Cadence" amount="-1" counterMin="0" />
             </actions>
@@ -112,6 +125,46 @@ Example class written in XML (conditions, counters, triggers). Favors [AGL] and 
         <targetWhen>Wounded</targetWhen>
         <actions>
           <action do="damage" type="Slashing" min="6" max="9" perRank="2" bonusPerStack="3" stacksOf="counter:Cadence" stacksFrom="self" consumeStacks="true" />
+        </actions>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Agility="1" />
+      <newAbility base="Bolt" name="Fleche" equipped="melee" icon="SKILLTREE_Acrobatics/1" range="4" cooldown="5" staminaCost="12" description="Run the length of the line and arrive point first. It counts as a clean cut.">
+        <actions>
+          <action do="leap" />
+          <action do="damage" type="Slashing" min="3" max="6" perRank="1" scale="Agility" scaleMult="0.3" weapon="0.6" />
+          <action do="counter" to="self" counter="Cadence" amount="1" counterMax="5" />
+        </actions>
+        <perk name="Long Line" description="The point arrives hard enough to throw off the guard.">
+          <addActions>
+            <action do="knockback" amount="1" />
+          </addActions>
+        </perk>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Strength="1" />
+      <newAbility base="Passive" name="Second Intention" icon="SKILLTREE_Blademaster/2" description="When Closing Line kills, the next line is already begun: you keep 2 Cadence.">
+        <procs>
+          <proc on="kill">
+            <when cast="Closing Line" />
+            <actions>
+              <action do="counter" to="self" counter="Cadence" amount="2" />
+            </actions>
+          </proc>
+        </procs>
+      </newAbility>
+    </tier>
+
+    <tier>
+      <attributes Agility="2" Recognition="1" />
+      <newAbility base="Buff" name="Perfect Time" icon="SKILLTREE_Blademaster/3" cooldown="14" staminaCost="15" description="At the top of the count you stop keeping time and start setting it. For four turns a miss costs nothing, and every dodge adds to your Cadence.">
+        <usableWhen value="counter:Cadence" of="self" atLeast="4" />
+        <actions>
+          <action do="effect" to="self" effect="@Tempo" />
         </actions>
       </newAbility>
     </tier>

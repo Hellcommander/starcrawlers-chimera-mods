@@ -30,6 +30,8 @@ namespace SCClassLoader
         };
 
         private static int areaDepth;      // inside a synchronous area method (damage fields, trap bombs, channel blasts)
+        private static int sweepDepth;     // inside one of those methods for real, not a test's stand-in
+        private static readonly List<Action> afterSweep = new List<Action>();
         private static bool passing;       // re-applying to riders right now
         private static Character lastAreaPrimary;
         private static int lastAreaFrame = -1;
@@ -173,8 +175,35 @@ namespace SCClassLoader
                 }
             }
 
-            private static void Prefix() => areaDepth++;
-            private static Exception Finalizer(Exception __exception) { areaDepth = Math.Max(0, areaDepth - 1); return __exception; }
+            private static void Prefix() { areaDepth++; sweepDepth++; }
+
+            private static Exception Finalizer(Exception __exception)
+            {
+                areaDepth = Math.Max(0, areaDepth - 1);
+                sweepDepth = Math.Max(0, sweepDepth - 1);
+                if (sweepDepth == 0 && afterSweep.Count > 0)
+                {
+                    var due = afterSweep.ToList();
+                    afterSweep.Clear();
+                    foreach (Action a in due)
+                    {
+                        try { a(); }
+                        catch (Exception e) { Plugin.Log.LogError("After an area hit: " + e); }
+                    }
+                }
+                return __exception;
+            }
+        }
+
+        /// <summary>
+        /// Holds a until the area method that's running ends; false if none is. Those methods walk tiles and read each
+        /// tile's occupant again after applying an effect, so whatever moves or kills that occupant has to wait.
+        /// </summary>
+        internal static bool AfterSweep(Action a)
+        {
+            if (sweepDepth <= 0) return false;
+            afterSweep.Add(a);
+            return true;
         }
 
         // ---- targeting and room lists -------------------------------------------------------------------------

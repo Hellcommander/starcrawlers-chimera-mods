@@ -303,6 +303,12 @@ namespace SCClassLoader
         public string fallAs;
         /// <summary>springTraps: only traps this close to you (0 = all of them on the floor).</summary>
         public float near;
+        /// <summary>raiseWall: on the tile this many steps behind the target as you see it, if the way there is open (something for a throw to hit).</summary>
+        public int behind;
+        /// <summary>raiseWall: the class whose folder holds "model", for a synergy borrowing another class's wall.</summary>
+        public string modelFrom;
+        /// <summary>An action a rune or rewrite adds: run before the skill's own instead of after them.</summary>
+        public bool first;
         /// <summary>summon: shown name of each summon (instead of the creature's own).</summary>
         public string summonName;
         /// <summary>summon: the summon stays on the tile it appears on (it still attacks what comes within reach).</summary>
@@ -339,6 +345,8 @@ namespace SCClassLoader
         public bool sight;
         public string pulseVfx;
         public bool onEnter = true;
+        /// <summary>Fields: covers the casting skill's cone or line out to "radius", not a circle around the aim.</summary>
+        public bool overShape;
         /// <summary>field: tiles between copies of its look or model (default 1.9; 1 = one on every tile, a palisade of spikes).</summary>
         public float spacing;
         /// <summary>trap: your turns before it is live (0 = at once).</summary>
@@ -360,6 +368,10 @@ namespace SCClassLoader
         /// <summary>wildCast: "spells" (default: other classes' skills, some of them wild spells), "wild" (only wild spells),
         /// "bosses" (only boss echoes), "monsters" (the mod monsters' attacks) or "all"".</summary>
         public string pool;
+        /// <summary>cast: the skill it fires for free, by name ("Comet Charge"); your own class's skills are looked up first.</summary>
+        public string skill;
+        /// <summary>order: which of your summons act ("self" = made by this skill, "any", "group:X" or a creature name; default any).</summary>
+        public string pets;
         /// <summary>summon: a coin toss decides whose side it arrives on. Against you it gives no xp and goes when its turns end.</summary>
         public bool anySide;
         /// <summary>surge: what it is called in the log ("Thundercrunch, Doctor Cerberus's").</summary>
@@ -560,6 +572,9 @@ namespace SCClassLoader
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;
+        /// <summary>Stats worth a share of another stat of whoever applied it, per stack, kept current each turn:
+        /// [{ "stat": "Armor", "from": "Toughness", "per": 2 }] (one Armor per 2 Toughness). See StatFromSpec.</summary>
+        public List<StatFromSpec> statsFrom;
         /// <summary>The bearer can't move while it lasts, like a vanilla root (flying and root-immune bearers shrug it off).</summary>
         public bool root;
         /// <summary>% chance a projectile or energy attack on the bearer is turned back at its attacker (see Reflect).</summary>
@@ -596,6 +611,10 @@ namespace SCClassLoader
         public List<ThresholdSpec> thresholds = new List<ThresholdSpec>();
         /// <summary>Run when the effect is first applied (stance transitions).</summary>
         public List<ActionSpec> onApplyActions = new List<ActionSpec>();
+        /// <summary>Run at each turn's end while it holds, as whoever applied it (a virus working inside a target, a drain
+        /// feeding its caster): "to": "self" is the applier, the rest lands on the bearer, or around it with tickRadius.</summary>
+        public List<ActionSpec> tickActions = new List<ActionSpec>();
+        public float tickRadius;
         /// <summary>Run when the duration runs out naturally (delayed detonations). Not on burst or purge.</summary>
         public List<ActionSpec> onExpireActions = new List<ActionSpec>();
         public float onExpireRadius;

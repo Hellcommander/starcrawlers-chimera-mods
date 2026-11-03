@@ -47,7 +47,7 @@ namespace SCClassLoader
             SwapCost = cfg.Bind("Retraining", "SwapCost", 200, "User Score swapping a whole class costs.");
             CreditsPerLevel = cfg.Bind("Retraining", "CreditsPerLevel", 100, "Credits a retrain costs on top of the User Score, per character level.");
             SwapCreditsPerLevel = cfg.Bind("Retraining", "SwapCreditsPerLevel", 300, "Credits a class swap costs on top of the User Score, per character level.");
-            KeptClasses = cfg.Bind("Retraining", "KeptClasses", $"SKILLTREE_Modder,SKILLTREE_Gadgeteer,{Conjoined.ClassId}", "Class ids that can't be swapped out, because what they do outlives them. Comma separated.");
+            KeptClasses = cfg.Bind("Retraining", "KeptClasses", "SKILLTREE_Modder,SKILLTREE_Gadgeteer,MOD_Conjoined", "Class ids that can't be swapped out, because what they do outlives them. Comma separated. Classes with a \"bodies\" block are always kept.");
         }
 
         internal static int Cost => BaseCost.Value;
@@ -72,7 +72,8 @@ namespace SCClassLoader
         private static bool Ctrl => TestCtrl || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
         internal static bool Kept(Skill_Tree t) =>
-            KeptClasses.Value.Split(',').Any(x => x.Trim().Equals(t.internalName, StringComparison.OrdinalIgnoreCase));
+            Conjoined.IsBodiesClass(t.internalName)
+            || KeptClasses.Value.Split(',').Any(x => x.Trim().Equals(t.internalName, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>Why this can't be paid for right now; null when it can.</summary>
         private static string Blocked(int cost = -1, int credits = -1)

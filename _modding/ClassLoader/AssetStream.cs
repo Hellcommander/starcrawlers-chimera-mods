@@ -31,7 +31,7 @@ namespace SCClassLoader
         private const float SweepSeconds = 20f;
         private const int ScanSliceMs = 1, UnloadSliceMs = 1;
 
-        internal static bool On => TestOn || (EventBus.On && Enabled != null && Enabled.Value);
+        internal static bool On => TestOn || (Enabled != null && Enabled.Value);
         /// <summary>Self-tests: on, and nothing held back, without touching the player's settings.</summary>
         internal static bool TestOn;
 
@@ -73,6 +73,7 @@ namespace SCClassLoader
         private static readonly List<int> slots = new List<int>();
         private static Renderer[] scanning;
         private static int scanAt;
+        private static volatile Plan answer;
         private static int[] dropping;
         private static int dropAt;
         private static long dropBytes;
@@ -80,7 +81,7 @@ namespace SCClassLoader
         internal static void Init(ConfigFile cfg)
         {
             Enabled = cfg.Bind("Performance", "AssetStreaming", false,
-                "Needs EventBus on. Textures no floor or effect in use needs leave video memory, and Unity reads them back from disk when something draws them. Saves gigabytes of video memory; the first sight of something not seen for a while can cost a short pause. UI art is never unloaded.");
+                "Textures no floor or effect in use needs leave video memory, and Unity reads them back from disk when something draws them. Saves gigabytes of video memory; the first sight of something not seen for a while can cost a short pause. UI art is never unloaded.");
             KeepUnusedSeconds = cfg.Bind("Performance", "AssetStreamingKeepSeconds", 120,
                 "Needs AssetStreaming on. A texture stays this long after its last use, so the effects of a fight don't load again each time they come back.");
             SkipSmallerThanKB = cfg.Bind("Performance", "AssetStreamingSkipSmallerThanKB", 512,
@@ -129,6 +130,10 @@ namespace SCClassLoader
                         break;
                     case Stage.Watch:
                         if (Walk()) stage = Stage.Idle;
+                        break;
+                    case Stage.Deciding:
+                        Plan p = answer;
+                        if (p != null) { answer = null; Decided(p); }
                         break;
                     case Stage.Unload:
                         Unload();
@@ -317,7 +322,9 @@ namespace SCClassLoader
             string[] never = NeverUnload.Value.Split(',').Select(s => s.Trim().ToLowerInvariant()).Where(s => s.Length > 0).ToArray();
             LastLive = live.Count;
             stage = Stage.Deciding;
-            if (!BusWorkers.Run(() => Decide(entries, now, hold, least, never), Decided)) stage = Stage.Idle;
+            // the workers need no EventBus setting, and its pump only runs with it on, so the answer is collected in Tick
+            answer = null;
+            if (!BusWorkers.Run(() => answer = Decide(entries, now, hold, least, never))) stage = Stage.Idle;
         }
 
         /// <summary>A worker. Biggest first, so a sweep cut short has already saved the most.</summary>
@@ -339,10 +346,9 @@ namespace SCClassLoader
             return new Plan { drop = drop.Select(e => e.id).ToArray(), bytes = drop.Sum(e => e.bytes), waiting = waiting, ms = clock.Elapsed.TotalMilliseconds };
         }
 
-        /// <summary>Back on the main thread, from the bus's budget.</summary>
+        /// <summary>Back on the main thread.</summary>
         private static void Decided(Plan p)
         {
-            if (stage != Stage.Deciding) return;   // a load came first
             dropping = p.drop;
             dropAt = 0;
             dropBytes = p.bytes;

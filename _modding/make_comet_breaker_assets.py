@@ -1,11 +1,11 @@
-"""Perihelion's own art (Mods/Perihelion), through the AAMT toolkit stages (D:\\games\\Ai assisted toolkit), the way
+"""Comet Breaker's own art (Mods/CometBreaker), through the AAMT toolkit stages (D:\\games\\Ai assisted toolkit), the way
 make_shadow_magus_assets.py does it:
-  particles - SD3.5 key + Wan2.2 clip cut into a flipbook, or SD sprites             -> Perihelion/fx/<name>.png
+  particles - SD3.5 key + Wan2.2 clip cut into a flipbook, or SD sprites             -> CometBreaker/fx/<name>.png
   mesh      - SD3.5 concept on white, then TRELLIS and mesh_edit's repair            -> _modding/item_art/mesh/<slug>.glb
-  props     - the nucleus that Ephemeris drops, repaired and slimmed                 -> Perihelion/models/ph_nucleus.glb
-  animate   - UniRig + Wan2.2 + CoTracker3 clips for the body inside the comet       -> Perihelion/models/ph_comet_body.glb
+  props     - the nucleus that Ephemeris drops, repaired and slimmed                 -> CometBreaker/models/ph_nucleus.glb
+  animate   - UniRig + Wan2.2 + CoTracker3 clips for the body inside the comet       -> CometBreaker/models/ph_comet_body.glb
 Every stage skips work already on disk, so a stopped run picks up where it left off.
-Usage: python make_perihelion_assets.py [--stage particles,mesh,props,animate|all] [--only name,name] [--redo]"""
+Usage: python make_comet_breaker_assets.py [--stage particles,mesh,props,animate|all] [--only name,name] [--redo]"""
 import argparse, shutil, sys, time
 from pathlib import Path
 
@@ -15,7 +15,7 @@ import make_interloper_assets as mi
 import make_item_assets as mia
 
 MODS = HERE.parent / "Mods"
-PH = "Perihelion"
+PH = "CometBreaker"
 
 # make_particles recipes; white-tinted sheets take each particle's colour in particles.json
 PARTICLES = [

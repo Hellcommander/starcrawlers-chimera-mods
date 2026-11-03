@@ -188,6 +188,7 @@ namespace SCClassLoader
                 foreach (Effect other in target.effects.GetEffects().ToList())
                     if (other != this && other is ModEffect m && m.rt != null && m.rt.spec.group == rt.spec.group) other.RemoveInstant();
             RunGroup(rt.spec.onApplyActions, 0f, null, null, null, ctx);
+            RefreshShares();
             if (target == Player.instance) DashCam.Showcase(rt.spec.thirdPerson);
             else StartAura();
         }
@@ -268,17 +269,55 @@ namespace SCClassLoader
         {
             EffectSpec s = rt.spec;
             int k = MaxStacks > 1 ? Stacks : 1;
-            if ((s.stats?.Count ?? 0) + (s.resists?.Count ?? 0) + attributeMods.Count + resistanceMods.Count > 0)
+            if ((s.stats?.Count ?? 0) + (s.resists?.Count ?? 0) + (s.statsFrom?.Count ?? 0) + attributeMods.Count + resistanceMods.Count > 0)
             {
+                var old = attributeMods;
                 attributeMods = (s.stats ?? new Dictionary<string, int>())
                     .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
                     .Where(x => x != null).ToList();
+                attributeMods.AddRange(StatsFromShare(s, k, old));
                 resistanceMods = (s.resists ?? new Dictionary<string, int>())
                     .Select(kv => Enum.TryParse(kv.Key, true, out DAMAGE_TYPE t) ? new DmgObj(t, kv.Value * k) : null)
                     .Where(x => x != null).ToList();
             }
             if (target != null && !target.GetIsDead() && !BuffLane.MovesNothing(this)) target.CalculateStats();
             if (target == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+        }
+
+        /// <summary>
+        /// "statsFrom" on an effect: stats worth a share of another stat of whoever applied it (the bearer for a buff on
+        /// yourself), per stack. What this effect itself already adds is left out, so a stat can't feed on itself.
+        /// </summary>
+        private List<StatObj> StatsFromShare(EffectSpec s, int k, List<StatObj> mine)
+        {
+            var add = new List<StatObj>();
+            Character from = caster != null && !caster.GetIsDead() ? caster : target;
+            if (s.statsFrom == null || from == null) return add;
+            foreach (StatFromSpec f in s.statsFrom)
+            {
+                if (f?.from == null || !Enum.TryParse(f.stat, true, out STAT_TYPE to)) continue;
+                int total = 0;
+                foreach (string name in f.from.Split('+'))
+                    if (Enum.TryParse(name.Trim(), true, out STAT_TYPE st))
+                        total += from.GetStat(st) - (from == target ? (mine ?? new List<StatObj>()).Where(x => x != null && x.statType == st).Sum(x => x.amount) : 0);
+                int amount = Math.Max(0, total) / Math.Max(1, f.per) * k;
+                if (amount != 0) add.Add(new StatObj(to, amount));
+            }
+            return add;
+        }
+
+        /// <summary>Re-reads statsFrom shares (the source's stats move with gear and other effects).</summary>
+        private void RefreshShares()
+        {
+            if (rt?.spec.statsFrom == null || rt.spec.statsFrom.Count == 0 || target == null || target.GetIsDead()) return;
+            int k = MaxStacks > 1 ? Stacks : 1;
+            var fresh = (rt.spec.stats ?? new Dictionary<string, int>())
+                .Select(kv => Enum.TryParse(kv.Key, true, out STAT_TYPE t) ? new StatObj(t, kv.Value * k) : null)
+                .Where(x => x != null).ToList();
+            fresh.AddRange(StatsFromShare(rt.spec, k, attributeMods));
+            if (fresh.Count == attributeMods.Count && fresh.Zip(attributeMods, (a, b) => a.statType == b.statType && a.amount == b.amount).All(x => x)) return;
+            attributeMods = fresh;
+            target.CalculateStats();
         }
 
         private void Burst(ActionContext ctx)
@@ -424,6 +463,10 @@ namespace SCClassLoader
                 }
                 if (s.hot > 0 && target != null && !target.GetIsDead()) target.Heal(s.hot + HotBonus(s), false);
                 if (s.staminaPerTurn != 0 && target != null) target.ModStamina(s.staminaPerTurn);
+                RefreshShares();
+                // stacks scale it through the actions' own bonusPerStack + stacksOf
+                if ((s.tickActions?.Count ?? 0) > 0 && target != null && !target.GetIsDead())
+                    RunGroup(s.tickActions, s.tickRadius, null, null, null, null);
             }
             base.TurnOver_Instant();
         }
@@ -515,6 +558,7 @@ namespace SCClassLoader
             foreach (ThresholdSpec th in s.thresholds ?? new List<ThresholdSpec>())
                 lines.Add($"<b>At {th.at} stacks:</b>\n" + Actions.Describe(th.actions, rt.classId, th.radius > 0 ? $"enemies within {th.radius:0.#}" : "the bearer"));
             if ((s.onApplyActions?.Count ?? 0) > 0) lines.Add("<b>When applied:</b>\n" + Actions.Describe(s.onApplyActions, rt.classId, "the bearer"));
+            if ((s.tickActions?.Count ?? 0) > 0) lines.Add("<b>Each turn:</b>\n" + Actions.Describe(s.tickActions, rt.classId, s.tickRadius > 0 ? $"enemies within {s.tickRadius:0.#}" : "the bearer"));
             if ((s.onDeathActions?.Count ?? 0) > 0) lines.Add("<b>If the bearer dies with it:</b>\n" + Actions.Describe(s.onDeathActions, rt.classId, "beside the bearer"));
             if ((s.onExpireActions?.Count ?? 0) > 0) lines.Add("<b>When it runs out:</b>\n" + Actions.Describe(s.onExpireActions, rt.classId, s.onExpireRadius > 0 ? $"enemies within {s.onExpireRadius:0.#}" : "the bearer"));
             if (s.invulnerable) lines.Add("<b>Can't lose health</b>");

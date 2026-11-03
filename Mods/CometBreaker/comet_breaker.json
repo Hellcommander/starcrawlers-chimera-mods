@@ -1,9 +1,9 @@
 {
-  "id": "MOD_Perihelion",
-  "name": "Perihelion",
-  "description": "Crawlers who hold a comet's path in their heads and their muscles, and take it when they need to be elsewhere. The point of an orbit where a comet burns brightest is the point where it strikes.\n\nComet Charge carries you across a room faster than anything can answer: you can't lose health until your next turn, and everything around your landing flies back. What hits a wall takes more damage, is stunned and can't use its specials for a turn after it recovers. Split Nucleus sheds fragments of you that wear your gear and use your skills at reduced strength. Damage scales with [STR] and [PSI].\n\nRequires the immortal fix: PlayerImmortalTag under [Fixes] in the Breachwork Loader config, on by default.",
+  "id": "MOD_CometBreaker",
+  "name": "Comet Breaker",
+  "description": "Crawlers who hold a comet's path in their heads and their muscles, and take it when they need to be elsewhere. A comet burns brightest where it passes closest, and that is where these ones strike.\n\nComet Charge carries you across a room faster than anything can answer: you can't lose health until your next turn, and everything around your landing flies back. What hits a wall takes more damage, is stunned and can't use its specials for a turn after it recovers. Split Nucleus sheds fragments of you that wear your gear and use your skills at reduced strength. Damage scales with [STR] and [PSI].\n\nRequires the immortal fix: PlayerImmortalTag under [Fixes] in the Breachwork Loader config, on by default.",
   "archetype": "Muscle",
-  "icon": "icons/perihelion.png",
+  "icon": "icons/comet_breaker.png",
   "iconFrom": "SKILLTREE_ForcePsyker",
   "attributePriorities": {
     "Strength": 4,

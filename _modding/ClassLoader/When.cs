@@ -49,6 +49,8 @@ namespace SCClassLoader
         /// <summary>The skill being used: vanilla, mod, item, attack, self, aimed, melee, cooldown, instant or its name.
         /// "a|b" = either, "a+b" = both, "!a" = not.</summary>
         public string cast;
+        /// <summary>true = a skill of yours is going off right now, false = not (a trap or a damage tick between casts).</summary>
+        public bool? casting;
         /// <summary>Gear equipped by whoever is checked (default you): "melee", "ranged|shield", "!heavy" (see Equipped).</summary>
         public string equipped;
         /// <summary>true = only once this skill's perk is bought, false = only before (a perk that changes what the skill does).</summary>
@@ -119,6 +121,7 @@ namespace SCClassLoader
             if (w.inCombat.HasValue && InCombat() != w.inCombat.Value) return false;
             if (w.inSide.HasValue && SideAreas.InSide != w.inSide.Value) return false;
             if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
+            if (w.casting.HasValue && CastRules.InCast != w.casting.Value) return false;
             if (!string.IsNullOrEmpty(w.equipped) && !Equipped.Check(w.equipped, Who(w.of, ctx, target, "self"))) return false;
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
@@ -371,6 +374,10 @@ namespace SCClassLoader
                 }
                 return (t.StartsWith("!") ? "non-" : "") + word;
             })) + " skill"));
+
+        internal static string ValueText(string v, string classId) => ValueName(v, classId);
+
+        internal static bool IsGlobalValue(string v) => IsGlobal(v);
 
         private static bool IsGlobal(string v)
         {

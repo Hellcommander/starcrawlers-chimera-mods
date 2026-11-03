@@ -2,7 +2,7 @@
   "id": "LookingGlass",
   "name": "Looking-Glass Rogue",
   "author": "Arendeth",
-  "version": "1.46.0",
+  "version": "2.0.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "A chaotic, fast duelist from the wrong side of the mirror: changes size mid-fight, fields playing-card guards, throws tea parties nobody survives, and has heads taken off.",
   "requires": ["Library"]

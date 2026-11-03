@@ -291,10 +291,13 @@ namespace SCClassLoader
         private static void DressWeapon(Component c, Item it, ItemDef def, List<Renderer> own)
         {
             Renderer main = own.OrderByDescending(r => r.bounds.size.magnitude).FirstOrDefault();
-            Transform hand = main != null ? main.transform : Bone(c, "RightHand");
+            // A body whose own weapon rides on its back (the Cyberninja's katana) still holds yours in its right hand.
+            Transform rightHand = Bone(c, "RightHand"), leftHand = Bone(c, "LeftHand");
+            if (main != null && !new[] { rightHand, leftHand }.Any(h => h != null && main.transform.IsChildOf(h)) && rightHand != null) main = null;
+            Transform hand = main != null ? main.transform : rightHand;
             if (hand == null) return;
             GameObject src = def?.wear != null ? null : it.worldObject;
-            GameObject pivot = def?.wear != null ? ModelAssets.Spawn(def.wear, def.pack.folder, hand.position, hand) : Copy(src, hand.parent ?? hand);
+            GameObject pivot = def?.wear != null ? ModelAssets.Spawn(def.wear, def.pack.folder, hand.position, hand) : Copy(src, main != null ? hand.parent ?? hand : hand);
             if (pivot == null) return;
             if (pivot.GetComponent<WearMark>() == null) pivot.AddComponent<WearMark>();
             foreach (Renderer r in own) r.enabled = false;
@@ -308,21 +311,28 @@ namespace SCClassLoader
             foreach (Transform part in pivot.transform.Cast<Transform>().Where(t => t != holder).ToList()) part.SetParent(holder, true);
             Bounds lb = LocalBounds(pivot);
             float[] ext = { lb.size.x, lb.size.y, lb.size.z };
-            int longI = new[] { 0, 1, 2 }.OrderBy(i => ext[i]).Last();
+            var bySize = new[] { 0, 1, 2 }.OrderBy(i => ext[i]).ToArray();
+            int longI = bySize[2];
+            // A chunky model (a creature gun like the Cinderbloom Podling) has no long side to go by: the game's own
+            // weapon models face +Z with +Y up (that's how the player holds them), so it points where the body faces.
+            bool chunky = ext[longI] < 1.4f * ext[bySize[1]];
             // the old weapon's length and long axis
             Bounds ob = main != null ? main.bounds : new Bounds(hand.position, Vector3.one * 0.8f);
-            Vector3 oldLong = main is SkinnedMeshRenderer || main is MeshRenderer ? LongAxisWorld(main) : hand.forward;
+            Vector3 oldLong = main is SkinnedMeshRenderer || main is MeshRenderer ? LongAxisWorld(main) : c.transform.forward;
             float oldLen = Mathf.Max(ob.size.x, Mathf.Max(ob.size.y, ob.size.z));
             holder.localPosition = -lb.center;
-            pivot.transform.rotation = Quaternion.FromToRotation(Axis(longI), oldLong);
+            pivot.transform.rotation = chunky ? Quaternion.LookRotation(c.transform.forward, c.transform.up) : Quaternion.FromToRotation(Axis(longI), oldLong);
             // sized by the kind of weapon, not the body's old one (a pistol stays a pistol)
             float height = BodyHeight(c);
             var wt = (it as Item_Weapon)?.weaponType ?? WEAPON_TYPE.Ranged;
             float len = height * (wt == WEAPON_TYPE.Ranged ? 0.16f : wt == WEAPON_TYPE.HeavyRanged ? 0.48f : wt == WEAPON_TYPE.Melee ? 0.42f : wt == WEAPON_TYPE.HeavyMelee ? 0.55f : 0.25f);
+            // a chunky one's longest side is its bulk, not its reach: as long, it would read smaller than a pistol
+            if (chunky) len *= 1.5f;
             float k = len / Mathf.Max(1e-4f, ext[longI]);
             Vector3 ls = pivot.transform.parent.lossyScale;
             pivot.transform.localScale = new Vector3(k / NZ(ls.x), k / NZ(ls.y), k / NZ(ls.z));
-            pivot.transform.position = main != null ? main.bounds.center : hand.position;
+            // in a bare hand, the grip sits in the fist and the rest reaches forward
+            pivot.transform.position = main != null ? main.bounds.center : hand.position + c.transform.forward * (len * 0.3f);
         }
 
         private static Vector3 LongAxisWorld(Renderer r)

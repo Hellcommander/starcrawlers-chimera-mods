@@ -501,9 +501,14 @@ namespace SCClassLoader
                     }
                 }
             }
+            int lead = 0;
             foreach (RuneSpec r in t.parts)
             {
-                foreach (ActionSpec a in Clone(r.actions)) acts.Add(a);
+                foreach (ActionSpec a in Clone(r.actions))
+                {
+                    if (a.first) acts.Insert(lead++, a);
+                    else acts.Add(a);
+                }
                 foreach (ActionSpec a in Clone(r.selfActions)) { a.to = "self"; acts.Add(a); }
             }
             if (t.instability > 0 && !string.IsNullOrEmpty(s.runeMeter))

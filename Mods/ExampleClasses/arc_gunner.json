@@ -1,7 +1,7 @@
 {
   "id": "MOD_ArcGunner",
   "name": "Arc Gunner",
-  "description": "Pistols in one hand, lightning in the other. Gun hits charge a static capacitor; Shocked enemies conduct forked discharges between each other, and Thunder Slug dumps the whole capacitor into one target.\n\nExample class: built on the shared library (#Shocked, 'Shot' and 'Bolt' templates). Favors [SMT] and [REC].",
+  "description": "Pistols in one hand, lightning in the other. Gun hits charge a static capacitor; Shocked enemies conduct forked discharges between each other, and Thunder Slug dumps the whole capacitor into one target. Every jump of your lightning charges the grip, and Live Wire turns each shot into another jump.\n\nExample class: built on the shared library (#Shocked, 'Shot' and 'Bolt' templates). Favors [SMT] and [REC].",
   "archetype": "Intellect",
   "icon": "arc_gunner.png",
   "attributePriorities": {
@@ -18,6 +18,30 @@
       "stats": {
         "Crit": 2
       }
+    },
+    {
+      "id": "LiveWire",
+      "name": "Live Wire",
+      "description": "The gun is wired straight into you. Your hits jump to the next Shocked enemy in reach.",
+      "duration": 5,
+      "procs": [
+        {
+          "on": "hit",
+          "when": { "casting": true },
+          "maxPerTurn": 1,
+          "actions": [
+            {
+              "do": "chain",
+              "jumps": 1,
+              "radius": 3.5,
+              "effect": "#Shocked",
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3 }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "tiers": [
@@ -174,6 +198,97 @@
           "description": "The round grounds through everything already carrying current.",
           "addActions": [
             { "do": "chain", "ifTargetHas": "#Shocked", "jumps": 2, "radius": 3.5, "effect": "#Shocked", "actions": [ { "do": "stun", "turns": 1 } ] }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Ground Line",
+        "icon": "SKILLTREE_Elementalist/1",
+        "description": "Each jump of your lightning runs back down the line and into the grip.",
+        "procs": [
+          {
+            "on": "chain",
+            "maxPerTurn": 2,
+            "actions": [
+              { "do": "effect", "to": "self", "effect": "@Static" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Lightning Rod",
+        "icon": "SKILLTREE_Elementalist/3",
+        "range": 6,
+        "radius": 0,
+        "cooldown": 8,
+        "staminaCost": 14,
+        "description": "Plant a charged rod in the deck. The first two enemies to walk up to it take what it holds.",
+        "actions": [
+          {
+            "do": "trap",
+            "fieldName": "Lightning Rod",
+            "affects": "enemies",
+            "triggerRadius": 1.5,
+            "radius": 1.5,
+            "charges": 2,
+            "maxTraps": 1,
+            "look": "HAZARD_Energy@0.5",
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact",
+            "sound": "sfx/arcgunner_slug.wav",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "effect", "effect": "#Shocked" }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Earthed Rod",
+          "description": "The rod is wired to your grip, so what it discharges comes back to you.",
+          "addProcs": [
+            {
+              "on": "trap",
+              "match": "Lightning Rod",
+              "actions": [
+                { "do": "effect", "to": "self", "effect": "@Static", "stacks": 2 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Live Wire",
+        "icon": "SKILLTREE_Elementalist/5",
+        "cooldown": 16,
+        "staminaCost": 20,
+        "description": "Bypass the safety and wire the gun into yourself. For five turns, your hits jump to the next Shocked enemy in reach.",
+        "castVfx": "PA_Engineer_Boltron.PS_shock",
+        "actions": [
+          { "do": "effect", "to": "self", "effect": "@LiveWire" }
+        ],
+        "perk": {
+          "name": "Closed Circuit",
+          "description": "Throwing the switch fills the grip at once.",
+          "addActions": [
+            { "do": "effect", "to": "self", "effect": "@Static", "stacks": 3 }
           ]
         }
       }

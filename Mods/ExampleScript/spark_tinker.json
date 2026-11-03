@@ -1,7 +1,7 @@
 {
   "id": "MOD_SparkTinker",
   "name": "Spark Tinker",
-  "description": "Builds a charge with every lash, and lets it all go at once. Everything that falls is scrap, and scrap sells.\n\nExample class: its verbs, conditions and numbers come from a Lua script (see Mods/ExampleScript/scripts). Favors [SMT] and [AGI].",
+  "description": "Builds a charge with every lash, and lets it all go at once. Everything that falls is scrap, and scrap sells. Coils lash whoever walks past, and what you don't let go you can bank in a shield or send through one target and out the other side.\n\nExample class: its verbs, conditions and numbers come from a Lua script (see Mods/ExampleScript/scripts). Favors [SMT] and [AGI].",
   "archetype": "Guile",
   "iconFrom": "SKILLTREE_Engineer/3",
   "attributePriorities": {
@@ -94,6 +94,114 @@
             "when": { "value": "ExampleScript:salvaged", "atLeast": 3 },
             "actions": [
               { "do": "effect", "to": "self", "effect": "@Scrapper" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Trip Coil",
+        "range": 6,
+        "radius": 0,
+        "cooldown": 6,
+        "staminaCost": 12,
+        "description": "Leave a live coil on the deck. It lashes the first enemy to walk up to it and anyone beside them, and the lash builds you a charge like any other.",
+        "actions": [
+          {
+            "do": "trap",
+            "fieldName": "Trip Coil",
+            "affects": "enemies",
+            "triggerRadius": 1.5,
+            "radius": 1.5,
+            "charges": 1,
+            "maxTraps": 2,
+            "look": "HAZARD_Energy@0.5",
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact",
+            "actions": [
+              { "do": "ExampleScript:arc", "amount": 3, "perRank": 1, "scale": "Smarts", "scaleMult": 0.3, "reach": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Ground Out",
+        "cooldown": 8,
+        "staminaCost": 6,
+        "description": "Bleed your charges into a field around you before they go off on their own. The more you hold, the thicker it is.",
+        "usableWhen": { "value": "counter:charge", "of": "self", "atLeast": 1 },
+        "actions": [
+          { "do": "shield", "amount": 3, "bonusPerStack": 4, "stacksOf": "counter:charge", "stacksFrom": "self", "consumeStacks": true }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Scrap Shot",
+        "cooldown": 3,
+        "staminaCost": 10,
+        "description": "Load the rail with whatever you picked up. Once you've salvaged ten pieces, you know which ones fly true.",
+        "impactVfx": "PA_Smuggler_Fistful.PS_impact",
+        "actions": [
+          { "do": "damage", "type": "Ballistic", "min": 4, "max": 7, "perRank": 1, "scale": "Smarts", "scaleMult": 0.4 },
+          { "do": "damage", "type": "Ballistic", "min": 3, "max": 5, "when": { "value": "ExampleScript:salvaged", "atLeast": 10 } },
+          { "do": "knockback", "amount": 1 }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Dead Cells",
+        "description": "Whatever falls still holds a little charge, and you know where to pull it from.",
+        "procs": [
+          {
+            "on": "kill",
+            "actions": [
+              { "do": "counter", "to": "self", "counter": "charge", "amount": 1, "counterMax": 3 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Agility": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Short Circuit",
+        "cooldown": 12,
+        "staminaCost": 20,
+        "description": "Needs two charges. Everything you hold goes through one target and locks it up, then what's left runs on to the next three.",
+        "usableWhen": { "value": "counter:charge", "of": "self", "atLeast": 2 },
+        "actions": [
+          { "do": "damage", "type": "Shock", "min": 4, "max": 7, "perRank": 2, "scale": "Smarts", "scaleMult": 0.4, "bonusPerStack": 4, "stacksOf": "counter:charge", "stacksFrom": "self", "consumeStacks": true },
+          { "do": "stun", "turns": 1 },
+          {
+            "do": "chain",
+            "jumps": 3,
+            "radius": 3.5,
+            "actions": [
+              { "do": "damage", "type": "Shock", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3 }
             ]
           }
         ]

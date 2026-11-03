@@ -138,6 +138,7 @@ namespace SCClassLoader
                     def.pack = pack;
                     if (!string.IsNullOrEmpty(def.id)) folders[def.id] = def.folder;
                     if (!string.IsNullOrEmpty(def.id)) { if (def.ignoresAllies) IgnoresAllies.Add(def.id); else IgnoresAllies.Remove(def.id); }
+                    if (!string.IsNullOrEmpty(def.id)) { if (def.bodies != null) BodyClasses[def.id] = def.bodies; else BodyClasses.Remove(def.id); }
                     ModelAssets.RegisterAll(obj, def.folder);
                     Alchemy.Register(def);
                     defs.Add(def);
@@ -197,6 +198,9 @@ namespace SCClassLoader
 
         /// <summary>Classes whose hostile actions never land on your own side (ClassDef.ignoresAllies).</summary>
         internal static readonly HashSet<string> IgnoresAllies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>Several-bodies classes (ClassDef.bodies), by class id.</summary>
+        internal static readonly Dictionary<string, BodiesSpec> BodyClasses = new Dictionary<string, BodiesSpec>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>The folder a class id lives in; a mod id (mod.json "id") answers with that mod's folder, so a creature's
         /// skill sounds resolve against the mod that wrote the creature.</summary>
@@ -491,7 +495,7 @@ namespace SCClassLoader
                 }
                 foreach (ActionSpec a in (es.burstActions ?? new List<ActionSpec>()).Concat(es.onApplyActions ?? new List<ActionSpec>())
                     .Concat(es.onExpireActions ?? new List<ActionSpec>()).Concat(es.onSaveActions ?? new List<ActionSpec>())
-                    .Concat(es.onDeathActions ?? new List<ActionSpec>())
+                    .Concat(es.onDeathActions ?? new List<ActionSpec>()).Concat(es.tickActions ?? new List<ActionSpec>())
                     .Concat((es.thresholds ?? new List<ThresholdSpec>()).SelectMany(th => th.actions ?? new List<ActionSpec>())))
                     a.@do = (a.@do ?? "").ToLowerInvariant();
                 SkillMods.Normalize(es.modifies, def.id);

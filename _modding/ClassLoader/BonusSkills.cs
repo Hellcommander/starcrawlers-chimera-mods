@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,8 @@ namespace SCClassLoader
     /// Bonus skills that ride on another skill instead of taking a hotbar slot: a granted skill with "attachTo" (a
     /// synergy's grant) is reached by a quick right-click on its parent's hotbar icon, which opens a small menu at the
     /// cursor; clicking an entry selects it exactly like a hotbar click. If the parent isn't on the hotbar at all, the
-    /// bonus skill goes on the hotbar itself so it is never out of reach.
+    /// bonus skill goes on the hotbar itself so it is never out of reach. A right-click on a class's icon on the skills
+    /// screen opens the same menu with every skill your synergies give that class.
     /// </summary>
     internal static class BonusSkills
     {
@@ -87,9 +89,30 @@ namespace SCClassLoader
             var list = For(parent);
             if (list.Count == 0) return false;
             if (popup == null && !Make()) return false;
-            popup.Show(parent, list, at);
+            popup.Show($"{parent.GetDisplayName()}: bonus skills", list, at, false);
             AudioManager.PlayEvent("event:/UI/UI_Click");
             return true;
+        }
+
+        /// <summary>Opens the menu for a class on the skills screen; one with no synergy skills yet says so.</summary>
+        internal static bool OpenClass(Skill_Tree tree, Vector2 at)
+        {
+            if (popup == null && !Make()) return false;
+            popup.Show($"{tree.displayName}: synergy skills", Synergies.GrantedTo(tree), at, true);
+            AudioManager.PlayEvent("event:/UI/UI_Click");
+            return true;
+        }
+
+        // the class icon has no right-click of its own; on a skill's icon the right-click stays the perk
+        [HarmonyPatch(typeof(SkillSelect), nameof(SkillSelect.OnPointerClick))]
+        private static class ClassIconClick
+        {
+            private static void Postfix(SkillSelect __instance, PointerEventData eventData)
+            {
+                if (eventData == null || eventData.button != PointerEventData.InputButton.Right || Game.RESOLVING) return;
+                if (__instance.skillTree == null || __instance.skillTier != null || __instance.mc != null || Menu_Skills.instance == null) return;
+                if (Menu_Skills.instance.skillTrees.Contains(__instance)) OpenClass(__instance.skillTree, eventData.position);
+            }
         }
 
         /// <summary>A right-click at a screen point, through the same UI raycast a mouse click uses (devtests).</summary>
@@ -98,6 +121,8 @@ namespace SCClassLoader
             Action_Icon icon = IconAt(at);
             return icon != null && Open(icon.ability, at);
         }
+
+        internal static void Close() { if (popup != null) popup.Close(); }
 
         internal static bool IsOpen => popup != null && popup.gameObject.activeSelf;
 
@@ -115,6 +140,8 @@ namespace SCClassLoader
             rt.pivot = new Vector2(0f, 0f);
             popup = rt.gameObject.AddComponent<Popup>();
             popup.font = UiKit.FontFrom(Menu_HUD.instance);
+            rt.gameObject.AddComponent<Canvas>(); // its own layer, so it also sits above the skills screen
+            rt.gameObject.AddComponent<GraphicRaycaster>();
             UiLook.Attach(rt, "BonusSkills");
             return true;
         }
@@ -125,6 +152,7 @@ namespace SCClassLoader
             private const float Width = 250f, Row = 34f, Pad = 6f;
             private readonly List<(ModAbility ab, TextMeshProUGUI label)> rows = new List<(ModAbility, TextMeshProUGUI)>();
             private float nextRefresh;
+            private bool onSkillsScreen;
 
             private Camera Cam
             {
@@ -133,16 +161,24 @@ namespace SCClassLoader
 
             private bool Over(Vector2 screen) => RectTransformUtility.RectangleContainsScreenPoint((RectTransform)transform, screen, Cam);
 
-            internal void Show(Ability parent, List<ModAbility> list, Vector2 at)
+            internal void Show(string title, List<ModAbility> list, Vector2 at, bool skillsScreen)
             {
                 foreach (Transform ch in transform) Destroy(ch.gameObject);
                 rows.Clear();
+                onSkillsScreen = skillsScreen;
                 var rt = (RectTransform)transform;
                 float y = Pad;
                 RectTransform head = UiKit.Rect(rt, "Header", new Vector2(Width - 2f * Pad, 22f));
                 UiKit.At(head, Pad, y);
-                TextMeshProUGUI h = UiKit.Label(head, $"<color=#9FB7C9>{parent.GetDisplayName()}: bonus skills</color>", font, 14f, TextAlignmentOptions.Left);
+                UiKit.Label(head, $"<color=#9FB7C9>{title}</color>", font, 14f, TextAlignmentOptions.Left);
                 y += 24f;
+                if (list.Count == 0)
+                {
+                    RectTransform none = UiKit.Rect(rt, "None", new Vector2(Width - 2f * Pad, 22f));
+                    UiKit.At(none, Pad, y);
+                    UiKit.Label(none, "<color=#8C99A6>none yet</color>", font, 14f, TextAlignmentOptions.Left);
+                    y += 24f;
+                }
                 foreach (ModAbility ab in list)
                 {
                     ModAbility pick = ab;
@@ -178,6 +214,9 @@ namespace SCClassLoader
                 rt.sizeDelta = new Vector2(Width, y + Pad - 2f);
                 gameObject.SetActive(true);
                 transform.SetAsLastSibling();
+                Canvas layer = GetComponent<Canvas>();
+                layer.overrideSorting = true;
+                layer.sortingOrder = 600;
                 Place(rt, at + new Vector2(4f, 8f));
                 Refresh();
             }
@@ -217,6 +256,7 @@ namespace SCClassLoader
             {
                 Close();
                 if (Game.RESOLVING || Game.TARGETING) { AudioManager.PlayEvent("event:/UI/UI_Error"); return; }
+                if (onSkillsScreen) Menu_Skills.instance?.Hide();
                 Player_AbilityControl.instance?.AbilitySelected(null, ab);
             }
 
@@ -229,6 +269,7 @@ namespace SCClassLoader
             private void Update()
             {
                 if (Player.instance == null || Game.Game_isLoading || Player.instance.GetIsDead()) { Close(); return; }
+                if (onSkillsScreen && (Menu_Skills.instance == null || !Menu_Skills.instance.GetIsShowing())) { Close(); return; }
                 if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(2)) && !Over(Input.mousePosition)) { Close(); return; }
                 if (Input.GetKeyDown(KeyCode.Escape)) { Close(); return; }
                 if (Time.unscaledTime < nextRefresh) return;

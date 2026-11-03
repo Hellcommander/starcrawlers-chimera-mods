@@ -111,9 +111,14 @@ namespace SCClassLoader
                     if (hit == null) return true;
                     if (Time.time > burstReset) { burst = 0; burstReset = Time.time + 1f; }
                     if (++burst > MaxBurst) return true;
-                    depth++;
-                    try { React(hit, target, internalName); }
-                    finally { depth--; }
+                    void Go()
+                    {
+                        if (target.GetIsDead()) return;
+                        depth++;
+                        try { React(hit, target, internalName); }
+                        finally { depth--; }
+                    }
+                    if (!TileStackAreas.AfterSweep(Go)) Go();
                     __result = null;
                     return !hit.spec.consume; // a reaction that keeps its reagents lets the new one land too
                 }

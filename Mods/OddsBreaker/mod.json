@@ -2,7 +2,7 @@
   "id": "OddsBreaker",
   "name": "Odds Breaker",
   "author": "Arendeth",
-  "version": "1.46.0",
+  "version": "2.0.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "A gambler class that pays real credits for its tricks: slot-machine shots, all-or-nothing bets and a finisher fed by your winning streak.",
   "requires": ["Library"]

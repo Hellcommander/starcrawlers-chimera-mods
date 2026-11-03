@@ -80,7 +80,7 @@ namespace SCClassLoader
 
         private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
             { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain" };
-        private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb" };
+        private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb", "block" };
         private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
 
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
@@ -256,6 +256,19 @@ namespace SCClassLoader
     internal static class Patch_ProcAbsorb
     {
         private static void Postfix() => Patch_ProcHurt.Absorbed = true;
+    }
+
+    /// <summary>"block": the bearer's Block roll stopped part of a hit (Brace, Reverb, a counter off a parry).</summary>
+    [HarmonyPatch(typeof(Character_Effect_Control), nameof(Character_Effect_Control.OnBlock))]
+    internal static class Patch_ProcBlock
+    {
+        private static void Postfix(Character_Effect_Control __instance, Character attacker)
+        {
+            Character me = __instance.character;
+            if (me == null || attacker == null || attacker == me || me.GetIsDead()) return;
+            if (me == Player.instance) ProcHub.Fire("block", attacker);
+            else if (me.ai != null && me.ai.GetTeam() == AI.AI_TEAM.Player) ProcHub.FireOn(me, "block", attacker);
+        }
     }
 
     [HarmonyPatch(typeof(Player), nameof(Player.OnDodge))]

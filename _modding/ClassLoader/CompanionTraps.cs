@@ -10,8 +10,8 @@ namespace SCClassLoader
 {
     /// <summary>
     /// Your allies set off traps (only hostile and passive creatures are spared), and walked straight onto them. Now
-    /// an ally's path treats a tile with a live trap or tripwire you can see (its room is discovered) as blocked, so
-    /// it stops short or goes round. A crawler-like companion (hired crew, a Conjoined body) next to one sizes it up
+    /// a tile with a live trap or tripwire you can see (its room is discovered) is closed to an ally's path, so it goes
+    /// round or waits. A crawler-like companion (hired crew, a Conjoined body) next to one sizes it up
     /// as a player would: when its own odds (the trap's base chance plus its Smarts, as on the disarm screen) are at
     /// least [Companions] DisarmAtChance, it tries once; failing sets the trap off on it, as it does on you.
     /// </summary>
@@ -44,15 +44,27 @@ namespace SCClassLoader
             return null;
         }
 
-        [HarmonyPatch(typeof(WalkingPathfinder), "GetICost")]
-        private static class Patch_Cost
+        /// <summary>Would this ally have to keep off this tile? Traps give their experience only to a disarm, so a walk over one wastes it.</summary>
+        internal static bool KeepsOff(Character c, NavNode n) =>
+            Avoid.Value && n != null && IsAlly(c) && (VisibleTrap(n) != null || Traps.HurtsAllies(n));
+
+        // A search can still end on a trap tile, so an ally walks up to a foe standing on one; only the last step is refused.
+        [HarmonyPatch(typeof(Pathfinder), "AdjacentNodes")]
+        private static class Patch_Adjacent
         {
-            private static void Postfix(WalkingPathfinder __instance, NavNode to, ref int __result)
+            private static void Postfix(AI ____ai, NavNode ___Destination, List<NavNode> __result)
             {
-                if (!Avoid.Value || __result > 0 || to == null) return;
-                AI ai = Traverse.Create(__instance).Field("_ai").GetValue<AI>();
-                if (ai == null || !IsAlly(ai.GetCharacter())) return;
-                if (VisibleTrap(to) != null || Traps.HurtsAllies(to)) __result = 1; // an extra cost of 1 ends the path before this tile
+                if (____ai == null || !IsAlly(____ai.GetCharacter())) return;
+                __result.RemoveAll(n => n != ___Destination && KeepsOff(____ai.GetCharacter(), n));
+            }
+        }
+
+        [HarmonyPatch(typeof(Pathfinder), nameof(Pathfinder.FindStep))]
+        private static class Patch_Step
+        {
+            private static void Postfix(AI ____ai, ref NavNode __result)
+            {
+                if (____ai != null && KeepsOff(____ai.GetCharacter(), __result)) __result = null;
             }
         }
 
@@ -64,6 +76,15 @@ namespace SCClassLoader
                 if (m != null && m.GetStatType() == STAT_TYPE.Smarts && m.amount > 1)
                     chance += c.GetStat(STAT_TYPE.Smarts) / (m.amount / 2);
             return Mathf.Clamp(chance, 0, 100);
+        }
+
+        /// <summary>A good disarm pays what yours would, parts and experience.</summary>
+        internal static void Succeed(Trap_Trigger t, Character c, int chance)
+        {
+            Game.LOG($"<color=#9FE08A>{c.GetName()} disarms the {(string)t.hazardName}</color> ({chance}%).");
+            AudioManager.PlayEvent("event:/Environment/Lockpick_Success", t.transform.position);
+            if (t.disarmAwardsXp) Menu_Event.instance?.GiveSuccessXp();
+            t.Disarm(giveParts: true);
         }
 
         /// <summary>Each crawler-like companion beside a seen trap weighs it up once; returns how many tried.</summary>
@@ -89,9 +110,7 @@ namespace SCClassLoader
                     n++;
                     if (Random.Range(1, 101) <= chance)
                     {
-                        Game.LOG($"<color=#9FE08A>{c.GetName()} disarms the {trap}</color> ({chance}%).");
-                        AudioManager.PlayEvent("event:/Environment/Lockpick_Success", t.transform.position);
-                        t.Disarm(giveParts: true);
+                        Succeed(t, c, chance);
                     }
                     else
                     {

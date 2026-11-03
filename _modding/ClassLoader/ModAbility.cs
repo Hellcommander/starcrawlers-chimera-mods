@@ -211,8 +211,8 @@ namespace SCClassLoader
             (rt.spec.actions ?? new List<ActionSpec>()).Concat(Perk?.addActions ?? new List<ActionSpec>()), rt.spec, rt.classId, Tuned);
 
         public override void Refresh() { Bind(); RefreshStats(); }
-        public override void PerkPointApplied() { base.PerkPointApplied(); RefreshStats(); }
-        public override void PerkPointRemoved() { base.PerkPointRemoved(); RefreshStats(); }
+        public override void PerkPointApplied() { base.PerkPointApplied(); RefreshStats(); EventBus.AbilitiesChanged(); }
+        public override void PerkPointRemoved() { base.PerkPointRemoved(); RefreshStats(); EventBus.AbilitiesChanged(); }
 
         public override bool CanUse()
         {
@@ -483,7 +483,7 @@ namespace SCClassLoader
             {
                 // Nobody at the aim point: ground (coins, knives, fields) still goes down there.
                 ctx.groundAtCenter = true;
-                Actions.Run(targetActions.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap" || a.@do == "raisewall").ToList(), ctx, caster);
+                Actions.Run(targetActions.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap" || a.@do == "raisewall" || a.@do == "springtraps").ToList(), ctx, caster);
                 ctx.groundAtCenter = false;
             }
             if (!shaped && !string.IsNullOrEmpty(s.areaVfx) && (radius > 0f || s.target == "floor" || s.target == "point")) Actions.SpawnVfx(s.areaVfx, center + Vector3.up * 0.1f);

@@ -2,13 +2,31 @@
 
 The version is the loader's version, and every bundled mod follows it. The numbers 1.2 and 1.3 were never used: the
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
-1.46.0. The dates are the dates of the work.
+1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.0.0 (unreleased)
+
+### Skills and interface
+
+- **Toxic Breath** (Mutagenic Brew) now leaves a Toxic Cloud over its whole cone for three turns: anyone in it or walking
+  in is poisoned and choking. Fields can follow a skill's cone or line with `"overShape": true`.
+- Right-clicking a class's icon on the skills screen lists the skills your synergies give that class; picking one starts
+  it.
+- 54 new synergies (`Mods/Synergies/synergies_k.json`) reach the 140 class skills none touched before, Bounty Hand and
+  Spark Tinker's whole kits among them. Each is a new pair of classes, and passive skills count once you have them.
+- With the event bus on, a perk that adds a proc now works from the moment you buy it, not from your next turn.
+- Allies and summons no longer path onto a live trap you can see: they go round or wait. A companion's disarm now pays
+  the experience yours would.
+- The example classes grew to nine skills each: Arc Gunner, Cadence Fencer, Bounty Hand and Spark Tinker.
+- `SpecialButtonsBesideCapstone` (`[Interface]`, off by default): when the ninth column has no room, one ninth-tier skill
+  shrinks to a quarter of its area and the ChimeraLinq and Vendordamus Beacon buttons share its cell at that size.
+- Realtime with Pause has an on-screen pause button.
+- A cast that spends a whole counter now spends what it read, so a kill during that cast can add to the counter.
+- XML mods: `of` on a condition reads correctly again.
 
 ### New class
 
-- **Perihelion** (`Mods/Perihelion/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
+- **Comet Breaker** (`Mods/CometBreaker/`): a Muscle class of comet magic scaling with Strength and Psi Power. Comet Charge
   takes you to an enemy or a tile, you can't lose health until your next turn, and everything around your landing flies
   back, every boss but Cerberus included; what hits a wall takes more damage, is stunned for 2 turns and can't use its
   specials for a turn after it recovers. Ephemeris marks a spot where a comet falls two turns later, and landing a
@@ -17,7 +35,13 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   on by default): with it off, its charges don't protect you. Spellsmith's forms all work on its charges, and together
   the two classes make Comet Breakup: under Nova Form your attack goes out all eight ways, you one way and seven
   Fragments of You the rest.
-- Perihelion now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
+- Comet Breaker has five more synergies. Grapnel Acrobat, Gravity Assist: Comet Charge on a hooked enemy may tear the
+  hook out and sling you on, the charge ready again and your turn not over. Bulkhead Psion, Ejecta Plating: a plate may
+  rise two tiles behind what your landing strikes, before it flies. Mimeticist, Cast-Off Shape: a shape ending in a
+  fight may fight on as a Fragment of You. Snareseer, Foretold Fall: a trap catching something may shift your Ephemeris
+  mark onto it, and landing sets off your traps within 2.6 before the blast throws anything. Phase Drifter, Late
+  Arrival: charging while Phased spends it, and the rest of you lands on the same spot a turn later.
+- Comet Breaker now has its own particles and models. Comet Charge and Extinction Arc show you as a figure of frozen rock
   flying head-first inside the comet, Ephemeris marks the deck with a turning orbit chart and drops a burning nucleus
   through the ceiling, and impacts, Tidal Pull, Split Nucleus and Outgassing have their own effects. Fragments shed ice
   as they fight.
@@ -46,6 +70,17 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   they trade one effect for another. Turn the mod off, or any one of them under Mod Content.
 - **Threading** (`Mods/Threading/`), off by default: for very large fights. It turns on the event bus, moves enemy paths
   to worker threads and stops head-turning work on off-screen models. Turn it off and the game runs as it always did.
+- **Enemy weapons** (loader config, `[EnemyWeapons]`), off by default: the weapon that falls from a dead enemy's hand
+  now stays where it lands, and you can pick it up and use it. Every one drops, with no roll. It keeps the enemy's own
+  model and its kind: a guard's pistol drops as a pistol, a ChefBot's cleaver as a cleaver. Weapons the base game kept
+  fixed to the body fall too, as does one the enemy carried but wasn't holding. Mugs, briefcases and claws stay junk,
+  and other loot still comes from the inventory everyone carries. Enemies run their weapons in a low-power mode: they
+  hit at 75% of floor loot, but a gun needs no ammo and your skills cost 25% less stamina while you swing a melee one
+  (`LowPowerDamage` and `MeleeStaminaSaving` in the config). The weapon deals the damage types of the attack the enemy
+  made with it, and a boss's is Epic or better. With the event bus on, the first drop also gives a **Scrap Bot Kit**.
+  The bot grinds loose weapons into scrap, rebuilds broken props with it, repairs itself and sells extra scrap when you
+  use a vendor. It tracks weapons and props on worker threads, including off-screen ones. It has high armor, and its
+  minion menu can scrap weapons from your pack. Boss weapons are never scrapped unless you allow it.
 
 ### Minions
 
@@ -92,6 +127,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - A skill that involves your weapon goes off through it under a nova, for one shot's ammo. A gun fires its own shots
   down all eight ways, and a melee weapon spins through the eight tiles beside you, which the camera pulls out to show.
 - A throw's description no longer says "1 tiles" or ends in two periods.
+- The Corrupted Mirror's copies and other copies of you hold your weapon properly. Before, a podling gun or other bulky
+  weapon showed up tiny and pointing straight up, and a body that carries its own weapon on its back held yours there.
 
 ### Interface
 
@@ -110,10 +147,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   particles, status looks, damage numbers, hits, items and the combat log are spread over frames or capped. These change
   the look and the timing of the work, never the damage or what a skill does.
 - `GraphicsJobs` and `IncrementalGC` under `[Performance]` work without the bus and apply the next time the game starts.
-- `AssetStreaming` under `[Performance]`, off by default and needing `EventBus`: every floor's textures sit in video
+- `AssetStreaming` under `[Performance]`, off by default: every floor's textures sit in video
   memory from the first menu on, about 7 GB. With this on, those nothing on your floor uses leave, and they come back
   from disk when something needs them; on a floor 6 test save that went from 7,093 MB to 2,724 MB. The event bus's
-  workers decide what goes. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
+  workers decide what goes, whether or not `EventBus` is on. UI art never does, and neither do textures listed in `AssetStreamingNeverUnload`.
 
 ### Modding
 
@@ -148,6 +185,14 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - `"corruptedGear"` in `sideAreas` adds corrupted skills and mods and sets how many an item takes.
 - The repository now holds the built Threading, Example Plugin and Character Portrait Tools dlls, so a fresh clone gets
   working plugins without building them.
+- More of what base-game skills do can now be built in class files:
+  - `"on": "block"` procs fire when a hit on you or your summon is blocked, aimed at the attacker.
+  - Effects take `tickActions` (with `tickRadius`), run each turn with the applier as the caster, and `statsFrom`, a
+    bearer stat worked out from the applier's.
+  - `"stacksOf": "value:NAME"` counts any condition value, such as `value:enemiesNear:4` or `value:Toughness/2`.
+  - `cast` fires another skill by name for free, and `order` has your summons carry out actions themselves.
+- Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.
+- `ignoresAllies` now spares your companions vanilla debuffs too, not only mod effects.
 
 ### Vanilla bug fixes
 
@@ -156,6 +201,8 @@ These came out of stress testing the event bus. None needs the bus, and `[Fixes]
 - When an effect on a character ended, the next one in the list was skipped: it missed that turn's countdown, or sat out
   that hit. Some effects now run out one turn sooner than before.
 - An enemy's Warp Jump no longer throws an error if its caster or target is destroyed while it travels.
+- Fire on the floor no longer throws an error when its burn sets off a reaction like Flashpoint. The reaction now goes
+  off just after the hazard finishes its tiles, so the foe takes the hazard's hit first.
 - Your health now respects the game's IMMORTAL tag, so damage over time can't kill you in the cutscene after beating
   Cerberus.
 - An event that spawns a mob no longer stops with an error when no tile near it is free.
