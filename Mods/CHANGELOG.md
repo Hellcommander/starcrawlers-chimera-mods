@@ -235,6 +235,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   - `dealtWith` takes `"summons"`, so an effect on you makes your summons and other allies hit harder instead of you.
   - A `smash` trigger fires when a prop breaks near you, and its radius procs hit the enemies around the wreck.
   - Effects take `hidden` to stay off the buff bar.
+  - The `useItem` trigger aims at whoever the item was used on, such as the enemy a grenade landed on, and no longer
+    fires when a crafting skill (Homebrew, Break It Down) uses up an item as material.
+  - Damage actions take `"hands": "both"` to land once with each weapon you hold.
+  - A `volley` action fires several shots at a target, and the shots left when it falls find the nearest enemy.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
   as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
   rules text reads "1 per ..." instead of "0, +1 per ...".

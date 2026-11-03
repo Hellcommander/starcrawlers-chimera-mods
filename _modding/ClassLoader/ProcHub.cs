@@ -24,11 +24,11 @@ namespace SCClassLoader
         /// for giveItem "$item".</summary>
         internal static Item ItemNow { get; private set; }
 
-        public static void FireItem(string on, Item it, string what)
+        public static void FireItem(string on, Item it, string what, Character usedOn = null)
         {
             Item prev = ItemNow;
             ItemNow = it;
-            try { Fire(on, null, what); }
+            try { Fire(on, usedOn, what); }
             finally { ItemNow = prev; }
         }
 
@@ -106,7 +106,7 @@ namespace SCClassLoader
         private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
             { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain", "ammo" };
         private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb", "block" };
-        private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
+        private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap", "useitem" };
 
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
         {

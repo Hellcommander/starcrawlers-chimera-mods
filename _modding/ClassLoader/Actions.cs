@@ -246,6 +246,7 @@ namespace SCClassLoader
                 case "cleanse": Dispel(a, ctx, t, debuffs: true); break;
                 case "chain": if (!string.IsNullOrEmpty(a.sound) && t != null) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId); Chain(a, ctx, t); break;
                 case "echo": Echo(a, ctx, t); break;
+                case "volley": Volley(a, ctx, t); break;
                 case "cast": CastSkill(a, ctx, t); break;
                 case "shorten": Shorten(a, ctx, t); break;
                 case "xp": Xp(a, ctx); break;
@@ -505,6 +506,48 @@ namespace SCClassLoader
                 cur = AI_Manager.instance.GetEnemiesAt(p, a.radius > 0 ? a.radius : 3f)
                     .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || e.effects.GetEffect(need) != null))
                     .OrderBy(e => Vector3.Distance(e.transform.position, p)).FirstOrDefault();
+            }
+        }
+
+        internal static int VolleyRetargets;
+
+        /// <summary>
+        /// "volley": "amount" shots of "actions" at the target, one after another; once it falls, the rest turn on the
+        /// nearest enemy within "radius" (3 unset) of where it stood, a salvo of homing missiles finding a new mark. Each
+        /// shot draws a "look" streak from you and plays "vfx" and "sound" where it lands. Inside a skill the shots
+        /// come a beat apart and the skill waits for them.
+        /// </summary>
+        private static void Volley(ActionSpec a, ActionContext ctx, Character first)
+        {
+            if (ctx.paced != null) { ctx.paced.Add(Shots(a, ctx, first, true)); return; }
+            IEnumerator run = Shots(a, ctx, first, false);
+            while (run.MoveNext()) { }
+        }
+
+        private static IEnumerator Shots(ActionSpec a, ActionContext ctx, Character cur, bool paced)
+        {
+            int n = Math.Max(1, a.amount);
+            Vector3 at = cur != null ? cur.transform.position : ctx.caster.transform.position;
+            for (int shot = 0; shot < n; shot++)
+            {
+                if (cur == null || cur.GetIsDead() || cur.GetHealth() <= 0)
+                {
+                    if (AI_Manager.instance == null) yield break;
+                    Character dead = cur;
+                    cur = AI_Manager.instance.GetEnemiesAt(at, a.radius > 0f ? a.radius : 3f)
+                        .Where(e => e != null && e != dead && e != ctx.caster && !e.GetIsDead() && e.GetHealth() > 0)
+                        .OrderBy(e => Vector3.Distance(e.transform.position, at)).FirstOrDefault();
+                    if (cur == null) yield break;
+                    VolleyRetargets++;
+                }
+                at = cur.transform.position;
+                Vector3 hit = cur.GetHitFx().position;
+                if (!string.IsNullOrEmpty(a.look) && ctx.caster != null) Moves.Streak(ctx.caster.GetHitFx().position, hit, Moves.Hex(a.look, Color.white), 0.025f, 0.35f);
+                if (!string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, hit);
+                if (!string.IsNullOrEmpty(a.sound)) ModAudio.Play(a.sound, hit, ctx.classId);
+                var c = Clone(ctx); c.target = cur; c.paced = null;
+                Run(a.actions, c, cur);
+                if (paced && shot < n - 1) yield return new WaitForSeconds(0.15f);
             }
         }
 
@@ -856,9 +899,26 @@ namespace SCClassLoader
             return Mathf.Max(0.1f, 1f - a.areaFalloff * Mathf.Round(d.magnitude));
         }
 
+        internal static int BothHandHits;
+
         private static void Damage(ActionSpec a, ActionContext ctx, Character t)
         {
             if (t == ctx.caster && !ctx.backfire) return; // never hurt yourself (unless your wild magic turned on you)
+            // "hands": "both": the hit once with each weapon held, main hand first; a fallen target takes no second swing
+            if ((a.weapon > 0f || a.channel) && string.Equals(a.hands, "both", StringComparison.OrdinalIgnoreCase) && ctx.caster is Player pl && !Equipped.Forcing)
+            {
+                var hands = Equipped.BothHands(pl);
+                if (hands.Count > 1)
+                {
+                    foreach (var (w, off) in hands)
+                    {
+                        if (t == null || t.GetIsDead() || t.GetHealth() <= 0) break;
+                        using (Equipped.Force(w, off)) Damage(a, ctx, t);
+                        BothHandHits++;
+                    }
+                    return;
+                }
+            }
             DAMAGE_TYPE type = Weakest(a.type, t) ?? DamageType(a.type);
             float v = Random.Range(a.min, Math.Max(a.min, a.max) + 1) + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
             v += StackBonus(a, ctx, t) + WeaponBonus(a, ctx) + a.stored * ctx.stored;
@@ -1207,6 +1267,15 @@ namespace SCClassLoader
                             : $"<color={DmgObj.GetDamageColor(type)}>{range}{Scaling(a)}{(a.weapon > 0f ? $" (+{Mathf.RoundToInt(a.weapon * 100)}% weapon, with its on-hit effects)" : "")}{(a.stored > 0f ? $" (+{Mathf.RoundToInt(a.stored * 100)}% of the damage it took while this lasted)" : "")} {Game.GetSpriteString(type)}</color>";
                         s = $"Deals {kind}{(a.trueDamage ? " <color=#FFFFFF>true damage</color>" : "")} to {who}{LevelNote(a.levelCap)}";
                         if (a.areaFalloff > 0f) s += $", {Mathf.RoundToInt(a.areaFalloff * 100)}% less for each tile from the centre";
+                        if ((a.weapon > 0f || a.channel) && string.Equals(a.hands, "both", StringComparison.OrdinalIgnoreCase))
+                            s += a.weapon > 0f ? ", once with each weapon you hold (the off-hand one's roll at its usual share)" : ", once with each weapon you hold";
+                        break;
+                    }
+                case "volley":
+                    {
+                        string per = Joined(Describe(a.actions, classId, "it"));
+                        int n = Math.Max(1, a.amount);
+                        s = $"Fires {n} shot{(n > 1 ? "s" : "")} at {who}, one after another; once it falls, the rest turn on the nearest enemy within {(a.radius > 0f ? a.radius : 3f):0.#} of it. Each shot: {per}";
                         break;
                     }
                 case "heal": s = $"Heals {who} for <color=#5CFF6B>{a.amount}{Scaling(a)}</color>"; break;
@@ -1658,6 +1727,7 @@ namespace SCClassLoader
             "chain" => "the enemy it jumped to",
             "summon" => "the new ally",
             "inflict" => "that enemy",
+            "useitem" => "whoever it was used on",
             _ => "you",
         };
 

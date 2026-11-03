@@ -153,6 +153,10 @@ A `damage` action can also take `"weapon": 0.4`: it adds 40% of a roll of your m
 off-hand weapon that fits the skill's gear rule, see Gear requirements), for skills
 that are half blade and half spell (nothing without a weapon; mod summons and enemies ignore it). Such a hit is a weapon
 hit as well: your weapon's own on-hit effects, your ammo's and every passive that answers weapon hits go off with it.
+Add `"hands": "both"` (with `"weapon"` or `"channel"`) and the whole hit lands once with each weapon you hold, main
+hand first: the off-hand one rolls its own weapon at the game's off-hand share, each sets off its own on-hit effects,
+and a target that falls to the first takes no second. With one weapon (or a shield in the other hand) it is one hit.
+A twin-blade flurry: `{ "do": "damage", "type": "Slashing", "min": 2, "max": 4, "weapon": 0.6, "hands": "both" }`.
 
 A `damage` action's `"type": "weakest"` deals whichever damage type the target resists least, the way an analyser
 finds the gap in its armour; `"weakest:Fire|Cryo|Shock"` picks among those only, the first listed on a tie.
@@ -483,6 +487,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     one runs the actions on every enemy standing on it or in the straight line between it and you.
   - `{ "do": "ricochet", "fieldName": "Coin", "radius": 4, "actions": [...] }` uses up every field of that name; from
     each, the actions hit the nearest enemy within the radius.
+  - `{ "do": "volley", "amount": 4, "radius": 3, "look": "#FF8040", "actions": [...] }` fires 4 shots of the actions
+    at the target, one after another (a beat apart inside a skill); once it falls, the rest turn on the nearest enemy
+    within the radius of where it stood, homing missiles finding a new mark. Each shot draws a `look` streak from you
+    and plays `vfx` and `sound` where it lands.
   - `{ "do": "tether", "look": "#C8D0DA" }` draws a hook line from you to the target for a moment (purely visual). Leaps,
     recalls and ricochets draw their own short streaks (dash, knife flying home, gold tracer).
   - A field can carry a mesh: `"model": { "mesh": "models/knife.obj", "texture": "models/knife.png", "wobble": 14,
@@ -928,8 +936,8 @@ Static Grip need a ranged weapon.
   `damage:TYPE` (it deals that type: `damage:Shock`). `unarmed` = no weapon in either hand (a shield is fine).
 - One hand only: `mainhand:KIND` / `offhand:KIND` (`offhand:melee`), or `mainhand` / `offhand` for anything there.
   `shield` = a shield generator in either hand, `dualWield` = a weapon in each hand.
-- **One weapon per swing.** A skill's `"weapon"` share (and the on-hit effects that come with it) uses one weapon,
-  never both: the main-hand one if it fits the rule, else the off-hand one that does, at the game's off-hand power
+- **One weapon per swing.** A skill's `"weapon"` share (and the on-hit effects that come with it) uses one weapon
+  unless the action says `"hands": "both"` (see Brand-new abilities): the main-hand one if it fits the rule, else the off-hand one that does, at the game's off-hand power
   (50%, raised by dual-wield skills, the same as an off-hand attack). A rule that names no weapon (`dualWield`) uses
   the main hand. With a blade and an off-hand pistol, Arc Round fires the pistol at half power; the tooltip names the
   weapon it swings and the power.
@@ -967,7 +975,9 @@ Static Grip need a ranged weapon.
 - `allyHurt` (one of your summons or pets is hit; aims at the attacker);
 - `summon` (an ally joins you: a summon, a pet, a charmed or hacked enemy, a hire; aims at the newcomer, noticed when your turn ends);
 - `inflict` (you put an effect on an enemy; `"match"` is the effect id; aims at that enemy. Your summons' effects don't count);
-- `useItem` (you use a consumable), `equip`, `unequip` (`"match"` is the item's name or id);
+- `useItem` (you use a consumable; aims at whoever it was used on: you for a chem or medkit, the one standing where a
+  grenade or other thrown item landed. An item a crafting skill uses up as material doesn't count), `equip`, `unequip`
+  (`"match"` is the item's name or id);
 - `craft` (you fabricate an item at a crafting window; `"match"` is its name or id; `giveItem` `"$item"` gives more of it);
 - `ammo` (your gun fired; `"match"` is the ammo's name or id, `"value:rounds"` the rounds it spent; see Ammo);
 - `smash` (a crate, console, door or other prop breaks near you, from anything: a blast, a charge, a thrown body;

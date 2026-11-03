@@ -368,11 +368,39 @@ namespace SCClassLoader
             private static void Postfix(int __state) { if (Game.FLOOR != __state) ProcHub.Fire("newfloor", null, Game.FLOOR.ToString()); }
         }
 
-        /// <summary>useItem: a consumable you used, just before it's spent ("match" = its name or id).</summary>
+        /// <summary>useItem: a consumable you used, just before it's spent ("match" = its name or id). Aims at whoever it
+        /// was used on: you for a chem or medkit, the one standing where a grenade or other thrown item landed. An item a
+        /// crafting skill uses up as material (Homebrew's chem, Break It Down's part) isn't a use.</summary>
         [HarmonyPatch(typeof(Item_Consumable), nameof(Item_Consumable.UseComplete))]
-        private static class Patch_UseItem
+        internal static class Patch_UseItem
         {
-            private static void Prefix(Item_Consumable __instance) => ProcHub.FireItem("useitem", __instance, ItemDetail(__instance));
+            internal static Character LastOn;
+            internal static int Fired;
+
+            private static void Prefix(Item_Consumable __instance)
+            {
+                if (IsMaterial(__instance)) return;
+                Character on = null;
+                Item_OnUse_Trigger use = __instance.useTrigger;
+                if (use != null && use.use_ability != null) on = use.use_ability.targetNode != null ? use.use_ability.targetNode.GetOccupant() : null;
+                else if (use != null && __instance.target_player) on = use.target;
+                if (on != null && on.GetIsDead()) on = null;
+                LastOn = on;
+                Fired++;
+                ProcHub.FireItem("useitem", __instance, ItemDetail(__instance), on);
+            }
+
+            private static readonly Dictionary<Type, System.Reflection.FieldInfo> materialFields = new Dictionary<Type, System.Reflection.FieldInfo>();
+
+            /// <summary>The skill being used holds the item as what it works on ("targetItem"): it's spent as material.</summary>
+            private static bool IsMaterial(Item_Consumable it)
+            {
+                Ability ab = Game.PLAYER_ABILITY;
+                if (ab == null || Game.PLAYER_ITEM == it) return false;
+                Type t = ab.GetType();
+                if (!materialFields.TryGetValue(t, out var f)) materialFields[t] = f = AccessTools.Field(t, "targetItem");
+                return f != null && ReferenceEquals(f.GetValue(ab), it);
+            }
         }
 
         /// <summary>Effects' "keepItem": a roll before the item is spent; on a success the use goes through (its cooldown

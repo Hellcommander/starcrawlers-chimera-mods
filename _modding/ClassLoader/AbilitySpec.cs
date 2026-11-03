@@ -230,6 +230,10 @@ namespace SCClassLoader
         /// <summary>Damage actions: the hit counts as a weapon hit (your weapon's and ammo's on-hit effects go off) with
         /// no weapon damage added. Comes with SkillMods' "channel".</summary>
         public bool channel;
+        /// <summary>Damage actions with "weapon" or "channel": "both" lands the hit once with each weapon you hold, the
+        /// off-hand at its usual share, each with its own on-hit effects (one hit with one weapon or a shield in the
+        /// other hand). Only for you.</summary>
+        public string hands;
         /// <summary>Damage actions run by an effect (onExpireActions, onDeathActions, a burst or threshold): adds this
         /// share of the health its bearer lost while the effect was on it (0.5 = half). A revenge counter.</summary>
         public float stored;
@@ -481,8 +485,8 @@ namespace SCClassLoader
     {
         /// <summary>hit | kill | hurt | dodge | turn | reaction | crit | miss | cast | move | wait | heal | lowHealth |
         /// allyDeath | effectGained | effectLost | combatStart | combatEnd | enterRoom | loot | levelUp | enemyDeath | allyKill |
-        /// allyHurt | summon | inflict | useItem | equip | unequip | search | newFloor | shieldBreak | absorb | trap | charge | leap |
-        /// teleport | knockback | swap | chain</summary>
+        /// allyHurt | summon | inflict | useItem | craft | ammo | equip | unequip | search | smash | newFloor | shieldBreak | absorb |
+        /// block | trap | charge | leap | teleport | knockback | swap | chain</summary>
         public string on;
         public int chance = 100;
         /// <summary>Only when this holds (target = the other character of the event, if any).</summary>
