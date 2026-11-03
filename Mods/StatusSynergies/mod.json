@@ -2,7 +2,7 @@
   "id": "StatusSynergies",
   "name": "Status Synergies",
   "author": "Arendeth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Synergies built on status effects instead of class pairs: a class that exploits Burning, Gashed, Toxified and the like works with any other class that causes them. Each payoff spends the status, so it trades one effect for another instead of adding to it. Turn it off here, or each synergy on its own under Mod Content.",
   "requires": [

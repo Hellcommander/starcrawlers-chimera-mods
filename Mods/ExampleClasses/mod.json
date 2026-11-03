@@ -2,7 +2,7 @@
   "id": "ExampleClasses",
   "name": "Example Classes",
   "author": "Arendeth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Arc Gunner, a small library-based class to copy from, and Spellsmith, which shows how passives and stances reshape other skills. Safe to delete.",
   "requires": [

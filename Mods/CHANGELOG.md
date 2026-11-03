@@ -4,11 +4,10 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.0.1 (unreleased)
 
-- The Example Script mod (the Spark Tinker) is off by default, like the Example Plugin. Turn it on in the mod manager.
-- Scrap from kills only comes while a Spark Tinker is in the party. It used to pay every party with the mod on.
-- Scripts: `game.has_class(id)` says whether anyone in the party has a class.
+### Minions
+
 - Five new orders for crew, pets and summons: **Kite** (keep their distance), **Shield** (stand between you and the
   nearest enemy), **Flank** (go round your target to its far side), **Draw fire** (taunt the enemy that's after you
   onto themselves) and **Scatter** (never stand next to each other or you). The order strip shows its orders in rows
@@ -18,6 +17,15 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   one left behind glides back to the middle of its tile instead of standing half on the next one.
 - A corpse is hidden while someone stands in it, so two bodies aren't drawn inside each other
   (`[Interface] HideCorpsesUnderfoot`, on). It can still be looted, butchered or used.
+
+### Mods
+
+- The Example Script mod (the Spark Tinker) is off by default, like the Example Plugin. Turn it on in the mod manager.
+- Scrap from kills only comes while a Spark Tinker is in the party. It used to pay every party with the mod on.
+
+### Modding
+
+- Scripts: `game.has_class(id)` says whether anyone in the party has a class.
 
 ## 2.0.0 (2026-11-03)
 
