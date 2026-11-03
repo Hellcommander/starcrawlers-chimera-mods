@@ -115,6 +115,16 @@ namespace SCClassLoader
             }
         }
 
+        /// <summary>Effects' "grantTags": the game's tag checks see a tag while an effect grants it, nothing is written to the save.</summary>
+        [HarmonyPatch(typeof(Character), nameof(Character.HasTag))]
+        private static class Patch_GrantTags
+        {
+            private static void Postfix(Character __instance, string tagName, ref bool __result)
+            {
+                if (!__result && ModEffect.Granting.Count > 0 && tagName != null) __result = ModEffect.Grants(__instance, tagName);
+            }
+        }
+
         private static bool Fits(string spec, Item_Weapon w)
         {
             focus = w;

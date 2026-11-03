@@ -626,6 +626,9 @@ namespace SCClassLoader
         /// <summary>Added to the share of a roll your off-hand weapon deals (the game's base is 0.5): 0.25 = off-hand swings
         /// at 75%. Per stack. On the crawler only.</summary>
         public float offhandPower;
+        /// <summary>Game character tags the bearer counts as having while this is on: "BULLET_DODGER" (dodge rolls work on
+        /// ranged attacks too), "NOKNOCKBACK", "FLYING", ... Read live, never written to the save.</summary>
+        public List<string> grantTags;
         /// <summary>% chance a consumable you use isn't spent (per stack, the chances of several effects add up). On the
         /// crawler only. keepItemMatch narrows it to items carrying that tag ("CHEM", "GRENADE") or whose id or name
         /// contains it; several joined with "|".</summary>

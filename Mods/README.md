@@ -521,6 +521,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Off-hand power.** An effect's `"offhandPower": 0.25` adds 25% of the weapon's roll to what your off-hand weapon
   deals (the game's base is 50%), per stack, for the attack's off-hand swing and for skills that swing the off-hand
   weapon alike. Pair it with `"dealtWith": "offhand"` for a dual-wielder's stance.
+- **Granted tags.** An effect's `"grantTags": [ "BULLET_DODGER" ]` makes the bearer count as having those game tags
+  while it lasts. The tag is read live and never saved, so it can't outlast the effect. Tags the game acts on:
+  `BULLET_DODGER` (dodge rolls work against ranged attacks too), `NOKNOCKBACK` (no knockback, bumps, throws or warps),
+  `FLYING` (can't be rooted, floats over traps), `IMMUNE_ROOT`. Conditions with `"tag"` see granted tags as well.
 - **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
   use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
   items carrying one of those tags, or whose id or name contains one.
@@ -718,6 +722,9 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   "to": "summons", "ifSummonAlive": "group:Gloomcap", "radius": 3, "turns": 2 }`: enemies within `radius` (default 4)
   that can see that ally attack it instead. The enemy wears **Taunted** and goes back to normal when it can't see its
   taunter, when the taunter dies, or when the turns run out. A later taunt by someone else takes over.
+- `{ "do": "forget" }` on an enemy: it loses track of you. It stops hunting you, turns a random way and goes idle, as
+  the game's Memory Hole and Stealth do, so `"unaware": true` holds on it again (an ambush reset, a flashbang, a
+  vanish). Bosses keep their focus. On an area skill it reaches everyone the skill hits.
 - `{ "do": "silence", "turns": 2 }`: the enemy wears **Silenced** and can only use its abilities without a cooldown
   (basic attacks); with none it closes in instead. A channel already under way finishes. Bosses shrug it off, unless
   the action adds `"bossTurns": 1`: a boss is then silenced for that many turns and wears **Composed**, which stops any
@@ -859,7 +866,7 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
-- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
+- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
 - **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).

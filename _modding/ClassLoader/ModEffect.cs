@@ -397,6 +397,37 @@ namespace SCClassLoader
             base.Init(c);
             Root();
             Resize();
+            Grant();
+        }
+
+        /// <summary>Bearers of "grantTags" effects, so the game's tag checks find them without the tag being saved.</summary>
+        internal static readonly Dictionary<Character, List<ModEffect>> Granting = new Dictionary<Character, List<ModEffect>>();
+        private Character granted;
+
+        private void Grant()
+        {
+            if (rt == null || (rt.spec.grantTags?.Count ?? 0) == 0 || granted != null || target == null) return;
+            granted = target;
+            if (!Granting.TryGetValue(granted, out var list)) Granting[granted] = list = new List<ModEffect>();
+            list.Add(this);
+        }
+
+        private void Ungrant()
+        {
+            if (granted == null) return;
+            if (Granting.TryGetValue(granted, out var list) && list.Remove(this) && list.Count == 0) Granting.Remove(granted);
+            granted = null;
+        }
+
+        /// <summary>Does an effect on this character grant the tag?</summary>
+        internal static bool Grants(Character c, string tag)
+        {
+            if (!Granting.TryGetValue(c, out var list)) return false;
+            foreach (ModEffect e in list)
+                if (e != null && e.rt != null)
+                    foreach (string g in e.rt.spec.grantTags)
+                        if (string.Equals(g, tag, StringComparison.OrdinalIgnoreCase)) return true;
+            return false;
         }
 
         // Several size effects can overlap and end in any order, so a model's true size is kept apart from them.
@@ -444,6 +475,7 @@ namespace SCClassLoader
         {
             Unroot();
             Unresize();
+            Ungrant();
             if (aura != null) Destroy(aura);
             base.OnDestroy();
         }
@@ -626,6 +658,19 @@ namespace SCClassLoader
             return (dealt ? " with " : " from ") + string.Join(" or ", parts);
         }
 
+        /// <summary>What a granted tag does, in words, for the tags the game gives a meaning to.</summary>
+        private static string TagWords(string tag)
+        {
+            switch (tag.ToUpperInvariant())
+            {
+                case "BULLET_DODGER": return "Can dodge ranged attacks";
+                case "NOKNOCKBACK": return "Can't be knocked back, bumped aside, thrown or warped";
+                case "FLYING": return "Flies: can't be rooted and floats over traps";
+                case "IMMUNE_ROOT": return "Can't be rooted";
+                default: return "Counts as " + tag.Replace('_', ' ').ToLowerInvariant();
+            }
+        }
+
         internal float OffhandPower { get { Bind(); return (rt?.spec.offhandPower ?? 0f) * Math.Max(1, Stacks); } }
 
         /// <summary>This effect's "keepItem" chance for a consumable being used (0 when it doesn't match).</summary>
@@ -643,6 +688,7 @@ namespace SCClassLoader
         {
             Character t = target;
             Unroot();
+            Ungrant();
             base.Clear();
             if (t != null && !t.GetIsDead()) BuffLane.AfterRemoved(t);
         }
@@ -651,7 +697,7 @@ namespace SCClassLoader
         {
             base.Deserialize(d);
             Bind();
-            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); }
+            if (rt != null) { icon = rt.icon; ScaleToStacks(); Root(); Grant(); }
         }
 
         public override string GetDescription()
@@ -672,6 +718,7 @@ namespace SCClassLoader
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
             if (s.keepItem > 0) lines.Add($"{s.keepItem * Math.Max(1, Stacks)}% chance a {(string.IsNullOrEmpty(s.keepItemMatch) ? "consumable" : string.Join(" or ", s.keepItemMatch.Split('|').Select(x => x.Trim().ToLowerInvariant())) + " item")} you use isn't used up");
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
+            if ((s.grantTags?.Count ?? 0) > 0) lines.Add(string.Join("; ", s.grantTags.Select(TagWords)));
             if (s.breakOnHurt) lines.Add("<b>Breaks when the bearer is hurt</b>" + ((s.onBreakActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onBreakActions, rt.classId, "the bearer") : "."));
             if ((s.hazardProof?.Count ?? 0) > 0) lines.Add(s.hazardProof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase)) ? "No harm from hazards"
                 : "No harm from " + string.Join(", ", s.hazardProof.Select(p => p.Replace("HAZARD_", "").Replace('_', ' ').ToLowerInvariant())));

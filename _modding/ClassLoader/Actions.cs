@@ -97,7 +97,7 @@ namespace SCClassLoader
         }
 
         private static readonly HashSet<string> Hostile = new HashSet<string>
-            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard" };
+            { "damage", "stun", "knockback", "blind", "throw", "pull", "silence", "exhaust", "execute", "swap", "tame", "hazard", "forget" };
 
         /// <summary>An ignoresAllies class (astral magic) never lands a hostile action on its own side.</summary>
         private static bool SparesAlly(ActionSpec a, string act, ActionContext ctx, Character t)
@@ -163,6 +163,7 @@ namespace SCClassLoader
                 case "throw": Moves.Throw(a, ctx, t); break;
                 case "leap": Moves.Leap(a, ctx, t); break;
                 case "rush": Moves.Rush(a, ctx, t); break;
+                case "forget": Forget(ctx, t); break;
                 case "warp": Moves.Warp(a, ctx, t); break;
                 case "show": Moves.Show(a, ctx, t); break;
                 case "tether": Moves.Tether(a, ctx, t); break;
@@ -1024,6 +1025,17 @@ namespace SCClassLoader
         }
 
         /// <summary>Sends one of your own minions away: no death, no corpse, no loot. Never works on enemies.</summary>
+        /// <summary>"forget": an enemy drops you as its target, turns a random way and goes idle (unaware), as the game's
+        /// Memory Hole and Stealth do. Bosses keep their focus.</summary>
+        private static void Forget(ActionContext ctx, Character t)
+        {
+            if (t?.ai == null || t == Player.instance || TileStacks.IsAlly(t) || t.HasTag("BOSS")) return;
+            if (t.ai.GetTarget() == Player.instance || t.ai.GetTarget() == ctx.caster) t.ai.SetTarget(null);
+            NavNode at = t.GetMover()?.GetCurrentNavNode();
+            if (at != null) t.ai.SetFacing(at.transform.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
+            t.ai.ChangeState(AI.AI_STATE.Idle);
+        }
+
         private static void Dismiss(ActionContext ctx, Character t)
         {
             if (t == null || t == ctx.caster) return;
@@ -1291,6 +1303,7 @@ namespace SCClassLoader
                         break;
                     }
                 case "leap": s = $"You leap to {who}"; break;
+                case "forget": s = $"{char.ToUpperInvariant(who[0])}{who.Substring(1)} loses track of you: it stops hunting you and looks away, unaware again"; break;
                 case "rush":
                     {
                         int n = Math.Max(1, a.amount);
