@@ -23,6 +23,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Realtime with Pause has an on-screen pause button.
 - A cast that spends a whole counter now spends what it read, so a kill during that cast can add to the counter.
 - XML mods: `of` on a condition reads correctly again.
+- `Mods/MAKING_A_CLASS.md`, a step-by-step guide to making your own mod and class, from an empty folder to a
+  three-skill class with its own effect and perks.
 
 ### New class
 

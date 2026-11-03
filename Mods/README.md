@@ -3,6 +3,9 @@
 The Breachwork Loader (a BepInEx plugin in `BepInEx/plugins/StarCrawlersClassLoader`) adds new
 skill trees to character creation, so you get more Dredmor-style combos to pick your 7 from.
 
+New to modding? [MAKING_A_CLASS.md](MAKING_A_CLASS.md) walks you through making your own mod and class step by step.
+This README is the full reference.
+
 ## Adding a class
 
 1. Make a folder under `Mods/`, e.g. `Mods/MyClasses/`, with a `mod.json` (see [mod.json](#modjson)); if you
