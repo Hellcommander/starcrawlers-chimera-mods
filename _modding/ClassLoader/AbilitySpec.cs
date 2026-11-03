@@ -344,6 +344,8 @@ namespace SCClassLoader
         /// <summary>attempt: the target's stat that pushes back ("Smarts"), taking resistMult % odds off per point.</summary>
         public string resistStat;
         public float resistMult = 0.2f;
+        /// <summary>attempt: a skill hitting several targets holds them all at once, paying tryCost once a beat, not one hold after another.</summary>
+        public bool together;
         /// <summary>raiseWall: on the tile this many steps behind the target as you see it, if the way there is open (something for a throw to hit).</summary>
         public int behind;
         /// <summary>raiseWall: the class whose folder holds "model", for a synergy borrowing another class's wall.</summary>

@@ -245,7 +245,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   - Effects take `trance` to sit you down while your turns pass on their own, `endWhen` to end once a condition
     holds, and `ramp` to make their per-turn healing, stamina or damage grow each turn.
   - An `attempt` action holds a target for several tries with rising odds, paid in stamina, then runs its actions
-    if one lands or its `else` actions if none does.
+    if one lands or its `else` actions if none does. With `together`, a skill holds all its targets in one hold that
+    costs stamina once a beat.
   - Scattered traps take `trail` to drop along the line from you to the aim.
   - Combo conditions: `cast` takes an archetype (`muscle`, `guile`, `intellect`), `lastCast` reads the skill you used
     before, `switched` holds when the archetype changed, and the `castStreak` value counts skills of one archetype in

@@ -500,7 +500,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     `scale` stats times `scaleMult`, less the target's `resistStat` times `resistMult`. Each try costs `tryCost` stamina,
     and it stops when you can't pay. The first try that lands runs `actions` on the target; if none lands, `else` runs
     (`"to": "self"` for a backlash on you). Inside a skill the tries come a second apart under a cast bar with a `look`
-    streak to the target's head; from a trigger they all roll at once. On several targets it holds them one by one.
+    streak to the target's head; from a trigger they all roll at once. On several targets it holds them one by one;
+    with `"together": true` a skill holds them all in one hold, as one mind bending a crowd: each beat costs `tryCost`
+    once and rolls every target still held, and each one caught drops out while the rest are held.
   - `{ "do": "tether", "look": "#C8D0DA" }` draws a hook line from you to the target for a moment (purely visual). Leaps,
     recalls and ricochets draw their own short streaks (dash, knife flying home, gold tracer).
   - A field can carry a mesh: `"model": { "mesh": "models/knife.obj", "texture": "models/knife.png", "wobble": 14,

@@ -557,24 +557,47 @@ namespace SCClassLoader
         /// "oddsPerTry" likelier and costing "tryCost" stamina, until one lands. Odds = "odds" + your "scale" stats ×
         /// scaleMult − the target's "resistStat" × resistMult. A landed try runs "actions" on the target, none landing
         /// runs "else". Inside a skill the tries come a second apart under a cast bar; from a trigger they roll at once.
+        /// With "together", a skill that hits several targets holds them all in one hold: each beat costs tryCost once
+        /// and rolls every target still held, and a target that's caught drops out while the rest go on.
         /// </summary>
         private static void Attempt(ActionSpec a, ActionContext ctx, Character t)
         {
             if (t == null || t.GetIsDead() || ctx.caster == null) return;
-            if (ctx.paced != null) { ctx.paced.Add(Tries(a, ctx, t, true)); return; }
-            IEnumerator run = Tries(a, ctx, t, false);
+            if (ctx.paced != null)
+            {
+                if (a.together)
+                {
+                    var key = (ctx.paced, a);
+                    if (Holds.TryGetValue(key, out var held)) { if (!held.Contains(t)) held.Add(t); return; }
+                    held = new List<Character> { t };
+                    Holds[key] = held;
+                    ctx.paced.Add(Tries(a, ctx, held, true, key));
+                    return;
+                }
+                ctx.paced.Add(Tries(a, ctx, new List<Character> { t }, true, null));
+                return;
+            }
+            IEnumerator run = Tries(a, ctx, new List<Character> { t }, false, null);
             while (run.MoveNext()) { }
         }
 
-        /// <summary>Tries rolled and holds that landed (tests).</summary>
-        internal static int Attempts, AttemptsWon;
+        /// <summary>Holds of a "together" attempt being gathered while a skill resolves, by its paced list and action.</summary>
+        private static readonly Dictionary<(List<IEnumerator>, ActionSpec), List<Character>> Holds = new Dictionary<(List<IEnumerator>, ActionSpec), List<Character>>();
+
+        /// <summary>Tries rolled, holds that landed, and the most targets one hold had (tests).</summary>
+        internal static int Attempts, AttemptsWon, AttemptsHeld;
 
         internal static float AttemptOdds(ActionSpec a, Character me, Character t, int i) =>
             a.odds + StatBonus(a.scale, a.scaleMult, me) - (string.IsNullOrEmpty(a.resistStat) ? 0f : StatBonus(a.resistStat, a.resistMult, t)) + a.oddsPerTry * i;
 
-        private static IEnumerator Tries(ActionSpec a, ActionContext ctx, Character t, bool paced)
+        private static IEnumerator Tries(ActionSpec a, ActionContext ctx, List<Character> held, bool paced, (List<IEnumerator>, ActionSpec)? key)
         {
+            // the skill has finished gathering targets by the time paced moves run
+            if (key.HasValue) Holds.Remove(key.Value);
             Character me = ctx.caster;
+            var left = held.Where(x => x != null && !x.GetIsDead()).ToList();
+            if (left.Count == 0) yield break;
+            AttemptsHeld = Math.Max(AttemptsHeld, left.Count);
             int tries = a.amount > 0 ? a.amount : 6;
             bool bar = paced && me == Player.instance && Menu_HUD.instance != null;
             if (bar)
@@ -582,34 +605,36 @@ namespace SCClassLoader
                 Menu_HUD.instance.SetCastBarTitle(ctx.sourceName ?? "", Moves.Hex(a.look, Color.cyan));
                 Menu_HUD.instance.StartCoroutine(Menu_HUD.instance.ShowCastBar(tries));
             }
-            if (!string.IsNullOrEmpty(a.sound)) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId);
-            bool won = false;
-            for (int i = 0; i < tries && !won; i++)
+            if (!string.IsNullOrEmpty(a.sound)) ModAudio.Play(a.sound, left[0].GetHitFx().position, ctx.classId);
+            for (int i = 0; i < tries && left.Count > 0; i++)
             {
-                if (t == null || t.GetIsDead() || me == null || me.GetIsDead()) break;
+                left.RemoveAll(x => x == null || x.GetIsDead());
+                if (left.Count == 0 || me == null || me.GetIsDead()) break;
                 if (a.tryCost > 0)
                 {
                     if (me.GetStamina() < a.tryCost) break;
                     me.ModStamina(-a.tryCost);
                 }
-                Attempts++;
-                if (!string.IsNullOrEmpty(a.look)) Moves.Streak(me.GetHitFx().position, t.GetHeadFx().position, Moves.Hex(a.look, Color.white), 0.02f, paced ? 0.9f : 0.3f);
-                won = Random.Range(0, 100) < Mathf.Clamp(Mathf.RoundToInt(AttemptOdds(a, me, t, i)), 0, 100);
-                if (!won && paced && i < tries - 1) yield return new WaitForSeconds(1f);
+                foreach (Character t in left.ToList())
+                {
+                    Attempts++;
+                    if (!string.IsNullOrEmpty(a.look)) Moves.Streak(me.GetHitFx().position, t.GetHeadFx().position, Moves.Hex(a.look, Color.white), 0.02f, paced ? 0.9f : 0.3f);
+                    if (Random.Range(0, 100) >= Mathf.Clamp(Mathf.RoundToInt(AttemptOdds(a, me, t, i)), 0, 100)) continue;
+                    left.Remove(t);
+                    AttemptsWon++;
+                    if (!string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, t.GetHitFx().position);
+                    Game.LOG($"{ctx.sourceName} takes hold of {t.GetName()}.");
+                    var c = Clone(ctx); c.target = t; c.paced = null;
+                    Run(a.actions, c, t);
+                }
+                if (left.Count > 0 && paced && i < tries - 1) yield return new WaitForSeconds(1f);
             }
             if (bar) Menu_HUD.instance.CancelCastBar();
-            if (t == null) yield break;
-            var c = Clone(ctx); c.target = t; c.paced = null;
-            if (won)
+            foreach (Character t in left)
             {
-                AttemptsWon++;
-                if (!string.IsNullOrEmpty(a.vfx)) SpawnVfx(a.vfx, t.GetHitFx().position);
-                Game.LOG($"{ctx.sourceName} takes hold of {t.GetName()}.");
-                Run(a.actions, c, t);
-            }
-            else
-            {
+                if (t == null) continue;
                 Game.LOG($"{t.GetName()} throws off {ctx.sourceName}.");
+                var c = Clone(ctx); c.target = t; c.paced = null;
                 Run(a.@else, c, t);
             }
         }
@@ -1350,9 +1375,10 @@ namespace SCClassLoader
                         string no = Describe(a.@else, classId, who).Replace("• ", "    - ");
                         string odds = $"{a.odds}%{(string.IsNullOrEmpty(a.scale) ? "" : $" + {Mathf.RoundToInt(a.scaleMult * 100)}% of your {a.scale.Replace("+", " and ")}")}"
                             + (string.IsNullOrEmpty(a.resistStat) ? "" : $", less {Mathf.RoundToInt(a.resistMult * 100)}% of its {a.resistStat}");
-                        s = $"Bears down on {who} for up to {n} tr{(n > 1 ? "ies" : "y")}, a second apart, at odds of {odds}"
+                        s = $"Bears down on {(a.together ? $"{who}, all at once," : who)} for up to {n} tr{(n > 1 ? "ies" : "y")}, a second apart, at odds of {odds}"
                             + (a.oddsPerTry != 0 ? $", {a.oddsPerTry:+#;-#}% each try after" : "")
-                            + (a.tryCost > 0 ? $"; each try costs {a.tryCost} {StatObj.GetStatString(STAT_TYPE.Stamina)} and it stops when you can't pay" : "")
+                            + (a.tryCost > 0 ? $"; each try costs {a.tryCost} {StatObj.GetStatString(STAT_TYPE.Stamina)}{(a.together ? " however many it holds" : "")} and it stops when you can't pay" : "")
+                            + (a.together ? "; each one caught drops out while the rest are held" : "")
                             + $".\n  If one lands:\n{(yes.Length > 0 ? yes : "    - nothing")}" + (no.Length > 0 ? $"\n  If none does:\n{no}" : "");
                         return "• " + (a.chance < 100 ? $"{a.chance}%: " : "") + s;
                     }
