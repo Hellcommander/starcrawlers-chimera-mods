@@ -52,6 +52,8 @@ namespace SCClassLoader
         public List<IEnumerator> paced;
         /// <summary>Tiles the last "rush" in this cast covered ("value:rushed").</summary>
         public int rushed;
+        /// <summary>Tiles "clearHazards" has cleared so far in this cast ("value:cleared").</summary>
+        public int cleared;
     }
 
     /// <summary>Runs ActionSpecs and writes their rules text. Shared by abilities, procs and effects.</summary>
@@ -176,6 +178,7 @@ namespace SCClassLoader
                 case "arm": Reactions.Arm(a, ctx); break;
                 case "spring": Reactions.Spring(ctx); break;
                 case "hazard": GroundFields.LayHazard(a, ctx, t); break;
+                case "clearhazards": HazardRules.Clear(a, ctx, t); break;
                 case "field": GroundFields.Lay(a, ctx, t); break;
                 case "trap": Traps.Lay(a, ctx, t); break;
                 case "springtraps": Traps.Spring(a, ctx); break;
@@ -400,7 +403,7 @@ namespace SCClassLoader
             // counts read as the thing counted: "+3 per enemy within 4 of you"
             string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
                 : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
-                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed" : head == "rounds" ? "round the shot fired"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed" : head == "cleared" ? "tile cleared" : head == "rounds" ? "round the shot fired"
                 : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
             if (one != null) return div != null ? $"{div} (counting each {one})" : one;
             string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
@@ -1239,7 +1242,7 @@ namespace SCClassLoader
                             $"Strikes {who}, then jumps to up to {a.jumps} nearby {link}{(a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "")}:\n{inner}";
                         break;
                     }
-                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
+                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.chaos ? ", fighting everyone near it, you included" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
                 case "corpses":
                     {
                         string many = a.amount > 0 ? $"up to {a.amount} {(a.amount == 1 ? "corpse" : "corpses")}" : "every corpse";
@@ -1342,6 +1345,7 @@ namespace SCClassLoader
                 case "arm": s = a.reaction != null ? Reactions.Describe(a.reaction, classId) : "Arms nothing"; break;
                 case "spring": s = "Every armed reaction goes off once right now at the nearest enemy it can reach, spending a charge"; break;
                 case "hazard": s = $"Leaves {GroundFields.HazardName(a.hazard)} on the floor{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
+                case "clearhazards": s = $"Puts out {(string.IsNullOrEmpty(a.hazard) || a.hazard.Equals("all", StringComparison.OrdinalIgnoreCase) ? "fire, acid and other harmful ground" : GroundFields.HazardName(a.hazard).ToLowerInvariant())}{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
                 case "field":
                     {
                         string aff = (a.affects ?? "enemies").ToLowerInvariant() switch { "allies" => "allies", "all" => "anyone", _ => "enemies" };
@@ -1539,7 +1543,23 @@ namespace SCClassLoader
 
         public static string DescribeProc(ProcSpec p, string classId, int chanceBonus)
         {
-            string when = (p.on ?? "").ToLowerInvariant() switch
+            string when = ProcWhen(p, classId);
+            int chance = Math.Min(100, p.chance + chanceBonus);
+            if (p.when != null) { string c = When.Describe(p.when, classId); if (c.Length > 0) when += $", if {c}"; }
+            if (p.every > 1) when = $"every {p.every}{Ordinal(p.every)} time {when.Replace("when ", "").Replace("each turn", "a turn passes")}";
+            var limits = new List<string>();
+            if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
+            if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
+            if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
+            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") : DefaultProcWho(p.on);
+            string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";
+            return head + "\n" + Describe(p.actions, classId, who);
+        }
+
+        /// <summary>A trigger in words: "when you kill", "each turn".</summary>
+        internal static string ProcWhen(ProcSpec p, string classId)
+        {
+            return (p.on ?? "").ToLowerInvariant() switch
             {
                 "hit" => "when you hit",
                 "kill" => "when you kill",
@@ -1595,16 +1615,6 @@ namespace SCClassLoader
                 "chain" => "when one of your chains jumps to another enemy",
                 _ => PluginHost.EventText(p.on) ?? p.on,
             };
-            int chance = Math.Min(100, p.chance + chanceBonus);
-            if (p.when != null) { string c = When.Describe(p.when, classId); if (c.Length > 0) when += $", if {c}"; }
-            if (p.every > 1) when = $"every {p.every}{Ordinal(p.every)} time {when.Replace("when ", "").Replace("each turn", "a turn passes")}";
-            var limits = new List<string>();
-            if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
-            if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
-            if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
-            string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") : DefaultProcWho(p.on);
-            string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";
-            return head + "\n" + Describe(p.actions, classId, who);
         }
 
         public static string DefaultProcWho(string on) => (on ?? "").ToLowerInvariant() switch

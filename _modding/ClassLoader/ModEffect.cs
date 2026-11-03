@@ -673,6 +673,14 @@ namespace SCClassLoader
 
         internal int AmmoSaveOdds { get { Bind(); return (rt?.spec.ammoSave ?? 0) * Math.Max(1, Stacks); } }
 
+        /// <summary>This effect's "hazardRules", each with the stacks it counts for.</summary>
+        internal IEnumerable<(HazardRuleSpec, int)> HazardRules()
+        {
+            Bind();
+            if (rt?.spec.hazardRules == null) yield break;
+            foreach (HazardRuleSpec r in rt.spec.hazardRules) if (r != null) yield return (r, Math.Max(1, Stacks));
+        }
+
         internal float OffhandPower { get { Bind(); return (rt?.spec.offhandPower ?? 0f) * Math.Max(1, Stacks); } }
 
         /// <summary>This effect's "keepItem" chance for a consumable being used (0 when it doesn't match).</summary>
@@ -722,6 +730,7 @@ namespace SCClassLoader
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
             if (AmmoSaveOdds > 0) lines.Add($"{AmmoSaveOdds}% chance each round your guns fire goes back into the load");
             if ((s.grantTags?.Count ?? 0) > 0) lines.Add(string.Join("; ", s.grantTags.Select(TagWords)));
+            foreach (var (r, n) in HazardRules()) { string w = SCClassLoader.HazardRules.Describe(r, n); if (w.Length > 0) lines.Add(w); }
             if (s.breakOnHurt) lines.Add("<b>Breaks when the bearer is hurt</b>" + ((s.onBreakActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onBreakActions, rt.classId, "the bearer") : "."));
             if ((s.hazardProof?.Count ?? 0) > 0) lines.Add(s.hazardProof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase)) ? "No harm from hazards"
                 : "No harm from " + string.Join(", ", s.hazardProof.Select(p => p.Replace("HAZARD_", "").Replace('_', ' ').ToLowerInvariant())));

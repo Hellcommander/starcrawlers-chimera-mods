@@ -34,6 +34,7 @@ namespace SCClassLoader
         {
             if (Actions.ProcDepth > 0 || Player.instance == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
             PluginHost.Fire(on, Player.instance, other, detail, ally); // first, so procs see what a plugin keeps up to date
+            ModAbility.CountTrigger(on);
             if (EventBus.On && !EventBus.Listens(Player.instance, on)) return;
             try
             {

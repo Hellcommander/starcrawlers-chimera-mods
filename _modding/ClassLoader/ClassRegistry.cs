@@ -439,6 +439,7 @@ namespace SCClassLoader
             s.target = (s.target ?? "enemy").ToLowerInvariant();
             foreach (ActionSpec a in AllActionsOf(s)) a.@do = (a.@do ?? "").ToLowerInvariant();
             foreach (ProcSpec p in (s.procs ?? new List<ProcSpec>()).Concat(s.perk?.addProcs ?? new List<ProcSpec>())) p.on = (p.on ?? "").ToLowerInvariant();
+            if (!string.IsNullOrEmpty(s.cooldownOn)) ModAbility.CooldownTriggers.Add(s.cooldownOn = s.cooldownOn.ToLowerInvariant());
             SkillMods.Normalize(s.modifies, classId);
         }
 

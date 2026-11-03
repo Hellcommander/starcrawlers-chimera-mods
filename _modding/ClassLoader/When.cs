@@ -294,6 +294,7 @@ namespace SCClassLoader
                     }
                 case "turnsincombat": return Counters.TurnsInCombat;
                 case "rushed": return ctx.rushed;
+                case "cleared": return ctx.cleared;
                 case "rounds": return Triggers.Rounds;
                 case "wallsnear": return who == null ? (float?)null : Walls.Count(who);
                 default:
@@ -417,7 +418,7 @@ namespace SCClassLoader
         {
             if (PluginHost.HasValue(v)) return true;
             string k = v.Split(':')[0].ToLowerInvariant();
-            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons" || k == "rushed" || k == "rounds";
+            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons" || k == "rushed" || k == "cleared" || k == "rounds";
         }
 
         private static string Num(float v, string value) => value.EndsWith("%") ? $"{v:0.#}%" : v.ToString("0.#", CultureInfo.InvariantCulture);
@@ -451,6 +452,7 @@ namespace SCClassLoader
                 case "distance": return "distance to the target";
                 case "turnsincombat": return "turns in this fight";
                 case "rushed": return "tiles you rushed";
+                case "cleared": return "tiles cleared";
                 case "rounds": return "rounds the shot fired";
                 case "wallsnear": return "walls beside";
                 default: return Enum.TryParse(k, true, out STAT_TYPE st) ? StatObj.GetStatString(st) : k;

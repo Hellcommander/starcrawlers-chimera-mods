@@ -42,6 +42,7 @@ namespace SCClassLoader
 
         public override void ReduceCooldown(int amount)
         {
+            if (TurnTick && !string.IsNullOrEmpty(Spec?.cooldownOn)) return; // "cooldownOn": turns don't count, the trigger does
             string hold = TurnTick ? Spec?.cooldownWhile : null;
             Character who = caster != null ? caster : Player.instance;
             if (!string.IsNullOrEmpty(hold) && who != null && Actions.StacksOn(who, Actions.EffectId(hold, ClassId)) > 0) return;
@@ -637,6 +638,29 @@ namespace SCClassLoader
 
         private List<ProcSpec> perkedProcs;
 
+        /// <summary>The triggers some loaded skill's "cooldownOn" counts, so other triggers needn't walk your skills.</summary>
+        internal static readonly HashSet<string> CooldownTriggers = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>"cooldownOn": a trigger fired for you; each skill counting it takes one off its cooldown.</summary>
+        internal static void CountTrigger(string on)
+        {
+            if (!CooldownTriggers.Contains(on) || Player_AbilityControl.instance == null) return;
+            bool turn = TurnTick;
+            TurnTick = false; // a trigger fired inside the turn's own count still counts
+            try
+            {
+                foreach (Ability a in Player_AbilityControl.instance.GetAbilities())
+                {
+                    if (!(a is ModAbility m) || !string.Equals(m.Spec?.cooldownOn, on, System.StringComparison.OrdinalIgnoreCase) || m.GetCooldownAmount() <= 0) continue;
+                    m.ReduceCooldown(1);
+                    if (m.GetCooldownAmount() > 0) continue;
+                    Game.LOG($"<color=#FFD15C>{m.GetDisplayName()} is ready again!</color>");
+                    if (Menu_HUD.instance != null) Menu_HUD.instance.Refresh_Cooldown();
+                }
+            }
+            finally { TurnTick = turn; }
+        }
+
         internal void HandleProc(string on, Character other)
         {
             List<ProcSpec> procs = Procs;
@@ -742,6 +766,7 @@ namespace SCClassLoader
                 if (s.instant) info.Add("instant");
                 if (s.resetOnKill) info.Add("<color=#FFD15C>a kill makes it ready again</color>");
                 if (s.ammoMult > 0f && !Mathf.Approximately(s.ammoMult, 1f)) info.Add($"each shot spends {s.ammoMult:0.##}x your gun's rounds{(s.ammoMult > 1f ? ", each adding its ammo damage" : "")}");
+                if (!string.IsNullOrEmpty(s.cooldownOn) && cooldown > 0) info.Add($"<color=#FFD15C>turns don't cool it down: each time {Actions.ProcWhen(new ProcSpec { on = s.cooldownOn }, rt.classId).Replace("when ", "").Replace("each turn", "a turn passes")} counts one</color>");
                 if (!string.IsNullOrEmpty(s.cooldownWhile)) info.Add($"its cooldown waits while you have {Actions.EffectNameOf(s.cooldownWhile, rt.classId)}");
                 if (IsCommand) info.Add("a command (usable in any transformation)");
                 if (!string.IsNullOrEmpty(s.ifSkill)) info.Add($"<color=#7FE0A0>from your {Synergies.TreeNames(s.ifSkill)} training</color>");

@@ -99,6 +99,7 @@ is built this way.
     "staminaCost": 12, "cooldown": 0, "instant": false, "dodgeable": false, "melee": false,
     "resetOnKill": false,        // true = a kill with it makes it ready again
     "cooldownWhile": "@Stance",  // the cooldown doesn't count down while you carry this effect (stances, shields)
+    "cooldownOn": "kill",        // the cooldown counts this trigger instead of turns (see Held cooldowns)
     "ammoMult": 1.5,             // its gun shots spend 1.5x the gun's rounds, rounded up (see Ammo)
     "castVfx": "PA_Psykonics_Temporal.castParticle",                 // borrowed vanilla particles,
     "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",       // see vanilla_reference.txt; "name@0.5" = half size
@@ -229,7 +230,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:rounds"` (rounds the shot fired, in an `ammo` proc). A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:cleared"` (tiles its `clearHazards` cleared), `"value:rounds"` (rounds the shot fired, in an `ammo` proc). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -257,6 +258,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - `"stacksOf": "summons"` counts your living minions, so `bonusPerStack` can scale with the size of your army.
 - `"hostile": true` brings the summon in against you every time (an `anySide` one only when the coin goes that way):
   something a curse lets loose, a price paid in enemies.
+- `"chaos": true` brings it in on the chaos side, the game's own side for loose nanite clouds: it fights whoever is
+  near, you, your summons and your enemies alike, and they all fight it. Like a hostile one it gives no xp, `"maxSummons"`
+  (default 3) caps how many are out, and it goes when its `"turns"` end: a thing let out of a jar, a rift that bites
+  both ways.
 - `"to": "summons"` runs an action on every living pet (or only those matching `ifSummonAlive`), e.g. a buff for
   the whole swarm.
 - `{ "do": "order", "pets": "group:ScrapDrones", "actions": [ ... ] }` has each matching summon carry out the nested
@@ -498,6 +503,19 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Hazard proof.** An effect's `"hazardProof": [ "HAZARD_Fire", "HAZARD_Acid" ]` (or `[ "all" ]`) stops those floor
   hazards' damage on its bearer. An id also covers its kin (`HAZARD_Fire` stops `HAZARD_Fire_Mini`); what a hazard puts
   on you is stopped with `immune` as usual. Hits from skills of the same damage type still land.
+- **Hazard rules.** An effect on you can change how the floor's damaging hazards (fire, acid, gas, ...) behave while
+  it lasts, wherever they are and whoever laid them, as the game's Pyromaniac makes every fire spread:
+  `"hazardRules": [ { "hazard": "HAZARD_Fire", "spread": 20, "damage": 0.25 } ]`.
+  - `"hazard"`: an id (covering its kin, as in `hazardProof`) or `"all"`.
+  - `"spread"`: % chance, per stack, that each such hazard creeps onto a free tile beside it each turn, on top of its
+    own spreading. Hazards that never spread start to. Only hazards that run out spread, and the new tile gets half to
+    all of the turns the old one had left, as the game's own spread does. Walls, closed doors and hidden tiles stop it.
+  - `"damage"`: added to the share of damage it deals on tiles where only your enemies stand (0.25 = a quarter more),
+    per stack. You and your summons take its usual damage; pair it with `hazardProof` to walk through your own fire.
+- **Clearing hazards.** `{ "do": "clearHazards", "radius": 2 }` puts out the damaging hazards on the tiles around the
+  cast's aim point (or the target), or under the target without a radius; `"hazard": "HAZARD_Fire"` clears only that
+  kind. Traps and mines stay. `"value:cleared"` counts the tiles cleared for the actions after it:
+  `{ "do": "heal", "to": "self", "amount": 0, "stacksOf": "value:cleared", "bonusPerStack": 3 }` drinks the fire in.
 - **Hit filters.** `"dealtWith"` and `"takenFrom"` on an effect limit its `damageDealtMult` / `damageTakenMult` to some
   hits: `"melee"`, `"ranged"` (by the skill or attack the hit came from; damage over time and hazards are neither),
   `"attack"` (a weapon attack), `"skill"` or `"item"` (grenades and other consumables), `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
@@ -506,7 +524,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   a brawler's stance.
 - **Held cooldowns.** `"cooldownWhile": "@Stance"` on an ability stops its cooldown counting down while you carry that
   effect, so a stance, form or shield can't be used again until it has ended and its cooldown has run. Skills that cut
-  cooldowns still work on it.
+  cooldowns still work on it. `"cooldownOn": "kill"` makes the cooldown count a trigger instead of turns: turns
+  passing don't cool it down, and each time the trigger fires for you takes one off. Any trigger name works (`kill`,
+  `crit`, `dodge`, `block`, ...); `"cooldown": 1` with `"cooldownOn": "kill"` is ready again after your next kill,
+  whatever made it, and `"cooldown": 3` with `"crit"` after three critical hits.
 - **Breaking effects.** `"breakOnHurt": true` on an effect ends it the moment its bearer takes damage (true damage
   doesn't count; it skips every effect). `"onBreakActions"` run on the bearer as it breaks, or on you with
   `"to": "self"`: a camouflage that drops, a crystal shell that bursts, a trance that snaps.

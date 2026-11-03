@@ -224,6 +224,10 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     attacks.
   - Ammo: skills take `ammoMult` for shots that spend more rounds, effects take `ammoSave` for a chance a round isn't
     spent, and an `ammo` trigger fires per shot with `value:rounds`.
+  - Effects take `hazardRules`, so the floor's fire, acid and other hazards spread more or hurt your enemies more
+    while you carry them, whoever laid them, and `clearHazards` puts hazards out, with `value:cleared` for what follows.
+  - Summons take `chaos` to arrive on the chaos side, fighting you and your enemies alike.
+  - Skills take `cooldownOn` to cool down by a trigger, such as kills, instead of by turns.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,
   as documented, instead of 1. Gloomspore Warden's and Tidewright's stamina refunds no longer give 1 extra, and the
   rules text reads "1 per ..." instead of "0, +1 per ...".

@@ -41,6 +41,10 @@ namespace SCClassLoader
         /// <summary>The cooldown doesn't count down while you carry this effect ("@Stance"): a stance, form or shield that
         /// can't be used again until it has ended and its cooldown run. Other skills that cut cooldowns still do.</summary>
         public string cooldownWhile;
+        /// <summary>The cooldown counts this trigger ("kill", "crit", "dodge", ... any proc "on") instead of turns: each
+        /// time it fires for you the cooldown drops by one, and turns passing don't count. Cooldown 1 + "kill": ready
+        /// again after your next kill, whatever made it.</summary>
+        public string cooldownOn;
         /// <summary>When this skill fires your gun (a channel, or a rewrite that shoots), each shot spends this many
         /// times the gun's rounds, rounded up (1.5: a burst; 2: a double load). Each extra round also adds the ammo's
         /// damage, as in the game's Suppression. The skill can't be used without the rounds.</summary>
@@ -415,6 +419,9 @@ namespace SCClassLoader
         public string pets;
         /// <summary>summon: a coin toss decides whose side it arrives on. Against you it gives no xp and goes when its turns end.</summary>
         public bool anySide;
+        /// <summary>summon: it arrives on the chaos side, the game's own side for loose nanite clouds: it fights everyone
+        /// near it, you, your summons and your enemies alike, and they fight it. It gives no xp and goes when its turns end.</summary>
+        public bool chaos;
         /// <summary>surge: what it is called in the log ("Thundercrunch, Doctor Cerberus's").</summary>
         public string surgeName;
         /// <summary>surge: % chance it lands on you instead of the target; your Crit (luck) takes half of itself off it,
@@ -641,6 +648,8 @@ namespace SCClassLoader
         /// <summary>% chance, per stack, that each round your guns spend goes back into the load (the shot still has
         /// its full damage). On the crawler only.</summary>
         public int ammoSave;
+        /// <summary>Rules for the floor's damaging hazards while this is on the crawler, whoever laid them (see HazardRuleSpec).</summary>
+        public List<HazardRuleSpec> hazardRules;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;
