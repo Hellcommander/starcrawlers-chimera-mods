@@ -6,6 +6,9 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ## Unreleased
 
+- The Example Script mod (the Spark Tinker) is off by default, like the Example Plugin. Turn it on in the mod manager.
+- Scrap from kills only comes while a Spark Tinker is in the party. It used to pay every party with the mod on.
+- Scripts: `game.has_class(id)` says whether anyone in the party has a class.
 - Five new orders for crew, pets and summons: **Kite** (keep their distance), **Shield** (stand between you and the
   nearest enemy), **Flank** (go round your target to its far side), **Draw fire** (taunt the enemy that's after you
   onto themselves) and **Scatter** (never stand next to each other or you). The order strip shows its orders in rows

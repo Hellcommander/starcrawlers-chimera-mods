@@ -4,7 +4,8 @@
   "author": "Arendeth",
   "version": "2.0.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
-  "description": "The Spark Tinker, a class whose skills come from a Lua script: the worked example of a script mod, with its scripts in scripts/. Safe to delete.",
+  "description": "The Spark Tinker, a class whose skills come from a Lua script: the worked example of a script mod, with its scripts in scripts/. Off by default. Safe to delete.",
+  "enabled": false,
   "requires": [
     "Library"
   ]

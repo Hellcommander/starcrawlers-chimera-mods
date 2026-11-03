@@ -476,6 +476,8 @@ namespace SCClassLoader
         public int api_level => Api.Level;
         public string loader_version => Api.LoaderVersion;
         public bool mod_loaded(string id) => Api.ModLoaded(id);
+        /// <summary>Does anyone in the party have this class (its id, as the class file writes it)?</summary>
+        public bool has_class(string id) => !string.IsNullOrEmpty(id) && ClassLoot.PartyTrees().Contains(id);
 
         // ---- who is where
 

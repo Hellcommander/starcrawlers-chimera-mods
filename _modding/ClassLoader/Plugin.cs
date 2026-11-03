@@ -326,6 +326,7 @@ namespace SCClassLoader
             else if (dev == "plugins") Instance.StartCoroutine(DevTestPlugins.Run());
             else if (dev == "plugins2") Instance.StartCoroutine(DevTestPlugins.RunAllowed());
             else if (dev == "scripts") Instance.StartCoroutine(DevTestScripts.Run());
+            else if (dev == "scripts2") Instance.StartCoroutine(DevTestScripts.RunLoaded());
             else if (dev == "plugins3") Instance.StartCoroutine(DevTestPlugins.RunReloaded());
             else if (dev == "mods") Instance.StartCoroutine(DevTestMods.Run());
             else if (dev == "mods2") Instance.StartCoroutine(DevTestMods.RunAfterRestart());

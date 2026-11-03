@@ -55,8 +55,9 @@ end, { describe = function(spec, who) return "Spends your charges: " .. spec.amo
 -- A number for value checks: the scrap salvaged this run.
 mod.value("salvaged", function(call, who) return mod.saved("salvaged", 0) end, "the scrap you have salvaged")
 
--- Every kill pays scrap by creature kind and goes in the tally saved with the run.
+-- Every kill pays scrap by creature kind and goes in the tally saved with the run, while a Spark Tinker is in the party.
 mod.on("kill", function(e)
+  if not game.has_class("MOD_SparkTinker") then return end
   mod.save("salvaged", mod.saved("salvaged", 0) + 1)
   local credits = e.other and prices[e.other.kind]
   if credits then

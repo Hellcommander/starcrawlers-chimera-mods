@@ -2472,7 +2472,7 @@ folder that add new actions, conditions, numbers, events and kinds of content, r
 reach into the world (who is where, health, effects, items, credits, text and sound). Class, item and enemy files use
 what a script registers by name, just as they use a plugin's. `Mods/ExampleScript/` is a complete worked example: the
 Spark Tinker class (`spark_tinker.json`), its scripts (`scripts/spark_tinker.lua`, `scripts/util.lua`) and a data file
-for them (`scrap_prices.json`).
+for them (`scrap_prices.json`). It's off by default.
 
 Scripts are **sandboxed**, so unlike a dll they load without the player's OK: a script reaches the game only through
 the `mod` and `game` tables below. It has no access to files, the internet, the operating system or the game's own
@@ -2555,6 +2555,7 @@ the target. An event handler gets `e.name`, `e.bearer`, `e.other`, `e.ally`, `e.
 | `game.text(text, at)`, `game.notify(text)`, `game.message(text)` | Floating text at a point, in the middle of the screen, or a line in the message log. Rich text works. |
 | `game.random()`, `game.random(n)`, `game.random(min, max)`, `game.chance(percent)` | A float in [0, 1), 1..n, min..max, or a percent roll. |
 | `game.mod_loaded(id)`, `game.api_level`, `game.loader_version` | |
+| `game.has_class(id)` | Whether anyone in the party (you, or another Conjoined body) has that class, by the id in its class file. Check it in hooks that should only run for your class's players. |
 
 ### Actors: characters as a script sees them
 
