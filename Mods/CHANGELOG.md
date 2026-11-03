@@ -4,9 +4,9 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.0.2 (2026-11-03)
 
-### Classes
+### Class changes
 
 - **Axiomancer's** shield pool refilled faster than any health regen: First Principles gave 1 shield point every
   turn, about 2 with starting Smarts and Psi Power, on top of its Shield Regen. That flat refill is gone, and the
@@ -17,12 +17,15 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   - Refutation recharges 1 instead of 2, so a refuted small hit can no longer leave you with more shield than before.
   - Quiet Mind's Wait refills 1 plus 10% of Smarts instead of 2 plus 20%.
 
-### Fixes
+### Vanilla bug fixes
 
 - **ShieldRegenPastCap** (`[Fixes]`, on): Shield Regen past every turn now counts, like Health Regen past 7. Every 5
   points past it refill 1 more shield per turn. Before, more did nothing, and a total pushed past it refilled every 8
   turns or never.
-- **Modding:** an effect's `"steadyShield": true` keeps hits from restarting its bearer's Shield Regen count.
+
+### Modding
+
+- An effect's `"steadyShield": true` keeps hits from restarting its bearer's Shield Regen count.
 
 ## 2.0.1 (2026-11-03)
 

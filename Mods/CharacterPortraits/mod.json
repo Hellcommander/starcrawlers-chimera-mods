@@ -2,7 +2,7 @@
   "id": "CharacterPortraits",
   "name": "Character Portrait Tools",
   "author": "Arendeth",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Adds Make Portrait to the character picture picker: your classes, skills and gear go to the portrait tool the Tool setting picks, and the picture lands on your character. By default the game renders your character in their real gear on the GPU, with no AI model; the AI asset toolkit and other tools work too. Off by default.",
   "enabled": false,
