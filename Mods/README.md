@@ -492,7 +492,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   on you is stopped with `immune` as usual. Hits from skills of the same damage type still land.
 - **Hit filters.** `"dealtWith"` and `"takenFrom"` on an effect limit its `damageDealtMult` / `damageTakenMult` to some
   hits: `"melee"`, `"ranged"` (by the skill or attack the hit came from; damage over time and hazards are neither),
-  `"attack"` (a weapon attack) or `"skill"`, `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
+  `"attack"` (a weapon attack), `"skill"` or `"item"` (grenades and other consumables), `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
   swing, or a skill that swings your off-hand weapon) or damage types, joined with `|`. `{ "damageTakenMult": 0.5, "takenFrom": "ranged" }` is a deflector field,
   `{ "damageTakenMult": 0.6, "takenFrom": "Fire|Cryo" }` insulation, `{ "damageDealtMult": 1.3, "dealtWith": "melee" }`
   a brawler's stance.
@@ -514,6 +514,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - **Off-hand power.** An effect's `"offhandPower": 0.25` adds 25% of the weapon's roll to what your off-hand weapon
   deals (the game's base is 50%), per stack, for the attack's off-hand swing and for skills that swing the off-hand
   weapon alike. Pair it with `"dealtWith": "offhand"` for a dual-wielder's stance.
+- **Thrift.** An effect's `"keepItem": 25` gives a 25% chance (per stack; several effects add up) that a consumable you
+  use isn't used up. The use still goes through, cooldown and all. `"keepItemMatch": "CHEM|GRENADE"` narrows it to
+  items carrying one of those tags, or whose id or name contains one.
 - **Model animation.** Besides `bob` and `spin`, a model takes `wobble` (degrees of rocking that settles after it
   appears), `pulse` (breathing in size, 0.1 = ±10%) and `randomYaw` (each copy turned differently).
 - `Mods/Kinetics/` has seven Muscle and Guile classes built on these: Grappler, Rig Jockey (hardpoints are rune

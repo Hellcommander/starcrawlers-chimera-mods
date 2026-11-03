@@ -375,6 +375,31 @@ namespace SCClassLoader
             private static void Prefix(Item_Consumable __instance) => ProcHub.Fire("useitem", null, ItemDetail(__instance));
         }
 
+        /// <summary>Effects' "keepItem": a roll before the item is spent; on a success the use goes through (its cooldown
+        /// and discovery too) and the item stays.</summary>
+        [HarmonyPatch(typeof(Item_Consumable), nameof(Item_Consumable.UseComplete))]
+        private static class Patch_KeepItem
+        {
+            private static void Prefix(Item_Consumable __instance, out bool __state)
+            {
+                __state = false;
+                Player p = Player.instance;
+                if (p?.effects == null || __instance == null || !__instance.onUse_consume || !__instance.inPlayerInventory) return;
+                int odds = 0;
+                foreach (Effect e in p.effects.GetEffects())
+                    if (e is ModEffect m) odds += m.KeepItemOdds(__instance);
+                if (odds <= 0 || UnityEngine.Random.Range(1, 101) > odds) return;
+                __instance.onUse_consume = false;
+                __state = true;
+                Game.LOG($"<color=#FFD15C>{System.Text.RegularExpressions.Regex.Replace(__instance.GetName(false), "<.*?>", "")} isn't used up.</color>");
+            }
+
+            private static void Postfix(Item_Consumable __instance, bool __state)
+            {
+                if (__state && __instance != null) __instance.onUse_consume = true;
+            }
+        }
+
         [HarmonyPatch(typeof(Item_Equipment), nameof(Item_Equipment.OnEquip))]
         private static class Patch_Equip
         {

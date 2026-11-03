@@ -586,7 +586,8 @@ namespace SCClassLoader
                 if (k.Equals("melee", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isMelee) return true; }
                 else if (k.Equals("ranged", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isRanged && !by.isMelee) return true; }
                 else if (k.Equals("attack", StringComparison.OrdinalIgnoreCase)) { if (by is PA_AutoAttack) return true; }
-                else if (k.Equals("skill", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack)) return true; }
+                else if (k.Equals("skill", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() == null) return true; }
+                else if (k.Equals("item", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() != null) return true; }
                 else if (k.Equals("offhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == true) return true; }
                 else if (k.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == false) return true; }
                 else if (Enum.TryParse(k, true, out DAMAGE_TYPE t) && d.dmgType == t) return true;
@@ -615,6 +616,7 @@ namespace SCClassLoader
                     case "melee": case "ranged": return w.ToLowerInvariant() + " hits";
                     case "attack": return "weapon attacks";
                     case "skill": return "skills";
+                    case "item": return "grenades and other items";
                     case "offhand": return "off-hand swings";
                     case "mainhand": return "main-hand swings";
                     default: return w;
@@ -625,6 +627,17 @@ namespace SCClassLoader
         }
 
         internal float OffhandPower { get { Bind(); return (rt?.spec.offhandPower ?? 0f) * Math.Max(1, Stacks); } }
+
+        /// <summary>This effect's "keepItem" chance for a consumable being used (0 when it doesn't match).</summary>
+        internal int KeepItemOdds(Item it)
+        {
+            Bind();
+            if (rt == null || rt.spec.keepItem <= 0 || it == null) return 0;
+            string m = rt.spec.keepItemMatch;
+            if (!string.IsNullOrEmpty(m) && !m.Split('|').Select(x => x.Trim()).Any(x => x.Length > 0 && (it.HasTag(x) || it.HasTag(x.ToUpperInvariant())
+                || it.itemId.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0 || it.GetName(false).IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))) return 0;
+            return rt.spec.keepItem * Math.Max(1, Stacks);
+        }
 
         public override void Clear()
         {
@@ -657,6 +670,7 @@ namespace SCClassLoader
             if (s.staminaPerTurn != 0) lines.Add($"{s.staminaPerTurn:+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
             if (DealtMult != 1f) lines.Add($"Deals {Mathf.RoundToInt((DealtMult - 1f) * 100):+#;-#}% damage{HitWords(s.dealtWith, true)}");
             if (TakenMult != 1f) lines.Add($"Takes {Mathf.RoundToInt((TakenMult - 1f) * 100):+#;-#}% damage{HitWords(s.takenFrom, false)}");
+            if (s.keepItem > 0) lines.Add($"{s.keepItem * Math.Max(1, Stacks)}% chance a {(string.IsNullOrEmpty(s.keepItemMatch) ? "consumable" : string.Join(" or ", s.keepItemMatch.Split('|').Select(x => x.Trim().ToLowerInvariant())) + " item")} you use isn't used up");
             if (OffhandPower != 0f) lines.Add($"Off-hand swings deal {(OffhandPower > 0f ? "an extra " : "")}{Mathf.RoundToInt(Mathf.Abs(OffhandPower) * 100)}% of the weapon's roll {(OffhandPower > 0f ? "on top of" : "less than")} the usual 50%");
             if (s.breakOnHurt) lines.Add("<b>Breaks when the bearer is hurt</b>" + ((s.onBreakActions?.Count ?? 0) > 0 ? ":\n" + Actions.Describe(s.onBreakActions, rt.classId, "the bearer") : "."));
             if ((s.hazardProof?.Count ?? 0) > 0) lines.Add(s.hazardProof.Any(p => p.Equals("all", StringComparison.OrdinalIgnoreCase)) ? "No harm from hazards"

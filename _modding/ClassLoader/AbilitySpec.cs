@@ -624,6 +624,11 @@ namespace SCClassLoader
         /// <summary>Added to the share of a roll your off-hand weapon deals (the game's base is 0.5): 0.25 = off-hand swings
         /// at 75%. Per stack. On the crawler only.</summary>
         public float offhandPower;
+        /// <summary>% chance a consumable you use isn't spent (per stack, the chances of several effects add up). On the
+        /// crawler only. keepItemMatch narrows it to items carrying that tag ("CHEM", "GRENADE") or whose id or name
+        /// contains it; several joined with "|".</summary>
+        public int keepItem;
+        public string keepItemMatch;
         /// <summary>Added to the damage multipliers per stack: -0.12 = 12% less damage dealt for each stack.</summary>
         /// <summary>The bearer gets this share of its owner's attributes (whoever applied it), kept current every turn.</summary>
         public float ownerShare;
