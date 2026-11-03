@@ -216,6 +216,8 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     and other consumables (which `skill` no longer counts).
   - Tree specs (`ifSkill`, conditions, `rank:`, synergy trees) take `archetype:Muscle`, `archetype:Guile` or
     `archetype:Intellect` for any other class of that archetype.
+  - `rush` runs you the way you face (or back, or sideways) until a wall, door or body stops you, hits an enemy you run
+    into, and `value:rushed` scales that hit by the tiles covered.
 - Rules text no longer ends a nested list with two full stops, and wall conditions read as a sentence ("the target has
   at least 1 wall beside it").
 - Conjoined's bodies are a `"bodies"` block any class can use, with `joinTiers` and a `strain` effect.

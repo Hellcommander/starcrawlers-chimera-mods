@@ -327,6 +327,8 @@ namespace SCClassLoader
         /// <summary>warp: where it lands - "behind" (you, on the far side of the target), "random" (the target, a random
         /// free tile within amount), "away" (the target, the free tile within amount farthest from you).</summary>
         public string warpTo;
+        /// <summary>rush: which way you go from the way you face - "forward" (default), "back", "left" or "right".</summary>
+        public string direction;
         /// <summary>show: seconds the model stays up (default 0.8); "showStyle": "pop" (default) or "snap" (jaws closing).</summary>
         public float showTime;
         public string showStyle;

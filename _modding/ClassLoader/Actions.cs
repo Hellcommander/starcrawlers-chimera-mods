@@ -50,6 +50,8 @@ namespace SCClassLoader
         /// <summary>Moves that play out over time (a leaping chain's hops). The ability waits for them before its own
         /// self actions; null = run everything at once (procs, effects).</summary>
         public List<IEnumerator> paced;
+        /// <summary>Tiles the last "rush" in this cast covered ("value:rushed").</summary>
+        public int rushed;
     }
 
     /// <summary>Runs ActionSpecs and writes their rules text. Shared by abilities, procs and effects.</summary>
@@ -160,6 +162,7 @@ namespace SCClassLoader
                 case "pull": Pull(a, ctx, t); break;
                 case "throw": Moves.Throw(a, ctx, t); break;
                 case "leap": Moves.Leap(a, ctx, t); break;
+                case "rush": Moves.Rush(a, ctx, t); break;
                 case "warp": Moves.Warp(a, ctx, t); break;
                 case "show": Moves.Show(a, ctx, t); break;
                 case "tether": Moves.Tether(a, ctx, t); break;
@@ -395,7 +398,7 @@ namespace SCClassLoader
             // counts read as the thing counted: "+3 per enemy within 4 of you"
             string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
                 : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
-                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have" : head == "rushed" ? "tile you rushed"
                 : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
             if (one != null) return div != null ? $"{div} (counting each {one})" : one;
             string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
@@ -1288,6 +1291,15 @@ namespace SCClassLoader
                         break;
                     }
                 case "leap": s = $"You leap to {who}"; break;
+                case "rush":
+                    {
+                        int n = Math.Max(1, a.amount);
+                        string way = (a.direction ?? "").ToLowerInvariant() switch { "back" => "back", "left" => "to your left", "right" => "to your right", _ => "ahead" };
+                        string imp = Describe(a.actions, classId, "it").Replace("• ", "").Replace("\n", "; ").TrimEnd('.', ' ');
+                        s = $"You rush up to {n} tile{(n > 1 ? "s" : "")} {way}, stopping at a wall, a closed door or anyone in the way"
+                          + (imp.Length > 0 ? $"; an enemy you run into: {imp}" : "");
+                        break;
+                    }
                 case "warp":
                     s = (a.warpTo ?? "").ToLowerInvariant() == "behind" ? $"You warp behind {who}"
                       : (a.warpTo ?? "").ToLowerInvariant() == "away" ? $"Warps {who} up to {Math.Max(1, a.amount)} tiles away from you"

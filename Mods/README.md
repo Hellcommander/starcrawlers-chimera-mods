@@ -228,7 +228,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`. A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -453,6 +453,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     field or hazard sets that off. Bosses and unmovable enemies aren't thrown.
   - `{ "do": "leap" }` puts you on the free tile beside the target nearest to you (hookshots, pounces, charges); put
     it first in an enemy-target ability's actions.
+  - `{ "do": "rush", "amount": 4, "actions": [ ...hit... ] }` runs you up to 4 tiles the way you face, with no target
+    to aim at (Dash, Lunge, a shield charge): put it on a `"target": "self"` skill. You stop at a wall, a closed door or
+    anyone in the way, and the nested actions hit an enemy you run into (not an ally). `"direction": "back"` is a
+    backflip, `"left"` / `"right"` a sidestep; you keep facing the same way. `"value:rushed"` counts the tiles you
+    covered, for scaling: `{ "do": "damage", ..., "stacksOf": "value:rushed", "bonusPerStack": 2 }` hits harder the
+    farther you ran. Rooted, you don't move but still hit an enemy right beside you that way. A forward rush fires
+    `charge` triggers, the others `leap`.
   - `{ "do": "warp", "warpTo": "behind" }` blinks you onto the free tile beside the target farthest from where you
     stood, facing it. `"warpTo": "random"` (or `"away"`, the farthest spot from you) blinks whoever the action is aimed
     at to a free tile up to `amount` (default 3) away in the same room: enemies, or you with `"to": "self"`. Bosses,
