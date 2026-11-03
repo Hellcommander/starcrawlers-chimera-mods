@@ -21,12 +21,39 @@ namespace SCClassLoader
     /// </summary>
     internal static class Conjoined
     {
-        internal const string ClassId = "MOD_Conjoined";
         internal const string BodyTag = "SCCL_BODY";
         private const string StampTag = "SCCL_BSTAMP";
-        /// <summary>Conjoined tree rank at which the 2nd, 3rd and 4th body join (rank 0 = tier 1).</summary>
-        private static readonly int[] JoinRanks = { 0, 2, 4 };
-        private static readonly string[] Numerals = { "", "", " II", " III", " IV", " V", " VI" };
+        private static readonly string[] Numerals = { "", "", " II", " III", " IV", " V", " VI", " VII", " VIII" };
+
+        /// <summary>
+        /// The several-bodies class in play: the player's tree with a "bodies" block, else the first one installed
+        /// (MOD_Conjoined is the one the pack ships). Any class can be one; a character has at most one.
+        /// </summary>
+        internal static string ClassId
+        {
+            get
+            {
+                if (Player_SkillControl.instance?.skillTrees != null)
+                    foreach (Skill_Tree t in Player_SkillControl.instance.skillTrees)
+                        if (t != null && ClassRegistry.BodyClasses.ContainsKey(t.internalName)) return t.internalName;
+                return ClassRegistry.BodyClasses.Keys.FirstOrDefault() ?? "MOD_Conjoined";
+            }
+        }
+
+        private static BodiesSpec Spec => ClassRegistry.BodyClasses.TryGetValue(ClassId, out BodiesSpec s) ? s : null;
+
+        /// <summary>The class's strain effect id, or null when it has none.</summary>
+        private static string StrainId
+        {
+            get
+            {
+                string local = Spec?.strain?.TrimStart('@');
+                return string.IsNullOrEmpty(local) ? null : ModEffect.MakeId(ClassId, local);
+            }
+        }
+
+        /// <summary>Is this tree a several-bodies class (kept out of a new body's class picks, kept on retraining)?</summary>
+        internal static bool IsBodiesClass(string treeId) => treeId != null && ClassRegistry.BodyClasses.ContainsKey(treeId);
 
         internal static bool Swapping;
         private static bool syncQueued;
@@ -81,7 +108,7 @@ namespace SCClassLoader
 
         /// <summary>The player has the Conjoined tree.</summary>
         internal static bool IsConjoined =>
-            Player.instance != null && Player_SkillControl.instance != null && Player_SkillControl.instance.GetRank(ClassId) >= 0;
+            Player.instance != null && Player_SkillControl.instance != null && Spec != null && Player_SkillControl.instance.GetRank(ClassId) >= 0;
 
         internal static bool IsBody(Character c) => c != null && c != Player.instance && c.HasTag(BodyTag) && !c.GetIsDead();
 
@@ -107,7 +134,8 @@ namespace SCClassLoader
 
         private static string MapKey => $"{Game.FLOOR}|{(Map.instance != null ? Map.instance.internalName : "")}";
 
-        private static int AllowedBodies(int conjRank) => 1 + JoinRanks.Count(r => conjRank >= r);
+        /// <summary>Bodies allowed at this class rank (rank 0 = tier 1): one, plus one per join tier reached.</summary>
+        private static int AllowedBodies(int conjRank) => 1 + (Spec?.joinTiers ?? new List<int>()).Count(t => conjRank >= t - 1);
 
         private static int PartyConjRank() =>
             Math.Max(Player_SkillControl.instance?.GetRank(ClassId) ?? -1, Bodies.Where(b => b.Id != ActiveId).Select(b => b.ConjRank).DefaultIfEmpty(-1).Max());
@@ -197,10 +225,11 @@ namespace SCClassLoader
             if ((save?.equippedItems as EquipSaveInfo)?.equippedItems is object[] eq) spec.gear = eq.Where(x => x != null).ToList();
             if (!b.Fresh && b.HpMax > 0)
             {
-                // its health was recorded while it carried Spread Thin; it carries it again as a companion
-                var thin = ModEffect.Specs.TryGetValue(ModEffect.MakeId(ClassId, "SpreadThin"), out var rt) ? rt.spec.stats : null;
+                // its health was recorded while it carried the strain; it carries it again as a companion
+                string strain = StrainId;
+                var thin = strain != null && ModEffect.Specs.TryGetValue(strain, out var rt) ? rt.spec.stats : null;
                 int per = thin != null && thin.TryGetValue("HealthMax", out int v) ? v : 0;
-                spec.healthMax = Math.Max(10, b.HpMax - per * Actions.StacksOn(Player.instance, ModEffect.MakeId(ClassId, "SpreadThin")));
+                spec.healthMax = Math.Max(10, b.HpMax - (per == 0 ? 0 : per * Actions.StacksOn(Player.instance, strain)));
             }
             return spec;
         }
@@ -264,12 +293,14 @@ namespace SCClassLoader
 
         // ---- strain -------------------------------------------------------------------------------------------
 
-        /// <summary>Every other living body costs each body some damage and health; at Conjoined rank 4 one is forgiven.</summary>
+        /// <summary>Every other living body puts a stack of the class's strain on each body; from strainForgivenAtTier one is forgiven.</summary>
         internal static void UpdateStrain()
         {
             if (!IsConjoined || EffectManager.instance == null) return;
-            string id = ModEffect.MakeId(ClassId, "SpreadThin");
-            int n = LivingOthers() - (PartyConjRank() >= 4 ? 1 : 0);
+            string id = StrainId;
+            if (id == null) return;
+            int forgiveAt = Spec.strainForgivenAtTier;
+            int n = LivingOthers() - (forgiveAt > 0 && PartyConjRank() >= forgiveAt - 1 ? 1 : 0);
             foreach (Character c in new[] { (Character)Player.instance }.Concat(Npcs()))
             {
                 Effect e = c.effects.GetEffect(id);
@@ -283,25 +314,35 @@ namespace SCClassLoader
 
         internal static bool InCombat => AI_Manager.instance != null && AI_Manager.instance.outOfCombatTimer > 0;
 
-        private static ModAbility TradeAbility() =>
+        /// <summary>The player's skill that runs this verb (swapBody, reviveBody), whatever the class calls it.</summary>
+        private static ModAbility SkillWith(string verb) =>
             Player_AbilityControl.instance?.GetAbilities().OfType<ModAbility>()
-                .FirstOrDefault(a => a.Spec?.actions?.Any(x => (x.@do ?? "").ToLowerInvariant() == "swapbody") == true);
+                .FirstOrDefault(a => a.Spec?.actions?.Any(x => (x.@do ?? "").ToLowerInvariant() == verb) == true);
+
+        private static ModAbility TradeAbility() => SkillWith("swapbody");
+
+        /// <summary>The swap skill's name for messages ("Trade Bodies" in Conjoined).</summary>
+        internal static string TradeName => TradeAbility()?.displayName ?? "a body swap skill";
 
         /// <summary>
-        /// Switching from the party panel: free out of combat; in combat it needs Trade Bodies ready and uses it up.
+        /// Switching from the party panel: free out of combat; in combat it needs the swap skill ready and uses it up.
         /// Null when allowed, else the reason.
         /// </summary>
         internal static string SwitchBlocker(Body b)
         {
             if (Swapping || Game.Game_isLoading) return "Already switching.";
             if (b == null || b.Id == ActiveId) return "You are this body.";
-            if (b.Downed) return "This body is down. Knit Together brings it back.";
+            if (b.Downed)
+            {
+                ModAbility revive = SkillWith("revivebody");
+                return revive != null ? $"This body is down. {revive.displayName} brings it back." : "This body is down.";
+            }
             if (NpcOf(b) == null) return "This body isn't here yet.";
             if (Game.RESOLVING || Game.TARGETING) return "Not in the middle of a turn.";
             if (!InCombat) return null;
             ModAbility t = TradeAbility();
-            if (t == null) return "In combat you need Trade Bodies to switch.";
-            if (!t.CanUse()) return "In combat: Trade Bodies isn't ready.";
+            if (t == null) return "In combat you need a body swap skill to switch.";
+            if (!t.CanUse()) return $"In combat: {t.displayName} isn't ready.";
             return null;
         }
 
@@ -321,7 +362,8 @@ namespace SCClassLoader
         private static void LandCarried()
         {
             Player p = Player.instance;
-            foreach (var (action, classId) in Carried) Actions.ApplyEffect(action, new ActionContext { caster = p, classId = classId, sourceName = "Trade Bodies" }, p);
+            string source = TradeName;
+            foreach (var (action, classId) in Carried) Actions.ApplyEffect(action, new ActionContext { caster = p, classId = classId, sourceName = source }, p);
             Carried.Clear();
         }
 
@@ -329,7 +371,7 @@ namespace SCClassLoader
 
         private static bool CorpseOf(Corpse c, Body b) => CorpseTag(c, BodyTag) == b.Id && CorpseTag(c, StampTag) == b.Stamp;
 
-        private static List<Corpse> Corpses() => Traverse.Create(AI_Manager.instance).Field("corpses").GetValue<List<Corpse>>() ?? new List<Corpse>();
+        private static List<Corpse> Corpses() => SCClassLoader.Corpses.All();
 
         /// <summary>The free tile a trade with this corpse lands on: its own, or the nearest beside it if something stands there.</summary>
         private static NavNode CorpseTile(Corpse c) =>
@@ -525,7 +567,7 @@ namespace SCClassLoader
 
         private static string ModelFor(string[] trees)
         {
-            string main = trees?.FirstOrDefault(t => !string.IsNullOrEmpty(t) && t != ClassId);
+            string main = trees?.FirstOrDefault(t => !string.IsNullOrEmpty(t) && !IsBodiesClass(t));
             Skill_Tree tree = main == null ? null : Game.instance.skills.FirstOrDefault(s => s != null && s.internalName == main);
             switch (tree?.skillClass)
             {
@@ -548,7 +590,7 @@ namespace SCClassLoader
 
         /// <summary>How many classes a new body picks besides Conjoined: as many as the body you're playing has.</summary>
         internal static int TreeChoices() =>
-            Math.Max(0, Player_SkillControl.instance.skillTrees.Count(t => t != null && t.internalName != ClassId));
+            Math.Max(0, Player_SkillControl.instance.skillTrees.Count(t => t != null && !IsBodiesClass(t.internalName)));
 
         /// <summary>A new body at your level: Conjoined plus <paramref name="trees"/>, every point unspent, nothing equipped.</summary>
         internal static Body CreateBody(IList<string> trees)
@@ -650,7 +692,7 @@ namespace SCClassLoader
             private static void Postfix() { if (!Game.Game_isLoading && !Swapping && Player.instance != null) pickerDeferred = false; }
         }
 
-        /// <summary>A companion body that dies is down, not gone: Knit Together brings it back.</summary>
+        /// <summary>A companion body that dies is down, not gone: a reviveBody skill brings it back.</summary>
         [HarmonyPatch(typeof(Character), nameof(Character.Die))]
         private static class Patch_BodyDies
         {
@@ -662,7 +704,7 @@ namespace SCClassLoader
                 b.Downed = true;
                 b.Hp = 0;
                 Game.LOG($"<color=#FF7272>{b.Name} goes down.</color>");
-                __instance.FLAG_corpseDissolveSpeed = 0f; // it stays lying there, and Trade Bodies can use that
+                __instance.FLAG_corpseDissolveSpeed = 0f; // it stays lying there, and the swap skill can use that
                 Plugin.Instance.StartCoroutine(StrainSoon());
             }
         }

@@ -15,6 +15,19 @@ namespace SCClassLoader
         internal static bool Is(string shape) => shape == "cone" || shape == "line";
 
         /// <summary>The ones among `candidates` inside the shape from `from` toward `aim`, nearest first.</summary>
+        internal static bool Covers(Vector3 at, Vector3 from, Vector3 aim, string shape, float reach, float width, float angle)
+        {
+            Vector3 dir = Flat(aim - from);
+            if (dir.sqrMagnitude < 0.0001f) return false;
+            dir.Normalize();
+            Vector3 v = Flat(at - from);
+            float along = Vector3.Dot(v, dir);
+            if (along <= 0.3f || along > reach + 0.45f) return false;
+            return shape == "line"
+                ? (v - dir * along).magnitude <= Mathf.Max(0.5f, width) * 0.5f + 0.35f
+                : Vector3.Dot(v.normalized, dir) >= Mathf.Cos(Mathf.Clamp(angle, 10f, 180f) * 0.5f * Mathf.Deg2Rad) || (v - dir * along).magnitude <= 0.6f;
+        }
+
         internal static List<Character> Hit(IEnumerable<Character> candidates, Vector3 from, Vector3 aim, string shape, float reach, float width, float angle)
         {
             Vector3 dir = Flat(aim - from);

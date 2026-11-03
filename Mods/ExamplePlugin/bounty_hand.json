@@ -1,7 +1,7 @@
 {
   "id": "MOD_BountyHand",
   "name": "Bounty Hand",
-  "description": "Collects what the galaxy owes, in blood and credits. Every kill goes in the ledger, and the ledger pays.\n\nExample class: its verbs, conditions and numbers come from a code plugin (see Mods/ExamplePlugin/src). Favors [SMT] and [TGH].",
+  "description": "Collects what the galaxy owes, in blood and credits. Every kill goes in the ledger, and the ledger pays. Put a name in the book, take back what it's holding, haul it in, and when the ledger is long enough, foreclose.\n\nExample class: its verbs, conditions and numbers come from a code plugin (see Mods/ExamplePlugin/src). Favors [SMT] and [TGH].",
   "archetype": "Guile",
   "iconFrom": "SKILLTREE_Hacker/4",
   "attributePriorities": {
@@ -96,6 +96,95 @@
               { "do": "effect", "to": "self", "effect": "@Feared" }
             ]
           }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Recognition": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Put in the Book",
+        "cooldown": 4,
+        "staminaCost": 6,
+        "description": "Write the name down. A name in the book is easier to find and easier to hurt.",
+        "actions": [
+          { "do": "effect", "effect": "#Marked" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Repossess",
+        "cooldown": 5,
+        "staminaCost": 10,
+        "description": "Whatever is protecting them was only ever on credit. Take it back, and the settled account steadies your hand.",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "perRank": 1, "scale": "Smarts", "scaleMult": 0.3 },
+          { "do": "dispel", "amount": 1, "effect": "@Paid" }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Late Fee",
+        "description": "A name struck out of the book pays extra, and the paperwork goes quicker.",
+        "procs": [
+          {
+            "on": "kill",
+            "when": { "has": "#Marked", "of": "victim" },
+            "actions": [
+              { "do": "credits", "amount": 15 },
+              { "do": "cooldowns", "amount": 1 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Reel In",
+        "range": 5,
+        "cooldown": 6,
+        "staminaCost": 10,
+        "description": "Hook a line into what you're owed and haul it across the deck to you.",
+        "actions": [
+          { "do": "tether", "look": "#FFD966" },
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "perRank": 1, "scale": "Smarts", "scaleMult": 0.3 },
+          { "do": "pull", "amount": 3 }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 2,
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Foreclosure",
+        "cooldown": 14,
+        "staminaCost": 20,
+        "resetOnKill": true,
+        "description": "Needs five kills in your ledger and a name in the book. Call the whole debt in: one time in four it ends them here. What can't be taken outright loses a slice instead, and a closed account leaves the skill ready again.",
+        "usableWhen": { "value": "ExamplePlugin:ledger", "atLeast": 5 },
+        "targetWhen": { "has": "#Marked", "of": "target" },
+        "actions": [
+          { "do": "execute", "amount": 25, "elitePercent": 15 }
         ]
       }
     }

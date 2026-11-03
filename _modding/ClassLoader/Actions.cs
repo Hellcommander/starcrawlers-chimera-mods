@@ -107,8 +107,19 @@ namespace SCClassLoader
             {
                 string id = EffectId(a.effect, ctx.classId);
                 if (ModEffect.Specs.TryGetValue(id ?? "", out var rt)) return rt.spec.debuff;
-                return id == "CHARM" || id == "CONFUSE" || id == "SLOW" || (id != null && id.StartsWith("EFFECT_Root"));
+                return VanillaDebuff(id);
             }
+            return false;
+        }
+
+        /// <summary>A vanilla effect the game marks as a debuff, plus the control effects it leaves unmarked.</summary>
+        private static bool VanillaDebuff(string id)
+        {
+            if (id == null) return false;
+            if (id == "CHARM" || id == "CONFUSE" || id == "SLOW" || id.StartsWith("EFFECT_Root")) return true;
+            var all = EffectManager.instance?.allEffects;
+            if (all == null) return false;
+            foreach (var e in all) if (e.effect != null && e.effect.internalName == id) return e.effect.isDebuff;
             return false;
         }
 
@@ -134,6 +145,8 @@ namespace SCClassLoader
             if (a.chance < 100 && Random.Range(1, 101) > a.chance + ctx.chanceBonus) return;
             if (SparesAlly(a, act, ctx, t)) return;
             if (ctx.share < 1f && (a = Mirrors.Weaken(a, act, ctx)) == null) return;
+            bool spendsCounter = a.consumeStacks && a.stacksUsed == 0 && !string.IsNullOrEmpty(a.stacksOf) && a.stacksOf.StartsWith("counter:", StringComparison.OrdinalIgnoreCase);
+            int counterRead = spendsCounter ? Counters.Get(StackHolder(a, ctx, t), a.stacksOf.Substring(8)) : 0;
 
             switch (act)
             {
@@ -162,6 +175,8 @@ namespace SCClassLoader
                 case "field": GroundFields.Lay(a, ctx, t); break;
                 case "trap": Traps.Lay(a, ctx, t); break;
                 case "springtraps": Traps.Spring(a, ctx); break;
+                case "movetraps": Traps.Move(a, t); break;
+                case "ready": CastRules.Ready(); break;
                 case "wallspikes": Walls.Spikes(a, ctx, t); break;
                 case "wildcast": WildMagic.Cast(a, ctx, t); break;
                 case "surge": WildMagic.Surge(a, ctx, t); break;
@@ -213,7 +228,8 @@ namespace SCClassLoader
                 case "cooldowns":
                     if (Player_AbilityControl.instance != null)
                         foreach (Ability ab in Player_AbilityControl.instance.GetAbilities())
-                            if (ab != ctx.source) ab.ReduceCooldown(Math.Max(1, a.amount));
+                            if (ab != ctx.source && (string.IsNullOrEmpty(a.skill) || string.Equals(ab.GetDisplayName(), a.skill, StringComparison.OrdinalIgnoreCase)))
+                                ab.ReduceCooldown(Math.Max(1, a.amount));
                     if (Menu_HUD.instance != null) Menu_HUD.instance.Refresh_Cooldown();
                     break;
                 case "purge": t.effects.RemoveEffect(EffectId(a.effect, ctx.classId), true); t.CalculateStats(); break;
@@ -222,11 +238,24 @@ namespace SCClassLoader
                 case "cleanse": Dispel(a, ctx, t, debuffs: true); break;
                 case "chain": if (!string.IsNullOrEmpty(a.sound) && t != null) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId); Chain(a, ctx, t); break;
                 case "echo": Echo(a, ctx, t); break;
+                case "cast": CastSkill(a, ctx, t); break;
+                case "shorten": Shorten(a, ctx, t); break;
+                case "xp": Xp(a, ctx); break;
+                case "ammo": Ammo(a, ctx, t); break;
+                case "anchor": Moves.SetAnchor(a, ctx); break;
+                case "rewind": Moves.Rewind(a, ctx); break;
+                case "corpses": Corpses.Use(a, ctx, t); break;
+                case "loot": Loot(a, ctx, t); break;
+                case "unlock": Unlock(a, ctx); break;
+                case "disarm": Disarm(a, ctx); break;
+                case "steal": Steal(a, ctx); break;
+                case "order": Order(a, ctx, t); break;
                 case "summon": Summons.Summon(a, ctx, t, ScaledCount(a, a.amount, ctx, t)); break;
                 case "tame": Taming.Tame(a, ctx, t, Amount(a, ctx)); break;
                 case "giveitem": GiveItem(a, ctx); break;
                 case "consumeitem": ConsumeItem(a, ctx); break;
                 case "salvage": Salvage(a, ctx); break;
+                case "tune": Tune(a, ctx); break;
                 case "craft": if (ctx.caster == Player.instance) Crafting.Open("field", a.recipes); break;
                 case "runepanel": if (ctx.caster == Player.instance) RunePanel.OpenCharging(); break;
                 case "runerestore": if (ctx.caster == Player.instance) Runes.Restore(Math.Max(1, a.amount)); break;
@@ -240,13 +269,15 @@ namespace SCClassLoader
                 t.effects.RemoveEffect(EffectId(a.ifTargetHas, ctx.classId), true);
                 t.CalculateStats();
             }
-            if (a.consumeStacks && !string.IsNullOrEmpty(a.stacksOf))
+            if (a.consumeStacks && !string.IsNullOrEmpty(a.stacksOf) && !a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase))
             {
                 Character holder = StackHolder(a, ctx, t);
                 string sid = EffectId(a.stacksOf, ctx.classId);
                 int n = Math.Max(0, a.stacksUsed);
                 if (holder == ctx.caster && ctx.deferredSelfConsume != null)
                 {
+                    // a counter spends what the cast read, so what a kill adds on the way stays
+                    if (spendsCounter && (n = counterRead) == 0) return;
                     // several actions reading the same pile in one cast spend it once: all of it if any asks for all
                     ctx.deferredSelfConsume[sid] = ctx.deferredSelfConsume.TryGetValue(sid, out int had) && (had == 0 || n == 0) ? 0 : Math.Max(had, n);
                 }
@@ -325,7 +356,51 @@ namespace SCClassLoader
         private static int StackBonus(ActionSpec a, ActionContext ctx, Character t)
         {
             if (a.bonusPerStack == 0 || string.IsNullOrEmpty(a.stacksOf)) return 0;
-            return a.bonusPerStack * UsedStacks(a, StacksOn(StackHolder(a, ctx, t), EffectId(a.stacksOf, ctx.classId)));
+            return a.bonusPerStack * UsedStacks(a, CountOf(a, ctx, t));
+        }
+
+        /// <summary>
+        /// What an action's stacksOf counts: an effect's stacks, a counter, summons, bodies, or "value:NAME" — any
+        /// condition value (health%, healthLost%, shield, credits, floor, enemiesNear:3, distance, Strength...) read from
+        /// the stack holder, optionally divided: "value:credits/50" counts one per 50 credits.
+        /// </summary>
+        private static int CountOf(ActionSpec a, ActionContext ctx, Character t)
+        {
+            Character holder = StackHolder(a, ctx, t);
+            if (!a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase)) return StacksOn(holder, EffectId(a.stacksOf, ctx.classId));
+            string name = a.stacksOf.Substring(6);
+            float div = 1f;
+            int slash = name.LastIndexOf('/');
+            if (slash > 0 && float.TryParse(name.Substring(slash + 1), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float d) && d > 0f)
+            {
+                div = d;
+                name = name.Substring(0, slash);
+            }
+            float? v = When.Value(name, ctx, holder, t);
+            return v.HasValue ? Math.Max(0, Mathf.FloorToInt(v.Value / div)) : 0;
+        }
+
+        /// <summary>A described action list as one run of text: "Deals 9 Crushing to it; Heals you for 5".</summary>
+        private static string Joined(string described) =>
+            string.Join("; ", described.Split('\n').Select(l => l.Replace("• ", "").Trim().TrimEnd('.')).Where(l => l.Length > 0));
+
+        /// <summary>Rules text for a "value:" count: "point of Strength on you", "50 of your credits".</summary>
+        private static string ValuePer(string name, string classId, string on)
+        {
+            int slash = name.LastIndexOf('/');
+            string div = slash > 0 ? name.Substring(slash + 1) : null;
+            string bare = slash > 0 ? name.Substring(0, slash) : name;
+            string[] parts = bare.Split(':');
+            string head = parts[0].ToLowerInvariant(), r = parts.Length > 1 ? parts[1] : "1.5";
+            // counts read as the thing counted: "+3 per enemy within 4 of you"
+            string one = head == "enemiesnear" ? $"enemy within {r} of you" : head == "alliesnear" ? $"ally within {r} of you"
+                : head == "corpses" ? $"corpse within {(parts.Length > 1 ? r : "3")} of you"
+                : head == "wallsnear" ? "wall beside you" : head == "summons" ? "summon you have"
+                : head == "buffs" ? $"buff {on}" : head == "debuffs" ? $"debuff {on}" : null;
+            if (one != null) return div != null ? $"{div} (counting each {one})" : one;
+            string what = When.ValueText(bare, classId) + (When.IsGlobalValue(bare) ? "" : " " + on);
+            if (bare.EndsWith("%")) return $"{div ?? "1"}% of {what}";
+            return div != null ? $"{div} {what}" : $"point of {what}";
         }
 
         /// <summary>The stacks an action counts: all it finds, or at most stacksUsed.</summary>
@@ -337,7 +412,7 @@ namespace SCClassLoader
         internal static int ExtraTurns(ActionSpec a, ActionContext ctx, Character t)
         {
             if (a.turnsPerStack == 0 || string.IsNullOrEmpty(a.stacksOf)) return 0;
-            return a.turnsPerStack * UsedStacks(a, StacksOn(StackHolder(a, ctx, t), EffectId(a.stacksOf, ctx.classId)));
+            return a.turnsPerStack * UsedStacks(a, CountOf(a, ctx, t));
         }
 
         private static bool Scaled(ActionSpec a) => a.bonusPerStack != 0 && !string.IsNullOrEmpty(a.stacksOf);
@@ -439,7 +514,208 @@ namespace SCClassLoader
             Run(src.Spec.actions.Where(x => (x.to ?? "").ToLowerInvariant() != "self" && x.@do != "echo" && x.@do != "teleport"), c, t);
         }
 
-        private static ActionContext Clone(ActionContext x) => new ActionContext
+        /// <summary>"shorten": takes "amount" turns off the target's effects ("effect": an id, "debuffs" (default) or "buffs");
+        /// one run down to nothing ends. A negative amount draws them out instead. Effects with no end are left alone.</summary>
+        private static void Shorten(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (t?.effects == null) return;
+            string which = string.IsNullOrEmpty(a.effect) ? "debuffs" : a.effect;
+            bool debuffs = which.Equals("debuffs", StringComparison.OrdinalIgnoreCase), buffs = which.Equals("buffs", StringComparison.OrdinalIgnoreCase);
+            string id = debuffs || buffs ? null : EffectId(which, ctx.classId);
+            int by = a.amount == 0 ? 1 : a.amount;
+            bool changed = false;
+            foreach (Effect e in t.effects.GetEffects().ToList())
+            {
+                if (e == null || e.duration <= 0 || e.durationIsHidden) continue;
+                bool bad = e.isDebuff || VanillaDebuff(e.internalName);
+                if (id != null ? e.internalName != id : debuffs != bad) continue;
+                int left = e.duration - by;
+                if (left <= 0) t.effects.RemoveEffect(e.internalName, true);
+                else e.duration = left;
+                changed = true;
+            }
+            if (!changed) return;
+            t.CalculateStats();
+            if (t == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+        }
+
+        /// <summary>"xp": you gain experience the way a won floor event pays it, which grows with the floor; "amount" multiplies it.</summary>
+        private static void Xp(ActionSpec a, ActionContext ctx)
+        {
+            Player p = Player.instance;
+            if (p == null || Menu_Skills.instance == null || (ctx.caster != p && !TileStacks.IsAlly(ctx.caster))) return;
+            int lv = Math.Min(5 + Game.FLOOR * 5, Menu_Skills.instance.xpLevels.Length - 1);
+            int xp = Math.Max(1, (int)(Menu_Skills.instance.xpLevels[lv] * 0.03)) * Math.Max(1, a.amount);
+            p.AddXp(xp, lv, "mod_skill");
+        }
+
+        /// <summary>"ammo": puts rounds back in your loaded ammo (a refund, up to a full stack), or takes them out with a
+        /// negative amount; the last round taken empties the slot as firing it would.</summary>
+        private static void Ammo(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (!(ctx.caster is Player p) || p.GetAmmo() == null) return;
+            Item_Ammo ammo = p.GetAmmo();
+            int n = a.amount + StackBonus(a, ctx, t);
+            int now = Mathf.Min(ammo.stack + n, ammo.GetStackMax());
+            if (now <= 0 && Menu_Player.instance != null) Menu_Player.instance.DestroyAmmo(ammo);
+            else ammo.SetStack(Mathf.Max(1, now));
+            if (Menu_Player.instance != null) Menu_Player.instance.RefreshAmmo();
+        }
+
+        /// <summary>"loot": the game rolls "amount" items of "lootType" (and "rarity", or the floor's odds), and they spill
+        /// from the target onto the floor the way a broken crate's do.</summary>
+        private static void Loot(ActionSpec a, ActionContext ctx, Character t)
+        {
+            Character from = t ?? ctx.caster;
+            if (LootManager.instance == null || from == null) return;
+            if (!Enum.TryParse(a.lootType ?? "Random", true, out LOOT_TYPE type)) type = LOOT_TYPE.Random;
+            if (!Enum.TryParse(a.rarity ?? "None", true, out RARITY rarity)) rarity = RARITY.None;
+            Vector3 at = from.transform.position;
+            for (int i = 0, n = Math.Max(1, a.amount) + StackBonus(a, ctx, t); i < n; i++)
+            {
+                Item item = LootManager.instance.Generate_Loot(type, rarity);
+                if (item == null) continue;
+                item.transform.position = at + Vector3.up * 0.8f;
+                item.OnEnterWorld();
+                LootManager.instance.DoLootSpew(at, item, false, 0.6f);
+            }
+        }
+
+        /// <summary>"unlock": every locked door and container within "radius" of you (default 2.5) comes open, by the base
+        /// game's hacking rules: sealed, broken and boss doors stay shut, and an opened container spills its loot. "odds"
+        /// rolls once per lock.</summary>
+        private static void Unlock(ActionSpec a, ActionContext ctx)
+        {
+            if (!(ctx.caster is Player p)) return;
+            int opened = 0;
+            foreach (Door d in Around<Door>(p, a.radius))
+            {
+                if (!d.GetIsLocked() || d.FLAG_isUberDoor || d.isBroken || d.isSealed || !Rolls(a.odds)) continue;
+                d.Lockpicked(p);
+                opened++;
+            }
+            foreach (Container c in Around<Container>(p, a.radius))
+            {
+                if (!c.isLocked || !Rolls(a.odds)) continue;
+                c.Unlock();
+                opened++;
+            }
+            if (opened > 0) Game.LOG($"{ctx.sourceName} opens {opened} {(opened == 1 ? "lock" : "locks")}.");
+        }
+
+        /// <summary>"disarm": every armed trap within "radius" of you (default 2.5) is made safe, seen or not, and gives its
+        /// parts as a disarm by hand does (so the Gadgeteer's and Security's disarm skills go off too). Hazards laid by
+        /// skills can't be disarmed and stay.</summary>
+        private static void Disarm(ActionSpec a, ActionContext ctx)
+        {
+            if (!(ctx.caster is Player p)) return;
+            int made = 0;
+            // the map's own list: a trap in a room the game has culled from view is inactive, and FindObjectsOfType misses it
+            float reach = (a.radius > 0f ? a.radius : 2.5f) + 0.25f;
+            foreach (Trap_Trigger h in (Map.instance?.GetTraps() ?? new List<Trap_Trigger>()).ToList())
+            {
+                if (h == null) continue;
+                Vector3 off = h.transform.position - p.transform.position;
+                off.y = 0f;
+                if (off.magnitude > reach) continue;
+                if (!h.CanDisarm() || h.GetTripped() || !Rolls(a.odds)) continue;
+                h.Disarm(giveParts: true);
+                made++;
+            }
+            if (made > 0) Game.LOG($"{ctx.sourceName} makes {made} {(made == 1 ? "trap" : "traps")} safe.");
+        }
+
+        /// <summary>"steal": takes "amount" items (default 1) from each vendor within "radius" of you who has any, by the
+        /// Hacker's rules: each theft works at 50 + your Smarts % ("odds" sets it), and the first that fails turns the
+        /// vendor on you (or calls the guards) and locks the shop.</summary>
+        private static void Steal(ActionSpec a, ActionContext ctx)
+        {
+            if (!(ctx.caster is Player p)) return;
+            foreach (Vendor v in Around<Vendor>(p, a.radius))
+            {
+                for (int i = 0; i < Math.Max(1, a.amount); i++)
+                {
+                    if (!v.canBeHacked || v.isLocked || v.vendor_items == null || v.vendor_items.Count == 0) break;
+                    if (Random.Range(1, 101) > (a.odds > 0 ? a.odds : 50 + p.GetStat(STAT_TYPE.Smarts))) { v.ThieveryFail(); break; }
+                    v.Hacked();
+                }
+            }
+        }
+
+        private static bool Rolls(int odds) => odds <= 0 || Random.Range(1, 101) <= odds;
+
+        /// <summary>Scene objects of a kind within r of you on the floor plan (default 2.5; a little slack for where the
+        /// object's pivot sits).</summary>
+        private static IEnumerable<T> Around<T>(Character who, float r) where T : Component
+        {
+            float reach = (r > 0f ? r : 2.5f) + 0.25f;
+            Vector3 at = who.transform.position;
+            foreach (T o in Object.FindObjectsOfType<T>(true)) // rooms out of view are inactive; still on the floor
+            {
+                if (o == null || !o.gameObject.scene.IsValid()) continue;
+                Vector3 d = o.transform.position - at;
+                d.y = 0f;
+                if (d.magnitude <= reach) yield return o;
+            }
+        }
+
+        private static int casting; // a skill that casts itself stops after a few rounds
+
+        /// <summary>"cast": fires another skill for free (no stamina, no cooldown) at the target, around it if the skill has an area.</summary>
+        private static void CastSkill(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (string.IsNullOrEmpty(a.skill) || casting >= 3 || ctx.caster == null) return;
+            ModAbility.Runtime rt = SkillNamed(a.skill, ctx.classId);
+            if (rt == null) { Plugin.Log.LogWarning($"{ctx.sourceName}: cast found no skill named '{a.skill}'"); return; }
+            AbilitySpec s = rt.spec;
+            var acts = s.actions.Where(x => x.@do != "teleport" && x.@do != "phase").ToList();
+            var c = Clone(ctx);
+            c.classId = rt.classId;
+            c.sourceName = s.name;
+            Game.LOG($"{ctx.sourceName} fires <color=#FFD15C>{s.name}</color>.");
+            casting++;
+            try
+            {
+                bool aimed = s.target == "enemy" || s.target == "point" || s.target == "floor";
+                if (!aimed || t == null || t == ctx.caster || t.GetIsDead()) { c.target = ctx.caster; Run(acts, c, ctx.caster); return; }
+                c.target = t;
+                c.center = t.transform.position;
+                float radius = s.radius > 0f ? s.radius : Shapes.Is(s.shape) ? 1.5f : 0f;
+                var victims = new List<Character> { t };
+                NavNode node = t.GetMover()?.GetCurrentNavNode();
+                if (radius > 0f && node != null && AI_Manager.instance != null)
+                    victims.AddRange(AI_Manager.instance.GetEnemiesAt(node.transform.position, radius).Where(v => v != t));
+                if (!string.IsNullOrEmpty(s.impactVfx)) SpawnVfx(s.impactVfx, t.GetHitFx().position);
+                ModAudio.Play(s.sound, t.GetHitFx().position, rt.classId);
+                Run(acts.Where(x => (x.to ?? "").ToLowerInvariant() == "self"), c, t);
+                HitLane.Each(victims, acts.Where(x => (x.to ?? "").ToLowerInvariant() != "self"), c);
+            }
+            finally { casting--; }
+        }
+
+        /// <summary>A skill by its shown name: the caster's own class first, then any class.</summary>
+        private static ModAbility.Runtime SkillNamed(string name, string classId)
+        {
+            var named = ModAbility.Specs.Values.Where(r => r?.spec != null && r.spec.type != "passive" && string.Equals(r.spec.name, name, StringComparison.OrdinalIgnoreCase)).ToList();
+            return named.FirstOrDefault(r => string.Equals(r.classId, classId, StringComparison.OrdinalIgnoreCase)) ?? named.FirstOrDefault();
+        }
+
+        /// <summary>"order": each of your summons carries out the nested actions itself, at your target (or at itself when there is none).</summary>
+        private static void Order(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (a.actions == null || a.actions.Count == 0) return;
+            foreach (Character pet in Summons.Matching(string.IsNullOrEmpty(a.pets) ? "any" : a.pets, ctx))
+            {
+                Character at = t != null && t != ctx.caster && !t.GetIsDead() ? t : pet;
+                var c = Clone(ctx);
+                c.caster = pet;
+                c.target = at;
+                c.ally = ctx.caster;
+                Run(a.actions, c, at);
+            }
+        }
+
+        internal static ActionContext Clone(ActionContext x) => new ActionContext
         {
             caster = x.caster, target = x.target, attacker = x.attacker, victim = x.victim, source = x.source,
             classId = x.classId, sourceName = x.sourceName, rank = x.rank, damageMult = x.damageMult,
@@ -536,13 +812,48 @@ namespace SCClassLoader
             return damageTypes[name] = Enum.TryParse(name, true, out type) ? type : DAMAGE_TYPE.Crushing;
         }
 
+        private static readonly DAMAGE_TYPE[] Resistible =
+        {
+            DAMAGE_TYPE.Slashing, DAMAGE_TYPE.Crushing, DAMAGE_TYPE.Piercing, DAMAGE_TYPE.Ballistic, DAMAGE_TYPE.Fire, DAMAGE_TYPE.Cryo,
+            DAMAGE_TYPE.Energy, DAMAGE_TYPE.Void, DAMAGE_TYPE.Psi, DAMAGE_TYPE.Bio, DAMAGE_TYPE.Shock,
+        };
+
+        /// <summary>"type": "weakest" (or "weakest:Fire|Cryo|Shock" to choose among those): the type the target resists
+        /// least, the first listed on a tie. Null for any other type.</summary>
+        internal static DAMAGE_TYPE? Weakest(string type, Character t)
+        {
+            if (type == null || !type.StartsWith("weakest", StringComparison.OrdinalIgnoreCase)) return null;
+            int colon = type.IndexOf(':');
+            var pool = colon < 0 ? Resistible
+                : type.Substring(colon + 1).Split('|').Select(n => Enum.TryParse(n.Trim(), true, out DAMAGE_TYPE d) ? (DAMAGE_TYPE?)d : null).Where(d => d.HasValue).Select(d => d.Value).ToArray();
+            if (pool.Length == 0) pool = Resistible;
+            if (t == null) return pool[0];
+            DAMAGE_TYPE best = pool[0];
+            int least = int.MaxValue;
+            foreach (DAMAGE_TYPE d in pool)
+            {
+                int r = t.GetResistance(d);
+                if (r < least) { least = r; best = d; }
+            }
+            return best;
+        }
+
+        /// <summary>"areaFalloff": less damage the further the victim stands from the area's centre, a tenth at the least.</summary>
+        private static float Falloff(ActionSpec a, ActionContext ctx, Character t)
+        {
+            if (a.areaFalloff <= 0f || !ctx.center.HasValue || t == null) return 1f;
+            Vector3 d = t.transform.position - ctx.center.Value;
+            d.y = 0f;
+            return Mathf.Max(0.1f, 1f - a.areaFalloff * Mathf.Round(d.magnitude));
+        }
+
         private static void Damage(ActionSpec a, ActionContext ctx, Character t)
         {
             if (t == ctx.caster && !ctx.backfire) return; // never hurt yourself (unless your wild magic turned on you)
-            DAMAGE_TYPE type = DamageType(a.type);
+            DAMAGE_TYPE type = Weakest(a.type, t) ?? DamageType(a.type);
             float v = Random.Range(a.min, Math.Max(a.min, a.max) + 1) + a.perRank * Math.Max(0, ctx.rank) + ScaleBonus(a, ctx);
             v += StackBonus(a, ctx, t) + WeaponBonus(a, ctx) + a.stored * ctx.stored;
-            v *= ctx.damageMult * LevelMult(a.levelCap);
+            v *= ctx.damageMult * LevelMult(a.levelCap) * Falloff(a, ctx, t);
             int dmg = Math.Max(1, Mathf.RoundToInt(v));
             int hpBefore = t.GetHealth();
             var list = new List<DmgObj> { new DmgObj(type, dmg) };
@@ -640,7 +951,7 @@ namespace SCClassLoader
         {
             var opts = (a.options ?? new List<RandomOption>()).Where(o => o != null).ToList();
             if (opts.Count == 0) return;
-            int stacks = string.IsNullOrEmpty(a.stacksOf) ? 0 : UsedStacks(a, StacksOn(StackHolder(a, ctx, t), EffectId(a.stacksOf, ctx.classId)));
+            int stacks = string.IsNullOrEmpty(a.stacksOf) ? 0 : UsedStacks(a, CountOf(a, ctx, t));
             var weights = opts.Select(o => Math.Max(0, o.weight + o.weightPerStack * stacks)).ToList();
             int total = weights.Sum();
             if (total <= 0) return;
@@ -756,6 +1067,63 @@ namespace SCClassLoader
             Game.LOG($"{ctx.sourceName}: {System.Text.RegularExpressions.Regex.Replace(name, "<.*?>", "")} breaks down into {(got.Count > 0 ? string.Join(", ", got) : "nothing useful")}.");
         }
 
+        /// <summary>"tune": works a lasting change into a piece of gear, saved with it: the item the skill is aimed at
+        /// ("target": "item"), or the one equipped in "slot". "stat" adds min-max of a stat; "type" on a weapon adds
+        /// min-max to that damage type's roll (a new type joins the weapon's damage). "limit" caps how often one item can
+        /// be tuned, counted under "tag" (default SCCL_TUNED, shared by every class that tunes).</summary>
+        private static void Tune(ActionSpec a, ActionContext ctx)
+        {
+            if (!(ctx.caster is Player p) || Menu_Player.instance == null) return;
+            Item_Equipment it = ctx.item as Item_Equipment ?? SlotItem(a.slot);
+            if (it == null || it.equipType == EQUIP_TYPE.None || it.equipType == EQUIP_TYPE.Ammo) return;
+            string name = System.Text.RegularExpressions.Regex.Replace(it.GetName(false), "<.*?>", "");
+            string counter = string.IsNullOrEmpty(a.tag) ? "SCCL_TUNED" : a.tag;
+            if (a.limit > 0 && it.GetTag(counter) >= a.limit) { Game.LOG($"{name} can't take any more tuning."); return; }
+            int n = a.max > a.min ? Random.Range(a.min, a.max + 1) : a.min;
+            if (n == 0) return;
+            var got = new List<string>();
+            if (!string.IsNullOrEmpty(a.stat))
+            {
+                STAT_TYPE? st = a.stat.Equals("random", StringComparison.OrdinalIgnoreCase) ? RandomGearStat() : Enum.TryParse(a.stat, true, out STAT_TYPE s) ? s : (STAT_TYPE?)null;
+                if (st == null) { Plugin.Log.LogWarning($"tune: unknown stat '{a.stat}'"); return; }
+                it.AddStat(st.Value, n);
+                got.Add($"{n:+#;-#} {Game.GetSpriteString(st.Value)}");
+            }
+            if (!string.IsNullOrEmpty(a.type) && it is Item_Weapon w && Enum.TryParse(a.type, true, out DAMAGE_TYPE dt))
+            {
+                w.AddDamage(new DmgObj(dt, n) { damageMax = w.damageList.Any(d => d != null && d.dmgType == dt && d.damageMax > 0) ? n : 0 });
+                got.Add($"{n:+#;-#} {Game.GetSpriteString(dt)} damage");
+            }
+            if (got.Count == 0) return;
+            it.AddTag(counter, 1); // a new tag starts at 1, an old one counts up
+            if (Menu_Player.instance.IsEquipped(it))
+            {
+                p.CalculateStats();
+                Menu_Player.instance.GetItemSlot(it)?.DoShing();
+            }
+            Game.LOG($"{ctx.sourceName}: {name} gains {string.Join(", ", got)}.");
+        }
+
+        /// <summary>A stat a piece of gear could roll: drawn from one of the game's own stat templates, as the Modder's
+        /// tinkering draws.</summary>
+        private static STAT_TYPE? RandomGearStat()
+        {
+            StatTemplate t = ItemDatabase.instance?.GetRandomStatTemplate();
+            if (t == null) return null;
+            var pool = (t.stats_major ?? new StatObject[0]).Concat(t.stats_minor ?? new StatObject[0]).Where(s => s != null).Select(s => s.stat).Distinct().ToList();
+            return pool.Count > 0 ? pool[Random.Range(0, pool.Count)] : (STAT_TYPE?)null;
+        }
+
+        /// <summary>The item in an equip slot: "mainhand", "offhand", or a slot name.</summary>
+        internal static Item_Equipment SlotItem(string slot)
+        {
+            Menu_Player mp = Menu_Player.instance;
+            if (string.IsNullOrEmpty(slot) || mp == null) return null;
+            if (slot.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) return mp.slot_mainhand?.item as Item_Equipment;
+            if (slot.Equals("offhand", StringComparison.OrdinalIgnoreCase)) return mp.slot_offhand?.item as Item_Equipment;
+            return Enum.TryParse(slot, true, out EQUIP_TYPE e) ? mp.GetEquipment().FirstOrDefault(x => x != null && x.GetEquipType() == e) as Item_Equipment : null;
+        }
+
         /// <summary>"@Hexed" -> this class's effect id; anything else is a vanilla id.</summary>
         public static string EffectId(string name, string classId)
         {
@@ -799,9 +1167,13 @@ namespace SCClassLoader
             {
                 case "damage":
                     {
-                        Enum.TryParse(a.type ?? "Crushing", true, out DAMAGE_TYPE type);
+                        DAMAGE_TYPE? weak = Weakest(a.type, null);
+                        Enum.TryParse(weak.HasValue ? "Crushing" : a.type ?? "Crushing", true, out DAMAGE_TYPE type);
                         string range = a.max > a.min ? $"{a.min}-{a.max}" : $"{a.min}";
-                        s = $"Deals <color={DmgObj.GetDamageColor(type)}>{range}{Scaling(a)}{(a.weapon > 0f ? $" (+{Mathf.RoundToInt(a.weapon * 100)}% weapon, with its on-hit effects)" : "")}{(a.stored > 0f ? $" (+{Mathf.RoundToInt(a.stored * 100)}% of the damage it took while this lasted)" : "")} {Game.GetSpriteString(type)}</color>{(a.trueDamage ? " <color=#FFFFFF>true damage</color>" : "")} to {who}{LevelNote(a.levelCap)}";
+                        string kind = weak.HasValue ? $"{range}{Scaling(a)}" + (a.type.Contains(":") ? $" {a.type.Substring(a.type.IndexOf(':') + 1).Replace("|", ", ")}" : "") + " damage, of whichever type it resists least,"
+                            : $"<color={DmgObj.GetDamageColor(type)}>{range}{Scaling(a)}{(a.weapon > 0f ? $" (+{Mathf.RoundToInt(a.weapon * 100)}% weapon, with its on-hit effects)" : "")}{(a.stored > 0f ? $" (+{Mathf.RoundToInt(a.stored * 100)}% of the damage it took while this lasted)" : "")} {Game.GetSpriteString(type)}</color>";
+                        s = $"Deals {kind}{(a.trueDamage ? " <color=#FFFFFF>true damage</color>" : "")} to {who}{LevelNote(a.levelCap)}";
+                        if (a.areaFalloff > 0f) s += $", {Mathf.RoundToInt(a.areaFalloff * 100)}% less for each tile from the centre";
                         break;
                     }
                 case "heal": s = $"Heals {who} for <color=#5CFF6B>{a.amount}{Scaling(a)}</color>"; break;
@@ -816,7 +1188,28 @@ namespace SCClassLoader
                 case "stun": s = $"Stuns {who} for {Turns(a)} turn{(Turns(a) > 1 ? "s" : "")}"; break;
                 case "knockback": s = $"Knocks {who} back {Math.Max(1, a.amount)}"; break;
                 case "blind": s = $"Blinds {who}"; break;
-                case "cooldowns": s = $"Reduces your other cooldowns by {Math.Max(1, a.amount)}"; break;
+                case "cooldowns": s = string.IsNullOrEmpty(a.skill) ? $"Reduces your other cooldowns by {Math.Max(1, a.amount)}" : $"Takes {Math.Max(1, a.amount)} off {a.skill}'s cooldown"; break;
+                case "shorten":
+                    {
+                        string what = string.IsNullOrEmpty(a.effect) || a.effect.Equals("debuffs", StringComparison.OrdinalIgnoreCase) ? "debuff" : a.effect.Equals("buffs", StringComparison.OrdinalIgnoreCase) ? "buff" : null;
+                        int by = a.amount == 0 ? 1 : a.amount;
+                        string on = what != null ? $"each {what} on {who}" : $"{EffectName(a.effect, classId)} on {who}";
+                        s = by > 0 ? $"Takes {by} turn{(by > 1 ? "s" : "")} off {on}" : $"Adds {-by} turn{(by < -1 ? "s" : "")} to {on}";
+                        break;
+                    }
+                case "ammo": s = a.amount >= 0 ? $"Puts <color=#FFD15C>{a.amount}{Scaling(a)}</color> rounds back in your loaded ammo" : $"Spends <color=#FFD15C>{-a.amount}</color> rounds of your loaded ammo"; break;
+                case "unlock": s = $"Opens {(a.odds > 0 ? $"with {a.odds}% odds each " : "")}the locked doors and containers within {(a.radius > 0f ? a.radius : 2.5f):0.#} of you (not sealed or boss doors)"; break;
+                case "disarm": s = $"Disarms {(a.odds > 0 ? $"with {a.odds}% odds each " : "")}the armed traps within {(a.radius > 0f ? a.radius : 2.5f):0.#} of you, seen or not, and salvages their parts"; break;
+                case "steal":
+                    {
+                        int n = Math.Max(1, a.amount);
+                        s = $"Steals {(n == 1 ? "an item" : $"up to {n} items")} from each vendor within {(a.radius > 0f ? a.radius : 2.5f):0.#} of you, "
+                          + (a.odds > 0 ? $"{a.odds}%" : "50% + your Smarts") + " odds each; a failed theft turns the vendor on you";
+                        break;
+                    }
+                case "anchor": s = "Marks the tile you stand on and your health as they are now"; break;
+                case "rewind": s = $"Pulls you back to your marked tile{(a.restore ? ", your health back up to what it was there" : "")} (uses up the mark)"; break;
+                case "xp": s = $"You gain experience{(a.amount > 1 ? $" ({a.amount}x)" : "")} as for a won floor event"; break;
                 case "purge": s = $"Removes {EffectName(a.effect, classId)} from {who}"; break;
                 case "teleport": s = "Teleports you to the target spot"; break;
                 case "dispel": s = $"Strips {(a.amount > 0 ? a.amount.ToString() : "all")} buff{(a.amount == 1 ? "" : "s")} from {who}{(string.IsNullOrEmpty(a.effect) ? "" : $"; you gain {EffectName(a.effect, classId)} per buff removed")}"; break;
@@ -829,7 +1222,22 @@ namespace SCClassLoader
                             $"Strikes {who}, then jumps to up to {a.jumps} nearby {link}{(a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "")}:\n{inner}";
                         break;
                     }
-                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}"; break;
+                case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
+                case "corpses":
+                    {
+                        string many = a.amount > 0 ? $"up to {a.amount} {(a.amount == 1 ? "corpse" : "corpses")}" : "every corpse";
+                        string per = Joined(Describe(a.actions, classId, a.blastRadius > 0f ? $"enemies within {a.blastRadius:0.#} of it" : who));
+                        s = $"{(a.keepCorpses ? "Draws on" : "Consumes")} {many} within {(a.radius > 0f ? a.radius : 3f):0.#} of you. For each: {per}";
+                        break;
+                    }
+                case "loot":
+                    {
+                        string kind = string.IsNullOrEmpty(a.lootType) || a.lootType.Equals("Random", StringComparison.OrdinalIgnoreCase) ? "item" : a.lootType.ToLowerInvariant() + " item";
+                        string what = (string.IsNullOrEmpty(a.rarity) ? "" : a.rarity.ToLowerInvariant() + " ") + kind;
+                        int n = Math.Max(1, a.amount);
+                        s = $"Drops {(n > 1 ? n.ToString() : "aeiou".IndexOf(what[0]) >= 0 ? "an" : "a")} {what}{(n > 1 ? "s" : "")} from {who}";
+                        break;
+                    }
                 case "echo": s = $"Echoes your last new ability onto {who} at {Mathf.RoundToInt(a.falloff * 100)}% power"; break;
                 case "tame":
                     {
@@ -843,6 +1251,18 @@ namespace SCClassLoader
                 case "consumeitem": s = $"Uses up {Math.Max(1, a.amount)}× {(a.item != null ? ItemRegistry.NameOf(Crafting.ResolveItem(a.item, null)) : (a.tag ?? "?").ToLowerInvariant())}"; break;
                 case "salvage": s = $"Breaks the item down into {string.Join(", ", (a.gives ?? new List<GiveSpec>()).Select(g => $"{g.count}× {ItemRegistry.NameOf(Crafting.ResolveItem(g.item, null))}{(g.chance < 100 ? $" ({g.chance}%)" : "")}"))}"; break;
                 case "craft": s = "Opens field crafting"; break;
+                case "tune":
+                    {
+                        string range = a.max > a.min ? $"{a.min}-{a.max}" : $"{a.min}";
+                        var adds = new List<string>();
+                        if (!string.IsNullOrEmpty(a.stat))
+                            adds.Add(a.stat.Equals("random", StringComparison.OrdinalIgnoreCase) ? $"{range} of a random gear stat"
+                                : Enum.TryParse(a.stat, true, out STAT_TYPE st) ? $"{range} {Game.GetSpriteString(st)}" : $"{range} {a.stat}");
+                        if (!string.IsNullOrEmpty(a.type)) adds.Add($"{range} {a.type} damage (weapons)");
+                        string what = !string.IsNullOrEmpty(a.slot) ? $"the gear in your {(a.slot.ToLowerInvariant() == "mainhand" ? "main hand" : a.slot.ToLowerInvariant() == "offhand" ? "off hand" : a.slot.ToLowerInvariant() + " slot")}" : "the item";
+                        s = $"Permanently adds {string.Join(" and ", adds)} to {what}{(a.limit > 0 ? $" (each item takes {a.limit} at most)" : "")}";
+                        break;
+                    }
                 case "runepanel": s = "Opens the rune matrix, where you can charge and discharge runes, even in combat"; break;
                 case "runerestore": s = $"Puts {Math.Max(1, a.amount)} cast{(a.amount > 1 ? "s" : "")} of charge back into each of your runes"; break;
                 case "credits": s = a.amount >= 0 ? $"You gain <color=#FFD966>{a.amount}{(a.perRank > 0 ? $" (+{a.perRank}/rank)" : "")} credits</color>" : $"Costs another <color=#FF9F5C>{-a.amount} credits</color>"; break;
@@ -878,6 +1298,14 @@ namespace SCClassLoader
                         s = $"Every {(a.fieldName ?? "?").ToLowerInvariant()} on the floor flies back to you: {per}";
                         break;
                     }
+                case "cast": s = $"Fires <color=#FFD15C>{a.skill ?? "?"}</color> at {who} for free"; break;
+                case "order":
+                    {
+                        string p = (a.pets ?? "any").ToLowerInvariant();
+                        string pets = p == "any" ? "Each of your summons" : p == "self" ? "Each summon from this skill" : p.StartsWith("group:") ? $"Each of your {a.pets.Substring(6)}" : $"Each of your {a.pets}";
+                        s = $"{pets} acts on its own: {Joined(Describe(a.actions, classId, who))}";
+                        break;
+                    }
                 case "ricochet":
                     {
                         string per = Describe(a.actions, classId, "it").Replace("• ", "").Replace("\n", "; ");
@@ -891,7 +1319,7 @@ namespace SCClassLoader
                     {
                         string aff = (a.affects ?? "enemies").ToLowerInvariant() switch { "allies" => "allies", "all" => "anyone", _ => "enemies" };
                         string inner = Describe(a.actions, classId, aff + " in it").Replace("• ", "").Replace("\n", "; ");
-                        s = $"Leaves {(a.fieldName ?? "a field")} for {Math.Max(1, a.turns)} turns{(a.radius > 0 ? $" (area {a.radius:0.#})" : "")}: each turn{(a.onEnter ? " and when they step in" : "")}, {inner}";
+                        s = $"Leaves {(a.fieldName ?? "a field")} for {Math.Max(1, a.turns)} turns{(a.overShape ? " across the cone" : a.radius > 0 ? $" (area {a.radius:0.#})" : "")}: each turn{(a.onEnter ? " and when they step in" : "")}, {inner}";
                         break;
                     }
                 case "trap":
@@ -910,6 +1338,8 @@ namespace SCClassLoader
                         break;
                     }
                 case "springtraps": s = $"Sets off every {(a.fieldName ?? "trap of yours").ToLowerInvariant()} on this floor at once"; break;
+                case "movetraps": s = $"Moves your {(a.fieldName ?? "trap").ToLowerInvariant()} under {who}, keeping its fuse"; break;
+                case "ready": s = "The skill you are using is ready again and doesn't end your turn"; break;
                 case "wallspikes":
                     {
                         string inner = Describe(a.actions, classId, who).Replace("• ", "    - ");
@@ -999,9 +1429,10 @@ namespace SCClassLoader
             {
                 string sf = (a.stacksFrom ?? "").ToLowerInvariant(); string on = sf == "self" ? "on you" : sf == "target" ? "on the target" : $"on {who}";
                 string per = a.stacksOf == "summons" ? "summon you have" : a.stacksOf == "bodies" ? "other living body" :
+                    a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) ? ValuePer(a.stacksOf.Substring(6), classId, on) :
                     a.stacksOf.StartsWith("counter:", StringComparison.OrdinalIgnoreCase) ? $"point of <color=#9FD3FF>{a.stacksOf.Substring(8)}</color> {on}" :
                     a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? $"{a.stacksOf.Substring(6)} you have" : $"stack of {EffectName(a.stacksOf, classId)} {on}";
-                string used = a.consumeStacks && !a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) && a.stacksOf != "summons" && a.stacksOf != "bodies" ? (a.stacksUsed > 0 ? $" (uses up to {a.stacksUsed} and spends only those)" : " (consumes them)") : a.stacksUsed > 0 ? $" (counts up to {a.stacksUsed})" : "";
+                string used = a.consumeStacks && !a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) && !a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) && a.stacksOf != "summons" && a.stacksOf != "bodies" ? (a.stacksUsed > 0 ? $" (uses up to {a.stacksUsed} and spends only those)" : " (consumes them)") : a.stacksUsed > 0 ? $" (counts up to {a.stacksUsed})" : "";
                 // effect and summon actions scale a count (stacks, summons) rather than an amount
                 int baseN = act == "effect" ? a.stacks : act == "summon" ? a.amount : -1;
                 if (baseN < 0) s += $", +{a.bonusPerStack} per {per}{used}";
@@ -1021,7 +1452,7 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(a.unlessSkill)) s = $"Without {Synergies.TreeNames(a.unlessSkill)}: {s.Substring(0, 1).ToLower()}{s.Substring(1)}";
             if (!string.IsNullOrEmpty(a.ifSkill))
                 s = $"<color=#7FE0C8>With {Synergies.TreeNames(a.ifSkill)}{(a.skillRank > 1 ? $" (rank {a.skillRank}+)" : "")}</color>: {s.Substring(0, 1).ToLower()}{s.Substring(1)}";
-            return "• " + s + ".";
+            return "• " + s + (s.EndsWith(".") ? "" : "."); // a nested list already ends its last line
         }
 
         private static string SummonWord(string spec) => (spec ?? "").ToLowerInvariant() switch
@@ -1119,6 +1550,7 @@ namespace SCClassLoader
                 "newfloor" => "when you reach another floor",
                 "shieldbreak" => "when your shield breaks",
                 "absorb" => "when your shield takes a hit",
+                "block" => "when you block a hit",
                 "charge" => "when you charge",
                 "leap" => "when you leap",
                 "teleport" => "when you teleport",
@@ -1160,6 +1592,7 @@ namespace SCClassLoader
             "allyhurt" => "the attacker",
             "shieldbreak" => "the attacker",
             "absorb" => "the attacker",
+            "block" => "the attacker",
             "charge" => "the target",
             "leap" => "the target",
             "knockback" => "that enemy",

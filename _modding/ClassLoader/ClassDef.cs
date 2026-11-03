@@ -44,11 +44,24 @@ namespace SCClassLoader
         public List<WildSpell> wildSpells;
         /// <summary>Augments your rune-socketed skills can buy from this class's pool in the rune matrix (see Augments).</summary>
         public List<AugmentSpec> augments;
+        /// <summary>Makes this a several-bodies class like Conjoined (see Conjoined).</summary>
+        public BodiesSpec bodies;
 
         [JsonIgnore] public string sourceFile;
         [JsonIgnore] public string folder;
         /// <summary>The mod this class came from.</summary>
         [JsonIgnore] public ModPack pack;
+    }
+
+    /// <summary>A class whose bodies are full characters of their own (Conjoined). One such class per character.</summary>
+    public class BodiesSpec
+    {
+        /// <summary>1-based tiers of this class at which another body pulls free; the count is the most extra bodies.</summary>
+        public List<int> joinTiers = new List<int> { 1, 3, 5 };
+        /// <summary>This class's effect ("@Id") every body carries, one stack per other body that's up. Empty: none.</summary>
+        public string strain;
+        /// <summary>From this tier on, one body's worth of strain is forgiven. 0: never.</summary>
+        public int strainForgivenAtTier;
     }
 
     public class TierDef

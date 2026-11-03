@@ -80,7 +80,7 @@ namespace SCClassLoader
 
         private static readonly HashSet<string> OtherIsVictim = new HashSet<string>
             { "hit", "kill", "crit", "miss", "cast", "allydeath", "enemydeath", "allykill", "inflict", "trap", "charge", "leap", "knockback", "chain" };
-        private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb" };
+        private static readonly HashSet<string> OtherIsAttacker = new HashSet<string> { "hurt", "dodge", "allyhurt", "shieldbreak", "absorb", "block" };
         private static readonly HashSet<string> AimsAtOther = new HashSet<string>(OtherIsVictim.Concat(OtherIsAttacker)) { "reaction", "summon", "swap" };
 
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
@@ -258,6 +258,19 @@ namespace SCClassLoader
         private static void Postfix() => Patch_ProcHurt.Absorbed = true;
     }
 
+    /// <summary>"block": the bearer's Block roll stopped part of a hit (Brace, Reverb, a counter off a parry).</summary>
+    [HarmonyPatch(typeof(Character_Effect_Control), nameof(Character_Effect_Control.OnBlock))]
+    internal static class Patch_ProcBlock
+    {
+        private static void Postfix(Character_Effect_Control __instance, Character attacker)
+        {
+            Character me = __instance.character;
+            if (me == null || attacker == null || attacker == me || me.GetIsDead()) return;
+            if (me == Player.instance) ProcHub.Fire("block", attacker);
+            else if (me.ai != null && me.ai.GetTeam() == AI.AI_TEAM.Player) ProcHub.FireOn(me, "block", attacker);
+        }
+    }
+
     [HarmonyPatch(typeof(Player), nameof(Player.OnDodge))]
     internal static class Patch_ProcDodge
     {
@@ -289,6 +302,21 @@ namespace SCClassLoader
             foreach (Effect e in c.effects.GetEffects())
                 if (e is ModEffect me && me.Invulnerable) return true;
             return false;
+        }
+    }
+
+    /// <summary>Enemies and mob summons never reach the three-argument overload either: Mob overrides DamageHealth(int, Ability)
+    /// with its own health change, so a preventDeath or invulnerable effect on one did nothing until this looked there.</summary>
+    [HarmonyPatch(typeof(Mob), nameof(Mob.DamageHealth), new[] { typeof(int), typeof(Ability) })]
+    internal static class Patch_PreventDeathMob
+    {
+        private static void Prefix(Mob __instance, ref int dmg)
+        {
+            if (__instance == null || __instance.isDead) return;
+            if (Patch_PreventDeath.Immortal(__instance)) { dmg = 0; return; }
+            if (__instance.health - dmg > 0) return;
+            foreach (Effect e in __instance.effects.GetEffects().ToList())
+                if (e is ModEffect me && me.TrySave(ref dmg)) return;
         }
     }
 

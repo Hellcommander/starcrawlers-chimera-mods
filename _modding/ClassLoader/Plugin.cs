@@ -15,7 +15,7 @@ namespace SCClassLoader
     public class Plugin : BaseUnityPlugin
     {
         public const string GUID = "arendeth.starcrawlers.classloader";
-        public const string Version = "1.46.0";
+        public const string Version = "2.0.0";
 
         internal static ManualLogSource Log;
         internal static Plugin Instance;
@@ -59,6 +59,7 @@ namespace SCClassLoader
             GameFixes.Bind(Config);
             BugFixes.Bind(Config);
             ClassLoot.Bind(Config);
+            EnemyArms.Bind(Config);
             BugReport.Bind(Config);
             CompanionTraps.Bind(Config);
             Traps.Bind(Config);
@@ -180,6 +181,8 @@ namespace SCClassLoader
             else if (dev == "qol") Instance.StartCoroutine(DevTestQol.Run());
             else if (dev == "gambler") Instance.StartCoroutine(DevTestGambler.Run());
             else if (dev == "elites") Instance.StartCoroutine(DevTestElites.Run());
+            else if (dev == "enemyweapons") Instance.StartCoroutine(DevTestEnemyArms.Run());
+            else if (dev == "enemyweapons:census") Instance.StartCoroutine(DevTestEnemyArms.RunCensus());
             else if (dev == "bosses") Instance.StartCoroutine(DevTestBosses.Run(false));
             else if (dev == "bosses:hardolo") Instance.StartCoroutine(DevTestBosses.Run(true));
             else if (dev == "chemistry") Instance.StartCoroutine(DevTestChemistry.Run());
@@ -257,7 +260,8 @@ namespace SCClassLoader
             else if (dev == "dice") Instance.StartCoroutine(DevTestTraps.RunDice());
             else if (dev == "equipped") Instance.StartCoroutine(DevTestEquipped.Run());
             else if (dev == "fulgurant") Instance.StartCoroutine(DevTestFulgurant.Run());
-            else if (dev == "perihelion") Instance.StartCoroutine(DevTestPerihelion.Run());
+            else if (dev == "cometbreaker") Instance.StartCoroutine(DevTestCometBreaker.Run());
+            else if (dev == "cometsyn") Instance.StartCoroutine(DevTestCometSynergies.Run());
             else if (dev == "perispell") Instance.StartCoroutine(DevTestPeriSpell.Run());
             else if (dev == "snareseer") Instance.StartCoroutine(DevTestSnareseer.Run());
             else if (dev == "revenge") Instance.StartCoroutine(DevTestRevenge.Run());
@@ -292,6 +296,8 @@ namespace SCClassLoader
             else if (dev != null && dev.StartsWith("minionmenu:")) Instance.StartCoroutine(DevTestMinionMenu.Run(dev.Substring("minionmenu:".Length)));
             else if (dev == "bodies") Instance.StartCoroutine(DevTestBodies.Run());
             else if (dev == "wear") Instance.StartCoroutine(DevTestWear.Run());
+            else if (dev == "mirrorwear") Instance.StartCoroutine(DevTestMirrorWear.Run());
+            else if (dev == "blocks") Instance.StartCoroutine(DevTestBlocks.Run());
             else if (dev == "combatflow") Instance.StartCoroutine(DevTestCombatFlow.Run());
             else if (dev == "settings") Instance.StartCoroutine(DevTestSettings.Run());
             else if (dev == "audiofast") Instance.StartCoroutine(DevTestAudioFallback.RunFast());

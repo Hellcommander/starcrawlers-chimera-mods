@@ -14,7 +14,8 @@ namespace SCClassLoader
     /// StarCrawlers-style party cards for Conjoined bodies on the left of the screen: class icon, name, level, class
     /// and health; the body you play is highlighted, fallen ones are greyed. Click a card to switch to that body.
     /// The "Party" tab (or the hotkey) hides and shows the cards; the choice is remembered.
-    /// Art comes from Mods/Conjoined/ui/*.png when present (card, card_active, card_down, tab, hp_fill).
+    /// Art comes from the bodies class's own ui/*.png when present (card, card_active, card_down, tab, hp_fill), else
+    /// from Mods/Conjoined/ui.
     /// </summary>
     internal static class PartyPanel
     {
@@ -24,8 +25,14 @@ namespace SCClassLoader
         internal static void Bind(ConfigFile cfg) =>
             ToggleKey = cfg.Bind("Conjoined", "PartyPanelKey", KeyCode.F7, "Shows or hides the Conjoined party cards.");
 
-        private static string ArtDir => Path.Combine(Plugin.GameDir, "Mods", "Conjoined", "ui");
-        private static Sprite Art(string name) => File.Exists(Path.Combine(ArtDir, name + ".png")) ? ClassRegistry.LoadSprite(ArtDir, name + ".png") : null;
+        private static string ArtDir(string name)
+        {
+            string own = ClassRegistry.FolderOf(Conjoined.ClassId);
+            if (own != null && File.Exists(Path.Combine(own, "ui", name + ".png"))) return Path.Combine(own, "ui");
+            return Path.Combine(Plugin.GameDir, "Mods", "Conjoined", "ui");
+        }
+
+        private static Sprite Art(string name) => File.Exists(Path.Combine(ArtDir(name), name + ".png")) ? ClassRegistry.LoadSprite(ArtDir(name), name + ".png") : null;
 
         internal static bool Hidden
         {
@@ -54,7 +61,7 @@ namespace SCClassLoader
             {
                 var b = Body;
                 if (b == null) return;
-                string why = b.Id == Conjoined.ActiveId ? "You are playing this body." : Conjoined.SwitchBlocker(b) ?? (Conjoined.InCombat ? "Click: switch (uses Trade Bodies)." : "Click: switch to this body.");
+                string why = b.Id == Conjoined.ActiveId ? "You are playing this body." : Conjoined.SwitchBlocker(b) ?? (Conjoined.InCombat ? $"Click: switch (uses {Conjoined.TradeName})." : "Click: switch to this body.");
                 Tooltip.instance?.Show_TinyTip(b.Name, $"Level {b.Level} · {ClassLine(b)}\n{why}", null);
             }
 
@@ -88,11 +95,12 @@ namespace SCClassLoader
             string[] trees = b.Id == Conjoined.ActiveId
                 ? Player_SkillControl.instance.skillTrees.Where(t => t != null).Select(t => t.internalName).ToArray()
                 : b.Save?.skillTrees;
-            string main = trees?.FirstOrDefault(t => !string.IsNullOrEmpty(t) && t != Conjoined.ClassId);
+            string main = trees?.FirstOrDefault(t => !string.IsNullOrEmpty(t) && !Conjoined.IsBodiesClass(t));
             return main == null ? null : Game.instance.skills.FirstOrDefault(s => s != null && s.internalName == main);
         }
 
-        private static string ClassLine(Conjoined.Body b) => MainTree(b)?.displayName.ToString() ?? "Conjoined";
+        private static string ClassLine(Conjoined.Body b) =>
+            MainTree(b)?.displayName.ToString() ?? Game.instance.skills.FirstOrDefault(s => s != null && s.internalName == Conjoined.ClassId)?.displayName.ToString() ?? "Body";
 
         internal class Panel : MonoBehaviour, IPointerClickHandler
         {

@@ -16,7 +16,7 @@ namespace SCClassLoader
     /// </summary>
     internal static class PortalButton
     {
-        internal static ConfigEntry<bool> BesidePerks, FreeSpots;
+        internal static ConfigEntry<bool> BesidePerks, FreeSpots, BesideCapstone;
         private const float Gap = 14f;
 
         private static RectTransform moved;
@@ -27,9 +27,13 @@ namespace SCClassLoader
             BesidePerks = cfg.Bind("Interface", "PortalBesidePerks", true,
                 "Puts the Apartment Portal button on the skills screen to the right of the perk point count instead of under the last tree row, where it covers that row's ninth tier slot.");
 
-        internal static void BindSpecials(ConfigFile cfg) =>
+        internal static void BindSpecials(ConfigFile cfg)
+        {
             FreeSpots = cfg.Bind("Interface", "SpecialButtonsInFreeSpots", true,
                 "Puts the skills screen's ChimeraLinq and Vendordamus Beacon buttons only where nothing else is: an empty cell of the ninth column, else the points line beside the skill point count. Off: the game's places, over the ninth tier slots.");
+            BesideCapstone = cfg.Bind("Interface", "SpecialButtonsBesideCapstone", false,
+                "When the ninth column has no empty cell for the ChimeraLinq and Vendordamus Beacon buttons, one ninth-tier skill shrinks to half its width and height, and both buttons sit beside it in its cell at that same size. Needs SpecialButtonsInFreeSpots.");
+        }
 
         internal static void Place(Menu_Skills ms)
         {
@@ -94,6 +98,7 @@ namespace SCClassLoader
                 if (!FreeSpots.Value) { b.localPosition = homes[b].pos; b.localScale = homes[b].scale; }
             }
             var shown = buttons.Where(b => homes.ContainsKey(b) && b.gameObject.activeInHierarchy).ToList();
+            GrowBack();
             if (!FreeSpots.Value || shown.Count == 0) return;
 
             // everything already on the screen that a button mustn't cover
@@ -120,6 +125,8 @@ namespace SCClassLoader
             var spots = new List<(Vector2 at, float scale)>();
             foreach (SkillSelect tree in ms.skillTrees.Where(t => t != null && t.gameObject.activeInHierarchy).OrderBy(t => ScreenRect((RectTransform)t.transform).center.y))
                 spots.Add((new Vector2(colX + colOffset, ScreenRect((RectTransform)tree.transform).center.y), 1f));
+            if (BesideCapstone.Value && spots.Count(s => !taken.Any(t => t.Overlaps(new Rect(0, 0, full, full) { center = s.at }))) < shown.Count && ShareCell(ms, shown, full))
+                return;
             Rect skill = ScreenRect(ms.skillPointsText.rectTransform);
             float small = full * Size;
             for (float x = skill.xMin - Gap - small / 2f; x - small / 2f > frame.xMin + Gap; x -= small + Gap)
@@ -141,6 +148,50 @@ namespace SCClassLoader
                 }
                 if (!placed) { b.localPosition = homes[b].pos; b.localScale = baseScale; }
             }
+        }
+
+        private static RectTransform shrunk;
+        private static Vector2 shrunkPivot;
+        private static Vector3 shrunkScale;
+
+        /// <summary>Moves a pivot without moving the rect, so the row's layout has nothing to put right.</summary>
+        private static void SetPivot(RectTransform t, Vector2 pivot)
+        {
+            Vector2 shift = Vector2.Scale(pivot - t.pivot, Vector2.Scale(t.rect.size, t.localScale));
+            t.pivot = pivot;
+            t.localPosition += (Vector3)shift;
+        }
+
+        private static void GrowBack()
+        {
+            if (shrunk != null)
+            {
+                shrunk.localScale = shrunkScale;
+                SetPivot(shrunk, shrunkPivot);
+            }
+            shrunk = null;
+        }
+
+        /// <summary>The lowest ninth-tier skill goes to half size in its cell's top left corner, and the buttons take the corners beside it.</summary>
+        private static bool ShareCell(Menu_Skills ms, List<RectTransform> shown, float full)
+        {
+            var rows = new[] { ms.tree_0_tiers, ms.tree_1_tiers, ms.tree_2_tiers, ms.tree_3_tiers, ms.tree_4_tiers, ms.tree_5_tiers, ms.tree_6_tiers };
+            var slot = rows.Where(r => r != null && r.Length > 8 && r[8] != null && r[8].gameObject.activeInHierarchy).Select(r => (RectTransform)r[8].transform)
+                .OrderBy(t => ScreenRect(t).center.y).FirstOrDefault();
+            if (slot == null) return false;
+            Rect cell = ScreenRect(slot);
+            shrunk = slot;
+            shrunkPivot = slot.pivot;
+            shrunkScale = slot.localScale;
+            SetPivot(slot, new Vector2(0f, 1f));
+            slot.localScale = shrunkScale * 0.5f;
+            var corners = new[] { new Vector2(cell.xMax - cell.width / 4f, cell.yMax - cell.height / 4f), new Vector2(cell.xMin + cell.width / 4f, cell.yMin + cell.height / 4f) };
+            for (int i = 0; i < shown.Count && i < corners.Length; i++)
+            {
+                shown[i].localScale = homes[shown[i]].scale * (cell.width / 2f / full);
+                Center(shown[i], corners[i]);
+            }
+            return true;
         }
 
         /// <summary>Once more after the screen's layout has settled.</summary>

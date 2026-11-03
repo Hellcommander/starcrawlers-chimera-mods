@@ -21,7 +21,7 @@ with a Glacier Sentinel golem) and `Mods/LookingGlass/` (a chaotic agile duelist
 Grown, steps out of a mirror, drops enemies down a rabbit hole and ends as the Grinning Cat; also the worked example of
 conditions, counters and triggers, see its README) are single-class mods whose icons, particle sheets, meshes,
 animated summons and sounds all come from the AAMT asset pipelines (`_modding/make_kelvin_glass_assets.py`).
-`Mods/Perihelion/` is another single-class mod: a Strength and Psi Power comet that crosses the room untouchable,
+`Mods/CometBreaker/` is another single-class mod: a Strength and Psi Power comet that crosses the room untouchable,
 throws what's around its landing into the walls, most bosses included, and splits off copies of you. It requires the
 immortal fix (`PlayerImmortalTag` under `[Fixes]`, on by default): with it off, its charges don't protect you.
 `Mods/ShadowMagus/` is a third: a Guile caster whose spells scale with Recognition and Psi Power and whose control
@@ -51,7 +51,7 @@ abilities, stats, damage types and item ids. Use it to choose what to borrow.
                                 //   ending use it (the Ichorborn). It stays registered, so saves with it still load.
                                 //   [Unlocks] UnlockAll = true shows every class anyway.
 
-  "ignoresAllies": false,       // true: nothing hostile the class does (damage, debuffs, shoves, stuns, swaps) lands on
+  "ignoresAllies": false,       // true: nothing hostile the class does (damage, debuffs, shoves, stuns, swaps; vanilla effects the game marks as debuffs) lands on
                                 //   your side (you, pets, summons, thralls, crew); buffs and heals still do. Rimelight Seer.
   "starterCredits": 0,
   "starterItems": ["WEAPON_R_Street_Special"],  // vanilla ids from vanilla_reference.txt, or mod items "Mod:Id"
@@ -98,6 +98,7 @@ is built this way.
     "shape": "line", "width": 1, // or "cone" with "angle": 60: everyone in that shape from you toward the target, out to range
     "staminaCost": 12, "cooldown": 0, "instant": false, "dodgeable": false, "melee": false,
     "resetOnKill": false,        // true = a kill with it makes it ready again
+    "cooldownWhile": "@Stance",  // the cooldown doesn't count down while you carry this effect (stances, shields)
     "castVfx": "PA_Psykonics_Temporal.castParticle",                 // borrowed vanilla particles,
     "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",       // see vanilla_reference.txt; "name@0.5" = half size
     "travelVfx": "MyBolt", "travelSpeed": 14,                        // flies caster -> target before the hit lands
@@ -131,7 +132,14 @@ small part of a bigger change, or the price of an upside. `"when": { "perk": tru
 actions swaps what it does outright.
 
 **Actions** (`"do"`): `damage`, `heal`, `stamina`, `shield` (overshield), `effect`, `stun` (`turns`), `knockback`
-(`amount`), `blind`, `cooldowns` (reduce your other cooldowns by `amount`), `purge` (remove `effect`), `teleport`
+(`amount`), `blind`, `cooldowns` (reduce your other cooldowns by `amount`; with `"skill": "Slam"` only that skill's,
+by its shown name), `purge` (remove `effect`), `shorten` (takes `amount` turns off the target's debuffs, or its
+`"effect": "buffs"`, or one effect by id; one run down to nothing ends, and a negative amount draws them out instead;
+effects with no end are left alone), `xp` (you gain experience as for a won floor event, which grows with the floor;
+`amount` multiplies it), `ammo` (puts `amount` rounds back in your loaded ammo, up to a full stack; negative takes
+them out, and taking the last empties the slot), `loot` (the game rolls `amount` items of `"lootType"` (`Random`,
+`Weapon`, `Gear`, `Consumable`, `Credits`, `Food`, `Ammo`, `Luxury`) at `"rarity"` (`Common` to `Legendary`; unset =
+the floor's own odds), and they spill from the target the way a broken crate's do), `teleport`
 (floor abilities; same room only), and the control actions `taunt`, `silence`, `exhaust`, `swap` (see below). Any action can have `"to"` (`target` default, `self`, `attacker`, `victim`),
 `"chance"`, `"scale"` + `"scaleMult"` (add a stat), `"perRank"`, and `"ifTargetHas": "@Hexed"` (+ `"consume": true`).
 **Shapes.** `"shape": "line"` hits everyone on a line from you toward the target or aim point, out to the skill's full
@@ -143,6 +151,11 @@ A `damage` action can also take `"weapon": 0.4`: it adds 40% of a roll of your m
 off-hand weapon that fits the skill's gear rule, see Gear requirements), for skills
 that are half blade and half spell (nothing without a weapon; mod summons and enemies ignore it). Such a hit is a weapon
 hit as well: your weapon's own on-hit effects, your ammo's and every passive that answers weapon hits go off with it.
+
+A `damage` action's `"type": "weakest"` deals whichever damage type the target resists least, the way an analyser
+finds the gap in its armour; `"weakest:Fire|Cryo|Shock"` picks among those only, the first listed on a tie.
+`"areaFalloff": 0.25` takes a quarter off for each tile between the victim and the area's centre (the tile the
+skill landed on, a burst's bearer), never below a tenth, so a blast hits hardest where it lands.
 
 **Chance, money and summon actions** (`Mods/OddsBreaker/` is a whole class built on them):
 
@@ -166,6 +179,9 @@ hit as well: your weapon's own on-hit effects, your ammo's and every passive tha
     "stats": { "Dodge": -10 }, "resists": { "Void": -15 }, "dot": { "type": "Void", "min": 1, "max": 3 },
     "hot": 0, "staminaPerTurn": 0, "damageDealtMult": 1.0, "damageTakenMult": 1.0,
     "critDamage": 0.0,            // extra crit damage while it holds (0.35 = crits hit 35% of the hit harder); crit chance is "stats": { "Crit": n }
+    "critDamagePerStack": 0.0,    // the same, added per stack
+    "immune": [ "#Poisoned", "EFFECT_Poison", "CONFUSE" ], // effects (mod or vanilla) the bearer can't get while it holds
+    "immuneToAllies": false,      // true: no damage from your own side reaches the bearer (your summons, bursts, damage over time)
     "vfx": "EFFECT_Void_Psyker_Drain", "procs": [] }
 ]
 ```
@@ -185,6 +201,9 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `onExpireActions` + `onExpireRadius` (delayed detonations), `group` (stances: one per group),
   `invulnerable` (no health can be lost while it's on, from hits, damage over time or anything else; on the player it needs `PlayerImmortalTag` under `[Fixes]`), `preventDeath` + `onSaveActions` (cheat death once; kept for the rare class whose theme earns it, like Looking Glass's
   Grinning Cat: a save is a boss's move, so most classes trigger on a `lowHealth` threshold instead).
+  `"preventDeathWhen"` takes a condition (see Conditions; "self" and "target" are both the bearer) and saves only while
+  it holds, so the effect stays on until then: `{ "has": "@Vow" }`, `{ "inCombat": true }`. Both work on enemies and
+  summons as well as on you.
   **Revenge counters:** every effect keeps a tally of the health its bearer loses while it is on, and a `damage`
   action in its `onExpireActions`, `onDeathActions`, `burstActions` or `thresholds` can add a share of it with
   `"stored": 0.5` (half of all it took). Vasculist's Strung Up bursts this way: the more the puppet soaks fighting
@@ -200,10 +219,17 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   with negative `stacks` takes that many off instead (`"stacks": -2`: a resource that bleeds away).
   With `bonusPerStack` the base (`stacks` / `amount`) may be 0: then nothing happens without stacks; `ifSelfHas` (stance- or state-dependent effects); `lifesteal`; `trueDamage`;
   `dispel` / `cleanse` (`amount`, optional `effect` gained per buff removed); `chain` (`jumps`, `radius`,
-  `effect` = only jump to enemies carrying it, `falloff`, nested `actions`; `"leap": true` makes it a charge: you land
+  `effect` = only jump to enemies carrying it, `falloff`, `"sight": true` = only jump to what the last link can see,
+  never through a wall, nested `actions`; `"leap": true` makes it a charge: you land
   beside each link before it is struck, one hop at a time, and the skill's own self actions wait for the last hop;
   Rimelight Seer's Prism Charge); `echo` (replay your last offensive
-  new ability at `falloff` strength).
+  new ability at `falloff` strength); `cast` (`"skill": "Capacitor Bolt"`: fires that skill by its shown name for
+  free, with no stamina or cooldown, at the target and around it if the skill has an area; your own class's skill of
+  that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
+- `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
+  (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`. A `/N` divides and rounds down. `stacksFrom`
+  says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
   the opposite. Another class's effect can be named as `"MOD_Etcher@Etched"` anywhere an effect id goes.
@@ -228,8 +254,14 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   `"stationary": true` keeps a summon on the tile it appeared on (a decoy, a totem); it still attacks what comes in reach.
 - Mod summons don't use up the vanilla 3-pet limit, and you don't need the Engineer tree for Junkers or Turrets.
 - `"stacksOf": "summons"` counts your living minions, so `bonusPerStack` can scale with the size of your army.
+- `"hostile": true` brings the summon in against you every time (an `anySide` one only when the coin goes that way):
+  something a curse lets loose, a price paid in enemies.
 - `"to": "summons"` runs an action on every living pet (or only those matching `ifSummonAlive`), e.g. a buff for
   the whole swarm.
+- `{ "do": "order", "pets": "group:ScrapDrones", "actions": [ ... ] }` has each matching summon carry out the nested
+  actions itself, at your target (or at itself on a skill with no target): the pet deals the damage, with its own
+  stats, the way a Beastmaster's command makes the animal bite. `pets`: `"any"` (default), `"self"` (made by this
+  skill), `"group:X"` or a creature name. Inside, `"to": "self"` is the pet.
 - `{ "do": "dismiss", "to": "summon" }` recalls one of your pets: it leaves without dying (no corpse, no loot).
   With `"ifSummonAlive": "CORPSEC_DRONE"` it picks a pet whose name matches, and other actions with the same
   condition can pay you back for it (see `Mods/SwarmConductor/`, where a recalled drone refunds stamina).
@@ -425,6 +457,11 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     stood, facing it. `"warpTo": "random"` (or `"away"`, the farthest spot from you) blinks whoever the action is aimed
     at to a free tile up to `amount` (default 3) away in the same room: enemies, or you with `"to": "self"`. Bosses,
     rooted and NOKNOCKBACK enemies stay put. `"vfx"` replaces the flash at both ends.
+  - `{ "do": "anchor" }` marks the tile you stand on and your health; `{ "do": "rewind", "restore": true }` pulls you
+    back to it (beside it if the tile is taken) and, with `restore`, raises your health back to what it was there,
+    never lowers it. A rewind uses the mark up; `"fieldName"` names an anchor, so one class can keep several. Anchors
+    stay on their floor and aren't saved: a new floor or a reload leaves them behind. `"vfx"` on the anchor flashes on
+    the tile.
   - `{ "do": "show", "model": { "mesh": "models/grin.glb", "scale": 1.9 }, "showStyle": "snap", "showTime": 0.9 }` puts
     a model on the target's body for a moment, as big as you like: `pop` swells in and fades, `snap` opens and then
     clamps shut (jaws, a trap). Purely visual; `Mods/LookingGlass/` bites with it.
@@ -441,7 +478,42 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   - A field's look or model goes on tiles about 1.9 apart; `"spacing": 1` puts one on every tile (a palisade of
     spikes), `1.4` the middle and the corners.
 - **Bodyguard cover.** An effect with `"redirect": 0.5` sends half of every hit its bearer takes to whoever applied it.
-  Put it on your summons with `"to": "summons"`.
+  Put it on your summons with `"to": "summons"`. `"redirectTo": "summon"` sends it to your summon nearest the bearer
+  instead (or `"group:X"`, or a creature name): drones that screen you, a familiar that takes the blows. It only works
+  for effects your side applies.
+- **Corpses.** `{ "do": "corpses", "amount": 2, "radius": 4, "blastRadius": 2, "actions": [ ... ] }` consumes up to 2
+  of the bodies lying within 4 of you (`amount` 0 = all of them; `radius` defaults to 3), nearest first. For each, the
+  nested actions with `"to": "self"` run on you and the rest on the enemies within `blastRadius` of that body (or on
+  the skill's target without one): a corpse explosion, a feast that heals, spare parts. `"keepCorpses": true` leaves
+  the bodies lying there, and `"vfx"` plays on each. The value `corpses:R` counts the bodies within R of whoever it
+  reads (`"value": "corpses:3"` in a condition, `"stacksOf": "value:corpses:3"` to scale with them).
+- **Hazard proof.** An effect's `"hazardProof": [ "HAZARD_Fire", "HAZARD_Acid" ]` (or `[ "all" ]`) stops those floor
+  hazards' damage on its bearer. An id also covers its kin (`HAZARD_Fire` stops `HAZARD_Fire_Mini`); what a hazard puts
+  on you is stopped with `immune` as usual. Hits from skills of the same damage type still land.
+- **Hit filters.** `"dealtWith"` and `"takenFrom"` on an effect limit its `damageDealtMult` / `damageTakenMult` to some
+  hits: `"melee"`, `"ranged"` (by the skill or attack the hit came from; damage over time and hazards are neither),
+  `"attack"` (a weapon attack) or `"skill"`, `"mainhand"` or `"offhand"` (the hand that swung: the attack's off-hand
+  swing, or a skill that swings your off-hand weapon) or damage types, joined with `|`. `{ "damageTakenMult": 0.5, "takenFrom": "ranged" }` is a deflector field,
+  `{ "damageTakenMult": 0.6, "takenFrom": "Fire|Cryo" }` insulation, `{ "damageDealtMult": 1.3, "dealtWith": "melee" }`
+  a brawler's stance.
+- **Held cooldowns.** `"cooldownWhile": "@Stance"` on an ability stops its cooldown counting down while you carry that
+  effect, so a stance, form or shield can't be used again until it has ended and its cooldown has run. Skills that cut
+  cooldowns still work on it.
+- **Breaking effects.** `"breakOnHurt": true` on an effect ends it the moment its bearer takes damage (true damage
+  doesn't count; it skips every effect). `"onBreakActions"` run on the bearer as it breaks, or on you with
+  `"to": "self"`: a camouflage that drops, a crystal shell that bursts, a trance that snaps.
+- **Opening locks.** `{ "do": "unlock", "radius": 3 }` opens every locked door and container within 3 of you (default
+  2.5), by the base Hacker's rules: sealed, broken and boss doors stay shut, and an opened container spills its loot.
+  `"odds": 60` rolls once per lock.
+- **Disarming.** `{ "do": "disarm", "radius": 4 }` disarms every armed trap within 4 of you, seen or not, and salvages
+  its parts the way a disarm by hand does, so skills that work on disarms go off too. Hazards laid by skills stay.
+  `"odds"` rolls once per trap.
+- **Stealing.** `{ "do": "steal", "amount": 2 }` takes up to 2 items from each vendor within `radius` (default 2.5).
+  Each theft works at 50% + your Smarts, as the Hacker's does (`"odds"` sets it), and the first one that fails turns
+  the vendor on you, or calls the guards, and locks the shop.
+- **Off-hand power.** An effect's `"offhandPower": 0.25` adds 25% of the weapon's roll to what your off-hand weapon
+  deals (the game's base is 50%), per stack, for the attack's off-hand swing and for skills that swing the off-hand
+  weapon alike. Pair it with `"dealtWith": "offhand"` for a dual-wielder's stance.
 - **Model animation.** Besides `bob` and `spin`, a model takes `wobble` (degrees of rocking that settles after it
   appears), `pulse` (breathing in size, 0.1 = ±10%) and `randomYaw` (each copy turned differently).
 - `Mods/Kinetics/` has seven Muscle and Guile classes built on these: Grappler, Rig Jockey (hardpoints are rune
@@ -450,11 +522,11 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   icons by `_modding/make_kinetics_icons.py`.
 - `"add": { "mirrors": 7 }` on a `"form": "nova"` rewrite (or a rewrite that holds alongside one) makes you one point of
   the nova: you take the way you aimed, and that many copies take the others, evenly round you, diagonals too. They
-  leave from where you stood and set the spell off where they land. `Mods/Perihelion/synergies.json`
+  leave from where you stood and set the spell off where they land. `Mods/CometBreaker/synergies.json`
   does this to Spellsmith's Nova Form. A rewrite never takes the aim from a `"target": "point"` skill: a charge still
   carries you, and the form shapes what happens where you land.
 - `"creature": "self"` makes copies of the player: your class's crawler body, your gear and stats as they are now,
-  your weapon, and every class skill that aims at a target (`Mods/Perihelion/` Split Nucleus). `"strength": 0.4` is
+  your weapon, and every class skill that aims at a target (`Mods/CometBreaker/` Split Nucleus). `"strength": 0.4` is
   the share of your damage; stuns, blinds, silences, taunts and set-backs land that often and last that share of
   their turns, other effects keep that share of their turns and stacks. `"healthShare": 0.3` is their health and
   `"look": "#6FB4F0"` tints them. A copy leaves no corpse and gives no xp. Skills with no action spec (vanilla
@@ -494,6 +566,13 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   Melee, damage over time and hazards aren't reflected. Rimelight Seer's Galeward uses it.
 - An effect's `"ownerShare": 0.5` gives its bearer half of its owner's attributes (Strength, Toughness, Agility, Recognition,
   Smarts, Savvy, Psi Power), kept current every turn. Starbound beasts fight with half of yours.
+- An effect's `"statsFrom": [{ "stat": "Armor", "from": "Toughness", "per": 2 }]` gives its bearer one Armor per 2
+  Toughness of whoever applied it (of the bearer itself when nobody did), per stack, kept current each turn: a guard
+  stance lent to an ally, a ward that grows with your Psi Power. Same fields as an ability's `statsFrom`.
+- An effect's `"tickActions": [ ... ]` run at the end of each of the bearer's turns (from the turn after it lands, as a
+  dot does), with whoever applied it as the caster: a mark that pulls stamina from its bearer back to you, a curse that
+  spreads, a ward that heals the bearer's neighbours. `"tickRadius": 2` runs them on everyone within 2 of the bearer
+  too. Stacks scale them through each action's own `bonusPerStack` + `stacksOf`.
 
 **Pulling and ground** (any ability, proc or effect):
 
@@ -512,6 +591,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "look": "HAZARD_Acid",                       // borrow a vanilla hazard's look (no hazard logic)
     "pulseVfx": "PA_Elementalist_FrigidBlast.impactParticle",   // optional particle each turn
     "onEnter": true,                             // stepping in triggers it too (default)
+    "overShape": true,                           // covers the casting skill's cone or line out to "radius"
     "actions": [ { "do": "damage", "type": "Cryo", "min": 2, "max": 4 }, { "do": "effect", "effect": "@Waterlogged" },
                  { "do": "pull", "amount": 1, "pullToward": "center" } ] }
   ```
@@ -561,11 +641,15 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     in hand is needed. `"do": "shield"` is the other kind: overshield, which goes above the pool.
   - `"wildForm": 25` on a passive: a 25% chance each of your aimed spells changes form as it leaves you: a burst over
     everyone within 2 of the target, a beam through the line, a split onto two more foes, a swerve onto another foe, a
-    one-shot trap laid where you aimed (it arms next turn), or (rarely) the whole spell turned on you.
+    one-shot trap laid where you aimed (it arms next turn), or (rarely) the whole spell turned on you. Its `"formVfx"`
+    sets each form's look: `{ "area": "...", "line": "...", "scatter": "...", "retarget": "...", "trap": "...",
+    "backfire": "..." }` ("line" and "retarget" fly as a travel effect from you; the rest play where the spell lands).
   - A class's top-level `"wildSpells"` list holds spells nothing else can cast (they never go on a skill bar):
     `{ "name": "Coin Toss", "say": "a line for the log", "weight": 1, "radius": 2, "friendlyFire": true, "impactVfx": "...", "sound": "...", "actions": [...] }`.
     Three in ten plain wild casts are one of these. Their actions aren't limited like borrowed spells: they can move you, lay hazards and traps, or use `"to": "self"`.
     `"friendlyFire"` makes the radius catch everyone, you and your allies too. `"group": "boss"` marks a boss echo, normally one `surge` action.
+  - `"notClass": "MOD_Wildcaster"` on a wildCast leaves that class's spells out of the pool (the caster's own class is
+    always left out).
   - `"pool"` on a wildCast picks from: `"spells"` (default), `"wild"` (only wild spells), `"bosses"` (only boss echoes), `"monsters"`, or `"all"` (anything, 15% a boss echo). `"atYou"` on it gives the echo that % chance of landing on you.
   - On a `summon`, `"anySide": true` tosses a coin for whose side it arrives on. Against you it gives no xp, and `"maxSummons"` (default 3) caps how many can be out; it goes when its `"turns"` end. `"creature": "boss:Enemy_BOSS_Smorn"` picks one of the creatures that boss really summons, read from its abilities. A wild spell's `"minLevel"` keeps it out until your total level reaches that.
   - `{ "do": "horror", "turns": 6, "anySide": true, "actions": [...] }` brings in The Horror for a few turns, hunting you or (without `anySide`, always) your enemies. It runs its actions on its quarry when it reaches it, is never saved, and leaves a Cursed player's own Horror alone.
@@ -590,9 +674,17 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   - `{ "do": "raiseWall", "amount": 3, "turns": 5, "model": { ... } }`: a wall `amount` tiles wide across your aim at
     the aim point (a floor skill with nobody there still raises it), on free tiles only. It blocks movement, counts as
     a wall for spikes, throws and `wallsNear`, and crumbles after `turns`. Raised walls don't outlast the floor.
+    `"behind": 2` raises it that many tiles straight behind the target as you see it, only if the way there is open,
+    so a throw has something to hit. `"modelFrom": "MOD_BulkheadPsion"` reads `model` from that class's folder.
   `Mods/ArendethClasses/bulkhead_psion.json` builds a class on them; `SCCL_DEVTEST=bulkhead` tests them.
 - `{ "do": "springTraps", "fieldName": "Snare Mine" }` sets off every one of your traps of that name on this floor
-  at once, live yet or not (no name = all of them): a remote detonator.
+  at once, live yet or not (no name = all of them): a remote detonator. `"near": 2.6` limits it to traps that close to
+  you, and on a skill rewrite's action `"first": true` runs it before the skill's own actions, so a blast hasn't moved
+  anyone off the traps yet.
+- `{ "do": "moveTraps", "fieldName": "Ephemeris" }` moves your traps of that name under the target, keeping their fuse
+  (`"look"` colours the streak). `{ "do": "ready" }` makes the skill going off now ready again when it ends, without
+  ending your turn; its stamina is still paid each cast. `Mods/CometBreaker/synergies.json` uses all of these, and
+  `SCCL_DEVTEST=cometsyn` plays them.
 
 **Particles.** Particle names played on the spot (`castVfx`, `impactVfx`, `pulseVfx`, `burstVfx`, a proc's or
 threshold's `vfx`, a field's `look`) take a size (an effect's own `vfx`, the aura it wears, does not):
@@ -756,6 +848,8 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
 - **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
+  That is the last skill you used even between casts, so pair it with `"casting": true` (a skill of yours is going off
+  right now) on a `hit` proc that a trap or a damage tick must not set off.
 - **Where:** `inSide` holds in a side area (`false`: outside one).
 - **Gear** (`equipped`): `"when": { "equipped": "melee+shield" }` holds while you have that gear on (see below).
 - **Named conditions:** a class or library defines them once and anything can use them by name:
@@ -791,6 +885,8 @@ Static Grip need a ranged weapon.
 
 **Triggers (`"on"`).** Besides `hit`, `kill`, `hurt`, `dodge`, `turn` and `reaction`, a proc can fire on:
 - `crit`, `miss`;
+- `block` (a hit on you is blocked; the actions aim at the attacker, as on `hurt`; also fires for your summons'
+  effects when they block);
 - `cast` (you use an ability; `"match"` is its name or id), `wait`;
 - `move`: your tile changes, which is checked once the move really happens, so a blocked step doesn't count. `"match"` says which moves:
   - nothing or `"step"`: you walk a tile (diagonals too; a dash or charge is not a step);
@@ -922,9 +1018,19 @@ skill and perk points, gear, hotbar (all pages) and effects. Inventory, credits,
 - **Falling:** if the body you play would die while another stands, you wake up in that one; the fallen body stays
   down until **Knit Together** (tier 4, 40-turn cooldown) brings it back at half health. With no body left
   standing, death is death.
-- For class makers: actions `swapBody` and `reviveBody` (`amount` = % health), `carryToBody` (`effect`, `turns`: for a
-  `cast` proc on the swap skill, lands on the body you step into), `"stacksOf": "bodies"` (other bodies that are up), and
-  the ability field `"requires": "livingBody"` / `"downedBody"`.
+- For class makers: any class can be a several-bodies class. Give it a class-level block
+  `"bodies": { "joinTiers": [1, 3, 5], "strain": "@SpreadThin", "strainForgivenAtTier": 5 }`:
+  - `joinTiers`: the tiers of your class at which another body pulls free; the list length is the most extra bodies.
+  - `strain`: one of your class's effects that every body carries, one stack per other body that's up (leave it out
+    for none).
+  - `strainForgivenAtTier`: from this tier on, one body's worth of strain is forgiven (0 = never).
+
+  The class itself is kept on retraining and left out of a new body's class picks. A character has at most one such
+  class. Party card art comes from your class folder's `ui/` (card, card_active, card_down, tab, hp_fill), else from
+  Conjoined's. Messages name your own skills: the one with `swapBody` and the one with `reviveBody`. Actions
+  `swapBody` and `reviveBody` (`amount` = % health), `carryToBody` (`effect`, `turns`: for a `cast` proc on the swap
+  skill, lands on the body you step into), `"stacksOf": "bodies"` (other bodies that are up), and the ability field
+  `"requires": "livingBody"` / `"downedBody"`.
 
 ## Retraining
 
@@ -1096,7 +1202,7 @@ Summons (`"do": "summon"`) and mod enemies take a `"model"`: a new mesh, or just
 { "do": "summon", "creature": "nanite_cloud", "summonName": "Hoarlight",
   "model": { "mesh": "models/hoarlight.glb", "scale": 0.9, "offset": [0, 1.0, 0], "rotation": [0, 0, 0],
              "glow": "#7fdcff", "glowStrength": 1.4, "tint": "#ffffff", "bob": 0.12, "spin": 35,
-             "keepParticles": false,
+             "keepParticles": false, "faceViewer": false,   // faceViewer: keeps turning to face the camera (a floating grin, a ghost)
              "particles": [ { "id": "RimeHoarlightMotes" } ], "deathVfx": "RimeHoarlightBurst" } }
 // an enemy: "enemies": [ { "id": "Frostling", "base": "CORPSEC_GUARD_MELEE", "model": { "texture": "frostling.png" } } ]
 ```
@@ -1323,7 +1429,8 @@ Painted Guard) and `Mods/KelvinMagus/creatures.json` (the Glacier Sentinel) are 
                  { "kind": "retreat", "below": 35 },   // under 35% health: keep backing off
                  { "kind": "guard", "leash": 6 },      // a summon farther than 6 from you walks back toward you
                  { "kind": "hitAndRun" },              // after using a skill away from where it started, dart straight back
-                 { "kind": "hunt" } ]                  // a summon with no enemy in reach closes on the nearest one instead of walking back to you
+                 { "kind": "hunt", "reach": 4 } ]      // a summon with no enemy in reach closes on the nearest one instead of walking back to you;
+                                                       // "reach" stops it that far off, for hunters that strike from range
   ```
   Each takes `"cooldown"` (its turns before it can kick in again). The Spitcap kites and retreats, the Zenith Hoarlight
   kites and guards, and Rimelight Seer's Hoarlights hit and run: their Wisp Dart skill leaps in (`{ "do": "leap" }`),
@@ -1414,11 +1521,22 @@ New ability actions (in class files, `newAbility.actions`):
 - `{ "do": "consumeItem", "item": "...", "amount": 2 }` or `"tag": "MECHPARTS"` uses items up if you have them.
 - `{ "do": "salvage", "gives": [ { "item": "...", "count": 2, "chance": 50 } ] }` destroys the targeted item and hands
   out the parts. Use it with `"target": "item"` (see below).
+- `{ "do": "tune", "stat": "Strength", "min": 1, "max": 3, "limit": 3 }` works a lasting change into a piece of gear,
+  saved with it: the item the skill is aimed at, or with `"slot": "mainhand"` (or `"offhand"`, `"head"`, `"torso"`,
+  `"hands"`, `"legs"`, `"feet"`, `"neck"`, `"belt"`, `"accessory"`) the one you have equipped there. `"stat"` adds
+  min-max of that stat, or of a random gear stat with `"random"` (drawn as the Modder's tinkering draws). `"type":
+  "Fire"` on a weapon adds min-max to that damage type's roll, or gives the weapon that damage if it has none.
+  `"limit"` caps how often one item can be tuned, counted on the item under `"tag"` (default `SCCL_TUNED`, shared by
+  every class that tunes, so a smith and a tinkerer compete for the same item).
 
 New ability fields:
 
 - `"target": "item"` makes the ability target an inventory item (it opens your inventory to pick one), filtered by
   `"itemTag": "GADGET"` and/or `"itemId": "..."`. Equipped, stash and shop items are never valid.
+  - `"itemKind"` narrows it to `"gear"` (anything you wear or wield), `"weapon"`, `"melee"`, `"ranged"`, `"armor"`
+    (gear that isn't a weapon), `"consumable"` or a slot (`"head"`, `"feet"`, ...), joined with `|`.
+  - `"itemRarity": "Rare"` takes only rare or better.
+  - A skill that tunes with a `limit` skips gear that has had all its tuning.
 - `"itemCost": [ { "tag": "MECHPARTS", "count": 3 } ]` is used up on every cast; the ability can't be used without it.
 
 ## Death recap and the Graveyard
@@ -2199,7 +2317,9 @@ The resource bars keep their own `[Resources] Scale` and `IdleOpacity`.
 `PortalBesidePerks` (on by default) it sits to the right of the perk point count instead, with room for the count to
 reach 99. The ChimeraLinq and Vendordamus Beacon buttons stack down that same column; with
 `SpecialButtonsInFreeSpots` (on by default) each goes only where nothing else is: the lowest cell of that column whose
-row has no tier slot there, else the points line left of the skill point count (`SCCL_DEVTEST=portal`).
+row has no tier slot there, else the points line left of the skill point count (`SCCL_DEVTEST=portal`). With
+`SpecialButtonsBesideCapstone` on (off by default), when that column has no empty cell for them, the lowest ninth-tier
+skill shrinks to half its width and height, and both buttons sit beside it in its cell at that same size.
 
 **Collapsing:** the order strip, minion strip, reactions strip and job tracker have a small `-` tab just above
 them, and the crew, body picker, faction, Rune Matrix and graveyard screens have one in their top-left corner.

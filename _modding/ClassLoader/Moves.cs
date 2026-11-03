@@ -123,7 +123,16 @@ namespace SCClassLoader
                      : spots.Count > 0 ? spots[UnityEngine.Random.Range(0, spots.Count)] : null;
             }
             if (land == null) return;
-            string flash = string.IsNullOrEmpty(a.vfx) ? "CYBERNINJA_DASH.particle_shadowstep" : a.vfx;
+            Place(mover, from, land, a.vfx, ctx);
+            if (mode == "behind")
+                me.transform.rotation = Quaternion.LookRotation(new Vector3(t.transform.position.x - land.transform.position.x, 0f, t.transform.position.z - land.transform.position.z));
+            if (mover != me && mover.ai != null) mover.ai.ForceMove = true;
+        }
+
+        /// <summary>Moves a character from one tile to another in a flash, the room and camera following when it's you.</summary>
+        private static void Place(Character mover, NavNode from, NavNode land, string vfx, ActionContext ctx)
+        {
+            string flash = string.IsNullOrEmpty(vfx) ? "CYBERNINJA_DASH.particle_shadowstep" : vfx;
             Actions.SpawnVfx(flash, mover.GetHitFx().position);
             from.ClearOccupant();
             mover.GetMover().transform.position = land.transform.position;
@@ -132,9 +141,6 @@ namespace SCClassLoader
             land.SetOccupant(mover);
             Actions.SpawnVfx(flash, mover.GetHitFx().position);
             Sfx("moves_leap", land.transform.position, ctx, 0.4f);
-            if (mode == "behind")
-                me.transform.rotation = Quaternion.LookRotation(new Vector3(t.transform.position.x - land.transform.position.x, 0f, t.transform.position.z - land.transform.position.z));
-            if (mover != me && mover.ai != null) mover.ai.ForceMove = true;
             if (mover == Player.instance)
             {
                 Player.CURRENT_ROOM = land.GetRoom();
@@ -143,6 +149,45 @@ namespace SCClassLoader
                 CullManager.instance.UpdateCulling();
                 DashCam.Teleported(from.transform.position, land.transform.position, blink: true, DashAs(ctx), null);
             }
+        }
+
+        private class Anchor { public NavNode node; public int health, floor; }
+
+        // one anchor per character and name; a floor change or the character's death leaves it behind
+        private static readonly Dictionary<(Character, string), Anchor> anchors = new Dictionary<(Character, string), Anchor>();
+
+        /// <summary>"anchor": marks the caster's tile and health ("fieldName" names the anchor; one per name, a new one replaces
+        /// the old; "vfx" flashes on the tile). Not saved: a reload, like a new floor, leaves it behind.</summary>
+        internal static void SetAnchor(ActionSpec a, ActionContext ctx)
+        {
+            Character me = ctx.caster;
+            NavNode here = me?.GetMover()?.GetCurrentNavNode();
+            if (!Alive(me) || here == null) return;
+            if (!string.IsNullOrEmpty(a.vfx)) Actions.SpawnVfx(a.vfx, here.transform.position);
+            anchors[(me, a.fieldName ?? "anchor")] = new Anchor { node = here, health = me.GetHealth(), floor = Game.FLOOR };
+        }
+
+        /// <summary>"rewind": the caster goes back to its anchor (beside it if the tile is taken), with "restore": true its health
+        /// back up to what it was then. The anchor is used up. Nothing happens without one on this floor.</summary>
+        internal static void Rewind(ActionSpec a, ActionContext ctx)
+        {
+            Character me = ctx.caster;
+            var key = (me, a.fieldName ?? "anchor");
+            if (!Alive(me) || !anchors.TryGetValue(key, out Anchor at)) return;
+            anchors.Remove(key);
+            NavNode from = me.GetMover()?.GetCurrentNavNode();
+            if (at.floor != Game.FLOOR || at.node == null || from == null) return;
+            NavNode land = at.node == from ? from : Free(at.node) ? at.node
+                : at.node.GetLinks().Where(Free).OrderBy(n => (n.transform.position - at.node.transform.position).sqrMagnitude).FirstOrDefault();
+            if (land == null) return;
+            if (land != from) Place(me, from, land, null, ctx);
+            if (a.restore && me.GetHealth() < at.health)
+            {
+                int back = Math.Min(at.health, me.GetHealthMax()) - me.GetHealth();
+                me.Heal(back, false);
+                if (HUD.instance != null) HUD.instance.MakeFct("<color=#5CFF6B>+" + back + "</color>", me.GetHitFx().position, false);
+            }
+            Game.LOG(me == Player.instance ? $"{ctx.sourceName} pulls you back to where you stood." : $"{ctx.sourceName} pulls {me.GetName()} back to where it stood.");
         }
 
         /// <summary>The creature the casting ability turns you into for its dash shot ("dashAs"), or null.</summary>

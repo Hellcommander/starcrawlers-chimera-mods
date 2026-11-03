@@ -302,12 +302,15 @@ namespace SCClassLoader
                     if (m.Name.EndsWith("Ability") && (m.Name.StartsWith("Add") || m.Name.StartsWith("Load") || m.Name.StartsWith("Remove"))) yield return m;
             }
 
-            private static void Postfix()
-            {
-                if (!On) return;
-                KitChanged(Player.instance);
-                Mark(Abilities);
-            }
+            private static void Postfix() => AbilitiesChanged();
+        }
+
+        /// <summary>You learned, lost or perked a skill: a perk's addProcs can answer an event nothing else listens for.</summary>
+        internal static void AbilitiesChanged()
+        {
+            if (!On) return;
+            KitChanged(Player.instance);
+            Mark(Abilities);
         }
 
         [HarmonyPatch(typeof(AI_Manager), nameof(AI_Manager.Spawn_Character), new[] { typeof(Character), typeof(Vector3), typeof(Quaternion), typeof(AI.AI_TEAM) })]

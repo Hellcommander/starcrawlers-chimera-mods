@@ -18,6 +18,7 @@ namespace SCClassLoader
     ///    after that many turns (a timed mine), turns = it fizzles after that long (0 = stays until used), maxTraps =
     ///    a cap per name (laying one more removes the oldest). Saved with the game (SideAreas.Data "traps"), per floor.
     ///  - "springTraps" sets off your traps (of one name, or all) on this floor right away: a remote detonator.
+    ///  - "moveTraps" moves your traps of one name under the target, fuse and all.
     ///  - Proc trigger "trap": one of your traps went off ("match" = its name; the victim is who it caught).
     ///  - Vanilla floor traps only go off on your side. An enemy you knock back, pull, throw, warp or swap onto one now
     ///    sets it off too ([Traps] ShoveIntoTraps), and you get the experience if it dies.
@@ -169,6 +170,24 @@ namespace SCClassLoader
             foreach (Trap tr in Here().Where(t => (string.IsNullOrEmpty(a.fieldName) || Same(t.name, a.fieldName))
                 && (a.near <= 0f || ctx?.caster == null || Vector3.Distance(t.pos, ctx.caster.transform.position) <= a.near)).ToList())
                 GoOff(tr, null);
+        }
+
+        /// <summary>"moveTraps": your traps of that name go under the target, keeping their fuse; one going off right now stays.</summary>
+        internal static void Move(ActionSpec a, Character t)
+        {
+            NavNode node = t?.GetMover()?.GetCurrentNavNode();
+            if (node == null) return;
+            foreach (Trap tr in Here().Where(o => Same(o.name, a.fieldName) && o.node != node && o.firedTick != tick).ToList())
+            {
+                foreach (GameObject v in tr.visuals) if (v != null) Object.Destroy(v);
+                tr.visuals.Clear();
+                Moves.Streak(tr.pos + Vector3.up * 0.3f, node.transform.position + Vector3.up * 0.3f, Moves.Hex(a.look, Color.white), 0.05f, 0.6f);
+                tr.node = node;
+                tr.pos = node.transform.position;
+                Place(tr);
+                Game.LOG($"<color=#FFB35C>{tr.name}</color> shifts onto {t.GetName()}.");
+            }
+            Record();
         }
 
         private static void Tick()

@@ -432,7 +432,7 @@ namespace SCClassLoader
                     string id = "Nemesis_" + t.internalName.Replace("SKILLTREE_", "");
                     if (Prefab(id) != null) return id;
                 }
-                switch (trees.FirstOrDefault(t => t.internalName != Conjoined.ClassId)?.skillClass)
+                switch (trees.FirstOrDefault(t => !Conjoined.IsBodiesClass(t.internalName))?.skillClass)
                 {
                     case SKILL_CLASS.Guile: return "Nemesis_Smuggler";
                     case SKILL_CLASS.Intellect: return "Nemesis_Engineer";

@@ -404,6 +404,7 @@ namespace SCClassLoader
                     if (m == null || came.ContainsKey(m) || m.Block_Move || m.Block_Mob || m.CheckBlockedMovement_Enter(n)) continue;
                     if (m.HasDoor() && !m.GetDoor().isOpen) continue;
                     if (m != to && m.IsOccupied()) continue;
+                    if (CompanionTraps.Avoid.Value && (CompanionTraps.VisibleTrap(m) != null || Traps.HurtsAllies(m))) continue;
                     came[m] = n;
                     queue.Enqueue(m);
                 }

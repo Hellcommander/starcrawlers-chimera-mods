@@ -37,7 +37,7 @@ namespace SCClassLoader
         internal static IReadOnlyList<string> Picked => picked;
 
         private static IEnumerable<Skill_Tree> Trees =>
-            Game.instance.skills.Where(s => s != null && s.isLive && s.internalName != "NYI" && s.internalName != Conjoined.ClassId && !Unlocks.IsLocked(s.internalName)
+            Game.instance.skills.Where(s => s != null && s.isLive && s.internalName != "NYI" && !Conjoined.IsBodiesClass(s.internalName) && !Unlocks.IsLocked(s.internalName)
                 && (swapping == null || (s.internalName != swapping.internalName && !Kept.Any(k => k.internalName == s.internalName))));
 
         /// <summary>The classes a swap leaves you with.</summary>
@@ -155,7 +155,7 @@ namespace SCClassLoader
 
         private static void BuildButtons(ref float sy)
         {
-            Btn("Copy my classes", () => Fill(Player_SkillControl.instance.skillTrees.Where(t => t != null && t.internalName != Conjoined.ClassId).Select(t => t.internalName)),
+            Btn("Copy my classes", () => Fill(Player_SkillControl.instance.skillTrees.Where(t => t != null && !Conjoined.IsBodiesClass(t.internalName)).Select(t => t.internalName)),
                 "Pick the same classes as the body you're playing.", ref sy);
             Btn("Random", () => Fill(Trees.Select(t => t.internalName).OrderBy(_ => Random.value)), "Roll a random set (no clashing classes).", ref sy);
             Btn("Clear", () => { picked.Clear(); Refresh(); }, "Start over.", ref sy);
@@ -167,8 +167,8 @@ namespace SCClassLoader
             foreach (BuildList.Build build in builds.Take(12))
             {
                 BuildList.Build bb = build;
-                string names = string.Join(", ", bb.trees.Where(x => x != Conjoined.ClassId).Select(id => Tree(id)?.displayName.ToString() ?? $"<color=#FF7272>{id} (not installed)</color>"));
-                Btn(build.name, () => Fill(bb.trees.Where(x => x != Conjoined.ClassId)), names, ref sy);
+                string names = string.Join(", ", bb.trees.Where(x => !Conjoined.IsBodiesClass(x)).Select(id => Tree(id)?.displayName.ToString() ?? $"<color=#FF7272>{id} (not installed)</color>"));
+                Btn(build.name, () => Fill(bb.trees.Where(x => !Conjoined.IsBodiesClass(x))), names, ref sy);
             }
         }
 
@@ -270,7 +270,7 @@ namespace SCClassLoader
             foreach (string id in ids)
             {
                 if (picked.Count >= need) break;
-                if (!cells.ContainsKey(id) || picked.Contains(id)) { if (!cells.ContainsKey(id) && id != Conjoined.ClassId) skipped.Add(id); continue; }
+                if (!cells.ContainsKey(id) || picked.Contains(id)) { if (!cells.ContainsKey(id) && !Conjoined.IsBodiesClass(id)) skipped.Add(id); continue; }
                 if (Clash(id) != null) { skipped.Add(Tree(id)?.displayName ?? id); continue; }
                 picked.Add(id);
             }

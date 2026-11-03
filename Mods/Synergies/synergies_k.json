@@ -1,0 +1,3033 @@
+{
+  "synergies": [
+    {
+      "id": "RepoOrder",
+      "name": "Repossession Order",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_SwarmConductor"
+      ],
+      "description": "Stolen hardware is still a debt: Repossess may designate the target for your drones, and Hijack Drone may leave you Paid in Full. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Repossess",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SwarmConductor@Designated"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Hijack Drone",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BountyHand@Paid",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "HaulTheCatch",
+      "name": "Haul the Catch",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_Corsair"
+      ],
+      "description": "Boarding Hook may write down whoever you land on, and Reel In on a name in the book may fill your pockets with Spoils. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Boarding Hook",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Reel In",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Corsair@Spoils",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "#Marked"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "QuietCollection",
+      "name": "Quiet Collection",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_ShadowBroker"
+      ],
+      "description": "Put in the Book may lay bare where the name hurts, Leverage may leave you Paid in Full, Foreclosure may leave you Unseen, and Silent Contract may turn up the next name nearby. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Put in the Book",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Leverage",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BountyHand@Paid",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Foreclosure",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ShadowBroker@Unseen",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Silent Contract",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked"
+              }
+            ],
+            "radius": 3,
+            "pick": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CalledMarker",
+      "name": "Called Marker",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_OddsBreaker"
+      ],
+      "description": "Double or Nothing may stake the target, Collect Debt on a Staked foe may stretch your Lucky Run, and Cash Out may leave you Paid in Full. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Double or Nothing",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_OddsBreaker@Staked"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Collect Debt",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_OddsBreaker@LuckyRun",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_OddsBreaker@Staked"
+            }
+          },
+          {
+            "on": "cast",
+            "match": "Cash Out",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BountyHand@Paid",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TopBilling",
+      "name": "Top Billing",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_Ringmaster"
+      ],
+      "description": "Once you have Reputation, kills while your Feared Name holds may bring Applause, and Grand Finale may spread your Feared Name. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ringmaster@Applause",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_BountyHand",
+                  "atLeast": 4
+                },
+                {
+                  "has": "MOD_BountyHand@Feared",
+                  "of": "self"
+                }
+              ]
+            }
+          },
+          {
+            "on": "cast",
+            "match": "Grand Finale",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BountyHand@Feared",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CompoundInterest",
+      "name": "Compound Interest",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_ParadoxWitch"
+      ],
+      "description": "With Second Notice, hits while Paid in Full may open a Wound Ledger on the target, and with Late Fee, striking out a name may open one on the foe beside it. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Ledger"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_BountyHand",
+                  "atLeast": 2
+                },
+                {
+                  "has": "MOD_BountyHand@Paid",
+                  "of": "self"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Ledger"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_BountyHand",
+              "atLeast": 7
+            },
+            "radius": 3,
+            "pick": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "KneeBreakers",
+      "name": "Knee-Breakers",
+      "trees": [
+        "MOD_BountyHand",
+        "MOD_Scrapper"
+      ],
+      "description": "Pipe to the Knee may put the target in the book, and with Bad Odds, getting hurt among three or more foes may leave you Cornered. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Pipe to the Knee",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Marked"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Scrapper@Cornered",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_BountyHand",
+                  "atLeast": 3
+                },
+                {
+                  "value": "enemiesNear:3",
+                  "of": "self",
+                  "atLeast": 3
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "LiveCircuit",
+      "name": "Live Circuit",
+      "trees": [
+        "MOD_SparkTinker",
+        "MOD_ArcGunner"
+      ],
+      "description": "Arc Lash may build Static in you, and Arc Round and Forked Discharge may leave you Charged. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Arc Lash",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ArcGunner@Static",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Arc Round",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Forked Discharge",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SharedGrid",
+      "name": "Shared Grid",
+      "trees": [
+        "MOD_SparkTinker",
+        "MOD_Coilwright"
+      ],
+      "description": "Trip Coil may feed your rig, Deploy Coil Tower and Hot Loaded may leave you Charged, and with Overload, hits while Charged may load Static onto the target. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Trip Coil",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Coilwright@GridFeed",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Deploy Coil Tower",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Hot Loaded",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Coilwright@Static"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_SparkTinker",
+                  "atLeast": 3
+                },
+                {
+                  "has": "MOD_SparkTinker@Charged",
+                  "of": "self"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ScrapEconomy",
+      "name": "Scrap Economy",
+      "trees": [
+        "MOD_SparkTinker",
+        "MOD_MadTinkerer"
+      ],
+      "description": "Scrap Shot may redline you, Zap Gun may leave you Charged, and once you have Spare Parts and Scrapper's Eye, wrecks may sharpen your eye. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Scrap Shot",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_MadTinkerer@Overclock",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Zap Gun",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Scrapper",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_MadTinkerer",
+                  "atLeast": 1
+                },
+                {
+                  "value": "rank:MOD_SparkTinker",
+                  "atLeast": 4
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "EarthStrap",
+      "name": "Earth Strap",
+      "trees": [
+        "MOD_SparkTinker",
+        "MOD_RigJockey"
+      ],
+      "description": "Ground Out may bleed your Rig Heat away with your charges, Vent Blast may leave the foes around you Shocked, and with Red Zone, hits at 7 Heat or more may leave you Charged. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Ground Out",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "purge",
+                "to": "self",
+                "effect": "MOD_RigJockey@Heat"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Vent Blast",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_RigJockey",
+                  "atLeast": 8
+                },
+                {
+                  "value": "stacks:MOD_RigJockey@Heat",
+                  "of": "self",
+                  "atLeast": 7
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "LoadBalancing",
+      "name": "Load Balancing",
+      "trees": [
+        "MOD_SparkTinker",
+        "MOD_SwarmConductor"
+      ],
+      "description": "Short Circuit may designate the target for your drones, Recall Protocol may leave you Charged, and with Dead Cells and Failover Mesh, a machine of yours going down may leave you Charged. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Short Circuit",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SwarmConductor@Designated"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Recall Protocol",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "allyDeath",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SparkTinker@Charged",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_SparkTinker",
+                  "atLeast": 8
+                },
+                {
+                  "value": "rank:MOD_SwarmConductor",
+                  "atLeast": 8
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "SingleRound",
+      "name": "One Round to Spare",
+      "trees": [
+        "MOD_ArcGunner",
+        "MOD_Longshot"
+      ],
+      "description": "One Shot may build Static along the barrel, and Thunder Slug may steady your aim. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "One Shot",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ArcGunner@Static",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Thunder Slug",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Longshot@Steady",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ConductiveSwarm",
+      "name": "Conductive Swarm",
+      "trees": [
+        "MOD_ArcGunner",
+        "MOD_NaniteHerder"
+      ],
+      "description": "Recall may send a spark back through the swarm and leave the target Shocked, and with Conductive, hits on Shocked foes may carry nanites to the next one. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Recall",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Shocked"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_NaniteHerder@Swarm"
+                  }
+                ]
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ArcGunner",
+                  "atLeast": 5
+                },
+                {
+                  "has": "#Shocked"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "LoadBearingProof",
+      "name": "Load-Bearing Proof",
+      "trees": [
+        "MOD_Axiomancer",
+        "MOD_BulkheadPsion"
+      ],
+      "description": "Axiom of Separation may put your back to the steel, Raise Bulkhead may add Insight, Hammer to the Wall may open a Case Study, and with First Principles and The Station Answers, blows your reasoning absorbs from a foe beside a wall may add Insight. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Axiom of Separation",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BulkheadPsion@Braced",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Raise Bulkhead",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@Insight",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Hammer to the Wall",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@CaseStudy"
+              }
+            ]
+          },
+          {
+            "on": "absorb",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Axiomancer@Insight",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Axiomancer",
+                  "atLeast": 1
+                },
+                {
+                  "value": "rank:MOD_BulkheadPsion",
+                  "atLeast": 8
+                },
+                {
+                  "value": "wallsNear",
+                  "of": "target",
+                  "atLeast": 1
+                }
+              ]
+            },
+            "cooldown": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "SqueezePlay",
+      "name": "Squeeze Play",
+      "trees": [
+        "MOD_BulkheadPsion",
+        "MOD_Puppetmaster"
+      ],
+      "description": "Crushing Corridor may tie Strings to everyone it drags together, and Cut the Strings may put your back to the steel. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Crushing Corridor",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Cut the Strings",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_BulkheadPsion@Braced",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "StellarCoreburn",
+      "name": "Stellar Coreburn",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_StarfireAdept"
+      ],
+      "description": "Coma Strike may leave the target Ionized, White-Dwarf Heart may bring your other skills back a turn sooner, and with Outgassing, what hurts you may be left Ionized. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Coma Strike",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_StarfireAdept@Ionized"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "White-Dwarf Heart",
+            "chance": 60,
+            "cooldown": 5,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "to": "self",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_StarfireAdept@Ionized"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_CometBreaker",
+              "atLeast": 6
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "TidalLock",
+      "name": "Tidal Lock",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_Tidewright"
+      ],
+      "description": "Tidal Pull may drag the sea along and leave its target Waterlogged, and Pour the Core may leave the foes around you wading in Floodwater. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Tidal Pull",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Pour the Core",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Floodwater"
+              }
+            ],
+            "radius": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "ManyReturns",
+      "name": "Many Returns",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_Conjoined"
+      ],
+      "description": "Rejoin Fragment may leave those around you Hemmed In, and Knit Together may make you Incandescent for the fall back into yourself. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Rejoin Fragment",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Conjoined@HemmedIn"
+              }
+            ],
+            "radius": 2
+          },
+          {
+            "on": "cast",
+            "match": "Knit Together",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_CometBreaker@Incandescent",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TightOrbit",
+      "name": "Tight Orbit",
+      "trees": [
+        "MOD_CometBreaker",
+        "MOD_GunKata"
+      ],
+      "description": "With Short Period, your kills and your allies' may add two Rhythm, and Bullet Ballet may bring your other skills back a turn sooner. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GunKata@Rhythm",
+                "stacks": 2,
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_CometBreaker",
+              "atLeast": 8
+            }
+          },
+          {
+            "on": "allyKill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GunKata@Rhythm",
+                "stacks": 2,
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_CometBreaker",
+              "atLeast": 8
+            }
+          },
+          {
+            "on": "cast",
+            "match": "Bullet Ballet",
+            "chance": 60,
+            "cooldown": 5,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "to": "self",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BothKnees",
+      "name": "Both Knees",
+      "trees": [
+        "MOD_GunKata",
+        "MOD_Scrapper"
+      ],
+      "description": "Kneecap may take the leg out for good and leave the target Kneecapped, and Pipe to the Knee may add two Rhythm. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Kneecap",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Scrapper@Kneecapped"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Pipe to the Knee",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GunKata@Rhythm",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ManyHandsOnTheStrings",
+      "name": "Many Hands on the Strings",
+      "trees": [
+        "MOD_Conjoined",
+        "MOD_Puppetmaster"
+      ],
+      "description": "Converging Blow may tie Strings to the target, and Rout of Many Hands may tie them to everyone around you. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Converging Blow",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Rout of Many Hands",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings"
+              }
+            ],
+            "radius": 2.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "OneBloodstream",
+      "name": "One Bloodstream",
+      "trees": [
+        "MOD_Conjoined",
+        "MOD_Vasculist"
+      ],
+      "description": "Clot Brood may leave those around you Hemmed In. With Borrowed Blood kills may race your Pulse, with Shared Marrow wounds may store up as Backflow, and with One Pulse your hits may raise Vein Pressure. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Clot Brood",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Conjoined@HemmedIn"
+              }
+            ],
+            "radius": 2.5
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pulse",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Conjoined",
+              "atLeast": 7
+            }
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Backflow",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Conjoined",
+              "atLeast": 1
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Vasculist@Pressure"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Conjoined",
+              "atLeast": 5
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "FullBroadside",
+      "name": "Full Broadside",
+      "trees": [
+        "MOD_Corsair",
+        "MOD_TrickShot"
+      ],
+      "description": "Point-Blank Volley may line up Deadeye, Bank Shot may pocket a little Spoils, and Jackpot may pocket a great deal. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Point-Blank Volley",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_TrickShot@Deadeye",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Bank Shot",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Corsair@Spoils",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Jackpot",
+            "chance": 60,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Corsair@Spoils",
+                "stacks": 3,
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NoWitnesses",
+      "name": "No Witnesses",
+      "trees": [
+        "MOD_Corsair",
+        "MOD_ShadowBroker"
+      ],
+      "description": "Walk the Plank may leave you Unseen, Knife in the Dark may pocket Spoils, and with Dread Reputation, a kill may lay bare the foe beside it. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Walk the Plank",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ShadowBroker@Unseen",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Knife in the Dark",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Corsair@Spoils",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Exposed"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Corsair",
+              "atLeast": 8
+            },
+            "radius": 3,
+            "pick": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "OutOfStep",
+      "name": "Out of Step",
+      "trees": [
+        "MOD_Corsair",
+        "MOD_PhaseDrifter"
+      ],
+      "description": "With Sea Legs, a dodge may leave you Phased, with Out of Sync, a dodge may pocket Spoils, and Phase Cut may leave the target Gashed from the wrong side. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_PhaseDrifter@Phased",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Corsair",
+              "atLeast": 5
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "dodge",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Corsair@Spoils",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_PhaseDrifter",
+              "atLeast": 1
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "cast",
+            "match": "Phase Cut",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Gashed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThermalRunaway",
+      "name": "Thermal Runaway",
+      "trees": [
+        "MOD_Demolitionist",
+        "MOD_KelvinMagus"
+      ],
+      "description": "With Bomb Habit, kills may hand you the blast's heat as Stolen Heat, and Thermal Plume may drive a Sticky Charge into the target. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@StolenHeat",
+                "stacks": 2,
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_Demolitionist",
+              "atLeast": 1
+            }
+          },
+          {
+            "on": "cast",
+            "match": "Thermal Plume",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "DeepScore",
+      "name": "Deep Score",
+      "trees": [
+        "MOD_Etcher",
+        "MOD_ReactantHauler"
+      ],
+      "description": "Etch Through may leave grit in the wound, Scavenger's Eye may recover Reagent from Scored kills, and with Chain Reaction Handling, hits on Brine-Soaked foes may score two layers. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Etch Through",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReactantHauler@Gritted"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Reagent",
+                "stacks": 2,
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ReactantHauler",
+                  "atLeast": 1
+                },
+                {
+                  "has": "MOD_Etcher@Etched"
+                }
+              ]
+            }
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "stacks": 2
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ReactantHauler",
+                  "atLeast": 9
+                },
+                {
+                  "has": "MOD_ReactantHauler@Brined"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "WrittenInResidue",
+      "name": "Written in Residue",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_Glyphrunner"
+      ],
+      "description": "Run Program may leave Aether Residue, Lattice Field may leave a Glyph: Mark, Catalyst Flask may cut a Glyph: Sever into everyone it splashes, and with Closed Loop, a kill on a Looped foe may restore your runes. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Run Program",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Lattice Field",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Mark"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Catalyst Flask",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Glyphrunner@Sever"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "kill",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "runerestore",
+                "to": "self",
+                "amount": 1
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_FluxSavant",
+                  "atLeast": 8
+                },
+                {
+                  "has": "MOD_Glyphrunner@Loop"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "BenchAccident",
+      "name": "Bench Accident",
+      "trees": [
+        "MOD_FluxSavant",
+        "MOD_MadTinkerer"
+      ],
+      "description": "Prototype Grenade may coat the foes near you in Aether Residue, Doomsday Device may recharge your runes, Rune Press may redline you, and with Failure Is Data, Instability may bring your other skills back a turn sooner. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Prototype Grenade",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_FluxSavant@Residue"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Doomsday Device",
+            "chance": 60,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "runerestore",
+                "to": "self",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Rune Press",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_MadTinkerer@Overclock",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "cooldowns",
+                "to": "self",
+                "amount": 1
+              }
+            ],
+            "match": "MOD_FluxSavant@Instability",
+            "when": {
+              "value": "rank:MOD_MadTinkerer",
+              "atLeast": 8
+            },
+            "cooldown": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "BoltedTogether",
+      "name": "Bolted Together",
+      "trees": [
+        "MOD_MadTinkerer",
+        "MOD_SwarmConductor"
+      ],
+      "description": "Assemble Drone and Priority Override may redline you, Lattice Foundry may designate a foe near you, and with Sentry Drone, hits may designate the target. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Assemble Drone",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_MadTinkerer@Overclock",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Priority Override",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_MadTinkerer@Overclock",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Lattice Foundry",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SwarmConductor@Designated"
+              }
+            ],
+            "radius": 4,
+            "pick": 1
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SwarmConductor@Designated"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_MadTinkerer",
+              "atLeast": 5
+            },
+            "cooldown": 3,
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "HeldTheLine",
+      "name": "Holding the Line",
+      "trees": [
+        "MOD_SwarmConductor",
+        "MOD_Bodyguard"
+      ],
+      "description": "Commandeer SPDR may harden your Resolve, and hits you soak with your Guard up may designate the attacker for your drones. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Commandeer SPDR",
+            "chance": 60,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Bodyguard@Resolve",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SwarmConductor@Designated"
+              }
+            ],
+            "when": {
+              "has": "MOD_Bodyguard@Braced",
+              "of": "self"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "FoulAir",
+      "name": "Foul Air",
+      "trees": [
+        "MOD_Miasmancer",
+        "MOD_GloomsporeWarden"
+      ],
+      "description": "Colony Exhale may leave those around you Choking and Rust Salt Cloud may seed Gloomrot. With Saturated Air, poisoned kills may build Sporeload, and with Air Sieve, hits on rotting foes may build it too. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Colony Exhale",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Miasmancer@Choking"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Rust Salt Cloud",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Sporeload",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Miasmancer",
+                  "atLeast": 9
+                },
+                {
+                  "has": "#Poisoned"
+                }
+              ]
+            }
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Sporeload",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Miasmancer",
+                  "atLeast": 1
+                },
+                {
+                  "has": "MOD_GloomsporeWarden@Gloomrot"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "LivingAssay",
+      "name": "Living Assay",
+      "trees": [
+        "MOD_Miasmancer",
+        "MOD_Mimeticist"
+      ],
+      "description": "Extract may leave a sample dart in the target. With Field Sampling, Tagged kills may harden your blood, with Second Skin, kills in a borrowed shape may too, and with Mithridatic Blood, your blood may poison what you hit. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Extract",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Mimeticist@Tagged"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Miasmancer@Inured",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Mimeticist",
+                  "atLeast": 1
+                },
+                {
+                  "has": "MOD_Mimeticist@Tagged"
+                }
+              ]
+            }
+          },
+          {
+            "on": "kill",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Miasmancer@Inured",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Mimeticist",
+                  "atLeast": 9
+                },
+                {
+                  "any": [
+                    {
+                      "has": "MOD_Mimeticist@FormPanther",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormHound",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormHullback",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormLurker",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormWeaver",
+                      "of": "self"
+                    },
+                    {
+                      "has": "MOD_Mimeticist@FormWyrm",
+                      "of": "self"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "#Poisoned"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Miasmancer",
+                  "atLeast": 8
+                },
+                {
+                  "has": "MOD_Miasmancer@Inured",
+                  "of": "self"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "SpringTide",
+      "name": "Spring Tide",
+      "trees": [
+        "MOD_GravemoteAstronomer",
+        "MOD_Tidewright"
+      ],
+      "description": "A moon pulls the water: Captive Moonlet may leave those around you Waterlogged, and hits on Waterlogged foes may wind a mote into your Orbit. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Captive Moonlet",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Tidewright@Soaked",
+                "stacks": 2
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GravemoteAstronomer@Orbit",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_Tidewright@Soaked"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "Pilgrimage",
+      "name": "Pilgrimage",
+      "trees": [
+        "MOD_Juggernaut",
+        "MOD_ReliquaryKnight"
+      ],
+      "description": "Pilgrim's Advance and Relic Strike may build Inertia, Earthshaker may wake the World Nail, and with Reliquary Vow, getting hurt may build Inertia. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Pilgrim's Advance",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Juggernaut@Inertia",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Relic Strike",
+            "chance": 40,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Juggernaut@Inertia",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Earthshaker",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReliquaryKnight@WorldNail",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "hurt",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Juggernaut@Inertia",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_ReliquaryKnight",
+              "atLeast": 1
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "TwoFaiths",
+      "name": "Two Faiths",
+      "trees": [
+        "MOD_ReliquaryKnight",
+        "MOD_RelicBearer"
+      ],
+      "description": "Relic Unbound may feed the idol two Whispers and Idol's Due may wake the Sun Engine. With Liturgy of Waking, waking the Moon Mirror may feed it too, with Borrowed Vigor, hits while the Sun Engine burns may do the same, and with Idol's Favourite, being ridden may wake the Moon Mirror. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Relic Unbound",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RelicBearer@Whispers",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Idol's Due",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReliquaryKnight@SunEngine",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "effectGained",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RelicBearer@Whispers",
+                "to": "self"
+              }
+            ],
+            "match": "MOD_ReliquaryKnight@MoonMirror",
+            "when": {
+              "value": "rank:MOD_ReliquaryKnight",
+              "atLeast": 8
+            }
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RelicBearer@Whispers",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_RelicBearer",
+                  "atLeast": 5
+                },
+                {
+                  "has": "MOD_ReliquaryKnight@SunEngine",
+                  "of": "self"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "effectGained",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ReliquaryKnight@MoonMirror",
+                "to": "self"
+              }
+            ],
+            "match": "MOD_RelicBearer@Possessed",
+            "when": {
+              "value": "rank:MOD_RelicBearer",
+              "atLeast": 8
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ShoveAndPin",
+      "name": "Shove and Pin",
+      "trees": [
+        "MOD_PsiKnight",
+        "MOD_Longshot"
+      ],
+      "description": "Pin Down may sharpen your Poise, and Telekinetic Shove may steady your aim on what you just moved. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Pin Down",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_PsiKnight@Poise",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Telekinetic Shove",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Longshot@Steady",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "EtchedRounds",
+      "name": "Etched Rounds",
+      "trees": [
+        "MOD_Longshot",
+        "MOD_Etcher"
+      ],
+      "description": "With Hand-Cast Rounds, hits on Gashed foes may score them, and hits on Scored foes may steady your aim. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Longshot",
+                  "atLeast": 5
+                },
+                {
+                  "has": "#Gashed"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          },
+          {
+            "on": "hit",
+            "chance": 20,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Longshot@Steady",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_Etcher@Etched"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "EmptiedMind",
+      "name": "Emptied Mind",
+      "trees": [
+        "MOD_PsiKnight",
+        "MOD_Puppetmaster"
+      ],
+      "description": "Mindbreaker may leave two Strings in the target, and with Strings on it, your hits may sharpen your Poise. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Mindbreaker",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_PsiKnight@Poise",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_Puppetmaster@Strings"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ChorusAndCurtain",
+      "name": "Chorus and Curtain",
+      "trees": [
+        "MOD_NullChorister",
+        "MOD_Ringmaster"
+      ],
+      "description": "Black Choir may bring two Applause, and kills while the crowd is with you may add Dissonance. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Black Choir",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@Dissonance",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_Ringmaster@Applause",
+              "of": "self"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "UnfinishedSong",
+      "name": "Unfinished Song",
+      "trees": [
+        "MOD_Wildcaster",
+        "MOD_NullChorister"
+      ],
+      "description": "Erratic Bolt may leave the target Off-Key, Unmoored Ground may leave those around you Off-Key, Cascade of Spells may add two Dissonance, and with Stray Magic, hits on Off-Key foes may shake a borrowed spell loose. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Erratic Bolt",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@OffKey"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Unmoored Ground",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@OffKey"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Cascade of Spells",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_NullChorister@Dissonance",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "wildCast",
+                "amount": 1,
+                "falloff": 0.6,
+                "notClass": "MOD_Wildcaster"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Wildcaster",
+                  "atLeast": 6
+                },
+                {
+                  "has": "MOD_NullChorister@OffKey"
+                }
+              ]
+            },
+            "cooldown": 2,
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "HouseTraps",
+      "name": "House Traps",
+      "trees": [
+        "MOD_OddsBreaker",
+        "MOD_Snareseer"
+      ],
+      "description": "Loaded Dice may add Premonition, Mindlatch may stake those near you, and Recursion Mine and Cascade of Futures may stretch your Lucky Run. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Loaded Dice",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Snareseer@Premonition",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Mindlatch",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_OddsBreaker@Staked"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Recursion Mine",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_OddsBreaker@LuckyRun",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Cascade of Futures",
+            "chance": 60,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_OddsBreaker@LuckyRun",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RevisedPolicy",
+      "name": "Revised Policy",
+      "trees": [
+        "MOD_ProbabilityShaman",
+        "MOD_ParadoxWitch"
+      ],
+      "description": "Branch Insurance may set a Revision Point, and Wavefunction Collapse may bring every year due at once on those around you. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Branch Insurance",
+            "chance": 35,
+            "cooldown": 8,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Revision",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Wavefunction Collapse",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ParadoxWitch@Aging"
+              }
+            ],
+            "radius": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "ContingencyCharges",
+      "name": "Contingency Charges",
+      "trees": [
+        "MOD_ReactionArchitect",
+        "MOD_Demolitionist"
+      ],
+      "description": "Tripwire Clause may arm your Dead Man's Switch. With Standing Orders, a reaction may stick a charge on its target, and with Contingency Lattice, a reaction on a Profiled foe may stick another. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Tripwire Clause",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Switch",
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "reaction",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_ReactionArchitect",
+              "atLeast": 1
+            }
+          },
+          {
+            "on": "reaction",
+            "chance": 50,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ReactionArchitect",
+                  "atLeast": 8
+                },
+                {
+                  "has": "MOD_ReactionArchitect@Profiled"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "AstralFront",
+      "name": "Astral Front",
+      "trees": [
+        "MOD_RimelightSeer",
+        "MOD_Squallblade"
+      ],
+      "description": "Galeward may leave Crosswind on those around you, and Call the Hoarlight may buffet its target. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Galeward",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Crosswind"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Call the Hoarlight",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Squallblade@Buffeted",
+                "stacks": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThreadsOfLight",
+      "name": "Threads of Light",
+      "trees": [
+        "MOD_RimelightSeer",
+        "MOD_Puppetmaster"
+      ],
+      "description": "Starbind may tie two Strings to the target, and hits on foes with Strings may splinter their will. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Starbind",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Puppetmaster@Strings",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_RimelightSeer@SplinteredWill"
+              }
+            ],
+            "when": {
+              "has": "MOD_Puppetmaster@Strings"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CleanLines",
+      "name": "Clean Lines",
+      "trees": [
+        "MOD_Runeforger",
+        "MOD_Etcher"
+      ],
+      "description": "Unkeyed Sling may score its target, and with Chisel Habit, hits on Scored foes may come away with a dormant glyph. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Unkeyed Sling",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Etcher@Etched",
+                "stacks": 2
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 15,
+            "actions": [
+              {
+                "do": "giveItem",
+                "to": "self",
+                "item": "ArendethClasses:RfGlyphCell",
+                "amount": 1
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Runeforger",
+                  "atLeast": 1
+                },
+                {
+                  "has": "MOD_Etcher@Etched"
+                }
+              ]
+            },
+            "cooldown": 6,
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "DarkContacts",
+      "name": "Dark Contacts",
+      "trees": [
+        "MOD_ShadowBroker",
+        "MOD_ShadowMagus"
+      ],
+      "description": "With Eyes of the Dark, critical hits on Benighted foes may leave you Unseen, and with Soft Spots, hits on Exposed foes may put shadow in their eyes. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "crit",
+            "chance": 40,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ShadowBroker@Unseen",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ShadowMagus",
+                  "atLeast": 8
+                },
+                {
+                  "has": "MOD_ShadowMagus@Benighted"
+                }
+              ]
+            }
+          },
+          {
+            "on": "hit",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_ShadowMagus@Benighted"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_ShadowBroker",
+                  "atLeast": 1
+                },
+                {
+                  "has": "#Exposed"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "HotPotato",
+      "name": "Hot Potato",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_Demolitionist"
+      ],
+      "description": "Bury the Charge may stick a charge on those near you, and Kindled Shell may stick one on a foe near you. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Bury the Charge",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "cast",
+            "match": "Kindled Shell",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Demolitionist@Charge"
+              }
+            ],
+            "radius": 4,
+            "pick": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ThermalForge",
+      "name": "Thermal Forge",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_KelvinMagus"
+      ],
+      "description": "Ember Lance may bank the heat as Stolen Heat, and with Cold Forge, hits while your Quench waits may supercool the target. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Ember Lance",
+            "chance": 45,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@StolenHeat",
+                "stacks": 2,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "hit",
+            "chance": 35,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_KelvinMagus@Supercooled"
+              }
+            ],
+            "when": {
+              "all": [
+                {
+                  "value": "rank:MOD_Spellsmith",
+                  "atLeast": 6
+                },
+                {
+                  "has": "MOD_Spellsmith@Quenched",
+                  "of": "self"
+                }
+              ]
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "Showpiece",
+      "name": "Showpiece",
+      "trees": [
+        "MOD_Spellsmith",
+        "MOD_Ringmaster"
+      ],
+      "description": "Masterwork may bring three Applause, and Loose Spell may bring one when it goes wandering. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Masterwork",
+            "chance": 60,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ringmaster@Applause",
+                "stacks": 3,
+                "to": "self"
+              }
+            ]
+          },
+          {
+            "on": "cast",
+            "match": "Loose Spell",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Ringmaster@Applause",
+                "to": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Crossgraft",
+      "name": "Crossgraft",
+      "trees": [
+        "MOD_SpliceHost",
+        "MOD_Graftwild"
+      ],
+      "description": "Metamorphic Burst may clog those around you with spores, and hits while the Prowler Graft holds may teach your body more Adaptation. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "cast",
+            "match": "Metamorphic Burst",
+            "chance": 50,
+            "cooldown": 2,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_Graftwild@Clogspore",
+                "stacks": 2
+              }
+            ],
+            "radius": 3
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_SpliceHost@Adaptation",
+                "to": "self"
+              }
+            ],
+            "when": {
+              "has": "MOD_Graftwild@ProwlerGraft",
+              "of": "self"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "SeededByTheFlock",
+      "name": "Seeded by the Flock",
+      "trees": [
+        "MOD_NaniteHerder",
+        "MOD_GloomsporeWarden"
+      ],
+      "description": "With Bellwether Swarm, the flock may seed Gloomrot on a foe near you each turn, and hits on rotting foes may carry the swarm to the next one. Each level adds 3% to these odds.",
+      "bonus": {
+        "procChancePerStack": 3,
+        "procs": [
+          {
+            "on": "turn",
+            "chance": 30,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "MOD_GloomsporeWarden@Gloomrot"
+              }
+            ],
+            "when": {
+              "value": "rank:MOD_NaniteHerder",
+              "atLeast": 8
+            },
+            "radius": 3,
+            "pick": 1
+          },
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 1,
+                "radius": 3,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "MOD_NaniteHerder@Swarm"
+                  }
+                ]
+              }
+            ],
+            "when": {
+              "has": "MOD_GloomsporeWarden@Gloomrot"
+            },
+            "maxPerTurn": 1
+          }
+        ]
+      }
+    }
+  ]
+}

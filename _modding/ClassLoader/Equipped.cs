@@ -101,6 +101,20 @@ namespace SCClassLoader
             return w;
         }
 
+        /// <summary>Effects' "offhandPower" on the crawler adds to the game's off-hand share, for the auto-attack's off-hand
+        /// swing and for skills that swing the off-hand weapon alike.</summary>
+        [HarmonyPatch(typeof(Player), nameof(Player.GetOffhandDamageMod))]
+        private static class Patch_OffhandPower
+        {
+            private static void Postfix(Player __instance, ref float __result)
+            {
+                if (__instance?.effects == null) return;
+                foreach (Effect e in __instance.effects.GetEffects())
+                    if (e is ModEffect m) __result += m.OffhandPower;
+                if (__result < 0f) __result = 0f;
+            }
+        }
+
         private static bool Fits(string spec, Item_Weapon w)
         {
             focus = w;

@@ -33,7 +33,7 @@ namespace SCClassLoader
             bool copy = Mirrors.IsSelf(a.creature);
             Character prefab = copy ? Mirrors.Body() : Resolve(a.creature);
             if (prefab == null) { Plugin.Log.LogWarning($"{ctx.sourceName}: summon creature '{a.creature}' not found"); return; }
-            if (a.anySide && (ForceLoose ?? UnityEngine.Random.value < 0.5f)) { Loose(a, ctx, near ?? caster, howMany ?? Math.Max(1, a.amount)); return; }
+            if (a.hostile || (a.anySide && (ForceLoose ?? UnityEngine.Random.value < 0.5f))) { Loose(a, ctx, near ?? caster, howMany ?? Math.Max(1, a.amount)); return; }
 
             string ownerTag = !string.IsNullOrEmpty(a.summonGroup) ? GroupTag(a.summonGroup) : OwnerTagPrefix + (ctx.source != null ? ctx.source.internalName : ctx.classId);
             int count = howMany ?? Math.Max(1, a.amount);

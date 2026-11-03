@@ -417,6 +417,19 @@ namespace SCClassLoader
             return s != null && granted.TryGetValue(GrantId(s, k), out ModAbility ab) ? ab : null;
         }
 
+        /// <summary>The skills your synergies give you right now that involve this class, whichever of its trees they sit under.</summary>
+        internal static List<ModAbility> GrantedTo(Skill_Tree tree)
+        {
+            var list = new List<ModAbility>();
+            foreach (SynergySpec s in All)
+            {
+                if (s.grants == null || !s.trees.Any(t => Matches(tree, t))) continue;
+                for (int k = 0; k < s.grants.Count; k++)
+                    if (granted.TryGetValue(GrantId(s, k), out ModAbility ab) && ab != null) list.Add(ab);
+            }
+            return list;
+        }
+
         // Each turn walks the synergies you use, which still puts back a purged effect, reaches new summons and keeps the
         // hotbar. One you don't use can only start with a rank or a choice, and both tell the bus; the bus's look every few
         // seconds finds a change with no hook. A new list replaces this one, so a nested Refresh can't disturb a walk over it.

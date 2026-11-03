@@ -65,6 +65,21 @@ namespace SCClassLoader
             if (HUD.instance != null) HUD.instance.MakeFct("<color=#B58CFF>-" + cost + "</color>", p.GetHitFx().position, false);
         }
 
+        /// <summary>A skill of yours is going off right now. Game.PLAYER_ABILITY stays set between casts, so it can't say.</summary>
+        internal static bool InCast { get; private set; }
+        private static bool readied;
+
+        /// <summary>"ready": the skill going off now is ready again when it ends, and doesn't end your turn.</summary>
+        internal static void Ready() { if (InCast) readied = true; }
+
+        private static IEnumerator Marked(IEnumerator cast)
+        {
+            InCast = true;
+            readied = false;
+            try { yield return cast; }
+            finally { InCast = false; }
+        }
+
         private static IEnumerator Around(IEnumerator cast)
         {
             Ability a = Game.PLAYER_ABILITY;
@@ -81,10 +96,16 @@ namespace SCClassLoader
                 lent = a;
             }
             yield return cast;
-            if (used.Any(e => e.Spec.castRules.noCooldown))
+            if (readied || used.Any(e => e.Spec.castRules.noCooldown))
             {
                 a.SetCooldownAmount(0);
                 Menu_HUD.instance.Refresh_Cooldown();
+            }
+            if (readied)
+            {
+                readied = false;
+                if (!a.isInstant) { a.isInstant = true; lent = a; }
+                Game.LOG($"<color=#FFD15C>{a.GetDisplayName()} is ready again!</color>");
             }
             foreach (ModEffect e in used)
             {
@@ -122,7 +143,7 @@ namespace SCClassLoader
         [HarmonyPatch(typeof(Game), nameof(Game.Resolve_UseAbility))]
         private static class Patch_Cast
         {
-            private static void Postfix(ref IEnumerator __result) => __result = Around(__result);
+            private static void Postfix(ref IEnumerator __result) => __result = Marked(Around(__result));
         }
 
         // the game reads isInstant again after the cast, to decide the turn

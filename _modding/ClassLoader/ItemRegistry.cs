@@ -449,6 +449,11 @@ namespace SCClassLoader
                     __result = doInstantiate ? Object.Instantiate(tpl) : tpl;
                     return false;
                 }
+                if (EnemyArms.TryTemplate(internalName, out tpl))
+                {
+                    __result = doInstantiate ? Object.Instantiate(tpl) : tpl;
+                    return false;
+                }
                 if (warnedMissing.Add(internalName))
                     Plugin.Log.LogWarning($"Items: '{internalName}' is from a mod that is not installed; it becomes a broken item");
                 __result = __instance.GetItem("MISC_Broken_Item", doInstantiate, RARITY.None);

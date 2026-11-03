@@ -57,6 +57,9 @@ namespace SCClassLoader
             Vector3 at = (wide || ctx.groundAtCenter) && ctx.center.HasValue ? ctx.center.Value
                        : t != null && t.GetMover()?.GetCurrentNavNode() != null ? t.GetMover().GetCurrentNavNode().transform.position
                        : ctx.center ?? ctx.caster.transform.position;
+            if (a.overShape && ctx.source is ModAbility m && ctx.center.HasValue && Shapes.Is(m.Spec?.shape))
+                return Map.instance.GetNavNodesAt(ctx.caster.transform.position, a.radius + 1f).Where(n => n != null && !n.BlockCheck()
+                    && Shapes.Covers(n.transform.position, ctx.caster.transform.position, ctx.center.Value, m.Spec.shape, a.radius, m.Spec.width, m.Spec.angle)).ToList();
             if (a.radius > 0f) return Map.instance.GetNavNodesAt(at, a.radius).Where(n => n != null && !n.BlockCheck()).ToList();
             NavNode one = Map.instance.GetNearestNavNodeAt(at, 1f);
             return one != null ? new List<NavNode> { one } : new List<NavNode>();
@@ -252,6 +255,8 @@ namespace SCClassLoader
         }
 
         internal static int CountHere() => fields.Count(f => f.map == MapKey);
+
+        internal static int TilesHere(string fieldName) => fields.Where(f => f.map == MapKey && string.Equals(f.spec.fieldName, fieldName, StringComparison.OrdinalIgnoreCase)).Sum(f => f.nodes.Count);
 
         internal static int CountHere(string fieldName) => fields.Count(f => f.map == MapKey && string.Equals(f.spec.fieldName, fieldName, StringComparison.OrdinalIgnoreCase));
 
