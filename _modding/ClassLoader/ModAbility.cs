@@ -400,6 +400,7 @@ namespace SCClassLoader
         public override IEnumerator Use()
         {
             Bind();
+            if (skillClass == SKILL_CLASS.Null && skillTree != null) skillClass = skillTree.skillClass; // a form's or synergy's skill, given its tree late
             RefreshStats();
             if (caster == null) caster = Player.instance;
             Runes.Tuning tuned = Tuned;

@@ -246,6 +246,12 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     holds, and `ramp` to make their per-turn healing, stamina or damage grow each turn.
   - An `attempt` action holds a target for several tries with rising odds, paid in stamina, then runs its actions
     if one lands or its `else` actions if none does.
+  - Scattered traps take `trail` to drop along the line from you to the aim.
+  - Combo conditions: `cast` takes an archetype (`muscle`, `guile`, `intellect`), `lastCast` reads the skill you used
+    before, `switched` holds when the archetype changed, and the `castStreak` value counts skills of one archetype in
+    a row.
+- Mod skills now carry their class's archetype, so the game's Combology counts them. Using one no longer breaks a
+  running combo.
 - The `stamina%` condition now reads your real stamina maximum. It read too high before, so Axiomancer's Insight came
   well short of 90% stamina.
 - A heal, stamina, shield or recharge action with `"amount": 0` and `bonusPerStack` now gives nothing without stacks,

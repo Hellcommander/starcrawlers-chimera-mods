@@ -694,6 +694,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
     "turns": 0,             // > 0: it fizzles out after that long; 0 = it stays on that floor until used
     "maxTraps": 3,          // most of this name at once; laying another removes the oldest
     "scatter": 0,           // > 0: lays that many at once on random tiles within "spread" (default 3) of the aim, a cluster bomb's bomblets
+    "trail": false,         // with scatter: one on each tile along the line from you to the aim instead (not beside you), a rocket shedding mines
     "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.45", "sound": "event:/Abilities/Smuggler/Smugger_Flashbang",
     "model": { "mesh": "models/snare.glb", "scale": 0.4 },   // or "look": a hazard id; default: the vanilla mine's look
     "actions": [ { "do": "damage", "type": "Energy", "min": 6, "max": 10 }, { "do": "stun", "turns": 1 } ] }
@@ -927,17 +928,23 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
   - around someone: `enemiesNear:3`, `alliesNear:3` (the number is the radius);
   - more about anyone: `healthLost`, `buffs`, `debuffs`;
   - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `distance` (you to the target), `turnsInCombat`, `floor`, `skillsCooling` (your skills on cooldown);
-  - about the skill in use: `cost` (its stamina), `cooldown`.
+  - about the skill in use: `cost` (its stamina), `cooldown`, `castStreak` (skills of its archetype in a row, this one counted).
 - **Comparisons:** `below`, `above`, `atLeast`, `atMost`, `is`.
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
 - **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
-- **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant` or a skill's name.
+- **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant`,
+  an archetype (`muscle`, `guile`, `intellect`) or a skill's name. A mod skill has its class's archetype.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
   That is the last skill you used even between casts, so pair it with `"casting": true` (a skill of yours is going off
   right now) on a `hit` proc that a trap or a damage tick must not set off.
+- **Combos:** `lastCast` reads the skill you used before this one, in the same words as `cast`. `"switched": true` holds
+  when the skill in use has another archetype than your last one, as the game's Combology counts a combo, and
+  `false` when it is the same again. With the `castStreak` value, `"when": { "value": "castStreak", "atLeast": 3 }`
+  holds on a third skill of one archetype in a row. Skills with no archetype (items) don't count. Mod skills now count
+  toward the game's own Combology too; before, using one broke a running combo.
 - **Where:** `inSide` holds in a side area (`false`: outside one).
 - **Gear** (`equipped`): `"when": { "equipped": "melee+shield" }` holds while you have that gear on (see below).
 - **Named conditions:** a class or library defines them once and anything can use them by name:

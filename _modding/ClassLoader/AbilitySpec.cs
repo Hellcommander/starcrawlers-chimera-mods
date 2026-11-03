@@ -334,6 +334,9 @@ namespace SCClassLoader
         /// one under it: a cluster bomb's bomblets. maxTraps still caps them.</summary>
         public int scatter;
         public float spread;
+        /// <summary>trap with scatter: they drop on the tiles along the line from you to the aim instead (not the tile
+        /// beside you), one a tile, as a rocket sheds bomblets on its way.</summary>
+        public bool trail;
         /// <summary>attempt: % odds added each try after the first, so the hold tightens the longer it lasts.</summary>
         public int oddsPerTry;
         /// <summary>attempt: stamina each try costs you; when you can't pay, it stops (failed).</summary>

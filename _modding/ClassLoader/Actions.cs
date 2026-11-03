@@ -1525,7 +1525,9 @@ namespace SCClassLoader
                         if (a.fuse > 0) extra.Add($"goes off by itself after {a.fuse} turn{(a.fuse > 1 ? "s" : "")}");
                         if (a.turns > 0) extra.Add($"fizzles after {a.turns} turns");
                         if (a.maxTraps > 0) extra.Add($"up to {a.maxTraps} at once");
-                        string what = a.scatter > 0
+                        string what = a.scatter > 0 && a.trail
+                            ? $"up to {a.scatter} × {(a.fieldName ?? "trap")}, one on each tile along the way to the aim"
+                            : a.scatter > 0
                             ? $"{a.scatter} × {(a.fieldName ?? "trap")}, strewn over random tiles within {(a.spread > 0f ? a.spread : 3f):0.#} of the aim"
                             : a.fieldName ?? "a trap";
                         s = $"Sets {what}{(a.armTurns > 0 ? $" (live after {a.armTurns} turn{(a.armTurns > 1 ? "s" : "")})" : "")}: the first {aff} to "

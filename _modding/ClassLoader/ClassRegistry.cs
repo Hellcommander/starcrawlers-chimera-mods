@@ -428,6 +428,7 @@ namespace SCClassLoader
             var abGo = new GameObject(ModAbility.Prefix + abId);
             abGo.transform.SetParent(tierGo.transform, false);
             ModAbility ab = abGo.AddComponent<ModAbility>();
+            ab.skillClass = tree.skillClass; // its class's archetype, so Combology and "cast": "guile" count it
             ab.Bind(); // template is inactive, so Awake never runs on it; bind now for conflict checks and tooltips
             if (s.type == "passive") tier.passive = ab; else tier.ability = ab;
             return tier;

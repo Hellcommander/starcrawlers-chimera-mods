@@ -51,6 +51,11 @@ namespace SCClassLoader
         public string cast;
         /// <summary>true = a skill of yours is going off right now, false = not (a trap or a damage tick between casts).</summary>
         public bool? casting;
+        /// <summary>The skill you used before this one, in the same words as "cast" ("guile", "!melee", a name).</summary>
+        public string lastCast;
+        /// <summary>true = the skill being used is of another archetype (Muscle, Guile, Intellect) than the one you used
+        /// before it, a combo; false = the same archetype again. Skills without one never count.</summary>
+        public bool? switched;
         /// <summary>Gear equipped by whoever is checked (default you): "melee", "ranged|shield", "!heavy" (see Equipped).</summary>
         public string equipped;
         /// <summary>true = only once this skill's perk is bought, false = only before (a perk that changes what the skill does).</summary>
@@ -128,6 +133,8 @@ namespace SCClassLoader
             if (w.inSide.HasValue && SideAreas.InSide != w.inSide.Value) return false;
             if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
             if (w.casting.HasValue && CastRules.InCast != w.casting.Value) return false;
+            if (!string.IsNullOrEmpty(w.lastCast) && !IsCast(w.lastCast, CastHistory.Last)) return false;
+            if (w.switched.HasValue && CastHistory.Switched(Casting(ctx)) != w.switched.Value) return false;
             if (!string.IsNullOrEmpty(w.equipped) && !Equipped.Check(w.equipped, Who(w.of, ctx, target, "self"))) return false;
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
@@ -153,6 +160,44 @@ namespace SCClassLoader
             }
             else if (w.chance < 100 && Random.Range(1, 101) > w.chance + ctx.chanceBonus) return false;
             return true;
+        }
+
+        /// <summary>
+        /// The skills you have used, for combos: the last one, and how many in a row shared an archetype. Updated as the game
+        /// finishes resolving each skill (Player_AbilityControl.PlayerUsedAbility, the call vanilla Combology counts on),
+        /// so while a skill is going off "last" is still the one before it.
+        /// </summary>
+        internal static class CastHistory
+        {
+            internal static Ability Last;
+            private static SKILL_CLASS lastKind;
+            private static int streak;
+
+            /// <summary>Another archetype than the last skill's (both having one).</summary>
+            internal static bool Switched(Ability now) =>
+                now != null && now.skillClass != SKILL_CLASS.Null && lastKind != SKILL_CLASS.Null && now.skillClass != lastKind;
+
+            /// <summary>Skills in a row of this one's archetype, this one counted.</summary>
+            internal static float Streak(Ability now)
+            {
+                if (now == null || now.skillClass == SKILL_CLASS.Null) return 0f;
+                return now.skillClass == lastKind ? streak + 1 : 1;
+            }
+
+            internal static void Used(Ability a)
+            {
+                if (a == null) return;
+                SKILL_CLASS kind = a.skillClass;
+                streak = kind != SKILL_CLASS.Null && kind == lastKind ? streak + 1 : kind != SKILL_CLASS.Null ? 1 : 0;
+                lastKind = kind;
+                Last = a;
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(Player_AbilityControl), nameof(Player_AbilityControl.PlayerUsedAbility))]
+            private static class Patch_Used
+            {
+                private static void Postfix(Ability ability) { try { Used(ability); } catch (Exception e) { Plugin.Log.LogError("CastHistory: " + e); } }
+            }
         }
 
         /// <summary>The skill in question: the one acting, or for a proc or an effect the one you are using right now.</summary>
@@ -181,6 +226,9 @@ namespace SCClassLoader
                 case "melee": return a.isMelee;
                 case "cooldown": return a.cooldown > 0;
                 case "instant": return a.isInstant;
+                case "muscle": return a.skillClass == SKILL_CLASS.Muscle;
+                case "guile": return a.skillClass == SKILL_CLASS.Guile;
+                case "intellect": return a.skillClass == SKILL_CLASS.Intellect;
                 default: return string.Equals(word, a.internalName, StringComparison.OrdinalIgnoreCase) || string.Equals(word, a.GetDisplayName(), StringComparison.OrdinalIgnoreCase);
             }
         }
@@ -293,6 +341,7 @@ namespace SCClassLoader
                         return a == null || b == null ? (float?)null : Vector3.Distance(a.transform.position, b.transform.position);
                     }
                 case "turnsincombat": return Counters.TurnsInCombat;
+                case "caststreak": return CastHistory.Streak(Casting(ctx));
                 case "rushed": return ctx.rushed;
                 case "cleared": return ctx.cleared;
                 case "rounds": return Triggers.Rounds;
@@ -361,6 +410,8 @@ namespace SCClassLoader
             if (w.inCombat.HasValue) parts.Add(w.inCombat.Value ? "in combat" : "out of combat");
             if (w.inSide.HasValue) parts.Add(w.inSide.Value ? "in a side area" : "outside side areas");
             if (!string.IsNullOrEmpty(w.cast)) parts.Add("using " + CastWords(w.cast));
+            if (!string.IsNullOrEmpty(w.lastCast)) parts.Add("your last skill was " + CastWords(w.lastCast));
+            if (w.switched.HasValue) parts.Add(w.switched.Value ? "this skill's archetype differs from your last one's" : "this skill shares your last one's archetype");
             if (w.melee.HasValue) parts.Add(w.melee.Value ? "in melee" : "at range");
             if (!string.IsNullOrEmpty(w.equipped)) parts.Add($"{whose ?? "you"} {(whose == null || whose == "you" ? "have" : "has")} {Equipped.Requirement(w.equipped)}");
             if (w.perk.HasValue) parts.Add(w.perk.Value ? "with the perk" : "without the perk");
@@ -406,6 +457,9 @@ namespace SCClassLoader
                     case "item": word = "item"; break;
                     case "self": word = "self-cast"; break;
                     case "cooldown": word = "cooldown"; break;
+                    case "muscle": word = "Muscle"; break;
+                    case "guile": word = "Guile"; break;
+                    case "intellect": word = "Intellect"; break;
                 }
                 return (t.StartsWith("!") ? "non-" : "") + word;
             })) + " skill"));
@@ -418,7 +472,7 @@ namespace SCClassLoader
         {
             if (PluginHost.HasValue(v)) return true;
             string k = v.Split(':')[0].ToLowerInvariant();
-            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "rank" || k == "summons" || k == "rushed" || k == "cleared" || k == "rounds";
+            return k == "level" || k == "credits" || k == "skillscooling" || k == "cost" || k == "cooldown" || k == "floor" || k == "distance" || k == "turnsincombat" || k == "caststreak" || k == "rank" || k == "summons" || k == "rushed" || k == "cleared" || k == "rounds";
         }
 
         private static string Num(float v, string value) => value.EndsWith("%") ? $"{v:0.#}%" : v.ToString("0.#", CultureInfo.InvariantCulture);
@@ -451,6 +505,7 @@ namespace SCClassLoader
                 case "credits": return "your credits";
                 case "distance": return "distance to the target";
                 case "turnsincombat": return "turns in this fight";
+                case "caststreak": return "skills of this archetype in a row";
                 case "rushed": return "tiles you rushed";
                 case "cleared": return "tiles cleared";
                 case "rounds": return "rounds the shot fired";
