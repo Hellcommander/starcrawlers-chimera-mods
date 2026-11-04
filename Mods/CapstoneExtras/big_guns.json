@@ -1,0 +1,24 @@
+{
+  "addTiers": {
+    "SKILLTREE_BigGuns": {
+      "fillUnfinished": true,
+      "tiers": [
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Walking Fire",
+            "icon": "SKILLTREE_BigGuns/2",
+            "equipped": "heavyRanged",
+            "description": "You stopped planting your feet years ago. The gun fires from the hip on every step, at whatever is nearest, for as long as the belt holds out.",
+            "procs": [
+              { "on": "move", "radius": 8, "pick": 1, "maxPerTurn": 1, "actions": [
+                { "do": "if", "when": { "value": "loaded", "of": "self", "atLeast": 1 }, "then": [
+                  { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "weapon": 0.5, "perRank": 1 },
+                  { "do": "ammo", "to": "self", "amount": -1 } ] } ] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

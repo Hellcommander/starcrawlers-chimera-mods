@@ -1,0 +1,122 @@
+{
+  "addTiers": {
+    "SKILLTREE_Smuggler": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Insured",
+          "name": "Fully Insured",
+          "description": "Somewhere a clerk keeps your file. As long as the premiums clear, you aren't allowed to die.",
+          "duration": 99,
+          "preventDeath": 1,
+          "preventDeathWhen": { "value": "credits", "of": "self", "atLeast": 150 },
+          "onSaveActions": [
+            { "do": "credits", "to": "self", "amount": -150 },
+            { "do": "heal", "to": "self", "amount": 10, "scale": "Savvy", "scaleMult": 1 }
+          ]
+        },
+        {
+          "id": "Wanted",
+          "name": "Wanted",
+          "description": "There's a price on this one, and everyone with a gun has heard.",
+          "duration": 10,
+          "debuff": true,
+          "damageTakenMult": 1.15,
+          "vfx": "EFFECT_Smuggler_Bounty",
+          "onDeathActions": [
+            { "do": "credits", "to": "self", "amount": 30, "bonusPerStack": 3, "stacksOf": "value:Savvy", "stacksFrom": "self" },
+            { "do": "loot", "to": "victim", "amount": 1, "lootType": "Random" }
+          ]
+        },
+        {
+          "id": "Retainer",
+          "name": "On Retainer",
+          "description": "Paid up front. Fights like it.",
+          "duration": -1,
+          "ownerShare": 0.5
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Shakedown",
+            "icon": "SKILLTREE_Smuggler/1",
+            "target": "enemy",
+            "range": 1.5,
+            "melee": true,
+            "staminaCost": 8,
+            "cooldown": 3,
+            "description": "A short, unfriendly conversation in close quarters. It ends with them hurt and you a little richer.",
+            "actions": [
+              { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "weapon": 0.4, "scale": "Agility+Savvy", "scaleMult": 0.2, "perRank": 1, "levelCap": 9 },
+              { "do": "credits", "to": "self", "amount": 3, "bonusPerStack": 1, "stacksOf": "value:Savvy", "stacksFrom": "self" },
+              { "do": "loot", "amount": 1, "lootType": "Credits", "chance": 25 }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Fine Print",
+            "icon": "SKILLTREE_Smuggler/2",
+            "description": "A policy taken out under a name that isn't yours. When a blow should finish you, the insurer pays out instead: 150 credits off your balance and you get back up. No balance, no cover.",
+            "auras": [ { "effect": "@Insured", "radius": 0, "affects": "enemies", "self": true } ]
+          }
+        },
+        {
+          "newAbility": {
+            "name": "Fistful of Credits",
+            "icon": "SKILLTREE_Smuggler/1",
+            "target": "enemy",
+            "shape": "cone",
+            "angle": 60,
+            "range": 3.5,
+            "staminaCost": 10,
+            "cooldown": 6,
+            "creditCost": 20,
+            "description": "Hard currency, thrown hard. The richer you are, the more of it there is to throw.",
+            "impactVfx": "PA_Elementalist_ChainLightning.shockImpact@0.3",
+            "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "perRank": 1, "levelCap": 9, "bonusPerStack": 1, "stacksOf": "value:credits/150" },
+              { "do": "blind", "turns": 1, "chance": 40 }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "name": "Hired Goon",
+            "icon": "SKILLTREE_Smuggler/1",
+            "target": "self",
+            "staminaCost": 10,
+            "cooldown": 15,
+            "creditCost": 60,
+            "description": "You know a guy. He doesn't ask questions, and he's already standing behind you.",
+            "actions": [
+              { "do": "summon", "creature": "CORPSEC_GUARD_MELEE", "summonName": "Goon", "summonGroup": "Goon", "amount": 1, "turns": 12, "maxSummons": 2, "summonAt": "behind", "effect": "@Retainer" }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "name": "Price on Their Head",
+            "icon": "SKILLTREE_Smuggler/2",
+            "target": "enemy",
+            "range": 8,
+            "staminaCost": 10,
+            "cooldown": 20,
+            "description": "Put the word out. Everyone takes a swing a little more eagerly, and whoever brings them down, you're the one who collects.",
+            "actions": [
+              { "do": "effect", "effect": "@Wanted" },
+              { "do": "order", "pets": "any", "when": { "perk": true }, "actions": [
+                { "do": "damage", "type": "Ballistic", "min": 2, "max": 4, "levelCap": 9 } ] }
+            ],
+            "perk": {
+              "name": "Dead or Alive",
+              "description": "Your hired help drops everything and takes a shot at the mark."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

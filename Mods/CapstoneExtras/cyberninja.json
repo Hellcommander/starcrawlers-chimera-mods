@@ -1,0 +1,32 @@
+{
+  "addTiers": {
+    "SKILLTREE_Cyberninja": {
+      "fillUnfinished": true,
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Thunderstep",
+            "icon": "SKILLTREE_Cyberninja/4",
+            "target": "enemy",
+            "range": 5,
+            "staminaCost": 25,
+            "cooldown": 20,
+            "resetOnKill": true,
+            "description": "The legs fire, the blade follows, and you are beside the next one before the first has fallen. Anyone who never saw you coming is cut twice.",
+            "impactVfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "chain", "jumps": 4, "radius": 4, "leap": true, "sight": true, "actions": [
+                { "do": "damage", "type": "Shock", "min": 3, "max": 6, "weapon": 0.6, "scale": "Agility", "scaleMult": 0.3, "perRank": 1, "levelCap": 9 },
+                { "do": "damage", "type": "Slashing", "min": 2, "max": 4, "weapon": 0.4, "levelCap": 9, "when": { "unaware": true } },
+                { "do": "forget", "when": { "perk": true } } ] }
+            ],
+            "perk": {
+              "name": "Never There",
+              "description": "Each one you pass loses the thread of where you went."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

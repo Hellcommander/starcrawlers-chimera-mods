@@ -1,0 +1,58 @@
+{
+  "addTiers": {
+    "SKILLTREE_Bodybuilding": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Mass",
+          "name": "Mass",
+          "description": "Too heavy to shove, too wide to get round. Things that run into you stop.",
+          "duration": 99,
+          "hidden": false,
+          "modelScale": 1.12,
+          "grantTags": [ "NOKNOCKBACK" ]
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Heave",
+            "icon": "SKILLTREE_Bodybuilding/2",
+            "target": "enemy",
+            "range": 1.5,
+            "melee": true,
+            "staminaCost": 15,
+            "cooldown": 5,
+            "description": "Get under them, lock out, and put them somewhere else. Whatever they land on is now part of the workout.",
+            "impactVfx": "PA_Prototype_Thunderclap.impactParticle@0.4",
+            "actions": [
+              { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.3, "perRank": 1, "levelCap": 9 },
+              { "do": "throw", "amount": 3, "when": { "lacks": "EFFECT_Bodybuilding_Rage", "of": "self" }, "actions": [
+                { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.5, "perRank": 1, "levelCap": 9 } ] },
+              { "do": "throw", "amount": 5, "when": { "has": "EFFECT_Bodybuilding_Rage", "of": "self" }, "actions": [
+                { "do": "damage", "type": "Crushing", "min": 5, "max": 8, "scale": "Strength", "scaleMult": 0.6, "perRank": 1, "levelCap": 9 } ] }
+            ],
+            "perk": {
+              "name": "No Rest Between Sets",
+              "description": "It's a warm-up. You're already reaching for the next one.",
+              "instant": true
+            }
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Slab",
+            "icon": "SKILLTREE_Bodybuilding/0",
+            "description": "Years of eating and lifting have made you less a person than a load-bearing structure. You don't get pushed. People who swing at you bounce.",
+            "statsFrom": [ { "stat": "HealthMax", "from": "Strength", "per": 1 } ],
+            "auras": [ { "effect": "@Mass", "radius": 0, "affects": "enemies", "self": true } ],
+            "procs": [
+              { "on": "hurt", "chance": 50, "when": { "melee": true }, "actions": [ { "do": "knockback", "to": "attacker", "amount": 1 } ] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

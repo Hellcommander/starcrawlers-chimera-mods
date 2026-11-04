@@ -100,7 +100,9 @@ namespace SCClassLoader
                         scalar.caster = caster;
                         scalar.amountA = div;
                         scalar.amountC = hpPerLevel;
-                        if (c.HasTag(StatTag)) (scalar as Effect_Pet_Scalar)?.UpdateStats();
+                        // now, not at its first turn: that first update sets the base health (level x per-level), and the
+                        // fill-up below has to come after it or the summon walks in hurt
+                        (scalar as Effect_Pet_Scalar)?.UpdateStats();
                     }
                 }
                 catch { }
@@ -108,13 +110,15 @@ namespace SCClassLoader
                 if (!string.IsNullOrEmpty(a.effect))
                 {
                     Actions.Run(new[] { new ActionSpec { @do = "effect", effect = a.effect } }, ctx, c);
+                    Taming.Refresh(c); // an "ownerShare" effect's attributes now, not at the next turn, so the full health below counts them
                     c.CalculateStats();
                     c.SetHealth(c.GetHealthMax()); // a fresh summon starts full, whatever its effect adds
                 }
+                if (!copy) { c.CalculateStats(); c.SetHealth(c.GetHealthMax()); } // a fresh summon starts full, whatever its scaling and effect add
                 if (!string.Equals(a.summonVfx, "none", StringComparison.OrdinalIgnoreCase))
                     Actions.SpawnVfx(string.IsNullOrEmpty(a.summonVfx) ? "PA_Engineer_Boltron.PS_summon" : a.summonVfx, c.GetHitFx().position);
                 existing++;
-                Plugin.Log.LogInfo($"{ctx.sourceName}: summoned {c.name} ({existing}/{(a.maxSummons > 0 ? a.maxSummons.ToString() : "-")}, {a.turns} turns)");
+                Plugin.Log.LogInfo($"{ctx.sourceName}: summoned {c.name} ({existing}/{(a.maxSummons > 0 ? a.maxSummons.ToString() : "-")}, {a.turns} turns, health {c.GetHealth()}/{c.GetHealthMax()})");
             }
             }
             catch (Exception e) { Plugin.Log.LogWarning($"{ctx.sourceName}: summon failed at {step}: {e}"); }
@@ -285,7 +289,8 @@ namespace SCClassLoader
             string want = prefer.ToLowerInvariant();
             return Map.instance.GetNavNodesAt(pos, r, validNodesOnly: true)
                 .Where(n => n != null && !n.IsOccupied() && !n.BlockCheck() && !n.Block_Move && Vector3.Distance(n.transform.position, pos) > 0.1f)
-                .OrderByDescending(n =>
+                .OrderBy(n => n.HasHazard()) // never onto a mine or a fire when a clear tile will do
+                .ThenByDescending(n =>
                 {
                     Vector3 d = n.transform.position - pos; d.y = 0f; d.Normalize();
                     float dot = Vector3.Dot(d, forward);
@@ -297,7 +302,7 @@ namespace SCClassLoader
         internal static NavNode FreeNode(Vector3 pos, float r) =>
             Map.instance.GetNavNodesAt(pos, r, validNodesOnly: true)
                 .Where(n => n != null && !n.IsOccupied() && !n.BlockCheck() && !n.Block_Move)
-                .OrderBy(n => Vector3.Distance(n.transform.position, pos)).FirstOrDefault();
+                .OrderBy(n => n.HasHazard()).ThenBy(n => Vector3.Distance(n.transform.position, pos)).FirstOrDefault();
 
         private static Character Resolve(string spec)
         {
@@ -330,7 +335,8 @@ namespace SCClassLoader
         private static Ability FindAbility(string id)
         {
             if (Game.instance == null) return null;
-            foreach (Skill_Tree t in Game.instance.skills)
+            // the game's own trees too: a placeholder tier that added tiers filled (Engineer's Boltron) still holds its prefab
+            foreach (Skill_Tree t in Game.instance.skills.Concat(ExtraTiers.Originals))
                 foreach (Skill_Tier tier in t?.skillTiers ?? new List<Skill_Tier>())
                 {
                     if (tier?.ability != null && tier.ability.internalName == id) return tier.ability;
@@ -343,7 +349,7 @@ namespace SCClassLoader
         internal static IEnumerable<string> ListPrefabs()
         {
             if (Game.instance == null) yield break;
-            foreach (Skill_Tree t in Game.instance.skills)
+            foreach (Skill_Tree t in Game.instance.skills.Concat(ExtraTiers.Originals).Distinct())
                 foreach (Skill_Tier tier in t?.skillTiers ?? new List<Skill_Tier>())
                 {
                     Ability a = tier?.ability ?? tier?.passive;

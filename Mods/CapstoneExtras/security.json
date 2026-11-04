@@ -1,0 +1,59 @@
+{
+  "addTiers": {
+    "SKILLTREE_Security": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Snared",
+          "name": "Snared",
+          "description": "A cable around the ankle that wasn't there a moment ago.",
+          "duration": 2,
+          "debuff": true,
+          "root": true
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Tripwire Reflexes",
+            "icon": "SKILLTREE_Security/2",
+            "target": "self",
+            "instant": true,
+            "staminaCost": 8,
+            "cooldown": 8,
+            "description": "Your hands string a wire before you've decided to. The next ones to step up beside you find out about it.",
+            "actions": [
+              { "do": "arm", "reaction": {
+                  "name": "Tripwire",
+                  "on": "approach",
+                  "charges": 3,
+                  "turns": 10,
+                  "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.35",
+                  "actions": [
+                    { "do": "damage", "type": "Shock", "min": 3, "max": 5, "scale": "Savvy+Recognition", "scaleMult": 0.2, "perRank": 1, "levelCap": 9 },
+                    { "do": "effect", "effect": "@Snared" }
+                  ] } }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Systemic Access",
+            "icon": "SKILLTREE_Security/1",
+            "description": "Every lock, every trap and every corpse wired by the people who run this place answers to the same handful of codes, and you know them. Rooms open up when you walk in, and what falls near you gets wired back.",
+            "procs": [
+              { "on": "enterRoom", "actions": [
+                { "do": "disarm", "to": "self", "radius": 5, "odds": 60 },
+                { "do": "unlock", "to": "self", "radius": 3, "odds": 60 } ] },
+              { "on": "enemyDeath", "chance": 35, "actions": [
+                { "do": "trap", "fieldName": "Wired Corpse", "affects": "enemies", "triggerRadius": 1.5, "radius": 1.6, "charges": 1, "turns": 12, "maxTraps": 3,
+                  "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.45",
+                  "actions": [ { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Savvy", "scaleMult": 0.3, "levelCap": 9 }, { "do": "stun", "turns": 1 } ] } ] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

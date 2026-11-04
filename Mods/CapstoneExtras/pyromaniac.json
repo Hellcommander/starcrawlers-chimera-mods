@@ -1,0 +1,27 @@
+{
+  "addTiers": {
+    "SKILLTREE_Pyromaniac": {
+      "fillUnfinished": true,
+      "tiers": [
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Burn It Shut",
+            "icon": "SKILLTREE_Pyromaniac/3",
+            "description": "Everyone else treats fire as the problem. You treat it as the stitches. A burning wound can't bleed, and nothing that crawled into your blood survives the heat.",
+            "procs": [
+              { "on": "turn", "when": { "has": "EFFECT_Fire", "of": "self" }, "actions": [
+                { "do": "heal", "to": "self", "amount": 2, "scale": "Toughness", "scaleMult": 0.3, "perRank": 1 },
+                { "do": "purge", "to": "self", "effect": "EFFECT_Bleed" },
+                { "do": "purge", "to": "self", "effect": "EFFECT_Poison" } ] },
+              { "on": "lowHealth", "threshold": 35, "cooldown": 8, "vfx": "PA_Pyromaniac_MovotolCocktail.impactParticle@0.4", "actions": [
+                { "do": "clearHazards", "to": "self", "radius": 2.5, "hazard": "HAZARD_Fire" },
+                { "do": "heal", "to": "self", "amount": 0, "bonusPerStack": 4, "stacksOf": "value:cleared" },
+                { "do": "effect", "to": "self", "effect": "EFFECT_Fire", "turns": 2 } ] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

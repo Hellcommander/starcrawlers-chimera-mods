@@ -1,0 +1,48 @@
+{
+  "addTiers": {
+    "SKILLTREE_BulletFarmer": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Harvest",
+          "name": "Bumper Crop",
+          "description": "Good soil, good season. Rounds come back to you.",
+          "duration": 99,
+          "hidden": true,
+          "ammoSave": 25
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Bumper Crop",
+            "icon": "SKILLTREE_BulletFarmer/1",
+            "description": "You grow your rounds, and a good farmer wastes nothing. A quarter of what you fire finds its way back into the load, and every kill with a gun reaps a few more.",
+            "auras": [ { "effect": "@Harvest", "radius": 0, "affects": "enemies", "self": true } ],
+            "procs": [
+              { "on": "kill", "when": { "equipped": "ranged" }, "actions": [ { "do": "ammo", "to": "self", "amount": 2, "perRank": 1 } ] }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "name": "Lead Storm",
+            "icon": "SKILLTREE_BulletFarmer/0",
+            "target": "enemy",
+            "range": 8,
+            "equipped": "ranged",
+            "staminaCost": 15,
+            "cooldown": 10,
+            "description": "Empty the whole harvest at once. Every two rounds loaded is another shot, and once the mark drops the rest go looking for whoever is next.",
+            "actions": [
+              { "do": "volley", "amount": 1, "bonusPerStack": 1, "stacksOf": "value:loaded/2", "stacksFrom": "self", "radius": 4, "look": "#FFC05A",
+                "actions": [ { "do": "damage", "type": "Ballistic", "min": 2, "max": 3, "weapon": 0.3, "perRank": 1, "levelCap": 9 } ] },
+              { "do": "ammo", "to": "self", "amount": -999 }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

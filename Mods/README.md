@@ -144,7 +144,7 @@ by its shown name), `purge` (remove `effect`), `shorten` (takes `amount` turns o
 `"effect": "buffs"`, or one effect by id; one run down to nothing ends, and a negative amount draws them out instead;
 effects with no end are left alone), `xp` (you gain experience as for a won floor event, which grows with the floor;
 `amount` multiplies it), `ammo` (puts `amount` rounds back in your loaded ammo, up to a full stack; negative takes
-them out, and taking the last empties the slot), `loot` (the game rolls `amount` items of `"lootType"` (`Random`,
+them out, and taking the last empties the slot; rounds put into an empty gun load as plain ammo), `loot` (the game rolls `amount` items of `"lootType"` (`Random`,
 `Weapon`, `Gear`, `Consumable`, `Credits`, `Food`, `Ammo`, `Luxury`) at `"rarity"` (`Common` to `Legendary`; unset =
 the floor's own odds), and they spill from the target the way a broken crate's do), `teleport`
 (floor abilities; same room only), and the control actions `taunt`, `silence`, `exhaust`, `swap` (see below). Any action can have `"to"` (`target` default, `self`, `attacker`, `victim`),
@@ -258,7 +258,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   that name is found first, then any installed class's. A skill that casts itself stops after three rounds).
 - `"stacksOf": "value:NAME"` counts any named value from `when` conditions instead of stacks: `"value:enemiesNear:4"`
   (+N per enemy within 4 of you), `"value:Toughness/2"` (one count per 2 Toughness), `"value:healthLost/10"`,
-  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:cleared"` (tiles its `clearHazards` cleared), `"value:rounds"` (rounds the shot fired, in an `ammo` proc). A `/N` divides and rounds down. `stacksFrom`
+  `"value:debuffs"`, `"value:credits/100"`, `"value:turnsInCombat"`, `"value:rushed"` (tiles the cast's `rush` covered), `"value:cleared"` (tiles its `clearHazards` cleared), `"value:rounds"` (rounds the shot fired, in an `ammo` proc), `"value:loaded"` (rounds in your gun right now). A `/N` divides and rounds down. `stacksFrom`
   says whose value it reads; `consumeStacks` does nothing here, as a value isn't spent.
 - Cross-tree riders: `ifSkill` runs an action only when you also have a skill tree (`"SKILLTREE_Pyromaniac"`, a
   mod class id, or a display name; `"A|B"` = either), at `skillRank` or higher (1 = just taken); `unlessSkill` is
@@ -277,7 +277,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
 - A summon aimed at an enemy (the ability targets one) arrives with that enemy as its target, so it fights instead of
   walking back to you the way the pet AI does when a minion has nothing to do; `hunt` keeps it that way afterwards.
 - `"summonAt": "behind"` (or `"beside"`) on a summon centred on you picks its tile along your facing and turns it to face the way you face, so a summon does not
-  stand up in front of the camera; the Shadow Magus's Shade steps out behind the Magus. Creature skills' `sound` and a `chain`
+  stand up in front of the camera; the Shadow Magus's Shade steps out behind the Magus. A summon is never put on a mine
+  or in a fire while a clear tile is free, and it arrives at full health, its scaling and its `effect` counted. Creature skills' `sound` and a `chain`
   action's `sound` play mod sound files as well as vanilla events.
 - Summons fight on your side and scale with your level and Smarts like Engineer pets. `turns` > 0 dismisses them
   after that many of your turns; `maxSummons` caps how many one ability keeps alive at once.
@@ -513,7 +514,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   - `{ "do": "volley", "amount": 4, "radius": 3, "look": "#FF8040", "actions": [...] }` fires 4 shots of the actions
     at the target, one after another (a beat apart inside a skill); once it falls, the rest turn on the nearest enemy
     within the radius of where it stood, homing missiles finding a new mark. Each shot draws a `look` streak from you
-    and plays `vfx` and `sound` where it lands.
+    and plays `vfx` and `sound` where it lands. `bonusPerStack` with `stacksOf` adds shots: `"amount": 1, "bonusPerStack": 1,
+    "stacksOf": "value:loaded/2"` fires one more for every two rounds in your gun.
   - `{ "do": "attempt", "amount": 6, "odds": 10, "oddsPerTry": 10, "tryCost": 2, "scale": "PsiPower", "scaleMult": 0.3,
     "resistStat": "Smarts", "resistMult": 0.2, "actions": [...], "else": [...] }` is a hold on the target, a mind
     being bent. It rolls once a try for up to `amount` tries (default 6), each `oddsPerTry` likelier, at `odds` plus your
@@ -707,7 +709,7 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   { "do": "trap", "fieldName": "Snare Mine", "affects": "enemies",   // or "allies", "all"
     "armTurns": 1,          // your turns before it is live (default 0: at once)
     "triggerRadius": 0,     // 0 = stepping onto its tile sets it off; 1.5 = coming beside it too (a tripwire)
-    "radius": 1.6,          // when it goes off, its actions hit everyone it affects this close; 0 = only who set it off
+    "radius": 1.6,          // when it goes off, its actions hit everyone it affects this close (and always who set it off); 0 = only who set it off
     "charges": 1,           // times it goes off before it is used up (0 = until "turns" runs out)
     "fuse": 0,              // > 0: it goes off by itself after that many of your turns (a timed mine)
     "fuseOnly": false,      // true: only the fuse or springTraps set it off, never someone on it
@@ -973,7 +975,7 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
   - your own or anyone's: `health`, `health%`, `stamina`, `stamina%`, `shield`, any stat (`Strength`, `Armor`, ...), `stacks:EFFECT`, `counter:NAME`;
   - around someone: `enemiesNear:3`, `alliesNear:3` (the number is the radius);
   - more about anyone: `healthLost`, `buffs`, `debuffs`;
-  - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `distance` (you to the target), `turnsInCombat`, `floor`, `skillsCooling` (your skills on cooldown);
+  - global: `summons` (or `summons:GROUP`), `rank:TREE`, `level`, `credits`, `loaded` (rounds in your gun), `distance` (you to the target), `turnsInCombat`, `floor`, `skillsCooling` (your skills on cooldown);
   - about the skill in use: `cost` (its stamina), `cooldown`, `castStreak` (skills of its archetype in a row, this one counted).
 - **Comparisons:** `below`, `above`, `atLeast`, `atMost`, `is`.
 - **`of`** says whose number or effects are checked:
@@ -985,7 +987,8 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
   proc can do something else for a vanilla skill, which a skill rewrite can't reach (rewrites only change mod skills).
   That is the last skill you used even between casts, so pair it with `"casting": true` (a skill of yours is going off
-  right now) on a `hit` proc that a trap or a damage tick must not set off.
+  right now) on a `hit` proc that a trap or a damage tick must not set off. On a `hit` or `kill` proc it reads what
+  made that hit instead, so `attack` hears your plain weapon swings and shots too (an effect's "your next three attacks").
 - **Combos:** `lastCast` reads the skill you used before this one, in the same words as `cast`. `"switched": true` holds
   when the skill in use has another archetype than your last one, as the game's Combology counts a combo, and
   `false` when it is the same again. With the `castStreak` value, `"when": { "value": "castStreak", "atLeast": 3 }`
@@ -1024,7 +1027,8 @@ Static Grip need a ranged weapon.
 - Read it in conditions as `counter:Cadence`.
 - Feed it to an amount with `"bonusPerStack": 3, "stacksOf": "counter:Cadence", "stacksFrom": "self"`; adding `"consumeStacks": true` zeroes it afterwards.
 
-**Triggers (`"on"`).** Besides `hit`, `kill`, `hurt`, `dodge`, `turn` and `reaction`, a proc can fire on:
+**Triggers (`"on"`).** A `"match"` can name several things with `|` (`"Spice|Stim"`), and `*` stands for any run of
+letters (`"CONSUME_CHEM_*"` is every chem). Besides `hit`, `kill`, `hurt`, `dodge`, `turn` and `reaction`, a proc can fire on:
 - `crit`, `miss`;
 - `block` (a hit on you is blocked; the actions aim at the attacker, as on `hurt`; also fires for your summons'
   effects when they block);
@@ -1073,7 +1077,8 @@ Static Grip need a ranged weapon.
 - `"every"`: fires on every Nth time the event passes the proc's condition (3 = every third hit on a bleeding enemy).
 - `"maxPerTurn"`: the most times it fires in one turn.
 
-**Ability icons.** `"icon": "SKILLTREE_Blademaster/2"` borrows a vanilla tier's icon, so no png is needed.
+**Ability icons.** `"icon": "SKILLTREE_Blademaster/2"` borrows a vanilla tier's icon, so no png is needed. Effects and
+the skills of a form's kit can borrow the same way.
 
 ## XML class files
 

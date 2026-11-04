@@ -1,0 +1,62 @@
+{
+  "addTiers": {
+    "SKILLTREE_Engineer": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Foreman",
+          "name": "Foreman",
+          "description": "The big one keeps the little ones in step. Machines near it fire on its count.",
+          "duration": -1,
+          "hidden": true,
+          "auras": [ { "effect": "@InStep", "radius": 3, "affects": "allies" } ]
+        },
+        {
+          "id": "InStep",
+          "name": "In Step",
+          "description": "Working to the big one's rhythm.",
+          "duration": 99,
+          "stats": { "Armor": 2 },
+          "damageDealtMult": 1.25
+        },
+        {
+          "id": "ForemanOverdriven",
+          "name": "Foreman",
+          "description": "The big one keeps the little ones in step, and it came off the line with every limiter unbolted.",
+          "duration": -1,
+          "hidden": true,
+          "auras": [ { "effect": "@InStep", "radius": 3, "affects": "allies" } ],
+          "onApplyActions": [ { "do": "effect", "effect": "@Overdrive" } ]
+        },
+        {
+          "id": "Overdrive",
+          "name": "Overdrive",
+          "description": "Every limiter has been unbolted.",
+          "duration": 4,
+          "damageDealtMult": 1.5,
+          "stats": { "Agility": 4 }
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Build the Big One",
+            "icon": "SKILLTREE_Engineer/4",
+            "target": "self",
+            "staminaCost": 30,
+            "cooldown": 40,
+            "description": "Every scrap of plating you never found a use for, bolted into one walking foundry. It leads your other machines: anything of yours that fights beside it hits harder and holds together better.",
+            "actions": [
+              { "do": "summon", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Big One", "summonGroup": "BigOne", "amount": 1, "turns": 20, "maxSummons": 1, "summonAt": "beside", "effect": "@Foreman", "when": { "perk": false } },
+              { "do": "summon", "creature": "PA_Engineer_Boltron.characterPrefab", "summonName": "Big One", "summonGroup": "BigOne", "amount": 1, "turns": 20, "maxSummons": 1, "summonAt": "beside", "effect": "@ForemanOverdriven", "when": { "perk": true } }
+            ],
+            "perk": {
+              "name": "Pull the Governor",
+              "description": "It comes off the line with every limiter already unbolted."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

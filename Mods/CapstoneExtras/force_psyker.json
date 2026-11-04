@@ -1,0 +1,83 @@
+{
+  "addTiers": {
+    "SKILLTREE_ForcePsyker": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Colossus",
+          "name": "Colossus",
+          "description": "Your will has a body now, and it is enormous. The room is smaller than it was.",
+          "duration": 5,
+          "modelScale": 1.5,
+          "grantTags": [ "NOKNOCKBACK" ],
+          "stats": { "Strength": 4, "Toughness": 4 },
+          "damageTakenMult": 0.75,
+          "vfx": "EFFECT_ForcePsyker_Judgement",
+          "keep": [ "Slam", "Smite" ],
+          "kit": [
+            {
+              "name": "Quake",
+              "icon": "SKILLTREE_ForcePsyker/0",
+              "target": "self",
+              "radius": 2.5,
+              "staminaCost": 10,
+              "description": "One foot comes down and the deck remembers it.",
+              "areaVfx": "PA_Prototype_Thunderclap.blastPrefab@0.6",
+              "actions": [
+                { "do": "damage", "type": "Crushing", "min": 4, "max": 7, "scale": "Strength+PsiPower", "scaleMult": 0.3, "levelCap": 9 },
+                { "do": "knockback", "amount": 2 }
+              ]
+            },
+            {
+              "name": "Hurl",
+              "icon": "SKILLTREE_ForcePsyker/2",
+              "target": "enemy",
+              "range": 1.5,
+              "staminaCost": 10,
+              "description": "Pick them up. Find a wall.",
+              "actions": [
+                { "do": "throw", "amount": 4, "actions": [
+                  { "do": "damage", "type": "Psi", "min": 5, "max": 8, "scale": "Strength+PsiPower", "scaleMult": 0.35, "levelCap": 9 } ] }
+              ]
+            },
+            {
+              "name": "Trample",
+              "icon": "SKILLTREE_ForcePsyker/4",
+              "target": "self",
+              "staminaCost": 8,
+              "description": "You no longer walk round people.",
+              "actions": [
+                { "do": "rush", "amount": 4, "actions": [
+                  { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.3, "levelCap": 9 },
+                  { "do": "knockback", "amount": 2 },
+                  { "do": "stun", "turns": 1 } ] }
+              ]
+            },
+            {
+              "name": "Let Go",
+              "target": "self",
+              "instant": true,
+              "description": "Fold back down to your own size.",
+              "actions": [ { "do": "purge", "to": "self", "effect": "@Colossus" } ]
+            }
+          ]
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Mountain of Will",
+            "icon": "SKILLTREE_ForcePsyker/5",
+            "target": "self",
+            "staminaCost": 30,
+            "cooldown": 25,
+            "cooldownWhile": "@Colossus",
+            "description": "Stop holding the force in. Wear it. For a few turns you stand twice your height in a body of pressure, and every skill you know turns into a way of moving mass.",
+            "castVfx": "EFFECT_ForcePsyker_Judgement",
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Colossus" } ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "addTiers": {
+    "SKILLTREE_SpacePirate": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Boarders",
+          "name": "Boarders Away",
+          "description": "Over the rail and in among them. Nobody gets a turn to react while you're still moving.",
+          "duration": 3,
+          "maxStacks": 3,
+          "castRules": { "freeTurn": true, "consume": true }
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Grappling Hook",
+            "icon": "SKILLTREE_SpacePirate/0",
+            "target": "enemy",
+            "range": 5,
+            "staminaCost": 10,
+            "cooldown": 6,
+            "description": "A hook on a line, thrown underhand. It bites, and they're coming your way whether they like it or not.",
+            "actions": [
+              { "do": "tether", "look": "#B89A6A" },
+              { "do": "damage", "type": "Piercing", "min": 2, "max": 4, "scale": "Savvy", "scaleMult": 0.3, "perRank": 1, "levelCap": 9 },
+              { "do": "pull", "amount": 3, "when": { "perk": false } },
+              { "do": "leap", "when": { "perk": true } }
+            ],
+            "perk": {
+              "name": "Swing Across",
+              "description": "Why bring them to you? You ride the line over to them instead."
+            }
+          }
+        },
+        {
+          "newAbility": {
+            "name": "Boarding Action",
+            "icon": "SKILLTREE_SpacePirate/4",
+            "target": "enemy",
+            "range": 4,
+            "staminaCost": 20,
+            "cooldown": 30,
+            "description": "Leap the gap, land among them swinging, and keep going. Your next two skills go off before anyone can answer.",
+            "actions": [
+              { "do": "leap" },
+              { "do": "damage", "type": "Slashing", "min": 3, "max": 6, "weapon": 0.8, "scale": "Savvy", "scaleMult": 0.3, "levelCap": 9 },
+              { "do": "effect", "to": "self", "effect": "@Boarders", "stacks": 2 },
+              { "do": "effect", "to": "self", "effect": "@Boarders", "stacks": 1, "when": { "perk": true } }
+            ],
+            "perk": {
+              "name": "Whole Crew Behind You",
+              "description": "One more move before they recover."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

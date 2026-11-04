@@ -556,14 +556,15 @@ namespace SCClassLoader
         /// </summary>
         private static void Volley(ActionSpec a, ActionContext ctx, Character first)
         {
-            if (ctx.paced != null) { ctx.paced.Add(Shots(a, ctx, first, true)); return; }
-            IEnumerator run = Shots(a, ctx, first, false);
+            // counted now, as the skill goes off: the shots come later, after the skill's other actions (a spent load)
+            int n = Math.Max(1, a.amount + StackBonus(a, ctx, first));
+            if (ctx.paced != null) { ctx.paced.Add(Shots(a, ctx, first, true, n)); return; }
+            IEnumerator run = Shots(a, ctx, first, false, n);
             while (run.MoveNext()) { }
         }
 
-        private static IEnumerator Shots(ActionSpec a, ActionContext ctx, Character cur, bool paced)
+        private static IEnumerator Shots(ActionSpec a, ActionContext ctx, Character cur, bool paced, int n)
         {
-            int n = Math.Max(1, a.amount);
             Vector3 at = cur != null ? cur.transform.position : ctx.caster.transform.position;
             for (int shot = 0; shot < n; shot++)
             {
@@ -727,12 +728,22 @@ namespace SCClassLoader
         }
 
         /// <summary>"ammo": puts rounds back in your loaded ammo (a refund, up to a full stack), or takes them out with a
-        /// negative amount; the last round taken empties the slot as firing it would.</summary>
+        /// negative amount; the last round taken empties the slot as firing it would, and rounds put into an empty gun load as plain ammo.</summary>
         private static void Ammo(ActionSpec a, ActionContext ctx, Character t)
         {
-            if (!(ctx.caster is Player p) || p.GetAmmo() == null) return;
+            if (!(ctx.caster is Player p)) return;
             Item_Ammo ammo = p.GetAmmo();
             int n = a.amount + StackBonus(a, ctx, t);
+            if (ammo == null)
+            {
+                // an empty gun takes plain rounds: what comes back after the load ran out
+                if (n <= 0 || Menu_Player.instance == null || !(ItemDatabase.instance?.GetItem("WEAPON_AMMO_Generic") is Item_Ammo fresh)) return;
+                fresh.stack = n;
+                Menu_Player.instance.AutoEquip(fresh, null, null);
+                if (!Menu_Player.instance.IsEquipped(fresh)) Menu_Inventory.instance?.AddToInventory(fresh, doStack: true, isSilent: true, null);
+                Menu_Player.instance.RefreshAmmo();
+                return;
+            }
             int now = Mathf.Min(ammo.stack + n, ammo.GetStackMax());
             if (now <= 0 && Menu_Player.instance != null) Menu_Player.instance.DestroyAmmo(ammo);
             else ammo.SetStack(Mathf.Max(1, now));
@@ -755,8 +766,12 @@ namespace SCClassLoader
                 item.transform.position = at + Vector3.up * 0.8f;
                 item.OnEnterWorld();
                 LootManager.instance.DoLootSpew(at, item, false, 0.6f);
+                LootDropped++;
             }
         }
+
+        /// <summary>Items the "loot" action has dropped (tests).</summary>
+        internal static int LootDropped;
 
         /// <summary>"unlock": every locked door and container within "radius" of you (default 2.5) comes open, by the base
         /// game's hacking rules: sealed, broken and boss doors stay shut, and an opened container spills its loot. "odds"
@@ -1412,7 +1427,8 @@ namespace SCClassLoader
                     {
                         string per = Joined(Describe(a.actions, classId, "it"));
                         int n = Math.Max(1, a.amount);
-                        s = $"Fires {n} shot{(n > 1 ? "s" : "")} at {who}, one after another; once it falls, the rest turn on the nearest enemy within {(a.radius > 0f ? a.radius : 3f):0.#} of it. Each shot: {per}";
+                        string count = Scaled(a) ? $"{(a.amount > 0 ? $"{a.amount} shot{(a.amount > 1 ? "s" : "")}, plus " : "")}{a.bonusPerStack} per {PerWord(a, classId, who)}," : $"{n} shot{(n > 1 ? "s" : "")}";
+                        s = $"Fires {count} at {who}, one after another; once it falls, the rest turn on the nearest enemy within {(a.radius > 0f ? a.radius : 3f):0.#} of it. Each shot: {per}";
                         break;
                     }
                 case "attempt":
@@ -1701,13 +1717,9 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(a.unlessSummonAlive)) s = $"If {SummonWord(a.unlessSummonAlive)} isn't out: {s.Substring(0, 1).ToLower()}{s.Substring(1)}";
             string act = (a.@do ?? "").ToLowerInvariant();
             if (act == "effect" && a.stacks > 1 && !Scaled(a)) s += $" (+{a.stacks} stacks)";
-            if (Scaled(a))
+            if (Scaled(a) && act != "volley") // a volley says its shot count itself
             {
-                string sf = (a.stacksFrom ?? "").ToLowerInvariant(); string on = sf == "self" ? "on you" : sf == "target" ? "on the target" : $"on {who}";
-                string per = a.stacksOf == "summons" ? "summon you have" : a.stacksOf == "bodies" ? "other living body" :
-                    a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) ? ValuePer(a.stacksOf.Substring(6), classId, on) :
-                    a.stacksOf.StartsWith("counter:", StringComparison.OrdinalIgnoreCase) ? $"point of <color=#9FD3FF>{a.stacksOf.Substring(8)}</color> {on}" :
-                    a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? $"{a.stacksOf.Substring(6)} you have" : $"stack of {EffectName(a.stacksOf, classId)} {on}";
+                string per = PerWord(a, classId, who);
                 string used = a.consumeStacks && !a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) && !a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) && a.stacksOf != "summons" && a.stacksOf != "bodies" ? (a.stacksUsed > 0 ? $" (uses up to {a.stacksUsed} and spends only those)" : " (consumes them)") : a.stacksUsed > 0 ? $" (counts up to {a.stacksUsed})" : "";
                 // effect and summon actions scale a count (stacks, summons) rather than an amount
                 int baseN = act == "effect" ? a.stacks : act == "summon" ? a.amount : -1;
@@ -1756,6 +1768,16 @@ namespace SCClassLoader
             if (string.IsNullOrEmpty(spec)) return "ally";
             if (spec.Contains(".")) spec = spec.Split('.')[1].Replace("Prefab", "").Replace("character", "construct");
             return spec.Replace("_", " ").Trim().ToLowerInvariant();
+        }
+
+        /// <summary>What one count of an action's stacksOf is, in words: "stack of Hexed on the target", "summon you have".</summary>
+        private static string PerWord(ActionSpec a, string classId, string who)
+        {
+            string sf = (a.stacksFrom ?? "").ToLowerInvariant(); string on = sf == "self" ? "on you" : sf == "target" ? "on the target" : $"on {who}";
+            return a.stacksOf == "summons" ? "summon you have" : a.stacksOf == "bodies" ? "other living body" :
+                a.stacksOf.StartsWith("value:", StringComparison.OrdinalIgnoreCase) ? ValuePer(a.stacksOf.Substring(6), classId, on) :
+                a.stacksOf.StartsWith("counter:", StringComparison.OrdinalIgnoreCase) ? $"point of <color=#9FD3FF>{a.stacksOf.Substring(8)}</color> {on}" :
+                a.stacksOf.StartsWith("group:", StringComparison.OrdinalIgnoreCase) ? $"{a.stacksOf.Substring(6)} you have" : $"stack of {EffectName(a.stacksOf, classId)} {on}";
         }
 
         private static string Scaling(ActionSpec a)

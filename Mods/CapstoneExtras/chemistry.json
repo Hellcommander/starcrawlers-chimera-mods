@@ -1,0 +1,68 @@
+{
+  "addTiers": {
+    "SKILLTREE_Chemistry": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Glowing",
+          "name": "Glowing Faintly",
+          "description": "Something in that batch lit up the parts of your head that do the thinking.",
+          "duration": 5,
+          "stats": { "PsiPower": 5, "Smarts": 3 }
+        },
+        {
+          "id": "Hardened",
+          "name": "Leathery",
+          "description": "Your skin has gone tough and faintly green. It will probably go back.",
+          "duration": 5,
+          "stats": { "Armor": 3 },
+          "resists": { "Bio": 25, "Fire": 10 }
+        },
+        {
+          "id": "LabGrade",
+          "name": "Lab-Grade Living",
+          "description": "Your body has learned to make the most of whatever you put in it, and so has everyone who travels with you.",
+          "duration": 99,
+          "hidden": true,
+          "itemTurns": 1,
+          "shareItems": true,
+          "keepItem": 25,
+          "keepItemMatch": "CHEM"
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Off-Label Use",
+            "icon": "SKILLTREE_Chemistry/1",
+            "description": "The label lists the side effects it knows about. You've found some new ones. Every chem you take has a chance to do something nobody designed it to.",
+            "procs": [
+              { "on": "useItem", "match": "CONSUME_CHEM_*", "chance": 40, "actions": [
+                { "do": "random", "options": [
+                  { "name": "Second Wind", "weight": 2, "actions": [ { "do": "stamina", "to": "self", "amount": 25 } ] },
+                  { "name": "Glowing Faintly", "weight": 2, "actions": [ { "do": "effect", "to": "self", "effect": "@Glowing" } ] },
+                  { "name": "Leathery", "weight": 2, "actions": [ { "do": "effect", "to": "self", "effect": "@Hardened" } ] },
+                  { "name": "Racing Thoughts", "weight": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 3 } ] },
+                  { "name": "Spontaneous Combustion", "weight": 1, "actions": [
+                    { "do": "if", "when": { "value": "enemiesNear:2", "of": "self", "atLeast": 1 }, "then": [
+                      { "do": "hazard", "to": "self", "hazard": "HAZARD_Fire_Mini", "radius": 1.6, "turns": 3 } ] },
+                    { "do": "effect", "to": "self", "effect": "EFFECT_Fire", "turns": 2 } ] }
+                ] }
+              ] }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Lab-Grade Living",
+            "icon": "SKILLTREE_Chemistry/2",
+            "description": "Your chems last twice as long, a quarter of the time the dose doesn't run out, and whatever you take, your summons and pets get a taste of too.",
+            "auras": [ { "effect": "@LabGrade", "radius": 0, "affects": "enemies", "self": true } ]
+          }
+        }
+      ]
+    }
+  }
+}

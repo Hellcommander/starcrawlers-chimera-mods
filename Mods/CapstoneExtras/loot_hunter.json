@@ -1,0 +1,32 @@
+{
+  "addTiers": {
+    "SKILLTREE_LootHunter": {
+      "fillUnfinished": true,
+      "tiers": [
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Treasure Sense",
+            "icon": "SKILLTREE_LootHunter/2",
+            "description": "You can tell who's carrying something good from the way they stand. The dangerous ones always are, and every third box you crack has a false bottom.",
+            "procs": [
+              { "on": "enemyDeath", "when": { "tag": "elite" }, "actions": [ { "do": "loot", "amount": 1, "lootType": "Random", "rarity": "Rare" } ] },
+              { "on": "search", "every": 3, "actions": [ { "do": "loot", "to": "self", "amount": 1, "lootType": "Random" } ] }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Golden Touch",
+            "icon": "SKILLTREE_LootHunter/1",
+            "description": "Things fall your way. Anything you kill has a chance to drop something extra, and the better your Loot Find, the better the chance.",
+            "procs": [
+              { "on": "kill", "when": { "chance": 5, "chanceScale": "LootFind", "chancePer": 1 }, "actions": [ { "do": "loot", "amount": 1, "lootType": "Random" } ] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

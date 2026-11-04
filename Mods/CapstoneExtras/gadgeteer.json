@@ -1,0 +1,53 @@
+{
+  "addTiers": {
+    "SKILLTREE_Gadgeteer": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Certified",
+          "name": "Certified Safe",
+          "description": "Every gadget you carry has passed an inspection you wrote yourself.",
+          "duration": 99,
+          "hidden": true,
+          "keepItem": 30,
+          "keepItemMatch": "GRENADE|UTL|GADGET",
+          "itemTurns": 0.5
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Widget Spray",
+            "icon": "SKILLTREE_Gadgeteer/2",
+            "target": "point",
+            "range": 5,
+            "staminaCost": 12,
+            "cooldown": 8,
+            "description": "A handful of half-finished widgets, tossed underarm. They scatter, sit there blinking, and go off at the first thing that comes close. What each one does is anybody's guess, including yours.",
+            "actions": [
+              { "do": "trap", "fieldName": "Widget", "affects": "enemies", "scatter": 3, "spread": 2, "triggerRadius": 1.5, "radius": 1.2, "charges": 1, "turns": 10, "maxTraps": 6,
+                "vfx": "PA_Engineer_Spidermine.PS_explode_shock@0.35",
+                "actions": [
+                  { "do": "damage", "type": "Shock", "min": 3, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1, "levelCap": 9 },
+                  { "do": "random", "options": [
+                    { "name": "Stunner", "actions": [ { "do": "stun", "turns": 1 } ] },
+                    { "name": "Flasher", "actions": [ { "do": "blind", "turns": 2 } ] },
+                    { "name": "Kicker", "actions": [ { "do": "knockback", "amount": 2 } ] },
+                    { "name": "Magnet", "actions": [ { "do": "pull", "amount": 2, "pullToward": "center" } ] }
+                  ] } ] }
+            ]
+          }
+        },
+        {
+          "newAbility": {
+            "type": "passive",
+            "name": "Certified Safe",
+            "icon": "SKILLTREE_Gadgeteer/1",
+            "description": "You test everything twice. Grenades and gadgets have a 30% chance not to be used up, and what they put on you lasts half again as long.",
+            "auras": [ { "effect": "@Certified", "radius": 0, "affects": "enemies", "self": true } ]
+          }
+        }
+      ]
+    }
+  }
+}

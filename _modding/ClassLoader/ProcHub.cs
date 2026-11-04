@@ -36,6 +36,10 @@ namespace SCClassLoader
         /// vfx plays there and radius procs centre on it.</summary>
         internal static Vector3? PlaceNow { get; private set; }
 
+        /// <summary>The skill or attack behind the hit or kill being handled (null for damage over time): "cast" asks it,
+        /// so an effect's "hit" proc with "cast": "attack" hears your plain weapon swings and shots.</summary>
+        internal static Ability HitBy { get; set; }
+
         public static void FireAt(string on, Vector3 at)
         {
             Vector3? prev = PlaceNow;
@@ -185,10 +189,21 @@ namespace SCClassLoader
             }
             if (string.IsNullOrEmpty(p.match)) return true;
             if (detail == null) return false;
+            // "A|B" = either; a '*' stands for any run of letters ("CONSUME_CHEM_*" = every chem)
+            string[] wants = p.match.Split('|');
             if (on == "effectgained" || on == "effectlost" || on == "inflict")
-                return string.Equals(detail, Actions.EffectId(p.match, ctx.classId), StringComparison.OrdinalIgnoreCase);
+                return wants.Any(w => Glob(detail, w.Contains("*") ? w : Actions.EffectId(w, ctx.classId)));
             // cast: "name|id" of the ability used; useItem / equip / unequip: "name|id" of the item
-            return detail.Split('|').Any(d => string.Equals(d, p.match, StringComparison.OrdinalIgnoreCase));
+            return detail.Split('|').Any(d => wants.Any(w => Glob(d, w)));
+        }
+
+        /// <summary>Case-blind equality, with '*' matching any run of characters.</summary>
+        internal static bool Glob(string text, string pattern)
+        {
+            if (text == null || pattern == null) return false;
+            if (pattern.IndexOf('*') < 0) return string.Equals(text, pattern, StringComparison.OrdinalIgnoreCase);
+            string rx = "^" + System.Text.RegularExpressions.Regex.Escape(pattern).Replace(@"\*", ".*") + "$";
+            return System.Text.RegularExpressions.Regex.IsMatch(text, rx, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         }
 
         /// <summary>Every lowHealth threshold any of your procs or effects listens for.</summary>
@@ -207,11 +222,17 @@ namespace SCClassLoader
     [HarmonyPatch(typeof(Player_AbilityControl), nameof(Player_AbilityControl.OnDealDamage))]
     internal static class Patch_ProcHit
     {
-        private static void Postfix(Character victim, int totalDamage)
+        private static void Postfix(Character victim, Ability dmgSource, int totalDamage)
         {
             if (victim == null || totalDamage <= 0) return;
-            ProcHub.Fire("hit", victim);
-            if (victim.GetIsDead() || victim.GetHealth() <= 0) ProcHub.Fire("kill", victim);
+            Ability prev = ProcHub.HitBy;
+            ProcHub.HitBy = dmgSource;
+            try
+            {
+                ProcHub.Fire("hit", victim);
+                if (victim.GetIsDead() || victim.GetHealth() <= 0) ProcHub.Fire("kill", victim);
+            }
+            finally { ProcHub.HitBy = prev; }
         }
     }
 

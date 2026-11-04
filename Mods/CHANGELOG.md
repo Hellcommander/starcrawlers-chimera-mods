@@ -15,8 +15,32 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - **Blocked abilities:** `"blocks"` on an effect stops the bearer's abilities by damage type, cooldown, melee, ranged
   or name, for you, enemies and summons; one used anyway fizzles and runs the effect's `onBlockedActions`. The
   condition `"uses"` and a `special` reaction's `"ability"` read the same words.
-- **Capstone Extras** (off by default): the Cybertechnician's unfinished tier becomes Null Spine, plus four more
-  skills. Psychic powers near you fizzle, a foe's or a friend's, and you grow stronger with every psychic enemy close by.
+- **Capstone Extras** (off by default): every unfinished `* NYI *` tier in the game is now a skill, 31 in 15 trees.
+  - Cybertechnician: Null Spine and four more. Psychic powers near you fizzle, and you grow stronger with every
+    psychic enemy close by.
+  - Pyromaniac: Burn It Shut drinks in the fire around you when you're nearly down.
+  - Bodybuilding: Heave throws an enemy, further while you rage; Slab can't be knocked back and knocks back whoever hits it.
+  - Force Psyker: Mountain of Will turns you into a colossus with its own four moves for a few turns.
+  - Cyberninja: Thunderstep leaps from enemy to enemy, hitting the unaware harder, and resets on a kill.
+  - Engineer: Build the Big One calls up a Boltron foreman that stiffens the allies around it.
+  - Big Guns: Walking Fire shoots a nearby enemy each time you step, spending a round.
+  - Space Pirate: Grappling Hook drags an enemy to you (the perk swings you to it); Boarding Action leaps in and makes
+    your next two skills free turns.
+  - Smuggler: Shakedown, Fine Print (credits pay to cheat death), Fistful of Credits, Hired Goon and Price on Their Head.
+  - Chemistry: Off-Label Use gives chems strange side effects; Lab-Grade Living makes doses last and sometimes not run out.
+  - Security: Tripwire Reflexes snares whoever steps up beside you; Systemic Access opens rooms as you walk in and wires corpses.
+  - Bullet Farmer: Bumper Crop reaps rounds back from gun kills; Lead Storm fires one shot for every two rounds loaded.
+  - Loot Hunter: Treasure Sense (elites always drop something, every third search has more) and Golden Touch.
+  - Rogue Modder: Fusion Core adds the damage type the target resists least; War Rig adds a second charge to your
+    next three attacks.
+  - Gadgeteer: Widget Spray scatters widgets that each do something different; Certified Safe keeps gadgets from being used up.
+- **Framework additions for these:**
+  - The `loaded` value is the rounds in your gun.
+  - A trigger's `match` takes `|` for either and `*` as a wildcard.
+  - `volley` takes `bonusPerStack`.
+  - Effects and form kits can borrow vanilla icons.
+  - On a `hit` proc, `cast` reads what made the hit, so `attack` hears plain weapon attacks.
+  - `ammo` loads plain rounds into an empty gun.
 - **Item skills:** mod items can give a skill while worn (`"skill"`, written like a class skill).
 - **`transfer` action:** moves your debuffs onto the target, with the turns and stacks they had left. An effect with
   `"transferable": false` can't be moved.
@@ -56,6 +80,13 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - A synergy with several tree specs tries every way of matching your trees, so one spec taking the best tree can't
   leave a later one empty. A misspelt `archetype:` in a synergy no longer hangs its rules text.
 - Scattered traps save once per cast, not once per bomblet.
+- A trap whose `triggerRadius` is wider than its blast `radius` also catches whoever set it off from the edge; before,
+  it went off and hit nobody.
+- Summons arrive at full health. Before, the pet scaling's first update set them to level × 8, and an `ownerShare`
+  effect's attributes counted only from the next turn.
+- Summons avoid tiles with mines or fire when a clear tile is free.
+- A summon whose creature comes from a placeholder tier that a mod filled (the Engineer's Boltron) is still found.
+- A Volley's `bonusPerStack` adds shots; before, it was ignored.
 
 ## 2.0.2 (2026-11-03)
 

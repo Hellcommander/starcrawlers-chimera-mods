@@ -1,0 +1,66 @@
+{
+  "addTiers": {
+    "SKILLTREE_Modder": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Fused",
+          "name": "Fusion Core",
+          "description": "A fusion cell spliced into the weapon's feed, retuning itself to whatever the target can't stand.",
+          "duration": 4,
+          "procs": [
+            { "on": "hit", "when": { "cast": "attack" }, "actions": [
+              { "do": "damage", "type": "weakest", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "levelCap": 9 } ] }
+          ]
+        },
+        {
+          "id": "Overclocked",
+          "name": "Overclocked",
+          "description": "Every safety in the weapon has been bridged. It fires twice. It also smokes.",
+          "duration": 4,
+          "maxStacks": 3,
+          "procs": [
+            { "on": "hit", "when": { "cast": "attack" }, "actions": [
+              { "do": "damage", "type": "Ballistic", "min": 1, "max": 2, "weapon": 0.5, "levelCap": 9 },
+              { "do": "effect", "to": "self", "effect": "@Smoking", "chance": 15 },
+              { "do": "effect", "to": "self", "effect": "@Overclocked", "stacks": -1 } ] }
+          ]
+        },
+        {
+          "id": "Smoking",
+          "name": "Smoking",
+          "description": "The weapon is too hot to hold properly.",
+          "duration": 2,
+          "debuff": true,
+          "damageDealtMult": 0.8
+        }
+      ],
+      "tiers": [
+        {
+          "newAbility": {
+            "name": "Fusion Core",
+            "icon": "SKILLTREE_Modder/2",
+            "target": "self",
+            "instant": true,
+            "staminaCost": 10,
+            "cooldown": 12,
+            "description": "Splice a fusion cell into whatever you're holding. For a few turns every weapon attack carries an extra charge of the one element its target resists least.",
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Fused" } ]
+          }
+        },
+        {
+          "newAbility": {
+            "name": "War Rig",
+            "icon": "SKILLTREE_Modder/1",
+            "target": "self",
+            "instant": true,
+            "staminaCost": 15,
+            "cooldown": 15,
+            "description": "Bridge every safety on the weapon. Your next three weapon attacks fire a second charge at half strength. Each one has a chance to cook the mods and leave you fighting with a smoking gun.",
+            "actions": [ { "do": "effect", "to": "self", "effect": "@Overclocked", "stacks": 3 } ]
+          }
+        }
+      ]
+    }
+  }
+}

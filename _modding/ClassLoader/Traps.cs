@@ -158,12 +158,17 @@ namespace SCClassLoader
 
         // ---- going off ------------------------------------------------------------------------------------------
 
-        /// <summary>Who a trap catches: everyone it affects in its radius, else whoever set it off (or stands on it).</summary>
+        /// <summary>Who a trap catches: everyone it affects in its radius, else whoever set it off (or stands on it). Whoever
+        /// set it off is always caught, even from the edge of a "triggerRadius" wider than the blast.</summary>
         private static List<Character> Caught(Trap tr, Character tripper)
         {
             if (tr.spec.radius > 0f)
-                return Map.instance.GetNavNodesAt(tr.pos, tr.spec.radius).Where(n => n != null).SelectMany(TileStacks.On)
+            {
+                var all = Map.instance.GetNavNodesAt(tr.pos, tr.spec.radius).Where(n => n != null).SelectMany(TileStacks.On)
                     .Where(c => GroundFields.Affects(tr.spec.affects, c)).Distinct().ToList();
+                if (tripper != null && !all.Contains(tripper) && GroundFields.Affects(tr.spec.affects, tripper)) all.Insert(0, tripper);
+                return all;
+            }
             if (tripper != null) return new List<Character> { tripper };
             return TileStacks.On(tr.node).Where(c => GroundFields.Affects(tr.spec.affects, c)).ToList();
         }

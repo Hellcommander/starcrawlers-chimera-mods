@@ -290,6 +290,8 @@ namespace SCClassLoader
             else if (dev == "mimeticist") Instance.StartCoroutine(DevTestMimeticist.Run());
             else if (dev == "bulkhead") Instance.StartCoroutine(DevTestBulkhead.Run());
             else if (dev == "extratiers") Instance.StartCoroutine(DevTestExtraTiers.Run());
+            else if (dev == "capstones") Instance.StartCoroutine(DevTestCapstones.Run(1));
+            else if (dev == "capstones2") Instance.StartCoroutine(DevTestCapstones.Run(2));
             else if (dev == "ichorborn") Instance.StartCoroutine(DevTestIchorborn.Run());
             else if (dev == "nosaves") Instance.StartCoroutine(DevTestNoSaves.Run());
             else if (dev == "ichorgoo") Instance.StartCoroutine(DevTestLooks.RunIchorGoo());

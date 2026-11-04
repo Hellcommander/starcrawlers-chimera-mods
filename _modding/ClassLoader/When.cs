@@ -212,7 +212,7 @@ namespace SCClassLoader
         }
 
         /// <summary>The skill in question: the one acting, or for a proc or an effect the one you are using right now.</summary>
-        private static Ability Casting(ActionContext ctx) => ctx.source != null && !ctx.source.isPassive ? ctx.source : Game.PLAYER_ABILITY != null ? Game.PLAYER_ABILITY : ctx.source;
+        private static Ability Casting(ActionContext ctx) => ProcHub.HitBy != null ? ProcHub.HitBy : ctx.source != null && !ctx.source.isPassive ? ctx.source : Game.PLAYER_ABILITY != null ? Game.PLAYER_ABILITY : ctx.source;
 
         internal static bool IsCast(string cast, Ability a)
         {
@@ -231,7 +231,7 @@ namespace SCClassLoader
                 case "vanilla": return !(a is ModAbility);
                 case "mod": return a is ModAbility;
                 case "item": return ModEffect.FromItem(a);
-                case "attack": return a is ModAbility m ? SkillMods.IsAttack(m.Spec?.actions) : a.GetTargetStyle() == TARGET_STYLE.Character || a.GetTargetStyle() == TARGET_STYLE.FloorCharacter;
+                case "attack": return a is PA_AutoAttack || (a is ModAbility m ? SkillMods.IsAttack(m.Spec?.actions) : a.GetTargetStyle() == TARGET_STYLE.Character || a.GetTargetStyle() == TARGET_STYLE.FloorCharacter || a.GetTargetStyle() == TARGET_STYLE.CharacterObject);
                 case "self": return a.GetTargetStyle() == TARGET_STYLE.None;
                 case "aimed": return a.GetTargetStyle() != TARGET_STYLE.None;
                 case "melee": return a.isMelee;
@@ -356,6 +356,7 @@ namespace SCClassLoader
                 case "rushed": return ctx.rushed;
                 case "cleared": return ctx.cleared;
                 case "rounds": return Triggers.Rounds;
+                case "loaded": return who is Player lp ? (lp.GetAmmo()?.stack ?? 0) : (float?)null;
                 case "wallsnear": return who == null ? (float?)null : Walls.Count(who);
                 default:
                     if (who != null && parsed.stat.HasValue) return who.GetStat(parsed.stat.Value);
@@ -521,6 +522,7 @@ namespace SCClassLoader
                 case "rushed": return "tiles you rushed";
                 case "cleared": return "tiles cleared";
                 case "rounds": return "rounds the shot fired";
+                case "loaded": return "rounds loaded";
                 case "wallsnear": return "walls beside";
                 default: return Enum.TryParse(k, true, out STAT_TYPE st) ? StatObj.GetStatString(st) : k;
             }

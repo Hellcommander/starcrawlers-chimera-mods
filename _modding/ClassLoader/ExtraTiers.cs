@@ -88,6 +88,10 @@ namespace SCClassLoader
         }
 
         /// <summary>The mods that added tiers to a class (empty when none).</summary>
+        /// <summary>The game's own trees that were replaced by copies with added tiers: what a filled placeholder held
+        /// (an unfinished tier's ability and the prefabs on it) is still found there.</summary>
+        internal static IEnumerable<Skill_Tree> Originals => originals.Values;
+
         internal static IReadOnlyList<string> AddedTo(string classId) =>
             classId != null && AddedBy.TryGetValue(classId, out var by) ? by : (IReadOnlyList<string>)new string[0];
 
