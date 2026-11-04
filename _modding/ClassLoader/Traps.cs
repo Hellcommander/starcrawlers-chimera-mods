@@ -92,6 +92,7 @@ namespace SCClassLoader
                 LayAt(a, ctx, n, name, quiet: true);
             }
             Scattered += spots.Count;
+            if (spots.Count > 0) Record();
             if (spots.Count > 0) Game.LOG($"{ctx.sourceName}: {spots.Count} {name.ToLowerInvariant()}{(spots.Count > 1 && !name.EndsWith("s") ? "s" : "")} scatter across the floor.");
         }
 
@@ -125,11 +126,10 @@ namespace SCClassLoader
             };
             Place(tr);
             traps.Add(tr);
+            if (quiet) return; // scatter saves the list once, after its last bomblet
             Record();
-            if (quiet) return;
             string who = Same(ctx.sourceName, name) ? "" : $"{ctx.sourceName}: ";
             Game.LOG($"{who}{name} set{(tr.arm > 0 ? $", live in {tr.arm} turn{(tr.arm > 1 ? "s" : "")}" : "")}{(tr.fuse > 0 ? $"; it goes off in {tr.fuse} turns" : "")}.");
-            Record();
         }
 
         private static bool Same(string a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);

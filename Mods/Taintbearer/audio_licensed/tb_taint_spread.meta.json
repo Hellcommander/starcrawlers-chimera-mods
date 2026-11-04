@@ -1,0 +1,156 @@
+{
+  "prompt": "a short wet hiss of dark corruption jumping to a new host",
+  "duration": 0.7,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "6b79c5d1c792a011",
+      "score": 0.4631969928741455,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 31 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "d6757401f2e11116",
+      "score": 0.45920053124427795,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 31 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "37b79e1567cc8b13",
+      "score": 0.45714250206947327,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 31 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "9317555403234a88",
+      "score": 0.4525899887084961,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- PROTOCOL CHAOS.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/48/NOISE ALCHEMY - PROTOCOL CHAOS 31 48k.wav",
+      "license": "reference",
+      "tags": [
+        "protocol",
+        "chaos",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "a319d878757e909f",
+      "score": 0.45133528113365173,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 7 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    },
+    {
+      "id": "1ea6a072fc885a97",
+      "score": 0.44901448488235474,
+      "via": "clap+tag",
+      "pack": "protocolchaos.zip",
+      "inner": "NOISE ALCHEMY- PROTOCOL CHAOS/44.1/NOISE ALCHEMY - PROTOCOL CHAOS 45 44.1k.wav",
+      "license": "reference",
+      "tags": [
+        "protocolchaos",
+        "noise",
+        "alchemy",
+        "protocol",
+        "chaos",
+        "1k"
+      ],
+      "archetypes": [
+        "ship",
+        "magic"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Taintbearer\\audio_licensed\\tb_taint_spread.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope) and levelled",
+  "derived": true,
+  "max_corr": 0.16,
+  "semitones": -4,
+  "width": 0.943,
+  "listen": {
+    "total": 0.555,
+    "match": 0.55,
+    "clean": 0.097
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tb taint spread, a short wet hiss of dark corruption jumping to a new host, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7075,
+    "steps": 36
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY - PROTOCOL CHAOS 31 48k.wav",
+    "waveform_pct": 3.7,
+    "tone_pct": 40.9,
+    "envelope_pct": 23.3
+  }
+}

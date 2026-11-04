@@ -1,0 +1,478 @@
+{
+  "id": "MOD_Taintbearer",
+  "name": "Taintbearer",
+  "description": "Mages who let the rot in. A Taintbearer's body is a vessel for corruption: it seeds Taint in whatever it touches, takes more of it into itself as fuel, and hands every affliction it carries to whoever it points at.\n\nTaint weakens body and mind and opens its bearer to harm, and when a Tainted host dies the rot moves on to the nearest one. Taint you carry yourself feeds your spells and your stamina, at the cost of your own health and focus, until you pass it on. Pass It On, Spillover and Return to Sender move your afflictions, enemy curses included, onto enemies; Rot Through gathers a target's Taint for a turn and then breaks it open. Damage scales with [TGH] and [PSI].",
+  "archetype": "Intellect",
+  "iconFrom": "SKILLTREE_Cursed",
+  "mirror": false,
+  "attributePriorities": {
+    "Toughness": 4,
+    "PsiPower": 4
+  },
+  "starterItems": [],
+  "effects": [
+    {
+      "id": "Taint",
+      "name": "Taint",
+      "debuff": true,
+      "description": "Corruption in the flesh and the mind. Each layer saps Toughness and Psi Power and lets every blow in a little deeper. When its host dies, the rot moves on to the nearest one.",
+      "duration": 5,
+      "maxStacks": 6,
+      "stats": {
+        "Toughness": -1,
+        "PsiPower": -1
+      },
+      "damageTakenPerStack": 0.03,
+      "onDeathActions": [
+        {
+          "do": "chain",
+          "jumps": 1,
+          "radius": 3,
+          "vfx": "TbRotBurst@0.6",
+          "actions": [
+            {
+              "do": "effect",
+              "effect": "@Taint",
+              "stacks": 2
+            }
+          ],
+          "sound": "audio_licensed/tb_taint_spread.wav"
+        }
+      ],
+      "icon": "icons/taint.png",
+      "aura": "TbRotDraw"
+    },
+    {
+      "id": "GatheringRot",
+      "name": "Gathering Rot",
+      "description": "Every thread of rot in the target is being drawn to one point. It breaks open at the start of your next turn, unless you are stunned first or the target is gone.",
+      "duration": 2,
+      "vfx": "PA_Cursed_Avatar.PS_cast@0.3",
+      "icon": "icons/gathering_rot.png"
+    }
+  ],
+  "tiers": [
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "addResistances": {
+        "Void": 5
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Vessel Flesh",
+        "icon": "icons/vessel_flesh.png",
+        "description": "Your body is used to the rot. What strikes you sometimes comes away fouled, and Taint you carry burns as stamina, a little each turn for every layer.",
+        "procs": [
+          {
+            "on": "hurt",
+            "when": {
+              "chance": 20,
+              "chanceScale": "Toughness"
+            },
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Taint"
+              }
+            ]
+          },
+          {
+            "on": "turn",
+            "when": {
+              "value": "stacks:@Taint",
+              "of": "self",
+              "atLeast": 1
+            },
+            "actions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 0,
+                "bonusPerStack": 1,
+                "stacksOf": "@Taint",
+                "stacksFrom": "self"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Seep",
+        "icon": "icons/seep.png",
+        "range": 6,
+        "staminaCost": 6,
+        "cooldown": 0,
+        "description": "A thread of your own corruption, pushed into an enemy. The more rot you carry, the deeper it bites.",
+        "castVfx": "TbRotDraw@0.5",
+        "impactVfx": "TbRotBurst@0.5",
+        "sound": "audio_licensed/tb_seep.wav",
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Void",
+            "min": 2,
+            "max": 4,
+            "scale": "Toughness+PsiPower",
+            "scaleMult": 0.2,
+            "perRank": 1,
+            "levelCap": 9,
+            "bonusPerStack": 2,
+            "stacksOf": "@Taint",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "effect",
+            "effect": "@Taint"
+          }
+        ],
+        "perk": {
+          "name": "Backwash",
+          "description": "The thread runs both ways: some of what it touches comes back into you.",
+          "addActions": [
+            {
+              "do": "effect",
+              "to": "self",
+              "effect": "@Taint"
+            }
+          ]
+        },
+        "travelVfx": "TbSeepBolt",
+        "travelSpeed": 12
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Open the Vessel",
+        "icon": "icons/open_the_vessel.png",
+        "staminaCost": 0,
+        "cooldown": 5,
+        "description": "Let the rot in on purpose. It sits in you as three layers of Taint, and the strength it brings comes at once.",
+        "castVfx": "TbRotDraw",
+        "sound": "audio_licensed/tb_open_vessel.wav",
+        "actions": [
+          {
+            "do": "effect",
+            "to": "self",
+            "effect": "@Taint",
+            "stacks": 3
+          },
+          {
+            "do": "stamina",
+            "to": "self",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Pass It On",
+        "icon": "icons/pass_it_on.png",
+        "range": 6,
+        "staminaCost": 8,
+        "cooldown": 3,
+        "description": "Everything that ails you, poured into one enemy: your Taint, your poisons, the curses it laid on you. It takes all of it, and it hurts more for every layer of Taint it now holds.",
+        "castVfx": "TbRotDraw@0.6",
+        "impactVfx": "TbRotBurst@0.7",
+        "sound": "audio_licensed/tb_pass_it_on.wav",
+        "actions": [
+          {
+            "do": "transfer"
+          },
+          {
+            "do": "damage",
+            "type": "Psi",
+            "min": 1,
+            "max": 3,
+            "scale": "Toughness+PsiPower",
+            "scaleMult": 0.2,
+            "perRank": 1,
+            "levelCap": 9,
+            "bonusPerStack": 2,
+            "stacksOf": "@Taint",
+            "stacksFrom": "target"
+          }
+        ],
+        "perk": {
+          "name": "Through the Skin",
+          "description": "The rot doesn't stop at the first host. It seeps into whoever stands closest.",
+          "addActions": [
+            {
+              "do": "chain",
+              "jumps": 2,
+              "radius": 1.5,
+              "vfx": "TbRotBurst@0.4",
+              "actions": [
+                {
+                  "do": "effect",
+                  "effect": "@Taint"
+                }
+              ]
+            }
+          ]
+        },
+        "travelVfx": "TbSeepBolt",
+        "travelSpeed": 11
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Return to Sender",
+        "icon": "icons/return_to_sender.png",
+        "staminaCost": 8,
+        "cooldown": 8,
+        "description": "Leave the vessel open. The next enemies to lay an affliction on you get everything you carry back, with Taint on top.",
+        "castVfx": "TbRotDraw@0.5",
+        "sound": "audio_licensed/tb_return.wav",
+        "actions": [
+          {
+            "do": "arm",
+            "reaction": {
+              "name": "Return to Sender",
+              "on": "debuff",
+              "charges": 2,
+              "turns": 10,
+              "priority": 50,
+              "vfx": "TbRotBurst@0.5",
+              "actions": [
+                {
+                  "do": "transfer"
+                },
+                {
+                  "do": "effect",
+                  "effect": "@Taint"
+                }
+              ],
+              "sound": "audio_licensed/tb_pass_it_on.wav"
+            }
+          }
+        ],
+        "perk": {
+          "name": "Bitter Return",
+          "description": "It comes back so hard the sender has to stop and choke on it.",
+          "addProcs": [
+            {
+              "on": "reaction",
+              "match": "Return to Sender",
+              "actions": [
+                {
+                  "do": "exhaust",
+                  "amount": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Nova",
+        "name": "Spillover",
+        "icon": "icons/spillover.png",
+        "radius": 2.5,
+        "staminaCost": 12,
+        "cooldown": 6,
+        "description": "The vessel overflows. Every enemy near you takes a lash of rot, Taint, and one of the afflictions you carry.",
+        "castVfx": "TbRotBurst@1.4",
+        "impactVfx": "TbRotBurst@0.5",
+        "sound": "audio_licensed/tb_spillover.wav",
+        "thirdPerson": 1.5,
+        "actions": [
+          {
+            "do": "damage",
+            "type": "Void",
+            "min": 2,
+            "max": 4,
+            "scale": "Toughness+PsiPower",
+            "scaleMult": 0.2,
+            "perRank": 1,
+            "levelCap": 9,
+            "bonusPerStack": 1,
+            "stacksOf": "@Taint",
+            "stacksFrom": "self"
+          },
+          {
+            "do": "transfer",
+            "amount": 1
+          },
+          {
+            "do": "effect",
+            "effect": "@Taint"
+          }
+        ],
+        "perk": {
+          "name": "Brimful",
+          "description": "Overflowing takes no effort any more.",
+          "instant": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1
+      },
+      "newAbility": {
+        "base": "Passive",
+        "name": "Blackened Marrow",
+        "icon": "icons/blackened_marrow.png",
+        "description": "The rot knows the way out of you now. When you seed Taint in an enemy, one of the afflictions you carry sometimes follows it in.",
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "@Taint",
+            "maxPerTurn": 1,
+            "when": {
+              "chance": 25,
+              "chanceScale": "Toughness"
+            },
+            "actions": [
+              {
+                "do": "transfer",
+                "amount": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Blast",
+        "name": "Fouled Ground",
+        "icon": "icons/fouled_ground.png",
+        "range": 6,
+        "radius": 1.5,
+        "staminaCost": 12,
+        "cooldown": 7,
+        "description": "Rot soaks into the deck. Anything standing in it is Tainted, and keeps being Tainted while it stays.",
+        "impactVfx": "TbRotBurst@0.8",
+        "sound": "audio_licensed/tb_fouled_ground.wav",
+        "actions": [
+          {
+            "do": "effect",
+            "effect": "@Taint"
+          },
+          {
+            "do": "field",
+            "fieldName": "Fouled Ground",
+            "turns": 4,
+            "radius": 1.5,
+            "affects": "enemies",
+            "look": "TbFouledPool",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Taint"
+              }
+            ]
+          }
+        ],
+        "perk": {
+          "name": "Quick Rot",
+          "description": "The deck takes the rot the moment it lands.",
+          "instant": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "Toughness": 1,
+        "PsiPower": 1
+      },
+      "newAbility": {
+        "base": "Bolt",
+        "name": "Rot Through",
+        "icon": "icons/rot_through.png",
+        "range": 6,
+        "staminaCost": 18,
+        "cooldown": 8,
+        "windup": 1,
+        "windupText": "gathers every thread of rot to one point",
+        "windupEffect": "@GatheringRot",
+        "description": "Draw all the Taint in an enemy to one point, then break it open. The rot it held is spent in the blow, and a host that held a great deal of it staggers and sprays it over its neighbours.",
+        "castVfx": "TbRotDraw@0.7",
+        "impactVfx": "TbRotBurst@1.0",
+        "sound": "audio_licensed/tb_rot_through.wav",
+        "actions": [
+          {
+            "do": "if",
+            "when": {
+              "value": "stacks:@Taint",
+              "of": "target",
+              "atLeast": 4
+            },
+            "then": [
+              {
+                "do": "stun",
+                "turns": 1
+              },
+              {
+                "do": "chain",
+                "jumps": 3,
+                "radius": 2.5,
+                "vfx": "TbRotBurst@0.5",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "@Taint",
+                    "stacks": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "do": "damage",
+            "type": "Void",
+            "min": 4,
+            "max": 7,
+            "scale": "Toughness+PsiPower",
+            "scaleMult": 0.35,
+            "perRank": 2,
+            "levelCap": 9,
+            "bonusPerStack": 4,
+            "stacksOf": "@Taint",
+            "stacksFrom": "target",
+            "consumeStacks": true
+          }
+        ],
+        "perk": {
+          "name": "Burst Host",
+          "description": "A host that bursts leaves the rot free for the next one.",
+          "resetOnKill": true
+        },
+        "travelVfx": "TbSeepBolt",
+        "travelSpeed": 10,
+        "windupSound": "audio_licensed/tb_rot_gather.wav"
+      }
+    }
+  ],
+  "icon": "icons/taintbearer.png"
+}

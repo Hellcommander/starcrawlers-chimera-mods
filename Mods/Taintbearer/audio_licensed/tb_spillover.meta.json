@@ -1,0 +1,154 @@
+{
+  "prompt": "dark rot bursting outward from a body in a ring, a wet splattering dark magic explosion",
+  "duration": 1.6,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7758d2eefce2bb1a",
+      "score": 0.5743319988250732,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "32f7b2ce8128ff62",
+      "score": 0.5616137981414795,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b1b6010e076e77a5",
+      "score": 0.5577417612075806,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 12.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "f3f4d9f717dc8c82",
+      "score": 0.5431952476501465,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 6.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "47efa64c22c8bdba",
+      "score": 0.5358632802963257,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.5341333150863647,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Taintbearer\\audio_licensed\\tb_spillover.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope) and levelled",
+  "derived": true,
+  "max_corr": 0.056,
+  "semitones": 3,
+  "width": 0.261,
+  "listen": {
+    "total": 0.427,
+    "match": 0.671,
+    "clean": -4.877
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tb spillover, dark rot bursting outward from a body in a ring, a wet splattering dark magic explosion, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.8,
+    "seed": 7177,
+    "steps": 36
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Wind spell-3.wav",
+    "waveform_pct": 8.9,
+    "tone_pct": 86.6,
+    "envelope_pct": 40.7
+  }
+}

@@ -95,7 +95,11 @@ namespace SCClassLoader
                         if (copy == null) continue;
                         if (fx.duration > 0) copy.duration = fx.duration;
                         copy.amountA = fx.amountA;
+                        copy.caster = fx.caster != null ? fx.caster : Player.instance;
                         copy.Activate();
+                        // as Actions.ApplyEffect sets one up: its on-apply actions, group and shares
+                        if (copy is ModEffect mod)
+                            mod.OnApplied(new ActionContext { caster = copy.caster, target = m, sourceName = fx.GetName() });
                         m.CalculateStats();
                         Shared++;
                     }

@@ -1,0 +1,149 @@
+{
+  "prompt": "a heavy gun chamber drawing in dark energy, a rising mechanical hum with a sucking magical swell",
+  "duration": 1.4,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "laser",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "3570126761103b3a",
+      "score": 0.4776296615600586,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "d20f10af64a19804",
+      "score": 0.470247745513916,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 18.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "6ab3ba3f2883c7fb",
+      "score": 0.4689716696739197,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-26.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "d39b74a33ef3c293",
+      "score": 0.4666336178779602,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 11.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "0904c4322aa19235",
+      "score": 0.4656428098678589,
+      "via": "clap+tag",
+      "pack": "NOISE ALCHEMY- FUTURGUN.zip",
+      "inner": "NOISE ALCHEMY- FUTURGUN/NOISE ALCHEMY- FUTURGUN  19.wav",
+      "license": "reference",
+      "tags": [
+        "futurgun",
+        "noise",
+        "alchemy"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "90fe12475546c9c3",
+      "score": 0.46456781029701233,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 24.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ExampleItems\\audio_licensed\\bp_unburden_charge.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope) and levelled",
+  "derived": true,
+  "max_corr": 0.199,
+  "semitones": -6,
+  "width": 0.374,
+  "listen": {
+    "total": 0.334,
+    "match": 0.285,
+    "clean": 0.976
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, bp unburden charge, a heavy gun chamber drawing in dark energy, a rising mechanical hum with a sucking magical swell, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7187,
+    "steps": 36
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio-lightgun-26.wav",
+    "waveform_pct": 4.6,
+    "tone_pct": 86.0,
+    "envelope_pct": 52.0
+  }
+}

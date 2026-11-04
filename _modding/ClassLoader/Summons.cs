@@ -196,7 +196,7 @@ namespace SCClassLoader
                 if (prefab == null || node == null) return;
                 Character c = AI_Manager.instance.Spawn_Character(prefab, node.transform.position, Quaternion.identity, a.chaos ? AI.AI_TEAM.Chaos : AI.AI_TEAM.Hostile);
                 if (c == null) return;
-                c.level = ctx.caster.level;
+                c.level = (ctx.caster ?? Player.instance ?? c).level; // a summon with no caster falls back to you, as Summon does
                 c.SetTag("NOXP", 1);
                 if (!string.IsNullOrEmpty(a.summonName)) c.nameOverride = a.summonName;
                 if (!string.IsNullOrEmpty(a.effect))

@@ -1,0 +1,163 @@
+{
+  "prompt": "a thin wet hissing thread of dark corrupted magic flung forward, slimy whispering rot",
+  "duration": 0.9,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "256fcf2883691928",
+      "score": 0.45756739377975464,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-9.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "9d8f8f1cab8e35bf",
+      "score": 0.43735790252685547,
+      "via": "clap+tag",
+      "pack": "magic",
+      "inner": "made/magic/bind.wav",
+      "license": "own",
+      "tags": [
+        "magic",
+        "made",
+        "bind",
+        "metal",
+        "chains",
+        "coiling",
+        "and",
+        "cinching",
+        "tight",
+        "around",
+        "body",
+        "links",
+        "grinding",
+        "low",
+        "ghostly",
+        "hum"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "d4a9cc93e409571e",
+      "score": 0.43714064359664917,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-5.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    },
+    {
+      "id": "4525d64f0f1271b7",
+      "score": 0.43689286708831787,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 31.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "2f64bc7170cb227d",
+      "score": 0.4325305223464966,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Dimensional portal.zip",
+      "inner": "Dark Fantasy Studio- Dimensional portal/Dark Fantasy Studio- Dimensional portal 36.wav",
+      "license": "reference",
+      "tags": [
+        "dimensional",
+        "portal",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.42648231983184814,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Taintbearer\\audio_licensed\\tb_seep.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope) and levelled",
+  "derived": true,
+  "max_corr": 0.115,
+  "semitones": 4,
+  "width": 1.097,
+  "listen": {
+    "total": 0.343,
+    "match": 0.433,
+    "clean": -1.789
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tb seep, a thin wet hissing thread of dark corrupted magic flung forward, slimy whispering rot, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7090,
+    "steps": 36
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "bind.wav",
+    "waveform_pct": 5.0,
+    "tone_pct": 85.5,
+    "envelope_pct": 15.6
+  }
+}

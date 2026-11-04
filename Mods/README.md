@@ -56,6 +56,8 @@ abilities, stats, damage types and item ids. Use it to choose what to borrow.
 
   "ignoresAllies": false,       // true: nothing hostile the class does (damage, debuffs, shoves, stuns, swaps; vanilla effects the game marks as debuffs) lands on
                                 //   your side (you, pets, summons, thralls, crew); buffs and heals still do. Rimelight Seer.
+  "mirror": true,               // false: no mirror copy of you casts this class's skills. A Corrupted Mirror swaps the class for a
+                                //   random one you don't have, as many of its skills at the same ranks. Taintbearer.
   "starterCredits": 0,
   "starterItems": ["WEAPON_R_Street_Special"],  // vanilla ids from vanilla_reference.txt, or mod items "Mod:Id"
   "starterGearFrom": ["SKILLTREE_Pistolier"],   // also give these trees' starter gear
@@ -160,6 +162,17 @@ Add `"hands": "both"` (with `"weapon"` or `"channel"`) and the whole hit lands o
 hand first: the off-hand one rolls its own weapon at the game's off-hand share, each sets off its own on-hit effects,
 and a target that falls to the first takes no second. With one weapon (or a shield in the other hand) it is one hit.
 A twin-blade flurry: `{ "do": "damage", "type": "Slashing", "min": 2, "max": 4, "weapon": 0.6, "hands": "both" }`.
+`"channel": true` on a skill's own damage action makes the weapon really go off once per cast, as the `channel` a
+rewrite adds does: its animation, noise, ammo and (for a gun) its accuracy roll, and a gun with no rounds can't cast
+it. A gun keeps the skill's own `range`; a melee weapon swings at the next tile. Add `"weapon"` for a share of its
+damage too. The Burden Projector's Unburden in ExampleItems is a shot like this.
+
+**Charge-up.** `"windup": 1` on a player skill makes the cast only begin it: it spends the skill's costs, starts its
+cooldown and ends your turn. At the start of your turn after the last charging turn (every enemy has acted by then) it
+goes off by itself at the target you aimed it at, through the skill's own cast, free, before you act. A stun on you, your
+death or a target that's dead or gone breaks it off, with nothing spent back. `"windupText"` is its log line ("draws your
+afflictions into the chamber") and `"windupEffect": "@Id"` an effect kept on you while it charges, so it shows on your
+effect bar. The tooltip says so. The Burden Projector's Unburden charges for 1 turn.
 
 A `damage` action's `"type": "weakest"` deals whichever damage type the target resists least, the way an analyser
 finds the gap in its armour; `"weakest:Fire|Cryo|Shock"` picks among those only, the first listed on a tie.
@@ -232,7 +245,10 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   cash in part of a pile (Fulgurant's Return Stroke uses up to 6 Potential and leaves the rest). An effect action
   with negative `stacks` takes that many off instead (`"stacks": -2`: a resource that bleeds away).
   With `bonusPerStack` the base (`stacks` / `amount`) may be 0: then nothing happens without stacks; `ifSelfHas` (stance- or state-dependent effects); `lifesteal`; `trueDamage`;
-  `dispel` / `cleanse` (`amount`, optional `effect` gained per buff removed); `chain` (`jumps`, `radius`,
+  `dispel` / `cleanse` (`amount`, optional `effect` gained per buff removed); `transfer` (moves up to `amount`
+  of your debuffs, all by default, onto the target with the turns and stacks they had left; `effect` moves only that
+  one; a debuff the target is immune to or resists stays on you, and so does a mod effect with `"transferable": false`
+  (default true: a curse that's yours to carry); moved ones count as yours from then on); `chain` (`jumps`, `radius`,
   `effect` = only jump to enemies carrying it, `falloff`, `"sight": true` = only jump to what the last link can see,
   never through a wall, nested `actions`; `"leap": true` makes it a charge: you land
   beside each link before it is struck, one hop at a time, and the skill's own self actions wait for the last hop;
@@ -1443,9 +1459,17 @@ turn a whole set off.
 - `base` can be another mod item, so variants are short: `{ "id": "CowlMk2", "base": "LinemansCowl", "stats": {...} }`.
 - A later mod (by load order) using the same qualified id patches only the fields it sets.
 - Fields by kind (the kind comes from the base item):
-  - **gear**: `stats`, `resists`, `bonusDamage` (extra attack damage), `equipEffect`.
+  - **gear**: `stats`, `resists`, `bonusDamage` (extra attack damage), `equipEffect`, `skill`.
+  - **Item skills**: `"skill": { "name": "...", "actions": [...] }` is written like a class's `newAbility` and is
+    yours while the item is worn, on the hotbar like a vanilla item skill. It replaces any skill the base item had;
+    without an `icon` it uses the item's. Item skills have no rank, so `perRank` adds nothing. Example: the Burden
+    Projector in ExampleItems, whose Unburden shot moves your debuffs onto what it hits.
   - **weapon** (base must be the same weapon family): `damage` `[{type,min,max}]`, `ammoUse`, `accuracy`
-    `{ "close": 10, "medium": 0, "long": -10 }`, plus the gear fields.
+    `{ "close": 10, "medium": 0, "long": -10 }`, `held`, plus the gear fields.
+  - **Held look**: `"held": { "mesh": "models/items/gun.glb" }` is the weapon in your hands, fitted over the base
+    weapon's own: its longest side is laid along the old one's, it is scaled to the old one's length (times `scale`) and
+    centred on it (plus `offset`). `"rotation": [0, 180, 0]` turns it from there, for a model that ends up facing back.
+    `"model"` is still the look on the floor. `SCCL_DEVTEST=itemmodels` photographs both.
   - **ammo**: `damage` (per shot; at least one entry above 0), `onHit` `{ "effect": "#Shocked", "chance": 20 }`
     (a `[X]` in the description shows the chance), `glow` `"#RRGGBB"`, `stack`, `stackMax`.
   - **consumable**: `use` `{ "effect": "@Steadied", "duration": 6, "amount": 0, "consume": true }`, `category`
@@ -1854,7 +1878,9 @@ or its kind's `bossChance` (0 to 1). The boss waits in a far room with a skull o
 when you find it or it notices you. Give it a `challenge` and it stays out of the level until the player calls it: a
 `model` prop stands by a wall, a click asks first (`title`, `text`, `accept`, `decline`), and saying yes breaks the prop
 (`breakVfx`, `sound`) and brings the boss out beside it (`glow`, `tracker`, `far`). A `self` boss reads `mirror`:
-`strength` (status effects), `finalDamage` (what's left of a hit, last of all), `skills`, `foreign`, `minSkills`, `look`,
+`strength` (status effects), `finalDamage` (what's left of a hit, last of all), `skills`, `foreign`, `minSkills`,
+`blacklist` (class ids it never copies, on top of every class with `"mirror": false`; a class of yours on it is swapped
+for a random class you don't have, as many skills at the same ranks), `look`,
 `glow`, `gearDrops`, `gearPower`, `escort`, `escortHealth`, `escortDeadly` (the share of your health all the copies
 together may take in a round), `escortMinDamage` (the lowest share of a hit that cut can reach) and `escortDefense` (how
 much of what a copy loses comes back as toughness).

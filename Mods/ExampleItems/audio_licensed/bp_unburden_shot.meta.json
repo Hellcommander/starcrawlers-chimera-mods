@@ -1,0 +1,151 @@
+{
+  "prompt": "a heavy energy rifle firing a thick dark violet orb, a deep thump with a wet magical whoosh",
+  "duration": 1.2,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "laser",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "6ab3ba3f2883c7fb",
+      "score": 0.5617178082466125,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-26.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "33178a698c8d7c25",
+      "score": 0.5577204823493958,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-20.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "5b6a4c09eab2e860",
+      "score": 0.5556164383888245,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-41.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "f5a831c84348c1ff",
+      "score": 0.5543556809425354,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-17.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "d4c3cd85ceca5e0e",
+      "score": 0.5401090383529663,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Gun reload and shot.zip",
+      "inner": "Dark Fantasy Studio- Gun reload and shot/Dark Fantasy Studio - Shot 19.wav",
+      "license": "reference",
+      "tags": [
+        "gun",
+        "reload",
+        "and",
+        "shot",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    },
+    {
+      "id": "116bfb9e2f380c64",
+      "score": 0.5386098623275757,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-18.wav",
+      "license": "reference",
+      "tags": [
+        "lightgun",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ExampleItems\\audio_licensed\\bp_unburden_shot.wav",
+  "sample_rate": 44100,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "derived": true,
+  "max_corr": 0.197,
+  "semitones": -5,
+  "width": 0.336,
+  "listen": {
+    "total": 0.549,
+    "match": 0.639,
+    "clean": -1.804
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, bp unburden shot, a heavy energy rifle firing a thick dark violet orb, a deep thump with a wet magical whoosh, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9100,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 27.7,
+      "tone_pct": 96.7,
+      "envelope_pct": 81.6
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio - Shot 19.wav",
+    "waveform_pct": 22.0,
+    "tone_pct": 95.8,
+    "envelope_pct": 78.7
+  }
+}

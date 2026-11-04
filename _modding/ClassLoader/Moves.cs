@@ -106,8 +106,9 @@ namespace SCClassLoader
             face.y = 0f;
             string way = (a.direction ?? "forward").ToLowerInvariant();
             Vector3 dir = way == "back" ? -face : way == "left" ? Quaternion.Euler(0f, -90f, 0f) * face : way == "right" ? Quaternion.Euler(0f, 90f, 0f) * face : face;
-            // the grid's own eight ways, as the game's dashes snap them
-            dir = new Vector3(Mathf.Round(dir.normalized.x), 0f, Mathf.Round(dir.normalized.z));
+            // tiles link only to their four side neighbours (NavNode.links), so a rush runs along the nearer grid axis;
+            // a diagonal facing (a turning monster) would find no link and never move
+            dir = Mathf.Abs(dir.x) >= Mathf.Abs(dir.z) ? new Vector3(Mathf.Sign(dir.x), 0f, 0f) : new Vector3(0f, 0f, Mathf.Sign(dir.z));
             if (dir.sqrMagnitude < 0.01f) return;
             dir.Normalize();
             NavNode node = start;

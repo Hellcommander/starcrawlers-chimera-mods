@@ -518,6 +518,68 @@ namespace SCClassLoader
 
         private static float NonZero(float v) => Mathf.Abs(v) < 0.0001f ? 1f : v;
 
+        /// <summary>
+        /// A weapon's look in your hands ("held"): the model takes the place of the meshes in its weaponObject, fitted to
+        /// them. Turned by "rotation" first, it gets the old mesh's longest side ("scale" multiplies that) and centre
+        /// ("offset" in the weapon's own space on top). The old meshes are hidden, not removed, so muzzle points,
+        /// particles and the hand's grip stay where the game expects them.
+        /// </summary>
+        internal static bool ApplyToHeld(Item_Weapon w, ModelSpec spec, string folder)
+        {
+            GameObject target = w.weaponObject;
+            if (target == null) return false;
+            Transform old = target.transform.Find("SCCL_Model");
+            if (old != null) Object.DestroyImmediate(old.gameObject); // a mod base's held look; this weapon has its own
+            Bounds? was = LocalBounds(target.transform, target.GetComponentsInChildren<Renderer>(true).Where(r => !(r is ParticleSystemRenderer) && !(r is SpriteRenderer)));
+            if (!Apply(target, spec, folder)) return false;
+            Transform root = target.transform.Find("SCCL_Model");
+            if (root == null) return false;
+            root.localPosition = Vector3.zero;
+            root.localScale = Vector3.one;
+            root.localRotation = Quaternion.identity;
+            Bounds? now = LocalBounds(target.transform, root.GetComponentsInChildren<Renderer>(true));
+            // lay the model's long side (a barrel) along the old one's, then "rotation" turns it from there
+            // ([0,180,0] when it faces back)
+            Quaternion lay = was.HasValue && now.HasValue && Longest(now.Value.size) != Longest(was.Value.size)
+                ? Quaternion.FromToRotation(Axis(Longest(now.Value.size)), Axis(Longest(was.Value.size))) : Quaternion.identity;
+            root.localRotation = Quaternion.Euler(V(spec.rotation, Vector3.zero)) * lay;
+            now = LocalBounds(target.transform, root.GetComponentsInChildren<Renderer>(true));
+            if (was.HasValue && now.HasValue)
+            {
+                float k = Mathf.Max(was.Value.size.x, Mathf.Max(was.Value.size.y, was.Value.size.z))
+                    / Mathf.Max(0.0001f, Mathf.Max(now.Value.size.x, Mathf.Max(now.Value.size.y, now.Value.size.z)))
+                    * (spec.scale <= 0 ? 1f : spec.scale);
+                root.localScale = Vector3.one * k;
+                root.localPosition = was.Value.center + V(spec.offset, Vector3.zero) - now.Value.center * k;
+            }
+            // the hand's camera only draws its own layer; a held gun casts no shadow on the view
+            foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = target.layer;
+            foreach (MeshRenderer mr in root.GetComponentsInChildren<MeshRenderer>(true)) mr.shadowCastingMode = ShadowCastingMode.Off;
+            return true;
+        }
+
+        private static int Longest(Vector3 v) => v.x >= v.y && v.x >= v.z ? 0 : v.y >= v.z ? 1 : 2;
+        private static Vector3 Axis(int i) => i == 0 ? Vector3.right : i == 1 ? Vector3.up : Vector3.forward;
+
+        /// <summary>Bounds of these renderers' meshes in `space`'s own coordinates (works on inactive templates).</summary>
+        private static Bounds? LocalBounds(Transform space, IEnumerable<Renderer> renderers)
+        {
+            Bounds? all = null;
+            foreach (Renderer r in renderers)
+            {
+                Mesh m = r is SkinnedMeshRenderer sk ? sk.sharedMesh : r.GetComponent<MeshFilter>()?.sharedMesh;
+                if (m == null) continue;
+                Matrix4x4 to = space.worldToLocalMatrix * r.transform.localToWorldMatrix;
+                Bounds b = m.bounds;
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector3 c = to.MultiplyPoint3x4(new Vector3((i & 1) == 0 ? b.min.x : b.max.x, (i & 2) == 0 ? b.min.y : b.max.y, (i & 4) == 0 ? b.min.z : b.max.z));
+                    if (all.HasValue) { Bounds x = all.Value; x.Encapsulate(c); all = x; } else all = new Bounds(c, Vector3.zero);
+                }
+            }
+            return all;
+        }
+
         /// <summary>A free-standing copy of a model (no creature under it): the look of a field tile, a dropped prop.</summary>
         internal static GameObject Spawn(ModelSpec spec, string folder, Vector3 at, Transform parent)
         {

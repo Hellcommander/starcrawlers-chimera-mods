@@ -1,0 +1,153 @@
+{
+  "prompt": "a cursed ward snapping open and dark magic thrown back, a sharp sour crack with a hissing tail",
+  "duration": 1.0,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7758d2eefce2bb1a",
+      "score": 0.4986587166786194,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "4bf3e29034861852",
+      "score": 0.49789929389953613,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 4.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "47efa64c22c8bdba",
+      "score": 0.48241952061653137,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 9.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b85920aab3567e43",
+      "score": 0.47920724749565125,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Electric spell.zip",
+      "inner": "Dark Fantasy Studio- Electric spell/Dark Fantasy Studio- Electric spell 7.wav",
+      "license": "reference",
+      "tags": [
+        "electric",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "laser",
+        "magic"
+      ]
+    },
+    {
+      "id": "e01a9bec7669dd60",
+      "score": 0.47918039560317993,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Earth spell.zip",
+      "inner": "Dark Fantasy Studio- Earth spell/Dark Fantasy Studio- Earth spell 20.wav",
+      "license": "reference",
+      "tags": [
+        "earth",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic"
+      ]
+    },
+    {
+      "id": "5749058ee55396f6",
+      "score": 0.4790324568748474,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Wind spell.zip",
+      "inner": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav",
+      "license": "reference",
+      "tags": [
+        "wind",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "ambience"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Taintbearer\\audio_licensed\\tb_return.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope) and levelled",
+  "derived": true,
+  "max_corr": 0.213,
+  "semitones": 4,
+  "width": 0.409,
+  "listen": {
+    "total": 0.342,
+    "match": 0.321,
+    "clean": 0.425
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tb return, a cursed ward snapping open and dark magic thrown back, a sharp sour crack with a hissing tail, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.6,
+    "seed": 7060,
+    "steps": 36
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Electric spell 4.wav",
+    "waveform_pct": 3.3,
+    "tone_pct": 0.0,
+    "envelope_pct": 53.2
+  }
+}

@@ -3,7 +3,9 @@
     { "id": "Grounded", "name": "Grounded", "description": "Insulated lining bleeds stray current into the floor.",
       "duration": -1, "resists": { "Shock": 10, "Energy": 5 } },
     { "id": "Steadied", "name": "Steadied", "description": "Hands stop shaking; sights stop drifting.",
-      "duration": 6, "stats": { "RangedAccuracy": 10, "Crit": 5 } }
+      "duration": 6, "stats": { "RangedAccuracy": 10, "Crit": 5 } },
+    { "id": "DrawingIn", "name": "Drawing In", "description": "The Burden Projector is drawing your afflictions into its chamber. A stun breaks it off.",
+      "duration": 2 }
   ],
 
   "items": [
@@ -25,6 +27,26 @@
       "damage": [ { "type": "Shock", "min": 2, "max": 6 }, { "type": "Energy", "min": 1, "max": 2 } ],
       "accuracy": { "close": 10, "long": -10 },
       "loot": [ { "floors": [1, 4] } ] },
+
+    { "id": "BurdenProjector", "base": "WEAPON_HR_Bio_Rifle",
+      "icon": "items/burden_projector.png", "model": { "mesh": "models/items/burden_projector.glb", "scale": 1.1 }, "held": { "mesh": "models/items/burden_projector.glb" },
+      "name": "Burden Projector", "description": "A heavy rifle with a draw-line cuffed to the wrist. It pulls whatever ails the hand that holds it into the chamber and fires it at the next thing in the sights.",
+      "rarity": "Legendary", "level": 5, "value": 320,
+      "damage": [ { "type": "Bio", "min": 8, "max": 12 }, { "type": "Ballistic", "min": 2, "max": 4 } ],
+      "stats": { "Agility": 2, "Toughness": 1 },
+      "skill": {
+        "name": "Unburden",
+        "icon": "items/unburden.png", "travelVfx": "BpUnburdenShot", "travelSpeed": 14, "impactVfx": "BpUnburdenHit",
+        "description": "The rifle spends a turn drawing every affliction on you into its chamber, then fires it into the target, with the turns and stacks each had left. What it takes, you are rid of.",
+        "target": "enemy", "range": 8, "dodgeable": true,
+        "staminaCost": 12, "cooldown": 6,
+        "windup": 1, "windupText": "draws your afflictions into the chamber", "windupEffect": "@DrawingIn", "windupSound": "audio_licensed/bp_unburden_charge.wav", "sound": "audio_licensed/bp_unburden_shot.wav",
+        "actions": [
+          { "do": "transfer" },
+          { "do": "damage", "type": "Bio", "min": 2, "max": 4, "weapon": 0.8, "channel": true }
+        ]
+      },
+      "loot": [ { "floors": [3, 6] } ] },
 
     { "id": "ArcbiteRounds", "base": "WEAPON_AMMO_Shock",
       "name": "Arcbite Rounds", "description": "Each round carries a [X]% chance to leave the target Shocked.",

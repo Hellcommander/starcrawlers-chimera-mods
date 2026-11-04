@@ -134,7 +134,7 @@ namespace SCClassLoader
             if (!string.IsNullOrEmpty(w.cast) && !IsCast(w.cast, Casting(ctx))) return false;
             if (w.casting.HasValue && CastRules.InCast != w.casting.Value) return false;
             if (!string.IsNullOrEmpty(w.lastCast) && !IsCast(w.lastCast, CastHistory.Last)) return false;
-            if (w.switched.HasValue && CastHistory.Switched(Casting(ctx)) != w.switched.Value) return false;
+            if (w.switched.HasValue && CastHistory.Combo(Casting(ctx)) != w.switched.Value) return false;
             if (!string.IsNullOrEmpty(w.equipped) && !Equipped.Check(w.equipped, Who(w.of, ctx, target, "self"))) return false;
             if (w.melee.HasValue && (ctx.source == null || ctx.source.isMelee != w.melee.Value)) return false;
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
@@ -174,8 +174,15 @@ namespace SCClassLoader
             private static int streak;
 
             /// <summary>Another archetype than the last skill's (both having one).</summary>
-            internal static bool Switched(Ability now) =>
-                now != null && now.skillClass != SKILL_CLASS.Null && lastKind != SKILL_CLASS.Null && now.skillClass != lastKind;
+            internal static bool Switched(Ability now) => Combo(now) == true;
+
+            /// <summary>true: another archetype than the last skill's; false: the same again; null: one of them has none
+            /// (items), so neither "switched" answer holds.</summary>
+            internal static bool? Combo(Ability now)
+            {
+                if (now == null || now.skillClass == SKILL_CLASS.Null || lastKind == SKILL_CLASS.Null) return null;
+                return now.skillClass != lastKind;
+            }
 
             /// <summary>Skills in a row of this one's archetype, this one counted.</summary>
             internal static float Streak(Ability now)
@@ -219,7 +226,7 @@ namespace SCClassLoader
             {
                 case "vanilla": return !(a is ModAbility);
                 case "mod": return a is ModAbility;
-                case "item": return a.GetComponentInParent<Item>() != null || (Menu_Player.instance != null && Menu_Player.instance.GetEquipment().Any(i => i != null && i.equipTrigger != null && i.equipTrigger.equipment_ability == a));
+                case "item": return ModEffect.FromItem(a);
                 case "attack": return a is ModAbility m ? SkillMods.IsAttack(m.Spec?.actions) : a.GetTargetStyle() == TARGET_STYLE.Character || a.GetTargetStyle() == TARGET_STYLE.FloorCharacter;
                 case "self": return a.GetTargetStyle() == TARGET_STYLE.None;
                 case "aimed": return a.GetTargetStyle() != TARGET_STYLE.None;

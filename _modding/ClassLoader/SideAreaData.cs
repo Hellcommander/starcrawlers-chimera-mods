@@ -324,6 +324,9 @@ namespace SCClassLoader
         /// <summary>Skills it casts at most, how many come from classes you don't have (at least 1), and the fewest it may
         /// have: a build with too few skills to copy is topped up from those classes.</summary>
         public int skills = 6, foreign = 1, minSkills = 3;
+        /// <summary>Class ids this copy never takes skills from, on top of every class that says "mirror": false. A class
+        /// of yours on it is swapped for a random class you don't have.</summary>
+        public List<string> blacklist = new List<string>();
         /// <summary>The glow on its body and how strong it is.</summary>
         public string look = "#7A2CFF";
         public float glow = 0.6f;

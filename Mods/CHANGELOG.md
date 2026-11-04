@@ -4,6 +4,50 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## Unreleased
+
+### New
+
+- **Item skills:** mod items can give a skill while worn (`"skill"`, written like a class skill).
+- **`transfer` action:** moves your debuffs onto the target, with the turns and stacks they had left. An effect with
+  `"transferable": false` can't be moved.
+- **Burden Projector** (ExampleItems): a Legendary heavy rifle for floors 4 to 7. Its skill Unburden charges for a turn,
+  then fires a real shot that moves every affliction on you into what it hits.
+- **Charge-up for player skills:** `"windup": N` makes a skill charge for N turns and go off by itself at the start of
+  a later turn, at the same target; a stun breaks it off.
+- **Held weapon looks:** a mod weapon's `"held"` model replaces the base weapon's look in your hands, laid along it and
+  scaled to it. The Burden Projector now has its own heavy model, icon and shot.
+- **Mirror blacklist:** a class with `"mirror": false`, or one named in a mirror boss's `blacklist`, is never copied.
+  The Corrupted Mirror fights with a random class you don't have in its place.
+- **Taintbearer** (`Mods/Taintbearer/`): an Intellect mage of corruption scaling with Toughness and Psi Power. Seep and
+  Fouled Ground seed Taint, which weakens its host and moves on when the host dies. Open the Vessel fills you with
+  Taint for stamina, and carried Taint feeds your spells. Pass It On, Spillover and Return to Sender move your
+  afflictions, enemy curses included, onto enemies, and Rot Through charges for a turn, then spends a target's Taint in one
+  blow. A Corrupted Mirror never copies it.
+- **`channel` on a skill's own damage** now really fires your weapon (animation, ammo, a gun's accuracy roll), as the
+  `channel` a rewrite adds already did. Before, written in a skill it only added the weapon's on-hit effects.
+
+### Fixes
+
+- `value:rushed` and `value:cleared` keep their count inside nested actions (`chain`, `cast`, `order`, a rush's own
+  impact actions); before, those read 0.
+- `clearHazards`, `moveTraps` (and `raiseWall` / `springTraps` written in camelCase) now work on a floor aim with
+  nobody standing there.
+- A heal, shield, recharge or stamina gain with `"amount": 0` and `bonusPerStack` gives nothing without stacks, even
+  when it has rank or stat scaling.
+- `rush` runs along the nearer grid axis when its user faces diagonally; before, a turning monster's rush never moved.
+- `"switched": false` no longer holds when this skill or the last one has no archetype (items).
+- `"hands": "both"` with only an off-hand weapon swings it once at its off-hand share, instead of no weapon.
+- The `item` and `skill` hit filters know a worn item's skill as an item's.
+- An effect that roots and also grants `FLYING` or `IMMUNE_ROOT` doesn't root its own bearer.
+- A stacking damage-over-time effect's tooltip shows its damage for the current stacks, as it deals it.
+- Consumable effects shared with your summons (`shareItems`) set themselves up as on you: on-apply actions, group and
+  caster.
+- A hostile or chaos summon with no caster no longer fails.
+- A synergy with several tree specs tries every way of matching your trees, so one spec taking the best tree can't
+  leave a later one empty. A misspelt `archetype:` in a synergy no longer hangs its rules text.
+- Scattered traps save once per cast, not once per bomblet.
+
 ## 2.0.2 (2026-11-03)
 
 ### Class changes
@@ -129,7 +173,7 @@ Covers everything since 1.46.0.
   to worker threads and stops head-turning work on off-screen models. Turn it off and the game runs as it always did.
 - **Enemy weapons** (loader config, `[EnemyWeapons]`), off by default: the weapon that falls from a dead enemy's hand
   now stays where it lands, and you can pick it up and use it. It drops at `DropChance` (30% by default); a boss's
-  always drops. At the same odds, an enemy holding one weapon carries a spare of the other kind from the floor's loot
+  weapon always drops. At the same odds, an enemy holding one weapon carries a spare of the other kind from the floor's loot
   for the attacks its own can't make: a gunman draws a blade for its pistol-whip, a brawler a sidearm for its shots,
   and puts it away for the next attack its own weapon makes. A spare always drops. A weapon keeps the enemy's own
   model and its kind: a guard's pistol drops as a pistol, a ChefBot's cleaver as a cleaver. Weapons the base game kept
@@ -137,7 +181,7 @@ Covers everything since 1.46.0.
   and other loot still comes from the inventory everyone carries. Enemies run their weapons in a low-power mode: they
   hit at 75% of floor loot, but a gun needs no ammo and your skills cost 25% less stamina while you swing a melee one
   (`LowPowerDamage` and `MeleeStaminaSaving` in the config). The weapon deals the damage types of the attack the enemy
-  made with it, and a boss's is Epic or better. With the event bus on, the first drop also gives a **Scrap Bot Kit**.
+  made with it, and a boss's weapon is Epic or better. With the event bus on, the first drop also gives a **Scrap Bot Kit**.
   The bot grinds loose weapons into scrap, rebuilds broken props with it, repairs itself and sells extra scrap when you
   use a vendor. It tracks weapons and props on worker threads, including off-screen ones. It has high armor, and its
   minion menu can scrap weapons from your pack. Boss weapons are never scrapped unless you allow it.
