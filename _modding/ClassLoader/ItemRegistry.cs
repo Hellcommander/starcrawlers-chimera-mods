@@ -214,11 +214,15 @@ namespace SCClassLoader
         // ---- building ---------------------------------------------------------------------------------------
 
         /// <summary>Puts the item's own skill on it, in place of any its base had (worn, the game moves it onto you).</summary>
+        internal static string OwnWeaponRule(string internalId) => "item:" + internalId;
+
         private static void GiveSkill(Item_Equipment eq, ItemDef def, string internalId, string cls, string ctx)
         {
             AbilitySpec s = def.skill;
             if (string.IsNullOrEmpty(s.name)) { Plugin.Log.LogError($"{ctx}: \"skill\" needs a \"name\""); return; }
             ClassRegistry.Normalize(s, cls);
+            // a weapon's own skill fires that weapon, in whichever hand it is held (no rule = the main hand)
+            if (string.IsNullOrEmpty(s.equipped) && eq is Item_Weapon) s.equipped = OwnWeaponRule(internalId);
             string abId = "ITEM_" + internalId;
             ModAbility.Specs[abId] = new ModAbility.Runtime
             {

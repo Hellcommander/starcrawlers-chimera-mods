@@ -189,7 +189,9 @@ namespace SCClassLoader
                 case "item":
                     {
                         string id = Crafting.ResolveItem(arg, null);
-                        return mp.GetEquipment().Any(e => e != null && e.itemId == id);
+                        // a weapon by name also picks out the hand that holds it
+                        bool held = Picks(hands, w => w != null && w.itemId == id);
+                        return held || mp.GetEquipment().Any(e => e != null && e.itemId == id);
                     }
                 case "tag": return arg != null && mp.GetEquipment().Any(e => e != null && (e.HasTag(arg) || e.HasTag(arg.ToUpperInvariant())));
                 case "damage":

@@ -116,6 +116,8 @@ def glow_icon(slug, redo):
     from make_icons import background, frame, W, S
     out = MOD / "items" / f"{slug}.png"
     if out.exists() and not redo: return
+    if not (ART / f"{slug}.png").exists():
+        print(f"skip {slug} icon: no concept yet (run --stage concept)"); return
     src = Image.open(ART / f"{slug}.png").convert("RGB")
     r, g, b = src.split()
     alpha = ImageChops.lighter(ImageChops.lighter(r, g), b).point(lambda v: 0 if v < 18 else min(255, int((v - 18) * 1.4)))
@@ -132,8 +134,9 @@ def glow_icon(slug, redo):
     print("wrote", out)
 
 
-def icons(redo):
+def icons(redo, only=frozenset()):
     for slug, *_ in CONCEPTS:
+        if only and slug not in only: continue
         if slug in GLOW_ICONS: glow_icon(slug, redo)
         else: mia.icon(MOD, slug, ACCENT, redo)
 
@@ -183,9 +186,13 @@ def wire():
         looks.append('"model": { "mesh": "models/items/burden_projector.glb", "scale": 1.1 }')
         looks.append('"held": { "mesh": "models/items/burden_projector.glb" }')
     if looks: new = re.sub(r'("base":\s*"[^"]*",)', lambda g: g.group(1) + "\n      " + ", ".join(looks) + ",", new, count=1)
-    if '"travelVfx"' not in new:
-        skill_look = '"travelVfx": "BpUnburdenShot", "travelSpeed": 14, "impactVfx": "BpUnburdenHit",'
-        if (MOD / "items/unburden.png").exists(): skill_look = '"icon": "items/unburden.png", ' + skill_look
+    # each skill look on its own, so an icon made after the first wire still gets added
+    skill = new.split('"skill"', 1)[1] if '"skill"' in new else ""
+    skill_look = []
+    if (MOD / "items/unburden.png").exists() and '"icon"' not in skill: skill_look.append('"icon": "items/unburden.png",')
+    if '"travelVfx"' not in skill: skill_look.append('"travelVfx": "BpUnburdenShot", "travelSpeed": 14, "impactVfx": "BpUnburdenHit",')
+    if skill_look:
+        skill_look = " ".join(skill_look)
         new = re.sub(r'("name":\s*"Unburden",)', lambda g: g.group(1) + "\n        " + skill_look, new, count=1)
     if new != obj:
         path.write_text(text[:start] + new + text[end + 1:], encoding="utf-8")
@@ -206,8 +213,9 @@ def main():
         print(f"=== {st}", flush=True)
         if st == "concept": concepts([c for c in CONCEPTS if not only or c[0] in only], a.redo)
         elif st == "particles": particles([r for r in PARTICLES if not only or r["name"] in only], a.redo)
-        elif st == "mesh": mesh(a.redo)
-        elif st == "icon": icons(a.redo)
+        elif st == "mesh":
+            if not only or "burden_projector" in only: mesh(a.redo)
+        elif st == "icon": icons(a.redo, only)
         elif st == "wire": wire()
         print(f"=== {st} done in {time.time() - t:.0f}s", flush=True)
 

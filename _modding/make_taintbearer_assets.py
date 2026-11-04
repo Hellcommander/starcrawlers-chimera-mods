@@ -52,12 +52,15 @@ def icons(todo, redo):
     os.environ.setdefault("AAMT_SD_KEEP_SERVER", "1")
     os.environ.setdefault("SD_SKIP_T5", "1")
     (MODS / TB / "icons").mkdir(parents=True, exist_ok=True)
+    failed = []
     for name, col, what in todo:
         rel = f"{TB}/icons/{name}.png"
         try:
             mci.concept(rel, "painted", col, what, redo)
             mci.icon(rel, "painted", redo)
-        except Exception as e: print(f"icon {rel} FAILED: {e}", flush=True)
+        except Exception as e:
+            print(f"icon {rel} FAILED: {e}", flush=True); failed.append(name)
+    if failed: raise SystemExit(f"{len(failed)} icon(s) failed: {', '.join(failed)}")
 
 
 def particles(todo, redo):

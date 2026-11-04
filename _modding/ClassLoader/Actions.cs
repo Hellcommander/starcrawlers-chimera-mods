@@ -462,12 +462,14 @@ namespace SCClassLoader
             string only = string.IsNullOrEmpty(a.effect) ? null : EffectId(a.effect, ctx.classId);
             int limit = a.amount > 0 ? a.amount : 99;
             var mine = from.effects.GetEffects()
-                .Where(e => e != null && !e.isHidden && e.isDebuff && !(e.duration < 0 && !(e is ModEffect)) && (only == null || e.internalName == only)
+                // the game leaves its control effects (slow, confuse, charm, roots) unmarked; they are afflictions too
+                .Where(e => e != null && !e.isHidden && (e.isDebuff || VanillaDebuff(e.internalName)) && !(e.duration < 0 && !(e is ModEffect)) && (only == null || e.internalName == only)
                     && !(e is ModEffect fx && fx.Spec != null && !fx.Spec.transferable)) // "transferable": false stays put
-                .Take(limit).ToList();
+                .ToList();
             int moved = 0;
             foreach (Effect e in mine)
             {
+                if (moved >= limit) break; // count what actually moved: a resisted one doesn't use up the amount
                 string id = e.internalName;
                 if (!EffectManager.instance.CanUseOn(id, t)) continue;
                 int stacks = e is ModEffect me && me.MaxStacks > 1 ? me.Stacks : 1;

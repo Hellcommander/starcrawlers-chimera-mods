@@ -529,10 +529,16 @@ namespace SCClassLoader
             GameObject target = w.weaponObject;
             if (target == null) return false;
             Transform old = target.transform.Find("SCCL_Model");
-            if (old != null) Object.DestroyImmediate(old.gameObject); // a mod base's held look; this weapon has its own
+            // a mod base's held look; this weapon has its own. Set aside, not destroyed, until the new one loads: the
+            // base meshes are already hidden, so losing both would leave the weapon invisible.
+            if (old != null) old.SetParent(null, false);
             Bounds? was = LocalBounds(target.transform, target.GetComponentsInChildren<Renderer>(true).Where(r => !(r is ParticleSystemRenderer) && !(r is SpriteRenderer)));
-            if (!Apply(target, spec, folder)) return false;
-            Transform root = target.transform.Find("SCCL_Model");
+            Transform root = Apply(target, spec, folder) ? target.transform.Find("SCCL_Model") : null;
+            if (old != null)
+            {
+                if (root == null) { old.SetParent(target.transform, false); return false; }
+                Object.DestroyImmediate(old.gameObject);
+            }
             if (root == null) return false;
             root.localPosition = Vector3.zero;
             root.localScale = Vector3.one;
@@ -555,6 +561,9 @@ namespace SCClassLoader
             // the hand's camera only draws its own layer; a held gun casts no shadow on the view
             foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = target.layer;
             foreach (MeshRenderer mr in root.GetComponentsInChildren<MeshRenderer>(true)) mr.shadowCastingMode = ShadowCastingMode.Off;
+            // a bobbing or spinning model moves from its Floater's base each frame, so the fit goes there too
+            var fl = root.GetComponent<Floater>();
+            if (fl != null) { fl.basePos = root.localPosition; fl.baseRot = root.localRotation; fl.baseScale = root.localScale; }
             return true;
         }
 

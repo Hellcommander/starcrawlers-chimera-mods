@@ -69,7 +69,9 @@ namespace SCClassLoader
             {
                 if (__result == null || target != pendingTarget || Time.frameCount != pendingFrame || !pendingIds.Remove(internalName)) return;
                 var (turns, share, _) = Rules();
-                if (turns > 0f || share) Plugin.Instance.StartCoroutine(Later(__result, internalName, turns, share));
+                // a mod effect from an item also needs the set-up Actions.ApplyEffect gives it (on-apply actions, group,
+                // shares, aura), as the minion copies get below
+                if (turns > 0f || share || __result is ModEffect) Plugin.Instance.StartCoroutine(Later(__result, internalName, turns, share));
             }
         }
 
@@ -87,6 +89,8 @@ namespace SCClassLoader
                     fx.duration = Mathf.RoundToInt(fx.duration * (1f + turns));
                     Lengthened++;
                 }
+                if (fx is ModEffect own)
+                    own.OnApplied(new ActionContext { caster = fx.caster != null ? fx.caster : Player.instance, target = fx.target, sourceName = fx.GetName() });
                 if (share && AI_Manager.instance != null)
                     foreach (Character m in AI_Manager.instance.GetPlayerMinions().ToList())
                     {

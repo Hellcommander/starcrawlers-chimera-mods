@@ -21,6 +21,7 @@ namespace SCClassLoader
             public string classId;
             public Character target;
             public NavNode node;
+            public Item item; // an item-target skill's item
             public int left;
         }
 
@@ -30,10 +31,10 @@ namespace SCClassLoader
         internal static bool Releasing(ModAbility a) => a != null && releasing == a;
         internal static bool Charging(ModAbility a) => charging.Any(c => c.ability == a);
 
-        internal static void Begin(ModAbility a, AbilitySpec spec, string classId, Character target, NavNode node)
+        internal static void Begin(ModAbility a, AbilitySpec spec, string classId, Character target, NavNode node, Item item = null)
         {
             charging.RemoveAll(c => c.ability == a);
-            charging.Add(new Charge { ability = a, spec = spec, classId = classId, target = target, node = node, left = Mathf.Max(1, spec.windup) });
+            charging.Add(new Charge { ability = a, spec = spec, classId = classId, target = target, node = node, item = item, left = Mathf.Max(1, spec.windup) });
             Player p = Player.instance;
             if (!string.IsNullOrEmpty(spec.windupEffect))
                 Actions.ApplyEffect(new ActionSpec { @do = "effect", effect = spec.windupEffect, stacks = 1, turns = spec.windup + 1 }, Context(a, classId, target), p);
@@ -79,6 +80,7 @@ namespace SCClassLoader
                 }
                 bool aimed = c.spec.target == "enemy" || c.spec.target == "ally" || c.spec.target == "pet";
                 if (aimed && (c.target == null || c.target.GetIsDead() || c.target.GetMover() == null)) { Break(c, "its target is gone"); continue; }
+                if (c.spec.target == "item" && c.item == null) { Break(c, "its item is gone"); continue; }
                 End(c);
                 Plugin.Instance.StartCoroutine(Release(c));
             }
@@ -95,8 +97,10 @@ namespace SCClassLoader
             NavNode keepN = Game.TARGET_N;
             try
             {
-                Game.TARGET_C = c.target;
+                // aimed at a spot past an enemy that has since died: the spot it stood on, not the body
+                Game.TARGET_C = c.target != null && c.target.GetIsDead() ? null : c.target;
                 Game.TARGET_N = c.node;
+                if (c.item != null) Game.TARGET_I = c.item;
                 Game.LOG($"<color=#FFD15C>{c.ability.GetDisplayName()} goes off!</color>");
             }
             catch (System.Exception e) { Plugin.Log.LogWarning("WindUp: " + e.Message); }

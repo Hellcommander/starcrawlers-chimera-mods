@@ -56,16 +56,19 @@ def level(x):
 
 
 def chance_limits(clips, pool, sr):
-    """Per-sound limits: the meter's figures are not alike for every kind of sound (short low booms correlate more by
-    chance), so each limit is raised to what 9 in 10 UNRELATED pack clips score against this sound's own sources,
-    never lowered below the pack-wide LIMITS. A take passes only if it is no closer to its sources than chance."""
-    rows = {k: [] for k in LIMITS}
+    """Per-clip limits: the meter's figures are not alike for every kind of sound (short low booms correlate more by
+    chance), so each source clip's limits are raised to what 9 in 10 UNRELATED pack clips score against THAT clip,
+    never lowered below the pack-wide LIMITS. A take passes only if it is no closer to each source than chance is to
+    that same source (one clip's loose limits never cover another clip). Returns {clip name: {metric: limit}}."""
+    out = {}
     for name, c in clips:
+        rows = {k: [] for k in LIMITS}
         for pname, pc in pool:
             if pname == name: continue
             d = ab.distance(pc, ab.to_stereo(c), sr)
             for k in LIMITS: rows[k].append(d[k])
-    return {k: round(max(LIMITS[k], float(np.percentile(v, 90))) if v else LIMITS[k], 1) for k, v in rows.items()}
+        out[name] = {k: round(max(LIMITS[k], float(np.percentile(v, 90))) if v else LIMITS[k], 1) for k, v in rows.items()}
+    return out
 
 
 def reference_pool(finder, mods_root):
@@ -83,11 +86,13 @@ def reference_pool(finder, mods_root):
     return pool
 
 
-def worst(x, sr, clips, limits=LIMITS):
+def worst(x, sr, clips, limits=None):
+    """The source clip this take is closest to, relative to that clip's own limits (per-clip dict, or one flat dict)."""
     out = None
     for name, c in clips:
+        lim = limits[name] if limits and name in limits else (limits or LIMITS)
         d = ab.distance(x, ab.to_stereo(c), sr)
-        over = max(d[k] / limits[k] for k in limits)
+        over = max(d[k] / lim[k] for k in LIMITS)
         if out is None or over > out[0]: out = (over, d, name)
     return out
 
@@ -126,6 +131,11 @@ def main():
             rec = finder.find(r.get("pack"), r.get("inner"), r.get("id"))
             c = sa.process(rec, 3.0)[0] if rec is not None else None
             if c is not None: clips.append((rec.inner.split("/")[-1], c))
+            else: print(f"  {name}: cannot find or read {r.get('inner') or r.get('id')} ({r.get('pack')})")
+        if len(clips) < len(refs):
+            # unique means unique against EVERY cited clip; one we cannot read cannot be checked
+            print(f"FAIL {name}: {len(refs) - len(clips)} referenced clip(s) not found; fix the sidecar or the library first")
+            report.append({"name": name, "ok": False, "missing": len(refs) - len(clips)}); continue
         limits = chance_limits(clips, pool, sr)
         print(f"  {name} limits {limits}", flush=True)
         purpose = j.get("prompt", name)
@@ -146,9 +156,10 @@ def main():
             try: controls.append((make(9100 + k, None), 9100 + k))
             except Exception as e: print(f"  {name} control {k}: SA3 failed: {e}")
         if controls:
-            # per metric, the closest any source clip gets (a take is judged by each metric against every clip)
-            figs = [{k: max(ab.distance(y, ab.to_stereo(c), sr)[k] for _, c in clips) for k in LIMITS} for y, _ in controls]
-            limits = {k: round(max(limits[k], float(np.median([f[k] for f in figs]))), 1) for k in LIMITS}
+            # per clip and metric: how close prompt-only takes land to THAT clip by themselves (median over controls)
+            for cname, c in clips:
+                figs = [ab.distance(y, ab.to_stereo(c), sr) for y, _ in controls]
+                limits[cname] = {k: round(max(limits[cname][k], float(np.median([f[k] for f in figs]))), 1) for k in LIMITS}
             print(f"  {name} limits after {len(controls)} prompt-only controls {limits}", flush=True)
         takes = []
         for y, seed in controls:

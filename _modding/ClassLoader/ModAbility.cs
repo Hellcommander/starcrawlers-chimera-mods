@@ -439,6 +439,8 @@ namespace SCClassLoader
 
             Character primary = null;
             NavNode node = null;
+            // "windup": this cast only charges it (nothing is spent on the way, a pet included); it goes off later
+            bool charging = rt.spec.windup > 0 && caster == Player.instance && !WindUp.Releasing(this);
             Vector3 center = caster.GetMover().GetCurrentNavNode().transform.position;
             if (s.target == "enemy")
             {
@@ -453,7 +455,7 @@ namespace SCClassLoader
                 NavNode at = pet != null && pet.GetMover() != null ? pet.GetMover().GetCurrentNavNode() : null;
                 if (at == null) yield break;
                 center = at.transform.position;
-                if (AllActions.Any(a => a.@do == "phase"))
+                if (!charging && AllActions.Any(a => a.@do == "phase"))
                 {
                     Actions.SpawnVfx(s.castVfx, pet.GetHitFx().position);
                     PetHandling.Unsummon(pet, GetDisplayName(), breakdown: false);
@@ -477,9 +479,11 @@ namespace SCClassLoader
             }
 
             // "windup": this cast only charges it; it goes off at the start of a later turn, aimed as now
-            if (rt.spec.windup > 0 && caster == Player.instance && !WindUp.Releasing(this))
+            if (charging)
             {
-                WindUp.Begin(this, rt.spec, rt.classId, primary, node ?? Game.TARGET_N);
+                // a pet or ally is the aim too, though never a victim
+                Character aim = primary ?? (s.target == "pet" || s.target == "ally" ? (Game.TARGET_C != null ? Game.TARGET_C : target) : null);
+                WindUp.Begin(this, rt.spec, rt.classId, aim, node ?? Game.TARGET_N, ctx.item);
                 yield break;
             }
 
@@ -799,7 +803,9 @@ namespace SCClassLoader
             {
                 // red while your current gear doesn't fit it
                 bool ok = Equipped.Check(s.equipped, caster ?? Player.instance);
-                info.Add($"<color={(ok ? "#FFD15C" : "#FF6B6B")}>{(isPassive ? "only works with" : "needs")} {Equipped.Requirement(s.equipped)}</color>");
+                // a weapon's own skill names its weapon only to find its hand; no need to say it needs it
+                bool own = rt.internalName != null && rt.internalName.StartsWith("ITEM_") && s.equipped == ItemRegistry.OwnWeaponRule(rt.internalName.Substring(5));
+                if (!own) info.Add($"<color={(ok ? "#FFD15C" : "#FF6B6B")}>{(isPassive ? "only works with" : "needs")} {Equipped.Requirement(s.equipped)}</color>");
                 // which one weapon its weapon share comes from right now
                 if (ok && RollsWeapon(s) && Equipped.Hand(s.equipped, Player.instance, out bool off) is Item_Weapon w)
                     info.Add(off ? $"swings your off-hand {w.GetName(false)} at {Mathf.RoundToInt(100f * Equipped.Power(Player.instance, w, true))}% power"

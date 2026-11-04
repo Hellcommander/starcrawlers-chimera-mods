@@ -37,7 +37,7 @@
       "skill": {
         "name": "Unburden",
         "icon": "items/unburden.png", "travelVfx": "BpUnburdenShot", "travelSpeed": 14, "impactVfx": "BpUnburdenHit",
-        "description": "The rifle spends a turn drawing every affliction on you into its chamber, then fires it into the target, with the turns and stacks each had left. What it takes, you are rid of.",
+        "description": "The rifle spends a turn drawing the afflictions on you into its chamber, then fires them into the target, with the turns and stacks each had left. What it takes, you are rid of; any the target throws off stay with you.",
         "target": "enemy", "range": 8, "dodgeable": true,
         "staminaCost": 12, "cooldown": 6,
         "windup": 1, "windupText": "draws your afflictions into the chamber", "windupEffect": "@DrawingIn", "windupSound": "audio_licensed/bp_unburden_charge.wav", "sound": "audio_licensed/bp_unburden_shot.wav",
