@@ -159,6 +159,188 @@
     "arcane+swarm": "Callwright",
     "arcane+guile": "Hexrogue"
   },
+  "themeWords": {
+    "fire": {
+      "adjectives": [
+        "Kindled",
+        "Smouldering",
+        "Scorched"
+      ],
+      "of": [
+        "the Pyre",
+        "Cinders",
+        "the Open Flame"
+      ]
+    },
+    "frost": {
+      "adjectives": [
+        "Rimed",
+        "Frostbitten",
+        "Icebound"
+      ],
+      "of": [
+        "the Long Winter",
+        "Rime",
+        "the Cold Deck"
+      ]
+    },
+    "storm": {
+      "adjectives": [
+        "Wired",
+        "Thunderous",
+        "Gale-Torn"
+      ],
+      "of": [
+        "the Storm",
+        "Static",
+        "the Live Rail"
+      ]
+    },
+    "rot": {
+      "adjectives": [
+        "Festering",
+        "Blighted",
+        "Caustic"
+      ],
+      "of": [
+        "the Blight",
+        "Rot",
+        "the Bad Air"
+      ]
+    },
+    "blood": {
+      "adjectives": [
+        "Red-Handed",
+        "Bloodsoaked",
+        "Veined"
+      ],
+      "of": [
+        "the Red Hand",
+        "Open Veins",
+        "the Pulse"
+      ]
+    },
+    "void": {
+      "adjectives": [
+        "Hollow",
+        "Starless",
+        "Umbral"
+      ],
+      "of": [
+        "the Hollow Dark",
+        "the Void",
+        "Nothing"
+      ]
+    },
+    "mind": {
+      "adjectives": [
+        "Far-Seeing",
+        "Psychic",
+        "Mind-Lit"
+      ],
+      "of": [
+        "the Inner Eye",
+        "Quiet Thoughts",
+        "the Open Mind"
+      ]
+    },
+    "gun": {
+      "adjectives": [
+        "Gunpowder",
+        "Hair-Trigger",
+        "Brass-Bound"
+      ],
+      "of": [
+        "the Smoking Barrel",
+        "Spent Brass",
+        "the Last Round"
+      ]
+    },
+    "blade": {
+      "adjectives": [
+        "Keen",
+        "Razor",
+        "Honed"
+      ],
+      "of": [
+        "the Edge",
+        "Clean Cuts",
+        "the Drawn Blade"
+      ]
+    },
+    "brawn": {
+      "adjectives": [
+        "Iron-Fisted",
+        "Hulking",
+        "Bone-Breaking"
+      ],
+      "of": [
+        "the Iron Fist",
+        "Broken Bones",
+        "the Heavy Hand"
+      ]
+    },
+    "guard": {
+      "adjectives": [
+        "Stalwart",
+        "Unbowed",
+        "Plated"
+      ],
+      "of": [
+        "the Wall",
+        "the Shield",
+        "the Held Door"
+      ]
+    },
+    "tech": {
+      "adjectives": [
+        "Wrench-Wise",
+        "Overclocked",
+        "Chrome"
+      ],
+      "of": [
+        "the Machine",
+        "Loose Wires",
+        "the Workbench"
+      ]
+    },
+    "swarm": {
+      "adjectives": [
+        "Swarming",
+        "Many-Handed",
+        "Brood-Kin"
+      ],
+      "of": [
+        "the Swarm",
+        "Many Hands",
+        "the Brood"
+      ]
+    },
+    "guile": {
+      "adjectives": [
+        "Sly",
+        "Slippery",
+        "Light-Fingered"
+      ],
+      "of": [
+        "the Shadows",
+        "Loaded Dice",
+        "the Back Door"
+      ]
+    },
+    "arcane": {
+      "adjectives": [
+        "Sigil-Marked",
+        "Runic",
+        "Eldritch"
+      ],
+      "of": [
+        "the Sigil",
+        "Old Words",
+        "the Hidden Script"
+      ]
+    }
+  },
   "titleCombos": {
     "SKILLTREE_Pyromaniac+SKILLTREE_Gunslinger": "Powder Saint",
     "SKILLTREE_Hacker+SKILLTREE_VoidPsyker": "Null Pointer",

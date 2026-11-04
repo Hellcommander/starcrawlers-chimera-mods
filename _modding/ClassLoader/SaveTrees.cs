@@ -67,6 +67,8 @@ namespace SCClassLoader
                 if (!string.IsNullOrEmpty(trees[i]) && byId.TryGetValue(trees[i], out Skill_Tree t))
                     shown.Add((t, ranks != null && i < ranks.Length ? ranks[i] : 0));
             row.sizeDelta = new Vector2(shown.Count * (Icon + Gap), Icon);
+            try { ClassTitles.OnSaveWidget(w, trees, ranks, byId); }
+            catch (Exception e) { Plugin.Log.LogWarning($"Class title for {w.path}: {e.Message}"); }
             for (int i = 0; i < shown.Count; i++)
             {
                 var (t, rank) = shown[i];

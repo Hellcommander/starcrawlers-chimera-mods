@@ -93,7 +93,7 @@ namespace SCClassLoader
     internal static partial class ModPacks
     {
         /// <summary>Top-level keys that make a json object mod data rather than a class.</summary>
-        internal static readonly string[] DataKeys = { "items", "tweaks", "enemies", "creatures", "recipes", "factions", "synergies", "wear", "sideAreas", "enemyPatches", "mobEffects", "particles", "pluginData", "soundFallbacks", "titles", "titleCombos", "themeTitles", "renown" };
+        internal static readonly string[] DataKeys = { "items", "tweaks", "enemies", "creatures", "recipes", "factions", "synergies", "wear", "sideAreas", "enemyPatches", "mobEffects", "particles", "pluginData", "soundFallbacks", "titles", "titleCombos", "themeTitles", "themeWords", "renown" };
 
         /// <summary>The <see cref="ModPlan.Skipped"/> reason for a mod that is simply switched off.</summary>
         internal const string Off = "turned off";

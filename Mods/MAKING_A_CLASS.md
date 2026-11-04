@@ -416,8 +416,11 @@ Players can show a title under their name made from their classes (Mod Settings 
 
 - **`themes`**: what the class *does* in a fight, strongest first, up to three, from: `fire frost storm rot blood
   void mind gun blade brawn guard tech swarm guile arcane`. Every class a character has adds to these, all alike
-  whatever their rank, and the two strongest pick a **mastery name** (fire + gun is "Powder Saint"), so one name covers all seven classes.
-  Leave it out and the themes are read from your skills' damage types and summons.
+  whatever their rank. The two strongest pick a **mastery name** (fire + gun is "Powder Saint"), the next one an "of"
+  epithet and the one after an adjective: "Wired Powder Saint of the Hollow Dark". The words are chosen by the whole
+  set of seven classes, so changing any one class changes the title, and the same seven always give the same one.
+  Leave `themes` out and they are read from your skills' damage types and summons; with Ollama titles on, Ollama
+  reads your class's description and skills once and writes its themes and words (kept in `SCCL_classwords.json`).
 - **`adjectives`, `nouns`, `of`, `master`**: the **Words** style. Your class gives the noun when it's first ("Gunslinger"),
   the adjective when it's second ("Kindled ..."), the "of" phrase when it's third ("... of the Void"), and `master`
   replaces the noun once it's maxed. Without them, your class's name stands in.
@@ -429,13 +432,22 @@ Any mod can also add or change titles for classes that aren't its own, in a data
   "titles": { "SKILLTREE_Soldier": { "themes": ["gun", "guard"], "nouns": ["Trooper"] } },
   "titleCombos": { "SKILLTREE_Pyromaniac+SKILLTREE_Gunslinger": "Powder Saint" },
   "themeTitles": { "fire+gun": ["Powder Saint"], "fire": ["Pyreheart"] },
+  "themeWords": { "void": { "adjectives": ["Hollow"], "of": ["the Hollow Dark"] } },
   "renown": [ { "maxed": 3, "text": "Thrice-Mastered" }, { "all": true, "text": "Paragon of Every Path" } ]
 }
 ```
 
-`titleCombos` hand-names a pair or trio of classes (it beats the generated words and the mastery name), `themeTitles` sets mastery names, and
+`titleCombos` hand-names a set of two to seven classes, joined with `+` in any order. An exact set beats everything; a pair or trio also names bigger sets that lead with it. `themeTitles` sets mastery names, `themeWords` the adjectives and epithets the other themes add, and
 `renown` is the line added once enough classes are maxed. Later mods win. `Mods/ClassTitles/titles.json` holds the full
 set for the vanilla classes.
+
+**The Class Titler** (an optional download: unpack `Breachwork-ClassTitler-<version>.7z` over the game folder, then run
+`Mods/ClassTitles/tools/ClassTitler/ClassTitler.exe` with the game closed) writes titles with a local Ollama without
+sharing video memory with the game. Pick up to seven classes, read their descriptions and skills, see the title the game
+gives that set now, have Ollama write some, edit one and save it. Saved titles go into `Mods/YourClassTitles/titles.json`
+as `titleCombos`, a data mod of your own the game loads next launch. The class list it reads is written by the loader
+on every launch to `BepInEx/cache/BreachworkClassCatalog` (it never leaves your computer), so start the game once first
+and your new classes show up there too.
 
 When you want more than damage and effects, the reference covers it:
 

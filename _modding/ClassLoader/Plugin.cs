@@ -144,6 +144,8 @@ namespace SCClassLoader
             catch (Exception e) { Log.LogError("Wear models failed: " + e); }
             try { ClassTitles.Load(); }
             catch (Exception e) { Log.LogError("Class titles failed: " + e); }
+            try { ClassCatalog.Write(game); }
+            catch (Exception e) { Log.LogWarning("Class catalog for the Class Titler: " + e.Message); }
             try { Factions.Load(); }
             catch (Exception e) { Log.LogError("Factions failed: " + e); }
             try { SideAreaData.Load(); }

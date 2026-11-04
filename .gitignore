@@ -43,6 +43,10 @@ __pycache__/
 *.pyc
 
 /Mods/CharacterPortraits/tools/**/*.exe
+/Mods/ClassTitles/tools/**/*.exe
+/Mods/ClassTitles/tools/**/*.config
+# the player's own saved character titles (the Class Titler writes them)
+/Mods/YourClassTitles/
 
 # Mod audio stays out of the repository (its packs' licenses); pack.ps1 ships it from disk, and without it the loader
 # plays the game's own sounds (Mods/Library/sound_fallbacks.json)
