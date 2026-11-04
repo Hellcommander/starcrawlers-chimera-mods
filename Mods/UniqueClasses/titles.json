@@ -1,0 +1,11 @@
+{
+  "titles": {
+    "MOD_Axiomancer": {"adjectives": ["Axiomatic", "Rigorous"], "nouns": ["Axiomancer", "Proofcaster"], "of": ["the Proof", "Weighted Thought"], "master": "Grand Axiom", "themes": ["mind", "arcane"]},
+    "MOD_Glyphrunner": {"adjectives": ["Glyph-Read", "Firmware-Old"], "nouns": ["Glyphrunner", "Sigil Coder"], "of": ["the Old Firmware", "Ancient Subroutines"], "master": "Glyph Sovereign", "themes": ["arcane", "tech"]},
+    "MOD_NullChorister": {"adjectives": ["Null-Sung", "Dissonant"], "nouns": ["Null Chorister", "Hollow Singer"], "of": ["the Hollow Choir", "Skipped Notes"], "master": "Choirmaster of Nothing", "themes": ["void", "brawn"]},
+    "MOD_ParadoxWitch": {"adjectives": ["Paradoxical", "Time-Borrowing"], "nouns": ["Paradox Witch", "Causality Witch"], "of": ["Borrowed Seconds", "Overdue Wounds"], "master": "Paradox Queen", "themes": ["arcane", "void"]},
+    "MOD_ProbabilityShaman": {"adjectives": ["Many-Roaded", "Probable"], "nouns": ["Probability Shaman", "Roadwalker"], "of": ["the Many Roads", "Other Choices"], "master": "Shaman of All Roads", "themes": ["guile", "arcane"]},
+    "MOD_ReliquaryKnight": {"adjectives": ["Reliquary", "Relic-Sealed"], "nouns": ["Reliquary Knight", "Relic Knight"], "of": ["Three Relics", "Engine Prayers"], "master": "Reliquary Lord", "themes": ["guard", "arcane"]},
+    "MOD_StarfireAdept": {"adjectives": ["Starfire", "Sunward"], "nouns": ["Starfire Adept", "Sunwright"], "of": ["the Sunward Order", "Stellar Plasma"], "master": "Living Star", "themes": ["fire", "arcane"]}
+  }
+}

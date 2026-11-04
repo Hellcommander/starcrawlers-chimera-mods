@@ -1,6 +1,7 @@
 {
   "id": "MOD_ArcGunner",
   "name": "Arc Gunner",
+  "title": { "adjectives": ["Arc-Charged", "Live-Wired"], "nouns": ["Arc Gunner", "Sparkshooter"], "of": ["the Capacitor", "Static"], "master": "Arcmaster", "themes": ["gun", "storm"] },
   "description": "Pistols in one hand, lightning in the other. Gun hits charge a static capacitor; Shocked enemies conduct forked discharges between each other, and Thunder Slug dumps the whole capacitor into one target. Every jump of your lightning charges the grip, and Live Wire turns each shot into another jump.\n\nExample class: built on the shared library (#Shocked, 'Shot' and 'Bolt' templates). Favors [SMT] and [REC].",
   "archetype": "Intellect",
   "icon": "arc_gunner.png",

@@ -1,0 +1,5 @@
+{
+  "titles": {
+    "MOD_BountyHand": {"adjectives": ["Bounty-Hunting", "Ledgered"], "nouns": ["Bounty Hand", "Collector"], "of": ["the Ledger", "Debts Owed"], "master": "Debt Collector", "themes": ["gun", "guile"]}
+  }
+}

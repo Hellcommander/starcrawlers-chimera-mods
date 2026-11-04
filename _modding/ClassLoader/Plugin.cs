@@ -83,6 +83,7 @@ namespace SCClassLoader
             WinCredits.Bind(Config);
             Endless.Bind(Config);
             NameLength.Bind(Config);
+            ClassTitles.Bind(Config);
             Factions.Bind(Config);
             Diagonal.Bind(Config);
             DiagonalAI.Bind(Config);
@@ -106,7 +107,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); CorpseClearance.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); ClassTitles.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); CorpseClearance.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -141,6 +142,8 @@ namespace SCClassLoader
             catch (Exception e) { Log.LogError("Mod particles failed: " + e); }
             try { Wear.Load(); }
             catch (Exception e) { Log.LogError("Wear models failed: " + e); }
+            try { ClassTitles.Load(); }
+            catch (Exception e) { Log.LogError("Class titles failed: " + e); }
             try { Factions.Load(); }
             catch (Exception e) { Log.LogError("Factions failed: " + e); }
             try { SideAreaData.Load(); }
@@ -217,6 +220,7 @@ namespace SCClassLoader
             else if (dev == "synergytip") Instance.StartCoroutine(DevTestSynergyTip.Run());
             else if (dev == "names") Instance.StartCoroutine(DevTestNames.Run());
             else if (dev == "names2") Instance.StartCoroutine(DevTestNames.RunLoadList());
+            else if (dev == "titles") Instance.StartCoroutine(DevTestTitles.Run());
             else if (dev == "drones") Instance.StartCoroutine(DevTestDrones.Run());
             else if (dev == "pets") Instance.StartCoroutine(DevTestPets.Run());
             else if (dev == "conjoined") Instance.StartCoroutine(DevTestConjoined.Run());

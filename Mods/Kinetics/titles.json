@@ -1,0 +1,11 @@
+{
+  "titles": {
+    "MOD_BladeJuggler": {"adjectives": ["Juggling", "Knife-Throwing"], "nouns": ["Blade Juggler", "Knife Act"], "of": ["Flying Knives", "the Circus"], "master": "Ringleader of Knives", "themes": ["blade", "guile"]},
+    "MOD_Bodyguard": {"adjectives": ["Protective", "Vigilant"], "nouns": ["Bodyguard", "Protector"], "of": ["Close Protection", "the Detail"], "master": "Living Shield", "themes": ["guard"]},
+    "MOD_Freerunner": {"adjectives": ["Free-Running", "Wall-Running"], "nouns": ["Freerunner", "Vent Kid"], "of": ["the Vents", "Momentum"], "master": "Untouchable", "themes": ["guile", "brawn"]},
+    "MOD_GrapnelAcrobat": {"adjectives": ["Grappling", "Hook-Swung"], "nouns": ["Grapnel Acrobat", "Hull Rigger"], "of": ["the Line and Hook", "the Outer Hull"], "master": "Rigger Supreme", "themes": ["guile", "tech"]},
+    "MOD_Grappler": {"adjectives": ["Grappling", "Bone-Locking"], "nouns": ["Grappler", "Wrestler"], "of": ["the Hold", "Thrown Freight"], "master": "Grand Wrestler", "themes": ["brawn"]},
+    "MOD_RigJockey": {"adjectives": ["Rig-Strapped", "Hydraulic"], "nouns": ["Rig Jockey", "Exo-Hauler"], "of": ["the Exo-Rig", "Bolt-On Hardpoints"], "master": "Walking Rig", "themes": ["tech", "brawn"]},
+    "MOD_TrickShot": {"adjectives": ["Ricocheting", "Coin-Flipping"], "nouns": ["Trick Shot", "Bankshooter"], "of": ["the Bank Shot", "Flicked Coins"], "master": "Casino Legend", "themes": ["gun", "guile"]}
+  }
+}

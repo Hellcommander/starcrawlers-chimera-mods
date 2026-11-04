@@ -49,6 +49,8 @@ namespace SCClassLoader
         public List<AugmentSpec> augments;
         /// <summary>Makes this a several-bodies class like Conjoined (see Conjoined).</summary>
         public BodiesSpec bodies;
+        /// <summary>Words for class titles (see ClassTitles): adjectives, nouns, "of" phrases and a master noun.</summary>
+        public TitleSpec title;
 
         [JsonIgnore] public string sourceFile;
         [JsonIgnore] public string folder;

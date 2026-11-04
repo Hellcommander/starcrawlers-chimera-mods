@@ -399,6 +399,44 @@ Some things that make a class feel good to play:
 - **Read finished classes.** `Mods/ExampleClasses/arc_gunner.json` is a complete nine-skill class built the same way as
   this one. `Mods/CustomClasses/`, `Mods/UniqueClasses/` and `Mods/ArendethClasses/` hold dozens more to learn from.
 
+### Your class in character titles
+
+Players can show a title under their name made from their classes (Mod Settings → Titles). Give your class a
+`"title"` block so it joins in, next to `"name"` (Arc Gunner has one):
+
+```json
+"title": {
+  "themes": ["gun", "storm"],
+  "adjectives": ["Arc-Charged", "Live-Wired"],
+  "nouns": ["Arc Gunner", "Sparkshooter"],
+  "of": ["the Capacitor", "Static"],
+  "master": "Arcmaster"
+}
+```
+
+- **`themes`**: what the class *does* in a fight, strongest first, up to three, from: `fire frost storm rot blood
+  void mind gun blade brawn guard tech swarm guile arcane`. Every class a character has adds to these, all alike
+  whatever their rank, and the two strongest pick a **mastery name** (fire + gun is "Powder Saint"), so one name covers all seven classes.
+  Leave it out and the themes are read from your skills' damage types and summons.
+- **`adjectives`, `nouns`, `of`, `master`**: the **Words** style. Your class gives the noun when it's first ("Gunslinger"),
+  the adjective when it's second ("Kindled ..."), the "of" phrase when it's third ("... of the Void"), and `master`
+  replaces the noun once it's maxed. Without them, your class's name stands in.
+
+Any mod can also add or change titles for classes that aren't its own, in a data file:
+
+```json
+{
+  "titles": { "SKILLTREE_Soldier": { "themes": ["gun", "guard"], "nouns": ["Trooper"] } },
+  "titleCombos": { "SKILLTREE_Pyromaniac+SKILLTREE_Gunslinger": "Powder Saint" },
+  "themeTitles": { "fire+gun": ["Powder Saint"], "fire": ["Pyreheart"] },
+  "renown": [ { "maxed": 3, "text": "Thrice-Mastered" }, { "all": true, "text": "Paragon of Every Path" } ]
+}
+```
+
+`titleCombos` hand-names a pair or trio of classes (it beats the generated words and the mastery name), `themeTitles` sets mastery names, and
+`renown` is the line added once enough classes are maxed. Later mods win. `Mods/ClassTitles/titles.json` holds the full
+set for the vanilla classes.
+
 When you want more than damage and effects, the reference covers it:
 
 | You want | Look up in `Mods/README.md` |
