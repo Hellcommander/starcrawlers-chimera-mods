@@ -1,0 +1,56 @@
+[
+ {
+  "name": "tb_seep",
+  "purpose": "a thin wet hissing thread of dark corrupted magic flung forward, slimy whispering rot",
+  "seconds": 0.9,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_open_vessel",
+  "purpose": "a slow deep reversed whoosh of dark wind being sucked inward into a body, swelling and ending in a low shudder",
+  "seconds": 1.6,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_pass_it_on",
+  "purpose": "a thick gush of dark corrupted magic pushed from the hands into an enemy, sickly wet whoosh ending in a hit",
+  "seconds": 1.3,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_return",
+  "purpose": "a cursed ward snapping open and dark magic thrown back, a sharp sour crack with a hissing tail",
+  "seconds": 1.0,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_spillover",
+  "purpose": "dark rot bursting outward from a body in a ring, a wet splattering dark magic explosion",
+  "seconds": 1.6,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_fouled_ground",
+  "purpose": "thick dark corrosive liquid splashing down and soaking into a metal floor, sizzling and bubbling",
+  "seconds": 1.8,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_rot_gather",
+  "purpose": "dark energy drawn inward to a single point, a rising sucking whine of black magic",
+  "seconds": 1.6,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_rot_through",
+  "purpose": "a corrupted body bursting open, a heavy wet dark magic blast with splatter",
+  "seconds": 1.5,
+  "archetype": "magic"
+ },
+ {
+  "name": "tb_taint_spread",
+  "purpose": "a short wet hiss of dark corruption jumping to a new host",
+  "seconds": 0.7,
+  "archetype": "magic"
+ }
+]

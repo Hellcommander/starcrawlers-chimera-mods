@@ -96,7 +96,7 @@ namespace SCClassLoader
         {
             foreach (Ability_Mob own in c.GetComponentsInChildren<Ability_Mob>(true).Where(a => !(a is ModMobAbility))) own.isAvailable = false;
             EnemyAbilities.Attach(c.gameObject, Basic(strength))?.Init(c);
-            foreach (ModAbility ab in Player_AbilityControl.instance.GetAbilities().OfType<ModAbility>())
+            foreach (ModAbility ab in Player_AbilityControl.instance.GetAbilities().OfType<ModAbility>().Where(a => !Corrupted.Barred(a.ClassId, null)))
             {
                 MobSkillSpec s = Copy(ab, strength);
                 if (s != null) EnemyAbilities.Attach(c.gameObject, s)?.Init(c);

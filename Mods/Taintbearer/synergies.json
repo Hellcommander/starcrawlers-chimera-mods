@@ -1,0 +1,78 @@
+{
+ "synergies": [
+  {
+   "id": "TarCarriesRot",
+   "name": "Tar Carries Rot",
+   "trees": ["MOD_Taintbearer", "MOD_Ichorborn"],
+   "description": "Ichor and rot get along. Taint seeded in a Tarred enemy may thicken the tar a layer, setting it fast sooner; a wing torn loose by Wingrend may carry two of your afflictions into whatever it bursts on. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     { "on": "inflict", "match": "MOD_Taintbearer@Taint", "chance": 30, "maxPerTurn": 2,
+       "when": { "has": "MOD_Ichorborn@Tarred" },
+       "actions": [ { "do": "effect", "effect": "MOD_Ichorborn@Tarred" } ] },
+     { "on": "hit", "chance": 35, "maxPerTurn": 1,
+       "when": { "cast": "Wingrend", "casting": true },
+       "actions": [ { "do": "transfer", "amount": 2 } ] }
+    ]
+   }
+  },
+  {
+   "id": "BadBlood",
+   "name": "Bad Blood",
+   "trees": ["MOD_Taintbearer", "MOD_Vasculist"],
+   "description": "Your blood has gone bad, and theirs goes with it. Pass It On while your own vein is open may leave the target bleeding your blood, a Weeping Cut two deep; hits on an enemy that is both Tainted and under Vein Pressure may push its pressure a notch, the rot thickening its blood toward rupture. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     { "on": "cast", "match": "Pass It On", "chance": 40,
+       "when": { "has": "MOD_Vasculist@OpenVein", "of": "self" },
+       "actions": [ { "do": "effect", "effect": "MOD_Vasculist@WeepingCut", "stacks": 2 } ] },
+     { "on": "hit", "chance": 30, "maxPerTurn": 2,
+       "when": { "all": [ { "has": "MOD_Taintbearer@Taint" }, { "has": "MOD_Vasculist@Pressure" } ] },
+       "actions": [ { "do": "effect", "effect": "MOD_Vasculist@Pressure" } ] }
+    ]
+   }
+  },
+  {
+   "id": "RottedSight",
+   "name": "Rotted Sight",
+   "trees": ["MOD_Taintbearer", "MOD_ShadowMagus"],
+   "description": "Rot reaches the eyes first. Taint seeded in a Benighted enemy may blind it outright; a Tainted enemy that dies may pass black fire to the next host along with its rot, leaving it Smouldering. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     { "on": "inflict", "match": "MOD_Taintbearer@Taint", "chance": 25, "maxPerTurn": 1,
+       "when": { "has": "MOD_ShadowMagus@Benighted" },
+       "actions": [ { "do": "blind" } ] },
+     { "on": "kill", "chance": 35,
+       "when": { "has": "MOD_Taintbearer@Taint", "of": "victim" },
+       "actions": [ { "do": "chain", "jumps": 1, "radius": 3,
+         "actions": [ { "do": "effect", "effect": "MOD_ShadowMagus@Smouldering" } ] } ] }
+    ]
+   }
+  },
+  {
+   "id": "CarriedCurse",
+   "name": "Carried Curse",
+   "trees": ["MOD_Taintbearer", "SKILLTREE_Cursed"],
+   "description": "The relic's Mark rides the rot. A Marked, Tainted enemy that dies may pass the Mark to the next host; your spells on a Marked enemy may hand it one of your afflictions as well. Each level adds 4% to these odds.",
+   "maxLevel": 5,
+   "bonus": {
+    "procChancePerStack": 4,
+    "procs": [
+     { "on": "kill", "chance": 40,
+       "when": { "all": [ { "has": "EFFECT_CURSED_Mark", "of": "victim" }, { "has": "MOD_Taintbearer@Taint", "of": "victim" } ] },
+       "actions": [ { "do": "chain", "jumps": 1, "radius": 3,
+         "actions": [ { "do": "effect", "effect": "EFFECT_CURSED_Mark" } ] } ] },
+     { "on": "hit", "chance": 25, "maxPerTurn": 1,
+       "when": { "has": "EFFECT_CURSED_Mark", "casting": true },
+       "actions": [ { "do": "transfer", "amount": 1 } ] }
+    ]
+   }
+  }
+ ]
+}

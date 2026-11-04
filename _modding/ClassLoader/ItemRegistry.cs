@@ -28,6 +28,9 @@ namespace SCClassLoader
         /// <summary>Gear: the look when a crew member wears it (mesh, offset/rotation in metres and degrees from the
         /// bone, "scale" = its size in metres). Without it, the floor model is stood up and fitted to the body part.</summary>
         public ModelSpec wear;
+        /// <summary>Weapons: the look in your hands (mesh, "rotation" in degrees, "scale" times the base gun's size,
+        /// "offset" in metres). The model is fitted over the base weapon's own, which is hidden.</summary>
+        public ModelSpec held;
         /// <summary>Bone for "wear": Head, Chest, Hips, LeftHand, RightHand, LeftFoot, RightFoot (default by slot).</summary>
         public string wearBone;
         public int? level;
@@ -46,6 +49,9 @@ namespace SCClassLoader
         public List<DamageDef> bonusDamage;
         /// <summary>Effect kept on you while equipped: "@Id" (this mod), "#Id" (library) or a vanilla id. Use "duration": -1.</summary>
         public string equipEffect;
+        /// <summary>Weapons and gear: a skill the item gives while worn, written like a class skill ("newAbility").
+        /// It takes the place of any skill the base item had; "@Id" effects in it are this mod's.</summary>
+        public AbilitySpec skill;
 
         /// <summary>Weapons: base damage. Ammo: damage added per shot.</summary>
         public List<DamageDef> damage;
@@ -207,6 +213,35 @@ namespace SCClassLoader
 
         // ---- building ---------------------------------------------------------------------------------------
 
+        /// <summary>Puts the item's own skill on it, in place of any its base had (worn, the game moves it onto you).</summary>
+        private static void GiveSkill(Item_Equipment eq, ItemDef def, string internalId, string cls, string ctx)
+        {
+            AbilitySpec s = def.skill;
+            if (string.IsNullOrEmpty(s.name)) { Plugin.Log.LogError($"{ctx}: \"skill\" needs a \"name\""); return; }
+            ClassRegistry.Normalize(s, cls);
+            string abId = "ITEM_" + internalId;
+            ModAbility.Specs[abId] = new ModAbility.Runtime
+            {
+                spec = s,
+                classId = cls,
+                internalName = abId,
+                icon = ClassRegistry.LoadSprite(def.pack.folder, s.icon) ?? eq.inventorySprite,
+                name = ClassRegistry.Term(abId, "Name", s.name),
+                desc = ClassRegistry.Term(abId, "Desc", s.description ?? ""),
+                perkName = ClassRegistry.Term(abId, "PerkName", s.perk?.name ?? s.name + "+"),
+                perkDesc = ClassRegistry.Term(abId, "PerkDesc", s.perk?.description ?? ""),
+            };
+            if (eq.equipTrigger == null) eq.equipTrigger = eq.gameObject.AddComponent<Item_OnUse_Trigger>();
+            Ability old = eq.equipTrigger.equipment_ability;
+            // the base's skill goes if it is part of this copy: alone when it sits on the item's own object, with its
+            // child otherwise; one that lives elsewhere is only let go
+            if (old != null && old.gameObject == eq.gameObject) Object.DestroyImmediate(old);
+            else if (old != null && old.transform.IsChildOf(eq.transform)) Object.DestroyImmediate(old.gameObject);
+            var go = new GameObject(ModAbility.Prefix + abId);
+            go.transform.SetParent(eq.equipTrigger.transform, false);
+            eq.equipTrigger.equipment_ability = go.AddComponent<ModAbility>();
+        }
+
         private static Item Build(ItemDef def, HashSet<string> visiting)
         {
             if (Ids.TryGetValue(def.qualified, out string done)) return Templates[done];
@@ -258,11 +293,13 @@ namespace SCClassLoader
                     eq.equipTrigger.equipment_effect = Actions.EffectId(def.equipEffect, cls);
                     CheckEffect(eq.equipTrigger.equipment_effect, ctx);
                 }
+                if (def.skill != null) GiveSkill(eq, def, internalId, cls, ctx);
             }
             if (it is Item_Weapon w)
             {
                 if (def.damage != null) w.damageList = Damage(def.damage, ctx);
                 if (def.ammoUse.HasValue) w.ammoUse = def.ammoUse.Value;
+                if (def.held != null && !ModelAssets.ApplyToHeld(w, def.held, def.pack.folder)) Plugin.Log.LogWarning($"{ctx}: held model not applied; it keeps its base's look in hand");
                 foreach (var kv in def.accuracy ?? new Dictionary<string, int>())
                 {
                     string band = kv.Key.ToUpperInvariant();

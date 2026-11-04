@@ -22,6 +22,9 @@ namespace SCClassLoader
         /// <summary>Nothing hostile this class does (damage, debuffs, shoves, stuns, swaps...) ever lands on your own side:
         /// you, your summons and pets, thralls and crew. Buffs and heals still reach them.</summary>
         public bool ignoresAllies;
+        /// <summary>false: no mirror copy of you ever casts this class's skills. A Corrupted Mirror fights with a random
+        /// class you don't have in its place, as many skills of it at the same ranks. Default true.</summary>
+        public bool mirror = true;
 
         public int starterCredits;
         /// <summary>Item ids from vanilla_reference.txt, or mod items ("Mod:Id", or "Id" for this class's own mod).</summary>

@@ -274,6 +274,7 @@ namespace SCClassLoader
             else if (dev == "ichorgoo") Instance.StartCoroutine(DevTestLooks.RunIchorGoo());
             else if (dev == "reactant") Instance.StartCoroutine(DevTestReactant.Run());
             else if (dev == "miasmancer") Instance.StartCoroutine(DevTestMiasmancer.Run());
+            else if (dev == "taintbearer") Instance.StartCoroutine(DevTestTaintbearer.Run());
             else if (dev == "miasmasyn") Instance.StartCoroutine(DevTestMiasmaSynergies.Run());
             else if (dev == "wildcaster") Instance.StartCoroutine(DevTestWildcaster.Run());
             else if (dev == "axiomancer") Instance.StartCoroutine(DevTestAxiomancer.Run());

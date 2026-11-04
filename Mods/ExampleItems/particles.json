@@ -1,0 +1,195 @@
+{
+ "particles": [
+  {
+   "id": "BpUnburdenShot",
+   "light": {
+    "color": "#B07CFF",
+    "range": 5,
+    "intensity": 2.2,
+    "time": 0.6
+   },
+   "layers": [
+    {
+     "texture": "fx/bp_core.png",
+     "grid": [
+      6,
+      6
+     ],
+     "count": 1,
+     "rate": 0,
+     "duration": 0.6,
+     "life": [
+      0.6,
+      0.6
+     ],
+     "speed": [
+      0
+     ],
+     "size": [
+      0.75,
+      0.75
+     ],
+     "sizeCurve": "flat",
+     "spin": [
+      -90,
+      90
+     ],
+     "shape": "point",
+     "color": "#E8D8FF",
+     "color2": "#9CFF8A",
+     "alpha": 1
+    },
+    {
+     "texture": "fx/bp_wisp.png",
+     "grid": [
+      6,
+      6
+     ],
+     "count": 0,
+     "rate": 30,
+     "duration": 0.6,
+     "life": [
+      0.35,
+      0.6
+     ],
+     "speed": [
+      0.05,
+      0.25
+     ],
+     "size": [
+      0.3,
+      0.5
+     ],
+     "sizeCurve": "grow",
+     "spin": [
+      -120,
+      120
+     ],
+     "shape": "point",
+     "color": "#C8A8FF",
+     "color2": "#5A3A8A",
+     "alpha": 0.8
+    },
+    {
+     "texture": "mote",
+     "count": 0,
+     "rate": 40,
+     "duration": 0.6,
+     "life": [
+      0.25,
+      0.45
+     ],
+     "speed": [
+      0.2,
+      0.6
+     ],
+     "size": [
+      0.03,
+      0.06
+     ],
+     "sizeCurve": "shrink",
+     "shape": "sphere",
+     "radius": 0.15,
+     "color": "#D8FFB0",
+     "color2": "#8A5AD8",
+     "alpha": 0.9
+    }
+   ]
+  },
+  {
+   "id": "BpUnburdenHit",
+   "light": {
+    "color": "#B07CFF",
+    "range": 6,
+    "intensity": 2.6,
+    "time": 0.7
+   },
+   "layers": [
+    {
+     "texture": "fx/bp_splash.png",
+     "grid": [
+      6,
+      6
+     ],
+     "count": 1,
+     "rate": 0,
+     "duration": 0.1,
+     "life": [
+      0.7,
+      0.7
+     ],
+     "speed": [
+      0
+     ],
+     "size": [
+      1.6,
+      1.6
+     ],
+     "sizeCurve": "flat",
+     "shape": "point",
+     "color": "#FFFFFF",
+     "color2": "#B07CFF",
+     "alpha": 1
+    },
+    {
+     "texture": "fx/bp_wisp.png",
+     "grid": [
+      6,
+      6
+     ],
+     "count": 6,
+     "rate": 0,
+     "duration": 0.1,
+     "life": [
+      0.6,
+      1.0
+     ],
+     "speed": [
+      0.6,
+      1.4
+     ],
+     "size": [
+      0.4,
+      0.7
+     ],
+     "sizeCurve": "grow",
+     "drag": 2,
+     "spin": [
+      -90,
+      90
+     ],
+     "shape": "sphere",
+     "radius": 0.2,
+     "color": "#C8A8FF",
+     "color2": "#3A2A5A",
+     "alpha": 0.75
+    },
+    {
+     "texture": "mote",
+     "count": 24,
+     "rate": 0,
+     "duration": 0.1,
+     "life": [
+      0.4,
+      0.8
+     ],
+     "speed": [
+      2,
+      4
+     ],
+     "size": [
+      0.04,
+      0.08
+     ],
+     "sizeCurve": "shrink",
+     "gravity": 1.2,
+     "shape": "sphere",
+     "radius": 0.1,
+     "color": "#D8FFB0",
+     "color2": "#6A3AA8",
+     "alpha": 1
+    }
+   ]
+  }
+ ]
+}

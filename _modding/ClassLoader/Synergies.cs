@@ -249,7 +249,12 @@ namespace SCClassLoader
             }
             var words = new List<string>();
             foreach (string part in spec.Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
-                words.Add(Archetype(part) is SKILL_CLASS c ? $"another {c} class" : TreeNames(part));
+            {
+                if (Archetype(part) is SKILL_CLASS c) { words.Add($"another {c} class"); continue; }
+                // a misspelt archetype stays as written; looking it up again would loop on the same token
+                var trees = part.StartsWith("archetype:", StringComparison.OrdinalIgnoreCase) ? new List<Skill_Tree>() : Resolve(part);
+                words.Add(trees.Count > 0 ? string.Join(" or ", trees.Select(t => (string)t.displayName)) : part);
+            }
             return string.Join(" or ", words);
         }
 
@@ -264,39 +269,52 @@ namespace SCClassLoader
         private static int Best(string spec, string[] except, out string which)
         {
             which = null;
+            int best = 0;
+            foreach (var (tree, level) in Candidates(spec, except))
+                if (level > best) { best = level; which = tree; }
+            return best;
+        }
+
+        /// <summary>Each tree of yours a spec accepts, with its level (rank + 1); `except` as in Best.</summary>
+        private static List<(string tree, int level)> Candidates(string spec, ICollection<string> except)
+        {
+            var found = new List<(string, int)>();
             var mine = Player_SkillControl.instance?.skillTrees;
-            if (mine == null) return 0;
+            if (mine == null) return found;
             var wanted = Resolve(spec);
             List<Skill_Tree> named = (spec ?? "").IndexOf("archetype:", StringComparison.OrdinalIgnoreCase) < 0 ? null
                 : Resolve(string.Join("|", spec.Split('|').Select(x => x.Trim()).Where(x => x.Length > 0 && Archetype(x) == null)));
-            int best = 0;
             foreach (Skill_Tree t in mine)
             {
                 if (t == null) continue;
                 if (except != null && except.Contains(t.internalName) && named != null && !named.Any(n => n.internalName == t.internalName)) continue;
-                foreach (Skill_Tree w in wanted)
-                    if (w.internalName == t.internalName)
-                    {
-                        if (t.GetRank() + 1 > best) { best = t.GetRank() + 1; which = t.internalName; }
-                        break;
-                    }
+                if (wanted.Any(w => w.internalName == t.internalName)) found.Add((t.internalName, t.GetRank() + 1));
             }
-            return best;
+            return found;
         }
 
         /// <summary>The synergy's level for you right now (0 = not active). A tree an earlier spec used doesn't count for a
-        /// later archetype spec, so "MOD_Duelist + archetype:Guile" needs a second Guile class beside the Duelist.</summary>
+        /// later archetype spec, so "MOD_Duelist + archetype:Guile" needs a second Guile class beside the Duelist. Every
+        /// way of handing your trees to the specs is tried, so taking the best tree for one spec never starves a later one.</summary>
         internal static int Level(SynergySpec s)
         {
-            int lvl = int.MaxValue;
-            var used = new List<string>();
-            foreach (string t in s.trees)
-            {
-                lvl = Math.Min(lvl, Best(t, used.ToArray(), out string which));
-                if (lvl == 0) return 0; // nearly every synergy in the pack stops at its first tree
-                if (which != null) used.Add(which);
-            }
+            int lvl = Assign(s.trees ?? new List<string>(), 0, new List<string>());
             return Mathf.Clamp(lvl, 0, s.maxLevel);
+        }
+
+        private static int Assign(List<string> specs, int i, List<string> used)
+        {
+            if (i >= specs.Count) return int.MaxValue;
+            int best = 0;
+            foreach (var (tree, level) in Candidates(specs[i], used))
+            {
+                if (level <= best) continue; // can't beat what we have
+                used.Add(tree);
+                int rest = Assign(specs, i + 1, used);
+                used.RemoveAt(used.Count - 1);
+                best = Math.Max(best, Math.Min(level, rest));
+            }
+            return best;
         }
 
         private static string ChoiceTag(SynergySpec s) => "SCCL_SYNERGY_SET_" + s.id;

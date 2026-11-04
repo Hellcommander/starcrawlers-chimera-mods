@@ -111,8 +111,9 @@ Inside a tier:
 
 - `attributes` are the stat points the player gets for taking that tier.
 - `newAbility` is the skill. `"base": "Passive"` starts it from the Library's passive template, so we only write what
-  is different. The templates are `Bolt`, `Shot`, `Strike`, `Smash`, `Nova`, `Blast`, `Blink`, `Buff` and `Passive`; each
-  already has sensible targeting, costs, visuals and sounds.
+  is different. The templates are `Bolt`, `Shot`, `Strike`, `Smash`, `Nova`, `Blast`, `Blink`, `Buff` and `Passive`. The active
+  ones already have sensible targeting, costs, visuals and sounds; `Passive` only makes the skill a passive, since a
+  passive is never cast.
 - `icon` can be a PNG next to the json, or `"SKILLTREE_Tree/N"` for a vanilla ability's icon.
 
 Start the game, make a new character and look in the **Muscle** column. The Rivet Driver is there. Its passive does

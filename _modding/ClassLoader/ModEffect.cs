@@ -396,9 +396,9 @@ namespace SCClassLoader
         {
             Bind();
             base.Init(c);
+            Grant(); // first: a granted FLYING or IMMUNE_ROOT must be seen by this effect's own root
             Root();
             Resize();
-            Grant();
             StartTrance();
         }
 
@@ -611,6 +611,15 @@ namespace SCClassLoader
             if (bearer == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
         }
 
+        /// <summary>A skill an item gives: still under the item, or worn, where the game moves the item's skill onto you
+        /// (Player_AbilityControl.AddEquipmentAbility), so only the slot's item knows it.</summary>
+        internal static bool FromItem(Ability by)
+        {
+            if (by == null) return false;
+            if (by.GetComponentInParent<Item>() != null) return true;
+            return Menu_Player.instance != null && Menu_Player.instance.GetEquipment().Any(i => i != null && i.equipTrigger != null && i.equipTrigger.equipment_ability == by);
+        }
+
         private static bool redirecting;
 
         /// <summary>
@@ -683,8 +692,8 @@ namespace SCClassLoader
                 if (k.Equals("melee", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isMelee) return true; }
                 else if (k.Equals("ranged", StringComparison.OrdinalIgnoreCase)) { if (by != null && by.isRanged && !by.isMelee) return true; }
                 else if (k.Equals("attack", StringComparison.OrdinalIgnoreCase)) { if (by is PA_AutoAttack) return true; }
-                else if (k.Equals("skill", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() == null) return true; }
-                else if (k.Equals("item", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && by.GetComponentInParent<Item>() != null) return true; }
+                else if (k.Equals("skill", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && !FromItem(by)) return true; }
+                else if (k.Equals("item", StringComparison.OrdinalIgnoreCase)) { if (by != null && !(by is PA_AutoAttack) && FromItem(by)) return true; }
                 else if (k.Equals("offhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == true) return true; }
                 else if (k.Equals("mainhand", StringComparison.OrdinalIgnoreCase)) { if (Offhand(by) == false) return true; }
                 else if (k.Equals("summons", StringComparison.OrdinalIgnoreCase)) { if (summonHit) return true; }
@@ -833,7 +842,10 @@ namespace SCClassLoader
             foreach (StatObj st in attributeMods) lines.Add($"{(st.amount >= 0 ? "+" : "")}{st.amount} {StatObj.GetStatString(st.statType)}");
             foreach (DmgObj r in resistanceMods) lines.Add($"{(r.damage >= 0 ? "+" : "")}{r.damage} {Game.GetSpriteString(r.dmgType, isResist: true)} resistance");
             float k = Ramp(s);
-            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) lines.Add($"Takes {Mathf.RoundToInt((s.dot.min + DotBonus(s)) * k)}-{Mathf.RoundToInt((s.dot.max + DotBonus(s)) * k)} {Game.GetSpriteString(dt)} each turn");
+            if (s.dot != null && Enum.TryParse(s.dot.type, true, out DAMAGE_TYPE dt)) {
+                int per = MaxStacks > 1 ? Stacks : 1; // as TurnOver_Instant deals it
+                lines.Add($"Takes {Mathf.RoundToInt((s.dot.min + DotBonus(s)) * per * k)}-{Mathf.RoundToInt((Mathf.Max(s.dot.min, s.dot.max) + DotBonus(s)) * per * k)} {Game.GetSpriteString(dt)} each turn");
+            }
             if (s.hot > 0) lines.Add($"Heals {Mathf.RoundToInt((s.hot + HotBonus(s)) * k)} each turn");
             if (s.staminaPerTurn != 0) lines.Add($"{Mathf.RoundToInt(s.staminaPerTurn * k):+#;-#} {StatObj.GetStatString(STAT_TYPE.Stamina)} each turn");
             if (s.ramp != 0f) lines.Add($"{(s.ramp > 0f ? "Grows" : "Fades")} by {Mathf.RoundToInt(Mathf.Abs(s.ramp) * 100)}% of itself each turn it holds{(s.ramp > 0f ? $", up to {Mathf.Max(1f, s.rampMax):0.#}×" : "")}");

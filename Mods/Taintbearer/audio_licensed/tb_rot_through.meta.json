@@ -1,0 +1,161 @@
+{
+  "prompt": "a corrupted body bursting open, a heavy wet dark magic blast with splatter",
+  "duration": 1.5,
+  "engine": "sa3_unique",
+  "unique": true,
+  "archetype": "magic",
+  "shippable": true,
+  "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
+  "references": [
+    {
+      "id": "7758d2eefce2bb1a",
+      "score": 0.5546208620071411,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "b1b6010e076e77a5",
+      "score": 0.5439016819000244,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 12.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "f3f4d9f717dc8c82",
+      "score": 0.5424832105636597,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 6.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "32f7b2ce8128ff62",
+      "score": 0.5388288497924805,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 3.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "a7205830e7606461",
+      "score": 0.5241929888725281,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Water spell.zip",
+      "inner": "Dark Fantasy Studio- Water spell/Dark Fantasy Studio- Water spell 14.wav",
+      "license": "reference",
+      "tags": [
+        "water",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    },
+    {
+      "id": "0ca782b5b18520d9",
+      "score": 0.5211969017982483,
+      "via": "clap+tag",
+      "pack": "Dark Fantasy Studio- Ice spell.zip",
+      "inner": "Dark Fantasy Studio- Ice spell/Dark Fantasy Studio- Ice spell 8.wav",
+      "license": "reference",
+      "tags": [
+        "ice",
+        "spell",
+        "dark",
+        "fantasy",
+        "studio"
+      ],
+      "archetypes": [
+        "magic",
+        "water"
+      ]
+    }
+  ],
+  "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\Taintbearer\\audio_licensed\\tb_rot_through.wav",
+  "sample_rate": 44100,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "derived": true,
+  "max_corr": 0.051,
+  "semitones": -6,
+  "width": 0.589,
+  "listen": {
+    "total": 0.496,
+    "match": 0.668,
+    "clean": -3.429
+  },
+  "sa3_prompt": "sound effect, heavy wet flesh burst, deep dark magic explosion with gory splatter, close, stereo, no music",
+  "sa3": {
+    "prompt": "sound effect, heavy wet flesh burst, deep dark magic explosion with gory splatter, close, stereo, no music",
+    "init_noise_level": 0.85,
+    "seed": 7279,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "waveform_pct": 16.8,
+      "tone_pct": 96.1,
+      "envelope_pct": 68.7
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Water spell 14.wav",
+    "waveform_pct": 16.5,
+    "tone_pct": 37.3,
+    "envelope_pct": 10.8
+  }
+}

@@ -45,6 +45,7 @@ namespace SCClassLoader
 
         /// <summary>The last kit taught, and its skills from other classes (tests).</summary>
         internal static List<MobSkillSpec> LastKit = new List<MobSkillSpec>(), LastForeign = new List<MobSkillSpec>();
+        internal static List<string> LastSwaps = new List<string>();
 
         /// <summary>A new copy: its share of you, raised by the depth in the Ichor Deep.</summary>
         internal static void Spawned(Character c, BossSpec b, NavNode at)
@@ -133,27 +134,49 @@ namespace SCClassLoader
             return c;
         }
 
-        /// <summary>Skills of classes you don't have, as a copy would cast them, one per class.</summary>
-        private static List<MobSkillSpec> Foreign(float strength, System.Random rng, int rank)
+        /// <summary>A class no copy may take skills from: it says "mirror": false, or this mirror's blacklist names it.</summary>
+        internal static bool Barred(string classId, MirrorSpec m) =>
+            !string.IsNullOrEmpty(classId) && ((m?.blacklist?.Contains(classId, StringComparer.OrdinalIgnoreCase) ?? false)
+                || ClassRegistry.AllDefs.Any(d => d.mirror == false && string.Equals(d.id, classId, StringComparison.OrdinalIgnoreCase)));
+
+        /// <summary>Every copyable skill of each class you don't have (nor barred), grouped by class, classes shuffled.</summary>
+        private static List<List<MobSkillSpec>> Strangers(MirrorSpec m, float strength, System.Random rng, int rank)
         {
             var mine = new HashSet<string>(Player_SkillControl.instance.skillTrees.Where(t => t != null).Select(t => t.internalName), StringComparer.OrdinalIgnoreCase);
             foreach (ModAbility a in Player_AbilityControl.instance.GetAbilities().OfType<ModAbility>()) mine.Add(a.ClassId);
-            var classes = ClassRegistry.AllDefs.Where(d => d.enabled && !mine.Contains(d.id)).Select(d => d.id).ToList();
+            var classes = ClassRegistry.AllDefs.Where(d => d.enabled && !mine.Contains(d.id) && !Barred(d.id, m)).Select(d => d.id).ToList();
             return Shuffled(ModAbility.Specs.Values.Where(r => classes.Contains(r.classId) && r.spec.type != "passive"), rng)
                 .Select(r => (r.classId, skill: Mirrors.Copy(r.spec, r.spec.actions ?? new List<ActionSpec>(), r.internalName, r.spec.name, r.spec.range, rank, r.classId, strength)))
-                .Where(x => x.skill != null).GroupBy(x => x.classId).Select(g => g.First().skill).ToList();
+                .Where(x => x.skill != null).GroupBy(x => x.classId).Select(g => g.Select(x => x.skill).ToList()).ToList();
         }
 
-        private static void Teach(Character c, MirrorSpec m, float strength, int seed, System.Random rng)
+        internal static void Teach(Character c, MirrorSpec m, float strength, int seed, System.Random rng)
         {
-            var mine = Shuffled(Player_AbilityControl.instance.GetAbilities().OfType<ModAbility>().Select(a => Mirrors.Copy(a, strength)).Where(s => s != null), rng);
+            var all = Player_AbilityControl.instance.GetAbilities().OfType<ModAbility>().ToList();
+            var barred = all.Where(a => Barred(a.ClassId, m)).Select(a => Mirrors.Copy(a, strength)).Where(s => s != null).ToList();
+            var mine = Shuffled(all.Where(a => !Barred(a.ClassId, m)).Select(a => Mirrors.Copy(a, strength)).Where(s => s != null), rng);
+            var strangers = Strangers(m, strength, rng, Player.instance.level / 3);
+            // a barred class of yours is swapped for a stranger class: as many of its skills, at your ranks
+            var swaps = new List<string>();
+            foreach (var cls in barred.GroupBy(s => s.classId))
+            {
+                List<MobSkillSpec> with = strangers.FirstOrDefault(g => g.Count >= cls.Count()) ?? strangers.FirstOrDefault();
+                if (with == null) break;
+                strangers.Remove(with);
+                var ranksOf = cls.Select(s => s.copyRank).ToList();
+                foreach (var (s, i) in with.Take(ranksOf.Count).Select((s, i) => (s, i))) { s.copyRank = ranksOf[i]; mine.Add(s); }
+                swaps.Add($"{cls.Key} -> {with[0].classId}");
+            }
+            if (swaps.Count > 0) { mine = Shuffled(mine, rng); Plugin.Log.LogInfo("Corrupted copy: barred classes swapped: " + string.Join(", ", swaps)); }
+            LastSwaps = swaps;
             // the Nemesis skills of a vanilla class are the nearest thing to its own: they stay when there's little else
             bool vanilla = mine.Count < m.minSkills;
             foreach (Ability_Mob own in c.GetComponentsInChildren<Ability_Mob>(true).Where(a => !(a is ModMobAbility))) own.isAvailable = vanilla;
 
             int rank = mine.Count > 0 ? mine.Max(s => s.copyRank) : Player.instance.level / 3;
-            int strangers = Mathf.Max(Mathf.Max(1, m.foreign), m.minSkills - mine.Count);
-            List<MobSkillSpec> foreign = Foreign(strength, rng, rank).Take(strangers).ToList();
+            int extra = Mathf.Max(Mathf.Max(1, m.foreign), m.minSkills - mine.Count);
+            List<MobSkillSpec> foreign = strangers.Select(g => g[0]).Take(extra).ToList();
+            foreach (MobSkillSpec f in foreign) f.copyRank = rank;
             var kit = mine.Take(Mathf.Max(0, m.skills - foreign.Count)).Concat(foreign).ToList();
             var ranks = Shuffled(kit.Select(s => s.copyRank), rng);
             var order = Shuffled(kit.Select(s => s.priority), rng);

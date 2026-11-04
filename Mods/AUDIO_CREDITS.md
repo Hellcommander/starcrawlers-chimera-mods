@@ -38,6 +38,8 @@ The tuning is programmatic: a read-only audio-quality tuner (the CLAP listener, 
 measures each sound, works out what it needs (the settings in `sfx_alter_settings.json`, chosen from numbers and text
 only) and keeps the try it hears as best, but it never generates or changes audio itself, and no pack clip ever goes
 into it. They are still derived from the packs below, so the packs' licences still apply.
+The exception is the Noise Alchemy sounds in the last table: that pack allows AI tools, and those were re-made with
+Stable Audio and checked unique, as described there.
 
 These files ship sealed in each mod's `sounds.pak` and are not in the source repository (a build from a plain clone
 plays the game's own sounds instead). The `sfx/` folders are different: those sounds were made new with our own
@@ -62,7 +64,7 @@ Sources:
 - **Noise Alchemy**, for the clips layered into the sounds in the second table. Sound effects created with NOISE
   ALCHEMY – NOISEALCHEMY.COM.
 
-No clip from these packs is ever embedded by, or fed to, any model: the asset library finds them by file name and a plain
+No clip from the Function Loops, Tao & Sound or Ovani packs is ever embedded by, or fed to, any model: the asset library finds them by file name and a plain
 spectral fingerprint, and the sounds made from them are shaped by plain processing. The sealed `sounds.pak` archives keep
 the files from being lifted out of the mods.
 
@@ -176,3 +178,29 @@ rebuild takes, main one first:
 | `ShadowMagus/audio_licensed/sm_shade_reach.wav` | Noise Alchemy - Dark Fantasy Studio Thunder: Dark Fantasy Studio - Thunder 4.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-5.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-11.wav |
 | `ShadowMagus/audio_licensed/sm_thing_lunge.wav` | Noise Alchemy - Dark Fantasy Studio Monster roar: Dark Fantasy Studio-Monster-51.wav; Noise Alchemy - Dark Fantasy Studio Monster roar: Dark Fantasy Studio-Monster-1.wav; Noise Alchemy - Dark Fantasy Studio Monster roar: Dark Fantasy Studio-Monster-56.wav |
 | `ShadowMagus/audio_licensed/sm_thing_tear.wav` | Noise Alchemy - Monster Screams: NOISE ALCHEMY- MONSTER SCREAMS_21.wav; Noise Alchemy - Monster Screams: NOISE ALCHEMY- MONSTER SCREAMS_23.wav; Noise Alchemy - Monster Screams: NOISE ALCHEMY- MONSTER SCREAMS_22.wav |
+
+### Noise Alchemy sounds re-made with Stable Audio
+
+Noise Alchemy's packs (Dark Fantasy Studio included) are licensed for making custom, unique sound effects, and their
+terms do not bar AI tools. So these sounds go one step beyond the processing above. A layering of the listed clips
+was re-made by Stable Audio 3 (audio-to-audio, from each sound's own written description), or, where noted, made by
+Stable Audio from the description alone with no pack audio as input (`_modding/audio/sfx_unique.py`).
+
+Every result is then measured against every clip listed for it, on waveform, tone (spectral colour) and envelope.
+It is kept only if it is no closer to any of them than 9 in 10 unrelated clips from these packs are to each other,
+and no closer than takes Stable Audio made without hearing the clips at all. The read-only listener picks among the
+takes that pass. Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM.
+
+| File | Clips checked against (and layered in, unless noted) | How it was made, and how close it is |
+|---|---|---|
+| `ExampleItems/audio_licensed/bp_unburden_charge.wav` | Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 3.wav; Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 18.wav; Noise Alchemy - Dark Fantasy Studio Lightgun: Dark Fantasy Studio-lightgun-26.wav | SA3 audio-to-audio at noise 0.9; closest clip 4.6% waveform, 86.0% tone, 52.0% envelope |
+| `ExampleItems/audio_licensed/bp_unburden_shot.wav` | Noise Alchemy - Dark Fantasy Studio Lightgun: Dark Fantasy Studio-lightgun-26.wav; Noise Alchemy - Dark Fantasy Studio Lightgun: Dark Fantasy Studio-lightgun-20.wav; Noise Alchemy - Dark Fantasy Studio Lightgun: Dark Fantasy Studio-lightgun-41.wav | SA3 from its prompt only, no pack audio as input; closest clip 22.0% waveform, 95.8% tone, 78.7% envelope |
+| `Taintbearer/audio_licensed/tb_fouled_ground.wav` | Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 4.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 12.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 5.wav | SA3 audio-to-audio at noise 0.95; closest clip 10.6% waveform, 59.6% tone, 63.8% envelope |
+| `Taintbearer/audio_licensed/tb_open_vessel.wav` | Noise Alchemy - Dark Fantasy Studio Thunder: Dark Fantasy Studio - Thunder 4.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-14.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-9.wav | SA3 from its prompt only, no pack audio as input; closest clip 19.7% waveform, 91.8% tone, 60.5% envelope |
+| `Taintbearer/audio_licensed/tb_pass_it_on.wav` | Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 6.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-3.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 3.wav | SA3 from its prompt only, no pack audio as input; closest clip 10.3% waveform, 95.3% tone, 21.0% envelope |
+| `Taintbearer/audio_licensed/tb_return.wav` | Noise Alchemy - Dark Fantasy Studio Ice spell: Dark Fantasy Studio- Ice spell 3.wav; Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 4.wav; Noise Alchemy - Dark Fantasy Studio Ice spell: Dark Fantasy Studio- Ice spell 9.wav | SA3 audio-to-audio at noise 0.6; closest clip 3.3% waveform, 0.0% tone, 53.2% envelope |
+| `Taintbearer/audio_licensed/tb_rot_gather.wav` | Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 3.wav; Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 11.wav; Noise Alchemy - Dark Fantasy Studio Electric spell: Dark Fantasy Studio- Electric spell 18.wav | SA3 audio-to-audio at noise 0.8; closest clip 2.9% waveform, 54.1% tone, 60.9% envelope |
+| `Taintbearer/audio_licensed/tb_rot_through.wav` | Noise Alchemy - Dark Fantasy Studio Ice spell: Dark Fantasy Studio- Ice spell 3.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 12.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 6.wav | SA3 audio-to-audio at noise 0.85; closest clip 16.5% waveform, 37.3% tone, 10.8% envelope |
+| `Taintbearer/audio_licensed/tb_seep.wav` | Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-9.wav; Breachwork, made for this project: magic/bind.wav; Noise Alchemy - Dark Fantasy Studio Wind spell: Dark Fantasy Studio- Wind spell-5.wav | SA3 audio-to-audio at noise 0.9; closest clip 5.0% waveform, 85.5% tone, 15.6% envelope |
+| `Taintbearer/audio_licensed/tb_spillover.wav` | Noise Alchemy - Dark Fantasy Studio Ice spell: Dark Fantasy Studio- Ice spell 3.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 3.wav; Noise Alchemy - Dark Fantasy Studio Water spell: Dark Fantasy Studio- Water spell 12.wav | SA3 audio-to-audio at noise 0.8; closest clip 8.9% waveform, 86.6% tone, 40.7% envelope |
+| `Taintbearer/audio_licensed/tb_taint_spread.wav` | Noise Alchemy - Protocol Chaos: NOISE ALCHEMY - PROTOCOL CHAOS 31 44.1k.wav; Noise Alchemy - Protocol Chaos: NOISE ALCHEMY - PROTOCOL CHAOS 7 44.1k.wav; Noise Alchemy - Protocol Chaos: NOISE ALCHEMY - PROTOCOL CHAOS 45 44.1k.wav | SA3 audio-to-audio at noise 0.75; closest clip 3.7% waveform, 40.9% tone, 23.3% envelope |

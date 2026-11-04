@@ -165,12 +165,16 @@ namespace SCClassLoader
             range = s.target == "self" ? 0f : s.range + (p?.rangeDelta ?? 0f) + (t?.range ?? 0f);
             if (t != null && t.adds.ContainsKey("melee")) range = Mathf.Min(range, 1.6f); // rewritten into a swing: it reaches the next tile
             channelSwing = channelShot = false;
-            if (t != null && t.adds.ContainsKey("channel") && s.target != "self")
+            // a rewrite's "channel", or the skill's own damage written with "channel" (as written, never a rewrite's copy): the weapon really goes off
+            bool ownChannel = (rt.spec.actions ?? new List<ActionSpec>()).Any(x => x != null && x.channel && x.@do == "damage");
+            if ((t != null && t.adds.ContainsKey("channel") || ownChannel) && s.target != "self")
             {
-                // weapons have no range of their own, only a kind: a blade reaches the next tile, a gun shoots
+                // weapons have no range of their own, only a kind: a blade reaches the next tile, a gun shoots (as far
+                // as the skill says when it is its own channel)
                 WEAPON_TYPE? kind = Equipped.Hand(s.equipped, Player.instance, out _)?.weaponType;
                 channelSwing = kind != WEAPON_TYPE.Ranged && kind != WEAPON_TYPE.HeavyRanged;
-                range = channelSwing ? 1.6f : ChannelGunRange;
+                if (kind == null && ownChannel) channelSwing = s.melee; // nothing held (an item skill read in the bag): as written
+                range = channelSwing ? 1.6f : ownChannel && !(t != null && t.adds.ContainsKey("channel")) && range > 0f ? range : ChannelGunRange;
                 channelShot = !channelSwing;
             }
             int priced = SynergyLevels;
@@ -246,6 +250,7 @@ namespace SCClassLoader
             (rt.spec.actions ?? new List<ActionSpec>()).Concat(Perk?.addActions ?? new List<ActionSpec>()), rt.spec, rt.classId, Tuned);
 
         public override void Refresh() { Bind(); RefreshStats(); }
+        public override void LevelChangeStart() { base.LevelChangeStart(); WindUp.Drop(this); } // a charge doesn't follow you down
         public override void PerkPointApplied() { base.PerkPointApplied(); RefreshStats(); EventBus.AbilitiesChanged(); }
         public override void PerkPointRemoved() { base.PerkPointRemoved(); RefreshStats(); EventBus.AbilitiesChanged(); }
 
@@ -397,6 +402,10 @@ namespace SCClassLoader
         /// <summary>What a cast does right now, perk and runes included (Mirrors copy it).</summary>
         internal List<ActionSpec> CurrentActions { get { Bind(); return AllActions.ToList(); } }
 
+        /// <summary>Actions that still work on a floor tile with nobody on it (spelled any case, as RunOne reads them).</summary>
+        private static readonly HashSet<string> GroundActs = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+            { "field", "hazard", "trap", "raisewall", "springtraps", "clearhazards", "movetraps" };
+
         public override IEnumerator Use()
         {
             Bind();
@@ -409,11 +418,12 @@ namespace SCClassLoader
             ctx.deferredSelfConsume = new Dictionary<string, int>();
             ctx.paced = new List<IEnumerator>();
             if (s.target != "self" && !AllActions.Any(x => x.@do == "echo")) Actions.LastUsed = this; // echo only replays offensive spells
-            caster.ModStamina(-GetStaminaCost());
-            if (rt.spec.itemCost != null && caster == Player.instance && !Consumables.KeepsCost(GetDisplayName())) foreach (CostSpec c in Costs) Crafting.Consume(c);
-            if (rt.spec.stackCost?.effect != null && caster.effects.GetEffect(Actions.EffectId(rt.spec.stackCost.effect, rt.classId)) is ModEffect paid)
+            bool paying = !WindUp.Releasing(this); // a charged skill paid when it began
+            if (paying) caster.ModStamina(-GetStaminaCost());
+            if (paying && rt.spec.itemCost != null && caster == Player.instance && !Consumables.KeepsCost(GetDisplayName())) foreach (CostSpec c in Costs) Crafting.Consume(c);
+            if (paying && rt.spec.stackCost?.effect != null && caster.effects.GetEffect(Actions.EffectId(rt.spec.stackCost.effect, rt.classId)) is ModEffect paid)
                 paid.RemoveStacks(StackCostAmount);
-            if (rt.spec.creditCost > 0 && caster == Player.instance)
+            if (paying && rt.spec.creditCost > 0 && caster == Player.instance)
             {
                 Menu_Inventory.instance.AdjustCredits(-Mathf.Min(rt.spec.creditCost, Menu_Inventory.instance.GetCredits()));
                 AudioManager.PlayEvent("event:/UI/UI_CashRegister");
@@ -464,6 +474,13 @@ namespace SCClassLoader
                 node = primary != null && primary.GetMover() != null ? primary.GetMover().GetCurrentNavNode() : Game.TARGET_N != null ? Game.TARGET_N : targetNode;
                 if (node == null) yield break;
                 center = node.transform.position;
+            }
+
+            // "windup": this cast only charges it; it goes off at the start of a later turn, aimed as now
+            if (rt.spec.windup > 0 && caster == Player.instance && !WindUp.Releasing(this))
+            {
+                WindUp.Begin(this, rt.spec, rt.classId, primary, node ?? Game.TARGET_N);
+                yield break;
             }
 
             ModAudio.Play(s.sound, caster.GetHitFx().position, rt.classId);
@@ -557,7 +574,7 @@ namespace SCClassLoader
             {
                 // Nobody at the aim point: ground (coins, knives, fields) still goes down there.
                 ctx.groundAtCenter = true;
-                Actions.Run(targetActions.Where(a => a.@do == "field" || a.@do == "hazard" || a.@do == "trap" || a.@do == "raisewall" || a.@do == "springtraps").ToList(), ctx, caster);
+                Actions.Run(targetActions.Where(a => GroundActs.Contains(a.@do ?? "")).ToList(), ctx, caster);
                 ctx.groundAtCenter = false;
             }
             if (!shaped && !string.IsNullOrEmpty(s.areaVfx) && (radius > 0f || s.target == "floor" || s.target == "point")) Actions.SpawnVfx(s.areaVfx, center + Vector3.up * 0.1f);
@@ -764,6 +781,7 @@ namespace SCClassLoader
                 else if (Shapes.Is(s.shape)) info.Add(Shapes.Describe(s.shape, range, s.width, s.angle));
                 else if (Radius > 0) info.Add($"area {Radius:0.#}");
                 if (s.dodgeable) info.Add("can be dodged");
+                if (s.windup > 0) info.Add($"<color=#FFD15C>charges for {s.windup} turn{(s.windup > 1 ? "s" : "")}, then goes off at the start of your turn; a stun breaks it</color>");
                 if (s.instant) info.Add("instant");
                 if (s.resetOnKill) info.Add("<color=#FFD15C>a kill makes it ready again</color>");
                 if (s.ammoMult > 0f && !Mathf.Approximately(s.ammoMult, 1f)) info.Add($"each shot spends {s.ammoMult:0.##}x your gun's rounds{(s.ammoMult > 1f ? ", each adding its ammo damage" : "")}");

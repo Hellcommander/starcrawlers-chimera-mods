@@ -198,19 +198,19 @@ namespace SCClassLoader
                 case "damage": Damage(a, ctx, t); break;
                 case "heal":
                     {
-                        int amt = Amount(a, ctx) + StackBonus(a, ctx, t);
+                        int amt = Scaled(a, ctx, t);
                         if (amt <= 0) break;
                         t.Heal(amt, false);
                         Game.LOG($"{ctx.sourceName}: {t.GetName()} {Ability.T("General/heals")} {amt}.");
                         if (HUD.instance != null) HUD.instance.MakeFct("<color=#5CFF6B>+" + amt + "</color>", t.GetHitFx().position, false);
                         break;
                     }
-                case "stamina": t.ModStamina(a.amount < 0 ? -DrainAmount(a, ctx) - StackBonus(a, ctx, t) : Amount(a, ctx) + StackBonus(a, ctx, t)); break;
+                case "stamina": t.ModStamina(a.amount < 0 ? -DrainAmount(a, ctx) - StackBonus(a, ctx, t) : Scaled(a, ctx, t)); break;
                 case "shield":
                     {
                         // Overshield never decays on its own, so cap stacking at half max health.
                         int room = Math.Max(0, t.GetHealthMax() / 2 - t.oshielding);
-                        int add = Math.Min(room, Amount(a, ctx) + StackBonus(a, ctx, t));
+                        int add = Math.Min(room, Scaled(a, ctx, t));
                         if (add > 0) t.AddOshields(add);
                         break;
                     }
@@ -220,7 +220,7 @@ namespace SCClassLoader
                         // Always yours, so a hit can refill you by what is on its target (stacksFrom "target")
                         Player me = Player.instance;
                         if (ctx.caster != me || me.shielding >= me.shieldingMax) break;
-                        int charge = Math.Min(me.shieldingMax - me.shielding, Amount(a, ctx) + StackBonus(a, ctx, t));
+                        int charge = Math.Min(me.shieldingMax - me.shielding, Scaled(a, ctx, t));
                         if (charge > 0) Menu_Player.instance.ModShield(charge);
                         break;
                     }
@@ -245,6 +245,7 @@ namespace SCClassLoader
                 case "teleport": break; // handled by ModAbility for floor targets
                 case "dispel": Dispel(a, ctx, t, debuffs: false); break;
                 case "cleanse": Dispel(a, ctx, t, debuffs: true); break;
+                case "transfer": Transfer(a, ctx, t); break;
                 case "chain": if (!string.IsNullOrEmpty(a.sound) && t != null) ModAudio.Play(a.sound, t.GetHitFx().position, ctx.classId); Chain(a, ctx, t); break;
                 case "echo": Echo(a, ctx, t); break;
                 case "volley": Volley(a, ctx, t); break;
@@ -446,6 +447,39 @@ namespace SCClassLoader
             if (removed.Count > 0) Game.LOG($"{ctx.sourceName} strips {removed.Count} effect{(removed.Count > 1 ? "s" : "")} from {t.GetName()}.");
             if (!string.IsNullOrEmpty(a.effect) && removed.Count > 0 && ctx.caster != null)
                 ApplyEffect(new ActionSpec { @do = "effect", effect = a.effect, stacks = removed.Count }, ctx, ctx.caster);
+        }
+
+        /// <summary>
+        /// "transfer": moves up to "amount" (0 = all) of your debuffs onto the target, with the turns they had left and their
+        /// stacks; "effect" moves only that one. A debuff the target can't take (immune, resisted), or one whose effect
+        /// says "transferable": false, stays on you. Moved
+        /// effects count as yours from then on, so their damage and triggers are your doing.
+        /// </summary>
+        private static void Transfer(ActionSpec a, ActionContext ctx, Character t)
+        {
+            Character from = ctx.caster;
+            if (from == null || t == null || t == from || t.GetIsDead() || EffectManager.instance == null) return;
+            string only = string.IsNullOrEmpty(a.effect) ? null : EffectId(a.effect, ctx.classId);
+            int limit = a.amount > 0 ? a.amount : 99;
+            var mine = from.effects.GetEffects()
+                .Where(e => e != null && !e.isHidden && e.isDebuff && !(e.duration < 0 && !(e is ModEffect)) && (only == null || e.internalName == only)
+                    && !(e is ModEffect fx && fx.Spec != null && !fx.Spec.transferable)) // "transferable": false stays put
+                .Take(limit).ToList();
+            int moved = 0;
+            foreach (Effect e in mine)
+            {
+                string id = e.internalName;
+                if (!EffectManager.instance.CanUseOn(id, t)) continue;
+                int stacks = e is ModEffect me && me.MaxStacks > 1 ? me.Stacks : 1;
+                ApplyEffect(new ActionSpec { @do = "effect", effect = id, stacks = stacks, turns = e.duration > 0 ? e.duration : 0 }, ctx, t);
+                if (t.effects.GetEffect(id) == null) continue; // shrugged off
+                e.RemoveInstant();
+                moved++;
+            }
+            if (moved == 0) return;
+            from.CalculateStats();
+            if (from == Player.instance && Menu_HUD.instance != null) Menu_HUD.instance.UpdatePlayerEffects();
+            Game.LOG($"{ctx.sourceName} passes {moved} affliction{(moved > 1 ? "s" : "")} from {from.GetName()} to {t.GetName()}.");
         }
 
         /// <summary>Runs a.actions on the target, then hops to nearby enemies (optionally only ones with a.effect).</summary>
@@ -861,9 +895,19 @@ namespace SCClassLoader
             caster = x.caster, target = x.target, attacker = x.attacker, victim = x.victim, source = x.source,
             classId = x.classId, sourceName = x.sourceName, rank = x.rank, damageMult = x.damageMult,
             chanceBonus = x.chanceBonus, deferredSelfConsume = x.deferredSelfConsume, hitVfx = x.hitVfx, paced = x.paced, share = x.share,
+            rushed = x.rushed, cleared = x.cleared,
         };
 
         private static int Turns(ActionSpec a) => Math.Max(1, a.turns > 0 ? a.turns : a.amount);
+
+        /// <summary>An amount plus what its stacks add. With bonusPerStack and a base of 0 nothing happens without stacks,
+        /// so rank and stat scaling only count once some stacks do.</summary>
+        private static int Scaled(ActionSpec a, ActionContext ctx, Character t)
+        {
+            int bonus = StackBonus(a, ctx, t);
+            if (a.amount == 0 && Scaled(a) && bonus == 0) return 0;
+            return Amount(a, ctx) + bonus;
+        }
 
         internal static int Amount(ActionSpec a, ActionContext ctx)
         {
@@ -998,7 +1042,8 @@ namespace SCClassLoader
             if ((a.weapon > 0f || a.channel) && string.Equals(a.hands, "both", StringComparison.OrdinalIgnoreCase) && ctx.caster is Player pl && !Equipped.Forcing)
             {
                 var hands = Equipped.BothHands(pl);
-                if (hands.Count > 1)
+                // an off-hand weapon alone swings too (a plain lookup would ask the empty main hand)
+                if (hands.Count > 1 || hands.Count == 1 && hands[0].off)
                 {
                     foreach (var (w, off) in hands)
                     {
@@ -1420,6 +1465,9 @@ namespace SCClassLoader
                 case "teleport": s = "Teleports you to the target spot"; break;
                 case "dispel": s = $"Strips {(a.amount > 0 ? a.amount.ToString() : "all")} buff{(a.amount == 1 ? "" : "s")} from {who}{(string.IsNullOrEmpty(a.effect) ? "" : $"; you gain {EffectName(a.effect, classId)} per buff removed")}"; break;
                 case "cleanse": s = $"Removes {(a.amount > 0 ? a.amount.ToString() : "all")} debuff{(a.amount == 1 ? "" : "s")} from {who}"; break;
+                case "transfer": s = string.IsNullOrEmpty(a.effect)
+                        ? $"Moves {(a.amount > 0 ? a.amount.ToString() : "all")} of your debuff{(a.amount == 1 ? "" : "s")} onto {who}, with the turns and stacks they had left"
+                        : $"Moves your {EffectName(a.effect, classId)} onto {who}, with the turns and stacks it had left"; break;
                 case "chain":
                     {
                         string link = string.IsNullOrEmpty(a.effect) ? "enemies" : $"enemies with {EffectName(a.effect, classId)}";

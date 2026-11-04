@@ -1,0 +1,9 @@
+{
+  "id": "Taintbearer",
+  "name": "Taintbearer",
+  "author": "Arendeth",
+  "version": "2.0.2",
+  "license": "Free to use with credit (see Mods/LICENSE.md)",
+  "description": "An Intellect caster of corruption: it seeds Taint in enemies, lets the rot into its own body as fuel, and passes every affliction it carries on to whoever it points at. Toughness and Psi Power drive every spell.",
+  "requires": ["Library"]
+}

@@ -36,6 +36,16 @@ namespace SCClassLoader
         public int cooldown;
         /// <summary>Does not end your turn.</summary>
         public bool instant;
+        /// <summary>Player skills: a charge-up of this many turns. The cast spends its costs, starts its cooldown and ends
+        /// your turn with nothing else; at the start of your turn after the last, it goes off by itself at the same
+        /// target, before you act. A stun, your death or a target that's gone breaks it off (WindUp.cs).</summary>
+        public int windup;
+        /// <summary>The log line while it charges ("draws your afflictions into the chamber"); has a default.</summary>
+        public string windupText;
+        /// <summary>An effect kept on you while it charges ("@Id"), gone when it goes off or breaks.</summary>
+        public string windupEffect;
+        /// <summary>Played on you when the charge begins (a sound path or "event:/...").</summary>
+        public string windupSound;
         /// <summary>If the cast kills anything, the cooldown starts over at 0 (go again).</summary>
         public bool resetOnKill;
         /// <summary>The cooldown doesn't count down while you carry this effect ("@Stance"): a stance, form or shield that
@@ -610,6 +620,8 @@ namespace SCClassLoader
         public string icon;
         public int duration = 3;
         public bool debuff;
+        /// <summary>false: a "transfer" can't move it off its bearer (a curse that's yours to carry). Default true.</summary>
+        public bool transferable = true;
         /// <summary>Kept off the buff bar and the bearer's effect list: inner workings (a counter, a hidden pool, a
         /// rule a passive keeps on you). "purge" and the buff / debuff counts pass over it.</summary>
         public bool hidden;
