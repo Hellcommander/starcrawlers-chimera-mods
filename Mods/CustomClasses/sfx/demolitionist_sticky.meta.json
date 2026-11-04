@@ -10,10 +10,10 @@
   "archetype": "mech",
   "references": [
     {
-      "id": "55af2a6c6a4a2886",
+      "id": "95026d17c96824a8",
       "score": 0.2893007695674896,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15.wav",
       "tags": [
         "hybrid",
@@ -25,10 +25,10 @@
       ]
     },
     {
-      "id": "bcb2ea355052e336",
+      "id": "d0b0c831750b534f",
       "score": 0.2781115174293518,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 30.wav",
       "tags": [
         "hybrid",
@@ -40,10 +40,10 @@
       ]
     },
     {
-      "id": "f849f4d5d5aed67d",
+      "id": "70bf67ad5a4d6cf3",
       "score": 0.26419469714164734,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 15_REV.wav",
       "tags": [
         "hybrid",
@@ -88,10 +88,10 @@
       ]
     },
     {
-      "id": "a66057badbe664ba",
+      "id": "53ef0888f0e2e87d",
       "score": 0.26132768392562866,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 21.wav",
       "tags": [
         "hybrid",
@@ -103,10 +103,10 @@
       ]
     },
     {
-      "id": "ba9ac86138785c57",
+      "id": "ff2b0fae48ff5d2d",
       "score": 0.25392356514930725,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 30_REV.wav",
       "tags": [
         "hybrid",
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "id": "b7b511d13d4fb4bc",
+      "id": "7601fa6a54043428",
       "score": 0.24782343208789825,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 22.wav",
       "tags": [
         "hybrid",
@@ -134,10 +134,10 @@
       ]
     },
     {
-      "id": "56d4addfb5019731",
+      "id": "88647662465dc4c8",
       "score": 0.24770066142082214,
       "via": "tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 20.wav",
       "tags": [
         "hybrid",
@@ -166,15 +166,15 @@
     }
   ],
   "used_ids": [
-    "55af2a6c6a4a2886",
-    "bcb2ea355052e336",
-    "f849f4d5d5aed67d",
+    "95026d17c96824a8",
+    "d0b0c831750b534f",
+    "70bf67ad5a4d6cf3",
     "91cde12895855d49",
     "89fe587e87a00499",
-    "a66057badbe664ba",
-    "ba9ac86138785c57",
-    "b7b511d13d4fb4bc",
-    "56d4addfb5019731",
+    "53ef0888f0e2e87d",
+    "ff2b0fae48ff5d2d",
+    "7601fa6a54043428",
+    "88647662465dc4c8",
     "947c9b4d887862f1"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\demolitionist_sticky.wav",

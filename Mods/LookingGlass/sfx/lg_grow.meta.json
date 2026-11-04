@@ -30,10 +30,10 @@
       ]
     },
     {
-      "id": "dca99a063fc5da1c",
+      "id": "27988d87d044a583",
       "score": 0.4621763229370117,
       "via": "clap+tag",
-      "pack": "nerve.zip",
+      "pack": "NOISE ALCHEMY- NERVE.zip",
       "inner": "nerve/NOISE ALCHEMY - Nerve 1_REV.wav",
       "license": "reference",
       "tags": [
@@ -65,10 +65,10 @@
       ]
     },
     {
-      "id": "634dcde971879777",
+      "id": "98b0dd1861ff0578",
       "score": 0.4585365951061249,
       "via": "clap+tag",
-      "pack": "texturesnoisealchemy.zip",
+      "pack": "NOISE ALCHEMY- TEXTURES.zip",
       "inner": "NOISE ALCHEMY- TEXTURES/NOISE ALCHEMY- TEXTURES 1 22_REV.wav",
       "license": "reference",
       "tags": [
@@ -83,10 +83,10 @@
       ]
     },
     {
-      "id": "cd7d9c43aaf79c68",
+      "id": "746598c1ad16c530",
       "score": 0.4570194482803345,
       "via": "clap+tag",
-      "pack": "nerve.zip",
+      "pack": "NOISE ALCHEMY- NERVE.zip",
       "inner": "nerve/NOISE ALCHEMY - Nerve 16_REV.wav",
       "license": "reference",
       "tags": [
@@ -188,10 +188,10 @@
   ],
   "used_ids": [
     "e386c2e427bc1c99",
-    "dca99a063fc5da1c",
+    "27988d87d044a583",
     "2209b9298ae4c47d",
-    "634dcde971879777",
-    "cd7d9c43aaf79c68",
+    "98b0dd1861ff0578",
+    "746598c1ad16c530",
     "3967d10d3773f396",
     "a153f52a3d3fbe34",
     "e13b070e2b36b427",

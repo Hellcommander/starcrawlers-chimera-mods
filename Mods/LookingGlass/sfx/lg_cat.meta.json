@@ -8,10 +8,10 @@
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
     {
-      "id": "634dcde971879777",
+      "id": "98b0dd1861ff0578",
       "score": 0.4382958710193634,
       "via": "clap+tag",
-      "pack": "texturesnoisealchemy.zip",
+      "pack": "NOISE ALCHEMY- TEXTURES.zip",
       "inner": "NOISE ALCHEMY- TEXTURES/NOISE ALCHEMY- TEXTURES 1 22_REV.wav",
       "license": "reference",
       "tags": [
@@ -26,10 +26,10 @@
       ]
     },
     {
-      "id": "15f13fb7d9145401",
+      "id": "aa95c18fb7807fda",
       "score": 0.39461177587509155,
       "via": "clap+tag",
-      "pack": "uiactivation.zip",
+      "pack": "NOISE ALCHEMY- UI ACTIVATION.zip",
       "inner": "NOISE ALCHEMY- UI ACTIVATION/NOISE ALCHEMY- UI ACTIVATION 17_REV.wav",
       "license": "reference",
       "tags": [
@@ -45,10 +45,10 @@
       ]
     },
     {
-      "id": "f0929d39e659bf6f",
+      "id": "9936d655a80db22c",
       "score": 0.3925167918205261,
       "via": "clap+tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18_REV.wav",
       "license": "reference",
       "tags": [
@@ -111,10 +111,10 @@
       "archetypes": []
     },
     {
-      "id": "3207267cd8081a8f",
+      "id": "50bb742e0bd564e0",
       "score": 0.38672715425491333,
       "via": "clap+tag",
-      "pack": "hybrid.zip",
+      "pack": "NOISE ALCHEMY- HYBRID.zip",
       "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 5_REV.wav",
       "license": "reference",
       "tags": [
