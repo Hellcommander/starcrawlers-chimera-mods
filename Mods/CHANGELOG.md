@@ -4,7 +4,54 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.1.0 (unreleased)
+
+### Class titles
+
+- **Class Titles** (`Mods/ClassTitles/`): a title under your name on the character sheet and the creation screen, made
+  from which classes you have, never their rank. Each class lists themes for what it does, and the strongest pair of
+  themes across all seven picks one of 120 mastery names, so the same set of classes always gets the same title. It
+  is display only: your name and saves don't change. `[Titles]` sets the style (`Full`, `Short` or `Epithet`), where
+  it comes from, a preview on the creation screen and a renown line once several classes are maxed. Every vanilla and
+  Breachwork class brings its own title words.
+- `OllamaTitles` (off by default): Ctrl+click your title to have a locally running Ollama write one for your class
+  combination. It is saved for that character. `OllamaUrl`, `OllamaModel` and `OllamaKeepAlive` set where it runs,
+  which model writes and how soon it leaves video memory.
+- **Class Titler**, an optional download (`Breachwork-ClassTitler-<ver>.7z`): run it while the game is closed. It lists
+  every class with its icon, description and skills. Pick up to seven, see the title the game gives that set, have
+  Ollama write more and save the one you like. Saved titles go to `Mods/YourClassTitles` and win over the made-up title
+  for that exact set, in any order. The loader writes the class list it reads to `BepInEx/cache` each launch.
+
+### Schematics and terminals
+
+- **Holo-laptops** on office desks can be searched once for a schematic, three per floor by default and the same ones
+  every time you load. Smarts gives a chance at a second (`[Crafting] LaptopSchematics`, `LaptopsPerFloor`,
+  `LaptopBonusPerSmarts`).
+- **Schematics** (`Mods/Schematics/`): general recipes made from the game's own items, each found on certain floors.
+  `RecipeLearning` sets whether a found recipe is learned by that character, shared by all of them, or known from the
+  start.
+- **Terminals:** CorpSec and Special Projects wall terminals offer more than the security shutdown: download
+  schematics, override this floor's locks (Agility; never sealed, secret or boss doors), pull the floor plan
+  (Recognition) or requisition ammo, medkits and tools for credits (no roll, cheaper with Savvy). A failed roll trips an
+  alarm and guards arrive beside you. Odds come from `[Terminals]` `BaseChance`, `ChancePerStat` and `ChancePerFloor`.
+
+### Movement
+
+- The number pad moves you, Num Lock on or off: 8 forward, 2 back, 4 and 6 strafe (or turn, with `NumpadSideKeys`),
+  5 waits, and 7, 9, 1 and 3 step diagonally. The arrow keys and Clear do the same with Num Lock off.
+- A diagonal step that's refused says why over your head.
+- A quick tap released inside the combo window still moves you.
+- `EnemyDiagonals` and `AllyDiagonals` (`[Movement]`, off by default): enemies, or your companions, summons and pets,
+  cut corners by your corner rule, and each diagonal costs them 1.41 turns.
+- `DiagonalReach` (off by default): anyone diagonally beside you counts as next to you, for melee and reach-1 skills,
+  for you, your allies and enemies, and the AI treats it as adjacent.
+- `TurnBy45` (off by default): turn 45 degrees at a time. Facing a diagonal, you step and attack along it, and facing
+  skills such as Dash, Charge and Backflip follow it.
+
+### Interface
+
+- The saved builds list has a fixed height and scrolls past eight builds, with a search box (build or class names)
+  and a sort button (Saved, A-Z, Recent). Replacing a build keeps its place.
 
 ### New
 
@@ -62,6 +109,12 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### Fixes
 
+- Mod effects from consumables run their on-apply actions.
+- A held weapon model keeps the old look until the new one is ready.
+- Unburden also moves control effects that aren't marked, breaks its wind-up if the Burden Projector is gone, and
+  drops a dead target.
+- The `item` equipped term picks the hand that holds that weapon.
+- A duplicate line in a title file no longer resets the hand-written titles.
 - `value:rushed` and `value:cleared` keep their count inside nested actions (`chain`, `cast`, `order`, a rush's own
   impact actions); before, those read 0.
 - `clearHazards`, `moveTraps` (and `raiseWall` / `springTraps` written in camelCase) now work on a floor aim with
@@ -87,6 +140,11 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 - Summons avoid tiles with mines or fire when a clear tile is free.
 - A summon whose creature comes from a placeholder tier that a mod filled (the Engineer's Boltron) is still found.
 - A Volley's `bonusPerStack` adds shots; before, it was ignored.
+
+### Tools
+
+- The dev package's mod manager has a **Sounds** button: it opens a mod's sealed sound archive to list, play, export,
+  replace, add and remove sounds, then reseals it. It needs the owner's key file and isn't in the player build.
 
 ## 2.0.2 (2026-11-03)
 
