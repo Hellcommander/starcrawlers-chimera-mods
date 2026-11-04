@@ -537,7 +537,8 @@ namespace SCClassLoader
             finally { walkingFor = null; }
             yield return ai.StartCoroutine(step);
             Character_Mover mover = c.GetMover();
-            if (!mover.isMoving && mover.GetCurrentNavNode() == from)
+            // the game's pursuit spent this move catching up after diagonal steps: that is the move, not a failure
+            if (!mover.isMoving && mover.GetCurrentNavNode() == from && !DiagonalAI.ConsumeCatchUp(c))
             {
                 // the game's pursuit gave up (it only searches so far): take one step along our own path
                 NavNode next = FirstStep(from, spot);

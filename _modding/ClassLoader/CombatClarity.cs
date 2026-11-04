@@ -419,6 +419,8 @@ namespace SCClassLoader
             bool held = false;
             foreach (string k in new[] { pc.MoveForward, pc.MoveBackward, pc.StrafeLeft, pc.StrafeRight, pc.TurnLeft, pc.TurnRight, pc.Wait })
                 if (!string.IsNullOrEmpty(k) && SafeGetKey(k)) { held = true; break; }
+            if (!held && Diagonal.Numpad != null && Diagonal.Numpad.Value)
+                held = Diagonal.NumpadKeys.Any(Input.GetKey);
             Keybindings kb = Keybindings.GetInstance();
             if (!held && kb != null && pc.CONTROLLERMODE)
             {

@@ -85,6 +85,7 @@ namespace SCClassLoader
             NameLength.Bind(Config);
             Factions.Bind(Config);
             Diagonal.Bind(Config);
+            DiagonalAI.Bind(Config);
             DashCam.Bind(Config);
             CombatClarity.Bind(Config);
             Crew.Bind(Config);
@@ -252,6 +253,9 @@ namespace SCClassLoader
             else if (dev == "towersvoid") Instance.StartCoroutine(DevTestTowers.RunVoid());
             else if (dev == "interlopers") Instance.StartCoroutine(DevTestInterlopers.Run());
             else if (dev == "diagonal") Instance.StartCoroutine(DevTestDiagonal.Run());
+            else if (dev == "numpad") Instance.StartCoroutine(DevTestDiagonal.RunNumpad());
+            else if (dev == "diagonalai") Instance.StartCoroutine(DevTestDiagonal.RunAI());
+            else if (dev == "turn45") Instance.StartCoroutine(DevTestDiagonal.RunTurn45());
             else if (dev == "synergies") Instance.StartCoroutine(DevTestSynergies.Run());
             else if (dev == "synergycost") Instance.StartCoroutine(DevTestSynergyCost.Run());
             else if (dev == "synergycost2") Instance.StartCoroutine(DevTestSynergyCost.RunBundled());
