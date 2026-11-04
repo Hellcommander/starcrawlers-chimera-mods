@@ -21,6 +21,8 @@ namespace SCClassLoader
         {
             public string name;
             public List<string> trees = new List<string>();
+            /// <summary>UTC ticks of the last save or load, for the "Recent" sort. 0 in files from before it existed.</summary>
+            public long used;
         }
 
         private static List<Build> builds;
@@ -61,8 +63,10 @@ namespace SCClassLoader
         {
             if (trees == null || trees.Count == 0) return;
             name = string.IsNullOrWhiteSpace(name) ? $"Build {All.Count + 1}" : name.Trim();
-            All.RemoveAll(b => string.Equals(b.name, name, StringComparison.OrdinalIgnoreCase));
-            All.Add(new Build { name = name, trees = trees.ToList() });
+            // Replacing keeps the build's place in the list (and its row, if the list is built); a new name goes at the end.
+            Build had = All.FirstOrDefault(b => string.Equals(b.name, name, StringComparison.OrdinalIgnoreCase));
+            if (had != null) { had.name = name; had.trees = trees.ToList(); had.used = DateTime.UtcNow.Ticks; }
+            else All.Add(new Build { name = name, trees = trees.ToList(), used = DateTime.UtcNow.Ticks });
             Save();
         }
 
@@ -83,6 +87,8 @@ namespace SCClassLoader
         private static void Load(Menu_Creation mc, Build b)
         {
             CloseList();
+            b.used = DateTime.UtcNow.Ticks;
+            Save();
             MakeCurrent(b);
             if (mc.customPresetName != null) mc.customPresetName.text = b.name;
             SkillSelect first = mc.madSkills.FirstOrDefault(s => s?.skillTree != null && s.skillTree.internalName == b.trees.FirstOrDefault());
@@ -111,62 +117,212 @@ namespace SCClassLoader
         }
 
         // ---- the list -----------------------------------------------------------------------------------------
+        // Built once per creation screen and then kept: closing hides it, opening syncs the rows with the saved builds
+        // (adds rows for new ones, drops rows for deleted ones, refreshes labels). Searching, sorting and deleting only
+        // re-place the existing rows.
 
-        internal static bool ListOpen => listPanel != null;
+        private enum SortBy { Saved, Name, Recent }
+        private static readonly string[] SortLabels = { "Saved", "A-Z", "Recent" };
+        private const string SortPref = "SCCL_BuildSort";
+
+        private class Row
+        {
+            public Build build;
+            public RectTransform load, del;
+            public TMPro.TextMeshProUGUI label, delLabel;
+            public bool armed;
+            public string search; // name + class names, lower case
+        }
+
+        private const float W = 460f, RowH = 44f, Step = RowH + 6f, ToolbarY = 56f, ToolbarH = 36f, ViewY = 100f;
+        private const int VisibleRows = 8; // past this the rows scroll instead of the panel growing off screen
+
+        private static Menu_Creation menu;
+        private static TMPro.TMP_FontAsset font;
+        private static RectTransform content;
+        private static ScrollRect scroll;
+        private static TMPro.TMP_InputField searchBox;
+        private static TMPro.TextMeshProUGUI status, sortLabel, noneLabel;
+        private static readonly List<Row> rows = new List<Row>();
+        private static SortBy sort = (SortBy)Mathf.Clamp(PlayerPrefs.GetInt(SortPref, 0), 0, 2);
+        private static bool refilling;
+
+        internal static bool ListOpen => listPanel != null && listPanel.gameObject.activeSelf;
+
+        /// <summary>True while the player types in the list's search box, so the creation screen's own keys stay quiet.</summary>
+        internal static bool Typing => ListOpen && searchBox != null && searchBox.isFocused;
 
         private static void CloseList()
         {
-            if (listPanel != null) UnityEngine.Object.Destroy(listPanel.gameObject);
-            listPanel = null;
+            if (listPanel != null) listPanel.gameObject.SetActive(false);
         }
 
         private static void OpenList(Menu_Creation mc)
         {
-            CloseList();
+            if (listPanel == null || menu != mc) MakePanel(mc);
+            if (listPanel == null) return;
+            var anchor = (RectTransform)(mc.customPresetName.GetComponentInParent<Button>()?.transform ?? mc.customPresetName.transform);
+            var corners = new Vector3[4];
+            anchor.GetWorldCorners(corners);
+            listPanel.position = corners[1]; // sits on top of the preset button
+            listPanel.SetAsLastSibling();
+            Sync();
+            refilling = true;
+            searchBox.text = ""; // each open starts unfiltered, like the class search
+            refilling = false;
+            listPanel.gameObject.SetActive(true);
+            Layout();
+            scroll.verticalNormalizedPosition = 1f;
+        }
+
+        private static void MakePanel(Menu_Creation mc)
+        {
+            if (listPanel != null) UnityEngine.Object.Destroy(listPanel.gameObject);
+            listPanel = null;
+            rows.Clear();
+            menu = mc;
             var anchor = (RectTransform)(mc.customPresetName.GetComponentInParent<Button>()?.transform ?? mc.customPresetName.transform);
             Canvas canvas = anchor.GetComponentInParent<Canvas>();
             if (canvas == null) return;
-            var font = mc.customPresetName.font;
-            const float w = 420f, row = 44f;
-            var items = All.ToList();
-            float h = 56f + Mathf.Max(1, items.Count) * (row + 6f) + 50f;
-            listPanel = UiKit.Panel(canvas.transform, "SCCL_BuildList", new Vector2(w, h), UiKit.PanelColor);
-            var corners = new Vector3[4];
-            anchor.GetWorldCorners(corners);
+            font = mc.customPresetName.font;
+
+            float viewH = VisibleRows * Step;
+            float h = ViewY + viewH + 24f + 50f;
+            listPanel = UiKit.Panel(canvas.transform, "SCCL_BuildList", new Vector2(W, h), UiKit.PanelColor);
             listPanel.pivot = new Vector2(0f, 0f);
-            listPanel.position = corners[1]; // sits on top of the preset button
             UiLook.Attach(listPanel, "BuildList");
             UiLook.Grip(listPanel);
-            var title = UiKit.Label(UiKit.Rect(listPanel, "Title", new Vector2(w, 46f)), "Saved builds", font, 26);
+            var title = UiKit.Label(UiKit.Rect(listPanel, "Title", new Vector2(W, 46f)), "Saved builds", font, 26);
             UiKit.At((RectTransform)title.transform.parent, 0f, 6f);
-            float y = 56f;
-            if (items.Count == 0)
+
+            // toolbar: search by build or class name, and the sort order (remembered between sessions)
+            searchBox = UiKit.TextBox(listPanel, "Search builds or classes...", font, 19f, new Vector2(W - 24f - 136f, ToolbarH));
+            UiKit.At((RectTransform)searchBox.transform, 12f, ToolbarY);
+            searchBox.onValueChanged.AddListener(_ => { if (!refilling) { Layout(); scroll.verticalNormalizedPosition = 1f; } });
+            searchBox.onEndEdit.AddListener(_ =>
             {
-                var none = UiKit.Label(UiKit.Rect(listPanel, "None", new Vector2(w, row)), "<color=#9FB7C9>None yet. Right-click the button to save one.</color>", font, 20);
-                UiKit.At((RectTransform)none.transform.parent, 0f, y);
-                y += row + 6f;
-            }
-            foreach (Build b in items)
+                if (!searchBox.wasCanceled) return;
+                CreationSearch.SwallowEscape(); // Esc in the box clears it instead of leaving the screen
+                searchBox.text = "";
+            });
+            var sortBtn = UiKit.Button(listPanel, "", font, 18, new Vector2(128f, ToolbarH), () =>
             {
-                Build bb = b;
-                var load = UiKit.Button(listPanel, $"{b.name}  <size=70%><color=#9FB7C9>{b.trees.Count} classes</color></size>", font, 22, new Vector2(w - 80f, row), () => Load(mc, bb));
-                UiKit.At((RectTransform)load.transform, 12f, y);
-                Button del = null;
-                bool armed = false;
-                del = UiKit.Button(listPanel, "X", font, 22, new Vector2(48f, row), () =>
-                {
-                    if (!armed) { armed = true; del.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Del?"; return; }
-                    Delete(bb);
-                    OpenList(mc);
-                }, UiKit.DangerColor);
-                UiKit.At((RectTransform)del.transform, w - 60f, y);
-                y += row + 6f;
-            }
+                sort = (SortBy)(((int)sort + 1) % 3);
+                PlayerPrefs.SetInt(SortPref, (int)sort);
+                Layout();
+            });
+            UiKit.At((RectTransform)sortBtn.transform, W - 140f, ToolbarY);
+            sortLabel = sortBtn.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            // the rows live in a masked, scrolling viewport so a long list keeps the panel a fixed size
+            RectTransform view = UiKit.Panel(listPanel, "Viewport", new Vector2(W, viewH), new Color(0f, 0f, 0f, 0f));
+            UiKit.At(view, 0f, ViewY);
+            view.gameObject.AddComponent<RectMask2D>();
+            content = UiKit.Rect(view, "Content", Vector2.zero);
+            content.anchorMin = new Vector2(0f, 1f); content.anchorMax = new Vector2(1f, 1f); content.pivot = new Vector2(0.5f, 1f);
+            scroll = view.gameObject.AddComponent<ScrollRect>();
+            scroll.content = content; scroll.viewport = view;
+            scroll.horizontal = false; scroll.movementType = ScrollRect.MovementType.Clamped; scroll.inertia = false;
+            scroll.scrollSensitivity = Step * 0.5f;
+            noneLabel = UiKit.Label(UiKit.Rect(view, "None", new Vector2(W, RowH)), "", font, 20);
+            UiKit.At((RectTransform)noneLabel.transform.parent, 0f, 0f);
+
+            status = UiKit.Label(UiKit.Rect(listPanel, "Status", new Vector2(W, 20f)), "", font, 15);
+            UiKit.At((RectTransform)status.transform.parent, 0f, ViewY + viewH + 2f);
+            float y = ViewY + viewH + 24f;
             var close = UiKit.Button(listPanel, "Close", font, 20, new Vector2(120f, 38f), CloseList);
-            UiKit.At((RectTransform)close.transform, w - 132f, y + 2f);
-            var hint = UiKit.Label(UiKit.Rect(listPanel, "Hint", new Vector2(w - 150f, 38f)), "<color=#9FB7C9>Right-click the button: save the current pick</color>", font, 16, TMPro.TextAlignmentOptions.Left);
+            UiKit.At((RectTransform)close.transform, W - 132f, y + 2f);
+            var hint = UiKit.Label(UiKit.Rect(listPanel, "Hint", new Vector2(W - 150f, 38f)), "<color=#9FB7C9>Right-click the button: save the current pick</color>", font, 16, TMPro.TextAlignmentOptions.Left);
             UiKit.At((RectTransform)hint.transform.parent, 8f, y + 2f);
+            listPanel.gameObject.SetActive(false);
         }
+
+        private static Row MakeRow(Build b)
+        {
+            var r = new Row { build = b };
+            var load = UiKit.Button(content, "", font, 22, new Vector2(W - 84f, RowH), () => Load(menu, r.build));
+            r.load = (RectTransform)load.transform;
+            r.label = load.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            r.label.alignment = TMPro.TextAlignmentOptions.Left;
+            var del = UiKit.Button(content, "X", font, 22, new Vector2(48f, RowH), () =>
+            {
+                if (!r.armed) { r.armed = true; r.delLabel.text = "Del?"; return; }
+                Delete(r.build);
+                UnityEngine.Object.Destroy(r.load.gameObject);
+                UnityEngine.Object.Destroy(r.del.gameObject);
+                rows.Remove(r);
+                Layout(); // the rows below move up; the scroll position stays (clamped)
+            }, UiKit.DangerColor);
+            r.del = (RectTransform)del.transform;
+            r.delLabel = del.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            return r;
+        }
+
+        /// <summary>Matches the rows to the saved builds: new builds get a row, deleted ones lose theirs, labels refresh.</summary>
+        private static void Sync()
+        {
+            foreach (Row r in rows.Where(r => !All.Contains(r.build)).ToList())
+            {
+                UnityEngine.Object.Destroy(r.load.gameObject);
+                UnityEngine.Object.Destroy(r.del.gameObject);
+                rows.Remove(r);
+            }
+            foreach (Build b in All.Where(b => rows.All(r => r.build != b))) rows.Add(MakeRow(b));
+            var names = Game.instance?.skills?.Where(t => t != null).GroupBy(t => t.internalName).ToDictionary(g => g.Key, g => g.First().displayName.ToString())
+                        ?? new Dictionary<string, string>();
+            foreach (Row r in rows)
+            {
+                r.armed = false;
+                r.delLabel.text = "X";
+                var classNames = r.build.trees.Select(id => names.TryGetValue(id, out string n) ? n : id).ToList();
+                r.label.text = $"{r.build.name}  <size=70%><color=#9FB7C9>{r.build.trees.Count} classes</color></size>";
+                r.search = (r.build.name + " " + string.Join(" ", classNames)).ToLowerInvariant();
+            }
+        }
+
+        /// <summary>Filters by the search words (all must match the build's name or one of its classes), sorts, places.</summary>
+        private static void Layout()
+        {
+            if (listPanel == null) return;
+            sortLabel.text = "Sort: " + SortLabels[(int)sort];
+            string[] words = (searchBox.text ?? "").ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            IEnumerable<Row> shown = rows.Where(r => words.All(w => r.search.Contains(w)));
+            // OrderBy is stable, so ties keep the save order
+            if (sort == SortBy.Name) shown = shown.OrderBy(r => r.build.name, StringComparer.OrdinalIgnoreCase);
+            else if (sort == SortBy.Recent) shown = shown.OrderByDescending(r => r.build.used);
+            else shown = shown.OrderBy(r => All.IndexOf(r.build));
+            var list = shown.ToList();
+            var visible = new HashSet<Row>(list);
+            foreach (Row r in rows)
+            {
+                bool on = visible.Contains(r);
+                r.load.gameObject.SetActive(on);
+                r.del.gameObject.SetActive(on);
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                UiKit.At(list[i].load, 12f, i * Step);
+                UiKit.At(list[i].del, W - 64f, i * Step);
+            }
+            content.sizeDelta = new Vector2(0f, list.Count * Step);
+            noneLabel.text = rows.Count == 0 ? "<color=#9FB7C9>None yet. Right-click the button to save one.</color>"
+                           : list.Count == 0 ? "<color=#FFC35C>No build matches</color>" : "";
+            status.text = words.Length > 0 && rows.Count > 0 ? $"<color=#9FB7C9>{list.Count} of {rows.Count} builds</color>"
+                        : list.Count > VisibleRows ? $"<color=#6F8794>{list.Count} builds, scroll for more</color>" : "";
+        }
+
+        /// <summary>For the devtest: types into the list's search box.</summary>
+        internal static void SetSearch(string text) { if (searchBox != null) searchBox.text = text; }
+
+        /// <summary>For the devtest: the visible build names, top to bottom.</summary>
+        internal static List<string> Shown() =>
+            rows.Where(r => r.load.gameObject.activeSelf).OrderByDescending(r => r.load.anchoredPosition.y).Select(r => r.build.name).ToList();
+
+        /// <summary>For the devtest: steps the sort button once.</summary>
+        internal static void NextSort() => listPanel?.GetComponentsInChildren<Button>().First(b => b.GetComponentInChildren<TMPro.TextMeshProUGUI>().text.StartsWith("Sort:")).onClick.Invoke();
+
+        /// <summary>For the devtest: how many row objects exist (rebuild check).</summary>
+        internal static int RowObjects => content != null ? content.childCount : 0;
 
         // ---- patches ------------------------------------------------------------------------------------------
 

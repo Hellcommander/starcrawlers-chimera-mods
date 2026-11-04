@@ -209,6 +209,7 @@ namespace SCClassLoader
             else if (dev == "perkfx") Instance.StartCoroutine(DevTestPerkFx.Run());
             else if (dev == "menufps") Instance.StartCoroutine(DevTestMenuFps.Run());
             else if (dev == "classsearch") Instance.StartCoroutine(DevTestClassSearch.Run());
+            else if (dev == "buildlist") Instance.StartCoroutine(DevTestBuildList.Run());
             else if (dev == "eventdump") Instance.StartCoroutine(DevTestEventDump.Run());
             else if (dev == "propscan") Instance.StartCoroutine(DevTestPropScan.Run());
             else if (dev == "schematics") Instance.StartCoroutine(DevTestSchematics.Run());

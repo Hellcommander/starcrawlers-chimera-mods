@@ -160,6 +160,9 @@ namespace SCClassLoader
 
         internal static void SetQuery(string text) => box.text = text; // fires Changed
 
+        /// <summary>Another box on this screen (the saved-builds search) cleared itself with Esc: keep that Esc from leaving the screen.</summary>
+        internal static void SwallowEscape() => swallowEscape = true;
+
         private static void Changed()
         {
             if (menu == null) return;
@@ -200,7 +203,7 @@ namespace SCClassLoader
                     if (Input.GetKeyUp(KeyCode.Escape)) swallowEscape = false;
                     return false;
                 }
-                return box == null || !box.isFocused;
+                return (box == null || !box.isFocused) && !BuildList.Typing;
             }
         }
     }
