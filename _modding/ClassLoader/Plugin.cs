@@ -57,6 +57,8 @@ namespace SCClassLoader
             ResourceBars.Bind(Config);
             RunePanel.Bind(Config);
             CraftPanel.Bind(Config);
+            Schematics.Bind(Config);
+            Terminals.Bind(Config);
             GameFixes.Bind(Config);
             BugFixes.Bind(Config);
             ClassLoot.Bind(Config);
@@ -206,6 +208,10 @@ namespace SCClassLoader
             else if (dev == "perkfx") Instance.StartCoroutine(DevTestPerkFx.Run());
             else if (dev == "menufps") Instance.StartCoroutine(DevTestMenuFps.Run());
             else if (dev == "classsearch") Instance.StartCoroutine(DevTestClassSearch.Run());
+            else if (dev == "eventdump") Instance.StartCoroutine(DevTestEventDump.Run());
+            else if (dev == "propscan") Instance.StartCoroutine(DevTestPropScan.Run());
+            else if (dev == "schematics") Instance.StartCoroutine(DevTestSchematics.Run());
+            else if (dev == "schematicsreal") Instance.StartCoroutine(DevTestSchematicsReal.Run());
             else if (dev == "synergytip") Instance.StartCoroutine(DevTestSynergyTip.Run());
             else if (dev == "names") Instance.StartCoroutine(DevTestNames.Run());
             else if (dev == "names2") Instance.StartCoroutine(DevTestNames.RunLoadList());

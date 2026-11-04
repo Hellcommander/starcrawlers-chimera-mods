@@ -25,6 +25,8 @@ namespace SCClassLoader
         /// <summary>Where it can be made: "apartment" (the Fabricator pad) and/or "field" (craft abilities). Default both.</summary>
         public List<string> stations;
         public bool enabled = true;
+        /// <summary>Set: the recipe must be found first (holo-laptops, security terminals); see Schematics.</summary>
+        public FoundSpec found;
 
         [JsonIgnore] public ModPack pack;
         [JsonIgnore] public string qualified;

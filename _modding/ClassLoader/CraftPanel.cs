@@ -48,7 +48,7 @@ namespace SCClassLoader
         }
 
         /// <summary>Recipes that pass their class requirement, whatever the station.</summary>
-        internal static List<RecipeDef> Known() => Crafting.Recipes.Where(Crafting.Unlocked).ToList();
+        internal static List<RecipeDef> Known() => Crafting.Recipes.Where(r => Crafting.Unlocked(r) && Schematics.Known(r)).ToList();
 
         private static Transform Holder()
         {

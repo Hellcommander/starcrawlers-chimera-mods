@@ -1524,11 +1524,25 @@ your inventory only, never from equipped gear or the stash.
     "credits": 25,                                                     // optional credit cost
     "tools": ["LOCKPICK"],                                             // must be carried, not used up
     "requires": { "class": "SKILLTREE_Engineer", "rank": 0 },          // hidden until you have that tree at that rank
-    "stations": ["apartment", "field"] }                               // default: both
+    "stations": ["apartment", "field"],                                // default: both
+    "found": { "floors": [2, 7], "weight": 2 } }                       // optional: must be found first (see below)
 ] }
 ```
 
 A recipe with the same id in a later mod replaces the earlier one. `Mods/ExampleItems/recipes.json` has working examples.
+
+**Found recipes.** A recipe with `"found"` stays out of the crafting window until the player finds its schematic: by
+searching a holo-laptop on an office desk (once each; Smarts gives a chance of a second schematic) or by downloading
+it from a CorpSec or Special Projects wall terminal (its "other functions"). `floors` is the range of floors it can
+turn up on, as the player counts them (1 = the first floor; leave it out for any floor), and `weight` how likely it is
+against the others that can turn up there. Only recipes the player's classes could use are offered. The player
+chooses how learning works in `[Crafting] RecipeLearning`: `PerCharacter` (default), `Shared` (one character's finds
+count for all) or `AllKnown` (no learning). `Mods/Schematics/recipes.json` has 20 working examples.
+
+The wall terminals' other functions, each one request per terminal instead of its own security shutdown:
+download schematics (Smarts), override this floor's locks (Agility), pull the floor plan (Recognition) and
+requisition supplies for credits (cheaper with Savvy). A failed roll trips an alarm. `[Terminals]` turns this off and
+sets the odds.
 
 ### Creatures
 

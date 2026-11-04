@@ -1,0 +1,47 @@
+{
+  "recipes": [
+    { "id": "ThermalGrenade", "output": "CONSUME_ATK_Grenade_Fire",
+      "inputs": [ { "item": "CONSUME_ATK_Grenade" }, { "item": "WEAPON_AMMO_Fire", "count": 20 } ], "found": { "weight": 3 } },
+    { "id": "FreezonGrenade", "output": "CONSUME_ATK_Grenade_Cryo",
+      "inputs": [ { "item": "CONSUME_ATK_Grenade" }, { "item": "WEAPON_AMMO_Ice", "count": 20 } ], "found": { "weight": 3 } },
+    { "id": "ShockGrenade", "output": "CONSUME_ATK_Grenade_Shock",
+      "inputs": [ { "item": "CONSUME_ATK_Grenade" }, { "item": "WEAPON_AMMO_Shock", "count": 20 } ], "found": { "weight": 3 } },
+    { "id": "ToxonGrenade", "output": "CONSUME_ATK_Grenade_Bio",
+      "inputs": [ { "item": "CONSUME_ATK_Grenade" }, { "item": "WEAPON_AMMO_Bio", "count": 20 } ], "found": { "weight": 3 } },
+    { "id": "Mine", "output": "CONSUME_UTL_Mine",
+      "inputs": [ { "item": "CONSUME_ATK_Grenade" }, { "item": "CONSUME_Small_Repair_Kit" } ], "found": { "weight": 2 } },
+    { "id": "Boobytrap", "output": "CONSUME_UTL_Security_Boobytrap",
+      "inputs": [ { "item": "CONSUME_UTL_Mine" }, { "item": "WEAPON_AMMO_Shock", "count": 15 } ], "found": { "floors": [2, 7], "weight": 2 } },
+    { "id": "Omnipick", "output": "CONSUME_LOCKPICK_Omnipick",
+      "inputs": [ { "item": "CONSUME_Small_Repair_Kit" }, { "item": "WEAPON_AMMO_Pierce", "count": 20 } ], "found": { "weight": 2 } },
+
+    { "id": "MediumMedkit", "output": "CONSUME_Medium_Medkit",
+      "inputs": [ { "item": "CONSUME_Small_Medkit", "count": 2 } ], "found": { "weight": 3 } },
+    { "id": "LargeMedkit", "output": "CONSUME_Large_Medkit",
+      "inputs": [ { "item": "CONSUME_Medium_Medkit", "count": 2 } ], "found": { "floors": [3, 7], "weight": 2 } },
+    { "id": "DeluxeMedkit", "output": "CONSUME_Deluxe_Medkit",
+      "inputs": [ { "item": "CONSUME_Large_Medkit", "count": 2 }, { "item": "CONSUME_CHEM_Promethean" } ], "found": { "floors": [5, 7], "weight": 1 } },
+    { "id": "MediumRepairKit", "output": "CONSUME_Medium_Repair_Kit",
+      "inputs": [ { "item": "CONSUME_Small_Repair_Kit", "count": 2 } ], "found": { "weight": 3 } },
+    { "id": "LargeRepairKit", "output": "CONSUME_Large_Repair_Kit",
+      "inputs": [ { "item": "CONSUME_Medium_Repair_Kit", "count": 2 } ], "found": { "floors": [3, 7], "weight": 2 } },
+
+    { "id": "ShredderRounds", "output": "WEAPON_AMMO_Pierce", "amount": 30,
+      "inputs": [ { "item": "WEAPON_AMMO_Generic", "count": 30 }, { "item": "CONSUME_ATK_Grenade" } ], "found": { "weight": 2 } },
+    { "id": "EnergonRounds", "output": "WEAPON_AMMO_Energy", "amount": 30,
+      "inputs": [ { "item": "WEAPON_AMMO_Generic", "count": 30 }, { "item": "CONSUME_CHEM_BottledEnergon" } ], "found": { "floors": [2, 7], "weight": 2 } },
+    { "id": "AcidRounds", "output": "WEAPON_AMMO_Acid", "amount": 30,
+      "inputs": [ { "item": "WEAPON_AMMO_Bio", "count": 30 }, { "item": "CONSUME_CHEM_Weep" } ], "found": { "floors": [2, 7], "weight": 2 } },
+    { "id": "CursedRounds", "output": "WEAPON_AMMO_Void", "amount": 30,
+      "inputs": [ { "item": "WEAPON_AMMO_Generic", "count": 30 }, { "item": "CONSUME_CHEM_Soulsuck" } ], "found": { "floors": [4, 7], "weight": 1 } },
+
+    { "id": "WarpGate", "output": "CONSUME_Prototype_Teleporter",
+      "inputs": [ { "item": "CONSUME_CHEM_YEETI" }, { "item": "CONSUME_LOCKPICK_Omnipick" } ], "credits": 60, "found": { "floors": [4, 7], "weight": 1 } },
+    { "id": "ForceField", "output": "CONSUME_Prototype_ForceField",
+      "inputs": [ { "item": "CONSUME_CHEM_ArmrAll", "count": 2 }, { "item": "CONSUME_Large_Repair_Kit" } ], "found": { "floors": [4, 7], "weight": 1 } },
+    { "id": "LootMagnet", "output": "CONSUME_Prototype_LootMagnet",
+      "inputs": [ { "item": "CONSUME_CHEM_ChooChoo" }, { "item": "WEAPON_AMMO_Shock", "count": 30 } ], "credits": 40, "found": { "floors": [3, 7], "weight": 1 } },
+    { "id": "MagicDonut", "output": "CONSUME_FOOD_Donut_Magic",
+      "inputs": [ { "item": "CONSUME_FOOD_Donut_Cronut" }, { "item": "CONSUME_CHEM_Spice" } ], "found": { "floors": [2, 7], "weight": 1 } }
+  ]
+}
