@@ -2,7 +2,7 @@
   "id": "Threading",
   "name": "Threading",
   "author": "Arendeth",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Spreads the game's heaviest work: enemy paths on worker threads, area hits and particle bursts over several frames, off-screen effects and head-turning stopped. For very large fights. Turn this mod off and the game runs as it always did. Settings are under [Performance] in the loader's config.",
   "enabled": false,

@@ -2,7 +2,7 @@
   "id": "CapstoneExtras",
   "name": "Capstone Extras",
   "author": "Arendeth",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "enabled": false,
   "description": "Finishes classes the game left unfinished. Where a tree ends in a \"* NYI *\" placeholder, this fills it and adds strong capstone skills after the normal ones, up to the skills screen's nine slots. Off by default: turn it on for the extra skills, off for the trees as the game shipped them (a character keeps its ranks either way). Every placeholder tier in the game becomes a skill: the Cybertechnician's jamming spine, a colossus form for the Force Psyker, a Boltron foreman for the Engineer, credits that cheat death for the Smuggler, chems with strange side effects, a gun that fires once per two rounds loaded, and more.",

@@ -2,7 +2,7 @@
   "id": "Library",
   "name": "Core Library",
   "author": "Arendeth",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Shared status effects (#Burning, #Gashed, ...) and ability templates (Bolt, Strike, Nova, ...) that class mods build on."
 }
