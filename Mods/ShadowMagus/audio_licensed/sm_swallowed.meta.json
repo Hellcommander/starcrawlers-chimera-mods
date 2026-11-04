@@ -1,8 +1,8 @@
 {
   "prompt": "darkness closing over a creature, a heavy muffled thump and a shrinking downward sweep, dark magic curse",
   "duration": 1.6,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "magic",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -122,14 +122,64 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_swallowed.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.153,
   "semitones": 5,
-  "width": 0.263,
+  "width": 1.037,
   "listen": {
-    "match": 0.46,
-    "clean": -1.031,
-    "faults": []
+    "total": 0.413,
+    "match": 0.349,
+    "clean": 1.287
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, sm swallowed, darkness closing over a creature, a heavy muffled thump and a shrinking downward sweep, dark magic curse, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7090,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Wind spell-11.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.9,
+        "envelope_pct": 72.8
+      },
+      "Dark Fantasy Studio- Wind spell-5.wav": {
+        "waveform_pct": 17.2,
+        "tone_pct": 95.9,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Wind spell-9.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.7,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 4.wav": {
+        "waveform_pct": 18.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Wind spell-4.wav": {
+        "waveform_pct": 15.9,
+        "tone_pct": 95.9,
+        "envelope_pct": 78.0
+      },
+      "Dark Fantasy Studio- Wind spell-10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.0,
+        "envelope_pct": 75.1
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Wind spell-11.wav",
+    "waveform_pct": 9.6,
+    "tone_pct": 75.9,
+    "envelope_pct": 69.0
   }
 }

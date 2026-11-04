@@ -4,7 +4,7 @@
   "duration": 2.2,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "mix_unique",
   "unique": true,
   "copy_corr": 0.008635696955025196,
   "archetype": "alien",
@@ -222,5 +222,151 @@
     "4b1d9047dd7cf93c"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\nanite_cloud.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "stable-audio"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 10,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "stretch": 1.007
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0
+      },
+      "shape": 0.6,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "hit": true,
+      "transient": {
+        "sustain": 0.0,
+        "attack": 0.0
+      },
+      "envelope_rounds": 2,
+      "decay_gamma": 1.25
+    },
+    "seed": 1746425716
+  },
+  "uniqueness": {
+    "over": 0.993,
+    "pass_mark": 1.225,
+    "closest": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-47.wav",
+    "figures": {
+      "waveform_pct": 0.6,
+      "tone_pct": 0.0,
+      "envelope_pct": 89.0
+    },
+    "limits": {
+      "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-2.wav": {
+        "waveform_pct": 15.4,
+        "tone_pct": 95.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-1.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-4.wav": {
+        "waveform_pct": 24.5,
+        "tone_pct": 94.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-3.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 73.2
+      },
+      "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    }
+  },
+  "width": 0.692,
+  "listen": {
+    "total": 0.26,
+    "match": 0.288,
+    "clean": -0.555
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": -0.044,
+    "current": -0.053,
+    "verdict": "same"
+  }
 }

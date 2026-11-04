@@ -1,8 +1,8 @@
 {
   "prompt": "sharp steel spike bursting out of a metal wall with a screech, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 0.7,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -177,14 +177,141 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_spike.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.216,
   "semitones": -5,
-  "width": 0.568,
+  "width": 0.589,
   "listen": {
-    "match": 0.736,
-    "clean": -2.923,
-    "faults": []
+    "total": 0.494,
+    "match": 0.708,
+    "clean": -4.279
+  },
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "sfx_alter",
+    "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 9,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "hit": true
+    },
+    "seed": 1392002179
+  },
+  "uniqueness": {
+    "over": 0.967,
+    "pass_mark": 1.172,
+    "closest": "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 37.wav",
+    "figures": {
+      "waveform_pct": 17.0,
+      "tone_pct": 63.7,
+      "envelope_pct": 2.0
+    },
+    "limits": {
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 25.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.2
+      },
+      "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 45.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 69.1
+      },
+      "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 37.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.7
+      },
+      "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 18.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.5
+      },
+      "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 50.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 78.9
+      },
+      "made/impact/iron_gaol.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.7
+      },
+      "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 55.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 73.5
+      },
+      "Dark Fantasy Studio- Waterphone/Dark Fantasy Studio - Waterphone 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.2
+      },
+      "Dark Fantasy Studio- Swords/Dark Fantasy Studio- Swords 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 77.2
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.072,
+    "current": 0.171,
+    "verdict": "worse"
   }
 }

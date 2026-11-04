@@ -4,7 +4,7 @@
   "duration": 1.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.015494534745812416,
   "archetype": "laser",
@@ -215,5 +215,83 @@
     "e34dc92bfcd6d502"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\tinkerer_zap.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tinkerer zap, zappy prototype ray gun with springy wobble, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Sci fi voices 5- Laser.wav": {
+        "waveform_pct": 15.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 78.3
+      },
+      "Dark Fantasy Studio- Sci fi voices 4- Laser.wav": {
+        "waveform_pct": 17.1,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.3
+      },
+      "Dark Fantasy Studio- Sci fi voices 2- Laser.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.6
+      },
+      "Dark Fantasy Studio- Sci fi voices 3- Laser.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.8
+      },
+      "Dark Fantasy Studio- Sci fi voices 1- Laser.wav": {
+        "waveform_pct": 20.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.2
+      },
+      "Dark Fantasy Studio - Shot 15.wav": {
+        "waveform_pct": 19.5,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.0
+      },
+      "Dark Fantasy Studio - Reload 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Shot 28.wav": {
+        "waveform_pct": 27.4,
+        "tone_pct": 95.9,
+        "envelope_pct": 82.8
+      },
+      "Dark Fantasy Studio - Shot 21.wav": {
+        "waveform_pct": 17.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 86.6
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Sci fi voices 3- Laser.wav",
+    "waveform_pct": 7.4,
+    "tone_pct": 84.0,
+    "envelope_pct": 80.5
+  },
+  "width": 0.537,
+  "listen": {
+    "total": 0.335,
+    "match": 0.475,
+    "clean": -2.799
+  }
 }

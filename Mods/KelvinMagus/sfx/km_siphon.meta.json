@@ -1,8 +1,8 @@
 {
   "prompt": "icy magic drain, warmth sucked out of the air, crackling frost forming, inward whoosh",
   "duration": 1.6,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -86,14 +86,54 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_siphon.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.159,
   "semitones": -5,
-  "width": 0.487,
+  "width": 1.037,
   "listen": {
-    "match": 0.519,
-    "clean": -6.0,
-    "faults": []
+    "total": 0.591,
+    "match": 0.357,
+    "clean": 4.696
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, km siphon, icy magic drain, warmth sucked out of the air, crackling frost forming, inward whoosh, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7187,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Ice spell 2.wav": {
+        "waveform_pct": 22.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 65.9
+      },
+      "Dark Fantasy Studio- Ice spell 1.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Ice spell 4.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Ice spell 3.wav": {
+        "waveform_pct": 16.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Ice spell 1.wav",
+    "waveform_pct": 5.8,
+    "tone_pct": 21.4,
+    "envelope_pct": 56.6
   }
 }

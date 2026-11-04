@@ -1,8 +1,8 @@
 {
   "prompt": "unstable magic bolt with a warbling pitch that changes as it flies, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 0.8,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -156,14 +156,74 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_bolt.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.087,
   "semitones": -5,
-  "width": 0.638,
+  "width": 0.783,
   "listen": {
-    "match": 0.472,
-    "clean": -4.818,
-    "faults": []
+    "total": 0.474,
+    "match": 0.376,
+    "clean": 1.959
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, wild bolt, unstable magic bolt with a warbling pitch that changes as it flies, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7187,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Metallic 43.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-1.wav": {
+        "waveform_pct": 19.7,
+        "tone_pct": 97.7,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices-34.wav": {
+        "waveform_pct": 18.2,
+        "tone_pct": 94.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.3
+      },
+      "Dark Fantasy Studio-lightgun-59.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices-31.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 30 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices-27.wav": {
+        "waveform_pct": 16.3,
+        "tone_pct": 95.2,
+        "envelope_pct": 64.9
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio-lightgun-26.wav",
+    "waveform_pct": 6.8,
+    "tone_pct": 21.9,
+    "envelope_pct": 62.4
   }
 }

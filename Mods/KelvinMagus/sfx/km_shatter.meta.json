@@ -4,7 +4,7 @@
   "duration": 1.4,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.03039822354912758,
   "source_corr": 0.014603903517127037,
@@ -204,5 +204,83 @@
     "17177cf1360920aa"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_shatter.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, km shatter, frozen block shattering into ice shards, bright glassy smash, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7075,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Broken glass 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.0
+      },
+      "Dark Fantasy Studio- Broken glass 24.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.9
+      },
+      "Dark Fantasy Studio- Broken glass 25.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.8
+      },
+      "Dark Fantasy Studio- Smashed 38.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 73.5
+      },
+      "Dark Fantasy Studio- Broken glass 26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.6
+      },
+      "Dark Fantasy Studio- Broken glass 40.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 73.7
+      },
+      "Dark Fantasy Studio- Broken glass 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 77.0
+      },
+      "Dark Fantasy Studio- Smashed 66.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.0
+      },
+      "Dark Fantasy Studio- Broken glass 14.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 69.4
+      },
+      "Dark Fantasy Studio- Broken glass 13.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.9
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Broken glass 40.wav",
+    "waveform_pct": 7.2,
+    "tone_pct": 59.7,
+    "envelope_pct": 73.1
+  },
+  "width": 0.884,
+  "listen": {
+    "total": 0.456,
+    "match": 0.477,
+    "clean": -0.427
+  }
 }

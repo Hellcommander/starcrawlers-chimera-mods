@@ -1,29 +1,12 @@
 {
   "prompt": "massive psychic punch impact with a clang of steel, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 0.9,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
-    {
-      "id": "5a3ed87c43ffa221",
-      "score": 0.5819599032402039,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Ghostly.zip",
-      "inner": "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 20.wav",
-      "license": "reference",
-      "tags": [
-        "ghostly",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "horror"
-      ]
-    },
     {
       "id": "a72bc9edf743cd47",
       "score": 0.5810230374336243,
@@ -44,22 +27,6 @@
       ]
     },
     {
-      "id": "ef3ab7c5ee7809db",
-      "score": 0.5612106919288635,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Riser impact.zip",
-      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 45.wav",
-      "license": "reference",
-      "tags": [
-        "riser",
-        "impact",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": []
-    },
-    {
       "id": "ae39015c887481e8",
       "score": 0.5506926774978638,
       "via": "clap+tag",
@@ -73,41 +40,6 @@
       ],
       "archetypes": [
         "mech"
-      ]
-    },
-    {
-      "id": "ae39015c887481e8",
-      "score": 0.5506926774978638,
-      "via": "clap+tag",
-      "pack": "NOISE ALCHEMY- HYBRID.zip",
-      "inner": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
-      "license": "reference",
-      "tags": [
-        "hybrid",
-        "noise",
-        "alchemy"
-      ],
-      "archetypes": [
-        "mech"
-      ]
-    },
-    {
-      "id": "28b51368bc151d46",
-      "score": 0.5454422831535339,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Complexe cinematic horror.zip",
-      "inner": "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 47.wav",
-      "license": "reference",
-      "tags": [
-        "complexe",
-        "cinematic",
-        "horror",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "horror"
       ]
     },
     {
@@ -131,14 +63,136 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_hammer.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "mixed from the referenced clips by plain signal processing (layer roles, pitch, gain, offset, stretch, phase scramble, EQ, shaping, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every clip used (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.126,
   "semitones": -5,
-  "width": 1.245,
+  "width": 0.422,
   "listen": {
-    "match": 0.655,
-    "clean": -6.0,
-    "faults": []
-  }
+    "total": 0.315,
+    "match": 0.474,
+    "clean": -3.178
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 1,
+          "role": "punch",
+          "pitch": -5.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "lowcut": 180.0,
+          "length_ms": 180.0,
+          "fit": 0.655,
+          "centroid_hz": 589
+        },
+        {
+          "clip": 3,
+          "role": "body",
+          "pitch": -3.0,
+          "gain_db": -3.0,
+          "offset_ms": 6.0,
+          "fit": 0.715,
+          "centroid_hz": 1722
+        },
+        {
+          "clip": 6,
+          "role": "tail",
+          "pitch": -7.0,
+          "gain_db": -6.0,
+          "offset_ms": 25.0,
+          "highcut": 5000.0,
+          "stretch": 1.2,
+          "fit": 0.574,
+          "centroid_hz": 145
+        }
+      ],
+      "scramble": {
+        "knots": 96,
+        "spread": 0.5,
+        "eq_db": 1.5
+      },
+      "shape": 0.7,
+      "tone": 0.3,
+      "attack_ms": 4.0,
+      "width": 0.26,
+      "glue": 0.25,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "seed": 3931736754
+  },
+  "uniqueness": {
+    "over": 0.955,
+    "closest": "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
+    "figures": {
+      "waveform_pct": 19.3,
+      "tone_pct": 84.8,
+      "envelope_pct": 30.1
+    },
+    "limits": {
+      "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 41.wav": {
+        "waveform_pct": 15.2,
+        "tone_pct": 96.6,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav": {
+        "waveform_pct": 20.2,
+        "tone_pct": 94.0,
+        "envelope_pct": 69.1
+      },
+      "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 19.wav": {
+        "waveform_pct": 26.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.0
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": -0.059,
+    "current": -0.002,
+    "verdict": "worse"
+  },
+  "references_before_mix": [
+    "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 20.wav",
+    "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 41.wav",
+    "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 45.wav",
+    "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
+    "NOISE ALCHEMY- HYBRID/NOISE ALCHEMY- HYBRID 18.wav",
+    "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 47.wav",
+    "Dark Fantasy Studio- Sub boom/Dark Fantasy Studio- Sub boom 19.wav"
+  ]
 }

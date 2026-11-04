@@ -41,6 +41,8 @@ namespace ChimeraModManager
             if (sealMod != null) return SealAudio.Run(sealMod, Array.IndexOf(args, "--remove-loose") >= 0, Console.WriteLine);
             string selfTest = Arg(args, "--selftest");
             if (selfTest != null) return SelfTest.Run(mods, selfTest);
+            string soundTest = Arg(args, "--soundtest");
+            if (soundTest != null) return SelfTest.Sounds(mods, soundTest);
 #endif
             Application.Run(new MainForm(mods));
             return 0;

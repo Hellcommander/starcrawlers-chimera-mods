@@ -4,7 +4,7 @@
   "duration": 1.8,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.0007263748557306826,
   "archetype": "magic",
@@ -191,5 +191,83 @@
     "145515ea5e56b018"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\psiknight_mindbreaker.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, psiknight mindbreaker, psychic shockwave crack, mind shattering pulse, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Dimensional portal 47.wav": {
+        "waveform_pct": 19.0,
+        "tone_pct": 96.9,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio- Dimensional portal 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.5
+      },
+      "Dark Fantasy Studio- Dimensional portal 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Stingers 47.wav": {
+        "waveform_pct": 18.5,
+        "tone_pct": 97.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 97.8,
+        "envelope_pct": 67.1
+      },
+      "Dark Fantasy Studio- Dimensional portal 28.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.6,
+        "envelope_pct": 74.3
+      },
+      "Dark Fantasy Studio- Dimensional portal 21.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 32.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.0
+      },
+      "Dark Fantasy Studio- Chaos 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.8,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Dimensional portal 28.wav",
+    "waveform_pct": 6.0,
+    "tone_pct": 76.3,
+    "envelope_pct": 73.5
+  },
+  "width": 0.377,
+  "listen": {
+    "total": 0.278,
+    "match": 0.526,
+    "clean": -4.958
+  }
 }

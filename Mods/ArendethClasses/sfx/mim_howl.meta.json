@@ -4,7 +4,7 @@
   "duration": 1.6,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.00022634188644587994,
   "source_corr": 0.018230516463518143,
@@ -193,5 +193,83 @@
     "81af71884a41c80c"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_howl.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, mim howl, eerie mechanical-sounding wolf howl echoing down a metal corridor, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.6,
+    "seed": 7060,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio-Ghostly 1.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.7
+      },
+      "Dark Fantasy Studio-Ghostly 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 78.4
+      },
+      "NOISE ALCHEMY- DREKAVAC 4.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.3
+      },
+      "Dark Fantasy Studio- Complexe cinematic horror 9.wav": {
+        "waveform_pct": 15.2,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 12 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 65.6
+      },
+      "NOISE ALCHEMY - HOSTILE 12 44.1k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 65.6
+      },
+      "Dark Fantasy Studio-Ghostly 38.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.4
+      },
+      "Dark Fantasy Studio- Complexe cinematic horror 49.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- DREKAVAC 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Ghostly 28.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.2
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY - HOSTILE 12 48k.wav",
+    "waveform_pct": 7.3,
+    "tone_pct": 80.6,
+    "envelope_pct": 40.2
+  },
+  "width": 1.115,
+  "listen": {
+    "total": 0.734,
+    "match": 0.435,
+    "clean": 5.995
+  }
 }

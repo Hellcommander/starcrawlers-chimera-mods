@@ -77,3 +77,5 @@ __pycache__/
 
 # The sound archives' key: baked into the loader at build, never shared (every sounds.pak carries its own key wrapped with the matching public key)
 /_modding/audio/loader_private.b64
+# archives the mod manager's sound editor replaced (owner machine only)
+/_modding/audio/pak_backups/

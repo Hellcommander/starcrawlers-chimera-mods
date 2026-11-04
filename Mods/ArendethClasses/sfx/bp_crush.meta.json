@@ -1,8 +1,8 @@
 {
   "prompt": "metal walls grinding inward with crushing pressure, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 1.2,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -165,14 +165,154 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_crush.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.049,
   "semitones": -4,
-  "width": 0.414,
+  "width": 0.408,
   "listen": {
-    "match": 0.471,
-    "clean": -0.283,
-    "faults": []
+    "total": 0.473,
+    "match": 0.488,
+    "clean": -0.307
+  },
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "sfx_alter",
+    "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 9,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "keep_lead": true
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0,
+        "depth": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "tone_frames": true,
+      "widen_mid": true,
+      "hit": false,
+      "decay_gamma": 0.8,
+      "flicker": {
+        "hz": 9.0,
+        "depth": 0.3
+      },
+      "transient": {
+        "attack": 0.3,
+        "sustain": 0.3
+      }
+    },
+    "seed": 2627105868
+  },
+  "uniqueness": {
+    "over": 0.987,
+    "pass_mark": 1.208,
+    "closest": "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 48.wav",
+    "figures": {
+      "waveform_pct": 1.9,
+      "tone_pct": 59.3,
+      "envelope_pct": 80.6
+    },
+    "limits": {
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 25.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.2
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 19.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 69.4
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 48.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.6
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 34.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.7
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 42.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.9,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Metallic/Dark Fantasy Studio- Metallic 14.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- ANCIENT MECHANISMS/NOISE ALCHEMY - ANCIENT MECHANISMS 18.wav": {
+        "waveform_pct": 17.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": -0.072,
+    "current": -0.064,
+    "verdict": "same"
   }
 }

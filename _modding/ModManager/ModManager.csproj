@@ -34,6 +34,9 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(PlayerBuild)' == 'true'">
     <Compile Remove="SelfTest.cs" />
+    <!-- the owner's sound editor opens sealed archives with the private key file: never in what players get -->
+    <Compile Remove="SoundArchive.cs" />
+    <Compile Remove="SoundEditorForm.cs" />
   </ItemGroup>
 
   <Target Name="EmbedNewtonsoft" AfterTargets="ResolveAssemblyReferences">

@@ -4,7 +4,7 @@
   "duration": 1.2,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.0011879419907927513,
   "source_corr": 0.01819845661520958,
@@ -201,5 +201,83 @@
     "e7183bb454e9f41e"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_mist.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, mia mist, low rolling hiss of toxic gas spreading, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9102,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY - HOSTILE 13 44.1k.wav": {
+        "waveform_pct": 21.5,
+        "tone_pct": 95.6,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 19 44.1k.wav": {
+        "waveform_pct": 20.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 13 48k.wav": {
+        "waveform_pct": 21.5,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 19 48k.wav": {
+        "waveform_pct": 20.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Beast-49.wav": {
+        "waveform_pct": 16.0,
+        "tone_pct": 96.7,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Alien-hit-and-death-3.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 14 44.1k.wav": {
+        "waveform_pct": 15.2,
+        "tone_pct": 96.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Monster-69.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.9,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- DRAGON WINGS 24.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- HYBRID 29_REV.wav": {
+        "waveform_pct": 25.3,
+        "tone_pct": 94.1,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio-Monster-69.wav",
+    "waveform_pct": 6.5,
+    "tone_pct": 91.7,
+    "envelope_pct": 33.6
+  },
+  "width": 1.044,
+  "listen": {
+    "total": 0.303,
+    "match": 0.309,
+    "clean": -0.122
+  }
 }

@@ -4,7 +4,7 @@
   "duration": 1.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.002212687162682414,
   "archetype": "organic",
@@ -199,5 +199,83 @@
     "256585101b22dc56"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\etcher_needle.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, etcher needle, thin hissing acid stream sizzling on metal, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9103,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio-Dragon 47.wav": {
+        "waveform_pct": 16.6,
+        "tone_pct": 98.0,
+        "envelope_pct": 65.3
+      },
+      "Dark Fantasy Studio- Crow 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 43.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 9.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Flesh and blood 20.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Crow 47.wav",
+    "waveform_pct": 4.1,
+    "tone_pct": 57.3,
+    "envelope_pct": 65.8
+  },
+  "width": 0.874,
+  "listen": {
+    "total": 0.369,
+    "match": 0.291,
+    "clean": 1.574
+  }
 }

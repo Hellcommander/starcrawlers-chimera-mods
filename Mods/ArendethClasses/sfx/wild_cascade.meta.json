@@ -1,8 +1,8 @@
 {
   "prompt": "rapid chaotic cascade of many different spell impacts one after another, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 1.6,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -167,14 +167,79 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\wild_cascade.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.106,
   "semitones": -3,
-  "width": 0.15,
+  "width": 0.944,
   "listen": {
-    "match": 0.54,
-    "clean": -6.0,
-    "faults": []
+    "total": 0.193,
+    "match": 0.231,
+    "clean": -0.77
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, wild cascade, rapid chaotic cascade of many different spell impacts one after another, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Chaos 5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Chaos 2.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Chaos 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Chaos 34.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.6,
+        "envelope_pct": 69.4
+      },
+      "Dark Fantasy Studio- Chaos 45.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 56 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 64.9
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 4 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Chaos 31.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 56 44.1k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.2,
+        "envelope_pct": 64.9
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Chaos 34.wav",
+    "waveform_pct": 6.2,
+    "tone_pct": 85.4,
+    "envelope_pct": 50.2
   }
 }

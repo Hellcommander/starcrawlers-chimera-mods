@@ -4,7 +4,7 @@
   "duration": 0.8,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.00676843011751771,
   "archetype": "impact",
@@ -182,5 +182,83 @@
     "bb0deb7254eaf10f"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\ringmaster_whip.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, ringmaster whip, sharp whip crack, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7090,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Whooshes 47.wav": {
+        "waveform_pct": 16.9,
+        "tone_pct": 97.3,
+        "envelope_pct": 77.2
+      },
+      "Dark Fantasy Studio- Smashed 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.0
+      },
+      "Dark Fantasy Studio- Swords 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.5
+      },
+      "Dark Fantasy Studio- Smashed 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.2
+      },
+      "Dark Fantasy Studio- Swords 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.9
+      },
+      "Dark Fantasy Studio- Whooshes 39.wav": {
+        "waveform_pct": 20.4,
+        "tone_pct": 96.1,
+        "envelope_pct": 71.4
+      },
+      "Dark Fantasy Studio- Smashed 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.7
+      },
+      "Dark Fantasy Studio- Swords 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.0
+      },
+      "Dark Fantasy Studio- Whooshes 35.wav": {
+        "waveform_pct": 17.4,
+        "tone_pct": 96.6,
+        "envelope_pct": 78.2
+      },
+      "Dark Fantasy Studio- Riser impact 47.wav": {
+        "waveform_pct": 17.1,
+        "tone_pct": 96.6,
+        "envelope_pct": 66.6
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Smashed 47.wav",
+    "waveform_pct": 5.8,
+    "tone_pct": 37.0,
+    "envelope_pct": 75.8
+  },
+  "width": 0.689,
+  "listen": {
+    "total": 0.447,
+    "match": 0.453,
+    "clean": -0.113
+  }
 }

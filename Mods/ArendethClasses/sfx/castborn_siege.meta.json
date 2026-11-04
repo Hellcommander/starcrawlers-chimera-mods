@@ -4,7 +4,7 @@
   "duration": 1.8,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.01347065344452858,
   "archetype": "mech",
@@ -182,5 +182,83 @@
     "c847e8b1e5391a64"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\castborn_siege.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, castborn siege, massive iron joints locking, deep metallic clunk and hum, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.6,
+    "seed": 7157,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Metallic 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 70.3
+      },
+      "Dark Fantasy Studio- Metallic 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 68.4
+      },
+      "Dark Fantasy Studio- Metallic 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.3
+      },
+      "Dark Fantasy Studio- Metallic 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 70.7
+      },
+      "Dark Fantasy Studio- Metallic 20.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 85.0
+      },
+      "Dark Fantasy Studio- Metallic 5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.7
+      },
+      "Dark Fantasy Studio- Metallic 3.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 77.5
+      },
+      "Dark Fantasy Studio- Metallic 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.3
+      },
+      "NOISE ALCHEMY- HYBRID 15.wav": {
+        "waveform_pct": 19.8,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.8
+      },
+      "NOISE ALCHEMY- HYBRID 15_REV.wav": {
+        "waveform_pct": 25.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.8
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY- HYBRID 15_REV.wav",
+    "waveform_pct": 25.5,
+    "tone_pct": 88.8,
+    "envelope_pct": 20.8
+  },
+  "width": 0.6,
+  "listen": {
+    "total": 0.176,
+    "match": 0.316,
+    "clean": -2.797
+  }
 }

@@ -4,7 +4,7 @@
   "duration": 2.6,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "mix_unique",
   "unique": true,
   "copy_corr": 0.013806674629449844,
   "source_corr": 0.011601747013628483,
@@ -12,74 +12,6 @@
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
-    {
-      "id": "a4286dee3207ebca",
-      "score": 0.516363799571991,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 8.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
-      "id": "dff13e933057cc54",
-      "score": 0.47824037075042725,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 14.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
-      "id": "213b599db1d8870b",
-      "score": 0.47612035274505615,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 12.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
-      "id": "354e14280819b42b",
-      "score": 0.4755629897117615,
-      "via": "clap+tag",
-      "pack": "NOISE ALCHEMY- DREKAVAC.zip",
-      "inner": "NOISE ALCHEMY- DREKAVAC/NOISE ALCHEMY- DREKAVAC 5.wav",
-      "license": "reference",
-      "tags": [
-        "drekavac",
-        "noise",
-        "alchemy"
-      ],
-      "archetypes": []
-    },
     {
       "id": "4efb7382eb62a6fb",
       "score": 0.4744410812854767,
@@ -117,24 +49,6 @@
       ]
     },
     {
-      "id": "0cfc7cd2b6eaa689",
-      "score": 0.4688042402267456,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 28.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
       "id": "acbeda1027854567",
       "score": 0.46368616819381714,
       "via": "clap+tag",
@@ -142,42 +56,6 @@
       "inner": "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 10.wav",
       "license": "reference",
       "tags": [
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
-      "id": "7e42475fd76e581d",
-      "score": 0.4564114212989807,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 6.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
-        "wind",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "ambience"
-      ]
-    },
-    {
-      "id": "e6d38078f1315f36",
-      "score": 0.45172542333602905,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Creepy wind.zip",
-      "inner": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 65.wav",
-      "license": "reference",
-      "tags": [
-        "creepy",
         "wind",
         "dark",
         "fantasy",
@@ -201,5 +79,137 @@
     "e6d38078f1315f36"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_zero_point.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "mixed from the referenced clips by plain signal processing (layer roles, pitch, gain, offset, stretch, phase scramble, EQ, shaping, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
+  "mix_mode": "rebuild",
+  "mix_plan": {
+    "plan": {
+      "hit": false,
+      "layers": [
+        {
+          "clip": 7,
+          "role": "body",
+          "pitch": -4.0,
+          "gain_db": 3.0,
+          "offset_ms": 0.0,
+          "fit": 0.519,
+          "centroid_hz": 1205
+        },
+        {
+          "clip": 5,
+          "role": "body",
+          "pitch": 3.0,
+          "gain_db": 3.0,
+          "offset_ms": 6.0,
+          "fit": 0.519,
+          "centroid_hz": 830
+        },
+        {
+          "clip": 4,
+          "role": "body",
+          "pitch": -6.0,
+          "gain_db": -11.0,
+          "offset_ms": 12.0,
+          "fit": 0.439,
+          "centroid_hz": 735
+        }
+      ],
+      "scramble": {
+        "knots": 60,
+        "spread": 0.5,
+        "eq_db": 1.5
+      },
+      "shape": 0.9,
+      "tone": 0.3,
+      "attack_ms": 0.0,
+      "width": 0.26,
+      "glue": 0.45,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "seed": 2700260680
+  },
+  "uniqueness": {
+    "over": 0.949,
+    "pass_mark": 1.077,
+    "closest": "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 21.wav",
+    "figures": {
+      "waveform_pct": 8.7,
+      "tone_pct": 96.2,
+      "envelope_pct": 34.3
+    },
+    "limits": {
+      "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.1,
+        "envelope_pct": 69.2
+      },
+      "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 68.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 66.3
+      },
+      "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    }
+  },
+  "width": 0.553,
+  "listen": {
+    "total": 0.375,
+    "match": 0.549,
+    "clean": -3.489
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.183,
+    "current": 0.065,
+    "verdict": "better"
+  },
+  "references_before_mix": [
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 8.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 14.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 12.wav",
+    "NOISE ALCHEMY- DREKAVAC/NOISE ALCHEMY- DREKAVAC 5.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 21.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 68.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 28.wav",
+    "Dark Fantasy Studio- Wind/Dark Fantasy Studio- Wind 10.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 6.wav",
+    "Dark Fantasy Studio- Creepy wind/Dark Fantasy Studio- Creepy wind 65.wav"
+  ]
 }

@@ -4,7 +4,7 @@
   "duration": 2.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.14546018838882446,
   "source_corr": 0.04163908213376999,
@@ -200,5 +200,83 @@
     "58ce2ceeb7fd422d"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\shaman_collapse.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, shaman collapse, quantum collapse, deep implosion whoom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7090,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio - Shipwreck 23.wav": {
+        "waveform_pct": 20.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 69.2
+      },
+      "Dark Fantasy Studio- Sub boom 19.wav": {
+        "waveform_pct": 26.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.0
+      },
+      "Dark Fantasy Studio - Shipwreck 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 95.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 20.wav": {
+        "waveform_pct": 23.4,
+        "tone_pct": 94.0,
+        "envelope_pct": 68.5
+      },
+      "Dark Fantasy Studio- Sub boom 12.wav": {
+        "waveform_pct": 20.2,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.8
+      },
+      "Dark Fantasy Studio- Sub boom 16.wav": {
+        "waveform_pct": 27.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.9
+      },
+      "Dark Fantasy Studio- Sub boom 48.wav": {
+        "waveform_pct": 28.0,
+        "tone_pct": 94.1,
+        "envelope_pct": 76.4
+      },
+      "Dark Fantasy Studio- Sub boom 15.wav": {
+        "waveform_pct": 28.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.0
+      },
+      "Dark Fantasy Studio- Sub boom 38.wav": {
+        "waveform_pct": 20.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 10.wav": {
+        "waveform_pct": 26.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.9
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio - Shipwreck 20.wav",
+    "waveform_pct": 19.4,
+    "tone_pct": 87.5,
+    "envelope_pct": 42.3
+  },
+  "width": 0.817,
+  "listen": {
+    "total": 0.215,
+    "match": 0.276,
+    "clean": -1.216
+  }
 }

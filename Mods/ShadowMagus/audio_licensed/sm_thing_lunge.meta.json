@@ -1,8 +1,8 @@
 {
   "prompt": "something huge lunging out of darkness, a rushing whoosh and a deep guttural roar at the end",
   "duration": 1.6,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "monster",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -118,14 +118,64 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_thing_lunge.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.241,
   "semitones": 3,
-  "width": 0.184,
+  "width": 0.389,
   "listen": {
-    "match": 0.387,
-    "clean": -3.802,
-    "faults": []
+    "total": 0.316,
+    "match": 0.183,
+    "clean": 2.655
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, sm thing lunge, something huge lunging out of darkness, a rushing whoosh and a deep guttural roar at the end, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7075,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio-Monster-51.wav": {
+        "waveform_pct": 24.2,
+        "tone_pct": 96.2,
+        "envelope_pct": 66.8
+      },
+      "Dark Fantasy Studio-Monster-1.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Monster-56.wav": {
+        "waveform_pct": 23.5,
+        "tone_pct": 96.2,
+        "envelope_pct": 65.9
+      },
+      "Dark Fantasy Studio-Monster-67.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Monster-54.wav": {
+        "waveform_pct": 18.8,
+        "tone_pct": 95.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Monster-50.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio-Monster-56.wav",
+    "waveform_pct": 10.5,
+    "tone_pct": 95.6,
+    "envelope_pct": 55.2
   }
 }

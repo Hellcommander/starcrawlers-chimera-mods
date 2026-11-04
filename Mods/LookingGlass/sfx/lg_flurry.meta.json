@@ -1,8 +1,8 @@
 {
   "prompt": "quick whimsical sword swishes, two fast blade cuts with a sparkle",
   "duration": 1.2,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -95,14 +95,59 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_flurry.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.051,
   "semitones": 4,
-  "width": 0.463,
+  "width": 0.985,
   "listen": {
-    "match": 0.611,
-    "clean": -1.31,
-    "faults": []
+    "total": 0.664,
+    "match": 0.588,
+    "clean": 1.527
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, lg flurry, quick whimsical sword swishes, two fast blade cuts with a sparkle, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7172,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Swords 45.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio- Swords 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.9
+      },
+      "Dark Fantasy Studio- Swords 24.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.1
+      },
+      "Dark Fantasy Studio- Swords 44.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.2
+      },
+      "Dark Fantasy Studio- Swords 6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.7
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Swords 44.wav",
+    "waveform_pct": 2.3,
+    "tone_pct": 0.0,
+    "envelope_pct": 72.9
   }
 }

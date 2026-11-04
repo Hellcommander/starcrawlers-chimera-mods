@@ -4,7 +4,7 @@
   "duration": 1.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.00193478271830827,
   "archetype": "magic",
@@ -192,5 +192,83 @@
     "b887b86e607de29f"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\shaman_coin.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, shaman coin, coin flip ping with energy bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9100,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Dimensional portal 47.wav": {
+        "waveform_pct": 19.0,
+        "tone_pct": 96.9,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio- Dimensional portal 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.5
+      },
+      "Dark Fantasy Studio- Dimensional portal 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 71.3
+      },
+      "Dark Fantasy Studio- Dimensional portal 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 49.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 97.8,
+        "envelope_pct": 67.1
+      },
+      "Dark Fantasy Studio- Dimensional portal 21.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Stingers 47.wav": {
+        "waveform_pct": 18.5,
+        "tone_pct": 97.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 8.wav": {
+        "waveform_pct": 20.6,
+        "tone_pct": 95.3,
+        "envelope_pct": 68.1
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Dimensional portal 29.wav",
+    "waveform_pct": 3.6,
+    "tone_pct": 1.4,
+    "envelope_pct": 62.4
+  },
+  "width": 0.672,
+  "listen": {
+    "total": 0.479,
+    "match": 0.438,
+    "clean": 0.818
+  }
 }

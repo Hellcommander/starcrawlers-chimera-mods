@@ -26,6 +26,9 @@ namespace ChimeraModManager
         private readonly ToolStripButton play;
         private readonly ToolStripStatusLabel said, gameState;
         private readonly Button up, down, top, bottom, openFolder, needs, allowCode, remove;
+#if !PLAYER
+        private readonly Button sounds;
+#endif
         private bool filling;
         private ModPack selected;
         private ModPlan next = new ModPlan();
@@ -120,6 +123,11 @@ namespace ChimeraModManager
             remove = ActionButton("Remove…", Remove);
             var actions = new FlowLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(0, Px(4), 0, 0) };
             actions.Controls.AddRange(new Control[] { openFolder, needs, allowCode, remove });
+#if !PLAYER
+            // owner tool: open, edit and reseal the mod's sealed sounds with the owner's private key file (never in the player build)
+            sounds = ActionButton("Sounds…", () => { if (selected != null) using (var f = new SoundEditorForm(files, selected.folder, selected.Title)) f.ShowDialog(this); });
+            actions.Controls.Add(sounds);
+#endif
             var infoBox = new Panel { Dock = DockStyle.Fill, BackColor = SystemColors.Window, Padding = new Padding(Px(12)), BorderStyle = BorderStyle.FixedSingle };
             infoBox.Controls.Add(info);
             var right = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Padding = new Padding(0, Px(8), Px(8), Px(8)) };
@@ -246,6 +254,9 @@ namespace ChimeraModManager
             up.Enabled = top.Enabled = i > 0;
             down.Enabled = bottom.Enabled = i >= 0 && i < order.Count - 1;
             openFolder.Enabled = selected != null;
+#if !PLAYER
+            sounds.Enabled = selected != null;
+#endif
             remove.Enabled = selected != null && !files.IsRoot(selected);
             needs.Visible = selected != null && ModChoices.IsOn(selected) && OffNeeds(selected).Any();
             allowCode.Visible = selected != null && selected.pluginFiles.Count > 0;

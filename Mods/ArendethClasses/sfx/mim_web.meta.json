@@ -1,8 +1,8 @@
 {
   "prompt": "sticky web spray hissing out, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 0.8,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -23,38 +23,6 @@
       "archetypes": [
         "mech"
       ]
-    },
-    {
-      "id": "7c8c8d8fe9c66961",
-      "score": 0.4650055170059204,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Insects.zip",
-      "inner": "Dark Fantasy Studio- Insects/Dark Fantasy Studio- Insects 8.wav",
-      "license": "reference",
-      "tags": [
-        "insects",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "alien"
-      ]
-    },
-    {
-      "id": "06f52a8f41a7a07a",
-      "score": 0.4581112265586853,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Glitch.zip",
-      "inner": "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 61.wav",
-      "license": "reference",
-      "tags": [
-        "glitch",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": []
     },
     {
       "id": "98b61e74566e2868",
@@ -87,35 +55,135 @@
       "archetypes": [
         "mech"
       ]
-    },
-    {
-      "id": "8e911cadac759964",
-      "score": 0.44876497983932495,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Rip.zip",
-      "inner": "Dark Fantasy Studio- Rip/Dark Fantasy Studio- Rip 12.wav",
-      "license": "reference",
-      "tags": [
-        "rip",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "impact"
-      ]
     }
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_web.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "mixed from the referenced clips by plain signal processing (layer roles, pitch, gain, offset, stretch, phase scramble, EQ, shaping, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every clip used (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.037,
   "semitones": 3,
-  "width": 0.757,
+  "width": 0.828,
   "listen": {
-    "match": 0.622,
-    "clean": -1.398,
-    "faults": []
-  }
+    "total": 0.463,
+    "match": 0.603,
+    "clean": -2.808
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 0,
+          "role": "body",
+          "pitch": -4.0,
+          "gain_db": 3.0,
+          "offset_ms": 0.0,
+          "fit": 0.642,
+          "centroid_hz": 8214
+        },
+        {
+          "clip": 3,
+          "role": "body",
+          "pitch": 3.0,
+          "gain_db": -3.0,
+          "offset_ms": 6.0,
+          "fit": 0.622,
+          "centroid_hz": 8837
+        },
+        {
+          "clip": 4,
+          "role": "body",
+          "pitch": -6.0,
+          "gain_db": -11.0,
+          "offset_ms": 12.0,
+          "fit": 0.606,
+          "centroid_hz": 9201
+        }
+      ],
+      "scramble": {
+        "knots": 60,
+        "spread": 0.5,
+        "eq_db": 1.5
+      },
+      "shape": 0.9,
+      "tone": 0.3,
+      "attack_ms": 0.0,
+      "width": 0.26,
+      "glue": 0.45,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "seed": 729194654
+  },
+  "uniqueness": {
+    "over": 0.902,
+    "closest": "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 30.wav",
+    "figures": {
+      "waveform_pct": 3.3,
+      "tone_pct": 84.8,
+      "envelope_pct": 18.6
+    },
+    "limits": {
+      "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.2
+      },
+      "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 92.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.3
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.185,
+    "current": 0.058,
+    "verdict": "better"
+  },
+  "references_before_mix": [
+    "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 30.wav",
+    "Dark Fantasy Studio- Insects/Dark Fantasy Studio- Insects 8.wav",
+    "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 61.wav",
+    "Dark Fantasy Studio- Glitch/Dark Fantasy Studio- Glitch 92.wav",
+    "Dark Fantasy Studio- Steam/Dark Fantasy Studio- Steam 29.wav",
+    "Dark Fantasy Studio- Rip/Dark Fantasy Studio- Rip 12.wav"
+  ]
 }

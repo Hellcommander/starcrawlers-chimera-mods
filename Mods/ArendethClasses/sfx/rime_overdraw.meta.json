@@ -4,7 +4,7 @@
   "duration": 1.6,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.010162468999624252,
   "archetype": "magic",
@@ -194,5 +194,83 @@
     "1768e5b5a17c814b"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\rime_overdraw.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, rime overdraw, ice shattering nova burst with cold wind blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.9,
+    "seed": 7090,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Dimensional portal 47.wav": {
+        "waveform_pct": 19.0,
+        "tone_pct": 96.9,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio- Dimensional portal 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.5
+      },
+      "Dark Fantasy Studio- Dimensional portal 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Ice spell 10.wav": {
+        "waveform_pct": 21.2,
+        "tone_pct": 94.8,
+        "envelope_pct": 72.8
+      },
+      "Dark Fantasy Studio- Dimensional portal 10.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 96.7,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 32.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 28.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.6,
+        "envelope_pct": 76.6
+      },
+      "Dark Fantasy Studio- Dimensional portal 21.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 97.8,
+        "envelope_pct": 67.1
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Dimensional portal 28.wav",
+    "waveform_pct": 6.2,
+    "tone_pct": 89.8,
+    "envelope_pct": 62.0
+  },
+  "width": 0.799,
+  "listen": {
+    "total": 0.426,
+    "match": 0.231,
+    "clean": 3.9
+  }
 }

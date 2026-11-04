@@ -4,7 +4,7 @@
   "duration": 0.8,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "mix_unique",
   "unique": true,
   "copy_corr": 0.028354821726679802,
   "source_corr": 0.007104428485035896,
@@ -199,5 +199,149 @@
     "8d36b5121784e87f"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\bp_shove.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "stable-audio"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 10,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "keep_lead": true
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0,
+        "depth": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "tone_frames": true,
+      "widen_mid": true,
+      "hit": false,
+      "decay_gamma": 1.25
+    },
+    "seed": 2219063892
+  },
+  "uniqueness": {
+    "over": 0.984,
+    "pass_mark": 1.228,
+    "closest": "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 48.wav",
+    "figures": {
+      "waveform_pct": 4.6,
+      "tone_pct": 61.3,
+      "envelope_pct": 83.7
+    },
+    "limits": {
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 48.wav": {
+        "waveform_pct": 23.4,
+        "tone_pct": 97.8,
+        "envelope_pct": 69.3
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 26.wav": {
+        "waveform_pct": 22.1,
+        "tone_pct": 95.3,
+        "envelope_pct": 74.8
+      },
+      "Dark Fantasy Studio- Whooshes vol 2/Dark Fantasy Studio- Whooshes vol 2 5.wav": {
+        "waveform_pct": 25.9,
+        "tone_pct": 97.6,
+        "envelope_pct": 73.6
+      },
+      "Dark Fantasy Studio- Whooshes vol 2/Dark Fantasy Studio- Whooshes vol 2 7.wav": {
+        "waveform_pct": 23.2,
+        "tone_pct": 97.6,
+        "envelope_pct": 75.0
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 28.wav": {
+        "waveform_pct": 22.9,
+        "tone_pct": 97.4,
+        "envelope_pct": 79.5
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 32.wav": {
+        "waveform_pct": 25.1,
+        "tone_pct": 97.8,
+        "envelope_pct": 77.0
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 30.wav": {
+        "waveform_pct": 19.9,
+        "tone_pct": 96.6,
+        "envelope_pct": 81.1
+      },
+      "Dark Fantasy Studio- Whooshes vol 2/Dark Fantasy Studio- Whooshes vol 2 10.wav": {
+        "waveform_pct": 22.5,
+        "tone_pct": 96.6,
+        "envelope_pct": 73.5
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 42.wav": {
+        "waveform_pct": 24.5,
+        "tone_pct": 97.1,
+        "envelope_pct": 76.2
+      },
+      "Dark Fantasy Studio- Whooshes/Dark Fantasy Studio- Whooshes 29.wav": {
+        "waveform_pct": 24.6,
+        "tone_pct": 97.3,
+        "envelope_pct": 77.8
+      }
+    }
+  },
+  "width": 0.261,
+  "listen": {
+    "total": 0.509,
+    "match": 0.418,
+    "clean": 1.812
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.189,
+    "current": 0.18,
+    "verdict": "same"
+  }
 }

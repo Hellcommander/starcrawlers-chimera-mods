@@ -1,8 +1,8 @@
 {
   "prompt": "eerie swirling psychic whispers rising into a mad echoing laugh of chimes",
   "duration": 2.0,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -149,14 +149,74 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_mad_here.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.049,
   "semitones": 3,
-  "width": 0.939,
+  "width": 0.248,
   "listen": {
-    "match": 0.437,
-    "clean": -3.059,
-    "faults": []
+    "total": 0.323,
+    "match": 0.112,
+    "clean": 4.207
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, lg mad here, eerie swirling psychic whispers rising into a mad echoing laugh of chimes, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7172,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY - Nerve 33_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.2
+      },
+      "NOISE ALCHEMY - Nerve 43 Loop.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.9,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-Ghostly 23.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.6
+      },
+      "NOISE ALCHEMY- UNEASY LISTENING 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - Nerve 45 Loop.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.9,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Metallic 14.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - Nerve 44 Loop_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.6,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - Nerve 43 Loop_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY - Nerve 33_REV.wav",
+    "waveform_pct": 1.8,
+    "tone_pct": 68.6,
+    "envelope_pct": 31.6
   }
 }

@@ -1,8 +1,8 @@
 {
   "prompt": "magical transformation shimmer ending in a deep rumbling purr",
   "duration": 2.4,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -163,14 +163,69 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\LookingGlass\\sfx\\lg_cat.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.206,
   "semitones": -5,
-  "width": 0.919,
+  "width": 0.748,
   "listen": {
-    "match": 0.58,
-    "clean": -0.717,
-    "faults": []
+    "total": 0.478,
+    "match": 0.444,
+    "clean": 0.676
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, lg cat, magical transformation shimmer ending in a deep rumbling purr, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY- TEXTURES 1 22_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.5
+      },
+      "NOISE ALCHEMY- UI ACTIVATION 17_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.9
+      },
+      "NOISE ALCHEMY- HYBRID 18_REV.wav": {
+        "waveform_pct": 25.1,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.7
+      },
+      "Dark Fantasy Studio - Waterphone 11.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 77.0
+      },
+      "Dark Fantasy Studio- Sirens 6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.8
+      },
+      "NOISE ALCHEMY- HYBRID 5_REV.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- DOWNSEEPS 1 11_REV.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY- HYBRID 18_REV.wav",
+    "waveform_pct": 8.3,
+    "tone_pct": 92.7,
+    "envelope_pct": 54.9
   }
 }

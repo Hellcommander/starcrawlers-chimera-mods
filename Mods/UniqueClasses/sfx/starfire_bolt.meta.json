@@ -4,7 +4,7 @@
   "duration": 1.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.0030741167720407248,
   "source_corr": 0.009586852975189686,
@@ -200,5 +200,83 @@
     "b07fab52988d2b45"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\starfire_bolt.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, starfire bolt, plasma bolt, searing fiery whoosh, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9102,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Whooshes 20.wav": {
+        "waveform_pct": 15.6,
+        "tone_pct": 97.1,
+        "envelope_pct": 78.6
+      },
+      "Dark Fantasy Studio- Whooshes 2.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 78.2
+      },
+      "Dark Fantasy Studio- Whooshes vol 2 20.wav": {
+        "waveform_pct": 19.7,
+        "tone_pct": 96.8,
+        "envelope_pct": 76.7
+      },
+      "Dark Fantasy Studio- Whooshes vol 2 4.wav": {
+        "waveform_pct": 19.2,
+        "tone_pct": 96.3,
+        "envelope_pct": 72.3
+      },
+      "Dark Fantasy Studio- Whooshes 36.wav": {
+        "waveform_pct": 20.8,
+        "tone_pct": 97.8,
+        "envelope_pct": 80.0
+      },
+      "Dark Fantasy Studio- Whooshes vol 2 33.wav": {
+        "waveform_pct": 19.6,
+        "tone_pct": 97.0,
+        "envelope_pct": 74.8
+      },
+      "Dark Fantasy Studio-lightgun-26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.3
+      },
+      "Dark Fantasy Studio- Whooshes vol 2 13.wav": {
+        "waveform_pct": 22.9,
+        "tone_pct": 97.3,
+        "envelope_pct": 75.5
+      },
+      "Dark Fantasy Studio- Whooshes 7.wav": {
+        "waveform_pct": 19.6,
+        "tone_pct": 97.6,
+        "envelope_pct": 77.6
+      },
+      "Dark Fantasy Studio- Whooshes 37.wav": {
+        "waveform_pct": 24.7,
+        "tone_pct": 95.9,
+        "envelope_pct": 80.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Whooshes vol 2 20.wav",
+    "waveform_pct": 8.8,
+    "tone_pct": 94.6,
+    "envelope_pct": 76.2
+  },
+  "width": 0.366,
+  "listen": {
+    "total": 0.323,
+    "match": 0.571,
+    "clean": -4.956
+  }
 }

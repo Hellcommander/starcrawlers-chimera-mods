@@ -1,8 +1,8 @@
 {
   "prompt": "chaotic warbling energy bolt with random glitch pitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "duration": 1.0,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -143,14 +143,74 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\entropy_coin.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.137,
   "semitones": -3,
-  "width": 0.817,
+  "width": 0.594,
   "listen": {
-    "match": 0.485,
-    "clean": -6.0,
-    "faults": []
+    "total": 0.274,
+    "match": 0.343,
+    "clean": -1.368
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, entropy coin, chaotic warbling energy bolt with random glitch pitch, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY- REALITY GLITCH 45.wav": {
+        "waveform_pct": 16.2,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 22 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.1,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- REALITY GLITCH 43.wav": {
+        "waveform_pct": 16.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 22 44.1k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.8,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 44 48k.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 97.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Glitch 3.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- REALITY GLITCH 47.wav": {
+        "waveform_pct": 18.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-41.wav": {
+        "waveform_pct": 21.4,
+        "tone_pct": 95.5,
+        "envelope_pct": 71.9
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Glitch 3.wav",
+    "waveform_pct": 2.1,
+    "tone_pct": 0.0,
+    "envelope_pct": 59.3
   }
 }

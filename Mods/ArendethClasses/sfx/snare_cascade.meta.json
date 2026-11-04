@@ -1,8 +1,8 @@
 {
   "prompt": "rapid chain of psychic traps detonating one after another in a rising cascade, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 1.6,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -164,14 +164,79 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\snare_cascade.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.123,
   "semitones": 3,
-  "width": 0.292,
+  "width": 1.078,
   "listen": {
-    "match": 0.472,
-    "clean": -6.0,
-    "faults": []
+    "total": 0.368,
+    "match": 0.196,
+    "clean": 3.435
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, snare cascade, rapid chain of psychic traps detonating one after another in a rising cascade, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.6,
+    "seed": 7060,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Chaos 5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 64.0
+      },
+      "NOISE_ALCHEMY_DOOM_14_GLITCH.wav": {
+        "waveform_pct": 18.3,
+        "tone_pct": 95.9,
+        "envelope_pct": 81.1
+      },
+      "NOISE_ALCHEMY_DOOM_5_GLITCH.wav": {
+        "waveform_pct": 21.7,
+        "tone_pct": 96.4,
+        "envelope_pct": 85.9
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 56 44.1k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.2,
+        "envelope_pct": 64.9
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 56 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 64.9
+      },
+      "NOISE_ALCHEMY_DOOM_8_GLITCH.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 95.2,
+        "envelope_pct": 74.5
+      },
+      "NOISE_ALCHEMY_DOOM_19_GLITCH.wav": {
+        "waveform_pct": 19.1,
+        "tone_pct": 96.0,
+        "envelope_pct": 75.5
+      },
+      "NOISE ALCHEMY - INVASION TEXTURE 3.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE_ALCHEMY_DOOM_1_GLITCH.wav": {
+        "waveform_pct": 19.5,
+        "tone_pct": 96.1,
+        "envelope_pct": 75.7
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY - PROTOCOL CHAOS 56 44.1k.wav",
+    "waveform_pct": 2.4,
+    "tone_pct": 8.1,
+    "envelope_pct": 30.4
   }
 }

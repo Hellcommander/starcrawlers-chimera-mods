@@ -1,8 +1,8 @@
 {
   "prompt": "solar flare eruption roar, massive plasma blast, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "duration": 2.5,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -151,14 +151,140 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\starfire_eruption.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.233,
   "semitones": -3,
-  "width": 0.043,
+  "width": 0.493,
   "listen": {
-    "match": 0.688,
-    "clean": -1.938,
-    "faults": []
+    "total": 0.594,
+    "match": 0.689,
+    "clean": -1.901
+  },
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "sfx_alter",
+    "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 8,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "keep_lead": true
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0,
+        "depth": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "tone_frames": true,
+      "widen_mid": true,
+      "hit": false
+    },
+    "seed": 637154098
+  },
+  "uniqueness": {
+    "over": 0.793,
+    "pass_mark": 1.301,
+    "closest": "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 33.wav",
+    "figures": {
+      "waveform_pct": 6.3,
+      "tone_pct": 99.4,
+      "envelope_pct": 9.5
+    },
+    "limits": {
+      "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 67.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 34.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 33.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Complexe cinematic horror/Dark Fantasy Studio- Complexe cinematic horror 44.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 31.wav": {
+        "waveform_pct": 18.2,
+        "tone_pct": 98.1,
+        "envelope_pct": 66.8
+      },
+      "Dark Fantasy Studio- Thunder/Dark Fantasy Studio - Thunder 27.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 64.7
+      },
+      "Dark Fantasy Studio- Fire spell/Dark Fantasy Studio- Fire spell 7.wav": {
+        "waveform_pct": 18.1,
+        "tone_pct": 97.5,
+        "envelope_pct": 78.0
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.029,
+    "current": -0.026,
+    "verdict": "better"
   }
 }

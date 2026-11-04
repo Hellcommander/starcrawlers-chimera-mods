@@ -4,7 +4,7 @@
   "duration": 1.4,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.025980019941926003,
   "source_corr": 0.02168428525328636,
@@ -196,5 +196,83 @@
     "53b25992b13cc051"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_stroke.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, fulg stroke, huge thunderclap return stroke of lightning with a heavy blade impact, sci-fi fantasy game sound effect, powerful, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9100,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio - Thunder 22.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 98.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.5,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 32.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 98.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 98.8,
+        "envelope_pct": 70.3
+      },
+      "Dark Fantasy Studio - Thunder.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 34.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 98.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 27.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.5,
+        "envelope_pct": 64.7
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio - Thunder 29.wav",
+    "waveform_pct": 14.4,
+    "tone_pct": 92.8,
+    "envelope_pct": 62.3
+  },
+  "width": 0.755,
+  "listen": {
+    "total": 0.379,
+    "match": 0.296,
+    "clean": 1.667
+  }
 }

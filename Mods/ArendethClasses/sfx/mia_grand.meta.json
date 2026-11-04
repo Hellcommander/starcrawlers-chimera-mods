@@ -4,7 +4,7 @@
   "duration": 1.5,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.07284598797559738,
   "source_corr": 0.05722609534859657,
@@ -194,5 +194,83 @@
     "5a89fc22e4785aed"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_grand.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, mia grand, big alchemical explosion with bubbling, hissing and a deep boom, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9103,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE_ALCHEMY_DOOM_22.wav": {
+        "waveform_pct": 20.2,
+        "tone_pct": 94.4,
+        "envelope_pct": 74.2
+      },
+      "NOISE_ALCHEMY_DOOM_8.wav": {
+        "waveform_pct": 17.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.1
+      },
+      "NOISE_ALCHEMY_DOOM_10.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 96.7,
+        "envelope_pct": 69.0
+      },
+      "NOISE_ALCHEMY_DOOM_22_GLITCH.wav": {
+        "waveform_pct": 19.3,
+        "tone_pct": 94.6,
+        "envelope_pct": 78.5
+      },
+      "NOISE_ALCHEMY_DOOM_13_GLITCH.wav": {
+        "waveform_pct": 25.5,
+        "tone_pct": 95.8,
+        "envelope_pct": 76.1
+      },
+      "NOISE ALCHEMY - HOSTILE 13 44.1k.wav": {
+        "waveform_pct": 21.5,
+        "tone_pct": 95.6,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - HOSTILE 13 48k.wav": {
+        "waveform_pct": 21.5,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "NOISE_ALCHEMY_DOOM_8_GLITCH.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 95.2,
+        "envelope_pct": 74.5
+      },
+      "Dark Fantasy Studio- Sub boom 12.wav": {
+        "waveform_pct": 28.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.0
+      },
+      "Dark Fantasy Studio- Sub boom 38.wav": {
+        "waveform_pct": 26.2,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY - HOSTILE 13 44.1k.wav",
+    "waveform_pct": 16.9,
+    "tone_pct": 95.4,
+    "envelope_pct": 48.2
+  },
+  "width": 0.512,
+  "listen": {
+    "total": 0.313,
+    "match": 0.527,
+    "clean": -4.296
+  }
 }

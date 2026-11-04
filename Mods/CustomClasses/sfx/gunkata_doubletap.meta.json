@@ -4,7 +4,7 @@
   "duration": 0.9,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.02215917967259884,
   "archetype": "laser",
@@ -203,5 +203,83 @@
     "4bfb2845a4112e33"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\gunkata_doubletap.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, gunkata doubletap, two rapid futuristic pistol shots, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9103,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Sci fi voices 5- Laser.wav": {
+        "waveform_pct": 15.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 73.2
+      },
+      "Dark Fantasy Studio- Sci fi voices 2- Laser.wav": {
+        "waveform_pct": 18.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 69.9
+      },
+      "Dark Fantasy Studio- Sci fi voices 3- Laser.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.2
+      },
+      "Dark Fantasy Studio- Sci fi voices 1- Laser.wav": {
+        "waveform_pct": 20.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.9
+      },
+      "Dark Fantasy Studio- Sci fi voices 4- Laser.wav": {
+        "waveform_pct": 17.1,
+        "tone_pct": 94.0,
+        "envelope_pct": 72.8
+      },
+      "Dark Fantasy Studio-lightgun-47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.3
+      },
+      "Dark Fantasy Studio-lightgun-35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.6
+      },
+      "Dark Fantasy Studio-lightgun-46.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio-lightgun-58.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.2
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio-lightgun-58.wav",
+    "waveform_pct": 10.1,
+    "tone_pct": 71.6,
+    "envelope_pct": 70.8
+  },
+  "width": 1.133,
+  "listen": {
+    "total": 0.207,
+    "match": 0.314,
+    "clean": -2.147
+  }
 }

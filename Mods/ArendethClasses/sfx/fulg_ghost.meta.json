@@ -4,7 +4,7 @@
   "duration": 1.0,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.15741854906082153,
   "source_corr": 0.032218772917985916,
@@ -209,5 +209,83 @@
     "65c5df84dc96d832"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\fulg_ghost.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, fulg ghost, static discharge burst with a fading electric hum, sci-fi fantasy game sound effect, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9100,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio-Interface-31.wav": {
+        "waveform_pct": 35.4,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 41.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.5,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 25.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "NOISE_ALCHEMY_FLICKERING_LIGHT_3_7.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 43.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 73.2
+      },
+      "Dark Fantasy Studio- Electric spell 4.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 78.8
+      },
+      "NOISE_ALCHEMY_FLICKERING_LIGHT_1_7.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Electric spell 27.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sub boom 12.wav": {
+        "waveform_pct": 19.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.8
+      },
+      "Dark Fantasy Studio- Sub boom 48.wav": {
+        "waveform_pct": 22.9,
+        "tone_pct": 94.1,
+        "envelope_pct": 76.4
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Electric spell 27.wav",
+    "waveform_pct": 2.7,
+    "tone_pct": 68.3,
+    "envelope_pct": 53.5
+  },
+  "width": 0.764,
+  "listen": {
+    "total": 0.373,
+    "match": 0.505,
+    "clean": -2.626
+  }
 }

@@ -1,64 +1,12 @@
 {
   "prompt": "heavy armoured beast charging, thudding footfalls and a metal impact, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 1.0,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
   "references": [
-    {
-      "id": "29e1aea2adcbe1d1",
-      "score": 0.5396357178688049,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
-      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 6.wav",
-      "license": "reference",
-      "tags": [
-        "rocks",
-        "and",
-        "boulders",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "impact"
-      ]
-    },
-    {
-      "id": "abf842914c959a46",
-      "score": 0.5150402784347534,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Riser impact.zip",
-      "inner": "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 31.wav",
-      "license": "reference",
-      "tags": [
-        "riser",
-        "impact",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": []
-    },
-    {
-      "id": "4db7d35a0fa3d9be",
-      "score": 0.5111644864082336,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Beast.zip",
-      "inner": "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-53.wav",
-      "license": "reference",
-      "tags": [
-        "beast",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "alien"
-      ]
-    },
     {
       "id": "3289ce165558c9c7",
       "score": 0.49814096093177795,
@@ -73,23 +21,6 @@
         "studio"
       ],
       "archetypes": []
-    },
-    {
-      "id": "116bfb9e2f380c64",
-      "score": 0.49645811319351196,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Lightgun.zip",
-      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-18.wav",
-      "license": "reference",
-      "tags": [
-        "lightgun",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "laser"
-      ]
     },
     {
       "id": "33178a698c8d7c25",
@@ -109,35 +40,148 @@
       ]
     },
     {
-      "id": "53981a631b3ebc54",
-      "score": 0.49542373418807983,
-      "via": "clap+tag",
-      "pack": "Dark Fantasy Studio- Rocks and boulders.zip",
-      "inner": "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 57.wav",
+      "id": "f5a831c84348c1ff",
+      "pack": "Dark Fantasy Studio- Lightgun.zip",
+      "inner": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-17.wav",
       "license": "reference",
-      "tags": [
-        "rocks",
-        "and",
-        "boulders",
-        "dark",
-        "fantasy",
-        "studio"
-      ],
-      "archetypes": [
-        "impact"
-      ]
+      "via": "mix_unique agent"
     }
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mim_stomp.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "mixed from the referenced clips by plain signal processing (layer roles, pitch, gain, offset, stretch, phase scramble, EQ, shaping, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every clip used (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.242,
   "semitones": -4,
-  "width": 0.44,
+  "width": 0.972,
   "listen": {
-    "match": 0.555,
-    "clean": -6.0,
-    "faults": []
-  }
+    "total": 0.161,
+    "match": 0.461,
+    "clean": -6.0
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 7,
+          "role": "punch",
+          "pitch": -9.0,
+          "gain_db": -4.0,
+          "offset_ms": 0.0,
+          "lowcut": 180.0,
+          "length_ms": 180.0,
+          "fit": 0.503,
+          "centroid_hz": 3914
+        },
+        {
+          "clip": 5,
+          "role": "body",
+          "pitch": -5.0,
+          "gain_db": -6.5,
+          "offset_ms": 6.0,
+          "fit": 0.637,
+          "centroid_hz": 2852
+        },
+        {
+          "clip": 3,
+          "role": "tail",
+          "pitch": -7.0,
+          "gain_db": -7.5,
+          "offset_ms": 45.0,
+          "highcut": 5000.0,
+          "stretch": 1.38,
+          "fit": 0.439,
+          "centroid_hz": 152
+        }
+      ],
+      "scramble": {
+        "knots": 324,
+        "spread": 0.8,
+        "eq_db": 1.5
+      },
+      "shape": 0.5,
+      "tone": 0.0,
+      "attack_ms": 0.5,
+      "width": 0.26,
+      "glue": 0.25,
+      "level_db": -19.0,
+      "eq30": [
+        -3.3,
+        -3.9,
+        -4.7,
+        -4.6,
+        -6.0,
+        -6.0,
+        -5.6,
+        -4.1,
+        -4.4,
+        -3.3,
+        -2.7,
+        -2.4,
+        -1.5,
+        -0.5,
+        -0.2,
+        0.6,
+        1.1,
+        1.3,
+        2.1,
+        2.1,
+        2.3,
+        2.7,
+        2.5,
+        2.8,
+        3.3,
+        4.1,
+        5.6,
+        6.3,
+        7.5,
+        8.9
+      ],
+      "transient": {
+        "sustain": 0.3
+      }
+    },
+    "seed": 271730866
+  },
+  "uniqueness": {
+    "over": 1.0,
+    "closest": "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-20.wav",
+    "figures": {
+      "waveform_pct": 14.2,
+      "tone_pct": 97.7,
+      "envelope_pct": 25.2
+    },
+    "limits": {
+      "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 95.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-20.wav": {
+        "waveform_pct": 22.0,
+        "tone_pct": 97.7,
+        "envelope_pct": 67.1
+      },
+      "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-17.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 97.2,
+        "envelope_pct": 75.5
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.035,
+    "current": -0.069,
+    "verdict": "better"
+  },
+  "references_before_mix": [
+    "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 6.wav",
+    "Dark Fantasy Studio- Riser impact/Dark Fantasy Studio- Riser impact 31.wav",
+    "Dark Fantasy Studio- Beast/Dark Fantasy Studio-Beast-53.wav",
+    "Dark Fantasy Studio- Shipwreck/Dark Fantasy Studio - Shipwreck 20.wav",
+    "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-18.wav",
+    "Dark Fantasy Studio- Lightgun/Dark Fantasy Studio-lightgun-20.wav",
+    "Dark Fantasy Studio- Rocks and boulders/Dark Fantasy Studio- Rocks and boulders 57.wav"
+  ]
 }

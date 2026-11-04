@@ -1,8 +1,8 @@
 {
   "prompt": "humming energy blade swing with psychic resonance, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "duration": 1.0,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -168,14 +168,79 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\psiknight_psiblade.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.141,
   "semitones": 4,
-  "width": 0.823,
+  "width": 0.665,
   "listen": {
-    "match": 0.49,
-    "clean": -3.971,
-    "faults": []
+    "total": 0.495,
+    "match": 0.458,
+    "clean": 0.735
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, psiknight psiblade, humming energy blade swing with psychic resonance, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Electric spell 11.wav": {
+        "waveform_pct": 27.8,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.9
+      },
+      "Dark Fantasy Studio - Waterphone 6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.8
+      },
+      "NOISE ALCHEMY- DRAGON WINGS 28.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 66.4
+      },
+      "NOISE ALCHEMY- DRAGON WINGS 24.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Whooshes 26.wav": {
+        "waveform_pct": 22.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 74.7
+      },
+      "Dark Fantasy Studio- Electric spell 26.wav": {
+        "waveform_pct": 23.4,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.2
+      },
+      "Dark Fantasy Studio-Monster-49.wav": {
+        "waveform_pct": 24.6,
+        "tone_pct": 97.1,
+        "envelope_pct": 71.2
+      },
+      "NOISE ALCHEMY- DRAGON WINGS 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.7,
+        "envelope_pct": 65.5
+      },
+      "Dark Fantasy Studio-lightgun-26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.3
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio - Waterphone 6.wav",
+    "waveform_pct": 2.5,
+    "tone_pct": 19.7,
+    "envelope_pct": 73.6
   }
 }

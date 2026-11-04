@@ -17,7 +17,7 @@ namespace ChimeraModManager
     /// </summary>
     internal static class SealAudio
     {
-        private static readonly string[] Kinds = { ".wav", ".ogg", ".mp3" };
+        internal static readonly string[] Kinds = { ".wav", ".ogg", ".mp3" };
 
         internal static int Run(string modFolder, bool removeLoose, Action<string> print)
         {
@@ -29,6 +29,24 @@ namespace ChimeraModManager
                 .OrderBy(f => f, StringComparer.OrdinalIgnoreCase).ToList();
             if (files.Count == 0) { print("No sounds found in the mod."); return 1; }
 
+            var entries = files.Select(f => (name: f.Substring(modFolder.Length + 1).Replace('\\', '/'), plain: File.ReadAllBytes(f))).ToList();
+            long raw = entries.Sum(e => (long)e.plain.Length);
+            long size = WritePak(Path.Combine(modFolder, "sounds.pak"), entries, out string loaderHex);
+            print($"{Path.GetFileName(modFolder)}: {files.Count} sounds, {raw / 1048576.0:F1} MB -> sounds.pak ({size / 1048576.0:F1} MB), sealed for the Breachwork Loader (key {loaderHex}), tagged against tampering.");
+            if (removeLoose)
+            {
+                foreach (var f in files) File.Delete(f);
+                print("Removed the loose sound files; the mod plays from sounds.pak.");
+            }
+            else print("The loose files are still there and still win over the pak; remove them from the copy you share.");
+            return 0;
+        }
+
+        /// <summary>Writes a BWPK5 archive at `pak` holding these entries (archive path with '/', bytes as they are), under a
+        /// fresh random key wrapped with the current loader public key. Shared by --seal-audio and the owner's sound editor.
+        /// Returns the archive's size in bytes.</summary>
+        internal static long WritePak(string pak, IList<(string name, byte[] plain)> entries, out string loaderHex)
+        {
             var key = new byte[32];
             using (var rng = RandomNumberGenerator.Create()) rng.GetBytes(key);
             byte[] wrapped, loaderId;
@@ -39,12 +57,8 @@ namespace ChimeraModManager
                 using (var sha = SHA256.Create()) loaderId = sha.ComputeHash(rsa.ExportParameters(false).Modulus).Take(8).ToArray();
             }
             var blobs = new List<(byte[] name, byte[] iv, byte[] data, byte[] tag)>();
-            long raw = 0;
-            foreach (var f in files)
+            foreach (var (name, plain) in entries)
             {
-                string name = f.Substring(modFolder.Length + 1).Replace('\\', '/');
-                byte[] plain = File.ReadAllBytes(f);
-                raw += plain.Length;
                 byte[] iv = Seal(key, name, plain, out byte[] enc);
                 blobs.Add((Encoding.UTF8.GetBytes(name), iv, enc, Hmac(key, Encoding.UTF8.GetBytes(name), iv, enc)));
             }
@@ -72,7 +86,6 @@ namespace ChimeraModManager
             }
             if (encIndex.Length != encIndexLen) throw new InvalidOperationException("index size mismatch");
             byte[] indexTag = Hmac(key, Encoding.ASCII.GetBytes("index"), encIndex);
-            string pak = Path.Combine(modFolder, "sounds.pak");
             using (var w = new BinaryWriter(File.Create(pak)))
             {
                 w.Write(Encoding.ASCII.GetBytes("BWPK5\0"));
@@ -82,17 +95,11 @@ namespace ChimeraModManager
                 w.Write(encIndex.Length); w.Write(encIndex); w.Write(indexTag);
                 foreach (var b in blobs) w.Write(b.data);
             }
-            print($"{Path.GetFileName(modFolder)}: {files.Count} sounds, {raw / 1048576.0:F1} MB -> sounds.pak ({offset / 1048576.0:F1} MB), sealed for the Breachwork Loader (key {BitConverter.ToString(loaderId).Replace("-", "").ToLowerInvariant()}), tagged against tampering.");
-            if (removeLoose)
-            {
-                foreach (var f in files) File.Delete(f);
-                print("Removed the loose sound files; the mod plays from sounds.pak.");
-            }
-            else print("The loose files are still there and still win over the pak; remove them from the copy you share.");
-            return 0;
+            loaderHex = BitConverter.ToString(loaderId).Replace("-", "").ToLowerInvariant();
+            return offset;
         }
 
-        private static byte[] Hmac(byte[] key, params byte[][] parts)
+        internal static byte[] Hmac(byte[] key, params byte[][] parts)
         {
             using (var h = new HMACSHA256(key)) return h.ComputeHash(parts.SelectMany(b => b).ToArray());
         }

@@ -4,7 +4,7 @@
   "duration": 1.2,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.015663642436265945,
   "source_corr": 0.02123863436281681,
@@ -206,5 +206,83 @@
     "5a89fc22e4785aed"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\gravemote_pin.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, gravemote pin, crushing gravity slam pinning to floor, deep thump, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7172,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Rocks and boulders 61.wav": {
+        "waveform_pct": 19.5,
+        "tone_pct": 95.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 64.wav": {
+        "waveform_pct": 21.5,
+        "tone_pct": 97.4,
+        "envelope_pct": 68.4
+      },
+      "NOISE ALCHEMY- DRAGON WINGS 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.4,
+        "envelope_pct": 74.3
+      },
+      "Dark Fantasy Studio- Rocks and boulders 23.wav": {
+        "waveform_pct": 19.1,
+        "tone_pct": 97.8,
+        "envelope_pct": 75.3
+      },
+      "Dark Fantasy Studio- Sub boom 19.wav": {
+        "waveform_pct": 26.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 80.0
+      },
+      "Dark Fantasy Studio- Sub boom 48.wav": {
+        "waveform_pct": 22.9,
+        "tone_pct": 94.1,
+        "envelope_pct": 81.0
+      },
+      "Dark Fantasy Studio- Sub boom 12.wav": {
+        "waveform_pct": 19.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.8
+      },
+      "Dark Fantasy Studio- Sub boom 16.wav": {
+        "waveform_pct": 27.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.9
+      },
+      "Dark Fantasy Studio- Riser impact 31.wav": {
+        "waveform_pct": 18.2,
+        "tone_pct": 98.1,
+        "envelope_pct": 66.7
+      },
+      "Dark Fantasy Studio- Sub boom 38.wav": {
+        "waveform_pct": 20.3,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Rocks and boulders 23.wav",
+    "waveform_pct": 14.7,
+    "tone_pct": 82.2,
+    "envelope_pct": 74.1
+  },
+  "width": 0.439,
+  "listen": {
+    "total": 0.148,
+    "match": 0.251,
+    "clean": -2.069
+  }
 }

@@ -4,7 +4,7 @@
   "duration": 1.4,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.0019302968867123127,
   "source_corr": 0.021701712161302567,
@@ -185,5 +185,83 @@
     "ed24d6c5e7cbc5fb"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\voidhacker_crash.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, voidhacker crash, electronic stutter and short-circuit fizzle, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.6,
+    "seed": 7060,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY- REALITY GLITCH 47.wav": {
+        "waveform_pct": 18.9,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY- REALITY GLITCH 50.wav": {
+        "waveform_pct": 17.8,
+        "tone_pct": 94.0,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio-Interface-37.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.8
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 8 48k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.5,
+        "envelope_pct": 69.1
+      },
+      "Dark Fantasy Studio- Glitch 7.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 73.2
+      },
+      "NOISE ALCHEMY- REALITY GLITCH.wav": {
+        "waveform_pct": 15.2,
+        "tone_pct": 94.0,
+        "envelope_pct": 65.1
+      },
+      "NOISE ALCHEMY- UI 129.wav": {
+        "waveform_pct": 20.9,
+        "tone_pct": 94.9,
+        "envelope_pct": 80.8
+      },
+      "NOISE ALCHEMY- UI 145.wav": {
+        "waveform_pct": 19.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.0
+      },
+      "NOISE ALCHEMY- REALITY GLITCH 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "NOISE ALCHEMY - PROTOCOL CHAOS 8 44.1k.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 69.1
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY- REALITY GLITCH 47.wav",
+    "waveform_pct": 1.9,
+    "tone_pct": 0.0,
+    "envelope_pct": 58.8
+  },
+  "width": 0.797,
+  "listen": {
+    "total": 0.655,
+    "match": 0.506,
+    "clean": 2.984
+  }
 }

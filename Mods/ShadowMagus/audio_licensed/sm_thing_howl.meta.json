@@ -1,8 +1,8 @@
 {
   "prompt": "a monstrous thing howling out darkness, a deep rising roar that breaks into a chorus of whispers",
   "duration": 2.2,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "monster",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -112,14 +112,64 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_thing_howl.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.099,
   "semitones": -3,
-  "width": 0.234,
+  "width": 0.596,
   "listen": {
-    "match": 0.399,
-    "clean": -1.313,
-    "faults": []
+    "total": 0.441,
+    "match": 0.402,
+    "clean": 0.783
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, sm thing howl, a monstrous thing howling out darkness, a deep rising roar that breaks into a chorus of whispers, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "NOISE ALCHEMY- MONSTER SCREAMS_30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.1,
+        "envelope_pct": 80.2
+      },
+      "NOISE ALCHEMY- MONSTER SCREAMS_6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.2,
+        "envelope_pct": 80.2
+      },
+      "NOISE ALCHEMY- MONSTER SCREAMS_43.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.5
+      },
+      "NOISE ALCHEMY- MONSTER SCREAMS_42.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 85.1
+      },
+      "NOISE ALCHEMY- MONSTER SCREAMS_45.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.7
+      },
+      "NOISE ALCHEMY- MONSTER SCREAMS_44.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 87.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "NOISE ALCHEMY- MONSTER SCREAMS_30.wav",
+    "waveform_pct": 7.3,
+    "tone_pct": 95.0,
+    "envelope_pct": 51.2
   }
 }

@@ -1,8 +1,8 @@
 {
   "prompt": "a shadow rising off the floor and taking shape, low dark drone, whispering smoke, ghostly summon",
   "duration": 2.2,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "magic",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -114,14 +114,64 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_shade.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.037,
   "semitones": 4,
-  "width": 1.475,
+  "width": 0.473,
   "listen": {
-    "match": 0.583,
-    "clean": -2.258,
-    "faults": []
+    "total": 0.421,
+    "match": 0.544,
+    "clean": -2.465
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, sm shade, a shadow rising off the floor and taking shape, low dark drone, whispering smoke, ghostly summon, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9103,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Stingers 13.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 74.6
+      },
+      "Dark Fantasy Studio- Stingers 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.2
+      },
+      "Dark Fantasy Studio- Stingers 27.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.0
+      },
+      "Dark Fantasy Studio- Stingers 8.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 79.5
+      },
+      "Dark Fantasy Studio- Wind spell-9.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.7,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Stingers 3.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 82.2
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Stingers 3.wav",
+    "waveform_pct": 14.4,
+    "tone_pct": 75.1,
+    "envelope_pct": 52.8
   }
 }

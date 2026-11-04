@@ -1,8 +1,8 @@
 {
   "prompt": "darkness spell bursting outward over a room, deep whoosh, bodies flung and scattered, eerie dark magic",
   "duration": 1.9,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "magic",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -124,14 +124,131 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ShadowMagus\\audio_licensed\\sm_lose_them.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.206,
   "semitones": -5,
-  "width": 0.224,
+  "width": 0.365,
   "listen": {
-    "match": 0.542,
-    "clean": -0.646,
-    "faults": []
+    "total": 0.531,
+    "match": 0.544,
+    "clean": -0.256
+  },
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "sfx_alter",
+    "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 6,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "keep_lead": true,
+          "shift_hz": -25.0
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0,
+        "depth": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "tone_frames": true,
+      "widen_mid": true,
+      "hit": false
+    },
+    "seed": 1820397795
+  },
+  "uniqueness": {
+    "over": 0.837,
+    "pass_mark": 1.224,
+    "closest": "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-1.wav",
+    "figures": {
+      "waveform_pct": 10.0,
+      "tone_pct": 98.6,
+      "envelope_pct": 54.3
+    },
+    "limits": {
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-9.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-4.wav": {
+        "waveform_pct": 15.9,
+        "tone_pct": 95.9,
+        "envelope_pct": 78.0
+      },
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-11.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.9,
+        "envelope_pct": 72.9
+      },
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-1.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-3.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.9,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Wind spell/Dark Fantasy Studio- Wind spell-5.wav": {
+        "waveform_pct": 17.3,
+        "tone_pct": 95.9,
+        "envelope_pct": 64.0
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": 0.034,
+    "current": 0.038,
+    "verdict": "same"
   }
 }

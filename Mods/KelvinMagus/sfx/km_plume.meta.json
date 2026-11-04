@@ -4,7 +4,7 @@
   "duration": 1.6,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.0011713890125975013,
   "source_corr": 0.015489094890654087,
@@ -206,5 +206,83 @@
     "936ab631a9dfe4c6"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\KelvinMagus\\sfx\\km_plume.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, km plume, scalding steam vent burst, pressurised hiss blast, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9101,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Steam 7.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.3
+      },
+      "Dark Fantasy Studio- Steam 4.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Steam 29.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.3
+      },
+      "Dark Fantasy Studio- Steam 23.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 68.7
+      },
+      "Dark Fantasy Studio- Steam 5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 65.8
+      },
+      "Dark Fantasy Studio- Steam 27.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Fart 21.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 68.3
+      },
+      "Dark Fantasy Studio- Steam 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 83.6
+      },
+      "Dark Fantasy Studio- Steam 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.2
+      },
+      "Dark Fantasy Studio- Steam 30.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 81.2
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Steam 30.wav",
+    "waveform_pct": 1.8,
+    "tone_pct": 90.6,
+    "envelope_pct": 40.4
+  },
+  "width": 0.404,
+  "listen": {
+    "total": 0.559,
+    "match": 0.512,
+    "clean": 0.959
+  }
 }

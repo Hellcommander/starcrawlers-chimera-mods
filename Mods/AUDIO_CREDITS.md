@@ -4,12 +4,19 @@
 
 **Sound effects created with NOISE ALCHEMY – NOISEALCHEMY.COM**
 
-The sounds in the `sfx/` folders are made from Noise Alchemy material only, apart from the synthesized ones named below. 91 were rendered new with our own
-asset tool (Stable Audio 3), which used clips from the packs below as reference material: every render starts from
-noise level 0.87, so the result is a new, unique sound, never a light edit of a clip (each one's correlation with its
-references is at most 0.081). 34 were rebuilt from their Noise Alchemy reference clips by plain signal
-processing, with no AI (pitch shift, layering, random all-pass, EQ; correlation with any clip at most 0.25), because
-their first renders had also leaned on a pack that bars AI tools, and one (`vasculist_spike`) and the Spellsmith's nine (`ss_*`) are synthesized from
+The sounds in the `sfx/` folders are made from Noise Alchemy material only, apart from the synthesized ones named below. Most
+were rendered new with our own asset tool (Stable Audio 3), which used clips from the packs below as reference material:
+the first renders start from noise level 0.87, so the result is a new, unique sound, never a light edit of a clip. Sounds
+that still sat too close to a clip were remade in one of two ways. Some were rendered again by Stable Audio 3, either
+from the earlier render as a starting point or from their text description alone (those heard no pack audio at all).
+The rest were remixed by plain signal processing with no AI touching the audio: a read-only listener studied the clips
+and the current sound and wrote a plan (which clips to layer, pitch, timing, EQ, shaping, stereo width), and a mixer
+program carried that plan out; a second, separate listener then judged the finished sound. Every remade sound was kept
+only if, against every clip it was made from, its waveform, tone and envelope were no closer than unrelated clips of
+these packs land by chance, and if both listeners heard it as no worse than the sound it replaced. Others were rebuilt
+from their Noise Alchemy reference clips by plain signal processing, with no AI (pitch shift, layering, random
+all-pass, EQ; correlation with any clip at most 0.25), because their first renders had also leaned on a pack that bars
+AI tools, and one (`vasculist_spike`) and the Spellsmith's nine (`ss_*`) are synthesized from
 material parameters by the asset toolkit's bench with no clip and no model behind them (the read-only listener only picks,
 among seeded takes, the one that reads most clearly as its own sound and least like its siblings); each one's `.meta.json` says which it is. Noise
 Alchemy's terms allow transformed sounds in commercial projects, so all of these are free to share, adapt and use in

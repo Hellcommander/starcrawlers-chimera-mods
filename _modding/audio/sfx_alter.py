@@ -243,6 +243,8 @@ def jobs(mods, lib):
     metas = glob.glob(os.path.join(mods, "**", "sfx", "*.meta.json"), recursive=True) + glob.glob(os.path.join(mods, "**", "audio_licensed", "*.meta.json"), recursive=True)
     for meta in sorted(metas):
         j = json.load(open(meta, encoding="utf-8"))
+        if j.get("engine") == "mix_unique":
+            continue   # mixed unique by sfx_mix_unique.py (its plan is in the sidecar); a rebuild here would undo that
         used = set(j.get("used_ids") or [])
         refs = [r for r in j["references"] if isinstance(r, dict) and (not used or r.get("id") in used)]
         if all(ai_allowed(r.get("pack", ""), r.get("inner", "")) for r in refs) and j.get("engine") != "sfx_alter":

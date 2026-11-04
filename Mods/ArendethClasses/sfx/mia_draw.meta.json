@@ -1,8 +1,8 @@
 {
   "prompt": "deep inhale of foul air then a hissing spit, sci-fi fantasy game sound effect, clean, no music, no voice",
   "duration": 0.8,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "mix_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -195,14 +195,146 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\mia_draw.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "the previous render of this sound (itself made from the referenced clips), changed by plain signal processing only as far as needed (phase scramble, EQ, shaping, stretch, width); an audio agent chose the plan by measuring the clips and each render and listening to the renders, and never touched the audio; checked unique against every referenced clip (waveform, tone and envelope, no closer than unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.238,
   "semitones": -5,
-  "width": 0.431,
+  "width": 0.433,
   "listen": {
-    "match": 0.524,
-    "clean": -1.667,
-    "faults": []
+    "total": 0.426,
+    "match": 0.487,
+    "clean": -1.215
+  },
+  "mix_mode": "repair",
+  "repaired_from": {
+    "engine": "sfx_alter",
+    "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation"
+  },
+  "mix_plan": {
+    "plan": {
+      "layers": [
+        {
+          "clip": 9,
+          "role": "base",
+          "pitch": 0.0,
+          "gain_db": 0.0,
+          "offset_ms": 0.0,
+          "keep_lead": true,
+          "shift_hz": 25.0
+        }
+      ],
+      "scramble": {
+        "knots": 24,
+        "spread": 0.2,
+        "eq_db": 0.0,
+        "depth": 0.0
+      },
+      "shape": 1.0,
+      "tone": 0.6,
+      "attack_ms": 12.0,
+      "width": 0.26,
+      "glue": 0.0,
+      "level_db": -19.0,
+      "eq30": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "repair": true,
+      "tone_frames": true,
+      "widen_mid": true,
+      "hit": false
+    },
+    "seed": 4027936118
+  },
+  "uniqueness": {
+    "over": 0.821,
+    "pass_mark": 1.242,
+    "closest": "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio- Alien voices-34.wav",
+    "figures": {
+      "waveform_pct": 15.1,
+      "tone_pct": 96.1,
+      "envelope_pct": 13.6
+    },
+    "limits": {
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-2.wav": {
+        "waveform_pct": 15.4,
+        "tone_pct": 95.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-5.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Sci Fi voices/5/Dark Fantasy Studio- Sci fi voices 5- Defense.wav": {
+        "waveform_pct": 26.6,
+        "tone_pct": 94.0,
+        "envelope_pct": 67.7
+      },
+      "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 31.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 78.3
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-6.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio-Alien-hit-and-death-4.wav": {
+        "waveform_pct": 24.5,
+        "tone_pct": 94.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Alien voices/Dark Fantasy Studio- Alien voices-34.wav": {
+        "waveform_pct": 18.3,
+        "tone_pct": 94.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Ghostly/Dark Fantasy Studio-Ghostly 26.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 75.4
+      },
+      "Dark Fantasy Studio- Monster roar/Dark Fantasy Studio-Monster-4.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 66.2
+      }
+    }
+  },
+  "second_judge": {
+    "model": "laion/larger_clap_general",
+    "new": -0.027,
+    "current": -0.04,
+    "verdict": "same"
   }
 }

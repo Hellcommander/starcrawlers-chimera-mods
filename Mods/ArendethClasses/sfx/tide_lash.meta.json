@@ -4,7 +4,7 @@
   "duration": 0.9,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 0.005519472062587738,
   "archetype": "impact",
@@ -197,5 +197,83 @@
     "39c51d08e8af7134"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\ArendethClasses\\sfx\\tide_lash.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, tide lash, high pressure water whip crack and splash, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9100,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Rocks and boulders 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.1,
+        "envelope_pct": 69.3
+      },
+      "Dark Fantasy Studio- Swords 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 70.4
+      },
+      "Dark Fantasy Studio- Whooshes 47.wav": {
+        "waveform_pct": 16.9,
+        "tone_pct": 97.3,
+        "envelope_pct": 77.2
+      },
+      "Dark Fantasy Studio- Smashed 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 60.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 94.0,
+        "envelope_pct": 68.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 39.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 97.2,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 35.wav": {
+        "waveform_pct": 15.7,
+        "tone_pct": 95.1,
+        "envelope_pct": 80.1
+      },
+      "Dark Fantasy Studio- Rocks and boulders 53.wav": {
+        "waveform_pct": 23.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 15.wav": {
+        "waveform_pct": 17.0,
+        "tone_pct": 95.3,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Rocks and boulders 31.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Rocks and boulders 47.wav",
+    "waveform_pct": 8.0,
+    "tone_pct": 60.3,
+    "envelope_pct": 60.8
+  },
+  "width": 1.312,
+  "listen": {
+    "total": 0.537,
+    "match": 0.642,
+    "clean": -2.109
+  }
 }

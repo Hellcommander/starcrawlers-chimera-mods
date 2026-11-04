@@ -4,7 +4,7 @@
   "duration": 2.4,
   "strength": 0.28,
   "init_noise_level": 0.874,
-  "engine": "stable-audio",
+  "engine": "sa3_unique",
   "unique": true,
   "copy_corr": 5.309004336595535e-06,
   "archetype": "magic",
@@ -190,5 +190,83 @@
     "c0c90362ca6071b4"
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\UniqueClasses\\sfx\\chorister_choir.wav",
-  "sample_rate": 44100
+  "sample_rate": 44100,
+  "derived": true,
+  "method": "made by Stable Audio 3 from this sound's own prompt alone (no pack audio as input), then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, chorister choir, dark choir shockwave, swelling dissonant boom, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": null,
+    "seed": 9102,
+    "steps": 36,
+    "prompt_only": true
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio- Dimensional portal 47.wav": {
+        "waveform_pct": 19.0,
+        "tone_pct": 96.9,
+        "envelope_pct": 70.2
+      },
+      "Dark Fantasy Studio- Dimensional portal 39.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 76.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 35.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 71.7
+      },
+      "Dark Fantasy Studio- Stingers 47.wav": {
+        "waveform_pct": 18.5,
+        "tone_pct": 97.1,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 15.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 97.6,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Chaos 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.8,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio - Thunder 47.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 96.4,
+        "envelope_pct": 64.0
+      },
+      "Dark Fantasy Studio- Dimensional portal 41.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 95.8,
+        "envelope_pct": 67.4
+      },
+      "Dark Fantasy Studio- Dimensional portal 20.wav": {
+        "waveform_pct": 22.4,
+        "tone_pct": 97.8,
+        "envelope_pct": 67.5
+      },
+      "Dark Fantasy Studio- Dimensional portal 21.wav": {
+        "waveform_pct": 16.7,
+        "tone_pct": 95.8,
+        "envelope_pct": 64.0
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio- Dimensional portal 35.wav",
+    "waveform_pct": 5.1,
+    "tone_pct": 42.4,
+    "envelope_pct": 70.8
+  },
+  "width": 0.862,
+  "listen": {
+    "total": 0.363,
+    "match": 0.089,
+    "clean": 5.476
+  }
 }

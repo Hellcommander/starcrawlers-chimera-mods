@@ -1,8 +1,8 @@
 {
   "prompt": "heavy sniper rifle shot with mechanical bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice",
   "duration": 1.4,
-  "engine": "sfx_alter",
-  "unique": false,
+  "engine": "sa3_unique",
+  "unique": true,
   "archetype": "",
   "shippable": true,
   "attribution": "Sound effects created with NOISE ALCHEMY \u2013 NOISEALCHEMY.COM",
@@ -147,14 +147,69 @@
   ],
   "output": "D:\\games\\Steam\\steamapps\\common\\StarCrawlers Chimera\\Mods\\CustomClasses\\sfx\\longshot_measured.wav",
   "sample_rate": 44100,
-  "method": "rebuilt from the referenced clips by pitch shift, layering, random all-pass and EQ; no AI generation",
+  "method": "a DSP layering of the referenced clips, re-made by Stable Audio 3 audio-to-audio from this sound's own prompt, then checked unique against every referenced clip (waveform, tone and envelope, no closer than prompt-only takes and unrelated pack clips get) and levelled",
   "derived": true,
   "max_corr": 0.207,
   "semitones": 3,
-  "width": 0.474,
+  "width": 0.611,
   "listen": {
-    "match": 0.544,
-    "clean": -4.017,
-    "faults": []
+    "total": 0.375,
+    "match": 0.492,
+    "clean": -2.355
+  },
+  "sa3": {
+    "prompt": "sci-fi dungeon crawler game sound effect, longshot measured, heavy sniper rifle shot with mechanical bolt, sci-fi fantasy game sound effect, punchy, clean, no music, no voice, clean, punchy, game-ready, no music vocals, stereo",
+    "init_noise_level": 0.75,
+    "seed": 7075,
+    "steps": 36,
+    "prompt_only": false
+  },
+  "uniqueness": {
+    "limits": {
+      "Dark Fantasy Studio - Shot 31.wav": {
+        "waveform_pct": 20.3,
+        "tone_pct": 94.9,
+        "envelope_pct": 81.6
+      },
+      "Dark Fantasy Studio - Shot 17.wav": {
+        "waveform_pct": 23.0,
+        "tone_pct": 97.3,
+        "envelope_pct": 82.0
+      },
+      "Dark Fantasy Studio - Shot 19.wav": {
+        "waveform_pct": 19.3,
+        "tone_pct": 97.0,
+        "envelope_pct": 77.8
+      },
+      "Dark Fantasy Studio - Shot 9.wav": {
+        "waveform_pct": 27.2,
+        "tone_pct": 96.7,
+        "envelope_pct": 81.1
+      },
+      "Dark Fantasy Studio - Shot 10.wav": {
+        "waveform_pct": 15.0,
+        "tone_pct": 94.0,
+        "envelope_pct": 87.8
+      },
+      "Dark Fantasy Studio-lightgun-41.wav": {
+        "waveform_pct": 21.4,
+        "tone_pct": 95.5,
+        "envelope_pct": 78.9
+      },
+      "Dark Fantasy Studio - Shot 28.wav": {
+        "waveform_pct": 27.4,
+        "tone_pct": 95.9,
+        "envelope_pct": 72.2
+      }
+    },
+    "pack_limits": {
+      "waveform_pct": 15.0,
+      "tone_pct": 94.0,
+      "envelope_pct": 64.0
+    },
+    "closest": "Dark Fantasy Studio - Shot 31.wav",
+    "waveform_pct": 10.1,
+    "tone_pct": 92.6,
+    "envelope_pct": 57.2
   }
 }
