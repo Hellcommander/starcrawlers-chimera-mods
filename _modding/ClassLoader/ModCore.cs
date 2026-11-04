@@ -93,7 +93,7 @@ namespace SCClassLoader
     internal static partial class ModPacks
     {
         /// <summary>Top-level keys that make a json object mod data rather than a class.</summary>
-        internal static readonly string[] DataKeys = { "items", "tweaks", "enemies", "creatures", "recipes", "factions", "synergies", "wear", "sideAreas", "enemyPatches", "mobEffects", "particles", "pluginData", "soundFallbacks", "titles", "titleCombos", "themeTitles", "themeWords", "renown" };
+        internal static readonly string[] DataKeys = { "items", "tweaks", "enemies", "creatures", "recipes", "factions", "synergies", "wear", "sideAreas", "enemyPatches", "mobEffects", "particles", "pluginData", "soundFallbacks", "titles", "titleCombos", "themeTitles", "themeWords", "renown", "addTiers" };
 
         /// <summary>The <see cref="ModPlan.Skipped"/> reason for a mod that is simply switched off.</summary>
         internal const string Off = "turned off";
@@ -101,7 +101,7 @@ namespace SCClassLoader
         internal const string NeedsOk = "waiting for your OK to run its code";
 
         /// <summary>The level of the plugin API (the Breachwork namespace); goes up when plugins can do more ("apiLevel" in mod.json).</summary>
-        public const int ApiLevel = 9;
+        public const int ApiLevel = 10;
 
         private static readonly Dictionary<string, ModPack> byFolder = new Dictionary<string, ModPack>(StringComparer.OrdinalIgnoreCase);
 

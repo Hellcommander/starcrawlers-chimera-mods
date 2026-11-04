@@ -24,6 +24,7 @@ namespace SCClassLoader
         private static List<ClassDef> defs;
         internal static IReadOnlyList<ClassDef> AllDefs => defs ?? new List<ClassDef>();
         private static GameObject holder;
+        internal static Transform Holder => holder != null ? holder.transform : null;
 
         public static string ModsDir => Path.Combine(Plugin.GameDir, "Mods");
 
@@ -393,7 +394,7 @@ namespace SCClassLoader
         }
 
         /// <summary>Builds a tier around a brand-new ModAbility.</summary>
-        private static Skill_Tier NewTier(ClassDef def, int i, TierDef td, Skill_Tree tree, Sprite classIcon)
+        internal static Skill_Tier NewTier(ClassDef def, int i, TierDef td, Skill_Tree tree, Sprite classIcon)
         {
             AbilitySpec s = td.newAbility;
             if (string.IsNullOrEmpty(s.name)) { Plugin.Log.LogError($"{def.id} tier {i}: newAbility needs a \"name\""); return null; }
@@ -472,7 +473,7 @@ namespace SCClassLoader
             Forms.Register(effectId, def.id, names, es.keep, es.keepOtherClasses);
         }
 
-        private static IEnumerable<ActionSpec> AllActionsOf(AbilitySpec s) =>
+        internal static IEnumerable<ActionSpec> AllActionsOf(AbilitySpec s) =>
             (s.actions ?? new List<ActionSpec>())
             .Concat(s.perk?.addActions ?? new List<ActionSpec>())
             .Concat((s.procs ?? new List<ProcSpec>()).Concat(s.perk?.addProcs ?? new List<ProcSpec>()).SelectMany(p => p.actions ?? new List<ActionSpec>()));
@@ -498,6 +499,7 @@ namespace SCClassLoader
                 foreach (ActionSpec a in (es.burstActions ?? new List<ActionSpec>()).Concat(es.onApplyActions ?? new List<ActionSpec>())
                     .Concat(es.onExpireActions ?? new List<ActionSpec>()).Concat(es.onSaveActions ?? new List<ActionSpec>())
                     .Concat(es.onDeathActions ?? new List<ActionSpec>()).Concat(es.tickActions ?? new List<ActionSpec>()).Concat(es.onBreakActions ?? new List<ActionSpec>())
+                    .Concat(es.onBlockedActions ?? new List<ActionSpec>())
                     .Concat((es.thresholds ?? new List<ThresholdSpec>()).SelectMany(th => th.actions ?? new List<ActionSpec>())))
                     a.@do = (a.@do ?? "").ToLowerInvariant();
                 SkillMods.Normalize(es.modifies, def.id);
@@ -528,7 +530,7 @@ namespace SCClassLoader
         }
 
         /// <summary>Effects without their own png use the icon of the first ability that applies them, else the class icon.</summary>
-        private static void FillEffectIcons(ClassDef def, Sprite classIcon)
+        internal static void FillEffectIcons(ClassDef def, Sprite classIcon)
         {
             foreach (EffectSpec es in def.effects ?? new List<EffectSpec>())
             {

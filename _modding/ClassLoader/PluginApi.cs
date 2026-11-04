@@ -109,6 +109,13 @@ namespace Breachwork
         /// </summary>
         public Action Subscribe(string topic, Action<object> handler) => EventBus.Subscribe(Owner, topic, handler);
 
+        /// <summary>
+        /// Adds skills to a class, vanilla or modded, after its own (needs apiLevel 10): the same object as a json file's
+        /// { "addTiers": { classId: ... } }, with "tiers", optional "effects" and "fillUnfinished". Call it in OnLoad. Paths
+        /// in it are relative to your mod's folder, and the tiers go away when your mod is turned off.
+        /// </summary>
+        public void AddTiers(string classId, string json) => ExtraTiers.Queue(Owner.pack, Owner.pack.folder, classId, JObject.Parse(json));
+
         /// <summary>A button on the character picture picker (needs apiLevel 2). Gets true on the creation screen, false on the character sheet.</summary>
         public void AddPortraitButton(string label, Action<bool> click) => PluginHost.AddPortraitButton(Owner, label, click);
 
@@ -249,6 +256,9 @@ namespace Breachwork
         public static int Level => ModPacks.ApiLevel;
         /// <summary>The running loader's version.</summary>
         public static string LoaderVersion => Plugin.Version;
+
+        /// <summary>The mods that added tiers to this class this session (apiLevel 10); empty when none.</summary>
+        public static IReadOnlyList<string> TiersAddedTo(string classId) => ExtraTiers.AddedTo(classId);
 
         /// <summary>Whether the player has turned the event bus on ([Performance] EventBus, needs apiLevel 5).</summary>
         public static bool EventBusOn => EventBus.On;

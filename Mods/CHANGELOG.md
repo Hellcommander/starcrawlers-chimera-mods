@@ -8,6 +8,15 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ### New
 
+- **Adding skills to a class:** `"addTiers"` puts new tiers after any class's own, vanilla or modded, and can fill
+  its unfinished `* NYI *` tiers. The game's own tree is never changed, so a character keeps loading with the mod off.
+  Plugins use `Context.AddTiers` and scripts `mod.addTiers` (plugin API level 10, `Api.TiersAddedTo`).
+- **Auras:** `"auras"` on a skill or an effect: everyone in reach wears an effect, and loses it on stepping out.
+- **Blocked abilities:** `"blocks"` on an effect stops the bearer's abilities by damage type, cooldown, melee, ranged
+  or name, for you, enemies and summons; one used anyway fizzles and runs the effect's `onBlockedActions`. The
+  condition `"uses"` and a `special` reaction's `"ability"` read the same words.
+- **Capstone Extras** (off by default): the Cybertechnician's unfinished tier becomes Null Spine, plus four more
+  skills. Psychic powers near you fizzle, a foe's or a friend's, and you grow stronger with every psychic enemy close by.
 - **Item skills:** mod items can give a skill while worn (`"skill"`, written like a class skill).
 - **`transfer` action:** moves your debuffs onto the target, with the turns and stacks they had left. An effect with
   `"transferable": false` can't be moved.

@@ -846,6 +846,8 @@ namespace SCClassLoader
             if (acts.Length > 0) parts.Add(acts);
             foreach (ProcSpec p in s.procs ?? new List<ProcSpec>())
                 parts.Add(Actions.DescribeProc(p, rt.classId, Perk?.chanceBonus ?? 0));
+            foreach (AuraSpec au in s.auras ?? new List<AuraSpec>())
+                parts.Add(Auras.Describe(au, rt.classId));
             return string.Join("\n\n", parts);
         }
     }

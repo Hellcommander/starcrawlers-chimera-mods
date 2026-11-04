@@ -107,7 +107,7 @@ namespace SCClassLoader
             Log.LogInfo($"Breachwork Loader {Version} ready");
         }
 
-        private void Update() { ModsPage.Tick(); ClassTitles.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); CorpseClearance.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); }
+        private void Update() { ModsPage.Tick(); ClassTitles.Tick(); Forms.Tick(); CrewScreen.Tick(); Commands.Tick(); MinionMenu.Tick(); CorpseClearance.Tick(); AimThrough.Tick(); BonusSkills.Tick(); HoverTip.Tick(); StuckTurns.Tick(); TextFit.Tick(); TooltipFit.Tick(); EventBus.Pump(); ViewLane.Tick(); BusTune.Tick(); ZoneLoad.Tick(); AssetStream.Tick(); PluginHost.Tick(); ModAudio.Tick(); Auras.Tick(); }
 
         // after the game's Update and coroutines, which rewrite what these cap
         private void LateUpdate() => CerberusFight.Tick();
@@ -128,6 +128,9 @@ namespace SCClassLoader
                 catch (Exception e) { Log.LogError("Reference dump failed: " + e); }
             }
             ClassRegistry.Register(game);
+            try { ExtraTiers.Apply(game, ClassRegistry.Holder); }
+            catch (Exception e) { Log.LogError("Added tiers failed: " + e); }
+            Auras.Scan();
             try { TileStacks.RegisterEffect(); }
             catch (Exception e) { Log.LogError("Crowded effect failed: " + e); }
             try { Afflictions.RegisterEffects(); }
@@ -286,6 +289,7 @@ namespace SCClassLoader
             else if (dev == "revenge") Instance.StartCoroutine(DevTestRevenge.Run());
             else if (dev == "mimeticist") Instance.StartCoroutine(DevTestMimeticist.Run());
             else if (dev == "bulkhead") Instance.StartCoroutine(DevTestBulkhead.Run());
+            else if (dev == "extratiers") Instance.StartCoroutine(DevTestExtraTiers.Run());
             else if (dev == "ichorborn") Instance.StartCoroutine(DevTestIchorborn.Run());
             else if (dev == "nosaves") Instance.StartCoroutine(DevTestNoSaves.Run());
             else if (dev == "ichorgoo") Instance.StartCoroutine(DevTestLooks.RunIchorGoo());

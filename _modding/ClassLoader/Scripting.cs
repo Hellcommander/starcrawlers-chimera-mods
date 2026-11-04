@@ -393,6 +393,17 @@ namespace SCClassLoader
         public void fire(string name, Actor other = null, string detail = null) => Ctx.FireEvent(name, other?.C, detail);
 
         /// <summary>
+        /// mod.addTiers("SKILLTREE_Cybertechnician", { fillUnfinished = true, effects = { ... }, tiers = { ... } }): skills
+        /// added to a class after its own, the same as a json file's "addTiers". Call it when the script loads.
+        /// </summary>
+        public void addTiers(string classId, Table spec)
+        {
+            if (!(ScriptPlugin.ToJson(DynValue.NewTable(spec)) is Newtonsoft.Json.Linq.JObject o))
+                throw new ScriptRuntimeException("mod.addTiers needs a table with tiers");
+            Ctx.AddTiers(classId, o.ToString());
+        }
+
+        /// <summary>
         /// mod.on("kill", function(e) ... end): a game event, your own ("OtherMod:name" works too), or "ready" (the game and
         /// every mod are loaded) and "update" (every frame).
         /// </summary>

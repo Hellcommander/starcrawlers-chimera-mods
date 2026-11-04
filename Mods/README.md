@@ -807,6 +807,27 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   still there, so a summon appears beside it; `"to": "self"` is whoever applied the effect and `"to": "victim"` the
   one dying. A `chain` there starts at the one dying but only passes things on: nothing lands on the corpse.
 
+**Auras and blocked abilities** (any class, any effect):
+
+- `"auras"` on a skill (while you know it, usually a passive) or on an effect (while anyone has it: you, an ally or an
+  enemy): everyone within `radius` wears another effect, and loses it the moment nothing keeps them in reach. It is
+  checked several times a second, so stepping in or out counts at once, on anyone's turn.
+
+  ```jsonc
+  "auras": [ { "effect": "@Nulled", "radius": 2, "affects": "all", "self": false, "when": { "lacks": "@Grounded" } } ]
+  ```
+
+  `affects` is `enemies` (the default), `allies` or `all`, seen from the aura's source; `self: true` puts it on the
+  source too; `when` is checked about each one in reach. The worn effect lasts as long as the aura holds it.
+- `"blocks"` on an effect: abilities the bearer can't use while it has it, for the player, enemies and summons alike.
+  The rule is `damage:TYPE` (the ability deals that type), `cooldown`, `melee`, `ranged` or a name or id, with
+  `a|b` either, `a+b` both, `!a` not: `"blocks": "damage:Psi|damage:Void"` shuts down psychic powers. Your hotbar
+  greys a blocked skill, an enemy or summon picks something else, and one used anyway fizzles (wasted, on cooldown).
+- `"onBlockedActions"` run each time the effect makes one of the bearer's abilities fizzle, on the bearer, with
+  whoever put the effect on as the caster: power that tried to get out and couldn't.
+- The condition `"uses"` takes the same words: `{ "uses": "damage:Psi|damage:Void" }` holds for a psychic (by default
+  the target). A `special` reaction with `"ability"` answers only those abilities, cooldown or not.
+
 **Controlling enemies and cooldowns** (any ability, proc or effect):
 
 - `{ "do": "taunt", "turns": 2 }` on an enemy: it attacks you for 2 turns. On you or an ally, `{ "do": "taunt",
@@ -852,7 +873,8 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 - **Triggers:**
   - `approach`: an enemy steps onto a tile next to you (or next to an ally).
   - `retreat`: an enemy that was next to you (or an ally) steps off to a tile that isn't.
-  - `special`: an enemy within `range` uses an ability with a cooldown.
+  - `special`: an enemy within `range` uses an ability with a cooldown. With `"ability": "damage:Psi|damage:Void"`
+    (the words of `blocks`, see [Auras and blocked abilities](#brand-new-abilities)) only those, cooldown or not.
   - `hurt`: an enemy hits you (or an ally).
   - `ranged`: an enemy hits you (or an ally) from two or more tiles away (a `hurt` reaction answers it too).
   - `lowHealth`: an enemy's hit takes you (or an ally) from `threshold` % health or more to under it.
@@ -957,7 +979,7 @@ The example class `Mods/ExampleClasses/cadence_fencer.xml` uses every feature be
 - **`of`** says whose number or effects are checked:
   - `self`; `target` (the default for `has` / `lacks` / `tag`); `victim` (who you hit or killed); `attacker` (who hit you);
   - `other`: whoever else is in a proc's event; `ally`: the ally in an ally trigger (see Triggers).
-- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling). Everything on one node must hold.
+- **Other checks:** `tag` (`"elite"` and `"boss"` both match every elite, rare, side-area elite, boss, miniboss, nemesis and kill squad), `skill` + `skillRank`, `inCombat`, `melee`, `chance`, `kind` (the creature's kind: `"Monster|Supernatural"`), `unaware` (`true`: the target hasn't noticed anyone yet and is idle, as the game's Assassin Strike reads it; `false`: it's alert), `facing` (`"you"`: the target has you in its field of view; `"away"`: it's turned from you, so you're behind or beside it), `perk` (`true` only once this skill's perk is bought, `false` only before: a perk that changes what a skill does, like Rimelight Seer's Zenith Calling), `uses` (whoever is checked, by default the target, has an ability these words name: `"damage:Psi|damage:Void"` is a psychic; see `blocks`). Everything on one node must hold.
 - **The skill in use** (`cast`): `vanilla`, `mod`, `item` (granted by gear), `attack`, `self`, `aimed`, `melee`, `cooldown`, `instant`,
   an archetype (`muscle`, `guile`, `intellect`) or a skill's name. A mod skill has its class's archetype.
   `|` = either, `+` = both, `!` = not: `"when": { "cast": "vanilla+attack" }`. On a proc it reads the skill you are using, so an `"on": "cast"`
@@ -1436,6 +1458,23 @@ turn a whole set off.
   ```
 
   `"enabled": false` in a patch removes the class. Patches never change the class id, so saves keep working.
+- **Adding skills to a class** (vanilla or modded): `"addTiers"` puts new tiers after a class's own, and with
+  `"fillUnfinished": true` first fills its unfinished `* NYI *` tiers (keeping their stat bonuses unless yours give
+  some). The skills rank with the tree they join; they come and go with your mod, and the game's own tree is never
+  changed, so a character ranked into them still loads with the mod off (it counts as maxed).
+
+  ```jsonc
+  { "addTiers": { "SKILLTREE_Cybertechnician": {
+      "fillUnfinished": true,
+      "effects": [ { "id": "Nulled", "name": "Nulled", "blocks": "damage:Psi|damage:Void" } ],
+      "tiers": [ { "attributes": { "Toughness": 2 }, "newAbility": { "base": "Passive", "name": "Null Spine",
+                   "auras": [ { "effect": "@Nulled", "radius": 2, "affects": "all" } ] } } ] } } }
+  ```
+
+  Tiers are written as in a class file; `@Name` refers to the `effects` here. Several mods can add to one class, in
+  mod order, up to the tier cap. A plugin calls `Context.AddTiers(classId, json)` and a script `mod.addTiers(classId,
+  table)` in their load (API level 10); `Api.TiersAddedTo(classId)` names the mods that did. The bundled
+  **Capstone Extras** mod (off by default) gives the Cybertechnician its null spine this way.
 - **Starter items** can be mod items: `"MyMod:ItemId"`, or just `"ItemId"` for an item in the class's own mod.
 
 ### Items
@@ -2564,6 +2603,7 @@ then = { … }, orelse = { … } }`. Everything else is spelled as in the class-
 | `mod.value(name, fn(call, who) → number, describe)` | `"value": "MyMod:name"` | A number for value checks; return `nil` if it can't be read. |
 | `mod.event(name, describe)`, `mod.fire(name, other, detail)` | `"on": "MyMod:name"` | Your own trigger. `other` is an actor, `detail` what `"match"` compares against. |
 | `mod.on(event, fn(e))` | | Runs whenever a proc with that `on` would (`hit`, `kill`, `hurt`, `turn`, `newfloor`, `loot`, … see [Conditions, counters and triggers](#conditions-counters-and-triggers)), or another mod's `"OtherMod:name"`. As with procs, what it does can't set off more procs or events. Also `"ready"` (the game and every mod are loaded; can run more than once) and `"update"` (every frame). |
+| `mod.addTiers(classId, table)` | `{ "addTiers": { classId: ... } }` | Skills added after a class's own (see [Classes in mods](#classes-in-mods)); call it when the script loads. Write `act` for `do`. |
 | `mod.data(name, fn(entry))` | `{ "pluginData": { "MyMod:name": … } }` | A new kind of content any mod's json can add to. Runs once per entry in load order, after every script and plugin has loaded; `entry.value` is the json as a table, `entry.mod` and `entry.file` say where it came from. |
 | `mod.setting(key, default, description) → setting` | | A setting under **Options > Mod Settings**, in a section named after your mod. `default` is a number, string or boolean; read and write `setting.value`. |
 | `mod.saved(key, fallback)`, `mod.save(key, value)` | | A number, string or boolean saved with the current run. Only these, so a save still opens without your mod. `save` returns false when no run is going. |
@@ -2725,6 +2765,7 @@ Everything else is on `Context`:
 | `Harmony` | | Your own Harmony instance, for anything the API doesn't cover: `Context.Harmony.PatchAll(GetType().Assembly)`. |
 | `AddPortraitButton(label, click)` | | A button on the character picture picker (API level 2). |
 | `Subscribe(topic, handler)` | | Hears a topic on the event bus, on the main thread (API level 5; see below). Returns what to call to stop. |
+| `AddTiers(classId, json)` | `{ "addTiers": { classId: ... } }` | Skills added after a class's own, the same object as the json (API level 10). Call it in `OnLoad`. |
 | `Log`, `ModFolder`, `PathTo(file)`, `StartCoroutine(routine)` | | Log lines show on your mod's page in the Mods screen and the mod manager. |
 
 An action's handler gets an `ActionCall`: `Caster`, `Target`, `Attacker`, `Victim`, `Ally`, `Source`, `Rank`, `Center`,
@@ -2732,7 +2773,8 @@ An action's handler gets an `ActionCall`: `Caster`, `Target`, `Attacker`, `Victi
 scaling), `Stacks(who, "@Effect")`, and `Run(...)` to run built-in actions in the same context, which is the easy way to
 deal damage or apply effects with all their usual rules. `Api` has helpers for code outside a call: `EnemiesNear`,
 `IsAlly`, `Stacks`, `Counter`, `SetCounter`, `Vfx`, `FloatText`, `ParseActions`, `RunActions`, `ModLoaded`, and at API level 2
-`CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait`, at level 3 `SimultaneousTurns`, and at level 8 `SynergyLevel`.
+`CurrentForm`, `PortraitFolder`, `CurrentPortrait`, `SetPortrait`, at level 3 `SimultaneousTurns`, at level 8 `SynergyLevel`,
+and at level 10 `TiersAddedTo`.
 
 Names you register are always your mod's (`MyMod:name`), so plugins can't collide, and json refers to them case-insensitively.
 Files in a mod's `plugins/`, `bin/` and `obj/` folders are never read as mod data, so a plugin can keep its own json there.

@@ -223,6 +223,16 @@ namespace SCClassLoader
             base.Expired_Duration();
         }
 
+        /// <summary>The effect just made one of the bearer's abilities fizzle: run onBlockedActions.</summary>
+        internal void OnBlocked(Ability a)
+        {
+            Bind();
+            if (rt == null || (rt.spec.onBlockedActions?.Count ?? 0) == 0 || target == null || target.GetIsDead()) return;
+            var ctx = new ActionContext { caster = caster != null ? caster : Player.instance, victim = target, classId = rt.classId, sourceName = GetName(), stored = Taken };
+            try { Actions.Run(rt.spec.onBlockedActions, ctx, target); }
+            catch (Exception e) { Plugin.Log.LogError($"{GetName()} on blocked: {e}"); }
+        }
+
         /// <summary>The bearer is dying (still alive for one more moment): run onDeathActions.</summary>
         internal void OnBearerDying()
         {
@@ -872,6 +882,9 @@ namespace SCClassLoader
                 lines.Add($"<b>At {th.at} stacks:</b>\n" + Actions.Describe(th.actions, rt.classId, th.radius > 0 ? $"enemies within {th.radius:0.#}" : "the bearer"));
             if ((s.onApplyActions?.Count ?? 0) > 0) lines.Add("<b>When applied:</b>\n" + Actions.Describe(s.onApplyActions, rt.classId, "the bearer"));
             if ((s.tickActions?.Count ?? 0) > 0) lines.Add("<b>Each turn:</b>\n" + Actions.Describe(s.tickActions, rt.classId, s.tickRadius > 0 ? $"enemies within {s.tickRadius:0.#}" : "the bearer"));
+            if (!string.IsNullOrEmpty(s.blocks)) lines.Add($"<b>Can't use</b> abilities that {AbilityMatch.Describe(s.blocks)}; they fizzle.");
+            if ((s.onBlockedActions?.Count ?? 0) > 0) lines.Add("<b>Each time one fizzles:</b>\n" + Actions.Describe(s.onBlockedActions, rt.classId, "the bearer"));
+            foreach (AuraSpec au in s.auras ?? new List<AuraSpec>()) lines.Add(Auras.Describe(au, rt.classId));
             if ((s.onDeathActions?.Count ?? 0) > 0) lines.Add("<b>If the bearer dies with it:</b>\n" + Actions.Describe(s.onDeathActions, rt.classId, "beside the bearer"));
             if ((s.onExpireActions?.Count ?? 0) > 0) lines.Add("<b>When it runs out:</b>\n" + Actions.Describe(s.onExpireActions, rt.classId, s.onExpireRadius > 0 ? $"enemies within {s.onExpireRadius:0.#}" : "the bearer"));
             if (s.invulnerable) lines.Add("<b>Can't lose health</b>");

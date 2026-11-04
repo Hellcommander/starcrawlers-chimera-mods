@@ -1,0 +1,163 @@
+{
+  "addTiers": {
+    "SKILLTREE_Cybertechnician": {
+      "fillUnfinished": true,
+      "effects": [
+        {
+          "id": "Nulled",
+          "name": "Nulled",
+          "description": "Inside the null spine's reach. No mind gets a thought past its own skull here, and none gets one in.",
+          "duration": 99,
+          "vfx": "EFFECT_Shocked",
+          "stats": { "PsiPower": -10 },
+          "resists": { "Psi": 25, "Void": 15 },
+          "blocks": "damage:Psi|damage:Void",
+          "onBlockedActions": [ { "do": "effect", "effect": "@Backpressure" } ]
+        },
+        {
+          "id": "Backpressure",
+          "name": "Backpressure",
+          "description": "Power that tried to leave and hit the wall. It is still in there, pressing, and the spine knows exactly where.",
+          "duration": 8,
+          "debuff": true,
+          "maxStacks": 10
+        },
+        {
+          "id": "Counterflow",
+          "name": "Counterflow",
+          "description": "Every mind straining against the field drives current back down the spine.",
+          "duration": 2,
+          "maxStacks": 5,
+          "stats": { "Strength": 1, "Toughness": 1 },
+          "resists": { "Psi": 5 }
+        },
+        {
+          "id": "DeadZone",
+          "name": "Dead Zone",
+          "description": "The spine is running at full, and the whole room sits inside it. When it winds down, everything pressed against it comes through at once.",
+          "duration": 3,
+          "auras": [ { "effect": "@Nulled", "radius": 8, "affects": "all" } ],
+          "procs": [
+            { "on": "turn", "radius": 8, "actions": [
+              { "do": "if", "when": { "uses": "damage:Psi|damage:Void" }, "then": [ { "do": "effect", "to": "self", "effect": "@Counterflow" } ] } ] }
+          ],
+          "onExpireRadius": 8,
+          "onExpireActions": [
+            { "do": "damage", "type": "Shock", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.4, "levelCap": 9,
+              "bonusPerStack": 3, "stacksOf": "@Backpressure", "stacksFrom": "target", "consumeStacks": true }
+          ]
+        }
+      ],
+      "tiers": [
+        {
+          "attributes": { "Toughness": 2, "PsiPower": -10 },
+          "resistances": { "Psi": 5 },
+          "newAbility": {
+            "base": "Passive",
+            "name": "Null Spine",
+            "icon": "SKILLTREE_Cybertechnician/0",
+            "description": "The chrome finally settles on the one frequency it was built for: none. Within two tiles of you no psychic power works, a foe's or a friend's. Minds that try anyway only press harder against the wall, and the spine drinks the strain.",
+            "auras": [ { "effect": "@Nulled", "radius": 2, "affects": "all" } ],
+            "procs": [
+              { "on": "turn", "radius": 2, "actions": [
+                { "do": "if", "when": { "uses": "damage:Psi|damage:Void" }, "then": [ { "do": "effect", "to": "self", "effect": "@Counterflow" } ] } ] }
+            ]
+          }
+        },
+        {
+          "attributes": { "Strength": 1, "Toughness": 1, "PsiPower": -3 },
+          "resistances": { "Psi": 3 },
+          "newAbility": {
+            "base": "Buff",
+            "name": "Feedback Loop",
+            "icon": "SKILLTREE_Prototype/4",
+            "staminaCost": 10,
+            "cooldown": 8,
+            "description": "Stretch the spine down the line toward any mind reaching out from beyond the field, and catch what it sends before it lands. Whatever it meant for you goes back the way it came.",
+            "actions": [
+              { "do": "arm", "reaction": {
+                  "name": "Feedback Loop",
+                  "on": "special",
+                  "ability": "damage:Psi|damage:Void",
+                  "range": 7,
+                  "interrupt": true,
+                  "charges": 2,
+                  "turns": 10,
+                  "vfx": "PA_Elementalist_ChainLightning.shockImpact",
+                  "actions": [
+                    { "do": "damage", "type": "Psi", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.3, "perRank": 1, "levelCap": 9,
+                      "bonusPerStack": 2, "stacksOf": "@Backpressure" },
+                    { "do": "effect", "effect": "@Backpressure", "stacks": 2 }
+                  ] } }
+            ],
+            "perk": {
+              "name": "Open Line",
+              "description": "The line stays open after the call comes back: for two turns the field reaches them wherever they stand.",
+              "addActions": [ { "do": "effect", "effect": "@Nulled", "turns": 2 } ]
+            }
+          }
+        },
+        {
+          "attributes": { "Strength": 2, "PsiPower": -3 },
+          "resistances": { "Psi": 3 },
+          "newAbility": {
+            "base": "Nova",
+            "name": "Discharge",
+            "icon": "SKILLTREE_Prototype/2",
+            "radius": 3,
+            "staminaCost": 20,
+            "cooldown": 8,
+            "description": "Drop the wall for a heartbeat. Everything that was pressing against it rushes back into the mind that sent it, and the heavier it pressed, the harder it lands.",
+            "actions": [
+              { "do": "stun", "turns": 1, "when": { "value": "stacks:@Backpressure", "of": "target", "atLeast": 4 } },
+              { "do": "damage", "type": "Shock", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.4, "perRank": 1, "levelCap": 9,
+                "bonusPerStack": 3, "stacksOf": "@Backpressure", "stacksFrom": "target", "consumeStacks": true }
+            ],
+            "perk": {
+              "name": "Cascade",
+              "description": "A mind that burns out takes the strain with it, and the spine is ready again.",
+              "resetOnKill": true
+            }
+          }
+        },
+        {
+          "attributes": { "Strength": 1, "Toughness": 1, "PsiPower": -3 },
+          "resistances": { "Psi": 3 },
+          "newAbility": {
+            "base": "Bolt",
+            "name": "Hardline",
+            "icon": "SKILLTREE_Prototype/0",
+            "range": 6,
+            "staminaCost": 12,
+            "cooldown": 6,
+            "description": "A cable from the spine latches on and reels them into the dead air, where their minds go quiet.",
+            "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+            "actions": [
+              { "do": "tether", "look": "#9FB4C8" },
+              { "do": "pull", "amount": 4 },
+              { "do": "effect", "effect": "@Backpressure", "when": { "uses": "damage:Psi|damage:Void" } }
+            ],
+            "perk": {
+              "name": "Clamp",
+              "description": "The cable carries the null along with it: they are cut off before they land.",
+              "addActions": [ { "do": "effect", "effect": "@Nulled", "turns": 2 } ]
+            }
+          }
+        },
+        {
+          "attributes": { "Strength": 2, "Toughness": 1, "PsiPower": -3 },
+          "resistances": { "Psi": 5 },
+          "newAbility": {
+            "base": "Buff",
+            "name": "Dead Zone",
+            "icon": "SKILLTREE_Cybertechnician/0",
+            "staminaCost": 30,
+            "cooldown": 30,
+            "description": "Turn the spine all the way up. For three turns the whole room sits inside the null, and when it winds down, everything pressed against it arrives together.",
+            "actions": [ { "do": "effect", "to": "self", "effect": "@DeadZone" } ]
+          }
+        }
+      ]
+    }
+  }
+}

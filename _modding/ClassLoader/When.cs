@@ -70,6 +70,9 @@ namespace SCClassLoader
         /// <summary>"you" = whoever is checked (default the target) has you in its field of view; "away" = it's turned
         /// from you (you're behind or beside it).</summary>
         public string facing;
+        /// <summary>Whoever is checked (default the target) has an ability this names, in the words of an effect's
+        /// "blocks": "damage:Psi|damage:Void" = a psychic.</summary>
+        public string uses;
         public int chance = 100;
         /// <summary>Stats that add to `chance` (a control roll on "PsiPower+Smarts"), `chancePer` points of chance each.</summary>
         public string chanceScale;
@@ -124,7 +127,7 @@ namespace SCClassLoader
             if (w.any != null && w.any.Count > 0 && !w.any.Any(x => Check(x, ctx, target, depth + 1))) return false;
             if (w.not != null && Check(w.not, ctx, target, depth + 1)) return false;
 
-            Character who = Who(w.of, ctx, target, w.value == null && (w.has != null || w.lacks != null || w.tag != null || w.kind != null || w.unaware.HasValue || w.facing != null) ? "target" : "self");
+            Character who = Who(w.of, ctx, target, w.value == null && (w.has != null || w.lacks != null || w.tag != null || w.kind != null || w.unaware.HasValue || w.facing != null || w.uses != null) ? "target" : "self");
             if (!string.IsNullOrEmpty(w.has) && (who == null || Actions.StacksOn(who, Actions.EffectId(w.has, ctx.classId)) <= 0)) return false;
             if (!string.IsNullOrEmpty(w.lacks) && who != null && Actions.StacksOn(who, Actions.EffectId(w.lacks, ctx.classId)) > 0) return false;
             if (!string.IsNullOrEmpty(w.tag) && (who == null || !HasTag(who, w.tag))) return false;
@@ -140,6 +143,7 @@ namespace SCClassLoader
             if (w.perk.HasValue && ((ctx.source is ModAbility pm && pm.Perked) != w.perk.Value)) return false;
             if (!string.IsNullOrEmpty(w.kind) && (who == null || !IsKind(w, who))) return false;
             if (w.unaware.HasValue && (who?.ai == null || (who.ai.GetState() == AI.AI_STATE.Idle) != w.unaware.Value)) return false;
+            if (!string.IsNullOrEmpty(w.uses) && (who == null || !AbilityMatch.Uses(who, w.uses))) return false;
             if (!string.IsNullOrEmpty(w.facing) && (who == null || FacesYou(who, ctx) != !w.facing.Equals("away", StringComparison.OrdinalIgnoreCase))) return false;
             if (!string.IsNullOrEmpty(w.value))
             {
@@ -424,6 +428,7 @@ namespace SCClassLoader
             if (w.perk.HasValue) parts.Add(w.perk.Value ? "with the perk" : "without the perk");
             if (!string.IsNullOrEmpty(w.kind)) parts.Add($"{whose ?? "the target"} is {string.Join(" or ", w.kind.Split('|').Select(k => k.Trim().ToLowerInvariant()))}");
             if (w.unaware.HasValue) parts.Add($"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} {(w.unaware.Value ? "unaware of you" : "alert")}");
+            if (!string.IsNullOrEmpty(w.uses)) parts.Add($"{whose ?? "the target"} can use abilities that {AbilityMatch.Describe(w.uses)}");
             if (!string.IsNullOrEmpty(w.facing)) parts.Add(w.facing.Equals("away", StringComparison.OrdinalIgnoreCase)
                 ? $"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} turned away from you" : $"{whose ?? "the target"} {(whose == "you" ? "are" : "is")} facing you");
             if (!string.IsNullOrEmpty(w.value))

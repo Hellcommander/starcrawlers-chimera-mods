@@ -398,6 +398,10 @@ Some things that make a class feel good to play:
   at once."), not what the player should do. The rules text is generated for you.
 - **Read finished classes.** `Mods/ExampleClasses/arc_gunner.json` is a complete nine-skill class built the same way as
   this one. `Mods/CustomClasses/`, `Mods/UniqueClasses/` and `Mods/ArendethClasses/` hold dozens more to learn from.
+- **You don't have to make a whole class.** `"addTiers"` puts new skills after any existing class's own, the game's or
+  another mod's, and `"fillUnfinished": true` fills the game's unfinished `* NYI *` tiers first. The bundled
+  `Mods/CapstoneExtras/cybertechnician.json` does this; see "Adding skills to a class" in
+  [README.md](README.md#classes-in-mods).
 
 ### Your class in character titles
 

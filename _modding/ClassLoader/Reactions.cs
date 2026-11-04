@@ -246,7 +246,7 @@ namespace SCClassLoader
             {
                 case "approach": return allies ? "when an enemy steps next to you or one of your allies" : "when an enemy steps next to you";
                 case "retreat": return allies ? "when an enemy next to you or one of your allies steps away" : "when an enemy next to you steps away";
-                case "special": return $"when an enemy within {s.range:0.#} uses a special attack" + (s.interrupt ? " (cutting it off)" : "");
+                case "special": return $"when an enemy within {s.range:0.#} uses {(string.IsNullOrEmpty(s.ability) ? "a special attack" : "an ability that " + AbilityMatch.Describe(s.ability).Replace("deal ", "deals ").Replace("have ", "has ").Replace("are ", "is "))}" + (s.interrupt ? " (cutting it off)" : "");
                 case "hurt": return allies ? "when an enemy hits you or one of your allies" : "when an enemy hits you";
                 case "ranged": return allies ? "when an enemy hits you or one of your allies from two or more tiles away" : "when an enemy hits you from two or more tiles away";
                 case "lowhealth": return $"when an enemy's hit takes {(allies ? "you or one of your allies" : "you")} under {Mathf.Clamp(s.threshold, 1, 99)}% health";
@@ -298,11 +298,14 @@ namespace SCClassLoader
             private static bool Prefix(Ability __instance, ref IEnumerator __result)
             {
                 Character enemy = __instance.GetCaster();
-                if (resolving || __instance.cooldown <= 0 || __instance is Ability_Player || !IsEnemy(enemy) || Player.instance == null) return true;
+                if (resolving || __instance is Ability_Player || Player.instance == null) return true;
+                if (AbilityMatch.Fizzle(__instance, enemy)) { __result = Nothing(); return false; }
+                if (!IsEnemy(enemy)) return true;
                 Ensure();
                 if (armed.Count == 0) return true;
                 float dist = Vector3.Distance(enemy.transform.position, Player.instance.transform.position);
-                var hits = Candidates("special", enemy, null).Where(r => dist <= r.spec.range).ToList();
+                var hits = Candidates("special", enemy, null).Where(r => dist <= r.spec.range
+                    && (string.IsNullOrEmpty(r.spec.ability) ? __instance.cooldown > 0 : AbilityMatch.Matches(__instance, r.spec.ability))).ToList();
                 if (hits.Count == 0) return true;
                 bool cut = false;
                 foreach (Armed r in hits)

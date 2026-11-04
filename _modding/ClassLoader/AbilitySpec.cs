@@ -93,6 +93,8 @@ namespace SCClassLoader
         public List<ActionSpec> castActions;
         /// <summary>Passive (or always-on) triggers.</summary>
         public List<ProcSpec> procs = new List<ProcSpec>();
+        /// <summary>While you know this skill, characters in reach wear an effect, and lose it when they step out.</summary>
+        public List<AuraSpec> auras;
         /// <summary>Upgrade bought with a perk point.</summary>
         public PerkSpec perk;
         /// <summary>What this skill pays for each level of the synergies its class is in. Those synergies then cost no
@@ -503,6 +505,9 @@ namespace SCClassLoader
         public float range = 8f;
         /// <summary>special: the enemy's ability is cut off (wasted and on cooldown).</summary>
         public bool interrupt;
+        /// <summary>special: only abilities this names, in the words of "blocks" ("damage:Psi|damage:Void"). With it,
+        /// abilities without a cooldown count too.</summary>
+        public string ability;
         public string vfx;
         public string sound;
         public List<ActionSpec> actions = new List<ActionSpec>();
@@ -739,6 +744,15 @@ namespace SCClassLoader
         public string aura;
         /// <summary>Triggers while the bearer has the effect (for buffs on you).</summary>
         public List<ProcSpec> procs = new List<ProcSpec>();
+        /// <summary>While anyone has the effect, characters in reach of them wear another one (see AuraSpec).</summary>
+        public List<AuraSpec> auras;
+        /// <summary>Abilities the bearer can't use while it has the effect: "damage:Psi|damage:Void", "cooldown", "melee",
+        /// "ranged" or a name ("a|b" either, "a+b" both, "!a" not). The player's hotbar greys them, enemies and summons
+        /// pick something else, and one used anyway fizzles.</summary>
+        public string blocks;
+        /// <summary>Run each time the effect makes one of the bearer's abilities fizzle (target: the bearer; caster:
+        /// whoever put the effect on).</summary>
+        public List<ActionSpec> onBlockedActions;
 
         /// <summary>&gt;1 makes the effect stack: re-applying adds stacks; stats, resists and dot scale per stack.</summary>
         public int maxStacks = 1;
