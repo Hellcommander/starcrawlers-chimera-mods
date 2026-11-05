@@ -30,6 +30,7 @@
 # Save backups, test output and logs
 /_modding/devtest/run_backup/
 /_modding/devtest/smoke/
+/_modding/devtest/bot/
 *.log
 *.scc
 

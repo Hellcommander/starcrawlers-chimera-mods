@@ -157,6 +157,14 @@ namespace SCClassLoader
             foreach (TMPro.TMP_FontAsset f in Resources.FindObjectsOfTypeAll<TMPro.TMP_FontAsset>())
                 if (f != null && f.atlasTextures != null)
                     foreach (Texture2D t in f.atlasTextures) if (t != null) keep.Add(t.GetInstanceID());
+            // sprite sheets behind <sprite> tags (the stat icons in the game log): not Sprite objects, so the loop above
+            // misses them, and TMP throws on every frame once the sheet is gone (found by the player bot, 2026-11-05)
+            foreach (TMPro.TMP_SpriteAsset sa in Resources.FindObjectsOfTypeAll<TMPro.TMP_SpriteAsset>())
+            {
+                if (sa == null) continue;
+                if (sa.spriteSheet != null) keep.Add(sa.spriteSheet.GetInstanceID());
+                if (sa.material != null && sa.material.mainTexture != null) keep.Add(sa.material.mainTexture.GetInstanceID());
+            }
             foreach (Texture2D t in LightmapSettings.lightmaps.SelectMany(l => new[] { l.lightmapColor, l.lightmapDir, l.shadowMask }))
                 if (t != null) keep.Add(t.GetInstanceID());
         }

@@ -4,6 +4,20 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## Unreleased
+
+### Fixes
+
+Found by the loader's new player bot, a self-test that plays the game the way a player does (see the dev readme):
+
+- The character creation screen threw once on every open: the portrait slot refreshed inside `AddComponent`, before
+  its picture existed.
+- With asset streaming on, the sprite sheet behind the game log's stat icons was unloaded after two minutes unused
+  (it is no Sprite object, so the keep-list missed it), and TextMeshPro then threw on every frame the log changed.
+  Sprite sheets now stay.
+- Body glow fades (`MeshFade`) threw on floor 2: Mono's `ConditionalWeakTable` handed back the wrong type after a
+  collection, and a glow whose colour list had shrunk indexed past it. A plain pruned dictionary and a bounds check.
+
 ## 2.1.1 (2026-11-05)
 
 ### Class titles

@@ -144,6 +144,7 @@ namespace SCClassLoader
 
             internal void Refresh()
             {
+                if (pic == null) return; // OnEnable runs inside AddComponent, before MakeSlot wires the picture
                 Sprite s = Load(Shown(this));
                 pic.sprite = s;
                 pic.enabled = s != null;
@@ -171,6 +172,7 @@ namespace SCClassLoader
             slot.label = label;
             slot.onCreation = creation;
             slots.Add(slot);
+            slot.Refresh();
             return slot;
         }
 

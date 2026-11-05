@@ -21,7 +21,23 @@ namespace SCClassLoader
             public readonly Dictionary<long, float> starts = new Dictionary<long, float>();
         }
 
-        private static readonly ConditionalWeakTable<PSMeshRendererUpdater, Memory> memories = new ConditionalWeakTable<PSMeshRendererUpdater, Memory>();
+        // a plain dictionary, pruned of destroyed updaters now and then: Mono's ConditionalWeakTable handed back values of the
+        // wrong type after a collection (InvalidCastException in GetOrCreateValue, found by the player bot 2026-11-05)
+        private static readonly Dictionary<PSMeshRendererUpdater, Memory> memories = new Dictionary<PSMeshRendererUpdater, Memory>();
+        private static int pruneAt;
+
+        private static Memory MemoryOf(PSMeshRendererUpdater self)
+        {
+            if (!memories.TryGetValue(self, out Memory m)) memories[self] = m = new Memory();
+            if (memories.Count > 64 && Time.frameCount >= pruneAt)
+            {
+                pruneAt = Time.frameCount + 600;
+                var dead = new List<PSMeshRendererUpdater>();
+                foreach (var kv in memories) if (kv.Key == null) dead.Add(kv.Key);
+                foreach (var k in dead) memories.Remove(k);
+            }
+            return m;
+        }
         private static readonly AccessTools.FieldRef<PSMeshRendererUpdater, string[]> ColourNames = AccessTools.FieldRefAccess<PSMeshRendererUpdater, string[]>("colorProperties");
         private static readonly List<Renderer> renderers = new List<Renderer>();
         private static readonly List<Material> materials = new List<Material>();
@@ -70,7 +86,8 @@ namespace SCClassLoader
                         long key = ((long)hash << 20) ^ ((long)m << 4) ^ (long)p;
                         if (!memory.starts.TryGetValue(key, out float start))
                         {
-                            starts.TryGetValue(hash.ToString() + m + names[p], out start);
+                            // the ids were remembered against an earlier colour list; a shorter one now has no name for this slot
+                            starts.TryGetValue(hash.ToString() + m + (p < names.Length ? names[p] : ""), out start);
                             memory.starts[key] = start;
                         }
                         Color c = mat.GetColor(ids[p]);
@@ -99,7 +116,7 @@ namespace SCClassLoader
                     if (stride > 1 && (__instance.GetInstanceID() & int.MaxValue) % stride != frame % stride) { Skipped++; return false; } // the last step always lands
                 }
 
-                Memory memory = memories.GetOrCreateValue(__instance);
+                Memory memory = MemoryOf(__instance);
                 bool active = __instance.IsActive;
                 Paint(__instance, memory, __instance.gameObject, ___alpha, ___startAlphaColors);
                 if (__instance.MeshObject != null) Paint(__instance, memory, __instance.MeshObject, ___alpha, ___startAlphaColors);

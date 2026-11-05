@@ -184,6 +184,8 @@ namespace SCClassLoader
                 }) { IsBackground = true }.Start();
             }
             if (dev == "3") Instance.StartCoroutine(DevTestCombat.Run());
+            else if (dev == "bot") Instance.StartCoroutine(DevTestBot.Run(null));
+            else if (dev != null && dev.StartsWith("bot:")) Instance.StartCoroutine(DevTestBot.Run(dev.Substring("bot:".Length)));
             else if (dev == "stash") Instance.StartCoroutine(DevTestStash.Run());
             else if (dev == "side") Instance.StartCoroutine(DevTestSide.Run());
             else if (dev == "items") Instance.StartCoroutine(DevTestItems.Run());
@@ -243,6 +245,7 @@ namespace SCClassLoader
             else if (dev == "looks") Instance.StartCoroutine(DevTestLooks.Run());
             else if (dev == "vfx") Instance.StartCoroutine(DevTestLooks.RunVfx());
             else if (dev == "tips") Instance.StartCoroutine(DevTestTips.Run());
+            else if (dev == "tipfade") Instance.StartCoroutine(DevTestTips.RunFade());
             else if (dev == "resources") Instance.StartCoroutine(DevTestResources.Run());
             else if (dev == "capscale") Instance.StartCoroutine(DevTestCapScale.Run());
             else if (dev == "poolgone") Instance.StartCoroutine(DevTestPoolGone.Run());
