@@ -42,6 +42,7 @@ namespace SCClassLoader
                     description = Clean(def?.description ?? (string)t.description),
                     skills = ClassTitles.Skills(t.internalName),
                     themes = ClassTitles.ThemesOf(t.internalName),
+                    smith = Smith(t.internalName, Clean(def?.name ?? (string)t.displayName)),
                     icon = File.Exists(iconPath) ? "icons/" + iconFile : null,
                 });
             }
@@ -53,9 +54,17 @@ namespace SCClassLoader
                 classes,
                 titles = ClassTitles.CatalogData(),
                 ollama = new { url = ClassTitles.OllamaUrl.Value, model = ClassTitles.OllamaModel.Value },
+                wordsmithLength = ClassTitles.WordsmithLength.Value,
             };
             File.WriteAllText(Path.Combine(Folder, "classes.json"), JsonConvert.SerializeObject(catalog, Formatting.Indented));
             Plugin.Log.LogInfo($"Class catalog: {classes.Count} classes ({drawn} new icons) for the Class Titler");
+        }
+
+        /// <summary>The class's wordsmith words as the game uses them (its own, or the fallbacks), so the Titler forges the same titles.</summary>
+        private static object Smith(string id, string name)
+        {
+            var w = ClassTitles.SmithWords(new ClassTitles.Pick { id = id, name = name });
+            return new { traits = w.traits, roots = w.roots, heads = w.heads };
         }
 
         private static string Clean(string s) => System.Text.RegularExpressions.Regex.Replace(s ?? "", "<[^>]*>", "").Trim();

@@ -25,6 +25,8 @@
   <!-- The title archive codec, the same file the loader compiles, so both read and write titles.bwt alike. -->
   <ItemGroup>
     <Compile Include="..\..\..\..\_modding\ClassLoader\TitleArchive.cs" Link="TitleArchive.cs" />
+    <!-- The wordsmith, the same file the loader compiles, so the Titler forges the titles the game shows. -->
+    <Compile Include="..\..\..\..\_modding\ClassLoader\Wordsmith.cs" Link="Wordsmith.cs" />
   </ItemGroup>
 
 </Project>

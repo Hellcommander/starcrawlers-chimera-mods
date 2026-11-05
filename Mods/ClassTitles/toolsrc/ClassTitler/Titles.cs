@@ -14,6 +14,11 @@ namespace ClassTitler
     {
         public string id, name, archetype, mod, description, icon;
         public List<string> skills = new List<string>(), themes = new List<string>();
+        /// <summary>The wordsmith's identity words for this class, as the game uses them (its own or the fallbacks).</summary>
+        public List<string> traits = new List<string>(), roots = new List<string>(), heads = new List<string>();
+
+        public Breachwork.Titles.WordsmithClass Smith() =>
+            new Breachwork.Titles.WordsmithClass { id = id, name = name, traits = traits, roots = roots, heads = heads, themes = themes };
     }
 
     /// <summary>
@@ -23,6 +28,8 @@ namespace ClassTitler
     internal class Catalog
     {
         public string Folder, SaveTo, OllamaUrl = "http://localhost:11434", OllamaModel = "llama3.1:8b";
+        /// <summary>The game's WordsmithLength: the longest wordsmith title, in letters.</summary>
+        public int WordsmithLength = 32;
         public DateTime Written;
         public List<ClassInfo> Classes = new List<ClassInfo>();
         public Dictionary<string, List<string>> ThemeTitles = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -43,15 +50,20 @@ namespace ClassTitler
             var ollama = Obj(root.TryGetValue("ollama", out object ol) ? ol : null);
             c.OllamaUrl = Str(ollama, "url") ?? c.OllamaUrl;
             c.OllamaModel = Str(ollama, "model") ?? c.OllamaModel;
+            if (root.TryGetValue("wordsmithLength", out object wl) && wl is int wli) c.WordsmithLength = wli;
             foreach (object o in (root.TryGetValue("classes", out object cl) ? cl as object[] : null) ?? new object[0])
             {
                 var d = Obj(o);
+                var smith = Obj(d.TryGetValue("smith", out object sm) ? sm : null);
                 c.Classes.Add(new ClassInfo
                 {
                     id = Str(d, "id"), name = Str(d, "name"), archetype = Str(d, "archetype"), mod = Str(d, "mod"),
                     description = Str(d, "description") ?? "", icon = Str(d, "icon"),
                     skills = Strings(d.TryGetValue("skills", out object sk) ? sk : null).Where(s => !s.Contains("NYI")).ToList(),
                     themes = Strings(d.TryGetValue("themes", out object th) ? th : null),
+                    traits = Strings(smith.TryGetValue("traits", out object tr) ? tr : null),
+                    roots = Strings(smith.TryGetValue("roots", out object ro) ? ro : null),
+                    heads = Strings(smith.TryGetValue("heads", out object he) ? he : null),
                 });
             }
             var titles = Obj(root.TryGetValue("titles", out object tt) ? tt : null);
@@ -108,6 +120,14 @@ namespace ClassTitler
                 }
             return score.OrderByDescending(kv => kv.Value).ThenBy(kv => kv.Key, StringComparer.Ordinal).ToList();
         }
+
+        /// <summary>The wordsmith's titles for these classes, best first: what the game shows with TitleSource = Wordsmith.</summary>
+        public List<Breachwork.Titles.WordsmithTitle> Forge(List<ClassInfo> picked, int count = 8) =>
+            Breachwork.Titles.Wordsmith.Titles(picked.Select(p => p.Smith()), WordsmithLength, count);
+
+        /// <summary>The classes a title names through their identity words.</summary>
+        public static List<ClassInfo> Named(string title, List<ClassInfo> picked) =>
+            Breachwork.Titles.Wordsmith.Names(title, picked.Select(p => p.Smith()).ToList()).Select(i => picked[i]).ToList();
 
         /// <summary>The title the game gives these classes: a saved one for exactly this set, else the mastery title.</summary>
         public string GameTitle(List<ClassInfo> picked, out bool saved)
@@ -236,13 +256,56 @@ namespace ClassTitler
             return sb.ToString();
         }
 
-        public static List<string> Titles(string baseUrl, string model, List<ClassInfo> classes, int count = 8)
+        /// <summary>
+        /// The wordsmith prompt: each class's identity words, and titles that fuse them into one name ("Gloom-Spored
+        /// Runesmith") naming as many of the classes as fit in <paramref name="maxLength"/> letters. Titles in
+        /// <paramref name="avoid"/> (earlier rolls) are not to be repeated.
+        /// </summary>
+        public static string SmithPrompt(List<ClassInfo> classes, int count, int maxLength, IEnumerable<string> avoid, int min = 0, string example = null, IEnumerable<string> missing = null)
+        {
+            var sb = new StringBuilder();
+            sb.Append("You name characters in a grim, darkly funny sci-fi dungeon crawler set on a corporate space station. ");
+            sb.Append("A character has all of these classes. Each comes with its identity words: traits (adjectives), stems (they join onto other words) and title words (a title can end on one; a leading - joins it onto a stem, so -smith makes Runesmith).\n");
+            foreach (ClassInfo c in classes)
+            {
+                sb.Append("- ").Append(c.name.Replace("!", ""));
+                string d = Regex.Replace(c.description ?? "", @"\[[A-Z]+\]|\s+", " ").Trim();
+                int dot = d.IndexOf(". ", StringComparison.Ordinal);
+                if (dot > 0 && dot < 220) d = d.Substring(0, dot + 1); else if (d.Length > 220) d = d.Substring(0, 220) + "...";
+                if (d != "") sb.Append(" (").Append(d).Append(')');
+                sb.Append(": traits ").Append(string.Join(", ", c.traits.DefaultIfEmpty("-")));
+                sb.Append("; stems ").Append(string.Join(", ", c.roots.DefaultIfEmpty("-")));
+                sb.Append("; title words ").Append(string.Join(", ", c.heads.DefaultIfEmpty("-"))).Append('\n');
+            }
+            sb.Append($"Write titles of 2 to 4 words and at most {maxLength} letters that fuse these identity words, or close forms of them, into one name. ");
+            sb.Append("Join a stem onto a trait or a title word with a hyphen or into one word (Psi-Spored, Hive-Guard, Runesmith). ");
+            sb.Append("Every word should point at one of the classes, and a broad word that fits two or more of them at once is best, so the title names as many classes as it can. ");
+            if (min > 0) sb.Append($"Each title must name at least {min} of the {classes.Count} classes through their words; 3 or 4 words, each carrying one or two classes, get there. ");
+            if (!string.IsNullOrWhiteSpace(example)) sb.Append($"For example, \"{example}\" is built this way; write new ones, not that one. ");
+            var left = (missing ?? Enumerable.Empty<string>()).ToList();
+            if (left.Count > 0) sb.Append("Your last titles left out ").Append(string.Join(", ", left)).Append(": use their words this time. ");
+            sb.Append("Only join words whose meanings belong together. Title Case, no personal name, do not start with \"The\". ");
+            var old = (avoid ?? Enumerable.Empty<string>()).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase).Take(40).ToList();
+            if (old.Count > 0) sb.Append("Do not repeat any of these: ").Append(string.Join("; ", old)).Append(". ");
+            sb.Append($"Write {count} different titles, one per line, and nothing else: no numbering, no quotes, no explanation.");
+            return sb.ToString();
+        }
+
+        public static List<string> Titles(string baseUrl, string model, List<ClassInfo> classes, int count = 8) => Generate(baseUrl, model, Prompt(classes, count), count, null);
+
+        /// <summary>Titles from the wordsmith prompt; <paramref name="seed"/> differs per roll so a reroll writes new ones.</summary>
+        public static List<string> SmithTitles(string baseUrl, string model, List<ClassInfo> classes, int maxLength, IEnumerable<string> avoid, int seed,
+            int min = 0, string example = null, IEnumerable<string> missing = null, int count = 8) =>
+            Generate(baseUrl, model, SmithPrompt(classes, count, maxLength, avoid, min, example, missing), count, seed);
+
+        private static List<string> Generate(string baseUrl, string model, string prompt, int count, int? seed)
         {
             var json = new JavaScriptSerializer();
+            var options = new Dictionary<string, object> { ["temperature"] = 0.95, ["num_ctx"] = 4096 };
+            if (seed.HasValue) options["seed"] = seed.Value;
             string body = json.Serialize(new Dictionary<string, object>
             {
-                ["model"] = model, ["prompt"] = Prompt(classes, count), ["stream"] = false,
-                ["options"] = new Dictionary<string, object> { ["temperature"] = 0.95, ["num_ctx"] = 4096 },
+                ["model"] = model, ["prompt"] = prompt, ["stream"] = false, ["options"] = options,
             });
             var root = json.DeserializeObject(Send(Url(baseUrl, "/api/generate"), body)) as Dictionary<string, object>;
             string answer = Regex.Replace(root?["response"] as string ?? "", "<think>.*?</think>", "", RegexOptions.Singleline);

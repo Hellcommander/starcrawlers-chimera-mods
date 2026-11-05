@@ -41,6 +41,32 @@ namespace ClassTitler
                 File.WriteAllText(Path.Combine(Path.GetTempPath(), "classtitler_ask.txt"), $"{picked.Count} classes, {sw.Elapsed.TotalSeconds:0.0}s\n{outText}\n---\n{Ollama.Prompt(picked, 8)}");
                 return 0;
             }
+            // --forge id1 id2 ...: the wordsmith's titles for these classes to classtitler_forge.txt (for testing)
+            if (args.Length > 1 && args[0] == "--forge")
+            {
+                var cat = Catalog.Load(CatalogFolder(game));
+                var picked = args.Skip(1).Select(id => cat.Classes.FirstOrDefault(c => c.id == id)).Where(c => c != null).ToList();
+                var lines = cat.Forge(picked).Select(t => $"{t.text}  ({t.covered}/{picked.Count}: {string.Join(", ", t.parts.Select(kv => kv.Key.TrimStart('-') + "=" + string.Join("/", kv.Value)))})");
+                File.WriteAllText(Path.Combine(Path.GetTempPath(), "classtitler_forge.txt"), $"{picked.Count} classes, max {cat.WordsmithLength}\n" + string.Join("\n", lines));
+                return 0;
+            }
+            // --smith id1 id2 ...: Ollama's identity-word titles, rerolling until one fits, to classtitler_smith.txt (for testing)
+            if (args.Length > 1 && args[0] == "--smith")
+            {
+                var cat = Catalog.Load(CatalogFolder(game));
+                var picked = args.Skip(1).Select(id => cat.Classes.FirstOrDefault(c => c.id == id)).Where(c => c != null).ToList();
+                var sw = Stopwatch.StartNew();
+                string outText;
+                try
+                {
+                    string known = cat.GameTitle(picked, out bool isSaved);
+                    var r = Idea.Roll(cat, cat.OllamaUrl, cat.OllamaModel, picked, Idea.DefaultMin(picked.Count), new List<string>(), 5, null, out int rolls, isSaved ? known : null);
+                    outText = $"{rolls} rolls\n" + string.Join("\n", r.Select(i => i.ToString() + "  [" + string.Join(", ", i.Names) + "]"));
+                }
+                catch (Exception e) { outText = "ERROR " + e.GetBaseException().Message; }
+                File.WriteAllText(Path.Combine(Path.GetTempPath(), "classtitler_smith.txt"), $"{picked.Count} classes, {sw.Elapsed.TotalSeconds:0.0}s, fits = names {Idea.DefaultMin(picked.Count)}+ in {cat.WordsmithLength} letters\n{outText}\n---\n{Ollama.SmithPrompt(picked, 8, cat.WordsmithLength, null, Idea.DefaultMin(picked.Count), cat.Forge(picked, 1).FirstOrDefault()?.text)}");
+                return 0;
+            }
             // --save "Title" id1 id2 ... / --forget id1 id2 ...: what the Save and Delete buttons do (for testing)
             if (args.Length > 1 && (args[0] == "--save" || args[0] == "--forget"))
             {
@@ -95,10 +121,15 @@ namespace ClassTitler
         private TextBox search, titleBox, url;
         private ListView list;
         private FlowLayoutPanel cards;
-        private Label pickedHeader, gameTitle, status;
+        private Label pickedHeader, gameTitle, status, forged, forgedWhy, titleNames;
         private ComboBox model;
         private ListBox ideas, savedList;
-        private Button ask, save;
+        private Button ask, reroll, save, forgeNext, forgeUse;
+        private CheckBox smithMode;
+        private NumericUpDown minNames;
+        private int forgeRoll;
+        /// <summary>Every title Ollama wrote for the picked classes so far: a reroll asks for new ones.</summary>
+        private readonly List<string> rolled = new List<string>();
 
         public TitlerForm(string game, Catalog cat, IEnumerable<string> pick)
         {
@@ -184,6 +215,21 @@ namespace ClassTitler
             gameTitle.MaximumSize = new Size(380, 0);
             right.Controls.Add(gameTitle);
 
+            right.Controls.Add(Spacer(10));
+            right.Controls.Add(Lbl("Wordsmith (TitleSource = Wordsmith in game)", 9f, FontStyle.Regular, Dim));
+            forged = Lbl("", 12f, FontStyle.Italic, Gold);
+            forged.MaximumSize = new Size(380, 0);
+            right.Controls.Add(forged);
+            forgedWhy = Lbl("", 8.5f, FontStyle.Regular, Dim);
+            forgedWhy.MaximumSize = new Size(380, 0);
+            right.Controls.Add(forgedWhy);
+            var frow = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            forgeNext = Btn("Next", (_, __) => { forgeRoll++; ShowForged(); });
+            forgeUse = Btn("Use this title", (_, __) => { if (forged.Tag is string t) titleBox.Text = t; });
+            frow.Controls.Add(forgeNext);
+            frow.Controls.Add(forgeUse);
+            right.Controls.Add(frow);
+
             right.Controls.Add(Spacer(14));
             right.Controls.Add(Lbl("Ollama", 12f, FontStyle.Bold, Gold));
             var row = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
@@ -192,15 +238,31 @@ namespace ClassTitler
             row.Controls.Add(url);
             row.Controls.Add(model);
             right.Controls.Add(row);
-            ask = Btn("Write titles for these classes", (_, __) => Ask());
-            right.Controls.Add(ask);
+            smithMode = new CheckBox { Text = "Build from the classes' identity words", Checked = true, AutoSize = true, ForeColor = Text_ };
+            smithMode.CheckedChanged += (_, __) => { minNames.Enabled = smithMode.Checked; };
+            right.Controls.Add(smithMode);
+            var mrow = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            mrow.Controls.Add(Lbl("Fits when it names at least", 9f, FontStyle.Regular, Dim));
+            minNames = new NumericUpDown { Minimum = 1, Maximum = 7, Value = 5, Width = 44, BackColor = Panel, ForeColor = Text_ };
+            mrow.Controls.Add(minNames);
+            mrow.Controls.Add(Lbl($"classes in {cat.WordsmithLength} letters", 9f, FontStyle.Regular, Dim));
+            right.Controls.Add(mrow);
+            var arow = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            ask = Btn("Write titles", (_, __) => Ask(false));
+            reroll = Btn("Reroll until one fits", (_, __) => Ask(true));
+            arow.Controls.Add(ask);
+            arow.Controls.Add(reroll);
+            right.Controls.Add(arow);
             ideas = new ListBox { Width = 380, Height = 170, BackColor = Panel, ForeColor = Text_, BorderStyle = BorderStyle.None, Font = new Font("Segoe UI", 10.5f, FontStyle.Italic) };
-            ideas.SelectedIndexChanged += (_, __) => { if (ideas.SelectedItem is string s) titleBox.Text = s; };
+            ideas.SelectedIndexChanged += (_, __) => { if (ideas.SelectedItem is Idea i) titleBox.Text = i.Title; else if (ideas.SelectedItem is string s && !s.EndsWith("...")) titleBox.Text = s; };
             right.Controls.Add(ideas);
             right.Controls.Add(Lbl("Title (edit it if you like)", 9f, FontStyle.Regular, Dim));
             titleBox = new TextBox { Width = 380, BackColor = Panel, ForeColor = Gold, BorderStyle = BorderStyle.FixedSingle, Font = new Font("Segoe UI", 11f, FontStyle.Italic) };
-            titleBox.TextChanged += (_, __) => save.Enabled = picked.Count >= 2 && titleBox.Text.Trim() != "";
+            titleBox.TextChanged += (_, __) => { save.Enabled = picked.Count >= 2 && titleBox.Text.Trim() != ""; ShowTitleNames(); };
             right.Controls.Add(titleBox);
+            titleNames = Lbl("", 8.5f, FontStyle.Regular, Dim);
+            titleNames.MaximumSize = new Size(380, 0);
+            right.Controls.Add(titleNames);
             save = Btn("Save for these classes", (_, __) => Save());
             right.Controls.Add(save);
 
@@ -291,7 +353,12 @@ namespace ClassTitler
             if (!isSaved && saved.Combos.TryGetValue(Catalog.Signature(picked.Select(p => p.id)), out string mine)) { t = mine; isSaved = true; }
             gameTitle.Text = picked.Count == 0 ? "-" : t + (isSaved ? "   (saved)" : "");
             ideas.Items.Clear();
-            ask.Enabled = picked.Count >= 1;
+            rolled.Clear();
+            forgeRoll = 0;
+            ShowForged();
+            ShowTitleNames();
+            minNames.Value = Math.Max(1, Math.Min(7, Idea.DefaultMin(Math.Max(1, picked.Count))));
+            ask.Enabled = reroll.Enabled = picked.Count >= 1;
             save.Enabled = picked.Count >= 2 && titleBox.Text.Trim() != "";
             var scores = Catalog.ThemeScores(picked);
             if (picked.Count > 0) status.Text = "Themes: " + string.Join(", ", scores.Select(kv => kv.Key + " " + kv.Value));
@@ -350,24 +417,72 @@ namespace ClassTitler
             })));
         }
 
-        private void Ask()
+        // ---- the wordsmith ---------------------------------------------------------------------------------------
+
+        private void ShowForged()
+        {
+            var list = picked.Count == 0 ? new List<Breachwork.Titles.WordsmithTitle>() : cat.Forge(picked);
+            forgeNext.Enabled = forgeUse.Enabled = list.Count > 0;
+            if (list.Count == 0) { forged.Text = "-"; forged.Tag = null; forgedWhy.Text = ""; return; }
+            var t = list[forgeRoll % list.Count];
+            forged.Text = t.text;
+            forged.Tag = t.text;
+            forgedWhy.Text = $"Names {t.covered} of {picked.Count}: " + string.Join(", ", t.parts.Select(kv => kv.Key.TrimStart('-') + " (" + string.Join(", ", kv.Value) + ")"))
+                + $"   [{forgeRoll % list.Count + 1}/{list.Count}]";
+        }
+
+        /// <summary>Which of the picked classes the title in the box names.</summary>
+        private void ShowTitleNames()
+        {
+            if (titleNames == null) return;
+            string t = titleBox.Text.Trim();
+            if (t == "" || picked.Count == 0) { titleNames.Text = ""; return; }
+            var named = Catalog.Named(t, picked);
+            titleNames.Text = $"Names {named.Count} of {picked.Count}" + (named.Count > 0 ? ": " + string.Join(", ", named.Select(c => c.name)) : "")
+                + (t.Length > cat.WordsmithLength ? $"   ({t.Length} letters, over {cat.WordsmithLength})" : "");
+        }
+
+        /// <summary>
+        /// Asks Ollama. With identity words on, every title is scored by the classes it names and a title fits when it
+        /// names enough of them in WordsmithLength letters; <paramref name="untilFits"/> rerolls (new seed, earlier
+        /// titles barred) until one fits or five rolls are used. Earlier rolls stay in the list.
+        /// </summary>
+        private void Ask(bool untilFits)
         {
             if (picked.Count == 0) return;
             WarnIfGameRuns();
             var classes = picked.ToList();
             string u = url.Text, m = model.Text;
-            ask.Enabled = false;
+            bool smith = smithMode.Checked;
+            int min = (int)minNames.Value;
+            var avoid = rolled.ToList();
+            string known = cat.GameTitle(classes, out bool isSaved);
+            if (!isSaved && saved.Combos.TryGetValue(Catalog.Signature(classes.Select(c => c.id)), out string mine)) { known = mine; isSaved = true; }
+            string example = isSaved ? known : null;
+            ask.Enabled = reroll.Enabled = false;
+            var before = ideas.Items.OfType<Idea>().ToList();
             ideas.Items.Clear();
             ideas.Items.Add($"{m} is writing... (the first one loads the model)");
-            Task.Run(() => Ollama.Titles(u, m, classes)).ContinueWith(t => BeginInvoke((Action)(() =>
+            Action<int> progress = n => BeginInvoke((Action)(() => { if (ideas.Items.Count > 0 && ideas.Items[0] is string) ideas.Items[0] = $"{m} is writing... roll {n}, none fits yet"; }));
+            Task.Run(() =>
             {
-                ask.Enabled = true;
+                if (!smith) return Ollama.Titles(u, m, classes).Select(x => new Idea { Title = x, Names = new List<string>(), Fits = true }).ToList();
+                return Idea.Roll(cat, u, m, classes, min, avoid, untilFits ? 5 : 1, progress, out _, example);
+            }).ContinueWith(t => BeginInvoke((Action)(() =>
+            {
+                ask.Enabled = reroll.Enabled = true;
                 ideas.Items.Clear();
-                if (t.Exception != null) { ideas.Items.Add("No titles: " + t.Exception.GetBaseException().Message); return; }
+                if (t.Exception != null) { ideas.Items.Add("No titles: " + t.Exception.GetBaseException().Message); foreach (var i in before) ideas.Items.Add(i); return; }
                 if (!classes.SequenceEqual(picked)) { status.Text = "The classes changed while Ollama was writing: ask again."; return; }
-                foreach (string s in t.Result) ideas.Items.Add(s);
-                if (t.Result.Count == 0) ideas.Items.Add("Ollama's answer had no usable titles: ask again.");
-                status.Text = "Pick one (or edit it), then save it for these classes. Ask again for more.";
+                rolled.AddRange(t.Result.Select(i => i.Title));
+                var all = t.Result.Concat(before).GroupBy(i => i.Title, StringComparer.OrdinalIgnoreCase).Select(g => g.First())
+                    .OrderByDescending(i => i.Fits).ThenByDescending(i => i.Names.Count).ThenBy(i => i.Title.Length).ToList();
+                foreach (var i in all) ideas.Items.Add(i);
+                if (all.Count == 0) ideas.Items.Add("Ollama's answer had no usable titles: ask again.");
+                int fit = t.Result.Count(i => i.Fits);
+                status.Text = !smith ? "Pick one (or edit it), then save it for these classes. Ask again for more."
+                    : fit > 0 ? $"{fit} new title(s) fit (✓). Pick one, edit it if you like, then save it for these classes."
+                    : "None fits yet: Reroll asks for new ones, or lower how many classes a title must name.";
             })));
         }
 
@@ -418,6 +533,52 @@ namespace ClassTitler
             try { saved.Save(); } catch (Exception e) { MessageBox.Show("Could not save: " + e.Message, "Class Titler"); }
             RefreshSaved();
             RefreshPicked();
+        }
+    }
+
+    /// <summary>One title Ollama wrote, with the classes it names through their identity words.</summary>
+    internal class Idea
+    {
+        public string Title;
+        public List<string> Names = new List<string>();
+        public bool Fits;
+        public int Of;
+
+        public override string ToString() => (Fits ? "✓ " : "   ") + Title + (Of > 0 ? $"   - names {Names.Count}/{Of}" : "");
+
+        /// <summary>How many classes a title must name to fit, by default: all of up to three, else two fewer.</summary>
+        public static int DefaultMin(int classes) => classes <= 3 ? classes : classes - 2;
+
+        /// <summary>
+        /// Asks Ollama's identity-word titles up to <paramref name="maxRolls"/> times, each roll with a new seed and the
+        /// titles so far barred, until one names at least <paramref name="min"/> classes within WordsmithLength letters.
+        /// </summary>
+        public static List<Idea> Roll(Catalog cat, string url, string model, List<ClassInfo> classes, int min, List<string> avoid, int maxRolls, Action<int> progress, out int rolls, string example = null)
+        {
+            var found = new List<Idea>();
+            var barred = new List<string>(avoid ?? new List<string>());
+            var rng = new Random();
+            // a title already saved for these classes is the best guide to the kind of name wanted; else the wordsmith's
+            example = example ?? cat.Forge(classes, 1).FirstOrDefault()?.text;
+            List<string> missing = null;
+            rolls = 0;
+            while (rolls < Math.Max(1, maxRolls))
+            {
+                rolls++;
+                progress?.Invoke(rolls);
+                foreach (string t in Ollama.SmithTitles(url, model, classes, cat.WordsmithLength, barred, rng.Next(), min, example, missing))
+                {
+                    if (barred.Contains(t, StringComparer.OrdinalIgnoreCase)) continue;
+                    barred.Add(t);
+                    var named = Catalog.Named(t, classes);
+                    found.Add(new Idea { Title = t, Names = named.Select(c => c.name).ToList(), Of = classes.Count, Fits = named.Count >= min && t.Length <= cat.WordsmithLength });
+                }
+                if (found.Any(i => i.Fits)) break;
+                // the next roll hears which classes the best title so far left out
+                var best = found.Where(i => i.Title.Length <= cat.WordsmithLength).OrderByDescending(i => i.Names.Count).FirstOrDefault();
+                if (best != null) missing = classes.Select(c => c.name).Where(n => !best.Names.Contains(n)).ToList();
+            }
+            return found.OrderByDescending(i => i.Fits).ThenByDescending(i => i.Names.Count).ThenBy(i => i.Title.Length).ToList();
         }
     }
 }

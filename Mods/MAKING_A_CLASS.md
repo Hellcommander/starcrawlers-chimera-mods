@@ -464,7 +464,13 @@ set for the vanilla classes.
 **The Class Titler** (an optional download: unpack `Breachwork-ClassTitler-<version>.7z` over the game folder, then run
 `Mods/ClassTitles/tools/ClassTitler/ClassTitler.exe` with the game closed) writes titles with a local Ollama without
 sharing video memory with the game. Pick up to seven classes, read their descriptions and skills, see the title the game
-gives that set now, have Ollama write some, edit one and save it. Saved titles go into `Mods/YourClassTitles`
+gives that set now and the wordsmith's title (with which word came from which class; Next walks the alternatives),
+have Ollama write some, edit one and save it. With "Build from the classes' identity words" on, Ollama is handed each
+class's traits, roots and heads and writes fused names from them; every title shows how many of your classes it names,
+and one fits (✓) when it names at least the number you set within `WordsmithLength` letters. "Reroll until one fits"
+asks again, up to five times, with new titles each roll and the classes the best one left out pointed out; a title
+already saved for the set is its example of the kind of name wanted. The box under the title says which classes the
+title you type names. Saved titles go into `Mods/YourClassTitles`
 as a title archive (`titles.bwt`; a `titles.json` from 2.1.0 still works and moves into it the next time you save), a data mod of your own the game loads next launch. The class list it reads is written by the loader
 on every launch to `BepInEx/cache/BreachworkClassCatalog` (it never leaves your computer), so start the game once first
 and your new classes show up there too.

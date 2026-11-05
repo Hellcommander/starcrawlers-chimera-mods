@@ -260,6 +260,35 @@ namespace Breachwork.Titles
             return result;
         }
 
+        /// <summary>
+        /// Which classes a title names through their identity words, for titles written by hand or by Ollama: a word
+        /// of the title is one of a class's traits, roots or heads, or starts with a root ("Sporecaller"), or ends
+        /// with a head ("Runesmith"), or is a form of one ("Spored" for "Spore"). Indices into <paramref name="classes"/>.
+        /// </summary>
+        public static List<int> Names(string title, IList<WordsmithClass> classes)
+        {
+            var found = new List<int>();
+            if (string.IsNullOrWhiteSpace(title) || classes == null) return found;
+            var tokens = title.Split(new[] { ' ', '-' }, StringSplitOptions.RemoveEmptyEntries).Select(t => new string(t.Where(char.IsLetter).ToArray()).ToLowerInvariant().Replace('y', 'i')).Where(t => t.Length >= 2).ToList();
+            for (int i = 0; i < classes.Count; i++)
+            {
+                var c = classes[i];
+                if (c == null) continue;
+                var pieces = (c.traits ?? new List<string>()).Concat(c.roots ?? new List<string>()).Concat(c.heads ?? new List<string>())
+                    .Select(p => (p ?? "").Trim().TrimStart('-').ToLowerInvariant().Replace('y', 'i')).Where(p => p.Length >= 3).Distinct().ToList();
+                bool hit = false;
+                foreach (string t in tokens)
+                {
+                    foreach (string p in pieces)
+                        if (t == p || t.StartsWith(p, StringComparison.Ordinal) || (p.Length >= 4 && t.EndsWith(p, StringComparison.Ordinal))
+                            || (t.Length >= 4 && p.StartsWith(t, StringComparison.Ordinal))) { hit = true; break; }
+                    if (hit) break;
+                }
+                if (hit) found.Add(i);
+            }
+            return found;
+        }
+
         /// <summary>Plain traits first, then the hyphened modifiers: "Brawny Fire-Frost Splice-Hive".</summary>
         private static IEnumerable<Part> Ordered(State s) => s.mods.OrderBy(p => p.hyphened ? 1 : 0);
 

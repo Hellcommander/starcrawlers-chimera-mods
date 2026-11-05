@@ -25,6 +25,11 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   the compounds mean something. Clicks walk through the next best names, the hover tip says which word came from
   which class, and classes without the words use their adjectives, nouns and themes. Ollama-written class words
   include them too. 38 classes have their own; the rest fall back.
+- **The Class Titler uses the wordsmith**: it shows the set's wordsmith title (and its alternatives) with which word
+  names which class, and Ollama can write from the classes' identity words. Each of Ollama's titles shows how many of
+  your classes it names; one fits when it names enough of them within `WordsmithLength`, and "Reroll until one fits"
+  asks again (up to five rolls, no repeats, told which classes the best one missed). A title already saved for the
+  set guides the rolls. The class catalog now carries each class's wordsmith words.
 - **Axiomancer's title words** follow its shield: Warded, Thought-Shelled, Thought-Bulwark, and themes led by guard.
 - Twelve hand-written titles for seven-class sets.
 
