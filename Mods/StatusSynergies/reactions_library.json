@@ -1,0 +1,33 @@
+{
+  "library": "reactions",
+  "about": "Statuses that only a reaction between two other statuses leaves behind (see reaction_synergies.json).",
+  "effects": [
+    {
+      "id": "Brittle",
+      "name": "Brittle",
+      "description": "Cracked through by heat and cold; the next blow finds the fault.",
+      "duration": 2,
+      "debuff": true,
+      "damageTakenMult": 1.25,
+      "stats": {
+        "Armor": -2
+      },
+      "vfx": "EFFECT_Freezing_Blood",
+      "icon": "icons/brittle.png"
+    },
+    {
+      "id": "Septic",
+      "name": "Septic",
+      "description": "A poisoned wound gone bad.",
+      "duration": 5,
+      "debuff": true,
+      "damageDealtMult": 0.8,
+      "stats": {
+        "Toughness": -2,
+        "Armor": -1
+      },
+      "vfx": "EFFECT_Xeno_Debuff_Green",
+      "icon": "icons/septic.png"
+    }
+  ]
+}

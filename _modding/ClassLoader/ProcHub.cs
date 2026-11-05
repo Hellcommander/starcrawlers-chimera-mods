@@ -58,11 +58,21 @@ namespace SCClassLoader
             finally { detail = prev; ally = prevAlly; }
         }
 
+        /// <summary>The deepest a cascade of procs can go: a proc inside a proc inside a proc, and no further.</summary>
+        internal const int MaxCascade = 3;
+
+        /// <summary>Is this event happening inside another proc's actions? Then only procs with "cascade" at least this deep
+        /// answer it (see RunProc); everything else stays quiet, as it always did.</summary>
+        internal static bool Cascading => Actions.ProcDepth > 0;
+
         public static void Fire(string on, Character other)
         {
-            if (Actions.ProcDepth > 0 || Player.instance == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
-            PluginHost.Fire(on, Player.instance, other, detail, ally); // first, so procs see what a plugin keeps up to date
-            ModAbility.CountTrigger(on);
+            if (Actions.ProcDepth > MaxCascade || Player.instance == null || Player_AbilityControl.instance == null || Game.Game_isLoading) return;
+            if (!Cascading)
+            {
+                PluginHost.Fire(on, Player.instance, other, detail, ally); // first, so procs see what a plugin keeps up to date
+                ModAbility.CountTrigger(on);
+            }
             if (EventBus.On && !EventBus.Listens(Player.instance, on)) return;
             try
             {
@@ -91,8 +101,8 @@ namespace SCClassLoader
 
         public static void FireOn(Character bearer, string on, Character other)
         {
-            if (Actions.ProcDepth > 0 || bearer == null || bearer == Player.instance || bearer.effects == null || Game.Game_isLoading) return;
-            PluginHost.Fire(on, bearer, other, detail, null);
+            if (Actions.ProcDepth > MaxCascade || bearer == null || bearer == Player.instance || bearer.effects == null || Game.Game_isLoading) return;
+            if (!Cascading) PluginHost.Fire(on, bearer, other, detail, null);
             if (EventBus.On && !EventBus.Listens(bearer, on)) return;
             try
             {
@@ -115,6 +125,8 @@ namespace SCClassLoader
         public static void RunProc(ProcSpec p, ActionContext ctx, string on, Character other)
         {
             on = (on ?? "").ToLowerInvariant();
+            // inside another proc's actions only a proc that cascades this deep answers (a reaction setting off the next)
+            if (Actions.ProcDepth > 0 && Mathf.Min(p.cascade, MaxCascade) < Actions.ProcDepth) return;
             if (!Matches(p, on, ctx)) return;
             bool pluginEvent = on.Contains(":"); // a plugin's own event: "other" is whoever it fired it about
             bool aimsAtOther = pluginEvent || AimsAtOther.Contains(on);
@@ -143,6 +155,11 @@ namespace SCClassLoader
                 Vector3 at = place ?? (focus != null ? focus.GetHitFx().position : ctx.caster.GetHitFx().position);
                 ModAudio.Play(p.sound, at, ctx.classId);
                 Actions.SpawnVfx(p.vfx, at);
+                if (!string.IsNullOrEmpty(p.announce))
+                {
+                    if (HUD.instance != null) HUD.instance.MakeFct($"<color=#7FE0C8>{p.announce}</color>", at, false);
+                    Game.LOG(focus != null && focus != ctx.caster ? $"<color=#7FE0C8>{p.announce}</color> on {focus.GetName()}." : $"<color=#7FE0C8>{p.announce}</color>.");
+                }
 
                 if (p.splitOf != p.actions)
                 {

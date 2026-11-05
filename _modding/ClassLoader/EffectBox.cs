@@ -65,6 +65,10 @@ namespace SCClassLoader
                 placeFor--;
                 if (!any) return;
                 Vector3 was = transform.position;
+                // an icon the game just added still sits where it was dropped: its layout groups (the column's and the row's,
+                // each with a size fitter) only place it in the canvas update after this, so the tab would land beside the
+                // old spot for a frame and then jump. Running that update now puts everything where the frame will show it.
+                Canvas.ForceUpdateCanvases();
                 Place();
                 if (transform.position != was) placeFor = SettleFrames;
             }

@@ -6,6 +6,28 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ## Unreleased
 
+### Status reactions (chain reactions between statuses)
+
+- **Reactions** in the Status Synergies mod: a synergy with `"status"` and `"with"` belongs to two statuses, not to a
+  class. Any class that causes the first and any other class that causes the second make it, and it goes off the
+  moment the second status lands on an enemy carrying the first, whichever came first. Eight ship: Shatter Point
+  (Burning + Chilled leaves the enemy Brittle and Reeling), Flashover (Burning + Toxified bursts fire onto the enemies
+  within two tiles), Conduction (Shocked + Chilled: the shock leaps to the nearest other chilled enemy and the ice
+  shatters as it goes), Arc Flash (Burning + Shocked: a blinding flash leaves everyone within two tiles Reeling),
+  Convulsion (Shocked + Gashed: the gash tears two stacks wider), Black Ice (Chilled + Reeling: a turn stunned),
+  Septic Wound (Toxified + Gashed: five turns Septic) and Overload (Shocked + Marked: the shock jumps to every other
+  marked enemy within six). Every reaction spends both statuses, fires at 30% plus 5% a level and at most three
+  times a turn. Brittle and Septic are new shared statuses (`#Brittle`, `#Septic`) from the mod's own small library.
+- **Chain reactions**: Flashover, Conduction and Overload spread a status with a chain, and the status they land is an
+  inflict of yours, so the same reaction can go off on the enemy it reached, up to three links deep. A row of chilled
+  enemies passes a shock all the way down; a marked squad overloads together. Each reaction shows its name over the
+  enemy and in the log, with a flash of its own.
+- For modders, three general blocks: `"cascade": N` on any proc lets it answer events set off inside other procs'
+  actions (up to three deep; without it procs stay quiet there, as before), `"announce"` on a proc shows words over
+  its target and logs them, and `"skipFirst": true` on a `chain` spreads its actions from the target to the enemies it
+  reaches without landing on the target again. A chain's `"effect"` filter takes `"A|B"` now. A library effect's
+  `icon` is read beside its own file whichever library loaded last. `SCCL_DEVTEST=chainsyn` plays the reactions.
+
 ### Reactions, in five classes
 
 The two reaction systems (a class's alchemical `"reactions"`, and the Reaction Architect's armed reactions) grow new
@@ -54,6 +76,10 @@ options, and five classes grow into them.
   Charge, and Plate Up gets Cold Plates and Overlapping Fields. `SCCL_DEVTEST=rigreact` plays it.
 
 ### Fixes
+
+- The fold tab on the effect icons (Effects N) no longer jumps when an effect lands or ends: it was placed from the
+  icons' positions in the same frame the game added one, before the layout had moved it, and corrected itself a frame
+  later. It now runs the canvas update before it looks. `SCCL_DEVTEST=chainsyn` watches it frame by frame.
 
 Found by the loader's new player bot, a self-test that plays the game the way a player does (see the dev readme):
 
@@ -225,7 +251,7 @@ Found by the loader's new player bot, a self-test that plays the game the way a 
 - Scattered traps save once per cast, not once per bomblet.
 - A trap whose `triggerRadius` is wider than its blast `radius` also catches whoever set it off from the edge; before,
   it went off and hit nobody.
-- Summons arrive at full health. Before, the pet scaling's first update set them to level Ã— 8, and an `ownerShare`
+- Summons arrive at full health. Before, the pet scaling's first update set them to level × 8, and an `ownerShare`
   effect's attributes counted only from the next turn.
 - Summons avoid tiles with mines or fire when a clear tile is free.
 - A summon whose creature comes from a placeholder tier that a mod filled (the Engineer's Boltron) is still found.

@@ -1,0 +1,684 @@
+{
+  "synergies": [
+    {
+      "id": "ShatterPoint",
+      "name": "Shatter Point",
+      "status": [
+        "#Burning",
+        "EFFECT_Fire"
+      ],
+      "sources": [
+        "SKILLTREE_Pyromaniac"
+      ],
+      "with": [
+        "#Chilled",
+        "EFFECT_Chill"
+      ],
+      "withSources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/shatter_point.png",
+      "description": "Fire and frost on one enemy: the swing of heat cracks it through. Both are spent, and it is left Brittle and Reeling. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Burning|EFFECT_Fire|#Chilled|EFFECT_Chill",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Shatter Point",
+            "vfx": "SsCrack@0.7",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Burning"
+                    },
+                    {
+                      "has": "EFFECT_Fire"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Chilled"
+                    },
+                    {
+                      "has": "EFFECT_Chill"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Burning"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Fire"
+              },
+              {
+                "do": "purge",
+                "effect": "#Chilled"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Chill"
+              },
+              {
+                "do": "effect",
+                "effect": "#Brittle"
+              },
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Flashover",
+      "name": "Flashover",
+      "status": [
+        "#Burning",
+        "EFFECT_Fire"
+      ],
+      "sources": [
+        "SKILLTREE_Pyromaniac"
+      ],
+      "with": [
+        "#Poisoned",
+        "EFFECT_Poison",
+        "EFFECT_Xeno_Debuff_Green"
+      ],
+      "withSources": [
+        "SKILLTREE_Xenobiologist"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/flashover.png",
+      "description": "The toxin in a burning enemy catches: both burn off in a flash that sets the enemies within two tiles Burning, and any of them that was Toxified flashes over in turn. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Burning|EFFECT_Fire|#Poisoned|EFFECT_Poison|EFFECT_Xeno_Debuff_Green",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Flashover",
+            "vfx": "SsFlashover@0.7",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Burning"
+                    },
+                    {
+                      "has": "EFFECT_Fire"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Poisoned"
+                    },
+                    {
+                      "has": "EFFECT_Poison"
+                    },
+                    {
+                      "has": "EFFECT_Xeno_Debuff_Green"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Burning"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Fire"
+              },
+              {
+                "do": "purge",
+                "effect": "#Poisoned"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Poison"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Xeno_Debuff_Green"
+              },
+              {
+                "do": "chain",
+                "skipFirst": true,
+                "jumps": 3,
+                "radius": 2,
+                "look": "#FF8A3C",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Burning"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Conduction",
+      "name": "Conduction",
+      "status": [
+        "#Shocked",
+        "EFFECT_Shock"
+      ],
+      "sources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "with": [
+        "#Chilled",
+        "EFFECT_Chill"
+      ],
+      "withSources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/conduction.png",
+      "description": "Frost carries current: the shock in a chilled enemy leaps to the nearest other chilled enemy within three tiles, and the ice shatters as it goes. A chilled crowd passes it along. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Shocked|EFFECT_Shock|#Chilled|EFFECT_Chill",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Conduction",
+            "vfx": "SsArc@0.6",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Shocked"
+                    },
+                    {
+                      "has": "EFFECT_Shock"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Chilled"
+                    },
+                    {
+                      "has": "EFFECT_Chill"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Shocked"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Shock"
+              },
+              {
+                "do": "purge",
+                "effect": "#Chilled"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Chill"
+              },
+              {
+                "do": "chain",
+                "skipFirst": true,
+                "jumps": 1,
+                "radius": 3,
+                "effect": "#Chilled|EFFECT_Chill",
+                "look": "#9FD8FF",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Shocked"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ArcFlash",
+      "name": "Arc Flash",
+      "status": [
+        "#Burning",
+        "EFFECT_Fire"
+      ],
+      "sources": [
+        "SKILLTREE_Pyromaniac"
+      ],
+      "with": [
+        "#Shocked",
+        "EFFECT_Shock"
+      ],
+      "withSources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/arc_flash.png",
+      "description": "Current through a flame makes a blinding flash: both are spent, and every enemy within two tiles is left Reeling. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Burning|EFFECT_Fire|#Shocked|EFFECT_Shock",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Arc Flash",
+            "vfx": "SsArc@0.8",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Burning"
+                    },
+                    {
+                      "has": "EFFECT_Fire"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Shocked"
+                    },
+                    {
+                      "has": "EFFECT_Shock"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Burning"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Fire"
+              },
+              {
+                "do": "purge",
+                "effect": "#Shocked"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Shock"
+              },
+              {
+                "do": "chain",
+                "skipFirst": true,
+                "jumps": 4,
+                "radius": 2,
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Reeling"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Convulsion",
+      "name": "Convulsion",
+      "status": [
+        "#Shocked",
+        "EFFECT_Shock"
+      ],
+      "sources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "with": [
+        "#Gashed",
+        "EFFECT_Bleed"
+      ],
+      "withSources": [
+        "SKILLTREE_Blademaster"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/convulsion.png",
+      "description": "The current fires every muscle at once: the shock is spent, the gash tears two stacks wider and the enemy reels. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Shocked|EFFECT_Shock|#Gashed|EFFECT_Bleed",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Convulsion",
+            "vfx": "PA_SerratedSpines.PS_impact@0.6",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Shocked"
+                    },
+                    {
+                      "has": "EFFECT_Shock"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Gashed"
+                    },
+                    {
+                      "has": "EFFECT_Bleed"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Shocked"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Shock"
+              },
+              {
+                "do": "effect",
+                "effect": "#Gashed",
+                "stacks": 2
+              },
+              {
+                "do": "effect",
+                "effect": "#Reeling"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BlackIce",
+      "name": "Black Ice",
+      "status": [
+        "#Chilled",
+        "EFFECT_Chill"
+      ],
+      "sources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "with": [
+        "#Reeling"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/black_ice.png",
+      "description": "Stiff with cold and off balance, an enemy goes down: both are spent for a turn stunned. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Chilled|EFFECT_Chill|#Reeling",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Black Ice",
+            "vfx": "SsCrack@0.5",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Chilled"
+                    },
+                    {
+                      "has": "EFFECT_Chill"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Reeling"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Chilled"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Chill"
+              },
+              {
+                "do": "purge",
+                "effect": "#Reeling"
+              },
+              {
+                "do": "stun",
+                "turns": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "SepticWound",
+      "name": "Septic Wound",
+      "status": [
+        "#Poisoned",
+        "EFFECT_Poison",
+        "EFFECT_Xeno_Debuff_Green"
+      ],
+      "sources": [
+        "SKILLTREE_Xenobiologist"
+      ],
+      "with": [
+        "#Gashed",
+        "EFFECT_Bleed"
+      ],
+      "withSources": [
+        "SKILLTREE_Blademaster"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/septic_wound.png",
+      "description": "Toxin in an open wound: both are spent and the wound turns Septic, five turns of weaker blows and softer flesh. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Poisoned|EFFECT_Poison|EFFECT_Xeno_Debuff_Green|#Gashed|EFFECT_Bleed",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Septic Wound",
+            "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.4",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Poisoned"
+                    },
+                    {
+                      "has": "EFFECT_Poison"
+                    },
+                    {
+                      "has": "EFFECT_Xeno_Debuff_Green"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Gashed"
+                    },
+                    {
+                      "has": "EFFECT_Bleed"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Poisoned"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Poison"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Xeno_Debuff_Green"
+              },
+              {
+                "do": "purge",
+                "effect": "#Gashed"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Bleed"
+              },
+              {
+                "do": "effect",
+                "effect": "#Septic"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Overload",
+      "name": "Overload",
+      "status": [
+        "#Shocked",
+        "EFFECT_Shock"
+      ],
+      "sources": [
+        "SKILLTREE_Elementalist"
+      ],
+      "with": [
+        "#Marked"
+      ],
+      "maxLevel": 3,
+      "icon": "icons/overload.png",
+      "description": "A marked enemy's tag carries the shock to every other marked enemy within six tiles; the mark and the shock are spent, and theirs can overload in turn. Each level adds 5% to the odds.",
+      "bonus": {
+        "procChancePerStack": 5,
+        "procs": [
+          {
+            "on": "inflict",
+            "match": "#Shocked|EFFECT_Shock|#Marked",
+            "chance": 30,
+            "maxPerTurn": 3,
+            "cascade": 2,
+            "announce": "Overload",
+            "vfx": "SsArc@0.6",
+            "when": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "has": "#Shocked"
+                    },
+                    {
+                      "has": "EFFECT_Shock"
+                    }
+                  ]
+                },
+                {
+                  "any": [
+                    {
+                      "has": "#Marked"
+                    }
+                  ]
+                }
+              ]
+            },
+            "actions": [
+              {
+                "do": "purge",
+                "effect": "#Shocked"
+              },
+              {
+                "do": "purge",
+                "effect": "EFFECT_Shock"
+              },
+              {
+                "do": "purge",
+                "effect": "#Marked"
+              },
+              {
+                "do": "chain",
+                "skipFirst": true,
+                "jumps": 4,
+                "radius": 6,
+                "effect": "#Marked",
+                "look": "#FF6A5C",
+                "actions": [
+                  {
+                    "do": "effect",
+                    "effect": "#Shocked"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

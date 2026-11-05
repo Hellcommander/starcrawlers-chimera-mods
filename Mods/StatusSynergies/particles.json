@@ -1,0 +1,107 @@
+{
+  "particles": [
+    {
+      "id": "SsCrack",
+      "layers": [
+        {
+          "texture": "fx/ss_crack.png",
+          "blend": "add",
+          "grid": [
+            6,
+            6
+          ],
+          "count": 1,
+          "life": [
+            0.7
+          ],
+          "speed": [
+            0
+          ],
+          "size": [
+            1.6
+          ],
+          "sizeCurve": "flat",
+          "shape": "point",
+          "color": "#DFF4FF",
+          "color2": "#7FC8FF",
+          "alpha": 1
+        }
+      ],
+      "light": {
+        "color": "#9FD8FF",
+        "range": 4,
+        "intensity": 2,
+        "time": 0.5
+      }
+    },
+    {
+      "id": "SsArc",
+      "layers": [
+        {
+          "texture": "fx/ss_arc.png",
+          "blend": "add",
+          "grid": [
+            4,
+            4
+          ],
+          "count": 1,
+          "life": [
+            0.5
+          ],
+          "speed": [
+            0
+          ],
+          "size": [
+            1.8
+          ],
+          "randomFrame": false,
+          "sizeCurve": "flat",
+          "shape": "point",
+          "radius": 0.25,
+          "color": "#FFFFFF",
+          "color2": "#8FD6FF",
+          "alpha": 1
+        }
+      ],
+      "light": {
+        "color": "#BFE8FF",
+        "range": 5,
+        "intensity": 3,
+        "time": 0.4
+      }
+    },
+    {
+      "id": "SsFlashover",
+      "layers": [
+        {
+          "texture": "fx/ss_flashover.png",
+          "blend": "add",
+          "grid": [
+            6,
+            6
+          ],
+          "count": 1,
+          "life": [
+            0.8
+          ],
+          "speed": [
+            0
+          ],
+          "size": [
+            2.2
+          ],
+          "sizeCurve": "flat",
+          "shape": "point",
+          "color": "#FFFFFF",
+          "alpha": 1
+        }
+      ],
+      "light": {
+        "color": "#FF8A3C",
+        "range": 6,
+        "intensity": 3,
+        "time": 0.7
+      }
+    }
+  ]
+}

@@ -56,6 +56,8 @@ namespace SCClassLoader
                 foreach (var e in (o["effects"] as Newtonsoft.Json.Linq.JArray) ?? new Newtonsoft.Json.Linq.JArray())
                 {
                     EffectSpec spec = e.ToObject<EffectSpec>();
+                    // a library effect's icon is beside its own file, whichever library's folder ends up as the shared one
+                    if (!string.IsNullOrEmpty(spec.icon) && !Path.IsPathRooted(spec.icon)) spec.icon = Path.Combine(Path.GetDirectoryName(file), spec.icon);
                     LibraryDef.effects.RemoveAll(x => x.id == spec.id);
                     LibraryDef.effects.Add(spec);
                 }

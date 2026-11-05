@@ -277,6 +277,7 @@ namespace SCClassLoader
             else if (dev == "allsyn") Instance.StartCoroutine(DevTestClassSynergies.RunAll());
             else if (dev == "smsyn") Instance.StartCoroutine(DevTestClassSynergies.RunShadow());
             else if (dev == "statussyn") Instance.StartCoroutine(DevTestStatusSynergies.Run());
+            else if (dev == "chainsyn") Instance.StartCoroutine(DevTestChainReactions.Run());
             else if (dev == "synbus") Instance.StartCoroutine(DevTestSynBus.Run());
             else if (dev == "conditions") Instance.StartCoroutine(DevTestConditions.Run());
             else if (dev == "triggers") Instance.StartCoroutine(DevTestTriggers.Run());
