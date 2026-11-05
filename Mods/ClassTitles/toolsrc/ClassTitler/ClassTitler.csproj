@@ -22,4 +22,9 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
 
+  <!-- The title archive codec, the same file the loader compiles, so both read and write titles.bwt alike. -->
+  <ItemGroup>
+    <Compile Include="..\..\..\..\_modding\ClassLoader\TitleArchive.cs" Link="TitleArchive.cs" />
+  </ItemGroup>
+
 </Project>

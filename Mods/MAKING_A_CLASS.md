@@ -442,14 +442,17 @@ Any mod can also add or change titles for classes that aren't its own, in a data
 ```
 
 `titleCombos` hand-names a set of two to seven classes, joined with `+` in any order. An exact set beats everything; a pair or trio also names bigger sets that lead with it. `themeTitles` sets mastery names, `themeWords` the adjectives and epithets the other themes add, and
-`renown` is the line added once enough classes are maxed. Later mods win. `Mods/ClassTitles/titles.json` holds the full
+`renown` is the line added once enough classes are maxed. Later mods win. For titles over many class sets, a mod can
+ship a title archive instead of `titleCombos`: any `*.bwt` file in its folder, read after its json. The Class Titler
+writes one; it holds each class id once, each set as one number and each title as numbers for its words, compressed,
+so a saved seven-class title takes about 7 bytes against about 160 as `titleCombos` text. `Mods/ClassTitles/titles.json` holds the full
 set for the vanilla classes.
 
 **The Class Titler** (an optional download: unpack `Breachwork-ClassTitler-<version>.7z` over the game folder, then run
 `Mods/ClassTitles/tools/ClassTitler/ClassTitler.exe` with the game closed) writes titles with a local Ollama without
 sharing video memory with the game. Pick up to seven classes, read their descriptions and skills, see the title the game
-gives that set now, have Ollama write some, edit one and save it. Saved titles go into `Mods/YourClassTitles/titles.json`
-as `titleCombos`, a data mod of your own the game loads next launch. The class list it reads is written by the loader
+gives that set now, have Ollama write some, edit one and save it. Saved titles go into `Mods/YourClassTitles`
+as a title archive (`titles.bwt`; a `titles.json` from 2.1.0 still works and moves into it the next time you save), a data mod of your own the game loads next launch. The class list it reads is written by the loader
 on every launch to `BepInEx/cache/BreachworkClassCatalog` (it never leaves your computer), so start the game once first
 and your new classes show up there too.
 

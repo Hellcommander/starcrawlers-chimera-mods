@@ -51,7 +51,7 @@ namespace SCClassLoader
     ///
     /// The title is display only: the game uses your name as the save file name and key, so <see cref="Player.playerName"/>
     /// never changes. Click the title for the next name; Shift+click makes the next class lead (Words); Ctrl+click asks
-    /// Ollama. All of it is kept per character in SCCL_titles.json.
+    /// Ollama. All of it is kept per character in SCCL_titles.bwt, a title archive (TitleArchive.cs).
     /// </summary>
     internal static class ClassTitles
     {
@@ -104,6 +104,7 @@ namespace SCClassLoader
             foreach (ClassDef d in ClassRegistry.AllDefs)
                 if (d?.title != null && !string.IsNullOrEmpty(d.id)) specs[d.id] = d.title;
             foreach (ModPack p in ModPacks.Ordered)
+            {
                 foreach (var (file, obj) in p.data)
                 {
                     if (obj["titles"] is JObject t)
@@ -145,6 +146,24 @@ namespace SCClassLoader
                         renown = list;
                     }
                 }
+                // title archives (*.bwt, the Class Titler writes one): titleCombos in their own compressed form, after the mod's json
+                foreach (string bwt in p.folder != null && Directory.Exists(p.folder) ? Directory.GetFiles(p.folder, "*.bwt", SearchOption.AllDirectories).OrderBy(x => x, StringComparer.OrdinalIgnoreCase).ToArray() : new string[0])
+                {
+                    try
+                    {
+                        var arc = Breachwork.Titles.TitleArchive.Load(bwt);
+                        int n = 0;
+                        foreach (var kv in arc.Sets)
+                        {
+                            int classes = kv.Key.Split('+').Length;
+                            string text = kv.Value.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
+                            if (classes >= 2 && classes <= 7 && text != null) { combos[kv.Key] = text.Trim(); n++; }
+                        }
+                        Plugin.Log.LogInfo($"Class titles: {n} saved titles from {Path.GetFileName(bwt)} ({p.id}, {new FileInfo(bwt).Length} bytes)");
+                    }
+                    catch (Exception e) { Plugin.Log.LogError($"{bwt}: title archive could not be read: {e.Message}"); }
+                }
+            }
             Plugin.Log.LogInfo($"Class titles: words for {specs.Count} classes, {combos.Count} hand-written combos, {themeTitles.Count} mastery names, {renown.Count} renown lines");
         }
 
@@ -421,32 +440,128 @@ namespace SCClassLoader
         {
             public int roll;
             public string lead;
-            /// <summary>A title Ollama wrote, and the classes it was written for (sorted ids).</summary>
-            public string custom, customFor;
+            /// <summary>The classes Ollama wrote for (sorted ids), and which of the titles for them is shown (-1: none).</summary>
+            public string customFor;
+            public int pick = -1;
             /// <summary>All the titles Ollama offered for customFor; a click moves to the next, past the last back to the generated one.</summary>
-            public List<string> options;
+            public List<string> options => customFor != null && asked.TryGetValue(customFor, out List<string> o) ? o : null;
+            /// <summary>The Ollama title shown, or null.</summary>
+            public string custom => options is List<string> o && pick >= 0 && pick < o.Count ? o[pick] : null;
+            internal bool Kept => roll != 0 || lead != null || custom != null;
         }
 
         private static Dictionary<string, Choice> choices;
-        private static string ChoicesPath => Path.Combine(Application.persistentDataPath, "SCCL_titles.json");
+        /// <summary>Ollama's titles per class set (sorted ids), kept once however many characters have that set.</summary>
+        private static Dictionary<string, List<string>> asked = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>The most titles kept for one class set; asking again adds five and drops the oldest past this.</summary>
+        internal const int MaxAsked = 20;
+        private static string ChoicesPath => Path.Combine(Application.persistentDataPath, "SCCL_titles.bwt");
+        /// <summary>The first format (2.1.0): JSON, every character with its full class list and all of Ollama's titles.</summary>
+        private static string OldChoicesPath => Path.Combine(Application.persistentDataPath, "SCCL_titles.json");
 
         internal static Choice ChoiceFor(string charName)
         {
-            if (choices == null)
-            {
-                try { choices = File.Exists(ChoicesPath) ? JsonConvert.DeserializeObject<Dictionary<string, Choice>>(File.ReadAllText(ChoicesPath)) : null; }
-                catch (Exception e) { Plugin.Log.LogWarning("SCCL_titles.json could not be read: " + e.Message); }
-                choices = new Dictionary<string, Choice>(choices ?? new Dictionary<string, Choice>(), StringComparer.OrdinalIgnoreCase);
-            }
+            if (choices == null) ReadChoices();
             if (!choices.TryGetValue(charName ?? "", out Choice c)) choices[charName ?? ""] = c = new Choice();
             return c;
         }
 
-        private static void SaveChoices()
+        /// <summary>
+        /// SCCL_titles.bwt, a title archive (Breachwork.Titles.TitleArchive): Ollama's titles once per class set, and each
+        /// character's roll, lead, set and pick as a record. Without one, an SCCL_titles.json from 2.1.0 is read, written
+        /// as the archive, read back, and only then deleted.
+        /// </summary>
+        private static void ReadChoices()
         {
-            try { File.WriteAllText(ChoicesPath, JsonConvert.SerializeObject(choices.Where(kv => kv.Key != "" && (kv.Value.roll != 0 || kv.Value.lead != null || kv.Value.custom != null)).ToDictionary(kv => kv.Key, kv => kv.Value), Formatting.Indented)); }
-            catch (Exception e) { Plugin.Log.LogWarning("SCCL_titles.json could not be written: " + e.Message); }
+            choices = new Dictionary<string, Choice>(StringComparer.OrdinalIgnoreCase);
+            asked = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+            if (File.Exists(ChoicesPath))
+            {
+                try
+                {
+                    var arc = Breachwork.Titles.TitleArchive.Load(ChoicesPath);
+                    foreach (var kv in arc.Sets) asked[kv.Key] = kv.Value;
+                    foreach (var r in arc.Records)
+                        choices[r.name] = new Choice { roll = r.roll, lead = r.lead, customFor = r.set, pick = r.set != null ? r.pick : -1 };
+                }
+                catch (Exception e) { Plugin.Log.LogWarning("SCCL_titles.bwt could not be read: " + e.Message); }
+                return;
+            }
+            if (!File.Exists(OldChoicesPath)) return;
+            try { ReadOldChoices(JObject.Parse(File.ReadAllText(OldChoicesPath))); }
+            catch (Exception e) { Plugin.Log.LogWarning("SCCL_titles.json could not be read: " + e.Message); return; }
+            long before = new FileInfo(OldChoicesPath).Length;
+            if (!SaveChoices()) return; // the json stays until the archive is safely written
+            File.Delete(OldChoicesPath);
+            Plugin.Log.LogInfo($"SCCL_titles.json moved into the title archive SCCL_titles.bwt: {before} bytes to {new FileInfo(ChoicesPath).Length}");
         }
+
+        /// <summary>The first SCCL_titles.json: a character's name to {roll, lead, custom, customFor, options}.</summary>
+        private static void ReadOldChoices(JObject root)
+        {
+            foreach (var kv in root)
+            {
+                if (!(kv.Value is JObject o)) continue;
+                var c = new Choice { roll = (int?)o["roll"] ?? 0, lead = (string)o["lead"] };
+                string custom = (string)o["custom"], set = (string)o["customFor"];
+                if (custom != null && set != null)
+                {
+                    var offered = (o["options"] as JArray)?.Select(x => (string)x).ToList() ?? new List<string>();
+                    if (!offered.Contains(custom)) offered.Insert(0, custom);
+                    c.customFor = set;
+                    c.pick = AddAsked(set, offered, custom);
+                }
+                choices[kv.Key] = c;
+            }
+        }
+
+        /// <summary>
+        /// Adds Ollama's titles to the ones kept for a set (a title it wrote before isn't kept twice), dropping the oldest
+        /// past <see cref="MaxAsked"/> and moving every character's pick with them. Returns where <paramref name="show"/> is.
+        /// </summary>
+        private static int AddAsked(string set, List<string> titles, string show)
+        {
+            if (!asked.TryGetValue(set, out List<string> list)) asked[set] = list = new List<string>();
+            var shown = choices.Values.Where(c => c.customFor == set).Select(c => (c, c.custom)).ToList();
+            foreach (string t in titles)
+                if (!string.IsNullOrWhiteSpace(t) && !list.Contains(t, StringComparer.OrdinalIgnoreCase)) list.Add(t);
+            // drop the oldest, sparing the titles a character shows now and the new one
+            for (int i = 0; list.Count > MaxAsked && i < list.Count; )
+            {
+                string t = list[i];
+                if (t == show || shown.Any(s => s.custom == t)) i++;
+                else list.RemoveAt(i);
+            }
+            foreach (var (c, title) in shown) c.pick = title == null ? -1 : list.IndexOf(title);
+            return list.FindIndex(x => string.Equals(x, show, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static bool SaveChoices()
+        {
+            try
+            {
+                // titles for a set no character shows any more can't be reached: forget them
+                var inUse = new HashSet<string>(choices.Values.Where(c => c.custom != null).Select(c => c.customFor), StringComparer.OrdinalIgnoreCase);
+                foreach (string gone in asked.Keys.Where(k => !inUse.Contains(k)).ToList()) asked.Remove(gone);
+                var arc = new Breachwork.Titles.TitleArchive();
+                foreach (var kv in choices.Where(kv => kv.Key != "" && kv.Value.Kept))
+                {
+                    Choice c = kv.Value;
+                    bool shows = c.custom != null;
+                    if (shows) arc.Sets[c.customFor] = asked[c.customFor];
+                    arc.Records.Add(new Breachwork.Titles.TitleArchive.Record { name = kv.Key, roll = c.roll, lead = c.lead, set = shows ? c.customFor : null, pick = shows ? c.pick : -1 });
+                }
+                arc.Save(ChoicesPath);
+                return true;
+            }
+            catch (Exception e) { Plugin.Log.LogWarning("SCCL_titles.bwt could not be written: " + e.Message); return false; }
+        }
+
+        /// <summary>Devtest: reads SCCL_titles again, as a new launch would.</summary>
+        internal static void ReloadChoices() => ReadChoices();
+        internal static string ChoicesFile => ChoicesPath;
+        internal static string OldChoicesFile => OldChoicesPath;
+        internal static int AskedSets => asked.Count;
 
         /// <summary>Click: other words. Shift+click: the next class leads.</summary>
         internal static void Cycle(string charName, List<Pick> picks, bool nextLead)
@@ -462,9 +577,8 @@ namespace SCClassLoader
             }
             else if (c.custom != null && c.customFor == Signature(picks))
             {
-                int at = c.options?.IndexOf(c.custom) ?? -1;
-                if (c.options != null && at >= 0 && at + 1 < c.options.Count) c.custom = c.options[at + 1];
-                else { c.custom = c.customFor = null; c.options = null; } // past the last: back to the generated title
+                if (c.pick + 1 < c.options.Count) c.pick++;
+                else { c.customFor = null; c.pick = -1; } // past the last: back to the generated title
             }
             else c.roll++;
             SaveChoices();
@@ -816,9 +930,8 @@ namespace SCClassLoader
             else
             {
                 Choice c = ChoiceFor(job.forName);
-                c.options = job.results;
-                c.custom = job.results[0];
                 c.customFor = job.forClasses;
+                c.pick = AddAsked(job.forClasses, job.results, job.results[0]);
                 SaveChoices();
                 Plugin.Log.LogInfo($"Class title: Ollama wrote {string.Join(" / ", job.results)} for {job.forName}");
             }

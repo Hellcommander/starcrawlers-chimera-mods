@@ -137,20 +137,29 @@ namespace ClassTitler
         }
     }
 
-    /// <summary>Your saved titles: Mods/YourClassTitles, a data mod the game loads like any other.</summary>
+    /// <summary>
+    /// Your saved titles: Mods/YourClassTitles/titles.bwt, a title archive (Breachwork.Titles.TitleArchive, the same
+    /// compressed format the game reads from any mod), loaded like any other mod. A titles.json from 2.1.0
+    /// ("titleCombos") is read too; the first save moves it into the archive and, once that reads back, deletes it
+    /// (a json with anything besides titleCombos is left in place).
+    /// </summary>
     internal class SavedTitles
     {
         public readonly string Folder;
         public readonly SortedDictionary<string, string> Combos = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        private string File_ => Path.Combine(Folder, "titles.json");
+        private string Archive => Path.Combine(Folder, "titles.bwt");
+        private string OldJson => Path.Combine(Folder, "titles.json");
 
         public SavedTitles(string folder)
         {
             Folder = folder;
-            if (!File.Exists(File_)) return;
-            var root = new JavaScriptSerializer().DeserializeObject(File.ReadAllText(File_)) as Dictionary<string, object>;
-            if (root != null && root.TryGetValue("titleCombos", out object c) && c is Dictionary<string, object> d)
-                foreach (var kv in d) if (kv.Value is string s) Combos[kv.Key] = s;
+            if (File.Exists(OldJson)
+                && new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.DeserializeObject(File.ReadAllText(OldJson)) is Dictionary<string, object> root
+                && root.TryGetValue("titleCombos", out object c) && c is Dictionary<string, object> d)
+                foreach (var kv in d) if (kv.Value is string s) Combos[Catalog.Signature(kv.Key.Split('+').Select(x => x.Trim()))] = s;
+            if (File.Exists(Archive))
+                foreach (var kv in Breachwork.Titles.TitleArchive.Load(Archive).Sets)
+                    if (kv.Value.Count > 0) Combos[kv.Key] = kv.Value[0];
         }
 
         public void Save()
@@ -160,11 +169,13 @@ namespace ClassTitler
             if (!File.Exists(manifest))
                 File.WriteAllText(manifest, "{\n  \"id\": \"YourClassTitles\",\n  \"name\": \"Your Class Titles\",\n  \"author\": \"You\",\n  \"version\": \"1.0.0\",\n" +
                     "  \"description\": \"Titles you picked in the Class Titler for exact class combinations. They win over the generated titles.\"\n}\n");
-            var json = new JavaScriptSerializer();
-            var sb = new StringBuilder("{\n  \"titleCombos\": {\n");
-            sb.Append(string.Join(",\n", Combos.Select(kv => "    " + json.Serialize(kv.Key) + ": " + json.Serialize(kv.Value))));
-            sb.Append("\n  }\n}\n");
-            File.WriteAllText(File_, sb.ToString());
+            var arc = new Breachwork.Titles.TitleArchive();
+            foreach (var kv in Combos) arc.Sets[kv.Key] = new List<string> { kv.Value };
+            arc.Save(Archive); // writes, reads back, then replaces
+            if (File.Exists(OldJson)
+                && new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.DeserializeObject(File.ReadAllText(OldJson)) is Dictionary<string, object> root
+                && root.Keys.All(k => k == "titleCombos"))
+                File.Delete(OldJson);
         }
     }
 
