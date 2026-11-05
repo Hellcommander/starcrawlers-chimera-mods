@@ -345,7 +345,19 @@
     "SKILLTREE_Pyromaniac+SKILLTREE_Gunslinger": "Powder Saint",
     "SKILLTREE_Hacker+SKILLTREE_VoidPsyker": "Null Pointer",
     "SKILLTREE_Smuggler+SKILLTREE_SpacePirate": "Free Trader",
-    "SKILLTREE_Chemistry+SKILLTREE_Pyromaniac": "Arsonist Chemist"
+    "SKILLTREE_Chemistry+SKILLTREE_Pyromaniac": "Arsonist Chemist",
+    "MOD_FluxSavant+MOD_Axiomancer+MOD_EntropyWeaver+MOD_GloomsporeWarden+SKILLTREE_ChaoticMutant+SKILLTREE_Psykonics+SKILLTREE_Xenobiologist": "Chaos Taxonomist",
+    "MOD_FluxSavant+MOD_GloomsporeWarden+MOD_EntropyWeaver+MOD_Axiomancer+MOD_Runeforger+MOD_PhaseDrifter+SKILLTREE_Acrobatics": "Glyphwright Between Seconds",
+    "MOD_Bodyguard+MOD_Conjoined+MOD_SpliceHost+MOD_PsiKnight+SKILLTREE_ForcePsyker+SKILLTREE_ChaoticMutant+SKILLTREE_Biomods": "Many-Bodied Bulwark",
+    "MOD_LookingGlassRogue+MOD_FluxSavant+MOD_Axiomancer+MOD_GloomsporeWarden+MOD_EntropyWeaver+MOD_PhaseDrifter+SKILLTREE_Acrobatics": "Prover of Impossible Things",
+    "MOD_SpliceHost+SKILLTREE_Pyromaniac+SKILLTREE_ForcePsyker+MOD_StarfireAdept+MOD_KelvinMagus+SKILLTREE_Bodybuilding+MOD_Conjoined": "Thermocline Colossus",
+    "MOD_SwarmConductor+SKILLTREE_Engineer+MOD_Runeforger+MOD_ReactionArchitect+MOD_PhaseDrifter+SKILLTREE_Acrobatics+MOD_GunKata": "Tripwire Virtuoso",
+    "MOD_Wildcaster+MOD_LookingGlassRogue+SKILLTREE_VoidPsyker+MOD_PhaseDrifter+SKILLTREE_Acrobatics+MOD_Spellsmith+MOD_EntropyWeaver": "Void-Touched Gambler",
+    "MOD_ShadowMagus+MOD_Wildcaster+MOD_Spellsmith+SKILLTREE_VoidPsyker+MOD_GloomsporeWarden+MOD_Axiomancer+MOD_RimelightSeer": "Lightless Hexsmith",
+    "MOD_Spellsmith+MOD_Wildcaster+MOD_EntropyWeaver+SKILLTREE_VoidPsyker+MOD_ShadowMagus+MOD_Axiomancer+MOD_RimelightSeer": "Black Frost Unraveler",
+    "MOD_CometBreaker+MOD_Spellsmith+MOD_Wildcaster+MOD_ReactantHauler+MOD_Miasmancer+SKILLTREE_ChaoticMutant+MOD_Axiomancer": "Plague Comet",
+    "MOD_Taintbearer+MOD_Emberhorn+MOD_CometBreaker+MOD_Vasculist+MOD_Ichorborn+MOD_ShadowMagus+MOD_Axiomancer": "Blackblood Rampager",
+    "MOD_ReactantHauler+MOD_Miasmancer+MOD_Spellsmith+MOD_Wildcaster+MOD_ShadowMagus+MOD_Coilwright+MOD_Axiomancer": "Live-Wire Alchemist"
   },
   "renown": [
     {
