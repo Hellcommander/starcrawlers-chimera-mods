@@ -2,7 +2,7 @@
   "id": "ShadowMagus",
   "name": "Shadow Magus",
   "author": "Arendeth",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "A Guile caster of the dark: it takes the enemy's sight, scatters them blind, shrinks them into the shadows, casts through its own Shade, and at the last whistles up the thing that lives in the dark to hunt from a distance. Recognition and Psi Power drive every spell.",
   "requires": ["Library"]

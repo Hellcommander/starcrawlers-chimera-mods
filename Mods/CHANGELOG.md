@@ -4,7 +4,7 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.2.0 (unreleased)
 
 ### Status reactions (chain reactions between statuses)
 
@@ -22,11 +22,6 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   inflict of yours, so the same reaction can go off on the enemy it reached, up to three links deep. A row of chilled
   enemies passes a shock all the way down; a marked squad overloads together. Each reaction shows its name over the
   enemy and in the log, with a flash of its own.
-- For modders, three general blocks: `"cascade": N` on any proc lets it answer events set off inside other procs'
-  actions (up to three deep; without it procs stay quiet there, as before), `"announce"` on a proc shows words over
-  its target and logs them, and `"skipFirst": true` on a `chain` spreads its actions from the target to the enemies it
-  reaches without landing on the target again. A chain's `"effect"` filter takes `"A|B"` now. A library effect's
-  `icon` is read beside its own file whichever library loaded last. `SCCL_DEVTEST=chainsyn` plays the reactions.
 
 ### Reactions, in five classes
 
@@ -75,6 +70,12 @@ options, and five classes grow into them.
   Cold Vent and Arc Vent, Piston Jab gets Taser Jab and Cold Fist, Hydraulic Charge gets Afterburner and Grapple
   Charge, and Plate Up gets Cold Plates and Overlapping Fields. `SCCL_DEVTEST=rigreact` plays it.
 
+### Interface
+
+- **TooltipOpacity** (`[Interface]`, 10-100%, default 100): the game's own tooltips (items, skills, perks, effects,
+  characters) fade their background like the mod's panels, never resized. Text stays solid unless `FadeText` is on,
+  and `AllOpacity` leaves them alone.
+
 ### Fixes
 
 - The fold tab on the effect icons (Effects N) no longer jumps when an effect lands or ends: it was placed from the
@@ -90,6 +91,14 @@ Found by the loader's new player bot, a self-test that plays the game the way a 
   Sprite sheets now stay.
 - Body glow fades (`MeshFade`) threw on floor 2: Mono's `ConditionalWeakTable` handed back the wrong type after a
   collection, and a glow whose colour list had shrunk indexed past it. A plain pruned dictionary and a bounds check.
+
+### Modding
+
+- Three general blocks for status reactions: `"cascade": N` on any proc lets it answer events set off inside other
+  procs' actions (up to three deep; without it procs stay quiet there, as before), `"announce"` on a proc shows words
+  over its target and logs them, and `"skipFirst": true` on a `chain` spreads its actions from the target to the enemies
+  it reaches without landing on the target again. A chain's `"effect"` filter takes `"A|B"` now. A library effect's
+  `icon` is read beside its own file whichever library loaded last. `SCCL_DEVTEST=chainsyn` plays the reactions.
 
 ## 2.1.1 (2026-11-05)
 
