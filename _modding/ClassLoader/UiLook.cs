@@ -49,8 +49,12 @@ namespace SCClassLoader
         };
 
         private static readonly Dictionary<string, (ConfigEntry<int> size, ConfigEntry<int> opacity)> settings = new Dictionary<string, (ConfigEntry<int>, ConfigEntry<int>)>();
-        private static ConfigEntry<int> allSize, allOpacity;
+        private static ConfigEntry<int> allSize, allOpacity, tooltipOpacity;
         private static ConfigEntry<bool> fadeText, collapseButtons, resizeGrips;
+
+        /// <summary>The game's own tooltip (items, skills, perks, effects, characters): fades only, never resized, and
+        /// AllOpacity leaves it alone, so dimming the loader's panels doesn't also dim what you read most.</summary>
+        internal const string TooltipKey = "Tooltip";
 
         /// <summary>Where a panel's collapse tab sits: just above its top edge (left or right end), or inside its top-left corner.</summary>
         internal enum Corner { AboveLeft, AboveRight, InsideLeft }
@@ -62,6 +66,7 @@ namespace SCClassLoader
             fadeText = cfg.Bind(Section, "FadeText", false, "Opacity fades the text and icons too. Off keeps them solid and fades only the backgrounds.");
             collapseButtons = cfg.Bind(Section, "CollapseButtons", true, "Panels have a small - tab that folds them down to a + tab and back. Off hides the tabs and shows every panel whole.");
             resizeGrips = cfg.Bind(Section, "ResizeGrips", true, "Panels have a small grip in their corner: drag it to change the panel's size setting. Off hides the grips.");
+            tooltipOpacity = cfg.Bind(Section, "TooltipOpacity", 100, new ConfigDescription("Background opacity of the game's tooltips (items, skills, perks, effects, characters), in percent; lower lets the game show through. Text stays solid unless FadeText is on. AllOpacity doesn't change it.", new AcceptableValueRange<int>(10, 100)));
             foreach (var (key, about) in Panels)
                 settings[key] = (
                     cfg.Bind(Section, key + "Size", 100, new ConfigDescription($"Size of {about}, in percent.", new AcceptableValueRange<int>(50, 200))),
@@ -72,16 +77,33 @@ namespace SCClassLoader
             (allSize?.Value ?? 100) / 100f * (settings.TryGetValue(key, out var s) ? s.size.Value : 100) / 100f;
 
         internal static float Opacity(string key) =>
-            Mathf.Clamp01((allOpacity?.Value ?? 100) / 100f * (settings.TryGetValue(key, out var s) ? s.opacity.Value : 100) / 100f);
+            key == TooltipKey ? Mathf.Clamp01((tooltipOpacity?.Value ?? 100) / 100f)
+            : Mathf.Clamp01((allOpacity?.Value ?? 100) / 100f * (settings.TryGetValue(key, out var s) ? s.opacity.Value : 100) / 100f);
 
         /// <summary>Gives `root` the panel's size and opacity; `scaled` (default: root) is what grows or shrinks.</summary>
-        internal static void Attach(Component root, string key, RectTransform scaled = null)
+        internal static void Attach(Component root, string key, RectTransform scaled = null) => Attach(root, key, scaled, true);
+
+        /// <summary>Gives `root` only the panel's opacity: for the game's own panels, which place themselves by their size.</summary>
+        internal static void AttachFade(Component root, string key) => Attach(root, key, null, false);
+
+        private static void Attach(Component root, string key, RectTransform scaled, bool sized)
         {
             if (root == null) return;
             Look l = root.GetComponent<Look>() ?? root.gameObject.AddComponent<Look>();
             l.key = key;
-            l.scaled = scaled != null ? scaled : root.transform as RectTransform;
+            l.scaled = !sized ? null : scaled != null ? scaled : root.transform as RectTransform;
             l.Apply(true);
+        }
+
+        /// <summary>The game's tooltip fades with TooltipOpacity (and any preview copy of it, like the skill screen's).</summary>
+        [HarmonyLib.HarmonyPatch(typeof(Tooltip), "Awake")]
+        private static class Patch_Tooltip
+        {
+            private static void Postfix(Tooltip __instance)
+            {
+                try { if (__instance != null && __instance.content != null) AttachFade(__instance.content, TooltipKey); }
+                catch (System.Exception ex) { Plugin.Log.LogWarning("Tooltip opacity: " + ex.Message); }
+            }
         }
 
         /// <summary>

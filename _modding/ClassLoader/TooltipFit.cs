@@ -20,11 +20,13 @@ namespace SCClassLoader
 
         private class State { public float baseSize; public string text; }
         private static readonly Dictionary<TextMeshProUGUI, State> states = new Dictionary<TextMeshProUGUI, State>();
+        private static Tooltip faded;
 
         internal static void Tick()
         {
             Tooltip tip = Tooltip.instance;
             if (tip == null || !tip.IsShowing() || tip.content == null) return;
+            if (tip != faded) { faded = tip; UiLook.AttachFade(tip.content, UiLook.TooltipKey); } // in case its Awake ran before the patches
             TextMeshProUGUI[] texts = { tip.ability_description, tip.itemDescription, tip.perkDescription };
 
             bool reworded = false;

@@ -2526,7 +2526,8 @@ has `<Panel>Size` (50-200%) and `<Panel>Opacity` (10-100%), and `AllSize` / `All
 Windows and HUD strips also have a small grip in the corner: drag it to change that panel's size setting (`ResizeGrips`
 off hides them). On the Synergies tab it scales the text and its `[ - ]` and `[ + ]`, rewrapping them to the box.
 Opacity fades the panel's backgrounds and keeps its text and icons solid; turn on `FadeText` to fade those too.
-The resource bars keep their own `[Resources] Scale` and `IdleOpacity`.
+`TooltipOpacity` (10-100%) does the same for the game's own tooltips (items, skills, perks, effects, characters);
+`AllOpacity` leaves it alone. The resource bars keep their own `[Resources] Scale` and `IdleOpacity`.
 
 **Apartment Portal button:** the skills screen puts it in the ninth tier column, on top of the extra tier slot. With
 `PortalBesidePerks` (on by default) it sits to the right of the perk point count instead, with room for the count to
