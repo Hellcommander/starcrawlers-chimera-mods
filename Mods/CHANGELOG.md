@@ -4,6 +4,20 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## Unreleased
+
+### Class titles
+
+- **Title archives** (`.bwt`): stored titles have their own compressed format, so titles kept for many class
+  combinations take little disk. Each class id is written once, a class set is one number (its place among all sets
+  of its size, written as the gap from the one before), a title is numbers for its words, and the whole is deflated
+  with a hash that refuses a damaged file. A saved seven-class title takes about 7 bytes instead of about 160 as text
+  (a million of them: 6.7 MB against 161 MB). `SCCL_titles.bwt` holds your characters' title choices, and Ollama's
+  titles are kept once per class combination rather than once per character (up to 20; asking again adds to them,
+  and titles nobody shows any more are dropped). The Class Titler saves to `Mods/YourClassTitles/titles.bwt`, and
+  any mod can ship a `*.bwt`. An `SCCL_titles.json` or Titler `titles.json` from 2.1.0 is moved into the archive
+  (on the first launch, or the Titler's next save) and deleted once the archive reads back.
+
 ## 2.1.0 (2026-11-04)
 
 ### Class titles
@@ -21,15 +35,6 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   every class with its icon, description and skills. Pick up to seven, see the title the game gives that set, have
   Ollama write more and save the one you like. Saved titles go to `Mods/YourClassTitles` and win over the made-up title
   for that exact set, in any order. The loader writes the class list it reads to `BepInEx/cache` each launch.
-- **Title archives** (`.bwt`): stored titles have their own compressed format, so titles kept for many class
-  combinations take little disk. Each class id is written once, a class set is one number (its place among all sets
-  of its size, written as the gap from the one before), a title is numbers for its words, and the whole is deflated
-  with a hash that refuses a damaged file. A saved seven-class title takes about 7 bytes instead of about 160 as text
-  (a million of them: 6.7 MB against 161 MB). `SCCL_titles.bwt` holds your characters' title choices, and Ollama's
-  titles are kept once per class combination rather than once per character (up to 20; asking again adds to them,
-  and titles nobody shows any more are dropped). The Class Titler saves to `Mods/YourClassTitles/titles.bwt`, and
-  any mod can ship a `*.bwt`. An `SCCL_titles.json` or Titler `titles.json` from 2.1.0 is moved into the archive
-  (on the first launch, or the Titler's next save) and deleted once the archive reads back.
 
 ### Schematics and terminals
 
