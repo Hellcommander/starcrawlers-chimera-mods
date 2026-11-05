@@ -226,6 +226,7 @@ namespace SCClassLoader
             else if (dev == "names") Instance.StartCoroutine(DevTestNames.Run());
             else if (dev == "names2") Instance.StartCoroutine(DevTestNames.RunLoadList());
             else if (dev == "titles") Instance.StartCoroutine(DevTestTitles.Run());
+            else if (dev == "wordsmith") Instance.StartCoroutine(DevTestWordsmith.Run());
             else if (dev == "drones") Instance.StartCoroutine(DevTestDrones.Run());
             else if (dev == "pets") Instance.StartCoroutine(DevTestPets.Run());
             else if (dev == "conjoined") Instance.StartCoroutine(DevTestConjoined.Run());

@@ -1,5 +1,5 @@
 {
   "titles": {
-    "MOD_KelvinMagus": {"adjectives": ["Absolute", "Heat-Stealing"], "nouns": ["Kelvin Magus", "Frostwright"], "of": ["Absolute Zero", "Stolen Heat"], "master": "Absolute Zero", "themes": ["frost", "arcane"]}
+    "MOD_KelvinMagus": {"adjectives": ["Absolute", "Heat-Stealing"], "nouns": ["Kelvin Magus", "Frostwright"], "of": ["Absolute Zero", "Stolen Heat"], "master": "Absolute Zero", "themes": ["frost", "arcane"], "traits": ["Supercooled", "-chilled"], "roots": ["Frost", "Kelvin"], "heads": ["Magus"]}
   }
 }

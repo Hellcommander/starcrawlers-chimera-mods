@@ -1,5 +1,5 @@
 {
   "titles": {
-    "MOD_Conjoined": {"adjectives": ["Conjoined", "Many-Bodied"], "nouns": ["Hivemind", "Gestalt"], "of": ["Many Bodies", "One Mind"], "master": "Gestalt Prime", "themes": ["swarm", "mind"]}
+    "MOD_Conjoined": {"adjectives": ["Conjoined", "Many-Bodied"], "nouns": ["Hivemind", "Gestalt"], "of": ["Many Bodies", "One Mind"], "master": "Gestalt Prime", "themes": ["swarm", "mind"], "traits": ["Many-Bodied"], "roots": ["Hive", "Twin"], "heads": ["Hive", "Host"]}
   }
 }

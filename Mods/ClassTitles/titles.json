@@ -2,13 +2,13 @@
   "titles": {
     "SKILLTREE_Prototype": {"adjectives": ["Prototype", "Untested"], "nouns": ["Testbed", "Prototype"], "of": ["the Test Bench", "Version Zero"], "master": "Final Build", "themes": ["brawn", "tech"]},
     "SKILLTREE_Soldier": {"adjectives": ["Drilled", "Regimental"], "nouns": ["Trooper", "Soldier"], "of": ["the Line", "the Last Muster"], "master": "Warmaster", "themes": ["gun", "guard"]},
-    "SKILLTREE_ForcePsyker": {"adjectives": ["Forceful", "Telekinetic"], "nouns": ["Force Psyker", "Mindhammer"], "of": ["the Unseen Fist", "Crushing Thought"], "master": "Forcelord", "themes": ["mind", "brawn"]},
+    "SKILLTREE_ForcePsyker": {"adjectives": ["Forceful", "Telekinetic"], "nouns": ["Force Psyker", "Mindhammer"], "of": ["the Unseen Fist", "Crushing Thought"], "master": "Forcelord", "themes": ["mind", "brawn"], "traits": ["Kinetic"], "roots": ["Force"], "heads": ["Psyker"]},
     "SKILLTREE_Cyberninja": {"adjectives": ["Silent", "Chrome-Edged"], "nouns": ["Cyberninja", "Shadowblade"], "of": ["the Quiet Cut", "Severed Signals"], "master": "Ghost Blade", "themes": ["blade", "guile", "tech"]},
     "SKILLTREE_Smuggler": {"adjectives": ["Contraband", "Slippery"], "nouns": ["Smuggler", "Runner"], "of": ["the Hidden Hold", "False Manifests"], "master": "Kingpin", "themes": ["guile", "gun"]},
     "SKILLTREE_SpacePirate": {"adjectives": ["Plundering", "Freebooting"], "nouns": ["Pirate", "Raider"], "of": ["the Black Flag", "Boarding Hooks"], "master": "Pirate King", "themes": ["blade", "gun", "guile"]},
-    "SKILLTREE_Engineer": {"adjectives": ["Engineered", "Turret-Minded"], "nouns": ["Engineer", "Mechanist"], "of": ["the Wrench", "Spare Parts"], "master": "Chief Engineer", "themes": ["tech", "swarm"]},
+    "SKILLTREE_Engineer": {"adjectives": ["Engineered", "Turret-Minded"], "nouns": ["Engineer", "Mechanist"], "of": ["the Wrench", "Spare Parts"], "master": "Chief Engineer", "themes": ["tech", "swarm"], "traits": ["Rigged"], "roots": ["Turret", "Gear"], "heads": ["-wright", "Engineer"]},
     "SKILLTREE_Hacker": {"adjectives": ["Wired", "Backdoored"], "nouns": ["Hacker", "Netrunner"], "of": ["the Backdoor", "Root Access"], "master": "Root", "themes": ["tech", "mind"]},
-    "SKILLTREE_VoidPsyker": {"adjectives": ["Void-Touched", "Hollow-Eyed"], "nouns": ["Void Psyker", "Voidcaller"], "of": ["the Void", "the Empty Dark"], "master": "Voidlord", "themes": ["void", "mind"]},
+    "SKILLTREE_VoidPsyker": {"adjectives": ["Void-Touched", "Hollow-Eyed"], "nouns": ["Void Psyker", "Voidcaller"], "of": ["the Void", "the Empty Dark"], "master": "Voidlord", "themes": ["void", "mind"], "traits": ["Voidtouched"], "roots": ["Void"], "heads": ["Psyker"]},
     "SKILLTREE_Smashmaster": {"adjectives": ["Smashing", "Bonebreaking"], "nouns": ["Smasher", "Wrecker"], "of": ["the Big Swing", "Broken Bulkheads"], "master": "Smashmaster", "themes": ["brawn"]},
     "SKILLTREE_Barbarian": {"adjectives": ["Savage", "Raging"], "nouns": ["Barbarian", "Berserker"], "of": ["the Red Rage", "Broken Chains"], "master": "Warlord", "themes": ["brawn", "blood"]},
     "SKILLTREE_BigGuns": {"adjectives": ["Heavy", "Big-Bore"], "nouns": ["Gunner", "Heavy"], "of": ["Big Guns", "the Belt Feed"], "master": "Walking Artillery", "themes": ["gun", "brawn"]},
@@ -16,24 +16,24 @@
     "SKILLTREE_DualWield": {"adjectives": ["Twin-Handed", "Ambidextrous"], "nouns": ["Dual Wielder", "Twinblade"], "of": ["Both Hands", "the Paired Strike"], "master": "Twin Fury", "themes": ["blade", "guile"]},
     "SKILLTREE_Pistolier": {"adjectives": ["Quick-Draw", "Sidearm"], "nouns": ["Pistolier", "Shootist"], "of": ["the Holster", "the Fast Draw"], "master": "Deadeye", "themes": ["gun", "guile"]},
     "SKILLTREE_Nanomancy": {"adjectives": ["Nanite-Laced", "Swarming"], "nouns": ["Nanomancer", "Swarmwright"], "of": ["the Grey Cloud", "a Billion Machines"], "master": "Archnanomancer", "themes": ["swarm", "tech"]},
-    "SKILLTREE_Psykonics": {"adjectives": ["Psychic", "Mind-Lit"], "nouns": ["Psykon", "Mentalist"], "of": ["the Inner Eye", "Open Minds"], "master": "Grand Psykon", "themes": ["mind"]},
+    "SKILLTREE_Psykonics": {"adjectives": ["Psychic", "Mind-Lit"], "nouns": ["Psykon", "Mentalist"], "of": ["the Inner Eye", "Open Minds"], "master": "Grand Psykon", "themes": ["mind"], "traits": ["Psionic"], "roots": ["Psi", "Mind"], "heads": ["Psion"]},
     "SKILLTREE_Chemistry": {"adjectives": ["Volatile", "Distilled"], "nouns": ["Chemist", "Alchemist"], "of": ["the Beaker", "Bad Reactions"], "master": "Master Chemist", "themes": ["rot", "fire"]},
-    "SKILLTREE_Bodybuilding": {"adjectives": ["Brawny", "Pumped"], "nouns": ["Bodybuilder", "Musclehead"], "of": ["Iron Gains", "the Heavy Set"], "master": "Colossus", "themes": ["brawn", "guard"]},
-    "SKILLTREE_Pyromaniac": {"adjectives": ["Kindled", "Scorching"], "nouns": ["Pyromaniac", "Firestarter"], "of": ["the Ember", "Open Flame"], "master": "Inferno", "themes": ["fire"]},
+    "SKILLTREE_Bodybuilding": {"adjectives": ["Brawny", "Pumped"], "nouns": ["Bodybuilder", "Musclehead"], "of": ["Iron Gains", "the Heavy Set"], "master": "Colossus", "themes": ["brawn", "guard"], "traits": ["Brawny"], "roots": ["Brawn", "Iron"], "heads": ["Brute"]},
+    "SKILLTREE_Pyromaniac": {"adjectives": ["Kindled", "Scorching"], "nouns": ["Pyromaniac", "Firestarter"], "of": ["the Ember", "Open Flame"], "master": "Inferno", "themes": ["fire"], "traits": ["Kindled"], "roots": ["Fire", "Pyre"], "heads": ["Arsonist"]},
     "SKILLTREE_Cybertechnician": {"adjectives": ["Augmented", "Rewired"], "nouns": ["Cybertech", "Implant Jockey"], "of": ["the Chrome", "Spliced Wiring"], "master": "Chief Cybertech", "themes": ["tech", "brawn"]},
     "SKILLTREE_Gunslinger": {"adjectives": ["Gun-Slung", "Trigger-Happy"], "nouns": ["Gunslinger", "Pistoleer"], "of": ["Six Barrels", "the High Noon"], "master": "Gunsaint", "themes": ["gun"]},
     "SKILLTREE_Security": {"adjectives": ["Watchful", "Corporate"], "nouns": ["Guard", "Enforcer"], "of": ["the Checkpoint", "Locked Doors"], "master": "Chief of Security", "themes": ["guard", "gun"]},
-    "SKILLTREE_Acrobatics": {"adjectives": ["Nimble", "Tumbling"], "nouns": ["Acrobat", "Tumbler"], "of": ["the High Wire", "Fast Feet"], "master": "Aerialist", "themes": ["guile"]},
+    "SKILLTREE_Acrobatics": {"adjectives": ["Nimble", "Tumbling"], "nouns": ["Acrobat", "Tumbler"], "of": ["the High Wire", "Fast Feet"], "master": "Aerialist", "themes": ["guile"], "traits": ["-tumbling", "Nimble"], "roots": [], "heads": ["Acrobat", "Tumbler"]},
     "SKILLTREE_Elementalist": {"adjectives": ["Elemental", "Storm-Wrought"], "nouns": ["Elementalist", "Stormcaller"], "of": ["the Elements", "Fire and Frost"], "master": "Archelementalist", "themes": ["fire", "frost", "storm"]},
     "SKILLTREE_Combology": {"adjectives": ["Combo-Chained", "Rhythmic"], "nouns": ["Combologist", "Chainer"], "of": ["the Long Chain", "Perfect Timing"], "master": "Grand Combologist", "themes": ["brawn", "guile"]},
-    "SKILLTREE_Xenobiologist": {"adjectives": ["Xenobiotic", "Specimen-Fed"], "nouns": ["Xenobiologist", "Beastkeeper"], "of": ["Strange Fauna", "the Specimen Jar"], "master": "Xenarch", "themes": ["swarm", "rot"]},
+    "SKILLTREE_Xenobiologist": {"adjectives": ["Xenobiotic", "Specimen-Fed"], "nouns": ["Xenobiologist", "Beastkeeper"], "of": ["Strange Fauna", "the Specimen Jar"], "master": "Xenarch", "themes": ["swarm", "rot"], "traits": ["Xenogenic"], "roots": ["Xeno"], "heads": ["Xenologist"]},
     "SKILLTREE_BulletFarmer": {"adjectives": ["Ammo-Hoarding", "Bullet-Grown"], "nouns": ["Bullet Farmer", "Ammo Baron"], "of": ["Endless Rounds", "the Brass Harvest"], "master": "Bullet Baron", "themes": ["gun"]},
     "SKILLTREE_Shieldbearer": {"adjectives": ["Shielded", "Bulwarked"], "nouns": ["Shield Bearer", "Bulwark"], "of": ["the Shield Wall", "Raised Shields"], "master": "Aegis", "themes": ["guard"]},
     "SKILLTREE_Cursed": {"adjectives": ["Hexed", "Doomed"], "nouns": ["Cursebearer", "Jinx"], "of": ["Bad Luck", "the Curse"], "master": "Living Curse", "themes": ["void", "arcane"]},
     "SKILLTREE_ThoughtLeader": {"adjectives": ["Inspiring", "Charismatic"], "nouns": ["Thought Leader", "Visionary"], "of": ["Big Ideas", "the Keynote"], "master": "Prophet", "themes": ["mind", "guile"]},
     "SKILLTREE_LootHunter": {"adjectives": ["Greedy", "Treasure-Mad"], "nouns": ["Loot Hunter", "Scavenger"], "of": ["Shiny Things", "the Loot Pile"], "master": "Hoardlord", "themes": ["guile"]},
-    "SKILLTREE_Biomods": {"adjectives": ["Biomodded", "Gene-Tuned"], "nouns": ["Biomod", "Splicer"], "of": ["Grown Organs", "the Vat"], "master": "Perfect Specimen", "themes": ["blood", "tech"]},
-    "SKILLTREE_ChaoticMutant": {"adjectives": ["Mutated", "Chaotic"], "nouns": ["Mutant", "Aberration"], "of": ["Many Mutations", "the Wrong Shape"], "master": "Chaos Incarnate", "themes": ["blood", "rot"]},
+    "SKILLTREE_Biomods": {"adjectives": ["Biomodded", "Gene-Tuned"], "nouns": ["Biomod", "Splicer"], "of": ["Grown Organs", "the Vat"], "master": "Perfect Specimen", "themes": ["blood", "tech"], "traits": ["Biomodded", "Augmented"], "roots": ["Bio", "Graft"], "heads": ["Augment"]},
+    "SKILLTREE_ChaoticMutant": {"adjectives": ["Mutated", "Chaotic"], "nouns": ["Mutant", "Aberration"], "of": ["Many Mutations", "the Wrong Shape"], "master": "Chaos Incarnate", "themes": ["blood", "rot"], "traits": ["Mutated"], "roots": ["Chaos"], "heads": ["Mutant"]},
     "SKILLTREE_Modder": {"adjectives": ["Overclocked", "Jailbroken"], "nouns": ["Modder", "Tinkerer"], "of": ["Voided Warranties", "the Mod Bench"], "master": "Rogue Engineer", "themes": ["tech"]},
     "SKILLTREE_Gadgeteer": {"adjectives": ["Gadget-Laden", "Gizmo-Strapped"], "nouns": ["Gadgeteer", "Gizmoist"], "of": ["the Gadget Belt", "Clever Toys"], "master": "Grand Gadgeteer", "themes": ["tech", "swarm"]}
   },
@@ -161,6 +161,7 @@
   },
   "themeWords": {
     "fire": {
+      "roots": ["Ember"],
       "adjectives": [
         "Kindled",
         "Smouldering",
@@ -173,6 +174,7 @@
       ]
     },
     "frost": {
+      "roots": ["Rime"],
       "adjectives": [
         "Rimed",
         "Frostbitten",
@@ -185,6 +187,7 @@
       ]
     },
     "storm": {
+      "roots": ["Storm"],
       "adjectives": [
         "Wired",
         "Thunderous",
@@ -197,6 +200,7 @@
       ]
     },
     "rot": {
+      "roots": ["Plague"],
       "adjectives": [
         "Festering",
         "Blighted",
@@ -209,6 +213,7 @@
       ]
     },
     "blood": {
+      "roots": ["Blood"],
       "adjectives": [
         "Red-Handed",
         "Bloodsoaked",
@@ -221,6 +226,7 @@
       ]
     },
     "void": {
+      "roots": ["Void"],
       "adjectives": [
         "Hollow",
         "Starless",
@@ -233,6 +239,7 @@
       ]
     },
     "mind": {
+      "roots": ["Psi"],
       "adjectives": [
         "Far-Seeing",
         "Psychic",
@@ -245,6 +252,7 @@
       ]
     },
     "gun": {
+      "roots": ["Gun"],
       "adjectives": [
         "Gunpowder",
         "Hair-Trigger",
@@ -257,6 +265,7 @@
       ]
     },
     "blade": {
+      "roots": ["Blade"],
       "adjectives": [
         "Keen",
         "Razor",
@@ -269,6 +278,7 @@
       ]
     },
     "brawn": {
+      "roots": ["Iron"],
       "adjectives": [
         "Iron-Fisted",
         "Hulking",
@@ -281,6 +291,7 @@
       ]
     },
     "guard": {
+      "roots": ["Shield"],
       "adjectives": [
         "Stalwart",
         "Unbowed",
@@ -293,6 +304,7 @@
       ]
     },
     "tech": {
+      "roots": ["Gear"],
       "adjectives": [
         "Wrench-Wise",
         "Overclocked",
@@ -305,6 +317,7 @@
       ]
     },
     "swarm": {
+      "roots": ["Swarm"],
       "adjectives": [
         "Swarming",
         "Many-Handed",
@@ -317,6 +330,7 @@
       ]
     },
     "guile": {
+      "roots": ["Trick"],
       "adjectives": [
         "Sly",
         "Slippery",
@@ -329,6 +343,7 @@
       ]
     },
     "arcane": {
+      "roots": ["Rune"],
       "adjectives": [
         "Sigil-Marked",
         "Runic",
@@ -346,10 +361,10 @@
     "SKILLTREE_Hacker+SKILLTREE_VoidPsyker": "Null Pointer",
     "SKILLTREE_Smuggler+SKILLTREE_SpacePirate": "Free Trader",
     "SKILLTREE_Chemistry+SKILLTREE_Pyromaniac": "Arsonist Chemist",
-    "MOD_FluxSavant+MOD_Axiomancer+MOD_EntropyWeaver+MOD_GloomsporeWarden+SKILLTREE_ChaoticMutant+SKILLTREE_Psykonics+SKILLTREE_Xenobiologist": "Psi-Spored Xenomutant Runeprover",
+    "MOD_FluxSavant+MOD_Axiomancer+MOD_EntropyWeaver+MOD_GloomsporeWarden+SKILLTREE_ChaoticMutant+SKILLTREE_Psykonics+SKILLTREE_Xenobiologist": "Warded Psi-Spored Xenomutant",
     "MOD_FluxSavant+MOD_GloomsporeWarden+MOD_EntropyWeaver+MOD_Axiomancer+MOD_Runeforger+MOD_PhaseDrifter+SKILLTREE_Acrobatics": "Blinking Spore-Runesmith",
     "MOD_Bodyguard+MOD_Conjoined+MOD_SpliceHost+MOD_PsiKnight+SKILLTREE_ForcePsyker+SKILLTREE_ChaoticMutant+SKILLTREE_Biomods": "Spliced Hive-Guard Psi-Blade",
-    "MOD_LookingGlassRogue+MOD_FluxSavant+MOD_Axiomancer+MOD_GloomsporeWarden+MOD_EntropyWeaver+MOD_PhaseDrifter+SKILLTREE_Acrobatics": "Blinking Glass Runeprover",
+    "MOD_LookingGlassRogue+MOD_FluxSavant+MOD_Axiomancer+MOD_GloomsporeWarden+MOD_EntropyWeaver+MOD_PhaseDrifter+SKILLTREE_Acrobatics": "Blinking Warded Glass-Rogue",
     "MOD_SpliceHost+SKILLTREE_Pyromaniac+SKILLTREE_ForcePsyker+MOD_StarfireAdept+MOD_KelvinMagus+SKILLTREE_Bodybuilding+MOD_Conjoined": "Brawny Fire-Frost Splice-Hive",
     "MOD_SwarmConductor+SKILLTREE_Engineer+MOD_Runeforger+MOD_ReactionArchitect+MOD_PhaseDrifter+SKILLTREE_Acrobatics+MOD_GunKata": "Tripwired Swarm Gun-Dancer",
     "MOD_Wildcaster+MOD_LookingGlassRogue+SKILLTREE_VoidPsyker+MOD_PhaseDrifter+SKILLTREE_Acrobatics+MOD_Spellsmith+MOD_EntropyWeaver": "Void-Forged Glass-Gambler",

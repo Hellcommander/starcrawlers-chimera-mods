@@ -2,18 +2,18 @@
   "titles": {
     "MOD_Corsair": {"adjectives": ["Swashbuckling", "Spoils-Laden"], "nouns": ["Corsair", "Buccaneer"], "of": ["the Spoils", "the Third Bottle"], "master": "Corsair Captain", "themes": ["blade", "guile"]},
     "MOD_Demolitionist": {"adjectives": ["Explosive", "Charge-Laying"], "nouns": ["Demolitionist", "Sapper"], "of": ["Controlled Detonations", "the Short Fuse"], "master": "Demolition Master", "themes": ["fire", "tech"]},
-    "MOD_GunKata": {"adjectives": ["Kata-Trained", "Rhythmic"], "nouns": ["Gun-Kata Adept", "Gun Monk"], "of": ["Zero Cover", "the Rhythm"], "master": "Gun-Kata Master", "themes": ["gun", "guile"]},
+    "MOD_GunKata": {"adjectives": ["Kata-Trained", "Rhythmic"], "nouns": ["Gun-Kata Adept", "Gun Monk"], "of": ["Zero Cover", "the Rhythm"], "master": "Gun-Kata Master", "themes": ["gun", "guile"], "traits": ["Rhythmic"], "roots": ["Gun", "Bullet"], "heads": ["Dancer"]},
     "MOD_Juggernaut": {"adjectives": ["Unstoppable", "Siege-Built"], "nouns": ["Juggernaut", "Siege Engine"], "of": ["the Long Fight", "the Siege"], "master": "Unstoppable Force", "themes": ["brawn", "guard"]},
     "MOD_Longshot": {"adjectives": ["Patient", "Steady"], "nouns": ["Longshot", "Marksman"], "of": ["the Long Barrel", "Steady Aim"], "master": "One Shot", "themes": ["gun"]},
     "MOD_MadTinkerer": {"adjectives": ["Mad", "Half-Working"], "nouns": ["Tinkerer", "Scrapsmith"], "of": ["Mostly Working Gadgets", "Scrap and Confidence"], "master": "Mad Genius", "themes": ["tech", "swarm"]},
     "MOD_NaniteHerder": {"adjectives": ["Swarm-Herding", "Jar-Keeping"], "nouns": ["Nanite Herder", "Swarmkeeper"], "of": ["the Jars", "Escaped Nanites"], "master": "Swarm Shepherd", "themes": ["swarm", "tech"]},
-    "MOD_PhaseDrifter": {"adjectives": ["Phased", "Out-of-Sync"], "nouns": ["Phase Drifter", "Blinker"], "of": ["Slipped Seconds", "the Bad Teleport"], "master": "Unanchored", "themes": ["void", "guile"]},
-    "MOD_PsiKnight": {"adjectives": ["Psi-Edged", "Knightly"], "nouns": ["Psi Knight", "Mind Knight"], "of": ["the Mind Blade", "Clean Hits"], "master": "Psi Paladin", "themes": ["mind", "blade"]},
+    "MOD_PhaseDrifter": {"adjectives": ["Phased", "Out-of-Sync"], "nouns": ["Phase Drifter", "Blinker"], "of": ["Slipped Seconds", "the Bad Teleport"], "master": "Unanchored", "themes": ["void", "guile"], "traits": ["Blinking", "Phased"], "roots": ["Phase", "Blink"], "heads": ["Drifter"]},
+    "MOD_PsiKnight": {"adjectives": ["Psi-Edged", "Knightly"], "nouns": ["Psi Knight", "Mind Knight"], "of": ["the Mind Blade", "Clean Hits"], "master": "Psi Paladin", "themes": ["mind", "blade"], "traits": ["Poised"], "roots": ["Psi", "Mind"], "heads": ["Knight", "Blade"]},
     "MOD_Puppetmaster": {"adjectives": ["String-Pulling", "Manipulative"], "nouns": ["Puppetmaster", "Stringpuller"], "of": ["Psychic Strings", "the Marionette"], "master": "Grand Puppeteer", "themes": ["mind", "swarm"]},
     "MOD_RelicBearer": {"adjectives": ["Whispered-To", "Relic-Bound"], "nouns": ["Relic Bearer", "Idol Keeper"], "of": ["the Humming Idol", "Whispers"], "master": "Idol's Chosen", "themes": ["arcane", "void"]},
     "MOD_Ringmaster": {"adjectives": ["Showstopping", "Applauded"], "nouns": ["Ringmaster", "Showrunner"], "of": ["the Big Top", "Applause"], "master": "Star of the Show", "themes": ["guile", "swarm"]},
     "MOD_ShadowBroker": {"adjectives": ["Shadowed", "Well-Informed"], "nouns": ["Shadow Broker", "Infobroker"], "of": ["Secrets", "the Dossier"], "master": "Spymaster", "themes": ["guile", "void"]},
-    "MOD_SpliceHost": {"adjectives": ["Spliced", "Gene-Shifting"], "nouns": ["Splice Host", "Chimera"], "of": ["Regretted Splices", "the Gene Vat"], "master": "Perfect Chimera", "themes": ["blood", "brawn"]},
+    "MOD_SpliceHost": {"adjectives": ["Spliced", "Gene-Shifting"], "nouns": ["Splice Host", "Chimera"], "of": ["Regretted Splices", "the Gene Vat"], "master": "Perfect Chimera", "themes": ["blood", "brawn"], "traits": ["Spliced"], "roots": ["Splice", "Gene"], "heads": ["Host", "Splicer"]},
     "MOD_VoidHacker": {"adjectives": ["Reality-Hacked", "Glitching"], "nouns": ["Void Hacker", "Glitchcaster"], "of": ["the Backdoor in Reality", "Stacked Malware"], "master": "Root of Reality", "themes": ["void", "tech"]}
   }
 }

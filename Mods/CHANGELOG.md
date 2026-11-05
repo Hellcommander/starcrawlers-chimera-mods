@@ -17,6 +17,16 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
   and titles nobody shows any more are dropped). The Class Titler saves to `Mods/YourClassTitles/titles.bwt`, and
   any mod can ship a `*.bwt`. An `SCCL_titles.json` or Titler `titles.json` from 2.1.0 is moved into the archive
   (on the first launch, or the Titler's next save) and deleted once the archive reads back.
+- **Wordsmith titles** (`TitleSource = Wordsmith`): one short name fused from every class's identity, naming as many of
+  your classes as fits in `WordsmithLength` (32 letters; Short style takes two thirds). Each class lists `traits`,
+  `roots` and `heads` ("Spored", "Rune", "-smith"); the wordsmith joins them into compounds ("Gloom-Spored",
+  "Runesmith", "Hive-Guard") and a word two classes share names both ("Host" for Conjoined and Splice Host:
+  "Sworn Psi-Force Bio-Host"). Pieces only fuse within a class or between classes whose main theme is the same, so
+  the compounds mean something. Clicks walk through the next best names, the hover tip says which word came from
+  which class, and classes without the words use their adjectives, nouns and themes. Ollama-written class words
+  include them too. 38 classes have their own; the rest fall back.
+- **Axiomancer's title words** follow its shield: Warded, Thought-Shelled, Thought-Bulwark, and themes led by guard.
+- Twelve hand-written titles for seven-class sets.
 
 ## 2.1.0 (2026-11-04)
 

@@ -28,6 +28,12 @@ namespace SCClassLoader
         /// <summary>What the class does, strongest first (up to three of the themes in themeTitles: fire, gun, swarm, ...).
         /// Without it the class's themes come from its skills' damage types.</summary>
         public List<string> themes;
+        /// <summary>Wordsmith: single adjectives for what the class does ("Blinking", "Lightless"). Without them, <see cref="adjectives"/>.</summary>
+        public List<string> traits;
+        /// <summary>Wordsmith: stems for the class's identity that fuse onto other words ("Spore", "Rune"). Without them, its themes' roots.</summary>
+        public List<string> roots;
+        /// <summary>Wordsmith: the word a title can end on ("Seer", "Guard"); a leading '-' fuses onto a root ("-smith": "Runesmith"). Without them, <see cref="nouns"/>.</summary>
+        public List<string> heads;
     }
 
     /// <summary>A line added once enough of your classes are maxed: "renown" in a mod's data file.</summary>
@@ -56,18 +62,20 @@ namespace SCClassLoader
     internal static class ClassTitles
     {
         internal enum Style { Full, Short, Epithet }
-        internal enum Source { Mastery, Words }
+        internal enum Source { Mastery, Words, Wordsmith }
 
         internal static ConfigEntry<bool> Enabled, OnCreation, ShowRenown, AiTitles;
         internal static ConfigEntry<Style> TitleStyle;
         internal static ConfigEntry<Source> TitleSource;
         internal static ConfigEntry<string> OllamaUrl, OllamaModel, OllamaKeepAlive;
+        internal static ConfigEntry<int> WordsmithLength;
 
         internal static void Bind(ConfigFile cfg)
         {
             Enabled = cfg.Bind("Titles", "ClassTitles", true, "Show a title made from your classes under your name (character sheet and creation screen). Display only: your name and saves are unchanged. Off = the vanilla screens.");
             TitleStyle = cfg.Bind("Titles", "TitleStyle", Style.Full, "Full: \"Kindled Gunslinger of the Void\" (up to three classes). Short: \"Kindled Gunslinger\" (two). Epithet: the full title joined to your name on the character sheet, \"Vex the Kindled Gunslinger of the Void\".");
-            TitleSource = cfg.Bind("Titles", "TitleSource", Source.Mastery, "Mastery: one name for what all your classes do together; every class counts the same, and the two strongest themes (fire, guns, summons, ...) pick the name (\"Powder Saint\" for fire and guns). Click it for the other pairs your classes make. Words: built from your first three classes (\"Kindled Gunslinger of the Void\"). Rank never counts in either.");
+            TitleSource = cfg.Bind("Titles", "TitleSource", Source.Mastery, "Mastery: one name for what all your classes do together; every class counts the same, and the two strongest themes (fire, guns, summons, ...) pick the name (\"Powder Saint\" for fire and guns). Click it for the other pairs your classes make. Words: built from your first three classes (\"Kindled Gunslinger of the Void\"). Wordsmith: fuses every class's identity words into one short name that names as many of your classes as it can (\"Blinking Spore-Runesmith\"); a word two classes share stands for both. Rank never counts in any of them.");
+            WordsmithLength = cfg.Bind("Titles", "WordsmithLength", 32, new ConfigDescription("Wordsmith: the longest title it makes, in characters (Short style takes two thirds). Longer names more of your classes; shorter reads at a glance.", new AcceptableValueRange<int>(16, 60)));
             OnCreation = cfg.Bind("Titles", "TitleOnCreation", true, "Preview the title under the name box on the creation screen as you pick classes.");
             ShowRenown = cfg.Bind("Titles", "ShowRenown", true, "Add a renown line once several of your classes are maxed (\"Paragon of Seven Paths\" with all of them).");
             AiTitles = cfg.Bind("Titles", "OllamaTitles", false, "Ctrl+click your title to have a locally running Ollama write one from your class combination. It is saved for that character and kept while you have the same classes; a plain click goes back to the generated title. Sends only your name, your classes and their descriptions to OllamaUrl.");
@@ -80,6 +88,7 @@ namespace SCClassLoader
             OnCreation.SettingChanged += changed;
             ShowRenown.SettingChanged += changed;
             TitleSource.SettingChanged += changed;
+            WordsmithLength.SettingChanged += changed;
         }
 
         // ---- words ----------------------------------------------------------------------------------------------
@@ -101,6 +110,7 @@ namespace SCClassLoader
             themeTitles = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             themeWords = new Dictionary<string, TitleSpec>(StringComparer.OrdinalIgnoreCase);
             derived.Clear();
+            forged.Clear();
             foreach (ClassDef d in ClassRegistry.AllDefs)
                 if (d?.title != null && !string.IsNullOrEmpty(d.id)) specs[d.id] = d.title;
             foreach (ModPack p in ModPacks.Ordered)
@@ -338,6 +348,46 @@ namespace SCClassLoader
             return (adj != null ? adj + " " : "") + name + (of != null ? " of " + of : "");
         }
 
+        // ---- wordsmith: one short name fused from every class's identity words --------------------------------------
+
+        /// <summary>A class's identity words: its traits, roots and heads, else its adjectives, its themes' roots and its nouns.</summary>
+        internal static Breachwork.Titles.WordsmithClass SmithWords(Pick p)
+        {
+            TitleSpec s = Spec(p.id);
+            var w = new Breachwork.Titles.WordsmithClass { id = p.id, name = Clean(p.name), themes = ThemesOf(p.id) };
+            w.traits = s?.traits != null && s.traits.Count > 0 ? s.traits : s?.adjectives ?? new List<string>();
+            w.heads = s?.heads != null && s.heads.Count > 0 ? s.heads : s?.nouns ?? new List<string>();
+            if (w.heads.Count == 0 && !string.IsNullOrEmpty(w.name)) w.heads = new List<string> { w.name };
+            if (s?.roots != null && s.roots.Count > 0) w.roots = s.roots;
+            else w.roots = ThemesOf(p.id).Take(2).SelectMany(t => ThemeWord(t.Trim().ToLowerInvariant())?.roots?.Take(1) ?? Enumerable.Empty<string>()).ToList();
+            return w;
+        }
+
+        private static readonly Dictionary<string, List<Breachwork.Titles.WordsmithTitle>> forged = new Dictionary<string, List<Breachwork.Titles.WordsmithTitle>>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>All the wordsmith's titles for these classes, best first (cached per class set and length).</summary>
+        internal static List<Breachwork.Titles.WordsmithTitle> ForgeAll(List<Pick> ordered, Style style)
+        {
+            if (specs == null) Load();
+            int max = WordsmithLength != null ? WordsmithLength.Value : 32;
+            if (style == Style.Short) max = Math.Max(16, max * 2 / 3);
+            string key = Signature(ordered) + "|" + max;
+            if (forged.TryGetValue(key, out var list)) return list;
+            list = Breachwork.Titles.Wordsmith.Titles(ordered.Select(SmithWords), max, 8);
+            if (ordered.All(p => FindTree(p.id) != null)) forged[key] = list; // not cached until every class is known
+            return list;
+        }
+
+        /// <summary>The wordsmith's title: the best one, or with clicks (roll) the next best. Null when nothing can be made.</summary>
+        internal static string Forge(List<Pick> ordered, int roll, Style style, out Breachwork.Titles.WordsmithTitle title)
+        {
+            title = null;
+            var list = ForgeAll(ordered, style);
+            if (list.Count == 0) return null;
+            title = list[((roll % list.Count) + list.Count) % list.Count];
+            return title.text;
+        }
+
         private static TitleSpec ThemeWord(string theme)
         {
             if (themeWords == null) Load();
@@ -353,6 +403,16 @@ namespace SCClassLoader
                 sb.Append("<color=#FEBF59>").Append(Clean(p.name)).Append("</color>  ").Append(string.Join(", ", ThemesOf(p.id).DefaultIfEmpty("-"))).Append('\n');
             var scores = ThemeScores(ordered);
             if (scores.Count > 0) sb.Append("\nThemes: ").Append(string.Join(", ", scores.Select(kv => kv.Key + " " + kv.Value))).Append('\n');
+            if (TitleSource.Value == Source.Wordsmith)
+            {
+                var forgedTitle = ForgeAll(ordered, TitleStyle.Value).FirstOrDefault();
+                if (forgedTitle != null)
+                {
+                    sb.Append("\nForged from: ");
+                    sb.Append(string.Join(", ", forgedTitle.parts.Select(kv => kv.Key.TrimStart('-') + " (" + string.Join(", ", kv.Value) + ")")));
+                    sb.Append("\nNames ").Append(forgedTitle.covered).Append(" of your ").Append(ordered.Count).Append(" classes.\n");
+                }
+            }
             sb.Append("\n<color=#9FB7C9>Click: the next name.");
             if (TitleSource.Value == Source.Words) sb.Append("  Shift+click: the next class leads.");
             if (AiTitles.Value) sb.Append("  Ctrl+click: Ollama writes five for these classes.");
@@ -365,6 +425,7 @@ namespace SCClassLoader
             renownLine = "";
             if (ordered == null || ordered.Count == 0) return "";
             string mastery = TitleSource != null && TitleSource.Value == Source.Mastery ? Mastery(ordered, charName, roll, style, out _) : null;
+            if (TitleSource != null && TitleSource.Value == Source.Wordsmith) mastery = Forge(ordered, roll, style, out _);
             Pick lead = ordered[0];
             TitleSpec ls = Spec(lead.id);
             if (combos == null) Load();
@@ -809,6 +870,9 @@ namespace SCClassLoader
             sb.Append("\"nouns\": 2 short nouns for a person of this class, like \"Gunslinger\".\n");
             sb.Append("\"of\": 2 short phrases used after \"of\" in a title, like \"the Ember\".\n");
             sb.Append("\"master\": 1 short noun for someone who has mastered this class.\n");
+            sb.Append("\"traits\": 2 single adjectives for what this class does, like \"Blinking\" or \"Lightless\".\n");
+            sb.Append("\"roots\": 2 short word stems for this class's identity that join onto other words, like \"Spore\" or \"Rune\".\n");
+            sb.Append("\"heads\": 2 short nouns a title can end on; start one with - to join it onto a stem, like \"-smith\" (Runesmith) or \"Seer\".\n");
             sb.Append("Do not use the word \"The\" at the start of nouns. Title Case.");
             return sb.ToString();
         }
@@ -832,6 +896,7 @@ namespace SCClassLoader
                 {
                     learned[job.id] = new LearnedWords { from = job.from, words = job.words };
                     derived.Remove(job.id);
+                    forged.Clear();
                     try { File.WriteAllText(LearnedPath, JsonConvert.SerializeObject(learned, Formatting.Indented)); }
                     catch (Exception e) { Plugin.Log.LogWarning("SCCL_classwords.json could not be written: " + e.Message); }
                     Plugin.Log.LogInfo($"Class title: Ollama wrote words for {job.id}: themes {string.Join(", ", job.words.themes)}; {string.Join(", ", job.words.adjectives)}; {string.Join(", ", job.words.nouns)}");
@@ -858,6 +923,10 @@ namespace SCClassLoader
                         nouns = Words("nouns"),
                         of = (o["of"] as JArray)?.Select(x => Cap(Regex.Replace(Tidy((string)x), @"^of\s+", "", RegexOptions.IgnoreCase), true)).Where(x => x.Length >= 2).Take(3).ToList() ?? new List<string>(),
                         master = Cap(Tidy((string)o["master"] ?? "")),
+                        traits = Words("traits").Where(x => !x.Contains(" ")).ToList(),
+                        roots = Words("roots").Where(x => !x.Contains(" ")).ToList(),
+                        heads = (o["heads"] as JArray)?.Select(x => ((string)x ?? "").Trim()).Select(x => x.StartsWith("-") ? "-" + Tidy(x.Substring(1)).ToLowerInvariant() : Cap(Tidy(x)))
+                            .Where(x => x.Trim('-').Length >= 2 && !x.Contains(" ")).Take(3).ToList() ?? new List<string>(),
                     };
                     var said = o["themes"] is JArray ta ? ta.Select(x => (string)x ?? "").ToList() : new List<string> { (string)o["themes"] ?? "" };
                     w.themes = ThemesFrom(said);
@@ -904,7 +973,7 @@ namespace SCClassLoader
         }
 
         /// <summary>Devtest: act as if no mod gave this class title words.</summary>
-        internal static void ForgetSpec(string id) { if (specs == null) Load(); specs.Remove(id); derived.Remove(id); }
+        internal static void ForgetSpec(string id) { if (specs == null) Load(); specs.Remove(id); derived.Remove(id); forged.Clear(); }
 
         internal static string DescribeFor(string id) => Describe(id);
 

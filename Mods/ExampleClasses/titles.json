@@ -1,5 +1,5 @@
 {
   "titles": {
-    "MOD_Spellsmith": {"adjectives": ["Spell-Forged", "Borrowed-Spell"], "nouns": ["Spellsmith", "Spellwright"], "of": ["Other People's Spells", "the Spell Anvil"], "master": "Master Spellsmith", "themes": ["arcane"]}
+    "MOD_Spellsmith": {"adjectives": ["Spell-Forged", "Borrowed-Spell"], "nouns": ["Spellsmith", "Spellwright"], "of": ["Other People's Spells", "the Spell Anvil"], "master": "Master Spellsmith", "themes": ["arcane"], "traits": ["-forged", "Quenched"], "roots": ["Spell", "Forge"], "heads": ["-smith"]}
   }
 }

@@ -1,5 +1,5 @@
 {
   "titles": {
-    "MOD_Taintbearer": {"adjectives": ["Tainted", "Rot-Fed"], "nouns": ["Taintbearer", "Rotvessel"], "of": ["the Rot", "Spreading Taint"], "master": "Rot Incarnate", "themes": ["rot", "void"]}
+    "MOD_Taintbearer": {"adjectives": ["Tainted", "Rot-Fed"], "nouns": ["Taintbearer", "Rotvessel"], "of": ["the Rot", "Spreading Taint"], "master": "Rot Incarnate", "themes": ["rot", "void"], "traits": ["Tainted", "-rotted"], "roots": ["Taint", "Rot"], "heads": ["-bearer"]}
   }
 }

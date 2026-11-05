@@ -1,5 +1,5 @@
 {
   "titles": {
-    "MOD_SwarmConductor": {"adjectives": ["Drone-Linked", "Fleet-Stealing"], "nouns": ["Swarm Conductor", "Drone Thief"], "of": ["the Stolen Fleet", "the Neural Link"], "master": "Fleet Admiral", "themes": ["swarm", "tech"]}
+    "MOD_SwarmConductor": {"adjectives": ["Drone-Linked", "Fleet-Stealing"], "nouns": ["Swarm Conductor", "Drone Thief"], "of": ["the Stolen Fleet", "the Neural Link"], "master": "Fleet Admiral", "themes": ["swarm", "tech"], "traits": ["Humming"], "roots": ["Swarm"], "heads": ["Conductor"]}
   }
 }

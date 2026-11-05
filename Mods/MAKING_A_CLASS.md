@@ -414,7 +414,10 @@ Players can show a title under their name made from their classes (Mod Settings 
   "adjectives": ["Arc-Charged", "Live-Wired"],
   "nouns": ["Arc Gunner", "Sparkshooter"],
   "of": ["the Capacitor", "Static"],
-  "master": "Arcmaster"
+  "master": "Arcmaster",
+  "traits": ["Live-Wired", "-charged"],
+  "roots": ["Arc", "Spark"],
+  "heads": ["Gunner", "-slinger"]
 }
 ```
 
@@ -428,6 +431,16 @@ Players can show a title under their name made from their classes (Mod Settings 
 - **`adjectives`, `nouns`, `of`, `master`**: the **Words** style. Your class gives the noun when it's first ("Gunslinger"),
   the adjective when it's second ("Kindled ..."), the "of" phrase when it's third ("... of the Void"), and `master`
   replaces the noun once it's maxed. Without them, your class's name stands in.
+- **`traits`, `roots`, `heads`**: the **Wordsmith** style, your class's identity in pieces, most telling first.
+  The wordsmith fuses the pieces of every class a character has into one short name that names as many of them as
+  it can ("Sworn Psi-Force Bio-Host" for Bodyguard, Psi Knight, Force Psyker, Biomods, Conjoined and Splice Host).
+  `traits` are single adjectives for what the class does ("Lightless"); one written with a leading `-` ("-charged")
+  only comes fused onto a root ("Arc-Charged"). `roots` are short stems that fuse onto other words ("Arc"). `heads`
+  are the word a title ends on ("Gunner", making "Arc-Gunner"); one with a leading `-` joins straight onto a root of
+  your own class ("-slinger": "Arcslinger"). A word two classes both list stands for both of them, so share a word
+  with a class you overlap with ("Host" is in Conjoined and Splice Host). Pieces fuse only within one class or
+  between classes whose first theme is the same, so the compounds stay meaningful. Without these, your
+  `adjectives`, your themes' roots (`themeWords`) and your `nouns` stand in. `WordsmithLength` (32) caps the title.
 
 Any mod can also add or change titles for classes that aren't its own, in a data file:
 
@@ -436,12 +449,12 @@ Any mod can also add or change titles for classes that aren't its own, in a data
   "titles": { "SKILLTREE_Soldier": { "themes": ["gun", "guard"], "nouns": ["Trooper"] } },
   "titleCombos": { "SKILLTREE_Pyromaniac+SKILLTREE_Gunslinger": "Powder Saint" },
   "themeTitles": { "fire+gun": ["Powder Saint"], "fire": ["Pyreheart"] },
-  "themeWords": { "void": { "adjectives": ["Hollow"], "of": ["the Hollow Dark"] } },
+  "themeWords": { "void": { "adjectives": ["Hollow"], "of": ["the Hollow Dark"], "roots": ["Void"] } },
   "renown": [ { "maxed": 3, "text": "Thrice-Mastered" }, { "all": true, "text": "Paragon of Every Path" } ]
 }
 ```
 
-`titleCombos` hand-names a set of two to seven classes, joined with `+` in any order. An exact set beats everything; a pair or trio also names bigger sets that lead with it. `themeTitles` sets mastery names, `themeWords` the adjectives and epithets the other themes add, and
+`titleCombos` hand-names a set of two to seven classes, joined with `+` in any order. An exact set beats everything; a pair or trio also names bigger sets that lead with it. `themeTitles` sets mastery names, `themeWords` the adjectives and epithets the other themes add (and `roots`, the wordsmith's stem for classes that list none), and
 `renown` is the line added once enough classes are maxed. Later mods win. For titles over many class sets, a mod can
 ship a title archive instead of `titleCombos`: any `*.bwt` file in its folder, read after its json. The Class Titler
 writes one; it holds each class id once, each set as one number and each title as numbers for its words, compressed,
