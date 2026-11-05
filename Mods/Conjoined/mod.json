@@ -2,7 +2,7 @@
   "id": "Conjoined",
   "name": "Conjoined",
   "author": "Arendeth",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "One mind, several bodies. Each body is a full character of its own; you play one and the others fight beside you, and you can swap between them.",
   "requires": ["Library"]
