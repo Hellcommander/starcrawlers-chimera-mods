@@ -14,7 +14,8 @@ namespace SCClassLoader
     /// The rune matrix: every skill of yours with rune sockets, the runes in your bag, and the reactions you know.
     /// Click an empty socket and then a rune to set it; click a set rune to take it back out. Locked in combat, but a
     /// skill with the "runepanel" action opens it for recharging runes there too.
-    /// Opened with the hotkey or the "Runes" tab beside the health panel (shown when you have socketed skills).
+    /// Opened with the hotkey or the "Runes" tab beside the health panel (shown when you have socketed skills, or as
+    /// "Reactions" when a class of yours only knows alchemical reactions).
     /// "Transmute" opens the Fabricator with the rune recipes you know.
     /// </summary>
     internal static class RunePanel
@@ -124,6 +125,7 @@ namespace SCClassLoader
                 Text(body, "Rune Matrix", 26, 20f, 12f, 400f, 34f, TextAlignmentOptions.TopLeft, new Color(0.75f, 0.9f, 1f));
                 string hint = bench != null ? "Spend the pool on how this spell behaves and lands. Hover for each one's gain and price; runes can resonate with them."
                     : combat ? (charging ? "Charge runes with stamina, or discharge them back into it. They can't be swapped in combat." : "<color=#FF7272>Runes can't be changed in combat.</color>")
+                    : Socketed().Count == 0 ? "None of your skills has rune sockets. The reactions your classes know are listed on the right; a reaction's reagents can come from anywhere: your weapons, your other classes, the enemy's own fire."
                     : "Click an empty socket, then a rune from your bag. Click a set rune to take it back out." +
                       (canCharge ? " Spent runes do nothing until you charge them; discharging turns charge back into stamina." : Socketed().Any(m => m.Spec.runeWear > 0) ? " Some skills wear their runes out; spares in your bag slot in." : " Runes are never used up.");
                 Text(body, note ?? hint, 14, 20f, 46f, W - 220f, 22f, TextAlignmentOptions.TopLeft, note != null ? new Color(1f, 0.75f, 0.45f) : new Color(0.7f, 0.78f, 0.85f));
@@ -288,8 +290,9 @@ namespace SCClassLoader
                 {
                     float ry = Mathf.Max(by + 10f, 108f + 32f * 7f);
                     Text(body, "Reactions you know", 18, rx, ry, rw, 24f, TextAlignmentOptions.TopLeft, new Color(0.75f, 0.9f, 1f));
-                    string lines = string.Join("\n", known.Select(e =>
-                        $"{string.Join(" + ", e.spec.needs.Select(x => Runes.EffectName(x, e.classId)))} = <color=#7FE3FF>{e.spec.name}</color>"));
+                    string lines = string.Join("\n", known.Select(e => Alchemy.Known(e)
+                        ? $"{string.Join(" + ", e.spec.needs.Select(x => Runes.EffectName(x, e.classId)))} = <color=#7FE3FF>{e.spec.name}</color>{Alchemy.Terms(e)}"
+                        : $"<color=#8A96A3>{string.Join(" + ", e.spec.needs.Select(x => Runes.EffectName(x, e.classId)))} = {e.spec.name} (rank {e.spec.rank})</color>"));
                     TextMeshProUGUI lt = Text(body, lines, 13, rx, ry + 26f, rw, ((RectTransform)transform).sizeDelta.y - ry - 36f, TextAlignmentOptions.TopLeft, new Color(0.82f, 0.88f, 0.92f));
                     lt.enableWordWrapping = true;
                     lt.overflowMode = TextOverflowModes.Truncate;
@@ -413,9 +416,12 @@ namespace SCClassLoader
                     next = Time.unscaledTime + 0.5f;
                     if (!EventBus.Unchanged(ref watch, EventBus.Abilities | EventBus.Turn))
                     {
-                        have = Player.instance != null && !Game.Game_isLoading && Socketed().Count > 0;
+                        bool sockets = Player.instance != null && !Game.Game_isLoading && Socketed().Count > 0;
+                        have = sockets || (Player.instance != null && !Game.Game_isLoading && Alchemy.Active().Count > 0);
                         foreach (Transform c in transform) c.gameObject.SetActive(have);
                         GetComponent<Image>().enabled = have;
+                        TMP_Text label = GetComponentInChildren<TMP_Text>(true);
+                        if (label != null) label.text = sockets ? "Runes" : "Reactions";
                     }
                 }
                 if (have && Input.GetKeyDown(PanelKey.Value) && EventSystem.current?.currentSelectedGameObject?.GetComponent<TMP_InputField>() == null) Toggle();

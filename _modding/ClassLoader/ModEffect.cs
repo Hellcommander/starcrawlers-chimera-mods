@@ -847,6 +847,7 @@ namespace SCClassLoader
             EffectSpec s = rt.spec;
             var lines = new List<string>();
             if (!string.IsNullOrEmpty(s.description)) lines.Add(s.description);
+            lines.AddRange(Alchemy.TooltipLines(internalName));
             if (MaxStacks > 1) lines.Add($"<color=#FFD15C>Stacks: {Stacks}/{MaxStacks}</color> (values below are for the current stacks)");
             if (s.capScale != null) lines.Add(rt.CapLine());
             foreach (StatObj st in attributeMods) lines.Add($"{(st.amount >= 0 ? "+" : "")}{st.amount} {StatObj.GetStatString(st.statType)}");

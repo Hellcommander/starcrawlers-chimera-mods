@@ -1,7 +1,7 @@
 {
   "id": "MOD_RigJockey",
   "name": "Rig Jockey",
-  "description": "Salvage crews strapped into cargo exo-rigs. Every hydraulic move takes bolt-on hardpoints - flamer nozzles, arc coils, magnet clamps - that change how it hits and are never used up.\n\nHeavy melee with hardware sockets and a Heat meter that raises damage until it overheats. Favors [STR] and [TGH].",
+  "description": "Salvage crews strapped into cargo exo-rigs. Every hydraulic move takes bolt-on hardpoints - flamer nozzles, arc coils, magnet clamps - that change how it hits and are never used up.\n\nHeavy melee with hardware sockets and a Heat meter that raises damage until it overheats. The hardpoints also set off reactions: fire, current and frost meeting plating you have stripped, or each other, and the element hardpoints retune what Vent Blast leaves on them. Favors [STR] and [TGH].",
   "archetype": "Muscle",
   "icon": "icons/rig_jockey.png",
   "attributePriorities": {
@@ -150,7 +150,32 @@
           ]
         }
       ]
+    },
+    {
+      "id": "Sheared",
+      "name": "Cold-Sheared",
+      "debuff": true,
+      "description": "Frozen metal shears instead of bending. Everything lands harder on it.",
+      "duration": 3,
+      "damageTakenMult": 1.2
     }
+  ],
+  "reactions": [
+    { "name": "Wiring Fire", "needs": [ "@Stripped", "EFFECT_Fire" ], "keep": [ "@Stripped" ], "description": "the exposed wiring catches, and whatever it was about to do waits",
+      "vfx": "PA_Pirate_Cacafuego.PS_explode@0.4", "sound": "audio_licensed/rig_vent_blast.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 8, "scale": "Strength", "scaleMult": 0.3 }, { "do": "exhaust", "amount": 1 } ] },
+    { "name": "Short Circuit", "needs": [ "@Stripped", "EFFECT_Shock" ], "keep": [ "@Stripped" ], "rank": 3, "description": "current straight into the open wiring",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/rig_overheat.wav",
+      "actions": [ { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.3 }, { "do": "stun", "turns": 1, "chance": 50 } ] },
+    { "name": "Cold Shear", "needs": [ "@Stripped", "EFFECT_Chill" ], "keep": [ "@Stripped" ], "rank": 3, "description": "frost gets under the loose plating and the metal shears",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/rig_piston_jab.wav",
+      "actions": [ { "do": "effect", "effect": "@Sheared" }, { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.25 } ] },
+    { "name": "Quench", "needs": [ "EFFECT_Fire", "EFFECT_Chill" ], "rank": 5, "description": "hot metal quenched: it cracks",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/rig_hammerfall.wav",
+      "actions": [ { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "Strength", "scaleMult": 0.4 }, { "do": "effect", "effect": "#Exposed", "turns": 2 } ] },
+    { "name": "Plasma Arc", "needs": [ "EFFECT_Fire", "EFFECT_Shock" ], "rank": 7, "radius": 1.2, "description": "the flame goes to plasma in the arc",
+      "vfx": "PA_Engineer_Spidermine.PS_explode_energy@0.4", "sound": "audio_licensed/rig_overheat.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.35 }, { "do": "blind", "chance": 40 } ] }
   ],
   "tiers": [
     {
@@ -351,6 +376,30 @@
                 "amount": 1
               }
             ]
+          },
+          {
+            "rune": "KnArcCoil",
+            "name": "Taser Jab",
+            "description": "the coil discharges through the knuckles: a quarter of the time they lock up for a turn.",
+            "actions": [
+              {
+                "do": "stun",
+                "turns": 1,
+                "chance": 25
+              }
+            ]
+          },
+          {
+            "rune": "KnCryoJacket",
+            "name": "Cold Fist",
+            "description": "a frosted fist: they come away slowed.",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "SLOW",
+                "turns": 1
+              }
+            ]
           }
         ],
         "perk": {
@@ -440,6 +489,38 @@
                 "amount": 2
               }
             ]
+          },
+          {
+            "rune": "KnFlamerNozzle",
+            "name": "Afterburner",
+            "description": "the jets fire the whole way: where you land burns for a while.",
+            "actions": [
+              {
+                "do": "hazard",
+                "hazard": "HAZARD_Fire_Mini",
+                "radius": 1.0,
+                "turns": 2
+              }
+            ]
+          },
+          {
+            "rune": "KnMagnetClamp",
+            "name": "Grapple Charge",
+            "description": "the clamp drags the two nearest enemies in behind you as you land.",
+            "actions": [
+              {
+                "do": "chain",
+                "jumps": 2,
+                "radius": 3,
+                "skipFirst": true,
+                "actions": [
+                  {
+                    "do": "pull",
+                    "amount": 2
+                  }
+                ]
+              }
+            ]
           }
         ],
         "perk": {
@@ -475,6 +556,35 @@
           "payload"
         ],
         "runeMeter": "@Heat",
+        "runeVariants": [
+          {
+            "rune": "KnHeatSink",
+            "name": "Cold Plates",
+            "description": "the sinks swallow the plating's heat: Plate Up adds none, and the pressure comes back as stamina.",
+            "instability": -1,
+            "selfActions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 4
+              }
+            ]
+          },
+          {
+            "rune": "KnShieldEmitter",
+            "name": "Overlapping Fields",
+            "description": "the emitter runs under the plates: a second layer of shielding on top of its own.",
+            "selfActions": [
+              {
+                "do": "shield",
+                "to": "self",
+                "amount": 4,
+                "scale": "Toughness",
+                "scaleMult": 0.4
+              }
+            ]
+          }
+        ],
         "description": "Lock every plate down: a shield and two turns of hard armor. One hardpoint for something extra.",
         "actions": [
           {
@@ -541,10 +651,64 @@
         "name": "Vent Blast",
         "icon": "icons/vent_blast.png",
         "instant": false,
+        "runeSlots": 1,
+        "runeSlotRanks": [
+          5
+        ],
+        "runeKinds": [
+          "element"
+        ],
+        "runeMeter": "@Heat",
+        "runeVariants": [
+          {
+            "rune": "KnFlamerNozzle",
+            "name": "Plasma Vent",
+            "description": "fuel in the vents: +30% damage, and the flame always takes.",
+            "power": 1.3,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "EFFECT_Fire"
+              }
+            ]
+          },
+          {
+            "rune": "KnCryoJacket",
+            "name": "Cold Vent",
+            "replace": true,
+            "description": "the jacket's coolant goes out the vents instead: frost rather than fire, and they come away slowed.",
+            "element": "Cryo",
+            "reagent": "EFFECT_Chill",
+            "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle",
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "SLOW",
+                "turns": 1
+              }
+            ]
+          },
+          {
+            "rune": "KnArcCoil",
+            "name": "Arc Vent",
+            "replace": true,
+            "description": "the coil dumps into the steam: current rather than fire, and half the time their special attacks are set back.",
+            "element": "Shock",
+            "reagent": "EFFECT_Shock",
+            "impactVfx": "PA_Elementalist_ChainLightning.shockImpact",
+            "actions": [
+              {
+                "do": "exhaust",
+                "amount": 1,
+                "chance": 50
+              }
+            ]
+          }
+        ],
         "radius": 2.5,
         "staminaCost": 10,
         "cooldown": 6,
-        "description": "Blow every vent at once. All the built-up heat goes out as a scalding blast around you - the hotter the rig, the worse it is for them.",
+        "description": "Blow every vent at once. All the built-up heat goes out as a scalding blast around you - the hotter the rig, the worse it is for them. An element hardpoint changes what the blast is made of.",
         "castVfx": "PA_Pirate_Cacafuego.PS_explode@0.5",
         "sound": "audio_licensed/rig_vent_blast.wav",
         "actions": [

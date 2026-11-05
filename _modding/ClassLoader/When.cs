@@ -358,6 +358,8 @@ namespace SCClassLoader
                 case "rounds": return Triggers.Rounds;
                 case "loaded": return who is Player lp ? (lp.GetAmmo()?.stack ?? 0) : (float?)null;
                 case "wallsnear": return who == null ? (float?)null : Walls.Count(who);
+                case "armed": return Reactions.Current.Count;
+                case "charges": return Reactions.Charges;
                 default:
                     if (who != null && parsed.stat.HasValue) return who.GetStat(parsed.stat.Value);
                     Plugin.Log.LogWarning($"Unknown condition value '{name}'");
@@ -524,6 +526,8 @@ namespace SCClassLoader
                 case "rounds": return "rounds the shot fired";
                 case "loaded": return "rounds loaded";
                 case "wallsnear": return "walls beside";
+                case "armed": return "reactions you have armed";
+                case "charges": return "charges across your armed reactions";
                 default: return Enum.TryParse(k, true, out STAT_TYPE st) ? StatObj.GetStatString(st) : k;
             }
         }

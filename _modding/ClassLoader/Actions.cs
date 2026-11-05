@@ -176,6 +176,7 @@ namespace SCClassLoader
                 case "exhaust": Afflictions.Exhaust(ctx, t, Math.Max(1, a.amount + StackBonus(a, ctx, t)) + (a.afterStun ? Afflictions.StunLeft(t) + 1 : 0)); break;
                 case "swap": Afflictions.Swap(ctx, t); break;
                 case "arm": Reactions.Arm(a, ctx); break;
+                case "rearm": Reactions.Rearm(a, ctx); break;
                 case "spring": Reactions.Spring(ctx); break;
                 case "hazard": GroundFields.LayHazard(a, ctx, t); break;
                 case "clearhazards": HazardRules.Clear(a, ctx, t); break;
@@ -484,6 +485,10 @@ namespace SCClassLoader
             Game.LOG($"{ctx.sourceName} passes {moved} affliction{(moved > 1 ? "s" : "")} from {from.GetName()} to {t.GetName()}.");
         }
 
+        /// <summary>chain: the effects a link has to carry ("effect": "#Chilled|EFFECT_Chill" = any of them); null = any enemy.</summary>
+        private static HashSet<string> ChainNeeds(ActionSpec a, ActionContext ctx) =>
+            string.IsNullOrEmpty(a.effect) ? null : new HashSet<string>(a.effect.Split('|').Select(x => x.Trim()).Where(x => x.Length > 0).Select(x => EffectId(x, ctx.classId)));
+
         /// <summary>Runs a.actions on the target, then hops to nearby enemies (optionally only ones with a.effect).</summary>
         private static void Chain(ActionSpec a, ActionContext ctx, Character first)
         {
@@ -492,7 +497,7 @@ namespace SCClassLoader
             var visited = new HashSet<Character>();
             Character cur = first;
             float mult = ctx.damageMult;
-            string need = string.IsNullOrEmpty(a.effect) ? null : EffectId(a.effect, ctx.classId);
+            HashSet<string> need = ChainNeeds(a, ctx);
             Vector3 last = Vector3.zero;
             for (int hop = 0; cur != null && hop <= Math.Max(0, a.jumps); hop++)
             {
@@ -503,15 +508,16 @@ namespace SCClassLoader
                 if (hop > 0 && !string.IsNullOrEmpty(a.look)) Moves.Streak(last, cur.GetHitFx().position, Moves.Hex(a.look, Color.white), 0.025f, 0.5f);
                 last = cur.GetHitFx().position;
                 if (a.leap && cur.GetHealth() > 0) Triggers.Styled("charge", cur, () => Moves.Leap(a, ctx, cur));
-                // a chain set off by a death starts at the one dying: it only passes things on from there
-                if (cur.GetHealth() > 0) Run(a.actions, c, cur);
+                // a chain set off by a death starts at the one dying: it only passes things on from there; so does one
+                // with skipFirst, which spreads something from its target without landing on it again
+                if (cur.GetHealth() > 0 && !(a.skipFirst && hop == 0)) Run(a.actions, c, cur);
                 Triggers.ChainHop(ctx.caster, cur, hop);
                 mult *= a.falloff;
                 if (AI_Manager.instance == null || cur.GetMover() == null || cur.GetMover().GetCurrentNavNode() == null) break;
                 Vector3 p = cur.GetMover().GetCurrentNavNode().transform.position;
                 AI eyes = a.sight ? cur.ai : null;
                 cur = AI_Manager.instance.GetEnemiesAt(p, a.radius > 0 ? a.radius : 3f)
-                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || e.effects.GetEffect(need) != null) && (eyes == null || eyes.CanSee(e)))
+                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || need.Any(n => e.effects.GetEffect(n) != null)) && (eyes == null || eyes.CanSee(e)))
                     .OrderBy(e => Vector3.Distance(e.transform.position, p)).FirstOrDefault();
             }
         }
@@ -522,7 +528,7 @@ namespace SCClassLoader
             var visited = new HashSet<Character>();
             Character cur = first;
             float mult = ctx.damageMult;
-            string need = string.IsNullOrEmpty(a.effect) ? null : EffectId(a.effect, ctx.classId);
+            HashSet<string> need = ChainNeeds(a, ctx);
             for (int hop = 0; cur != null && hop <= Math.Max(0, a.jumps); hop++)
             {
                 visited.Add(cur);
@@ -533,7 +539,7 @@ namespace SCClassLoader
                     yield return new WaitForSeconds(0.12f); // the dash lands
                     var c = Clone(ctx); c.damageMult = mult; c.target = cur; c.paced = null;
                     SpawnVfx(a.vfx ?? ctx.hitVfx ?? "PA_Elementalist_ChainLightning.shockImpact", cur.GetHitFx().position);
-                    Run(a.actions, c, cur);
+                    if (!(a.skipFirst && hop == 0)) Run(a.actions, c, cur);
                     Triggers.ChainHop(ctx.caster, cur, hop);
                     yield return new WaitForSeconds(0.22f); // a beat before the next
                 }
@@ -541,7 +547,7 @@ namespace SCClassLoader
                 if (AI_Manager.instance == null || cur.GetMover() == null || cur.GetMover().GetCurrentNavNode() == null) break;
                 Vector3 p = cur.GetMover().GetCurrentNavNode().transform.position;
                 cur = AI_Manager.instance.GetEnemiesAt(p, a.radius > 0 ? a.radius : 3f)
-                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || e.effects.GetEffect(need) != null))
+                    .Where(e => !visited.Contains(e) && !e.GetIsDead() && (need == null || need.Any(n => e.effects.GetEffect(n) != null)))
                     .OrderBy(e => Vector3.Distance(e.transform.position, p)).FirstOrDefault();
             }
         }
@@ -1488,10 +1494,12 @@ namespace SCClassLoader
                         : $"Moves your {EffectName(a.effect, classId)} onto {who}, with the turns and stacks it had left"; break;
                 case "chain":
                     {
-                        string link = string.IsNullOrEmpty(a.effect) ? "enemies" : $"enemies with {EffectName(a.effect, classId)}";
+                        string link = string.IsNullOrEmpty(a.effect) ? "enemies" : $"enemies with {string.Join(" or ", a.effect.Split('|').Select(x => EffectName(x.Trim(), classId)))}";
                         string inner = Describe(a.actions, classId, "each target").Replace("• ", "    - ");
-                        s = a.leap ? $"You charge {who}, then on to up to {a.jumps} nearby {link}, landing beside each{(a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "")}:\n{inner}" :
-                            $"Strikes {who}, then jumps to up to {a.jumps} nearby {link}{(a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "")}:\n{inner}";
+                        string power = a.falloff != 1f ? $" ({Mathf.RoundToInt(a.falloff * 100)}% power per jump)" : "";
+                        s = a.leap ? $"You charge {who}, then on to up to {a.jumps} nearby {link}, landing beside each{power}:\n{inner}" :
+                            a.skipFirst ? $"From {who}, jumps to up to {a.jumps} nearby {link}{power}:\n{inner}" :
+                            $"Strikes {who}, then jumps to up to {a.jumps} nearby {link}{power}:\n{inner}";
                         break;
                     }
                 case "summon": s = $"Summons {(a.amount > 1 && !Scaled(a) ? a.amount + " " : "a ")}{a.summonName ?? CreatureName(a.creature)}{(a.turns > 0 ? $" for {a.turns} turns" : "")}{(a.maxSummons > 0 ? $" (max {a.maxSummons})" : "")}{SummonGrowth(a)}{(a.hostile ? ", against you" : a.chaos ? ", fighting everyone near it, you included" : a.anySide ? "; a coin toss decides whose side it takes" : "")}"; break;
@@ -1598,6 +1606,7 @@ namespace SCClassLoader
                     }
                 case "arm": s = a.reaction != null ? Reactions.Describe(a.reaction, classId) : "Arms nothing"; break;
                 case "spring": s = "Every armed reaction goes off once right now at the nearest enemy it can reach, spending a charge"; break;
+                case "rearm": s = $"{(string.IsNullOrEmpty(a.skill) ? "Every armed reaction" : $"Your armed {a.skill.Replace("|", " or ")}")} gets {(a.amount > 0 ? $"{a.amount} charge{(a.amount == 1 ? "" : "s")} back" : "")}{(a.amount > 0 && a.turns > 0 ? " and " : "")}{(a.turns > 0 ? $"{a.turns} more turn{(a.turns == 1 ? "" : "s")}" : "")}"; break;
                 case "hazard": s = $"Leaves {GroundFields.HazardName(a.hazard)} on the floor{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
                 case "clearhazards": s = $"Puts out {(string.IsNullOrEmpty(a.hazard) || a.hazard.Equals("all", StringComparison.OrdinalIgnoreCase) ? "fire, acid and other harmful ground" : GroundFields.HazardName(a.hazard).ToLowerInvariant())}{(a.radius > 0 ? $" around {who} (area {a.radius:0.#})" : $" under {who}")}"; break;
                 case "field":
@@ -1817,6 +1826,7 @@ namespace SCClassLoader
             var limits = new List<string>();
             if (p.cooldown > 0) limits.Add($"then not for {p.cooldown} turn{(p.cooldown > 1 ? "s" : "")}");
             if (p.maxPerTurn > 0) limits.Add($"at most {p.maxPerTurn}× a turn");
+            if (p.cascade > 0) limits.Add("even when another proc set it off");
             if (limits.Count > 0) when += $" ({string.Join(", ", limits)})";
             string who = p.radius > 0 ? (p.pick > 0 ? $"{(p.pick == 1 ? "a random enemy" : p.pick + " random enemies")} within {p.radius:0.#}" : $"enemies within {p.radius:0.#}") + (string.Equals(p.on, "smash", StringComparison.OrdinalIgnoreCase) ? " of the wreck" : "") : DefaultProcWho(p.on);
             string head = chance < 100 ? $"<b>{chance}% {when}:</b>" : $"<b>{char.ToUpper(when[0]) + when.Substring(1)}:</b>";

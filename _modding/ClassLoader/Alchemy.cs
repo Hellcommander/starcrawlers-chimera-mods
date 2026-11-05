@@ -16,6 +16,14 @@ namespace SCClassLoader
         public List<string> needs = new List<string>();
         /// <summary>The reacting effects are used up (default).</summary>
         public bool consume = true;
+        /// <summary>Reagents that are not used up (catalysts): the reaction happens and these stay on, or land anyway.</summary>
+        public List<string> keep;
+        /// <summary>The class rank it is known from (1 = just taken; 0 or 1 = always). Earlier, the reagents simply sit side by side.</summary>
+        public int rank;
+        /// <summary>% odds the contact reacts at all (default 100); a failed roll lets the reagent land like any other effect.</summary>
+        public int chance = 100;
+        /// <summary>Added to chance for every class rank past the first.</summary>
+        public int chancePerRank;
         /// <summary>The actions hit every enemy within this radius of the target (0 = the target only).</summary>
         public float radius;
         public string vfx;
@@ -28,6 +36,8 @@ namespace SCClassLoader
     /// reacts on contact: both are used up and the reaction's actions run, with you as the caster. Reactions
     /// belong to a class and only happen while you have that class, whoever applied the effects (your weapons, other
     /// classes, vanilla fire and shock all count). A reaction can set off another; a short burst limit stops loops.
+    /// A reaction with a "rank" is known once the class reaches it; "keep" names reagents the reaction leaves alone;
+    /// "chance" makes the contact a roll.
     /// </summary>
     internal static class Alchemy
     {
@@ -36,6 +46,7 @@ namespace SCClassLoader
             public ReagentReaction spec;
             public string classId;
             public string[] ids;
+            public string[] keepIds;
         }
 
         private static readonly Dictionary<string, List<Entry>> byClass = new Dictionary<string, List<Entry>>();
@@ -50,7 +61,13 @@ namespace SCClassLoader
             byClass.Remove(def.id);
             var list = (def.reactions ?? new List<ReagentReaction>())
                 .Where(r => r?.needs != null && r.needs.Count >= 2)
-                .Select(r => new Entry { spec = r, classId = def.id, ids = r.needs.Select(n => Actions.EffectId(n, def.id)).ToArray() }).ToList();
+                .Select(r => new Entry
+                {
+                    spec = r, classId = def.id,
+                    ids = r.needs.Select(n => Actions.EffectId(n, def.id)).ToArray(),
+                    keepIds = r.consume ? (r.keep ?? new List<string>()).Select(n => Actions.EffectId(n, def.id)).ToArray()
+                                        : r.needs.Select(n => Actions.EffectId(n, def.id)).ToArray()
+                }).ToList();
             if (list.Count > 0) byClass[def.id] = list;
             reagents = new HashSet<string>(byClass.Values.SelectMany(l => l).SelectMany(e => e.ids));
         }
@@ -58,7 +75,7 @@ namespace SCClassLoader
         /// <summary>The effect takes part in some class's reaction (rune element swaps replace these).</summary>
         internal static bool IsReagent(string effectId) => effectId != null && reagents.Contains(effectId);
 
-        /// <summary>Reactions of the classes the player has now.</summary>
+        /// <summary>Reactions of the classes the player has now, known or not yet (see Known).</summary>
         internal static List<Entry> Active()
         {
             var trees = Player_SkillControl.instance?.skillTrees;
@@ -67,6 +84,24 @@ namespace SCClassLoader
         }
 
         internal static List<Entry> OfClass(string classId) => classId != null && byClass.TryGetValue(classId, out var l) ? l : new List<Entry>();
+
+        /// <summary>The class's level (rank + 1) for the player, 0 without the class.</summary>
+        private static int Level(string classId)
+        {
+            var trees = Player_SkillControl.instance?.skillTrees;
+            if (trees == null) return 0;
+            foreach (Skill_Tree t in trees) if (t != null && t.internalName == classId) return t.GetRank() + 1;
+            return 0;
+        }
+
+        /// <summary>The class has reached the reaction's rank.</summary>
+        internal static bool Known(Entry e) => e.spec.rank <= 1 || Level(e.classId) >= e.spec.rank;
+
+        private static bool Rolls(Entry e)
+        {
+            int odds = e.spec.chance + e.spec.chancePerRank * Math.Max(0, Level(e.classId) - 1);
+            return odds >= 100 || UnityEngine.Random.Range(1, 101) <= odds;
+        }
 
         private static bool IsEnemy(Character c) =>
             c != null && !c.GetIsDead() && c != Player.instance && c.ai != null && c.ai.GetTeam() != AI.AI_TEAM.Player && c.ai.GetTeam() != AI.AI_TEAM.Passive;
@@ -80,7 +115,7 @@ namespace SCClassLoader
             return true;
         }
 
-        /// <summary>The first reaction, in class and file order, this reagent sets off on the target. Every hit of a fire or shock skill asks, whoever casts it, so it walks the lists instead of building them.</summary>
+        /// <summary>The first known reaction, in class and file order, this reagent sets off on the target. Every hit of a fire or shock skill asks, whoever casts it, so it walks the lists instead of building them.</summary>
         private static Entry ReactionFor(string incoming, Character target)
         {
             Skill_Tree[] trees = Player_SkillControl.instance?.skillTrees;
@@ -88,8 +123,9 @@ namespace SCClassLoader
             foreach (Skill_Tree t in trees)
             {
                 if (t == null || !byClass.TryGetValue(t.internalName, out List<Entry> list)) continue;
+                int level = t.GetRank() + 1;
                 foreach (Entry e in list)
-                    if (Array.IndexOf(e.ids, incoming) >= 0 && PartnersOn(e, incoming, target)) return e;
+                    if ((e.spec.rank <= 1 || level >= e.spec.rank) && Array.IndexOf(e.ids, incoming) >= 0 && PartnersOn(e, incoming, target)) return e;
             }
             return null;
         }
@@ -108,7 +144,7 @@ namespace SCClassLoader
                 try
                 {
                     Entry hit = ReactionFor(internalName, target);
-                    if (hit == null) return true;
+                    if (hit == null || !Rolls(hit)) return true;
                     if (Time.time > burstReset) { burst = 0; burstReset = Time.time + 1f; }
                     if (++burst > MaxBurst) return true;
                     void Go()
@@ -119,8 +155,10 @@ namespace SCClassLoader
                         finally { depth--; }
                     }
                     if (!TileStackAreas.AfterSweep(Go)) Go();
+                    // a reaction that keeps this reagent lets it land too
+                    if (Array.IndexOf(hit.keepIds, internalName) >= 0) return true;
                     __result = null;
-                    return !hit.spec.consume; // a reaction that keeps its reagents lets the new one land too
+                    return false;
                 }
                 catch (Exception ex) { Plugin.Log.LogError("Reactions: " + ex); return true; }
             }
@@ -135,11 +173,16 @@ namespace SCClassLoader
             ReagentReaction r = e.spec;
             Recent.Add(r.name);
             if (Recent.Count > 40) Recent.RemoveAt(0);
-            if (r.consume)
+            bool removed = false;
+            foreach (string id in e.ids)
             {
-                foreach (string id in e.ids.Where(id => id != incoming)) t.effects.GetEffect(id)?.RemoveInstant();
-                t.CalculateStats();
+                if (id == incoming || Array.IndexOf(e.keepIds, id) >= 0) continue;
+                Effect fx = t.effects.GetEffect(id);
+                if (fx == null) continue;
+                fx.RemoveInstant();
+                removed = true;
             }
+            if (removed) t.CalculateStats();
             Vector3 at = t.GetHitFx().position;
             Actions.SpawnVfx(r.vfx, at);
             ModAudio.Play(r.sound, at, e.classId);
@@ -161,5 +204,31 @@ namespace SCClassLoader
         internal static string Describe(Entry e) =>
             $"{string.Join(" + ", e.spec.needs.Select(n => Runes.EffectName(n, e.classId)))}: <color=#7FE3FF>{e.spec.name}</color>" +
             (string.IsNullOrEmpty(e.spec.description) ? "" : " - " + e.spec.description);
+
+        /// <summary>What a known reaction costs or spares: "(kept)" reagents, odds, rank.</summary>
+        internal static string Terms(Entry e)
+        {
+            var bits = new List<string>();
+            if (!e.spec.consume) bits.Add("nothing used up");
+            else if (e.spec.keep != null && e.spec.keep.Count > 0) bits.Add(string.Join(" and ", e.spec.keep.Select(k => Runes.EffectName(k, e.classId))) + " stays");
+            int odds = e.spec.chance + e.spec.chancePerRank * Math.Max(0, Level(e.classId) - 1);
+            if (odds < 100) bits.Add($"{odds}% odds");
+            if (e.spec.radius > 0f) bits.Add($"area {e.spec.radius:0.#}");
+            return bits.Count == 0 ? "" : " (" + string.Join(", ", bits) + ")";
+        }
+
+        /// <summary>For an effect's tooltip: the known reactions it takes part in, for the classes the player has.</summary>
+        internal static IEnumerable<string> TooltipLines(string effectId)
+        {
+            if (string.IsNullOrEmpty(effectId) || !reagents.Contains(effectId) || Player_SkillControl.instance == null) yield break;
+            foreach (Entry e in Active())
+            {
+                if (Array.IndexOf(e.ids, effectId) < 0) continue;
+                string others = string.Join(" + ", e.spec.needs.Where((n, i) => e.ids[i] != effectId).Select(n => Runes.EffectName(n, e.classId)));
+                yield return Known(e)
+                    ? $"<color=#7FE3FF>Reacts with {others}: {e.spec.name}</color>{Terms(e)}"
+                    : $"<color=#8A96A3>Reacts with {others} at rank {e.spec.rank}: {e.spec.name}</color>";
+            }
+        }
     }
 }

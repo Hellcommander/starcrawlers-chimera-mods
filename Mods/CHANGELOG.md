@@ -6,6 +6,53 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
 
 ## Unreleased
 
+### Reactions, in five classes
+
+The two reaction systems (a class's alchemical `"reactions"`, and the Reaction Architect's armed reactions) grow new
+options, and five classes grow into them.
+
+- **Alchemical reactions**: `"rank"` on a reaction keeps it unknown until the class reaches that rank (the rune matrix
+  and effect tooltips show it greyed until then), `"keep"` names reagents the reaction leaves alone (a catalyst: it
+  stays on, or lands anyway), and `"chance"` with `"chancePerRank"` makes the contact a roll. A class effect that is a
+  reagent lists its reactions in its tooltip. A class with reactions but no rune sockets gets the rune matrix as a
+  "Reactions" tab, listing what it knows.
+- **Armed reactions**: six new triggers: `buff` (an enemy buffs itself or another enemy; `"to": "victim"` reaches the
+  buffed one), `heal`, `summon` (the newcomer is the victim), `allyDown` (an enemy downs one of your summons or pets),
+  `move` (any step within `range`) and `turn` (an enemy within `range` begins its turn). New options on a reaction:
+  `when` (a condition on the enemy; one that fails spends nothing), `radius` (the answer hits the enemies beside it),
+  `cooldown` (turns it rests) and `stack` with `maxCharges` (arming it again adds charges). A passive's proc can arm
+  (a wire strung on `combatStart`), `{ "do": "rearm" }` puts charges and turns back, the `reaction` proc trigger takes
+  a `match`, and the condition values `armed` and `charges` read the slots. The readout and the rules text know the
+  new words. `SCCL_DEVTEST=reactions` plays all of it, with a fixture class for the options.
+- **Reaction Architect**: every fight opens with a Welcome Mat already strung across the approaches (Standing Orders),
+  Tripwire stacks to four charges when strung again, Interdict also arms Veto (strips an enemy's buff and jolts the
+  one that gave it), Retort Protocol also arms Clawback (an enemy on file that heals is jolted and the healed one
+  bleeds the mending), Fail-Safe blasts everyone beside the attacker back, Full Cascade gives every armed reaction a
+  charge back, Binding Terms arms Uninvited (hits and files anything called into the room) and Contingency Lattice
+  strings Reprisal when you fight beside allies (the first enemy to down one is hit hard and filed) and gives a
+  second Foresight per reaction while three or more are armed.
+- **Reactant Hauler**: seven more mixes, learned by rank: Grease Ice (oil over frost knocks it down, the oil stays),
+  Sparkshower (grit in fire sprays sparks over everyone near), Salt Flare (brine in fire blinds the area), Scouring
+  Paste (brine and grit leave it Salt-Scoured: armor and dodge down), Cold Short (current through frozen coolant sets
+  its specials back), Sludge Fire (fire on the sludge burns it, still stuck). The Oil-Slicked, Coolant-Frosted and
+  other marks list their reactions in their tooltips.
+- **Miasmancer**: seven reactions on its own salts and clouds, with fire, current, acid and frost from anywhere (your
+  weapons, your crew, the enemy's own): Rust Flash (fire on rust salts), Salt Cough (a choking enemy coughs the salts
+  over its neighbours), Salt Etch (acid eats through, weakening), Galvanic Rot (current runs through the rust to the
+  next one), Choke Point (choking on poison silences, odds growing with rank, poison kept), Toxic Smoke (fire burns the
+  poison off into a choking cloud, poison kept) and Frozen Lungs (frost on a choking enemy stuns).
+- **Flux Savant**: four reactions on the products of reactions: Shatter (fire on Brittle, true damage in an area),
+  Resonance Crack (current on Brittle sets specials back), Cold Weld (frost on Galvanized stuns and keeps it flaking)
+  and Thermite Bloom (fire on Galvanized). Four augments (Cryo Trace, Overpressure, Deep Etch, Catalyst Bed) and a
+  flaw (Thin Plating), and three signature combos: Spectrum Lance (a Prism rune in Arc Lance rides a second reagent on
+  every hit), Residue Flask and Residue Lattice (a Cascade rune in Catalyst Flask or Lattice Field lays residue).
+- **Rig Jockey**: five hardpoint reactions, by rank: Wiring Fire, Short Circuit and Cold Shear (fire, current and frost
+  on plating you have stripped; the plating stays stripped, frost leaves it Cold-Sheared), Quench (fire then frost) and
+  Plasma Arc (fire and current). The three element hardpoints carry a reagent, so a Cryo Jacket or Arc Coil in Vent
+  Blast turns the blast's fire into frost or current; Vent Blast gets an element socket at rank 5 with Plasma Vent,
+  Cold Vent and Arc Vent, Piston Jab gets Taser Jab and Cold Fist, Hydraulic Charge gets Afterburner and Grapple
+  Charge, and Plate Up gets Cold Plates and Overlapping Fields. `SCCL_DEVTEST=rigreact` plays it.
+
 ### Fixes
 
 Found by the loader's new player bot, a self-test that plays the game the way a player does (see the dev readme):
@@ -178,7 +225,7 @@ Found by the loader's new player bot, a self-test that plays the game the way a 
 - Scattered traps save once per cast, not once per bomblet.
 - A trap whose `triggerRadius` is wider than its blast `radius` also catches whoever set it off from the edge; before,
   it went off and hit nobody.
-- Summons arrive at full health. Before, the pet scaling's first update set them to level × 8, and an `ownerShare`
+- Summons arrive at full health. Before, the pet scaling's first update set them to level Ã— 8, and an `ownerShare`
   effect's attributes counted only from the next turn.
 - Summons avoid tiles with mines or fire when a clear tile is free.
 - A summon whose creature comes from a placeholder tier that a mod filled (the Engineer's Boltron) is still found.

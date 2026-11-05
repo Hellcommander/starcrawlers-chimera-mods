@@ -249,7 +249,8 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   of your debuffs, all by default, onto the target with the turns and stacks they had left; `effect` moves only that
   one; a debuff the target is immune to or resists stays on you, and so does a mod effect with `"transferable": false`
   (default true: a curse that's yours to carry); moved ones count as yours from then on); `chain` (`jumps`, `radius`,
-  `effect` = only jump to enemies carrying it, `falloff`, `"sight": true` = only jump to what the last link can see,
+  `effect` = only jump to enemies carrying it (`"#Chilled|EFFECT_Chill"` = any of them), `falloff`, `"skipFirst": true` = the target
+  is only where it starts, its actions land on the enemies it jumps to, `"sight": true` = only jump to what the last link can see,
   never through a wall, nested `actions`; `"leap": true` makes it a charge: you land
   beside each link before it is struck, one hop at a time, and the skill's own self actions wait for the last hop;
   Rimelight Seer's Prism Charge); `echo` (replay your last offensive
@@ -407,10 +408,21 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   ```jsonc
   "reactions": [ { "name": "Plasma Flash", "needs": [ "EFFECT_Fire", "EFFECT_Shock" ], "radius": 1.5,
                    "description": "a blinding burst", "vfx": "...", "sound": "...", "consume": true,
+                   "keep": [ "EFFECT_Fire" ],           // reagents the reaction leaves alone (catalysts): they stay on, or land anyway
+                   "rank": 3,                           // known from this class rank (1 = just taken); before it the reagents just sit together
+                   "chance": 50, "chancePerRank": 5,    // odds the contact reacts; a failed roll lets the reagent land like any other effect
                    "actions": [ { "do": "damage", "type": "Energy", "min": 5, "max": 9 },
                                 { "do": "stamina", "to": "self", "amount": 2 } ] } ]
   ```
-  `Mods/FluxSavant/` uses all of this: 18 runes in three tiers, 12 signature combos and 10 reactions.
+  Three or more reagents work too (`needs` lists them all). The first reaction in class and file order whose other
+  reagents are all on the enemy wins, so put the mix you want preferred first. A class's effect that takes part in a
+  reaction says so in its tooltip ("Reacts with Fire: Oil Flare", greyed with the rank it needs until then), and the
+  rune matrix lists every reaction your classes know; a class without rune sockets gets the same window as a
+  "Reactions" tab. `Mods/FluxSavant/` uses all of this: 18 runes in three tiers, 15 signature combos and 14
+  reactions, four of them on the products of others (brittle plating shatters in heat, galvanized plating burns like
+  thermite). `Mods/ArendethClasses/reactant_hauler.json` learns 7 more mixes as it ranks up, `miasmancer.json` makes
+  reagents of its salts and clouds, and `Mods/Kinetics/rig_jockey.json` reacts fire, current and frost with the
+  plating it strips; a Rig hardpoint's `reagent` retunes what Vent Blast leaves behind.
 - **Reshaping skills (augments).** A passive you know, an effect on you (a stance, or a charge an active skill puts
   on you for the next cast) or a rune in a socket can rewrite how another skill is delivered, what it is made of and
   what it does. The skill's tooltip shows every rewrite in force ("Reshaped by ..."), the hotbar icon aims the new
@@ -859,11 +871,16 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 { "do": "arm", "reaction": {
     "name": "Tripwire",
     "on": "approach",          // approach | retreat | special | hurt | ranged | lowHealth | debuff | dodge
-    "who": "allies",           // all but special / dodge: "you" (default) or "allies" (you or any summon/pet)
+                               // | buff | heal | summon | allyDown | move | turn
+    "who": "allies",           // approach / retreat / hurt / ranged / lowHealth / debuff: "you" (default) or "allies" (you or any summon/pet)
     "threshold": 40,           // lowHealth: the health % the hit has to take you under
     "charges": 2, "turns": 8,  // goes off up to 2 times; disarms after 8 of your turns
+    "stack": true, "maxCharges": 4,  // arming it again adds its charges (up to 4) instead of starting over
     "priority": 40,            // higher answers first when several react to the same thing
-    "range": 8,                // special: only enemies this close
+    "range": 8,                // special / move / turn: only enemies this close
+    "when": { "has": "@Profiled" },  // only answers an enemy this holds for (no charge spent otherwise)
+    "radius": 1.5,             // the actions also hit every enemy within this of the one that set it off
+    "cooldown": 1,             // your turns it rests after going off
     "interrupt": false,        // special: cut the enemy's ability off (wasted, on cooldown)
     "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5", "sound": "...",
     "actions": [ { "do": "damage", "type": "Shock", "min": 3, "max": 6 }, { "do": "effect", "effect": "SLOW", "turns": 2 } ] } }
@@ -871,7 +888,10 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
 
 - An ability with an `arm` action puts the reaction in one of your **reaction slots**. You have 2. An ability with
   `"reactionSlots": 3` raises that while you know it (the highest wins). Arming with every slot full pushes out the
-  oldest, and arming the same reaction again refreshes it instead of adding a second copy.
+  oldest, and arming the same reaction again refreshes it instead of adding a second copy (with `"stack": true` it adds
+  the charges, up to `maxCharges`, three times its charges by default). An `arm` inside a passive's proc arms too: a
+  wire strung on `combatStart` is in place before the first enemy moves. The index of the `arm` among the ability's
+  (actions, perk actions, then its procs' actions) is what the save keeps.
 - **Triggers:**
   - `approach`: an enemy steps onto a tile next to you (or next to an ally).
   - `retreat`: an enemy that was next to you (or an ally) steps off to a tile that isn't.
@@ -882,8 +902,17 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   - `lowHealth`: an enemy's hit takes you (or an ally) from `threshold` % health or more to under it.
   - `debuff`: an enemy puts a debuff on you (or an ally) on its turn.
   - `dodge`: you dodge an enemy.
+  - `buff`: an enemy puts a buff on itself or another enemy on its turn (`"to": "victim"` is the one buffed: a
+    `dispel` there strips it).
+  - `heal`: an enemy heals itself or another enemy on its turn (the healed one is the victim).
+  - `summon`: an enemy calls in another enemy on its turn (the newcomer is the victim).
+  - `allyDown`: an enemy's turn downs one of your summons or pets.
+  - `move`: an enemy within `range` steps onto a tile, any tile (each enemy once per round).
+  - `turn`: an enemy within `range` begins its turn.
 - The reaction's actions run on the enemy that set it off (`"to": "victim"` is whoever it went for, e.g. a shield
-  for the ally that got hit). They use the arming ability's rank and perk.
+  for the ally that got hit). They use the arming ability's rank and perk. With `radius`, the actions not aimed at
+  you or the victim run on every enemy within it of that enemy too. With `when`, a reaction whose condition fails for
+  the enemy stays armed and spends nothing. With `cooldown`, it rests that many of your turns after going off.
 - **Interrupts:** a `special` reaction runs before the enemy's ability goes off. With `"interrupt": true`, or when
   the reaction leaves the enemy dead, stunned or silenced, the ability is cut off: wasted, and on its cooldown.
 - **Bounded queue:** reactions answer one at a time in priority order. A moving enemy is answered once it stands
@@ -891,7 +920,11 @@ copies of one particle play at once, so an area hit on six enemies doesn't stack
   and at most 5 reactions go off between two of your turns.
 - `{ "do": "spring" }` sets off every armed reaction once right now at the nearest enemy it can reach, spending a
   charge each.
-- The proc trigger `"on": "reaction"` fires whenever one of your reactions goes off (with that enemy as the target).
+- `{ "do": "rearm", "amount": 1, "turns": 2 }` gives every armed reaction a charge back (up to its `maxCharges`), that
+  many more turns, and ends its rest; `"skill": "Tripwire|Retort"` limits it to reactions of those names.
+- The proc trigger `"on": "reaction"` fires whenever one of your reactions goes off (with that enemy as the target);
+  `"match"` names the reaction (`"Tripwire|Welcome Mat"`). The condition values `"armed"` (reactions armed now) and
+  `"charges"` (their charges together) read the slots: `{ "value": "armed", "atLeast": 3 }`.
 - A panel above the hotbar's left end lists what's armed (name, trigger, charges, turns left), with the full rules
   on hover. It only appears for characters with an ability that arms reactions. Armed reactions are saved with the
   game. `SCCL_DEVTEST=reactions` checks all of this against real enemies.
@@ -1076,6 +1109,11 @@ letters (`"CONSUME_CHEM_*"` is every chem). Besides `hit`, `kill`, `hurt`, `dodg
 - `"cooldown"`: your turns before the proc can fire again.
 - `"every"`: fires on every Nth time the event passes the proc's condition (3 = every third hit on a bleeding enemy).
 - `"maxPerTurn"`: the most times it fires in one turn.
+- `"cascade"`: normally a proc stays quiet while another proc's actions run, so what those set off (an effect they
+  inflict, a chain's hops, a kill) wakes no further procs. `"cascade": 2` lets this proc answer events from inside
+  other procs too, up to two procs deep (three is the most any proc can go), so a reaction can set off the next
+  reaction on the enemy it spreads to. Plugins' event handlers only hear the outermost event.
+- `"announce": "Shatter Point"`: words shown over the proc's target when it fires, and a line in the log.
 
 **Ability icons.** `"icon": "SKILLTREE_Blademaster/2"` borrows a vanilla tier's icon, so no png is needed. Effects and
 the skills of a form's kit can borrow the same way.
@@ -2288,6 +2326,31 @@ Two trees that work together give a bonus when you have both, vanilla or mod. Th
   fire on a 2-turn cooldown, and each spends the status it reads (a `purge` action), trading it for the class's own
   effect instead of adding to it. A status synergy's skill price, `synergyPenalty`, goes to the exploiting class only.
   `SCCL_DEVTEST=statussyn` checks them with real casts.
+- **Reactions:** a synergy with `"status"` and `"with"` names no tree at all. It belongs to the two statuses: any class
+  that causes the first and any *other* class that causes the second make it (one class that causes both makes
+  nothing on its own), at the lower of the two ranks. Its procs fire on `inflict` with both statuses present, so it
+  goes off the moment the second lands, whichever that is:
+  ```jsonc
+  { "id": "Conduction", "name": "Conduction", "status": ["#Shocked", "EFFECT_Shock"], "with": ["#Chilled", "EFFECT_Chill"],
+    "sources": ["SKILLTREE_Elementalist"], "withSources": ["SKILLTREE_Elementalist"], "maxLevel": 3,
+    "bonus": { "procChancePerStack": 5, "procs": [ { "on": "inflict", "match": "#Shocked|EFFECT_Shock|#Chilled|EFFECT_Chill",
+      "chance": 30, "maxPerTurn": 3, "cascade": 2, "announce": "Conduction", "vfx": "SsArc@0.6",
+      "when": { "all": [ { "any": [ { "has": "#Shocked" }, { "has": "EFFECT_Shock" } ] }, { "any": [ { "has": "#Chilled" }, { "has": "EFFECT_Chill" } ] } ] },
+      "actions": [ { "do": "purge", "effect": "#Shocked" }, { "do": "purge", "effect": "EFFECT_Shock" }, { "do": "purge", "effect": "#Chilled" }, { "do": "purge", "effect": "EFFECT_Chill" },
+                   { "do": "chain", "skipFirst": true, "jumps": 1, "radius": 3, "effect": "#Chilled|EFFECT_Chill", "actions": [ { "do": "effect", "effect": "#Shocked" } ] } ] } ] } }
+  ```
+  `sources` and `withSources` add vanilla trees for each status. The chain reaction is the `cascade`: the shock the
+  chain lands on the next chilled enemy is an inflict of yours, so Conduction fires again there, up to three links.
+  The bundled reactions (`Mods/StatusSynergies/reaction_synergies.json`) are Shatter Point (Burning + Chilled: Brittle
+  and Reeling), Flashover (Burning + Toxified: fire bursts onto the enemies within two tiles), Conduction, Arc Flash
+  (Burning + Shocked: everyone within two tiles Reeling), Convulsion (Shocked + Gashed: the gash tears wider),
+  Black Ice (Chilled + Reeling: a turn stunned), Septic Wound (Toxified + Gashed: Septic) and Overload (Shocked +
+  Marked: the shock jumps to every other marked enemy within six). Brittle and Septic are statuses of the mod's own
+  small library (`reactions_library.json`), so `#Brittle` and `#Septic` work anywhere once the mod is on. Each
+  reaction spends both statuses it reads, fires at 30% plus 5% a level and at most three times a turn, and has an
+  icon and a particle of its own (`_modding/make_reaction_assets.py`). `SCCL_DEVTEST=chainsyn` plays them: a real
+  Pipe to the Knee on a chilled guard for Black Ice, and a shock on the first of four chilled guards in a row for a
+  Conduction chain that stops at the cascade cap.
 - **Missing classes:** a synergy naming a class that isn't installed is skipped.
 - **Overriding:** a later mod with the same `id` replaces a synergy, and `"enabled": false` removes it.
 - **For a single ability:** use `ifSkill` on its actions instead (see Brand-new abilities).

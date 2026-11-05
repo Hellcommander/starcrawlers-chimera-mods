@@ -1,7 +1,7 @@
 {
   "id": "MOD_FluxSavant",
   "name": "Flux Savant",
-  "description": "Half lab coat, half spellbook. Runes slotted into their techniques retune them - element, shape, power - and run flat with use, so every fight needs a moment at the bench; the reagents they lay react on contact.\n\nRune-socket caster with alchemical reactions and an Instability backfire meter. Spend stamina to recharge your runes, and your growing augment pool on how each spell behaves and lands. Scales with Smarts and Psi. Favors [SMT] and [PSI].",
+  "description": "Half lab coat, half spellbook. Runes slotted into their techniques retune them - element, shape, power - and run flat with use, so every fight needs a moment at the bench; the reagents they lay react on contact.\n\nRune-socket caster with alchemical reactions (the products of a reaction react again: brittle plating shatters in heat, galvanized plating burns like thermite) and an Instability backfire meter. Spend stamina to recharge your runes, and your growing augment pool on how each spell behaves and lands. Scales with Smarts and Psi. Favors [SMT] and [PSI].",
   "archetype": "Intellect",
   "icon": "icons/flux_savant.png",
   "attributePriorities": {
@@ -470,7 +470,27 @@
         }
       ],
       "sound": "audio_licensed/react_dissolution.wav"
-    }
+    },
+    { "name": "Shatter", "needs": [ "@Brittle", "EFFECT_Fire" ], "rank": 5, "radius": 1.5,
+      "description": "heat on frozen glass: it bursts, and the shards go everywhere",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/react_thermal_shock.wav",
+      "actions": [ { "do": "damage", "type": "Crushing", "min": 7, "max": 11, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "trueDamage": true },
+                   { "do": "stamina", "to": "self", "amount": 2 } ] },
+    { "name": "Resonance Crack", "needs": [ "@Brittle", "EFFECT_Shock" ], "rank": 5,
+      "description": "the current finds every fault line: its special attacks are set back",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/react_superconduct.wav",
+      "actions": [ { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Smarts+PsiPower", "scaleMult": 0.24 }, { "do": "exhaust", "amount": 2 },
+                   { "do": "stamina", "to": "self", "amount": 2 } ] },
+    { "name": "Cold Weld", "needs": [ "@Galvanized", "EFFECT_Chill" ], "keep": [ "@Galvanized" ], "rank": 6,
+      "description": "frost seizes the flaking plating solid, and it keeps flaking",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/react_brittle_lattice.wav",
+      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2 },
+                   { "do": "stamina", "to": "self", "amount": 2 } ] },
+    { "name": "Thermite Bloom", "needs": [ "@Galvanized", "EFFECT_Fire" ], "rank": 6, "radius": 1.2,
+      "description": "the acid-eaten plating burns like thermite",
+      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "audio_licensed/react_flashpoint.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.3 }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" },
+                   { "do": "stamina", "to": "self", "amount": 2 } ] }
   ],
   "augments": [
     { "id": "Beamline", "kind": "delivery", "name": "Beamline", "points": 2, "rank": 2, "form": "line", "power": 0.85,
@@ -507,11 +527,19 @@
     { "id": "Undercut", "name": "Undercut", "points": 3, "rank": 6, "power": 0.85, "add": { "trueDamage": true } },
     { "id": "Quickdraw", "name": "Quickdraw", "points": 4, "rank": 7, "burn": 1, "instant": true,
       "resonance": [ { "rune": "FsCapacitorRune", "name": "Steady Hands", "burn": -1 } ] },
+    { "id": "CryoTrace", "name": "Cryo Trace", "points": 2, "rank": 3, "power": 0.9, "instability": 1, "add": { "effect": "EFFECT_Chill" },
+      "resonance": [ { "rune": "FsCryoRune", "name": "Deep Frost", "add": { "effectTurns": 2 } } ] },
+    { "id": "Overpressure", "name": "Overpressure", "points": 2, "rank": 4, "power": 0.9, "add": { "knockback": 2 },
+      "resonance": [ { "rune": "shape", "name": "Shaped Charge", "power": 1.1 } ] },
+    { "id": "DeepEtch", "name": "Deep Etch", "points": 3, "rank": 5, "stamina": 2, "add": { "effectTurns": 2 } },
+    { "id": "CatalystBed", "name": "Catalyst Bed", "points": 3, "rank": 6, "instability": 1, "add": { "effect": "EFFECT_Acid" },
+      "resonance": [ { "rune": "FsCausticRune", "name": "Saturated", "instability": -1 } ] },
 
     { "id": "HotContacts", "kind": "flaw", "name": "Hot Contacts", "points": 2, "burn": 1 },
     { "id": "LeakyHousing", "kind": "flaw", "name": "Leaky Housing", "points": 2, "instability": 2 },
     { "id": "CrampedLattice", "kind": "flaw", "name": "Cramped Lattice", "points": 3, "seal": 1 },
-    { "id": "SlowReset", "kind": "flaw", "name": "Slow Reset", "points": 1, "cooldown": 2 }
+    { "id": "SlowReset", "kind": "flaw", "name": "Slow Reset", "points": 1, "cooldown": 2 },
+    { "id": "ThinPlating", "kind": "flaw", "name": "Thin Plating", "points": 2, "power": 0.85 }
   ],
   "tiers": [
     {
@@ -628,6 +656,18 @@
             "range": 2,
             "power": 1.3,
             "instability": 1
+          },
+          {
+            "rune": "FsPrismRune",
+            "name": "Spectrum Lance",
+            "description": "the lance splits across the spectrum: a second random reagent rides every hit, so a clean target reacts on the spot.",
+            "actions": [
+              { "do": "random", "options": [
+                { "weight": 1, "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] },
+                { "weight": 1, "actions": [ { "do": "effect", "effect": "EFFECT_Shock" } ] },
+                { "weight": 1, "actions": [ { "do": "effect", "effect": "EFFECT_Chill" } ] },
+                { "weight": 1, "actions": [ { "do": "effect", "effect": "EFFECT_Acid" } ] } ] }
+            ]
           },
           {
             "rune": "FsBloomRune",
@@ -978,6 +1018,15 @@
             ]
           },
           {
+            "rune": "FsCascadeRune",
+            "name": "Residue Flask",
+            "replace": true,
+            "description": "the flask is cut with spent aether: it lays residue instead of acid, ready to react with whatever comes next.",
+            "element": "Psi",
+            "reagent": "MOD_FluxSavant@Residue",
+            "impactVfx": "PA_Psykonics_Warp.castParticle@0.4"
+          },
+          {
             "rune": "FsCoolantRune",
             "name": "Cryo Grenade",
             "replace": true,
@@ -1081,6 +1130,14 @@
                 "scale": "Smarts+PsiPower",
                 "scaleMult": 0.2
               }
+            ]
+          },
+          {
+            "rune": "FsCascadeRune",
+            "name": "Residue Lattice",
+            "description": "the lattice films whoever stands in it with residue each turn, on top of the chill.",
+            "fieldActions": [
+              { "do": "effect", "effect": "MOD_FluxSavant@Residue" }
             ]
           },
           {

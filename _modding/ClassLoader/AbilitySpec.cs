@@ -315,6 +315,9 @@ namespace SCClassLoader
         /// <summary>chain: you charge along it, landing beside each link before it is struck (a link you can't reach
         /// is still struck from where you are).</summary>
         public bool leap;
+        /// <summary>chain: the one it starts from is only the starting point; its actions land on the enemies it jumps
+        /// to, so something can spread from a target without landing on it again.</summary>
+        public bool skipFirst;
         /// <summary>Actions run on every link of a chain.</summary>
         public List<ActionSpec> actions;
         /// <summary>summon: creature prefab ("ABILITY.field", "nanite_cloud", or part of a creature name); amount = how many,
@@ -489,7 +492,9 @@ namespace SCClassLoader
         /// <summary>approach (an enemy steps next to you) | retreat (an enemy next to you steps away) | special (an
         /// enemy uses an ability with a cooldown) | hurt (an enemy hits you) | ranged (an enemy hits you from two or
         /// more tiles away) | lowHealth (an enemy's hit takes you under threshold % health) | debuff (an enemy puts a
-        /// debuff on you) | dodge (you dodge an enemy)</summary>
+        /// debuff on you) | dodge (you dodge an enemy) | buff (an enemy buffs itself or another enemy) | heal (an enemy
+        /// heals itself or another) | summon (an enemy calls in another) | allyDown (an enemy downs one of your allies) |
+        /// move (an enemy within range steps) | turn (an enemy within range begins its turn)</summary>
         public string on = "approach";
         /// <summary>approach / retreat / hurt / ranged / lowHealth / debuff: "you" (default) or "allies" (you or any
         /// of your summons and pets).</summary>
@@ -501,13 +506,23 @@ namespace SCClassLoader
         public int turns = 6;
         /// <summary>Higher goes first when several reactions answer the same event.</summary>
         public int priority = 50;
-        /// <summary>special: only enemies this close to you.</summary>
+        /// <summary>special, move, turn: only enemies this close to you.</summary>
         public float range = 8f;
         /// <summary>special: the enemy's ability is cut off (wasted and on cooldown).</summary>
         public bool interrupt;
         /// <summary>special: only abilities this names, in the words of "blocks" ("damage:Psi|damage:Void"). With it,
         /// abilities without a cooldown count too.</summary>
         public string ability;
+        /// <summary>Only answers while this holds for the enemy that set it off (no charge spent otherwise).</summary>
+        public WhenSpec when;
+        /// <summary>The actions also hit every enemy within this radius of the one that set it off (0 = it alone).</summary>
+        public float radius;
+        /// <summary>Your turns it rests after going off before it answers again.</summary>
+        public int cooldown;
+        /// <summary>Arming it again adds its charges (up to maxCharges) instead of starting over.</summary>
+        public bool stack;
+        /// <summary>Most charges it holds when stacked or rearmed (0 = three times its charges).</summary>
+        public int maxCharges;
         public string vfx;
         public string sound;
         public List<ActionSpec> actions = new List<ActionSpec>();
@@ -529,6 +544,12 @@ namespace SCClassLoader
         public int every;
         /// <summary>Most times per turn (0 = no limit).</summary>
         public int maxPerTurn;
+        /// <summary>How many procs deep this one may still fire: a proc normally stays quiet while another proc's actions
+        /// run, so what they set off (an effect they inflict, a chain's hops) wakes no further procs. "cascade": 2 lets
+        /// it answer those too, up to two procs deep (three at most), so a reaction can set off the next reaction.</summary>
+        public int cascade;
+        /// <summary>Words shown over the proc's target when it fires, and written to the log ("Shatter Point").</summary>
+        public string announce;
         /// <summary>cast: ability name or id; effectGained / effectLost / inflict: effect id ("@X", vanilla); useItem / equip /
         /// unequip: item name or id. Empty = any.</summary>
         public string match;

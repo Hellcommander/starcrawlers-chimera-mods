@@ -1,7 +1,7 @@
 {
   "id": "MOD_ReactionArchitect",
   "name": "Reaction Architect",
-  "description": "Architects don't win fights on their own turn. They spend it wiring the room: tripwires on the approaches, cut-offs waiting for the enemy's big move, standing retorts for anyone who lays a hand on their crew. Then the enemy moves, and the room answers. Every reaction that goes off teaches the Architect a little more about how the enemy fights.\n\nSet-up controller with reaction slots that fire on enemy actions (closing in, backing off, shooting from afar, hitting, debuffing, missing, winding up a big move), interrupts and a room-wide release. Favors [SMT].",
+  "description": "Architects don't win fights on their own turn. They spend it wiring the room: tripwires on the approaches, cut-offs waiting for the enemy's big move, standing retorts for anyone who lays a hand on their crew. Then the enemy moves, and the room answers. Every reaction that goes off teaches the Architect a little more about how the enemy fights.\n\nSet-up controller with reaction slots that fire on enemy actions (closing in, backing off, shooting from afar, hitting, debuffing, missing, winding up a big move, shoring itself up, patching itself up, calling for help, downing one of yours), interrupts, wires that stack and a room-wide release. Every fight opens with a wire already strung. Favors [SMT].",
   "archetype": "Intellect",
   "icon": "icons/reaction_architect.png",
   "attributePriorities": {
@@ -36,10 +36,18 @@
         "base": "Passive",
         "name": "Standing Orders",
         "icon": "icons/standing_orders.png",
-        "description": "You keep three reactions armed at once instead of two. Every reaction that goes off gives you Foresight.",
+        "description": "You keep three reactions armed at once instead of two, every fight opens with a Welcome Mat already strung across the approaches, and every reaction that goes off gives you Foresight.",
         "reactionSlots": 3,
         "procs": [
-          { "on": "reaction", "actions": [ { "do": "effect", "to": "self", "effect": "@Foresight" } ] }
+          { "on": "reaction", "actions": [ { "do": "effect", "to": "self", "effect": "@Foresight" } ] },
+          { "on": "combatStart", "actions": [
+            { "do": "arm", "reaction": {
+              "name": "Welcome Mat", "on": "approach", "who": "allies", "charges": 1, "turns": 4, "priority": 30,
+              "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
+              "actions": [
+                { "do": "damage", "type": "Shock", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
+                { "do": "effect", "effect": "@Profiled" }
+              ] } } ] }
         ]
       }
     },
@@ -71,12 +79,12 @@
         "icon": "icons/tripwire_clause.png",
         "cooldown": 5,
         "staminaCost": 8,
-        "description": "String the approaches. The first enemies to step up to you or anyone fighting beside you get a jolt, a stumble and a shove back where they came from.",
+        "description": "String the approaches. The first enemies to step up to you or anyone fighting beside you get a jolt, a stumble and a shove back where they came from. String it again before it is spent and the wires add up, to four.",
         "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
         "sound": "event:/Abilities/Hacker/Hacker_Scramble",
         "actions": [
           { "do": "arm", "reaction": {
-            "name": "Tripwire", "on": "approach", "who": "allies", "charges": 2, "turns": 8, "priority": 40,
+            "name": "Tripwire", "on": "approach", "who": "allies", "charges": 2, "turns": 8, "priority": 40, "stack": true, "maxCharges": 4,
             "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
             "actions": [
               { "do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
@@ -96,7 +104,7 @@
         "icon": "icons/interdict.png",
         "cooldown": 6,
         "staminaCost": 10,
-        "description": "Watch for the wind-up. The next enemy near you that goes for its big move is cut off mid-motion: the move is wasted, and for a turn it can't remember any other.",
+        "description": "Watch for the wind-up. The next enemy near you that goes for its big move is cut off mid-motion: the move is wasted, and for a turn it can't remember any other. Anything that shores itself or a friend up instead is overruled: Veto strips the buff off and jolts whoever gave it.",
         "castVfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4",
         "sound": "event:/Abilities/Hacker/Hacker_Scramble",
         "actions": [
@@ -106,6 +114,14 @@
             "actions": [
               { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
               { "do": "silence", "turns": 1 },
+              { "do": "effect", "effect": "@Profiled" }
+            ] } },
+          { "do": "arm", "reaction": {
+            "name": "Veto", "on": "buff", "charges": 2, "turns": 8, "priority": 65,
+            "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4",
+            "actions": [
+              { "do": "dispel", "to": "victim", "amount": 1 },
+              { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.25, "perRank": 1 },
               { "do": "effect", "effect": "@Profiled" }
             ] } }
         ],
@@ -132,7 +148,7 @@
         "icon": "icons/retort_protocol.png",
         "cooldown": 5,
         "staminaCost": 10,
-        "description": "Anyone who hits you or your crew gets an answer: a shot straight back, and a skin of shielding for whoever took the hit.",
+        "description": "Anyone who hits you or your crew gets an answer: a shot straight back, and a skin of shielding for whoever took the hit. Anyone on file who patches itself or a friend up is clawed back: a jolt for the healer, and the mending bleeds straight out of the healed.",
         "castVfx": "PA_Elementalist_ChainLightning.shockImpact@0.4",
         "sound": "event:/Abilities/Hacker/Hacker_Hack",
         "actions": [
@@ -142,6 +158,13 @@
               { "do": "damage", "type": "Ballistic", "min": 2, "max": 5, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
               { "do": "damage", "type": "Ballistic", "min": 2, "max": 3, "ifTargetHas": "@Profiled" },
               { "do": "shield", "to": "victim", "amount": 3 }
+            ] } },
+          { "do": "arm", "reaction": {
+            "name": "Clawback", "on": "heal", "when": { "has": "@Profiled" }, "charges": 2, "turns": 6, "priority": 50,
+            "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+            "actions": [
+              { "do": "damage", "type": "Energy", "min": 4, "max": 7, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 },
+              { "do": "damage", "type": "Energy", "min": 3, "max": 5, "to": "victim", "trueDamage": true }
             ] } }
         ],
         "perk": { "name": "Counterclaim", "cooldownDelta": -2,
@@ -177,8 +200,8 @@
           { "do": "effect", "effect": "@Profiled" },
           { "do": "spring", "to": "self" }
         ],
-        "perk": { "name": "Full Cascade", "description": "Nothing burns out; it was all rerouted. Your tools come back early, ready to be strung again.",
-          "addActions": [ { "do": "cooldowns", "to": "self", "amount": 4 } ] }
+        "perk": { "name": "Full Cascade", "description": "Nothing burns out; it was all rerouted. Your tools come back early, ready to be strung again, and every reaction still armed gets a charge back.",
+          "addActions": [ { "do": "cooldowns", "to": "self", "amount": 4 }, { "do": "rearm", "to": "self", "amount": 1 } ] }
       }
     },
     {
@@ -205,10 +228,10 @@
             ] } }
         ],
         "perk": { "name": "Clean Escape", "cooldownDelta": -2,
-          "description": "Also arms Fail-Safe: the first hit that takes you under 40% health throws up a shield around you and blasts the one who dealt it two tiles back, maybe stunned.",
+          "description": "Also arms Fail-Safe: the first hit that takes you under 40% health throws up a shield around you and blasts the one who dealt it, and everyone beside it, two tiles back, maybe stunned.",
           "addActions": [
             { "do": "arm", "reaction": {
-              "name": "Fail-Safe", "on": "lowHealth", "threshold": 40, "charges": 1, "turns": 10, "priority": 90,
+              "name": "Fail-Safe", "on": "lowHealth", "threshold": 40, "charges": 1, "turns": 10, "priority": 90, "radius": 1.5,
               "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
               "actions": [
                 { "do": "shield", "to": "self", "amount": 8, "scale": "Smarts", "scaleMult": 0.3 },
@@ -224,12 +247,22 @@
         "base": "Passive",
         "name": "Contingency Lattice",
         "icon": "icons/contingency_lattice.png",
-        "description": "The plans start covering each other. You keep four reactions armed at once, every reaction that goes off on an enemy already on file hits it again, and now and then one going off buys back time on your other tools.",
+        "description": "The plans start covering each other. You keep four reactions armed at once, every reaction that goes off on an enemy already on file hits it again, with three or more armed each one going off gives a second Foresight, and now and then one buys back time on your other tools. When you fight beside allies, every fight opens with Reprisal strung: the first enemy to down one of them is hit hard, maybe stunned, and put on file.",
         "reactionSlots": 4,
         "procs": [
           { "on": "reaction", "when": { "has": "@Profiled", "of": "target" }, "actions": [
             { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.2, "perRank": 1 } ] },
-          { "on": "reaction", "chance": 25, "cooldown": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 1 } ] }
+          { "on": "reaction", "when": { "value": "armed", "atLeast": 3 }, "actions": [ { "do": "effect", "to": "self", "effect": "@Foresight" } ] },
+          { "on": "reaction", "chance": 25, "cooldown": 2, "actions": [ { "do": "cooldowns", "to": "self", "amount": 1 } ] },
+          { "on": "combatStart", "when": { "value": "alliesnear:8", "of": "self", "atLeast": 1 }, "actions": [
+            { "do": "arm", "reaction": {
+              "name": "Reprisal", "on": "allyDown", "charges": 1, "turns": 10, "priority": 85,
+              "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 6, "max": 10, "scale": "Smarts", "scaleMult": 0.4, "perRank": 1 },
+                { "do": "stun", "turns": 1, "chance": 50 },
+                { "do": "effect", "effect": "@Profiled" }
+              ] } } ] }
         ]
       }
     },
@@ -263,7 +296,17 @@
               { "do": "effect", "effect": "@Profiled" }
             ] } }
         ],
-        "perk": { "name": "Binding Terms", "description": "Anyone already on file is bound the moment the clause is written, and hauled a step closer.",
+        "perk": { "name": "Binding Terms", "description": "Anyone already on file is bound the moment the clause is written, and hauled a step closer. Anything called into the room after that is met at the door: Uninvited hits the newcomer and puts it on file.",
+          "addActions": [
+            { "do": "arm", "reaction": {
+              "name": "Uninvited", "on": "summon", "charges": 2, "turns": 8, "priority": 55,
+              "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5",
+              "actions": [
+                { "do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1, "to": "victim" },
+                { "do": "effect", "effect": "@Profiled", "to": "victim" },
+                { "do": "effect", "effect": "@Profiled" }
+              ] } }
+          ],
           "addProcs": [
             { "on": "cast", "match": "Exit Clause", "radius": 6, "actions": [
               { "do": "effect", "effect": "SLOW", "turns": 2, "ifTargetHas": "@Profiled" },

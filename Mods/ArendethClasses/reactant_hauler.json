@@ -1,7 +1,7 @@
 {
   "id": "MOD_ReactantHauler",
   "name": "Reactant Hauler",
-  "description": "Dockhands who learned their chemistry by throwing it. They haul whatever spills out of the station's machinery (oil, coals, coolant, brine, blasting grit) and hurl it by the drum. None of it is very dangerous alone. Together it all reacts.\n\nScrounge and hurl: every throw spends a reactant you carry and leaves its mark on the enemy and the deck; mark the same foe twice and the reactants go off against each other. Oil meets fire, coolant meets fire, brine meets coolant or a current, grit meets oil. Scales with [STR], [SMT] and [PSI].",
+  "description": "Dockhands who learned their chemistry by throwing it. They haul whatever spills out of the station's machinery (oil, coals, coolant, brine, blasting grit) and hurl it by the drum. None of it is very dangerous alone. Together it all reacts.\n\nScrounge and hurl: every throw spends a reactant you carry and leaves its mark on the enemy and the deck; mark the same foe twice and the reactants go off against each other. Oil meets fire, coolant meets fire, brine meets coolant or a current, grit meets oil, and every few ranks you learn another mix: grit in fire, oil over frost, brine in fire, salt and grit, a current through frozen coolant, burning sludge. Some leave the mess in place for the next throw. Scales with [STR], [SMT] and [PSI].",
   "archetype": "Muscle",
   "icon": "reactant_hauler.png",
   "attributePriorities": { "Strength": 3, "Smarts": 2, "PsiPower": 2 },
@@ -16,9 +16,14 @@
     { "id": "Gritted", "name": "Grit-Scoured", "debuff": true, "duration": 3, "stats": { "Armor": -2, "RangedAccuracy": -10 },
       "description": "Grit in the eyes and the joints." },
     { "id": "Mired", "name": "Mired in Sludge", "debuff": true, "duration": 2, "root": true, "stats": { "Dodge": -10 },
-      "description": "Oil and grit set into a sucking sludge around its feet." }
+      "description": "Oil and grit set into a sucking sludge around its feet." },
+    { "id": "Scoured", "name": "Salt-Scoured", "debuff": true, "duration": 3, "stats": { "Armor": -4, "Dodge": -5 },
+      "description": "Salt and grit ground into every joint and seam." }
   ],
   "reactions": [
+    { "name": "Sludge Fire", "needs": [ "@Mired", "EFFECT_Fire" ], "keep": [ "@Mired" ], "rank": 7, "description": "the sludge burns, and it is still stuck in it",
+      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "sfx/rh_flare.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
     { "name": "Oil Flare", "needs": [ "@Slicked", "EFFECT_Fire" ], "radius": 1.6, "description": "the oil goes up in a gout of flame",
       "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "sfx/rh_flare.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.15 },
@@ -35,7 +40,22 @@
       "actions": [ { "do": "effect", "effect": "@Mired" }, { "do": "damage", "type": "Crushing", "min": 2, "max": 4 } ] },
     { "name": "Brine Freeze", "needs": [ "@Brined", "@Frosted" ], "description": "the brine freezes solid around it",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "sound": "audio_licensed/rh_freeze.wav",
-      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 4, "max": 7, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 } ] }
+      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 4, "max": 7, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 } ] },
+    { "name": "Grease Ice", "needs": [ "@Slicked", "@Frosted" ], "keep": [ "@Slicked" ], "rank": 3, "description": "oil over frost: it goes down hard, and the oil stays",
+      "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.4", "sound": "audio_licensed/rh_freeze.wav",
+      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Crushing", "min": 3, "max": 6, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 } ] },
+    { "name": "Sparkshower", "needs": [ "@Gritted", "EFFECT_Fire" ], "rank": 3, "radius": 1.5, "description": "the grit catches and sprays burning sparks over everyone near",
+      "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "sfx/rh_flare.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 4, "max": 8, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 }, { "do": "blind", "chance": 50 } ] },
+    { "name": "Salt Flare", "needs": [ "@Brined", "EFFECT_Fire" ], "rank": 5, "radius": 2, "description": "the brine burns a blinding orange",
+      "vfx": "PA_Smuggler_Flashbang.explosionPrefab@0.4", "sound": "sfx/rh_flare.wav",
+      "actions": [ { "do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1 }, { "do": "blind" } ] },
+    { "name": "Scouring Paste", "needs": [ "@Brined", "@Gritted" ], "rank": 5, "description": "salt and grit grind into a paste that eats every seam",
+      "vfx": "PA_DualWield_SinisterStrike.impactEffect@0.4", "sound": "sfx/rh_sludge.wav",
+      "actions": [ { "do": "effect", "effect": "@Scoured" }, { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1 } ] },
+    { "name": "Cold Short", "needs": [ "@Frosted", "EFFECT_Shock" ], "rank": 7, "description": "frozen coolant takes the current badly: its systems seize up",
+      "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/rh_arc.wav",
+      "actions": [ { "do": "exhaust", "amount": 2 }, { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.12 } ] }
   ],
   "tiers": [
     {

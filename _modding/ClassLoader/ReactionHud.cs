@@ -83,6 +83,12 @@ namespace SCClassLoader
                     case "lowhealth": return $"a hit takes {(allies ? "your side" : "you")} under {Mathf.Clamp(s.threshold, 1, 99)}%";
                     case "debuff": return allies ? "enemy debuffs your side" : "enemy debuffs you";
                     case "dodge": return "you dodge";
+                    case "buff": return "enemy buffs its side";
+                    case "heal": return "enemy heals its side";
+                    case "summon": return "enemy calls in another";
+                    case "allydown": return "enemy downs an ally";
+                    case "move": return $"enemy moves within {s.range:0.#}";
+                    case "turn": return $"enemy's turn within {s.range:0.#}";
                     default: return s.on;
                 }
             }
@@ -123,7 +129,7 @@ namespace SCClassLoader
 
             /// <summary>Only characters with an ability that arms reactions get the panel.</summary>
             private static bool CanArm() => Player_AbilityControl.instance.GetAbilities().Any(a => a is ModAbility m && m.Spec != null
-                && (m.Spec.actions ?? new List<ActionSpec>()).Any(x => string.Equals(x.@do, "arm", StringComparison.OrdinalIgnoreCase)));
+                && Reactions.ArmActions(m.Spec).Count > 0);
 
             private void LateUpdate()
             {
