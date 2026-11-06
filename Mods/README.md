@@ -406,23 +406,35 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   vanilla fire and shock. Checked before the game applies the status, because some vanilla statuses cancel each other
   (chill puts out fire). A reaction can set off another, up to a small limit.
   ```jsonc
-  "reactions": [ { "name": "Plasma Flash", "needs": [ "EFFECT_Fire", "EFFECT_Shock" ], "radius": 1.5,
+  "reactions": [ { "name": "Plasma Flash", "needs": [ "EFFECT_Fire|#Burning", "EFFECT_Shock" ], "radius": 1.5,
+                   // a need written "A|B" takes either: vanilla fire or the library's Burning fills that place in the mix
                    "description": "a blinding burst", "vfx": "...", "sound": "...", "consume": true,
                    "keep": [ "EFFECT_Fire" ],           // reagents the reaction leaves alone (catalysts): they stay on, or land anyway
                    "rank": 3,                           // known from this class rank (1 = just taken); before it the reagents just sit together
                    "chance": 50, "chancePerRank": 5,    // odds the contact reacts; a failed roll lets the reagent land like any other effect
+                   "when": { "value": "stacks:@Heat", "of": "self", "atLeast": 6 },  // only while this holds (checked on the enemy, you as caster)
                    "actions": [ { "do": "damage", "type": "Energy", "min": 5, "max": 9 },
                                 { "do": "stamina", "to": "self", "amount": 2 } ] } ]
   ```
   Three or more reagents work too (`needs` lists them all). The first reaction in class and file order whose other
-  reagents are all on the enemy wins, so put the mix you want preferred first. A class's effect that takes part in a
-  reaction says so in its tooltip ("Reacts with Fire: Oil Flare", greyed with the rank it needs until then), and the
-  rune matrix lists every reaction your classes know; a class without rune sockets gets the same window as a
-  "Reactions" tab. `Mods/FluxSavant/` uses all of this: 18 runes in three tiers, 15 signature combos and 14
-  reactions, four of them on the products of others (brittle plating shatters in heat, galvanized plating burns like
-  thermite). `Mods/ArendethClasses/reactant_hauler.json` learns 7 more mixes as it ranks up, `miasmancer.json` makes
-  reagents of its salts and clouds, and `Mods/Kinetics/rig_jockey.json` reacts fire, current and frost with the
-  plating it strips; a Rig hardpoint's `reagent` retunes what Vent Blast leaves behind.
+  reagents are all on the enemy wins, so put the mix you want preferred first: a three-part mix written before its
+  pairs goes off when the third reagent lands. A reaction whose `when` fails is passed over the same way, so two
+  reactions can share a mix and part on a condition (the Rig Jockey's Meltdown wants the rig hot; with it cool, the
+  same fire on the same plating makes a Wiring Fire). When two of your classes know the same mix, the class earlier in
+  your list wins. A class's effect that takes part in a reaction says so in its tooltip ("Reacts with Fire or Burning:
+  Oil Flare", greyed with the rank it needs until then, with its kept reagents, odds and condition), and the rune
+  matrix lists every reaction your classes know; a class without rune sockets gets the same window as a "Reactions"
+  tab. `Mods/FluxSavant/` uses all of this: 18 runes in three tiers, 15 signature combos and 19 reactions, nine of
+  them on the products of others (brittle plating shatters in heat, galvanized plating burns like thermite, acid
+  etches the glass and current runs along the flaking plating) and a three-part Aether Shatter. `Mods/ArendethClasses/
+  reactant_hauler.json` learns 12 more mixes as it ranks up, Mortar Set (oil, grit and brine) among them, and Live
+  Sludge runs the current to everyone standing in the same spill; `miasmancer.json` makes reagents of its salts and
+  clouds, with Full Compound going off when all three meet; `Mods/Kinetics/rig_jockey.json` reacts fire, current and
+  frost with the plating it strips and shears, a Rig hardpoint's `reagent` retunes what Vent Blast leaves behind; and
+  `Mods/ReactionArchitect/` reads four clauses off anything on file (Profiled with a slow, a stumble, an exposed flank
+  or a weakened arm: its big move waits, a wire is strung again, its buffs are read off, your tools come back early).
+  Every elemental reagent in these lists is written `EFFECT_Fire|#Burning` and the like, so the library statuses other
+  mod classes inflict count too. `SCCL_DEVTEST=recipes` plays the lot on one character.
 - **Reshaping skills (augments).** A passive you know, an effect on you (a stance, or a charge an active skill puts
   on you for the next cast) or a rune in a socket can rewrite how another skill is delivered, what it is made of and
   what it does. The skill's tooltip shows every rewrite in force ("Reshaped by ..."), the hotbar icon aims the new

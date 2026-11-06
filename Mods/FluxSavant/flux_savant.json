@@ -116,7 +116,7 @@
       "name": "Aether Residue",
       "icon": "icons/residue.png",
       "debuff": true,
-      "description": "A violet film of spent aether. It reacts with fire, current, frost and acid alike.",
+      "description": "A violet film of spent aether. It reacts with fire, current, frost, acid and poison alike.",
       "duration": 5,
       "resists": {
         "Psi": -10,
@@ -150,11 +150,12 @@
     }
   ],
   "reactions": [
+    {"name": "Aether Shatter", "needs": ["@Residue", "@Brittle", "EFFECT_Fire|#Burning"], "rank": 8, "radius": 2, "description": "the residue burns through the glass: it bursts, the shards go everywhere, and the aether settles on everything near", "vfx": "PA_Pirate_Cacafuego.PS_explode@0.6", "sound": "audio_licensed/react_thermal_shock.wav", "actions": [{"do": "damage", "type": "Crushing", "min": 8, "max": 12, "scale": "Smarts+PsiPower", "scaleMult": 0.36, "trueDamage": true}, {"do": "knockback", "amount": 1}, {"do": "effect", "effect": "@Residue"}, {"do": "stamina", "to": "self", "amount": 3}]},
     {
       "name": "Plasma Flash",
       "needs": [
-        "EFFECT_Fire",
-        "EFFECT_Shock"
+        "EFFECT_Fire|#Burning",
+        "EFFECT_Shock|#Shocked"
       ],
       "radius": 1.5,
       "description": "a blinding burst around the target",
@@ -185,8 +186,8 @@
     {
       "name": "Thermal Shock",
       "needs": [
-        "EFFECT_Fire",
-        "EFFECT_Chill"
+        "EFFECT_Fire|#Burning",
+        "EFFECT_Chill|#Chilled"
       ],
       "description": "a cracking blow that leaves them exposed",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle",
@@ -215,7 +216,7 @@
     {
       "name": "Caustic Vapour",
       "needs": [
-        "EFFECT_Fire",
+        "EFFECT_Fire|#Burning",
         "EFFECT_Acid"
       ],
       "description": "boils off into a poison cloud",
@@ -260,8 +261,8 @@
     {
       "name": "Superconduct",
       "needs": [
-        "EFFECT_Shock",
-        "EFFECT_Chill"
+        "EFFECT_Shock|#Shocked",
+        "EFFECT_Chill|#Chilled"
       ],
       "description": "shorts out their special attacks",
       "vfx": "PA_Elementalist_ChainLightning.shockImpact",
@@ -289,7 +290,7 @@
     {
       "name": "Galvanic Bloom",
       "needs": [
-        "EFFECT_Shock",
+        "EFFECT_Shock|#Shocked",
         "EFFECT_Acid"
       ],
       "description": "strips armor and keeps eating",
@@ -318,7 +319,7 @@
     {
       "name": "Brittle Lattice",
       "needs": [
-        "EFFECT_Chill",
+        "EFFECT_Chill|#Chilled",
         "EFFECT_Acid"
       ],
       "description": "freezes them in place, brittle",
@@ -344,7 +345,7 @@
       "name": "Aether Arc",
       "needs": [
         "@Residue",
-        "EFFECT_Shock"
+        "EFFECT_Shock|#Shocked"
       ],
       "description": "arcs on, spreading the residue",
       "vfx": "PA_Elementalist_ChainLightning.shockImpact",
@@ -381,7 +382,7 @@
       "name": "Flashpoint",
       "needs": [
         "@Residue",
-        "EFFECT_Fire"
+        "EFFECT_Fire|#Burning"
       ],
       "radius": 2,
       "description": "detonates and throws them back",
@@ -411,7 +412,7 @@
       "name": "Stasis Bloom",
       "needs": [
         "@Residue",
-        "EFFECT_Chill"
+        "EFFECT_Chill|#Chilled"
       ],
       "description": "locks them in aether-frost",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle",
@@ -471,26 +472,30 @@
       ],
       "sound": "audio_licensed/react_dissolution.wav"
     },
-    { "name": "Shatter", "needs": [ "@Brittle", "EFFECT_Fire" ], "rank": 5, "radius": 1.5,
+    { "name": "Shatter", "needs": [ "@Brittle", "EFFECT_Fire|#Burning" ], "rank": 5, "radius": 1.5,
       "description": "heat on frozen glass: it bursts, and the shards go everywhere",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/react_thermal_shock.wav",
       "actions": [ { "do": "damage", "type": "Crushing", "min": 7, "max": 11, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "trueDamage": true },
                    { "do": "stamina", "to": "self", "amount": 2 } ] },
-    { "name": "Resonance Crack", "needs": [ "@Brittle", "EFFECT_Shock" ], "rank": 5,
+    { "name": "Resonance Crack", "needs": [ "@Brittle", "EFFECT_Shock|#Shocked" ], "rank": 5,
       "description": "the current finds every fault line: its special attacks are set back",
       "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/react_superconduct.wav",
       "actions": [ { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Smarts+PsiPower", "scaleMult": 0.24 }, { "do": "exhaust", "amount": 2 },
                    { "do": "stamina", "to": "self", "amount": 2 } ] },
-    { "name": "Cold Weld", "needs": [ "@Galvanized", "EFFECT_Chill" ], "keep": [ "@Galvanized" ], "rank": 6,
+    { "name": "Cold Weld", "needs": [ "@Galvanized", "EFFECT_Chill|#Chilled" ], "keep": [ "@Galvanized" ], "rank": 6,
       "description": "frost seizes the flaking plating solid, and it keeps flaking",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/react_brittle_lattice.wav",
       "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2 },
                    { "do": "stamina", "to": "self", "amount": 2 } ] },
-    { "name": "Thermite Bloom", "needs": [ "@Galvanized", "EFFECT_Fire" ], "rank": 6, "radius": 1.2,
+    { "name": "Thermite Bloom", "needs": [ "@Galvanized", "EFFECT_Fire|#Burning" ], "rank": 6, "radius": 1.2,
       "description": "the acid-eaten plating burns like thermite",
       "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "audio_licensed/react_flashpoint.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.3 }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" },
-                   { "do": "stamina", "to": "self", "amount": 2 } ] }
+                   { "do": "stamina", "to": "self", "amount": 2 } ] },
+    {"name": "Etched Glass", "needs": ["@Brittle", "EFFECT_Acid"], "keep": ["@Brittle"], "rank": 6, "description": "acid runs into every fracture and keeps eating", "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3", "sound": "audio_licensed/react_galvanic_bloom.wav", "actions": [{"do": "effect", "effect": "@Galvanized"}, {"do": "stamina", "to": "self", "amount": 2}]},
+    {"name": "Live Plating", "needs": ["@Galvanized", "EFFECT_Shock|#Shocked"], "rank": 7, "description": "the flaking plating takes the whole current and passes it on", "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/react_aether_arc.wav", "actions": [{"do": "chain", "jumps": 2, "radius": 3, "actions": [{"do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Smarts+PsiPower", "scaleMult": 0.24}, {"do": "effect", "effect": "@Galvanized"}]}, {"do": "stamina", "to": "self", "amount": 2}]},
+    {"name": "Flash Freeze", "needs": ["@Brittle", "EFFECT_Chill|#Chilled"], "keep": ["@Brittle"], "rank": 7, "description": "frozen harder still: the glass is a hair from breaking", "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/react_stasis_bloom.wav", "actions": [{"do": "effect", "effect": "#Exposed", "turns": 3}, {"do": "damage", "type": "Cryo", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.18}, {"do": "stamina", "to": "self", "amount": 2}]},
+    {"name": "Aether Rot", "needs": ["@Residue", "EFFECT_Poison|#Poisoned"], "rank": 5, "description": "the residue curdles the poison", "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3", "sound": "audio_licensed/react_caustic_vapour.wav", "actions": [{"do": "effect", "effect": "#Poisoned", "stacks": 2}, {"do": "damage", "type": "Psi", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.24}, {"do": "stamina", "to": "self", "amount": 2}]}
   ],
   "augments": [
     { "id": "Beamline", "kind": "delivery", "name": "Beamline", "points": 2, "rank": 2, "form": "line", "power": 0.85,

@@ -1,7 +1,7 @@
 {
   "id": "MOD_ReactionArchitect",
   "name": "Reaction Architect",
-  "description": "Architects don't win fights on their own turn. They spend it wiring the room: tripwires on the approaches, cut-offs waiting for the enemy's big move, standing retorts for anyone who lays a hand on their crew. Then the enemy moves, and the room answers. Every reaction that goes off teaches the Architect a little more about how the enemy fights.\n\nSet-up controller with reaction slots that fire on enemy actions (closing in, backing off, shooting from afar, hitting, debuffing, missing, winding up a big move, shoring itself up, patching itself up, calling for help, downing one of yours), interrupts, wires that stack and a room-wide release. Every fight opens with a wire already strung. Favors [SMT].",
+  "description": "Architects don't win fights on their own turn. They spend it wiring the room: tripwires on the approaches, cut-offs waiting for the enemy's big move, standing retorts for anyone who lays a hand on their crew. Then the enemy moves, and the room answers. Every reaction that goes off teaches the Architect a little more about how the enemy fights.\n\nSet-up controller with reaction slots that fire on enemy actions (closing in, backing off, shooting from afar, hitting, debuffing, missing, winding up a big move, shoring itself up, patching itself up, calling for help, downing one of yours), interrupts, wires that stack and a room-wide release. Every fight opens with a wire already strung, and anything on file reacts: a slow, a stumble, an exposed flank or a weakened arm on a profiled enemy is answered on the spot. Favors [SMT].",
   "archetype": "Intellect",
   "icon": "icons/reaction_architect.png",
   "attributePriorities": {
@@ -28,6 +28,12 @@
       "debuff": true,
       "stats": { "Dodge": -5 }
     }
+  ],
+  "reactions": [
+    {"name": "Boxed In", "needs": ["@Profiled", "SLOW"], "keep": ["@Profiled"], "rank": 2, "description": "slowed and on file: you know where it will stand, and its big move waits", "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.4", "sound": "event:/Abilities/Hacker/Hacker_Hack", "actions": [{"do": "exhaust", "amount": 1}, {"do": "effect", "to": "self", "effect": "@Foresight"}]},
+    {"name": "Follow-Through", "needs": ["@Profiled", "#Reeling"], "keep": ["@Profiled"], "rank": 4, "description": "a stumble you saw coming: the wire it tripped is strung again", "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.5", "sound": "event:/Abilities/Hacker/Hacker_Scramble", "actions": [{"do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3}, {"do": "rearm", "to": "self", "amount": 1}]},
+    {"name": "Open Book", "needs": ["@Profiled", "#Exposed|#Marked"], "keep": ["@Profiled"], "rank": 6, "description": "exposed and on file: everything it was leaning on is read off and stripped", "vfx": "PA_Hacker_Virus_Mindmelt.PS_mindmelt_impact@0.4", "sound": "event:/Abilities/Hacker/Hacker_Hack", "actions": [{"do": "dispel"}, {"do": "effect", "to": "self", "effect": "@Foresight"}]},
+    {"name": "Case Closed", "needs": ["@Profiled", "#Weakened"], "rank": 8, "description": "weakened and on file: the file closes, and your tools come back early", "vfx": "PA_Elementalist_ChainLightning.shockImpact@0.6", "sound": "event:/Abilities/Misc/Psykonics_Warp", "actions": [{"do": "damage", "type": "Energy", "min": 4, "max": 8, "scale": "Smarts", "scaleMult": 0.4}, {"do": "cooldowns", "to": "self", "amount": 2}, {"do": "effect", "to": "self", "effect": "@Foresight", "stacks": 2}]}
   ],
   "tiers": [
     {

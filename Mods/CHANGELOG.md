@@ -70,6 +70,38 @@ options, and five classes grow into them.
   Cold Vent and Arc Vent, Piston Jab gets Taser Jab and Cold Fist, Hydraulic Charge gets Afterburner and Grapple
   Charge, and Plate Up gets Cold Plates and Overlapping Fields. `SCCL_DEVTEST=rigreact` plays it.
 
+### More recipes for the five classes
+
+- **Alchemical reactions**, two new keys: a need written `"EFFECT_Fire|#Burning"` takes either effect for that place in
+  the mix, and `"when"` gates a reaction on a condition (checked on the enemy with you as the caster); a reaction whose
+  condition fails is passed over for the next in order, so two can share a mix and part on it. Every elemental reagent
+  in the five classes' lists now takes the library status too (Fire or Burning, Shock or Shocked, Chill or Chilled), so
+  what other mod classes inflict counts. The effect tooltips and the Reactions tab read "Fire or Burning" and carry
+  the condition. `SCCL_DEVTEST=recipes` plays every new recipe on one character.
+- **Reactant Hauler**, five more: Mortar Set (oil, grit and brine together set like mortar: Mired and Salt-Scoured),
+  Set Hard (frost on the sludge: it stays stuck and its special waits), Live Sludge (current through the sludge runs to
+  every oiled or mired enemy in the spill, miring them), Salt in the Wound (a gash on salt-scoured seams bleeds two
+  stacks wider and weakens) and Flash Rust (fire in the scoured seams burns straight through and leaves it Exposed).
+- **Miasmancer**, five more: Full Compound (the choke landing on an enemy that carries poison and two or more salts:
+  silenced, the salts stay, and a cloud of poison and salt hangs over everyone near; salting never sets it off, only
+  the choke does, so Grand Compound and Rust Salt Cloud still build the stacks the Saturated Compound perk wants), Frost Scale (frost cracks the salt-eaten plating:
+  Exposed), Backdraft (a choking enemy draws the flame in: Burning from inside), Rust Blood (a gash on the salts
+  poisons and weakens; the gash is salted shut, the salts stay) and Venom Etch (acid on the poison strips a buff and weakens).
+- **Flux Savant**, five more on its products: Aether Shatter (fire on residue and Brittle together: the glass bursts over
+  two tiles and the aether settles on everyone near), Etched Glass (acid on Brittle adds Galvanized, the glass kept),
+  Live Plating (current on Galvanized passes the flaking plating on along a chain), Flash Freeze (frost on Brittle:
+  Exposed on top of the glass) and Aether Rot (poison on the residue curdles into two more stacks). Aether Residue now
+  reacts with poison too.
+- **Rig Jockey**, five more: Meltdown (fire on stripped plating while your rig holds six or more Heat melts the whole
+  thing down over everyone beside it; cooler, the same fire is a Wiring Fire), Jammed Works (a slow on stripped
+  plating: a plate gets into the gears), Heat Fracture (fire on Cold-Sheared metal splits it, true damage), Fault Arc
+  (current down the shear stuns and sets its special back) and Servo Lock (current and frost lock the servos).
+- **Reaction Architect**: four alchemical clauses on anything on file: Boxed In (a slow on a profiled enemy: its big
+  move waits, Foresight to you), Follow-Through (a stumble: every armed reaction gets a charge back), Open Book (an
+  exposed flank or a mark: its buffs are read off and stripped) and Case Closed (a weakened arm: the file closes, your
+  tools come back two turns early, two Foresight). The Architect gets the Reactions tab, and Profiled's tooltip lists
+  them.
+
 ### Interface
 
 - **TooltipOpacity** (`[Interface]`, 10-100%, default 100): the game's own tooltips (items, skills, perks, effects,

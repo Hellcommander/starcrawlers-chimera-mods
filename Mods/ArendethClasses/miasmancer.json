@@ -15,7 +15,8 @@
       "immune": [ "#Poisoned", "EFFECT_Poison", "EFFECT_Acid", "@Choking" ] }
   ],
   "reactions": [
-    { "name": "Rust Flash", "needs": [ "@Corroded", "EFFECT_Fire" ], "description": "the rust salts flare white-hot against the plating",
+    {"name": "Full Compound", "needs": ["@Corroded", "#Poisoned", "@Choking"], "keep": ["@Corroded"], "rank": 7, "when": {"value": "stacks:@Corroded", "of": "target", "atLeast": 2}, "description": "the choke sets everything you mixed off at once: the salts stay, and a cloud of poison and salt hangs over everyone near", "vfx": "PA_Prototype_Thunderclap.impactParticle@0.5", "sound": "sfx/mia_grand.wav", "actions": [{"do": "damage", "type": "Bio", "min": 6, "max": 10, "scale": "Smarts+PsiPower", "scaleMult": 0.3}, {"do": "silence", "turns": 1}, {"do": "field", "fieldName": "Compound Cloud", "turns": 2, "radius": 2, "affects": "enemies", "look": "HAZARD_Gas@0.6", "actions": [{"do": "effect", "effect": "#Poisoned"}, {"do": "effect", "effect": "@Corroded"}]}]},
+    { "name": "Rust Flash", "needs": [ "@Corroded", "EFFECT_Fire|#Burning" ], "description": "the rust salts flare white-hot against the plating",
       "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "sfx/mia_bloom.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "trueDamage": true }, { "do": "hazard", "hazard": "HAZARD_Fire_Mini" } ] },
     { "name": "Salt Cough", "needs": [ "@Corroded", "@Choking" ], "keep": [ "@Corroded" ], "rank": 3, "radius": 1.6, "description": "it coughs the salts over everyone beside it",
@@ -24,19 +25,23 @@
     { "name": "Salt Etch", "needs": [ "@Corroded", "EFFECT_Acid" ], "rank": 4, "description": "acid and rust salts eat straight through",
       "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.4", "sound": "audio_licensed/mia_salt.wav",
       "actions": [ { "do": "damage", "type": "Bio", "min": 4, "max": 8, "scale": "Smarts+PsiPower", "scaleMult": 0.25, "trueDamage": true }, { "do": "effect", "effect": "#Weakened", "turns": 2 } ] },
-    { "name": "Galvanic Rot", "needs": [ "@Corroded", "EFFECT_Shock" ], "rank": 4, "description": "the current runs through the rust to the next one along",
+    { "name": "Galvanic Rot", "needs": [ "@Corroded", "EFFECT_Shock|#Shocked" ], "rank": 4, "description": "the current runs through the rust to the next one along",
       "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "sfx/mia_extract.wav",
       "actions": [ { "do": "chain", "jumps": 2, "radius": 3, "actions": [ { "do": "damage", "type": "Bio", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2 }, { "do": "effect", "effect": "@Corroded" } ] } ] },
     { "name": "Choke Point", "needs": [ "@Choking", "#Poisoned" ], "keep": [ "#Poisoned" ], "rank": 5, "chance": 50, "chancePerRank": 5, "description": "it chokes on the poison and can't get a technique out",
       "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.3", "sound": "sfx/mia_draw.wav",
       "actions": [ { "do": "silence", "turns": 1 }, { "do": "damage", "type": "Bio", "min": 3, "max": 5, "scale": "Smarts+PsiPower", "scaleMult": 0.2 } ] },
-    { "name": "Toxic Smoke", "needs": [ "#Poisoned", "EFFECT_Fire" ], "keep": [ "#Poisoned" ], "rank": 6, "description": "the poison burns off into a choking smoke",
+    { "name": "Toxic Smoke", "needs": [ "#Poisoned", "EFFECT_Fire|#Burning" ], "keep": [ "#Poisoned" ], "rank": 6, "description": "the poison burns off into a choking smoke",
       "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5", "sound": "sfx/mia_mist.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 2, "max": 4, "scale": "Smarts+PsiPower", "scaleMult": 0.15 },
                    { "do": "field", "fieldName": "Toxic Smoke", "turns": 2, "radius": 1.5, "affects": "enemies", "look": "HAZARD_Gas@0.6", "actions": [ { "do": "effect", "effect": "@Choking" }, { "do": "effect", "effect": "#Poisoned" } ] } ] },
-    { "name": "Frozen Lungs", "needs": [ "@Choking", "EFFECT_Chill" ], "rank": 6, "description": "the breath freezes in its chest",
+    { "name": "Frozen Lungs", "needs": [ "@Choking", "EFFECT_Chill|#Chilled" ], "rank": 6, "description": "the breath freezes in its chest",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "sound": "sfx/mia_draw.wav",
-      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2 } ] }
+      "actions": [ { "do": "stun", "turns": 1 }, { "do": "damage", "type": "Cryo", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2 } ] },
+    {"name": "Frost Scale", "needs": ["@Corroded", "EFFECT_Chill|#Chilled"], "rank": 3, "description": "frost gets into the salt-eaten plating and cracks it open", "vfx": "PA_Elementalist_FrigidBlast.impactParticle@0.5", "sound": "audio_licensed/mia_salt.wav", "actions": [{"do": "damage", "type": "Cryo", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2}, {"do": "effect", "effect": "#Exposed", "turns": 2}]},
+    {"name": "Backdraft", "needs": ["@Choking", "EFFECT_Fire|#Burning"], "rank": 5, "description": "it gasps and draws the flame into its lungs", "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.4", "sound": "sfx/mia_draw.wav", "actions": [{"do": "damage", "type": "Fire", "min": 3, "max": 6, "scale": "Smarts+PsiPower", "scaleMult": 0.2, "trueDamage": true}, {"do": "effect", "effect": "#Burning", "stacks": 2}]},
+    {"name": "Rust Blood", "needs": ["@Corroded", "#Gashed"], "keep": ["@Corroded"], "rank": 5, "description": "the salts get into the open wounds and the blood carries them; the bleeding stops, salted", "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.35", "sound": "audio_licensed/mia_salt.wav", "actions": [{"do": "effect", "effect": "#Poisoned", "stacks": 2}, {"do": "effect", "effect": "#Weakened", "turns": 2}]},
+    {"name": "Venom Etch", "needs": ["#Poisoned", "EFFECT_Acid"], "rank": 8, "description": "the acid carries the poison through whatever was keeping it out", "vfx": "PA_Engineer_Spidermine.PS_explode_bio@0.5", "sound": "audio_licensed/mia_salt.wav", "actions": [{"do": "dispel", "amount": 1}, {"do": "damage", "type": "Bio", "min": 5, "max": 9, "scale": "Smarts+PsiPower", "scaleMult": 0.3, "trueDamage": true}, {"do": "effect", "effect": "#Weakened", "turns": 3}]}
   ],
   "tiers": [
     {

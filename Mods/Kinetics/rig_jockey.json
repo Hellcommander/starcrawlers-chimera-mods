@@ -161,21 +161,26 @@
     }
   ],
   "reactions": [
-    { "name": "Wiring Fire", "needs": [ "@Stripped", "EFFECT_Fire" ], "keep": [ "@Stripped" ], "description": "the exposed wiring catches, and whatever it was about to do waits",
+    {"name": "Meltdown", "needs": ["@Stripped", "EFFECT_Fire|#Burning"], "keep": ["@Stripped"], "rank": 8, "radius": 1.5, "when": {"value": "stacks:@Heat", "of": "self", "atLeast": 6}, "description": "with your rig running hot the fire goes into the wiring hotter still: the whole thing melts down over everyone beside it", "vfx": "PA_Pirate_Cacafuego.PS_explode@0.6", "sound": "audio_licensed/rig_overheat.wav", "actions": [{"do": "damage", "type": "Fire", "min": 7, "max": 11, "scale": "Strength", "scaleMult": 0.4}, {"do": "stun", "turns": 1, "chance": 50}, {"do": "hazard", "hazard": "HAZARD_Fire_Mini"}]},
+    { "name": "Wiring Fire", "needs": [ "@Stripped", "EFFECT_Fire|#Burning" ], "keep": [ "@Stripped" ], "description": "the exposed wiring catches, and whatever it was about to do waits",
       "vfx": "PA_Pirate_Cacafuego.PS_explode@0.4", "sound": "audio_licensed/rig_vent_blast.wav",
       "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 8, "scale": "Strength", "scaleMult": 0.3 }, { "do": "exhaust", "amount": 1 } ] },
-    { "name": "Short Circuit", "needs": [ "@Stripped", "EFFECT_Shock" ], "keep": [ "@Stripped" ], "rank": 3, "description": "current straight into the open wiring",
+    { "name": "Short Circuit", "needs": [ "@Stripped", "EFFECT_Shock|#Shocked" ], "keep": [ "@Stripped" ], "rank": 3, "description": "current straight into the open wiring",
       "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/rig_overheat.wav",
       "actions": [ { "do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.3 }, { "do": "stun", "turns": 1, "chance": 50 } ] },
-    { "name": "Cold Shear", "needs": [ "@Stripped", "EFFECT_Chill" ], "keep": [ "@Stripped" ], "rank": 3, "description": "frost gets under the loose plating and the metal shears",
+    { "name": "Cold Shear", "needs": [ "@Stripped", "EFFECT_Chill|#Chilled" ], "keep": [ "@Stripped" ], "rank": 3, "description": "frost gets under the loose plating and the metal shears",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/rig_piston_jab.wav",
       "actions": [ { "do": "effect", "effect": "@Sheared" }, { "do": "damage", "type": "Crushing", "min": 3, "max": 5, "scale": "Strength", "scaleMult": 0.25 } ] },
-    { "name": "Quench", "needs": [ "EFFECT_Fire", "EFFECT_Chill" ], "rank": 5, "description": "hot metal quenched: it cracks",
+    { "name": "Quench", "needs": [ "EFFECT_Fire|#Burning", "EFFECT_Chill|#Chilled" ], "rank": 5, "description": "hot metal quenched: it cracks",
       "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/rig_hammerfall.wav",
       "actions": [ { "do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "Strength", "scaleMult": 0.4 }, { "do": "effect", "effect": "#Exposed", "turns": 2 } ] },
-    { "name": "Plasma Arc", "needs": [ "EFFECT_Fire", "EFFECT_Shock" ], "rank": 7, "radius": 1.2, "description": "the flame goes to plasma in the arc",
+    { "name": "Plasma Arc", "needs": [ "EFFECT_Fire|#Burning", "EFFECT_Shock|#Shocked" ], "rank": 7, "radius": 1.2, "description": "the flame goes to plasma in the arc",
       "vfx": "PA_Engineer_Spidermine.PS_explode_energy@0.4", "sound": "audio_licensed/rig_overheat.wav",
-      "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.35 }, { "do": "blind", "chance": 40 } ] }
+      "actions": [ { "do": "damage", "type": "Fire", "min": 5, "max": 9, "scale": "Strength", "scaleMult": 0.35 }, { "do": "blind", "chance": 40 } ] },
+    {"name": "Jammed Works", "needs": ["@Stripped", "SLOW"], "keep": ["@Stripped"], "rank": 4, "description": "slowed with the works hanging out: a loose plate gets into the gears", "vfx": "PA_DualWield_SinisterStrike.impactEffect@0.4", "sound": "audio_licensed/rig_piston_jab.wav", "actions": [{"do": "exhaust", "amount": 1}, {"do": "stun", "turns": 1, "chance": 50}, {"do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength", "scaleMult": 0.2}]},
+    {"name": "Heat Fracture", "needs": ["@Sheared", "EFFECT_Fire|#Burning"], "rank": 5, "description": "heat on sheared metal: it splits along the fracture", "vfx": "PA_Elementalist_MagmaBurst.impactParticle@0.5", "sound": "audio_licensed/rig_hammerfall.wav", "actions": [{"do": "damage", "type": "Crushing", "min": 6, "max": 10, "scale": "Strength", "scaleMult": 0.4, "trueDamage": true}, {"do": "knockback", "amount": 1}]},
+    {"name": "Fault Arc", "needs": ["@Sheared", "EFFECT_Shock|#Shocked"], "rank": 5, "description": "current down the fracture and into the works", "vfx": "PA_Elementalist_ChainLightning.shockImpact", "sound": "audio_licensed/rig_overheat.wav", "actions": [{"do": "damage", "type": "Shock", "min": 4, "max": 7, "scale": "Strength", "scaleMult": 0.3}, {"do": "stun", "turns": 1}, {"do": "exhaust", "amount": 1}]},
+    {"name": "Servo Lock", "needs": ["EFFECT_Shock|#Shocked", "EFFECT_Chill|#Chilled"], "rank": 6, "description": "frozen joints and a live current: the servos lock up", "vfx": "PA_Elementalist_FrigidBlast.impactParticle", "sound": "audio_licensed/rig_piston_jab.wav", "actions": [{"do": "stun", "turns": 1}, {"do": "effect", "effect": "SLOW", "turns": 2}, {"do": "damage", "type": "Shock", "min": 3, "max": 6, "scale": "Strength", "scaleMult": 0.3}]}
   ],
   "tiers": [
     {
