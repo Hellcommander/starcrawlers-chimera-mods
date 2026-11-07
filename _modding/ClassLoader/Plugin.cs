@@ -302,6 +302,7 @@ namespace SCClassLoader
             else if (dev == "nosaves") Instance.StartCoroutine(DevTestNoSaves.Run());
             else if (dev == "ichorgoo") Instance.StartCoroutine(DevTestLooks.RunIchorGoo());
             else if (dev == "reactant") Instance.StartCoroutine(DevTestReactant.Run());
+            else if (dev == "loads") Instance.StartCoroutine(DevTestLoads.Run());
             else if (dev == "rigreact") Instance.StartCoroutine(DevTestRigReactions.Run());
             else if (dev == "recipes") Instance.StartCoroutine(DevTestRecipes.Run());
             else if (dev == "miasmancer") Instance.StartCoroutine(DevTestMiasmancer.Run());

@@ -141,7 +141,7 @@ namespace SCClassLoader
         /// <summary>The same from a skill as its class defines it, for a copy that never had it to tune.</summary>
         internal static MobSkillSpec Copy(AbilitySpec s, List<ActionSpec> all, string internalName, string name, float abilityRange, int rank, string classId, float strength)
         {
-            if (s.target == "item" || s.target == "pet" || s.itemCost != null || s.creditCost > 0 || !string.IsNullOrEmpty(s.requires)) return null;
+            if (s.target == "item" || s.target == "pet" || s.itemCost != null || s.loads != null || s.creditCost > 0 || !string.IsNullOrEmpty(s.requires)) return null;
             if (s.target == "self" && s.radius <= 0f) return null;
             if (all.Any(a => (a.@do ?? "").ToLowerInvariant() == "summon")) return null;
             List<ActionSpec> acts = all.Where(a => Copied.Contains((a.@do ?? "").ToLowerInvariant()) && (a.to ?? "target").ToLowerInvariant() == "target").ToList();

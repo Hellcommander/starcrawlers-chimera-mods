@@ -1454,7 +1454,7 @@
         "MOD_Etcher",
         "MOD_ReactantHauler"
       ],
-      "description": "Etch Through may leave grit in the wound, Scavenger's Eye may recover Reagent from Scored kills, and with Chain Reaction Handling, hits on Brine-Soaked foes may score two layers. Each level adds 3% to these odds.",
+      "description": "Etch Through may leave grit in the wound, Hurl Reactant's scavenging may recover Reagent from Scored kills, and with Chain Reaction Handling, hits on Brine-Soaked foes may score two layers. Each level adds 3% to these odds.",
       "bonus": {
         "procChancePerStack": 3,
         "procs": [
@@ -2698,7 +2698,7 @@
         "MOD_Runeforger",
         "MOD_Etcher"
       ],
-      "description": "Unkeyed Sling may score its target, and with Chisel Habit, hits on Scored foes may come away with a dormant glyph. Each level adds 3% to these odds.",
+      "description": "Unkeyed Sling may score its target, and with Flick Glyph's chisel habit, hits on Scored foes may come away with a Glyph Cell. Each level adds 3% to these odds.",
       "bonus": {
         "procChancePerStack": 3,
         "procs": [

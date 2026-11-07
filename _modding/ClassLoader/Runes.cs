@@ -95,6 +95,21 @@ namespace SCClassLoader
         public string burstOn;
     }
 
+    /// <summary>One item a skill can be loaded with (AbilitySpec.loads): the skill spends it on each cast and is retuned
+    /// by it with the same fields a rune has. You pick which one by right-clicking the skill on the hotbar (Loads).</summary>
+    public class LoadSpec : RuneSpec
+    {
+        /// <summary>The item ("RhOilDrum", "Mod:Id" or a vanilla id).</summary>
+        public string item;
+        /// <summary>Shown in the picker and the tooltip; the item's own name when empty.</summary>
+        public string name;
+        /// <summary>What it does in this skill, for the picker and the tooltip; generated from the fields when empty.</summary>
+        public string description;
+        /// <summary>How many of the item one cast spends.</summary>
+        public int count = 1;
+        [Newtonsoft.Json.JsonIgnore] internal string resolved;
+    }
+
     /// <summary>A signature combo: what one rune does in one particular skill (AbilitySpec.runeVariants).</summary>
     public class RuneVariant : RuneSpec
     {
@@ -128,6 +143,8 @@ namespace SCClassLoader
             public float power = 1f, radius, range, fieldRadius;
             public int cost, stamina, cooldown, instability, jumps, fieldTurns, burn;
             public string element, reagent, impactVfx;
+            /// <summary>The item the skill is loaded with for this cast (AbilitySpec.loads), or null.</summary>
+            public LoadSpec load;
             public string sig;
             public string Signature => sig;
 
@@ -449,10 +466,12 @@ namespace SCClassLoader
         /// <summary>What the runes in this ability's sockets and the rewrites on it (SkillMods) add up to; null when there are none.</summary>
         internal static Tuning For(string abilityId, AbilitySpec s, int open = int.MaxValue, List<SkillMods.Carried> mods = null)
         {
-            if (s == null || abilityId == null || (s.runeSlots <= 0 && (mods == null || mods.Count == 0))) return null;
+            LoadSpec load = s != null && abilityId != null ? Loads.Current(abilityId, s) : null;
+            if (s == null || abilityId == null || (s.runeSlots <= 0 && (mods == null || mods.Count == 0) && load == null)) return null;
             // Runes left in sockets that are locked again (a lower rank) wait there and do nothing.
             var set = s.runeSlots > 0 ? Sockets(abilityId, s.runeSlots).Take(Mathf.Max(0, open)).Where(x => x != null && !IsSpent(abilityId, s, x)).ToList() : new List<string>();
             string sig = string.Join("|", set);
+            if (load != null) sig += "|load:" + load.resolved;
             if (mods != null && mods.Count > 0) sig += "||" + string.Join("|", mods.Select(m => m.key));
             if (sig.Length == 0) return null;
             if (tunings.TryGetValue(abilityId, out var c) && c.sig == sig) return c.t;
@@ -466,6 +485,7 @@ namespace SCClassLoader
                 if (v == null || !v.replace) t.Add(r);
                 if (v != null) { t.variants.Add(v); t.Add(v); }
             }
+            if (load != null) { t.load = load; t.Add(load); }
             foreach (SkillMods.Carried m in mods ?? new List<SkillMods.Carried>()) t.Add(m);
             t.Finish(s);
             tunings[abilityId] = (sig, t);

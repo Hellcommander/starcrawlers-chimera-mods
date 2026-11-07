@@ -374,6 +374,23 @@ Custom abilities and effects are saved and restored with the game like vanilla o
   ```
   Runes in sockets that lock again (a lower rank) wait there and do nothing. In other mods' runes, refer to a class's
   effects as `"MOD_FluxSavant@Residue"` (rune files aren't part of a class).
+- **Loaded skills.** `"loads"` lets one skill use any of several items, and do what the item does. A quick right-click
+  on the skill's hotbar icon opens a picker with each item and how many you carry; your pick is kept in the save. Each
+  cast spends the item it is loaded with and is retuned by it with the same fields a rune has (`element`, `reagent`,
+  `actions`, `selfActions`, `fieldActions`, `power`, `radius`, `form` and the rest). When your pick runs out the skill
+  goes on with the next item in its list you still carry, and it can't be cast with none of them. The item a cast uses
+  is held for the whole cast, so throwing your last one still does what that one does. The tooltip shows what it is
+  loaded with and what each item would do. A skill can have loads and `itemCost` together; enemy copies (Mirrors) skip it.
+  ```jsonc
+  "loads": [
+    { "item": "ArendethClasses:RhOilDrum", "description": "slicks them with oil",       // description: shown in the picker and tooltip (generated when empty)
+      "actions": [ { "do": "effect", "effect": "@Slicked" } ] },
+    { "item": "ArendethClasses:RhEmberPot", "element": "Fire", "count": 1,             // count: items one cast spends (default 1)
+      "name": "Ember Pot",                                                              // optional: the item's own name otherwise
+      "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.3",
+      "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] } ]
+  ```
+  The Reactant Hauler's Hurl Reactant and the Runeforger's Flick Glyph are built this way; `SCCL_DEVTEST=loads` tests it.
 - **Spell augments.** A class with an `"augments"` list lets its rune-socketed skills buy rewrites from a shared pool,
   in the rune matrix: each skill's row gets an Augments button, and the right column turns into that skill's bench. The
   pool is the class's rank plus one per rune-socketed skill you have perked, so it grows as those skills advance. A skill

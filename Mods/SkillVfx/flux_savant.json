@@ -62,8 +62,8 @@
     ] }
 ] },
 { "id": "MOD_FluxSavant", "tiers": [
-  {},
   {"newAbility": {"castVfx": "", "impactVfx": "fx_flux_savant_arc_lance_impact", "travelVfx": "fx_flux_savant_arc_lance_travel", "areaVfx": ""}},
+  {},
   {"newAbility": {"castVfx": "fx_flux_savant_rune_press_cast", "impactVfx": "", "travelVfx": "", "areaVfx": ""}},
   {"newAbility": {"castVfx": "", "impactVfx": "", "travelVfx": "fx_flux_savant_catalyst_flask_travel", "areaVfx": "fx_flux_savant_catalyst_flask_area"}},
   {"newAbility": {"castVfx": "", "impactVfx": "fx_flux_savant_lattice_field_impact", "travelVfx": "fx_flux_savant_lattice_field_travel", "areaVfx": ""}},

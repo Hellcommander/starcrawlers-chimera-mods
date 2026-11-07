@@ -260,7 +260,9 @@ namespace SCClassLoader
             RefreshStats();
             if (rt == null || isPassive) return false;
             if (caster == null) caster = Player.instance;
+            _useFail = ""; // a reason from an earlier refusal mustn't outlive it
             if (rt.spec.itemCost != null && !Crafting.HasAll(Costs)) return false;
+            if (rt.spec.loads != null && rt.spec.loads.Count > 0 && Loads.Current(rt.internalName, rt.spec) == null) { _useFail = "load"; return false; }
             if (rt.spec.creditCost > 0 && caster == Player.instance && Menu_Inventory.instance != null && Menu_Inventory.instance.GetCredits() < rt.spec.creditCost) return false;
             if (rt.spec.stackCost?.effect != null && !PoolGone && Actions.StacksOn(caster, Actions.EffectId(rt.spec.stackCost.effect, rt.classId)) < StackCostAmount) return false;
             if (!string.IsNullOrEmpty(rt.spec.requires))
@@ -283,8 +285,10 @@ namespace SCClassLoader
         /// <summary>Clicking a skill your gear doesn't fit says what it needs (the game would repeat an older reason).</summary>
         public override void ProcessUseFail()
         {
-            if (_useFail != "equipped" || rt == null) { base.ProcessUseFail(); return; }
-            string msg = $"{GetDisplayName()} needs {Equipped.Requirement(rt.spec.equipped)}";
+            if ((_useFail != "equipped" && _useFail != "load") || rt == null) { base.ProcessUseFail(); return; }
+            string msg = _useFail == "load"
+                ? $"{GetDisplayName()} needs {string.Join(" or ", rt.spec.loads.Select(Loads.NameOf).Distinct())}"
+                : $"{GetDisplayName()} needs {Equipped.Requirement(rt.spec.equipped)}";
             Game.LOG(msg);
             HUD.instance?.MakeFct("<size=42>" + msg + " </size>");
             AudioManager.PlayEvent("event:/UI/UI_Error");
@@ -406,7 +410,21 @@ namespace SCClassLoader
         private static readonly HashSet<string> GroundActs = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
             { "field", "hazard", "trap", "raisewall", "springtraps", "clearhazards", "movetraps" };
 
+        /// <summary>A loaded skill (Loads) holds the item it uses for the whole cast and spends it as the cast is paid.</summary>
         public override IEnumerator Use()
+        {
+            Bind();
+            bool loaded = rt?.spec?.loads != null && rt.spec.loads.Count > 0 && (caster == null || caster == Player.instance);
+            if (loaded && Loads.Begin(rt.internalName, rt.spec, !WindUp.Releasing(this), GetDisplayName()) == null) yield break;
+            try
+            {
+                IEnumerator body = UseBody();
+                while (body.MoveNext()) yield return body.Current;
+            }
+            finally { if (loaded) { Loads.End(rt.internalName); RefreshStats(); } }
+        }
+
+        private IEnumerator UseBody()
         {
             Bind();
             if (skillClass == SKILL_CLASS.Null && skillTree != null) skillClass = skillTree.skillClass; // a form's or synergy's skill, given its tree late
@@ -793,6 +811,7 @@ namespace SCClassLoader
                 if (!string.IsNullOrEmpty(s.cooldownWhile)) info.Add($"its cooldown waits while you have {Actions.EffectNameOf(s.cooldownWhile, rt.classId)}");
                 if (IsCommand) info.Add("a command (usable in any transformation)");
                 if (!string.IsNullOrEmpty(s.ifSkill)) info.Add($"<color=#7FE0A0>from your {Synergies.TreeNames(s.ifSkill)} training</color>");
+                if (s.loads != null && s.loads.Count > 0) info.Add("each cast spends the item it is loaded with");
                 if (!string.IsNullOrEmpty(s.attachTo)) info.Add($"<color=#7FE0A0>right-click {s.attachTo} on your hotbar to use it</color>");
                 var bonus = BonusSkills.For(this);
                 if (bonus.Count > 0) info.Add($"<color=#7FE0A0>right-click for {string.Join(", ", bonus.Select(b => b.GetDisplayName()))}</color>");
@@ -817,6 +836,7 @@ namespace SCClassLoader
             string reshapes = SkillMods.Summary(s.modifies, rt.classId);
             if (reshapes.Length > 0) parts.Add(reshapes);
             if (rt.spec.synergyPenalty != null) parts.Add(PenaltyLine(rt.spec.synergyPenalty));
+            if (rt.spec.loads != null && rt.spec.loads.Count > 0) parts.Add(Loads.TipLine(rt.internalName, rt.spec, rt.classId));
             if (s.runeSlots > 0)
             {
                 Runes.Tuning t = Tuned;

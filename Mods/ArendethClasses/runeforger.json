@@ -74,10 +74,30 @@
         "Smarts": 1
       },
       "newAbility": {
-        "base": "Passive",
-        "name": "Chisel Habit",
+        "base": "Bolt",
+        "name": "Flick Glyph",
         "icon": "runeforger_t0.png",
-        "description": "You can't help scratching a sigil into everything you hit, and now and then one comes away clean as a dormant glyph. Anything you kill might leave enough charge behind to fill a Glyph Cell.",
+        "range": 4,
+        "staminaCost": 5,
+        "cooldown": 0,
+        "description": "Snap a dormant glyph and flick it at them, whichever kind you've loaded: it wakes just long enough to let go of its element. You can't help scratching a sigil into everything you hit, either, and now and then one comes away clean as a dormant glyph. Anything you kill might leave enough charge behind to fill a Glyph Cell.",
+        "sound": "sfx/rune_kindle.wav",
+        "impactVfx": "PA_Engineer_Spidermine.PS_explode_energy@0.3",
+        "actions": [
+          { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 }
+        ],
+        "loads": [
+          { "item": "ArendethClasses:RfKineticGlyph", "description": "Crushing damage, and the jolt shoves them back a tile", "element": "Crushing",
+            "actions": [ { "do": "knockback", "amount": 1 } ] },
+          { "item": "ArendethClasses:RfThermicGlyph", "description": "Fire damage, and sets them burning", "element": "Fire", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.3",
+            "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] },
+          { "item": "ArendethClasses:RfCryicGlyph", "description": "Cryo damage, and chills them", "element": "Cryo", "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.3",
+            "actions": [ { "do": "effect", "effect": "EFFECT_Chill" } ] },
+          { "item": "ArendethClasses:RfVoltaicGlyph", "description": "Shock damage, and shocks them", "element": "Shock", "impactVfx": "PA_Elementalist_ChainLightning.shockImpact@0.6",
+            "actions": [ { "do": "effect", "effect": "EFFECT_Shock" } ] }
+        ],
+        "perk": { "name": "Split Sigil", "description": "The glyph cracks in two as it wakes, and the second half finds another enemy nearby.",
+          "addActions": [ { "do": "chain", "jumps": 1, "radius": 3, "skipFirst": true, "actions": [ { "do": "damage", "type": "Energy", "min": 2, "max": 4, "scale": "Smarts", "scaleMult": 0.3, "perRank": 1 } ] } ] },
         "procs": [
           {
             "on": "hit",

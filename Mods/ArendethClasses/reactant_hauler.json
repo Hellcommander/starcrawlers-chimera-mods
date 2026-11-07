@@ -66,8 +66,25 @@
     {
       "attributes": { "Strength": 1 },
       "newAbility": {
-        "base": "Passive", "name": "Scavenger's Eye", "icon": "reactant_hauler_t0.png",
-        "description": "You know what's worth taking off a body. Kills sometimes leave you a reactant, and every reaction you set off puts a little wind back in you.",
+        "base": "Bolt", "name": "Hurl Reactant", "icon": "reactant_hauler_t0.png", "range": 5, "staminaCost": 6, "cooldown": 0,
+        "description": "Throw whatever you're holding: a drum, a pot, a keg, a jug or a sack, whichever you've loaded it with. Each one leaves its own mark, and two different marks on one enemy go off against each other. You know what's worth taking off a body, too: kills sometimes leave you a reactant, and every reaction you set off puts a little wind back in you.",
+        "sound": "audio_licensed/rh_throw.wav", "impactVfx": "PA_Engineer_Spidermine.PS_explode_bio@0.25",
+        "actions": [
+          { "do": "damage", "type": "Crushing", "min": 2, "max": 4, "scale": "Strength+Smarts+PsiPower", "scaleMult": 0.1, "perRank": 1 }
+        ],
+        "loads": [
+          { "item": "ArendethClasses:RhOilDrum", "description": "slicks them with oil",
+            "actions": [ { "do": "effect", "effect": "@Slicked" } ] },
+          { "item": "ArendethClasses:RhEmberPot", "description": "Fire damage, and sets them burning", "element": "Fire", "impactVfx": "PA_Elementalist_MagmaBurst.impactParticle@0.3",
+            "actions": [ { "do": "effect", "effect": "EFFECT_Fire" } ] },
+          { "item": "ArendethClasses:RhCoolantKeg", "description": "Cryo damage, and frosts them with coolant", "element": "Cryo", "impactVfx": "PA_Elementalist_FrigidBlast.impactParticle@0.3",
+            "actions": [ { "do": "effect", "effect": "@Frosted" } ] },
+          { "item": "ArendethClasses:RhBrineJug", "description": "soaks them in brine", "impactVfx": "PA_Elementalist_Tempest.impactParticle@0.3",
+            "actions": [ { "do": "effect", "effect": "@Brined" } ] },
+          { "item": "ArendethClasses:RhGritSack", "description": "scours them with grit", "impactVfx": "PA_DualWield_SinisterStrike.impactEffect@0.3",
+            "actions": [ { "do": "effect", "effect": "@Gritted" } ] }
+        ],
+        "perk": { "name": "Good Arm", "description": "You throw it hard enough that it bursts across everyone beside them too.", "radiusDelta": 1.2 },
         "procs": [
           { "on": "kill", "chance": 40, "actions": [ { "do": "random", "options": [
             { "name": "an oil drum", "weight": 1, "actions": [ { "do": "giveItem", "to": "self", "item": "ArendethClasses:RhOilDrum", "amount": 1 } ] },

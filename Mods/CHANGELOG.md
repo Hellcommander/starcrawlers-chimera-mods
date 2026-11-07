@@ -4,6 +4,30 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## Unreleased
+
+### Classes
+
+- **Reactant Hauler, Runeforger and Flux Savant use their items from level 1.** Each class's first skill now takes
+  any of the items it carries, so you can mix from the start:
+  - The Reactant Hauler's **Hurl Reactant** throws whichever reactant you've loaded it with: oil, ember, coolant,
+    brine or grit, each leaving its own mark, so two throws of different reactants set off a reaction. It keeps
+    Scavenger's Eye's knack for finding reactants on bodies and getting wind back from reactions. Perk: Good Arm
+    (the throw bursts over everyone beside the target).
+  - The Runeforger's **Flick Glyph** snaps whichever dormant glyph you've loaded and flicks its element at them:
+    kinetic shoves, thermic burns, cryic chills, voltaic shocks. It keeps Chisel Habit's glyph and cell finds. Perk:
+    Split Sigil (half the glyph finds a second enemy).
+  - The Flux Savant starts with **Arc Lance**, two of its rune sockets open from the start (the third at rank 6), so
+    your starting runes go straight into it. Bench Instincts moves to the second tier.
+  Characters made before this keep their ranks, so a Flux Savant who had only Bench Instincts now has Arc Lance.
+
+### Modding
+
+- **Loaded skills** (`"loads"` on a skill): one skill that can use any of several items and does what the item does.
+  Right-click the skill on the hotbar to pick the item; each cast spends it and is retuned by it with rune fields
+  (element, reagent, actions, fields, form...). It falls back to the next item you carry when your pick runs out, and
+  the tooltip lists what each item does. `SCCL_DEVTEST=loads` tests it.
+
 ## 2.2.0 (2026-11-06)
 
 ### Status reactions (chain reactions between statuses)

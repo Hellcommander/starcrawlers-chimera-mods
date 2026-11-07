@@ -549,48 +549,6 @@
   "tiers": [
     {
       "attributes": {
-        "Smarts": 1
-      },
-      "newAbility": {
-        "base": "Buff",
-        "name": "Bench Instincts",
-        "icon": "icons/bench_instincts.png",
-        "description": "Step back to the bench and work on your rig: opens the rune matrix, where you can charge spent runes with stamina or discharge full ones to deactivate them, even mid-fight. A discharge pays its stamina back once every 8 turns. You never quite stop experimenting, either: your hits sometimes leave a film of aether residue, and kills and the reactions you set off give you stamina back.",
-        "procs": [
-          {
-            "on": "hit",
-            "chance": 25,
-            "actions": [
-              {
-                "do": "effect",
-                "effect": "@Residue"
-              }
-            ]
-          },
-          {
-            "on": "kill",
-            "actions": [
-              {
-                "do": "stamina",
-                "to": "self",
-                "amount": 4
-              }
-            ]
-          }
-        ],
-        "target": "self",
-        "instant": false,
-        "staminaCost": 0,
-        "cooldown": 0,
-        "actions": [
-          {
-            "do": "runepanel"
-          }
-        ]
-      }
-    },
-    {
-      "attributes": {
         "PsiPower": 1
       },
       "newAbility": {
@@ -632,8 +590,8 @@
           ]
         },
         "runeSlotRanks": [
-          2,
-          4,
+          1,
+          1,
           6
         ],
         "runeVariants": [
@@ -706,6 +664,48 @@
         ],
         "runeCharge": 2,
         "runeDischarge": 8
+      }
+    },
+    {
+      "attributes": {
+        "Smarts": 1
+      },
+      "newAbility": {
+        "base": "Buff",
+        "name": "Bench Instincts",
+        "icon": "icons/bench_instincts.png",
+        "description": "Step back to the bench and work on your rig: opens the rune matrix, where you can charge spent runes with stamina or discharge full ones to deactivate them, even mid-fight. A discharge pays its stamina back once every 8 turns. You never quite stop experimenting, either: your hits sometimes leave a film of aether residue, and kills and the reactions you set off give you stamina back.",
+        "procs": [
+          {
+            "on": "hit",
+            "chance": 25,
+            "actions": [
+              {
+                "do": "effect",
+                "effect": "@Residue"
+              }
+            ]
+          },
+          {
+            "on": "kill",
+            "actions": [
+              {
+                "do": "stamina",
+                "to": "self",
+                "amount": 4
+              }
+            ]
+          }
+        ],
+        "target": "self",
+        "instant": false,
+        "staminaCost": 0,
+        "cooldown": 0,
+        "actions": [
+          {
+            "do": "runepanel"
+          }
+        ]
       }
     },
     {

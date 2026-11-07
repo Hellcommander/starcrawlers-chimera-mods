@@ -103,6 +103,9 @@ namespace SCClassLoader
 
         /// <summary>Items used up each cast; the ability can't be used without them.</summary>
         public List<CostSpec> itemCost;
+        /// <summary>Items the skill can be loaded with, one per cast: you pick one by right-clicking it on the hotbar, each
+        /// cast spends it, and it retunes the skill with rune fields (element, reagent, actions...). See Loads.</summary>
+        public List<LoadSpec> loads;
         /// <summary>Credits paid each cast; the ability can't be used without them.</summary>
         public int creditCost;
         /// <summary>Stacks of one of your effects spent each cast, e.g. {"effect": "@Scrap", "amount": 2}.</summary>

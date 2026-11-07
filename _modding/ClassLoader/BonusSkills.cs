@@ -64,6 +64,17 @@ namespace SCClassLoader
             return hits.Select(h => h.gameObject != null ? h.gameObject.GetComponentInParent<Action_Icon>() : null).FirstOrDefault(i => i != null && i.ability != null);
         }
 
+        /// <summary>The click point raised to the icon's top edge, so the menu opens above the hotbar, not over it.</summary>
+        private static Vector2 Above(Action_Icon icon, Vector2 at)
+        {
+            var corners = new Vector3[4];
+            ((RectTransform)icon.transform).GetWorldCorners(corners);
+            Canvas root = icon.GetComponentInParent<Canvas>()?.rootCanvas;
+            Camera cam = root == null || root.renderMode == RenderMode.ScreenSpaceOverlay ? null : root.worldCamera;
+            float top = RectTransformUtility.WorldToScreenPoint(cam, corners[1]).y;
+            return new Vector2(at.x, Mathf.Max(at.y, top));
+        }
+
         internal static void Tick()
         {
             if (Player.instance == null || Menu_HUD.instance == null || Game.Game_isLoading) return;
@@ -79,17 +90,27 @@ namespace SCClassLoader
                 pressed = null;
                 if (Time.unscaledTime - pressTime > ClickSeconds || Vector2.Distance(Input.mousePosition, pressAt) > ClickPixels) return;
                 if (IconAt(Input.mousePosition) != icon) return;
-                Open(icon.ability, Input.mousePosition);
+                Open(icon.ability, Above(icon, Input.mousePosition));
             }
         }
 
-        /// <summary>Opens the bonus menu for a parent skill at a screen point; false when it has none.</summary>
+        /// <summary>A row of the menu that isn't a skill: an item a loaded skill can take (Loads).</summary>
+        internal class Choice
+        {
+            internal Sprite icon;
+            internal System.Func<string> label, title, tip;
+            internal System.Action pick;
+        }
+
+        /// <summary>Opens the menu for a skill at a screen point: the items it can be loaded with (Loads), then its bonus
+        /// skills; false when it has neither.</summary>
         internal static bool Open(Ability parent, Vector2 at)
         {
             var list = For(parent);
-            if (list.Count == 0) return false;
+            var loads = parent is ModAbility m && m.Spec?.loads != null && m.Spec.loads.Count > 0 ? Loads.Choices(m) : new List<Choice>();
+            if (list.Count == 0 && loads.Count == 0) return false;
             if (popup == null && !Make()) return false;
-            popup.Show($"{parent.GetDisplayName()}: bonus skills", list, at, false);
+            popup.Show(loads.Count > 0 ? $"{parent.GetDisplayName()}: load with" : $"{parent.GetDisplayName()}: bonus skills", list, at, false, loads);
             AudioManager.PlayEvent("event:/UI/UI_Click");
             return true;
         }
@@ -119,7 +140,7 @@ namespace SCClassLoader
         internal static bool RightClickAt(Vector2 at)
         {
             Action_Icon icon = IconAt(at);
-            return icon != null && Open(icon.ability, at);
+            return icon != null && Open(icon.ability, Above(icon, at));
         }
 
         internal static void Close() { if (popup != null) popup.Close(); }
@@ -151,8 +172,39 @@ namespace SCClassLoader
             internal TMP_FontAsset font;
             private const float Width = 250f, Row = 34f, Pad = 6f;
             private readonly List<(ModAbility ab, TextMeshProUGUI label)> rows = new List<(ModAbility, TextMeshProUGUI)>();
+            private readonly List<(Choice c, TextMeshProUGUI label)> choiceRows = new List<(Choice, TextMeshProUGUI)>();
             private float nextRefresh;
             private bool onSkillsScreen;
+
+            private Button AddRow(RectTransform rt, float y, Sprite sp, System.Action click, System.Action enter)
+            {
+                Button b = UiKit.Button(rt, "", font, 16f, new Vector2(Width - 2f * Pad, Row - 2f), click, UiKit.ButtonColor);
+                var brt = (RectTransform)b.transform;
+                UiKit.At(brt, Pad, y);
+                TextMeshProUGUI label = b.GetComponentInChildren<TextMeshProUGUI>();
+                label.alignment = TextAlignmentOptions.Left;
+                label.margin = new Vector4(36f, 0f, 4f, 0f);
+                if (sp != null)
+                {
+                    var ic = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+                    ic.transform.SetParent(brt, false);
+                    var irt = (RectTransform)ic.transform;
+                    irt.anchorMin = irt.anchorMax = new Vector2(0f, 0.5f);
+                    irt.pivot = new Vector2(0f, 0.5f);
+                    irt.anchoredPosition = new Vector2(3f, 0f);
+                    irt.sizeDelta = new Vector2(Row - 6f, Row - 6f);
+                    var img = ic.GetComponent<Image>();
+                    img.sprite = sp;
+                    img.raycastTarget = false;
+                }
+                var trig = b.gameObject.AddComponent<EventTrigger>();
+                var on = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+                on.callback.AddListener(_ => enter());
+                var off = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+                off.callback.AddListener(_ => Tooltip.instance?.Hide());
+                trig.triggers.Add(on); trig.triggers.Add(off);
+                return b;
+            }
 
             private Camera Cam
             {
@@ -161,54 +213,45 @@ namespace SCClassLoader
 
             private bool Over(Vector2 screen) => RectTransformUtility.RectangleContainsScreenPoint((RectTransform)transform, screen, Cam);
 
-            internal void Show(string title, List<ModAbility> list, Vector2 at, bool skillsScreen)
+            internal void Show(string title, List<ModAbility> list, Vector2 at, bool skillsScreen, List<Choice> choices = null)
             {
                 foreach (Transform ch in transform) Destroy(ch.gameObject);
                 rows.Clear();
+                choiceRows.Clear();
                 onSkillsScreen = skillsScreen;
+                choices = choices ?? new List<Choice>();
                 var rt = (RectTransform)transform;
                 float y = Pad;
                 RectTransform head = UiKit.Rect(rt, "Header", new Vector2(Width - 2f * Pad, 22f));
                 UiKit.At(head, Pad, y);
                 UiKit.Label(head, $"<color=#9FB7C9>{title}</color>", font, 14f, TextAlignmentOptions.Left);
                 y += 24f;
-                if (list.Count == 0)
+                foreach (Choice c in choices)
+                {
+                    Choice pick = c;
+                    Button b = AddRow(rt, y, c.icon, () => Choose(pick), () => Tooltip.instance?.Show_TinyTip(pick.title?.Invoke() ?? "", pick.tip?.Invoke() ?? "", null));
+                    choiceRows.Add((c, b.GetComponentInChildren<TextMeshProUGUI>()));
+                    y += Row;
+                }
+                if (list.Count == 0 && choices.Count == 0)
                 {
                     RectTransform none = UiKit.Rect(rt, "None", new Vector2(Width - 2f * Pad, 22f));
                     UiKit.At(none, Pad, y);
                     UiKit.Label(none, "<color=#8C99A6>none yet</color>", font, 14f, TextAlignmentOptions.Left);
                     y += 24f;
                 }
+                if (list.Count > 0 && choices.Count > 0)
+                {
+                    RectTransform sub = UiKit.Rect(rt, "Bonus", new Vector2(Width - 2f * Pad, 22f));
+                    UiKit.At(sub, Pad, y);
+                    UiKit.Label(sub, "<color=#9FB7C9>bonus skills</color>", font, 14f, TextAlignmentOptions.Left);
+                    y += 24f;
+                }
                 foreach (ModAbility ab in list)
                 {
                     ModAbility pick = ab;
-                    Button b = UiKit.Button(rt, "", font, 16f, new Vector2(Width - 2f * Pad, Row - 2f), () => Use(pick), UiKit.ButtonColor);
-                    var brt = (RectTransform)b.transform;
-                    UiKit.At(brt, Pad, y);
-                    TextMeshProUGUI label = b.GetComponentInChildren<TextMeshProUGUI>();
-                    label.alignment = TextAlignmentOptions.Left;
-                    label.margin = new Vector4(36f, 0f, 4f, 0f);
-                    Sprite sp = ab.displaySprite;
-                    if (sp != null)
-                    {
-                        var ic = new GameObject("Icon", typeof(RectTransform), typeof(Image));
-                        ic.transform.SetParent(brt, false);
-                        var irt = (RectTransform)ic.transform;
-                        irt.anchorMin = irt.anchorMax = new Vector2(0f, 0.5f);
-                        irt.pivot = new Vector2(0f, 0.5f);
-                        irt.anchoredPosition = new Vector2(3f, 0f);
-                        irt.sizeDelta = new Vector2(Row - 6f, Row - 6f);
-                        var img = ic.GetComponent<Image>();
-                        img.sprite = sp;
-                        img.raycastTarget = false;
-                    }
-                    var trig = b.gameObject.AddComponent<EventTrigger>();
-                    var enter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-                    enter.callback.AddListener(_ => Tooltip.instance?.Show_AbilityTip(pick));
-                    var exit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
-                    exit.callback.AddListener(_ => Tooltip.instance?.Hide());
-                    trig.triggers.Add(enter); trig.triggers.Add(exit);
-                    rows.Add((ab, label));
+                    Button b = AddRow(rt, y, ab.displaySprite, () => Use(pick), () => Tooltip.instance?.Show_AbilityTip(pick));
+                    rows.Add((ab, b.GetComponentInChildren<TextMeshProUGUI>()));
                     y += Row;
                 }
                 rt.sizeDelta = new Vector2(Width, y + Pad - 2f);
@@ -242,14 +285,26 @@ namespace SCClassLoader
                     string state = cd > 0 ? $" <size=80%><color=#FF9F43>{cd}</color></size>" : ok ? "" : " <size=80%><color=#8C99A6>can't now</color></size>";
                     label.text = (ok ? ab.GetDisplayName() : $"<color=#8C99A6>{ab.GetDisplayName()}</color>") + state;
                 }
+                foreach (var (c, label) in choiceRows) if (label != null) label.text = c.label?.Invoke() ?? "";
             }
 
             internal bool Pick(string name)
             {
+                var choice = choiceRows.FirstOrDefault(r => r.label != null && StripTags(r.label.text).StartsWith(name));
+                if (choice.c != null) { Choose(choice.c); return true; }
                 var row = rows.FirstOrDefault(r => r.ab.GetDisplayName() == name);
                 if (row.ab == null) return false;
                 Use(row.ab);
                 return true;
+            }
+
+            private static string StripTags(string s) => System.Text.RegularExpressions.Regex.Replace(s ?? "", "<[^>]*>", "");
+
+            private void Choose(Choice c)
+            {
+                Close();
+                AudioManager.PlayEvent("event:/UI/UI_Click");
+                c.pick?.Invoke();
             }
 
             private void Use(ModAbility ab)
