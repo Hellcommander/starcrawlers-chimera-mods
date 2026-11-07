@@ -499,7 +499,7 @@ namespace SCClassLoader
                     D["job_beacons"] = rest.ToArray();
                     SetProgress(Progress + 1);
                     Game.LOG($"{o.Employer.Tinted()}: tap planted ({Math.Min(Progress, o.need)}/{o.need}).");
-                    AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+                    GameSounds.HackDone();
                 }
                 Object.Destroy(__instance.gameObject);
                 return false;

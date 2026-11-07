@@ -266,6 +266,15 @@ namespace SCClassLoader
             Quaternion rot = against ? Facing(wall) : Yaw(rng);
             Vector3 out3 = new Vector3(wall.x, 0f, wall.y);
             float H = Mathf.Max(1.6f, p.height);
+            // a breakable prop is its own object (not merged into the room's meshes), so it can go when it's smashed
+            GameObject alone = null;
+            if (prop.breakable)
+            {
+                alone = new GameObject("PlaceProp_" + prop.id);
+                alone.transform.SetParent(parent, false);
+                alone.transform.position = w;
+                mb = new MeshBatch();
+            }
             if (propPieces.TryGetValue(prop.id, out Piece pc))
             {
                 Quaternion own = pc.spec?.rotation != null && pc.spec.rotation.Length >= 3 ? Quaternion.Euler(pc.spec.rotation[0], pc.spec.rotation[1], pc.spec.rotation[2]) : Quaternion.identity;
@@ -276,10 +285,15 @@ namespace SCClassLoader
                 Add(mb, pc, Fit(pc, size, centre, rot));
             }
             else StandIn(mb, w, prop, against, out3, rot, H);
+            if (alone != null)
+            {
+                mb.Flush(alone.transform, "PlaceProp_" + prop.id);
+                PlaceProp.Make(alone, prop, w);
+            }
             if (!string.IsNullOrEmpty(prop.glow) && ColorUtility.TryParseHtmlString(prop.glow, out Color gc))
             {
                 var g = new GameObject("PropGlow");
-                g.transform.SetParent(parent, false);
+                g.transform.SetParent(alone != null ? alone.transform : parent, false); // a smashed prop's light goes with it
                 g.transform.position = w + Vector3.up * Mathf.Min(1.2f, prop.size) - (against ? out3 * 0.1f : Vector3.zero);
                 Light l = g.AddComponent<Light>();
                 l.type = LightType.Point; l.color = gc; l.range = 2.2f; l.intensity = 1.2f; l.shadows = LightShadows.None;

@@ -55,7 +55,7 @@ namespace SCClassLoader
 
             foreach (PlaceLayout.LRoom r in lay.rooms)
             {
-                GameObject t = Room(p, lay, r, holder.transform, kit, deco, doorPrefab, pool, chests);
+                GameObject t = Room(p, lay, r, holder.transform, kit, deco, new System.Random(unchecked(seed * 486187739 + r.id * 7919 + 17)), doorPrefab, pool, chests);
                 Room room = t.GetComponent<Room>();
                 map._packedRooms.Add(new PackedRoom(room.PrefabGroupName, room.Properties, t.transform.position, Quaternion.identity));
                 room.Properties.UseSpecificRoomVariant = t;
@@ -70,7 +70,13 @@ namespace SCClassLoader
             return t;
         }
 
-        private static GameObject Room(PlaceSpec p, PlaceLayout lay, PlaceLayout.LRoom r, Transform holder, PlaceKit kit, System.Random rng, Door doorPrefab, List<Character> pool, List<Chest> chests)
+        /// <summary>
+        /// rng is the look (which floor, wall and ceiling model, which way they turn), and how many draws it makes depends
+        /// on which models were loaded. pick is everything that must come out the same every time this place is built
+        /// (which tiles hold props and which props, enemy and loot spots): its own per room, from the seed alone, so a
+        /// reload or a return trip puts every prop back where it was (smashed props are found again by their tile).
+        /// </summary>
+        private static GameObject Room(PlaceSpec p, PlaceLayout lay, PlaceLayout.LRoom r, Transform holder, PlaceKit kit, System.Random rng, System.Random pick, Door doorPrefab, List<Character> pool, List<Chest> chests)
         {
             float H = Mathf.Max(1.6f, p.height);
             int minX = r.cells.Min(c => c.x), maxX = r.cells.Max(c => c.x), minY = r.cells.Min(c => c.y), maxY = r.cells.Max(c => c.y);
@@ -126,12 +132,12 @@ namespace SCClassLoader
             {
                 int want = r.cells.Count / 8;
                 var spots = r.cells.Where(c => free.Contains(c) && lay.WallSides(c).Any() && !lay.NextToDoorway(c) && !NearExit(lay, c)).ToList();
-                Shuffle(spots, rng);
+                Shuffle(spots, pick);
                 foreach (Vector2Int c in spots)
                 {
                     if (want <= 0) break;
                     bool corner = lay.WallSides(c).Count() >= 2;
-                    PlacePropSpec prop = kit.PickProp(rng, r.role, corner ? "corner" : "wall");
+                    PlacePropSpec prop = kit.PickProp(pick, r.role, corner ? "corner" : "wall");
                     if (prop == null) break;
                     if (prop.blocks && !StaysConnected(r, lay, blocked.Keys.Concat(filler).Append(c))) continue;
                     if (prop.blocks) blocked[c] = prop;
@@ -143,8 +149,8 @@ namespace SCClassLoader
                 if (r.cells.Count >= 25)
                 {
                     var mid = r.cells.Where(c => free.Contains(c) && !lay.WallSides(c).Any() && Dirs.All(d => r.set.Contains(c + d) && !lay.NextToDoorway(c + d))).ToList();
-                    Shuffle(mid, rng);
-                    PlacePropSpec centreProp = kit.PickProp(rng, r.role, "centre");
+                    Shuffle(mid, pick);
+                    PlacePropSpec centreProp = kit.PickProp(pick, r.role, "centre");
                     foreach (Vector2Int c in mid.Take(r.cells.Count / 30))
                         if (centreProp != null && StaysConnected(r, lay, blocked.Keys.Concat(filler).Append(c))) { blocked[c] = centreProp; free.Remove(c); }
                 }
@@ -190,10 +196,13 @@ namespace SCClassLoader
             FloorColliders(col, lay, r);
             foreach (var kv in blocked)
             {
+                // a container is searched from a free tile beside it: the one facing away from its wall if it can,
+                // else any open side (a crate that looks searchable must be searchable)
                 Vector2Int wall = lay.WallSides(kv.Key).FirstOrDefault();
-                Vector2Int inward = -wall;
-                if (kv.Value.search && wall != Vector2Int.zero && r.set.Contains(kv.Key + inward) && !blocked.ContainsKey(kv.Key + inward))
-                    chests.Add(new Chest { at = lay.World(kv.Key), wall = new Vector3(wall.x, 0f, wall.y), front = lay.World(kv.Key + inward) });
+                bool Open(Vector2Int d) => d != Vector2Int.zero && r.set.Contains(kv.Key + d) && !blocked.ContainsKey(kv.Key + d) && !filler.Contains(kv.Key + d);
+                Vector2Int inward = Open(-wall) ? -wall : Dirs.FirstOrDefault(Open);
+                if (kv.Value.search && inward != Vector2Int.zero)
+                    chests.Add(new Chest { at = lay.World(kv.Key), wall = new Vector3(-inward.x, 0f, -inward.y), front = lay.World(kv.Key + inward) });
                 else kit.Prop(mb, lay, kv.Key, kv.Value, rng, meshes);
             }
             kit.PlaceScenery(mb, lay, r, rng, meshes);
@@ -224,18 +233,18 @@ namespace SCClassLoader
             if (!quiet && pool != null && pool.Count > 0)
             {
                 var marked = r.marks.Where(kv => kv.Value == 'S').Select(kv => kv.Key).ToList();
-                int count = r.hallway ? (rng.NextDouble() < 0.35 ? 1 : 0) : Mathf.Clamp(Mathf.RoundToInt(r.cells.Count / (float)Mathf.Max(4, p.tilesPerEnemy)), 1, 4);
+                int count = r.hallway ? (pick.NextDouble() < 0.35 ? 1 : 0) : Mathf.Clamp(Mathf.RoundToInt(r.cells.Count / (float)Mathf.Max(4, p.tilesPerEnemy)), 1, 4);
                 var spots = r.cells.Where(c => free.Contains(c) && !lay.NextToDoorway(c) && !marked.Contains(c)).ToList();
-                Shuffle(spots, rng);
+                Shuffle(spots, pick);
                 foreach (Vector2Int c in marked.Concat(spots.Take(Mathf.Max(0, count - marked.Count))))
                 {
                     var sp = new GameObject("Spawn_Point").AddComponent<Spawn_Point>();
                     sp.transform.SetParent(spawnT, false);
                     sp.transform.position = lay.World(c);
-                    sp.transform.rotation = Quaternion.Euler(0f, 90f * rng.Next(4), 0f);
+                    sp.transform.rotation = Quaternion.Euler(0f, 90f * pick.Next(4), 0f);
                     sp.useExactPosition = true;
                     sp.emptyChance = marked.Contains(c) ? 0 : Mathf.Clamp(p.emptyChance, 0, 90);
-                    sp.spawns = Enumerable.Range(0, 4).Select(_ => pool[rng.Next(pool.Count)]).Distinct().ToArray();
+                    sp.spawns = Enumerable.Range(0, 4).Select(_ => pool[pick.Next(pool.Count)]).Distinct().ToArray();
                     spawnPoints.Add(sp);
                     free.Remove(c);
                 }
@@ -246,8 +255,8 @@ namespace SCClassLoader
             room.spawners = new[] { ctl };
 
             var lootMarks = r.marks.Where(kv => kv.Value == 'L').Select(kv => kv.Key).ToList();
-            int loot = r.hallway ? 0 : Mathf.RoundToInt(r.cells.Count / (float)Mathf.Max(6, p.tilesPerLoot) + (float)rng.NextDouble() * 0.6f);
-            var lootSpots = r.cells.Where(c => free.Contains(c) && !lay.NextToDoorway(c)).OrderBy(c => lay.WallSides(c).Any() ? 0 : 1).ThenBy(_ => rng.Next()).ToList();
+            int loot = r.hallway ? 0 : Mathf.RoundToInt(r.cells.Count / (float)Mathf.Max(6, p.tilesPerLoot) + (float)pick.NextDouble() * 0.6f);
+            var lootSpots = r.cells.Where(c => free.Contains(c) && !lay.NextToDoorway(c)).OrderBy(c => lay.WallSides(c).Any() ? 0 : 1).ThenBy(_ => pick.Next()).ToList();
             foreach (Vector2Int c in lootMarks.Concat(lootSpots.Take(Mathf.Max(0, loot - lootMarks.Count))))
             {
                 var ll = new GameObject("LootLocator").AddComponent<LootLocator>();

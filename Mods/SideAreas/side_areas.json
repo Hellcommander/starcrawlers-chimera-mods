@@ -143,7 +143,7 @@
             { "id": "locker", "where": "corner", "size": 1.1, "search": true, "weight": 7, "model": {"mesh": "models/places/derelict/locker.glb"} },
             { "id": "cryopod", "where": "wall", "size": 1.2, "glow": "#7FE8FF", "weight": 4, "roles": ["compartment", "hold"], "model": {"mesh": "models/places/derelict/cryopod.glb"} },
             { "id": "debris", "where": "centre", "size": 0.6, "weight": 10, "model": {"mesh": "models/places/derelict/debris.glb"} },
-            { "id": "reactor", "where": "centre", "size": 1.6, "glow": "#FF9A3C", "weight": 0, "model": {"mesh": "models/places/derelict/reactor.glb"} }
+            { "id": "reactor", "where": "centre", "size": 1.6, "glow": "#FF9A3C", "weight": 0, "breakable": false, "model": {"mesh": "models/places/derelict/reactor.glb"} }
           ] },
         "templates": [
           { "id": "bridge", "role": "bridge", "at": "bow", "map": [
@@ -269,7 +269,7 @@
             { "id": "boulder", "where": "centre", "size": 0.84, "weight": 12, "model": {"mesh": "models/places/mine/boulder.glb"} },
             { "id": "crystal", "where": "wall", "size": 0.66, "glow": "#7FD0FF", "weight": 8, "model": {"mesh": "models/places/mine/crystal.glb"} },
             { "id": "crate", "where": "corner", "size": 0.48, "search": true, "loot": true, "weight": 8, "model": {"mesh": "models/places/mine/crate.glb"} },
-            { "id": "drill", "where": "centre", "size": 1.7, "weight": 0, "model": {"mesh": "models/places/mine/drill.glb"} }
+            { "id": "drill", "where": "centre", "size": 1.7, "weight": 0, "breakable": false, "model": {"mesh": "models/places/mine/drill.glb"} }
           ] },
         "templates": [
           { "id": "pad", "role": "landing", "at": "start", "noEnemies": true, "map": [

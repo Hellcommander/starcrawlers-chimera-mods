@@ -102,6 +102,14 @@ namespace SCClassLoader
         public bool search;
         /// <summary>Glow colour; a small light sits on it.</summary>
         public string glow;
+        /// <summary>
+        /// The game's own breakable prop: a blast smashes it, so does clicking it from a tile next to it (that takes your
+        /// turn), and walking into one that doesn't block. A smashed prop frees its tile and stays smashed through saves.
+        /// Off for the big fixtures a room is built round.
+        /// </summary>
+        public bool breakable = true;
+        /// <summary>FMOD event when it breaks (default the game's "Smash Big").</summary>
+        public string breakSound;
     }
 
     /// <summary>

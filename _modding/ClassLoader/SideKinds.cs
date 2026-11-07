@@ -355,7 +355,7 @@ namespace SCClassLoader
                     D["obj_started"] = Get("echo_turn", 0);
                     D["obj_waves"] = 0;
                     Game.LOG($"<color=#FF8F5C>The beacon wakes the whole echo. Hold out: {Obj?.waves ?? 3} waves are coming, and the exits are sealed until it's over.</color>");
-                    AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+                    GameSounds.HackDone();
                     Object.Destroy(__instance.gameObject);
                     BreachFinder.Refresh();
                 }
@@ -396,7 +396,7 @@ namespace SCClassLoader
                         foreach (ObjPad p in Object.FindObjectsOfType<ObjPad>().Where(p => Vector3.Distance(p.transform.position, me) < 0.7f).ToList()) Object.Destroy(p.gameObject);
                         int doneCount = Get("obj_count", 0) + 1;
                         D["obj_count"] = doneCount;
-                        AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+                        GameSounds.HackDone();
                         Game.LOG($"<color={ObjColor}>Uplink {doneCount}/{doneCount + pads.Count} done.</color>");
                         if (pads.Count == 0) Complete(o);
                         else Responders(o.size, "The uplink trips security: a response team is on its way.");
@@ -439,7 +439,7 @@ namespace SCClassLoader
                 for (int i = 0; i < o.rewardItems; i++) Echoes.Spew(i % 2 == 0 ? LOOT_TYPE.Weapon : LOOT_TYPE.Gear, SideAreaData.Rarity(o.reward), here);
             string pay = string.Join(", ", new[] { credits > 0 ? $"+{credits} credits" : null, o.xp > 0 ? "XP" : null }.Where(x => x != null));
             Game.LOG($"<color=#9FE08A>{o.done ?? "Objective done."}</color>{(pay.Length > 0 ? $" <color=#FFD966>{pay}</color>" : "")}");
-            AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+            GameSounds.HackDone();
             SideAreas.Data["obj_total"] = Get("obj_total", 0) + 1;
             BreachFinder.Refresh();
         }
@@ -494,6 +494,7 @@ namespace SCClassLoader
 
         internal static void OnEchoRestored()
         {
+            PlaceProp.OnRestored();
             PlacePads();
             if (Current.vendor != null)
                 foreach (Character c in Contracts.AllCharacters().Where(c => c.HasTag("SCCLK_VENDOR"))) Stock(c, Current);

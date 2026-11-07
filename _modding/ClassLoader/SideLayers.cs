@@ -336,7 +336,7 @@ namespace SCClassLoader
             if (!Locked) return;
             D.Remove("lift_locked");
             if (text != null) Game.LOG($"<color=#9FE08A>{string.Format(text, Overseer)}</color>");
-            AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+            GameSounds.HackDone();
             PlaceLifts();
         }
 

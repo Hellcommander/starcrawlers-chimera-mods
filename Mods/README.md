@@ -1898,6 +1898,9 @@ decontamination hatch); the room you arrive in is always clear.
 - Crates, lockers and cabinets in a generated place are the game's own containers: click one from the tile in front
   to search it. A handful per place hold one or two things (some locked: pick or bash them; deeper down, maybe a
   mimic); the rest stand open and empty, already picked clean. Searched stays searched, through saves and return trips.
+- The other props break like the game's own: a blast smashes them, and so does clicking one from a tile next to it
+  (that takes your turn). A smashed prop frees its tile and stays smashed through saves. The big fixtures a room is
+  built round (a reactor, a drill) don't break.
 - `[SideAreas] Brightness` (percent, default 100) turns a generated place's ambient and ceiling lights up or down. A
   blackout still goes dark.
 - Kill squads wait until you're back on the real floor, and floor intros don't replay.
@@ -2016,7 +2019,8 @@ A **place** sets its layout `style` (`spine`, `hub`, `grid` or `caves`), `rooms`
 `tilesPerLoot`, a `look` (ambient light, fog, ceiling light colour, reach, flicker and an accent colour) and a `kit`:
 `floor`, `wall` and `ceiling` model lists (1 x 1 tiles and panels, picked at random), a `door` leaf (`doorHeight`,
 `doorSlide` side or up), an `exit` and `props` (each with `where`: wall, corner or centre; `blocks`, `size`, `weight`,
-`roles`, `glow`). Anything the kit lacks is drawn as a plain stand-in in the look's colours. `templates` are special
+`roles`, `glow`, `search` for the game's own container in its place, `breakable` (default on; off for fixtures) and
+`breakSound`, an FMOD event, default `event:/Effects/Smash Big`). Anything the kit lacks is drawn as a plain stand-in in the look's colours. `templates` are special
 rooms drawn as text: `#` solid, `.` floor, `D` a doorway on the outer ring, `E` the way out, `L` loot, `S` an enemy spot,
 `x` a tile taken by a big prop next to it, and letters mapped to props in `legend`; `at` says where one goes (`start`
 holds the way out; `bow` / `stern` are the ends of a spine; `far` is deep inside; `any`). The game measures in units

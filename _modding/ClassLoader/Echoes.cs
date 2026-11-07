@@ -397,7 +397,7 @@ namespace SCClassLoader
             if (vault != null) foreach (Door d in vault.roomDoors) if (d != null) d.SetSeal(false);
             if (D != null) D["vault_open"] = true;
             Game.LOG($"<color=#FFD966>The vault's seals release{(string.IsNullOrEmpty(why) ? "" : ": " + why)}.</color>");
-            AudioManager.PlayEvent("event:/Abilities/Hacker/Hacker_Hack");
+            GameSounds.HackDone();
             BreachFinder.Refresh();
         }
 
