@@ -72,26 +72,24 @@ options, and five classes grow into them.
 
 ### More recipes for the five classes
 
-- **Alchemical reactions**, two new keys: a need written `"EFFECT_Fire|#Burning"` takes either effect for that place in
-  the mix, and `"when"` gates a reaction on a condition (checked on the enemy with you as the caster); a reaction whose
-  condition fails is passed over for the next in order, so two can share a mix and part on it. Every elemental reagent
-  in the five classes' lists now takes the library status too (Fire or Burning, Shock or Shocked, Chill or Chilled), so
-  what other mod classes inflict counts. The effect tooltips and the Reactions tab read "Fire or Burning" and carry
-  the condition. `SCCL_DEVTEST=recipes` plays every new recipe on one character.
+- **Fire or Burning:** every elemental reagent in the five classes' recipes now also takes the shared status (Fire or
+  Burning, Shock or Shocked, Chill or Chilled), so what other mod classes inflict counts. The effect tooltips and the
+  Reactions tab read "Fire or Burning" and show any condition a recipe has.
 - **Reactant Hauler**, five more: Mortar Set (oil, grit and brine together set like mortar: Mired and Salt-Scoured),
   Set Hard (frost on the sludge: it stays stuck and its special waits), Live Sludge (current through the sludge runs to
   every oiled or mired enemy in the spill, miring them), Salt in the Wound (a gash on salt-scoured seams bleeds two
   stacks wider and weakens) and Flash Rust (fire in the scoured seams burns straight through and leaves it Exposed).
 - **Miasmancer**, five more: Full Compound (the choke landing on an enemy that carries poison and two or more salts:
-  silenced, the salts stay, and a cloud of poison and salt hangs over everyone near; salting never sets it off, only
-  the choke does, so Grand Compound and Rust Salt Cloud still build the stacks the Saturated Compound perk wants), Frost Scale (frost cracks the salt-eaten plating:
-  Exposed), Backdraft (a choking enemy draws the flame in: Burning from inside), Rust Blood (a gash on the salts
-  poisons and weakens; the gash is salted shut, the salts stay) and Venom Etch (acid on the poison strips a buff and weakens).
-- **Flux Savant**, five more on its products: Aether Shatter (fire on residue and Brittle together: the glass bursts over
-  two tiles and the aether settles on everyone near), Etched Glass (acid on Brittle adds Galvanized, the glass kept),
-  Live Plating (current on Galvanized passes the flaking plating on along a chain), Flash Freeze (frost on Brittle:
-  Exposed on top of the glass) and Aether Rot (poison on the residue curdles into two more stacks). Aether Residue now
-  reacts with poison too.
+  silenced, the salts stay, and a cloud of poison and salt hangs over everyone near; salting never sets it off, only the
+  choke does, so Grand Compound and Rust Salt Cloud still build the stacks the Saturated Compound perk wants), Frost
+  Scale (frost cracks the salt-eaten plating: Exposed), Backdraft (a choking enemy draws the flame in: Burning from
+  inside), Rust Blood (a gash on the salts poisons and weakens; the gash is salted shut, the salts stay) and Venom Etch
+  (acid on the poison strips a buff and weakens).
+- **Flux Savant**, five more on its products: Aether Shatter (fire on residue and Brittle together: the glass bursts
+  over two tiles and the aether settles on everyone near), Etched Glass (acid on Brittle adds Galvanized, the glass
+  kept), Live Plating (current on Galvanized passes the flaking plating on along a chain), Flash Freeze (frost on
+  Brittle: Exposed on top of the glass) and Aether Rot (poison on the residue curdles into two more stacks). Aether
+  Residue now reacts with poison too.
 - **Rig Jockey**, five more: Meltdown (fire on stripped plating while your rig holds six or more Heat melts the whole
   thing down over everyone beside it; cooler, the same fire is a Wiring Fire), Jammed Works (a slow on stripped
   plating: a plate gets into the gears), Heat Fracture (fire on Cold-Sheared metal splits it, true damage), Fault Arc
@@ -114,6 +112,9 @@ options, and five classes grow into them.
   icons' positions in the same frame the game added one, before the layout had moved it, and corrected itself a frame
   later. It now runs the canvas update before it looks. `SCCL_DEVTEST=chainsyn` watches it frame by frame.
 
+- Alchemical reactions are held back past 12 a second as a safety valve. That count now runs on real time, so a paused
+  game no longer holds it and keeps the next reactions from going off.
+
 Found by the loader's new player bot, a self-test that plays the game the way a player does (see the dev readme):
 
 - The character creation screen threw once on every open: the portrait slot refreshed inside `AddComponent`, before
@@ -131,6 +132,10 @@ Found by the loader's new player bot, a self-test that plays the game the way a 
   over its target and logs them, and `"skipFirst": true` on a `chain` spreads its actions from the target to the enemies
   it reaches without landing on the target again. A chain's `"effect"` filter takes `"A|B"` now. A library effect's
   `icon` is read beside its own file whichever library loaded last. `SCCL_DEVTEST=chainsyn` plays the reactions.
+- Alchemical reactions: a need written `"EFFECT_Fire|#Burning"` takes either effect for that place in the mix, and
+  `"when"` gates a reaction on a condition (checked on the enemy, with you as the caster). A reaction whose condition
+  fails is passed over for the next in order, so two can share a mix and part on it. `SCCL_DEVTEST=recipes` plays every
+  new recipe on one character.
 
 ## 2.1.1 (2026-11-05)
 
