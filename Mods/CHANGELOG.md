@@ -4,6 +4,30 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
+## 2.2.2 (unreleased)
+
+### Side areas
+
+- **Props break.** The props in a generated place (derelicts, mines and the rest) break like the game's own: a blast
+  smashes them, and so does clicking one from a tile next to it, which takes your turn. A skill aimed at a prop's tile
+  smashes it too. A smashed prop frees its tile and stays smashed through saves and return trips. The big fixtures a
+  room is built round (a reactor, a drill) don't break.
+- Props, enemy spots and loot spots now land in the same places every time a place is built, so a reload or a return
+  trip puts everything back where it was.
+
+### Fixes
+
+- A crate, locker or cabinet that stood with its front against another prop couldn't be searched. It's now searched from
+  any free tile beside it, so a container that looks searchable is.
+- Some of the game's sounds are loops that the game stops itself. Mod skills, reactions and objectives that played one
+  as a one-shot left it humming behind everything for the rest of the session (the hack sound after an uplink or a vault
+  opening). A looping sound played that way is now cut short.
+
+### Modding
+
+- A place's kit props take `"breakable"` (default on; set it off for fixtures) and `"breakSound"`, an FMOD event
+  (default `event:/Effects/Smash Big`).
+
 ## 2.2.1 (2026-11-06)
 
 ### Class changes

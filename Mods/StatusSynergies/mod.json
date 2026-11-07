@@ -2,7 +2,7 @@
   "id": "StatusSynergies",
   "name": "Status Synergies",
   "author": "Arendeth",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "Synergies built on status effects instead of class pairs: a class that exploits Burning, Gashed, Toxified and the like works with any other class that causes them, and reactions go off when two statuses from two classes meet on one enemy (Shatter Point, Conduction, Flashover...), some of them spreading from enemy to enemy in a chain. Each payoff spends the statuses it reads, so it trades one effect for another instead of adding to it. Turn it off here, or each synergy on its own under Mod Content.",
   "requires": [

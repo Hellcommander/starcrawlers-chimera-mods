@@ -2,7 +2,7 @@
   "id": "CometBreaker",
   "name": "Comet Breaker",
   "author": "Arendeth",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "A Muscle class of comet magic: it crosses a room as a comet, untouchable until its next turn, flings everything around its landing into the walls, and splits off fragments of itself that fight with its own gear and skills. Strength and Psi Power drive every skill. Requires the immortal fix: PlayerImmortalTag under [Fixes] in the Breachwork Loader config, on by default.",
   "requires": ["Library"]
