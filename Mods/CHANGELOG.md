@@ -105,6 +105,9 @@ options, and five classes grow into them.
 - **TooltipOpacity** (`[Interface]`, 10-100%, default 100): the game's own tooltips (items, skills, perks, effects,
   characters) fade their background like the mod's panels, never resized. Text stays solid unless `FadeText` is on,
   and `AllOpacity` leaves them alone.
+- **EffectShrink** (`[Interface]`, default on): the more buffs and debuffs you carry, the smaller your effect icons
+  get. Past `EffectShrinkFrom` icons in a column (default 8) both columns shrink so the longest stays about that long,
+  down to `EffectShrinkMin` (default 50%), and they ease back up as effects wear off. The fold tab keeps its size.
 
 ### Fixes
 

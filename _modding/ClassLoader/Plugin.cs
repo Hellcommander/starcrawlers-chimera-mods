@@ -94,6 +94,7 @@ namespace SCClassLoader
             MinionMenu.Bind(Config);
             AimThrough.Bind(Config);
             UiLook.Bind(Config);
+            EffectBox.Bind(Config);
             HoverTip.Bind(Config);
             TextFit.Bind(Config);
             PortalButton.Bind(Config);
@@ -345,6 +346,7 @@ namespace SCClassLoader
             else if (dev == "grid") Instance.StartCoroutine(DevTestGrid.Run());
             else if (dev == "effectbox") Instance.StartCoroutine(DevTestEffectBox.Run());
             else if (dev == "effectbox2") Instance.StartCoroutine(DevTestEffectBox.RunReload());
+            else if (dev == "effectshrink") Instance.StartCoroutine(DevTestEffectShrink.Run());
             else if (dev == "busstress") Instance.StartCoroutine(DevTestBus.Run());
             else if (dev == "streamcensus") Instance.StartCoroutine(DevTestStreaming.RunCensus());
             else if (dev == "streaming") Instance.StartCoroutine(DevTestStreaming.Run());

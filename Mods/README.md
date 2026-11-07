@@ -2620,6 +2620,12 @@ party panel and resource bars already have their own hide tab and hotkey.) Your 
 the top of their columns: folded, it reads `+ Effects` with your buffs counted in green and debuffs in red, and new
 effects keep counting there (`SCCL_DEVTEST=effectbox,effectbox2`).
 
+**Shrinking effect icons:** with `EffectShrink` on (the default), the more buffs and debuffs you carry, the smaller
+your effect icons get, so a long list doesn't run down the screen and over the hotbar. Up to `EffectShrinkFrom` icons
+in a column (8 by default) they stay full size; past that both columns shrink together toward their top-right corner,
+keeping the longest about that long, but never below `EffectShrinkMin` (50% by default). They ease back up as effects
+wear off. The fold tab keeps its size, and the icons' tips work at any size (`SCCL_DEVTEST=effectshrink`).
+
 **Character tips:** the tip over a character (name, health, effects) shows only while you hold
 `CharacterTipKey` (Left Alt by default), so it never covers what you're about to click. `CharacterTipNeedsKey`
 off brings back the base game's tip on every mouse-over. Either way it lets clicks through, and mod effects get a

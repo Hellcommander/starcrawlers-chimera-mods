@@ -283,7 +283,7 @@ Crafting, class search, retraining, your own character portraits, hotbar and sta
 [*][b]Autosave:[/b] the game's hidden autosaves now respect the autosave option, and you can choose to autosave on every floor change.
 [*][b]Key binding:[/b] Enter, Backspace, Delete, the numpad keys and more can now be bound on the Keybindings screen, and hotbar rows 2 and 3 show their modifier (Ctrl+1, Alt+1).
 [*][b]Character names:[/b] up to 32 characters (or 64), with the case you type.
-[*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking, and your effect icons fold away behind a tab that counts your buffs and debuffs. Skill tooltips now say where a stack stops, and [b]TooltipOpacity[/b] fades the game's own tooltips the same way.
+[*][b]Interface:[/b] every mod panel has a size and opacity setting and can be collapsed. Character tips show while you hold Left Alt, so they never cover what you're clicking, and your effect icons fold away behind a tab that counts your buffs and debuffs, shrinking as the list grows. Skill tooltips now say where a stack stops, and [b]TooltipOpacity[/b] fades the game's own tooltips the same way.
 [/list]
 [/spoiler]
 
