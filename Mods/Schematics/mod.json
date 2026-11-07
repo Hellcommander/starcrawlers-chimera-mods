@@ -2,7 +2,7 @@
   "id": "Schematics",
   "name": "Schematics",
   "author": "Arendeth",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "license": "Free to use with credit (see Mods/LICENSE.md)",
   "description": "General recipes made from the game's own items. Each must be found first: search the holo-laptops on office desks, or download them from a security terminal. [Crafting] RecipeLearning sets whether they are learned per character, shared, or all known."
 }

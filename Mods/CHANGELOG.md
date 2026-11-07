@@ -4,9 +4,9 @@ The version is the loader's version, and every bundled mod follows it. The numbe
 release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never packed: its changes are in
 1.46.0. The release after 1.46.0 is 2.0.0. The dates are the dates of the work.
 
-## Unreleased
+## 2.2.1 (unreleased)
 
-### Classes
+### Class changes
 
 - **Reactant Hauler, Runeforger and Flux Savant use their items from level 1.** Each class's first skill now takes
   any of the items it carries, so you can mix from the start:
@@ -19,7 +19,7 @@ release after 1.1.0 is 1.4.0, and the one after that is 1.45.0. 1.45.2 was never
     Split Sigil (half the glyph finds a second enemy).
   - The Flux Savant starts with **Arc Lance**, two of its rune sockets open from the start (the third at rank 6), so
     your starting runes go straight into it. Bench Instincts moves to the second tier.
-  Characters made before this keep their ranks, so a Flux Savant who had only Bench Instincts now has Arc Lance.
+- Characters made before this keep their ranks, so a Flux Savant who had only Bench Instincts now has Arc Lance.
 
 ### Modding
 
